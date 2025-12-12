@@ -1,25 +1,23 @@
-import Image from "next/image";
 import Container from "./container";
-import heroImg from "../public/img/hero.png";
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900">
+    <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-30"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 "
       >
         <source
           src="/img/Leigham%20Primary%20Web%20Banner.mp4"
           type="video/mp4"
         />
       </video>
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
-          <div className="flex items-center w-full lg:w-1/2">
+          <div className="flex flex-col items-center w-full lg:w-full text-center">
             <div className="max-w-2xl mb-8">
               <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
                 Free Landing Page Template for startups
@@ -30,7 +28,7 @@ export default function Hero() {
                 And its completely open-source.
               </p>
 
-              <div className="flex flex-col items-start space-x-3 space-y-3 sm:space-y-0 sm:items-center sm:flex-row">
+              <div className="flex flex-col items-center justify-center space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
                 <a
                   href="https://github.com/web3templates"
                   target="_blank"
@@ -59,21 +57,9 @@ export default function Hero() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center w-full lg:w-1/2">
-            <div className="hidden lg:block">
-              <Image
-                src={heroImg}
-                width="616"
-                height="617"
-                alt="Hero Illustration"
-                layout="intrinsic"
-                loading="eager"
-                placeholder="blur"
-              />
-            </div>
-          </div>
+
         </Container>
-        <Container>
+        {/* <Container>
           <div className="flex flex-col justify-center">
             <div className="text-xl text-center text-gray-700 dark:text-white">
               Trusted by <span className="text-indigo-600">2000+</span> customers
@@ -98,7 +84,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        </Container>
+        </Container> */}
       </div>
     </div>
   );
