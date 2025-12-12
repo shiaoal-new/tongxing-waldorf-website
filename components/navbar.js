@@ -1,12 +1,33 @@
 import Link from "next/link";
 import ThemeChanger from "./DarkSwitch";
+import Image from "next/image"
 import { Disclosure } from "@headlessui/react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const navigation = ["Product", "Features", "Pricing", "Company", "Blog"];
+  const [scroll, setScroll] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if scroll position is greater than viewport height
+      if (window.scrollY > window.innerHeight) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <div className="w-full">
+    <div
+      className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${scroll ? "bg-white dark:bg-gray-900 shadow-lg" : "bg-transparent"
+        }`}>
       <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
         {/* Logo  */}
         <Disclosure>
