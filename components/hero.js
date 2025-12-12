@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
+    <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-end">
       <video
         autoPlay
         loop
@@ -20,7 +20,7 @@ export default function Hero() {
       <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
           <div className="flex flex-col items-left lg:w-2/5">
-            <div className="max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20">
+            <div className="max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 animate-slideInLeft">
               {/* <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
                 同心華德福
               </h1> */}
