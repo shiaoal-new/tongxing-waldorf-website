@@ -46,7 +46,7 @@ export default function Navbar() {
                       className="w-8"
                     />
                   </span>
-                  <span>Nextly</span>
+                  <span>同心華德福</span>
                 </Link>
 
                 <Disclosure.Button
