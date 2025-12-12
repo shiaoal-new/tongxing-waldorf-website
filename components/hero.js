@@ -18,7 +18,7 @@ export default function Hero() {
       <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
           <div className="flex flex-col items-center w-full lg:w-full text-center">
-            <div className="max-w-2xl mb-8">
+            <div className="max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20">
               <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
                 Free Landing Page Template for startups
               </h1>

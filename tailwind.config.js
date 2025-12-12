@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        trueGray: colors.trueGray,
+        trueGray: colors.stone,
+        indigo: colors.amber,
       },
     },
     fontFamily: {
