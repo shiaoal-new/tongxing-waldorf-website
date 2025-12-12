@@ -14,7 +14,7 @@ module.exports = {
       keyframes: {
         slideInLeft: {
           '0%': {
-            transform: 'translateX(-100%)',
+            transform: 'translateX(-20%)',
             opacity: '0',
           },
           '100%': {

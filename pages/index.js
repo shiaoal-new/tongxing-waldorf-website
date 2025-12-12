@@ -39,6 +39,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <SectionTitle
+        className="animate-slideInLeft"
         pretitle="Nextly Benefits"
         title=" Why should you use this landing page">
         Nextly is a free landing page & marketing website template for startups

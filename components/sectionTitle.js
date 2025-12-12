@@ -1,12 +1,15 @@
 import React from "react";
 import Container from "./container";
+import { useInView } from "../hooks/useInView";
 
 export default function SectionTitle(props) {
+  const [ref, isInView] = useInView();
+
   return (
     <Container
-      className={`flex w-full flex-col mt-4 ${
-        props.align === "left" ? "" : "items-center justify-center text-center"
-      }`}>
+      ref={ref}
+      className={`flex w-full flex-col mt-4 ${props.align === "left" ? "" : "items-center justify-center text-center"
+        } ${!isInView ? "opacity-0" : ""} ${isInView && props.className ? props.className : ""}`}>
       {props.pretitle && (
         <div className="text-sm font-bold tracking-wider text-indigo-600 uppercase">
           {props.pretitle}
