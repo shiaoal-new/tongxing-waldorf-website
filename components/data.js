@@ -11,41 +11,41 @@ import benefitOneImg from "../public/img/benefit-one.png";
 import benefitTwoImg from "../public/img/benefit-two.png";
 
 const benefitOne = {
-  title: "Highlight your benefits",
-  desc: "You can use this space to highlight your first benefit or a feature of your product. It can also contain an image or Illustration like in the example along with some bullet points.",
+  title: "順應發展的體驗式學習",
+  desc: "同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求",
   image: benefitOneImg,
   bullets: [
     {
-      title: "Understand your customers",
-      desc: "Then explain the first point breifly in one or two lines.",
+      title: "中低年級的情感工作",
+      desc: "對於中低年級（一到四年級），教學重點放在情感面和意願面的工作，避免過早要求孩子進行抽象的「頭部上的思考」。",
       icon: <EmojiHappyIcon />,
     },
     {
-      title: "Improve acquisition",
-      desc: "Here you can add the next benefit point.",
+      title: "肢體經驗的學習",
+      desc: "學習主要透過肢體經驗和行動來進行，讓孩子在大量實踐中累積感受，並將這些感受凝結成回憶儲存於大腦。這種教育模式透過藝術性的引導，將人性的細膩面與道德觀融入課程中。",
       icon: <ChartSquareBarIcon />,
     },
     {
-      title: "Drive customer retention",
-      desc: "This will be your last bullet point in this section.",
+      title: "高年級",
+      desc: "孩子們在親身經歷世界後，即便在高年級面對抽象的學術內容，也能夠很快地產生情感連結與共鳴。這種緩慢且長遠的學習路徑，能讓孩子長出品位、美感以及清楚了解自己的能力，這些都是未來世代更為需要的核心素質",
       icon: <CursorClickIcon />,
     },
   ],
 };
 
 const benefitTwo = {
-  title: "Offer more benefits here",
-  desc: "You can use this same layout with a flip image to highlight your rest of the benefits of your product. It can also contain an image or Illustration as above section along with some bullet points.",
+  title: "健康與自然的物質環境滋養",
+  desc: "華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力",
   image: benefitTwoImg,
   bullets: [
     {
-      title: "Mobile Responsive Template",
-      desc: "Nextly is designed as a mobile first responsive template.",
+      title: "食材選擇",
+      desc: "學校在食材選擇上極為謹慎，優先採用實行生機互動農法（BD 農法）或小農提供的天然無毒食材，特別是在米飯和蔬果方面",
       icon: <DeviceMobileIcon />,
     },
     {
-      title: "Powered by Next.js & TailwindCSS",
-      desc: "This template is powered by latest technologies and tools.",
+      title: "食農教育",
+      desc: "學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。家長們甚至會在週末參與客家親子農耕，實踐永續環保的農作方式。這種從源頭把關的飲食與環境，為孩子提供了身心靈健康發展的堅實基礎",
       icon: <AdjustmentsIcon />,
     },
     {
@@ -56,4 +56,23 @@ const benefitTwo = {
   ],
 };
 
-export { benefitOne, benefitTwo };
+const benefitThree = {
+  title: "強大且互助的「村莊」社群",
+  desc: "在現代小家庭孤立的社會結構下，同心華德福提供了「一個村子來共同養育一個孩子」的強大社群支持",
+  image: benefitTwoImg,
+  bullets: [
+    {
+      title: "親師生三元合作",
+      desc: "親師生工作關係非常密切。老師不僅在教學上投入，也花費大量時間與家長建立信任與溝通。家長之間也形成強大的橫向聯繫，不僅踴躍參與校務（如午餐小組、環境美化），甚至在課後互相支援，提供從放電、晚餐到洗澡的「一條龍服務」。這種充足的安全感與支持，讓孩子能踏出穩固的步伐。",
+      icon: <DeviceMobileIcon />,
+    },
+    {
+      title: "學習面對與處理衝突",
+      desc: "當孩子在人際互動中出現衝突時，老師會引導他們學習如何表達感受、傾聽對方，並為自己的行為負起責任，甚至要求道歉的品質。",
+      icon: <AdjustmentsIcon />,
+    },
+  ],
+};
+
+
+export { benefitOne, benefitTwo, benefitThree };
