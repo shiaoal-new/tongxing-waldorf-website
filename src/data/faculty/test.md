@@ -1,6 +1,6 @@
 ---
-name: test name
-title: sadfasdf1,2,3
+name: "[test] Bill gates"
+title: CEO
 bio: no
 order: 0
 ---
