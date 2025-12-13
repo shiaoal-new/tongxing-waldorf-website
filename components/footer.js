@@ -24,7 +24,7 @@ export default function Footer() {
                     className="w-8"
                   />
                 </span>
-                <span>Nextly</span>
+                <span>同心華德福實驗教育機構</span>
               </Link>
             </div>
 
