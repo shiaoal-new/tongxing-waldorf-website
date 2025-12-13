@@ -43,7 +43,7 @@ collections:
     identifier_field: question
     fields:
       - { label: "問題", name: "question", widget: "string", required: true }
-      - { label: "答案", name: "answer", widget: "text", required: true }
+      - { label: "答案", name: "answer", widget: "markdown", required: true }
       - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
   
   # ... 您之前設計的 events 和 faculty collections ...

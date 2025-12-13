@@ -32,7 +32,8 @@
     "next-themes": "^0.0.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.8.3"
+    "react-hook-form": "^7.8.3",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
