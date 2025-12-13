@@ -1,0 +1,13 @@
+---
+name: "張美華"
+title: "校長"
+photo: "/img/uploads/faculty-placeholder.jpg"
+email: "principal@tongxin-waldorf.edu.tw"
+extension: "101"
+bio: "擁有超過20年的華德福教育經驗,致力於推動全人教育理念,培養孩子的創造力與獨立思考能力。"
+expertise:
+  - area: "華德福教育理論"
+  - area: "學校行政管理"
+  - area: "教師培訓"
+order: 1
+---

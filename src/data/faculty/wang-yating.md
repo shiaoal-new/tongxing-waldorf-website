@@ -1,0 +1,13 @@
+---
+name: "王雅婷"
+title: "音樂教師"
+photo: "/img/uploads/faculty-placeholder.jpg"
+email: "wang.yating@tongxin-waldorf.edu.tw"
+extension: "301"
+bio: "畢業於音樂教育系,擅長五聲音階教學與合唱指導,相信音樂能滋養孩子的心靈。"
+expertise:
+  - area: "音樂教育"
+  - area: "五聲音階"
+  - area: "合唱指導"
+order: 3
+---

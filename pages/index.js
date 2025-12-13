@@ -11,6 +11,8 @@ import Testimonials from "../components/testimonials";
 import Cta from "../components/cta";
 import Faq from "../components/faq";
 import PopupWidget from "../components/popupWidget";
+import Faculty from "../components/faculty";
+import { getAllFaculty } from "../lib/faculty";
 
 //import dynamic from "next/dynamic";
 
@@ -24,7 +26,7 @@ import PopupWidget from "../components/popupWidget";
 
 // const PopupWidget = dynamic(() => import("../components/popupWidget"));
 
-export default function Home() {
+export default function Home({ facultyList }) {
   return (
     <>
       <Head>
@@ -62,6 +64,10 @@ export default function Home() {
         Use this section to highlight your popular customers.
       </SectionTitle>
       <Testimonials />
+      <SectionTitle pretitle="我們的團隊" title="教職員名單">
+        認識我們專業且充滿熱忱的教職員團隊,他們致力於為孩子提供最優質的華德福教育。
+      </SectionTitle>
+      <Faculty facultyList={facultyList} />
       <SectionTitle pretitle="FAQ" title="常見問答">
         Answer your customers possible questions here, it will increase the
         conversion rate as well as support or chat requests.
@@ -72,4 +78,13 @@ export default function Home() {
       <PopupWidget />
     </>
   );
+}
+
+export async function getStaticProps() {
+  const facultyList = getAllFaculty();
+  return {
+    props: {
+      facultyList,
+    },
+  };
 }
