@@ -1,19 +1,54 @@
 import { useState } from "react";
 import Container from "./container";
+import { videoData } from "./data";
 
 export default function Video() {
-  const [playVideo, setPlayVideo] = useState(false);
   return (
     <Container>
-      <div className="w-full max-w-4xl mx-auto mb-20 overflow-hidden rounded-2xl ">
-        <div
-          onClick={() => setPlayVideo(!playVideo)}
-          className="relative bg-indigo-300 cursor-pointer aspect-w-16 aspect-h-9 bg-gradient-to-tr from-purple-400 to-indigo-700">
-          {!playVideo && (
-            <button className="absolute inset-auto text-white transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 top-1/2 left-1/2">
+      <div className="grid gap-10 lg:grid-cols-3">
+        {videoData.map((video, index) => (
+          <VideoItem key={index} video={video} />
+        ))}
+      </div>
+    </Container>
+  );
+}
+
+function VideoItem({ video }) {
+  const [playVideo, setPlayVideo] = useState(false);
+
+  // Helper function to extract YouTube Video ID
+  const getYoutubeId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  const videoId = getYoutubeId(video.url);
+  const embedUrl = videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1` : video.url;
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+
+  return (
+    <div className="flex flex-col w-full overflow-hidden rounded-xl shadow-lg h-full">
+      <div
+        onClick={() => setPlayVideo(!playVideo)}
+        className="relative cursor-pointer aspect-w-16 aspect-h-9 bg-gray-200 group"
+        style={{
+          backgroundImage: thumbnailUrl ? `url(${thumbnailUrl})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {!playVideo && (
+          <>
+            {/* Overlay for better text/icon visibility */}
+            <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
+
+            <button className="absolute inset-auto text-white transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-28 h-28"
+                className="w-16 h-16 drop-shadow-lg"
                 viewBox="0 0 20 20"
                 fill="currentColor">
                 <path
@@ -24,17 +59,28 @@ export default function Video() {
               </svg>
               <span className="sr-only">Play Video</span>
             </button>
-          )}
-          {playVideo && (
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/aOq49euWnIo?controls=0&autoplay=1"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-          )}
-        </div>
+          </>
+        )}
+        {playVideo && (
+          <iframe
+            src={embedUrl}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          ></iframe>
+        )}
       </div>
-    </Container>
+      <div className="p-5 bg-white dark:bg-trueGray-800 flex-grow border-t dark:border-trueGray-700">
+        <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">
+          {video.title}
+        </h3>
+        <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-4 leading-relaxed">
+          {video.description}
+        </p>
+      </div>
+    </div>
   );
 }
+
