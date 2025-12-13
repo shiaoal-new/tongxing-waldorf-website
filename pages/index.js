@@ -51,11 +51,10 @@ export default function Home({ facultyList, faqList }) {
       <Benefits imgPos="right" data={benefitTwo} />
       <Benefits data={benefitThree} />
       <SectionTitle
-        pretitle="Watch a video"
-        title="Learn how to fullfil your needs">
-        This section is to highlight a promo or demo video of your product.
-        Analysts says a landing page with video has 3% more conversion rate. So,
-        don't forget to add one. Just like this.
+        pretitle="深入了解華德福"
+        title="同心影音專區">
+        透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。
+        從幼兒教育到中學發展，讓我們一起探索孩子的生命歷程。
       </SectionTitle>
       <Video />
       {/* <SectionTitle
