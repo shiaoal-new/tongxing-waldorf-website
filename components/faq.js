@@ -3,6 +3,7 @@ import Container from "./container";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Faq({ faqList }) {
   // 如果没有数据,返回 null
@@ -27,6 +28,7 @@ export default function Faq({ faqList }) {
                   </Disclosure.Button>
                   <Disclosure.Panel className="px-4 pt-4 pb-2 text-gray-500 dark:text-gray-300 prose prose-sm dark:prose-invert max-w-none">
                     <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
                       components={{
                         // 自定义链接样式
                         a: ({ node, ...props }) => (
@@ -40,6 +42,21 @@ export default function Faq({ faqList }) {
                         // 自定义段落样式
                         p: ({ node, ...props }) => (
                           <p {...props} className="mb-3 last:mb-0" />
+                        ),
+                        // 自定義表格樣式
+                        table: ({ node, ...props }) => (
+                          <div className="overflow-x-auto my-4">
+                            <table {...props} className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700" />
+                          </div>
+                        ),
+                        thead: ({ node, ...props }) => (
+                          <thead {...props} className="bg-gray-50 dark:bg-gray-800" />
+                        ),
+                        th: ({ node, ...props }) => (
+                          <th {...props} className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider border-b border-gray-200 dark:border-gray-700" />
+                        ),
+                        td: ({ node, ...props }) => (
+                          <td {...props} className="px-6 py-4 whitespace-normal text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700" />
                         ),
                       }}
                     >

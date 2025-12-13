@@ -58,17 +58,17 @@ export default function Home({ facultyList, faqList }) {
         don't forget to add one. Just like this.
       </SectionTitle>
       <Video />
-      <SectionTitle
+      {/* <SectionTitle
         pretitle="Testimonials"
         title="Here's what our customers said">
         Testimonails is a great way to increase the brand trust and awareness.
         Use this section to highlight your popular customers.
       </SectionTitle>
-      <Testimonials />
-      <SectionTitle pretitle="我們的團隊" title="教職員名單">
+      <Testimonials /> */}
+      {/* <SectionTitle pretitle="我們的團隊" title="教職員名單">
         認識我們專業且充滿熱忱的教職員團隊,他們致力於為孩子提供最優質的華德福教育。
       </SectionTitle>
-      <Faculty facultyList={facultyList} />
+      <Faculty facultyList={facultyList} /> */}
       <SectionTitle pretitle="FAQ" title="常見問答">
         Answer your customers possible questions here, it will increase the
         conversion rate as well as support or chat requests.

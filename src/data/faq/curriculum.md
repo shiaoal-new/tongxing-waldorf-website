@@ -15,6 +15,5 @@ answer: |
   - [華德福教育介紹](https://waldorf.org.tw)
   - [同心課程手冊](https://tongxin-waldorf.edu.tw/curriculum)
 
-  歡迎來電洽詢: **03-1234-5678**
 order: 5
 ---
