@@ -13,6 +13,7 @@ import Faq from "../components/faq";
 import PopupWidget from "../components/popupWidget";
 import Faculty from "../components/faculty";
 import { getAllFaculty } from "../lib/faculty";
+import { getAllFaq } from "../lib/faq";
 
 //import dynamic from "next/dynamic";
 
@@ -26,7 +27,7 @@ import { getAllFaculty } from "../lib/faculty";
 
 // const PopupWidget = dynamic(() => import("../components/popupWidget"));
 
-export default function Home({ facultyList }) {
+export default function Home({ facultyList, faqList }) {
   return (
     <>
       <Head>
@@ -72,7 +73,7 @@ export default function Home({ facultyList }) {
         Answer your customers possible questions here, it will increase the
         conversion rate as well as support or chat requests.
       </SectionTitle>
-      <Faq />
+      <Faq faqList={faqList} />
       <Cta />
       <Footer />
       <PopupWidget />
@@ -82,9 +83,11 @@ export default function Home({ facultyList }) {
 
 export async function getStaticProps() {
   const facultyList = getAllFaculty();
+  const faqList = getAllFaq();
   return {
     props: {
       facultyList,
+      faqList,
     },
   };
 }

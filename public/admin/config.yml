@@ -34,4 +34,16 @@ collections:
         fields:
           - { label: "領域名稱", name: "area", widget: "string" }
       - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0 } # 用於前端排序，數字越小越前面
+  
+  - name: "faq"
+    label: "常見問答"
+    folder: "src/data/faq"
+    delete: true
+    create: true
+    identifier_field: question
+    fields:
+      - { label: "問題", name: "question", widget: "string", required: true }
+      - { label: "答案", name: "answer", widget: "text", required: true }
+      - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
+  
   # ... 您之前設計的 events 和 faculty collections ...
