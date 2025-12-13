@@ -9,7 +9,7 @@ import {
 
 import benefitOneImg from "../public/img/benefit-one.png";
 import benefitTwoImg from "../public/img/benefit-two.png";
-
+import benefitThreeImg from "../public/img/cooperation.webp";
 const benefitOne = {
   title: "順應發展的體驗式學習",
   desc: "同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求",
@@ -59,7 +59,7 @@ const benefitTwo = {
 const benefitThree = {
   title: "強大且互助的「村莊」社群",
   desc: "在現代小家庭孤立的社會結構下，同心華德福提供了「一個村子來共同養育一個孩子」的強大社群支持",
-  image: benefitTwoImg,
+  image: benefitThreeImg,
   bullets: [
     {
       title: "親師生三元合作",
