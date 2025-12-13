@@ -19,6 +19,7 @@ collections:
     label: "教職員名單"
     folder: "src/data/faculty" # 建議將此列表資料存放在專門的資料夾
     delete: true               # 允許管理者刪除教職員
+    create: true               # 允許管理者新增教職員
     identifier_field: name     # 在列表上以教職員姓名作為主要識別
     fields:
       - { label: "姓名", name: "name", widget: "string", required: true }
