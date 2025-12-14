@@ -7,7 +7,7 @@ module.exports = {
   //   defaultLocale: "en",
   // },
   output: "export",
-  basePath: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}` : '',
+  basePath: `/${REPO_NAME}`, //process.env.NODE_ENV === 'production' ? `/${REPO_NAME}` : '',
   // target: "serverless",
   // webpack: (config, { isServer }) => {
   //   if (!isServer) {
