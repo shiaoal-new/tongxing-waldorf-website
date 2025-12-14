@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Container from "./container";
+import { motion } from "framer-motion";
 
 export default function Benefits(props) {
   const { data } = props;
@@ -8,10 +9,13 @@ export default function Benefits(props) {
   return (
     <>
       <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
-        <div
-          className={`flex items-center justify-center w-full lg:w-1/2 ${
-            props.imgPos === "right" ? "lg:order-1" : ""
-          }`}>
+        <motion.div
+          initial={{ opacity: 0, x: props.imgPos === "right" ? 100 : -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className={`flex items-center justify-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:order-1" : ""
+            }`}>
           <div>
             <Image
               src={data.image}
@@ -22,12 +26,15 @@ export default function Benefits(props) {
               placeholder="blur"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <div
-          className={`flex flex-wrap items-center w-full lg:w-1/2 ${
-            props.imgPos === "right" ? "lg:justify-end" : ""
-          }`}>
+        <motion.div
+          initial={{ opacity: 0, x: props.imgPos === "right" ? -100 : 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className={`flex flex-wrap items-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:justify-end" : ""
+            }`}>
           <div>
             <div className="flex flex-col w-full mt-4">
               <h3 className="max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl dark:text-white">
@@ -47,7 +54,7 @@ export default function Benefits(props) {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </>
   );

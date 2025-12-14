@@ -42,7 +42,7 @@ export default function Home({ facultyList, faqList }) {
       <Navbar />
       <Hero />
       <SectionTitle
-        className="animate-slideInLeft"
+        direction="left"
         pretitle="Nextly Benefits"
         title="為什麼要選擇同心華德福">
         選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
@@ -51,6 +51,7 @@ export default function Home({ facultyList, faqList }) {
       <Benefits imgPos="right" data={benefitTwo} />
       <Benefits data={benefitThree} />
       <SectionTitle
+        direction="right"
         pretitle="深入了解華德福"
         title="同心影音專區">
         透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。
@@ -68,7 +69,7 @@ export default function Home({ facultyList, faqList }) {
         認識我們專業且充滿熱忱的教職員團隊,他們致力於為孩子提供最優質的華德福教育。
       </SectionTitle>
       <Faculty facultyList={facultyList} /> */}
-      <SectionTitle pretitle="FAQ" title="常見問答">
+      <SectionTitle pretitle="FAQ" title="常見問答" direction="left">
         Answer your customers possible questions here, it will increase the
         conversion rate as well as support or chat requests.
       </SectionTitle>
