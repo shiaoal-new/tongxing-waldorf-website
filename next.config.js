@@ -1,3 +1,6 @@
+// ❗ 必須是 tongxing-waldorf-website
+const REPO_NAME = 'tongxing-waldorf-website';
+
 module.exports = {
   // i18n: {
   //   locales: ["en"],
