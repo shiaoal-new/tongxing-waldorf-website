@@ -12,7 +12,7 @@ local_backend: true
 publish_mode: editorial_workflow # 啟用草稿/審核流程 (可選)
 
 media_folder: "public/img/uploads" # 媒體檔案儲存位置（相對路徑）
-public_folder: "/img/uploads"     # 網站上可訪問的媒體路徑
+public_folder: "./img/uploads"     # 網站上可訪問的媒體路徑
 
 collections:
   - name: "faculty"

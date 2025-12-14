@@ -10,11 +10,11 @@ export default function Hero() {
         loop
         muted
         playsInline
-        poster="/img/video-poster.jpg"
+        poster="./img/video-poster.jpg"
         className="absolute top-0 left-0 w-full h-full object-cover z-0 "
       >
         <source
-          src="/img/Leigham%20Primary%20Web%20Banner.mp4"
+          src="./img/Leigham%20Primary%20Web%20Banner.mp4"
           type="video/mp4"
         />
       </video>
