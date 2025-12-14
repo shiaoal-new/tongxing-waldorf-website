@@ -1,0 +1,49 @@
+# public/admin/config.yml
+
+backend:
+  name: git-gateway
+  branch: main # 您的 GitHub 主分支名稱
+  # 啟用或禁用文件鎖定 (可選，用於多人編輯)
+  # enable_rollback: true 
+
+# 您的網站部署位置，用於預覽功能
+local_backend: true 
+
+publish_mode: editorial_workflow # 啟用草稿/審核流程 (可選)
+
+media_folder: "public/img/uploads" # 媒體檔案儲存位置（相對路徑）
+public_folder: "/img/uploads"     # 網站上可訪問的媒體路徑
+
+collections:
+  - name: "faculty"
+    label: "教職員名單"
+    folder: "src/data/faculty" # 建議將此列表資料存放在專門的資料夾
+    delete: true               # 允許管理者刪除教職員
+    create: true               # 允許管理者新增教職員
+    identifier_field: name     # 在列表上以教職員姓名作為主要識別
+    fields:
+      - { label: "姓名", name: "name", widget: "string", required: true }
+      - { label: "職稱", name: "title", widget: "string", required: true } # 教授、講師、行政人員
+      - { label: "頭像", name: "photo", widget: "image", required: false } # 圖片上傳
+      - { label: "電子郵件", name: "email", widget: "email", required: false }
+      - { label: "辦公室分機", name: "extension", widget: "string", required: false }
+      - { label: "簡介/專長", name: "bio", widget: "markdown", required: false } # 使用 Markdown 編輯器輸入較長的介紹
+      - label: "專業領域"
+        name: "expertise"
+        widget: "list"         # 這裡使用 list widget 來允許輸入多個領域
+        fields:
+          - { label: "領域名稱", name: "area", widget: "string" }
+      - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0 } # 用於前端排序，數字越小越前面
+  
+  - name: "faq"
+    label: "常見問答"
+    folder: "src/data/faq"
+    delete: true
+    create: true
+    identifier_field: question
+    fields:
+      - { label: "問題", name: "question", widget: "string", required: true }
+      - { label: "答案", name: "answer", widget: "markdown", required: true }
+      - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
+  
+  # ... 您之前設計的 events 和 faculty collections ...
