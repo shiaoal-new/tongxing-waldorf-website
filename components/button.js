@@ -19,9 +19,7 @@ export default function Button({ href, children, className, ...props }) {
 export function BookVisitButton(props) {
     return (
         <Button
-            href="https://github.com/web3templates"
-            target="_blank"
-            rel="noopener"
+            href="/visit"
             className="mx-auto text-white bg-indigo-600"
             // w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5
             {...props}>
