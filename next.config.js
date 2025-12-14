@@ -4,7 +4,7 @@ module.exports = {
   //   defaultLocale: "en",
   // },
   output: "export",
-  basePath: "/tongxing-waldorf-website",
+  basePath: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}` : '',
   // target: "serverless",
   // webpack: (config, { isServer }) => {
   //   if (!isServer) {
