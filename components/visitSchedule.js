@@ -1,32 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon } from "@heroicons/react/outline";
+import { Dialog, Transition } from "@headlessui/react";
+import VisitRegistrationForm from "./visitRegistrationForm";
 
-const initialDates = [
-    { id: 1, date: "2024-03-15 (五)", time: "09:30 - 11:30", quota: 5, total: 20 },
-    { id: 2, date: "2024-03-29 (五)", time: "09:30 - 11:30", quota: 12, total: 20 },
-    { id: 3, date: "2024-04-12 (五)", time: "09:30 - 11:30", quota: 0, total: 20 },
-    { id: 4, date: "2024-04-26 (五)", time: "09:30 - 11:30", quota: 8, total: 20 },
-];
+import initialDates from "./initialVisitDates.json";
 
 export default function VisitSchedule() {
     const [dates, setDates] = useState(initialDates);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedSession, setSelectedSession] = useState(null);
 
-    const handleRegister = (id) => {
-        alert("報名成功！我們會將確認信寄至您的信箱。");
+    const openModal = (session) => {
+        setSelectedSession(session);
+        setIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsOpen(false);
+        setTimeout(() => setSelectedSession(null), 300);
+    };
+
+    // Placeholder for your deployed Apps Script Web App URL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP28DYxKx8A3ZcjJV2lqYYRUue6WHiMXFCpwWWt9HVpzOGvGw7ZVJjEOF4MaSafnlF/exec";
+
+    const handleFormComplete = (data) => {
+        const visitors = parseInt(data.visitors || 1);
+
+        // Prepare data for submission
+        const payload = {
+            ...data,
+            sessionDate: selectedSession.date,
+            sessionTime: selectedSession.time
+        };
+
+        // Submit to Apps Script
+        // Note: 'no-cors' mode is used because Google Apps Script redirects. 
+        // This means we won't get a readable response JSON in the browser, but the request will succeed.
+        if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_WEB_APP_URL") {
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Error submitting form:", err));
+        } else {
+            console.warn("Apps Script URL not set. Data not sent to backend.");
+        }
+
         setDates(dates.map(d => {
-            if (d.id === id) {
-                return { ...d, quota: d.quota - 1 };
+            if (d.id === selectedSession.id) {
+                return { ...d, quota: Math.max(0, d.quota - visitors) };
             }
             return d;
         }));
+
+        closeModal();
+        setTimeout(() => {
+            alert("報名成功！確認信將發送至 " + data.email);
+        }, 300);
     };
 
     const renderButton = (item) => {
         if (item.quota > 0) {
             return (
                 <button
-                    onClick={() => handleRegister(item.id)}
+                    onClick={() => openModal(item)}
                     className="inline-block rounded bg-indigo-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg w-full sm:w-auto">
                     立即報名
                 </button>
@@ -113,6 +154,67 @@ export default function VisitSchedule() {
                     </div>
                 </div>
             </div>
+
+            {/* Registration Modal */}
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={closeModal}>
+                    <div className="min-h-screen px-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl relative">
+                                <button
+                                    onClick={closeModal}
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
+                                >
+                                    <span className="sr-only">Close</span>
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-gray-900 mb-4"
+                                >
+                                    預約參觀 - {selectedSession?.date}
+                                </Dialog.Title>
+
+                                {selectedSession && (
+                                    <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+                                        <VisitRegistrationForm onComplete={handleFormComplete} />
+                                    </div>
+                                )}
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition>
         </Container>
     );
 }

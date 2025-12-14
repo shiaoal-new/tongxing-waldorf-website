@@ -1,0 +1,48 @@
+{
+    "pages": [
+        {
+            "name": "page1",
+            "elements": [
+                {
+                    "type": "text",
+                    "name": "name",
+                    "title": "姓名",
+                    "titleLocation": "hidden",
+                    "isRequired": true,
+                    "placeholder": "姓名"
+                },
+                {
+                    "type": "text",
+                    "name": "email",
+                    "title": "Email",
+                    "titleLocation": "hidden",
+                    "isRequired": true,
+                    "inputType": "email",
+                    "placeholder": "Email"
+                },
+                {
+                    "type": "text",
+                    "name": "cellphone",
+                    "title": "手機號碼",
+                    "titleLocation": "hidden",
+                    "isRequired": true,
+                    "inputType": "tel",
+                    "placeholder": "手機號碼"
+                },
+                {
+                    "type": "slider",
+                    "name": "visitors",
+                    "title": "參觀人數",
+                    "titleLocation": "left",
+                    "defaultValue": 1,
+                    "isRequired": true,
+                    "min": 1,
+                    "max": 5,
+                    "labelCount": 5
+                }
+            ]
+        }
+    ],
+    "completeText": "提交報名",
+    "widthMode": "responsive"
+}

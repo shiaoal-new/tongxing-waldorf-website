@@ -35,7 +35,9 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.8.3",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "survey-core": "^2.5.0",
+    "survey-react-ui": "^2.5.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
