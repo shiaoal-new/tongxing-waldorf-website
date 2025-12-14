@@ -5,7 +5,7 @@ import { Disclosure } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const navigation = ["Product", "Features", "Pricing", "Company", "Blog"];
+  const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function Navbar() {
                     <Link
                       href="/"
                       className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">
-                      Get Started
+                      預約參觀
                     </Link>
                   </>
                 </Disclosure.Panel>
@@ -113,7 +113,7 @@ export default function Navbar() {
           <Link
             href="/"
             className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
-            Get Started
+            預約參觀
           </Link>
 
           <ThemeChanger />

@@ -31,10 +31,10 @@ export default function Home({ facultyList, faqList }) {
   return (
     <>
       <Head>
-        <title>Nextly - Free Nextjs & TailwindCSS Landing Page Template</title>
+        <title>台北市同心華德福實驗教育機構</title>
         <meta
           name="description"
-          content="Nextly is a free landing page template built with next.js & Tailwind CSS"
+          content="台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -43,7 +43,7 @@ export default function Home({ facultyList, faqList }) {
       <Hero />
       <SectionTitle
         direction="left"
-        pretitle="Nextly Benefits"
+        pretitle="教育特色"
         title="為什麼要選擇同心華德福">
         選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
       </SectionTitle>
@@ -70,8 +70,7 @@ export default function Home({ facultyList, faqList }) {
       </SectionTitle>
       <Faculty facultyList={facultyList} /> */}
       <SectionTitle pretitle="FAQ" title="常見問答" direction="left">
-        Answer your customers possible questions here, it will increase the
-        conversion rate as well as support or chat requests.
+        這裡彙整了家長們最常詢問的問題，希望能協助您更深入了解同心華德福的教育理念與入學相關資訊。
       </SectionTitle>
       <Faq faqList={faqList} />
       <Cta />

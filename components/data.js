@@ -48,11 +48,7 @@ const benefitTwo = {
       desc: "學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。家長們甚至會在週末參與客家親子農耕，實踐永續環保的農作方式。這種從源頭把關的飲食與環境，為孩子提供了身心靈健康發展的堅實基礎",
       icon: <AdjustmentsIcon />,
     },
-    {
-      title: "Dark & Light Mode",
-      desc: "Nextly comes with a zero-config light & dark mode. ",
-      icon: <SunIcon />,
-    },
+
   ],
 };
 

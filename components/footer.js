@@ -3,8 +3,8 @@ import React from "react";
 import Container from "./container";
 
 export default function Footer() {
-  const navigation = ["Product", "Features", "Pricing", "Company", "Blog"];
-  const legal = ["Terms", "Privacy", "Legal"];
+  const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
+  const legal = ["隱私權政策", "使用條款"];
   return (
     <div className="relative">
       <Container>
@@ -29,9 +29,7 @@ export default function Footer() {
             </div>
 
             <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
-              Nextly is a free landing page & marketing website template for
-              startups and indie projects. Its built with Next.js & TailwindCSS.
-              And its completely open-source.
+              同心華德福為一所致力於實踐華德福教育理念的實驗教育機構，期盼親師生共同成長，創造良善的教育社群。
             </div>
           </div>
 
