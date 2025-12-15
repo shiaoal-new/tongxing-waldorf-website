@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useEffect, useState, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 
 export default function Navbar() {
   const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
@@ -124,12 +125,27 @@ export default function Navbar() {
                         </Link>
 
                         <div className="w-full mt-4 border-t border-gray-200 dark:border-gray-700 pt-4">
-                          <button
-                            onClick={() => setShowAboutModal(true)}
-                            className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
-                          >
-                            Debug: About this site
-                          </button>
+                          <Disclosure>
+                            {({ open }) => (
+                              <>
+                                <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                  <span>Debug</span>
+                                  <ChevronDownIcon
+                                    className={`${open ? "transform rotate-180" : ""
+                                      } w-5 h-5`}
+                                  />
+                                </Disclosure.Button>
+                                <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-gray-500">
+                                  <button
+                                    onClick={() => setShowAboutModal(true)}
+                                    className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+                                  >
+                                    About this site
+                                  </button>
+                                </Disclosure.Panel>
+                              </>
+                            )}
+                          </Disclosure>
                         </div>
                       </>
                     </Disclosure.Panel>
@@ -176,36 +192,45 @@ export default function Navbar() {
 function DebugMenu({ onOpenModal }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <Menu.Button className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none">
-          Debug
-        </Menu.Button>
-      </div>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:divide-gray-700">
-          <div className="px-1 py-1 ">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? 'bg-indigo-500 text-white' : 'text-gray-900 dark:text-gray-200'
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  onClick={onOpenModal}
-                >
-                  About this site
-                </button>
-              )}
-            </Menu.Item>
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button className="inline-flex items-center px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none">
+              <span>Debug</span>
+              <ChevronDownIcon
+                className={`${open ? "transform rotate-180" : ""
+                  } w-5 h-5 ml-1 transition-transform duration-200`}
+                aria-hidden="true"
+              />
+            </Menu.Button>
           </div>
-        </Menu.Items>
-      </Transition>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:divide-gray-700">
+              <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${active ? "bg-indigo-500 text-white" : "text-gray-900 dark:text-gray-200"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      onClick={onOpenModal}
+                    >
+                      About this site
+                    </button>
+                  )}
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
     </Menu>
   );
 }
