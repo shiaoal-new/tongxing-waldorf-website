@@ -3,6 +3,7 @@ import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure } from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
@@ -33,13 +34,20 @@ export default function Navbar() {
         <Disclosure>
           {({ open }) => (
             <>
-              {open && (
-                <Disclosure.Button
-                  as="div"
-                  className="fixed inset-0 z-0 bg-black/80 w-full h-full touch-none cursor-default"
-                  aria-hidden="true"
-                />
-              )}
+              <AnimatePresence>
+                {open && (
+                  <Disclosure.Button
+                    as={motion.div}
+                    static
+                    initial={{ x: "100%", opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: "100%", opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="fixed inset-0 z-0 bg-black/80 w-full h-full touch-none cursor-default"
+                    aria-hidden="true"
+                  />
+                )}
+              </AnimatePresence>
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
@@ -79,23 +87,44 @@ export default function Navbar() {
                   </svg>
                 </Disclosure.Button>
 
-                <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20">
-                  <>
-                    {navigation.map((item, index) => (
-                      <Link
-                        key={index}
-                        href="/"
-                        className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
-                        {item}
-                      </Link>
-                    ))}
-                    <Link
-                      href="/"
-                      className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">
-                      預約參觀
-                    </Link>
-                  </>
-                </Disclosure.Panel>
+                <AnimatePresence>
+                  {open && (
+                    <Disclosure.Panel
+                      static
+                      as={motion.div}
+                      initial={{ x: "100%", opacity: 0 }}
+                      animate={{
+                        x: 0,
+                        opacity: 1,
+                        transition: { delay: 0.5, duration: 0.5, ease: "easeInOut" },
+                      }}
+                      exit={{
+                        x: "100%",
+                        opacity: 0,
+                        transition: { duration: 0.5, ease: "easeInOut" },
+                      }}
+                      className="flex flex-wrap w-full my-5 lg:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20"
+                    >
+                      <>
+                        {navigation.map((item, index) => (
+                          <Link
+                            key={index}
+                            href="/"
+                            className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+                          >
+                            {item}
+                          </Link>
+                        ))}
+                        <Link
+                          href="/"
+                          className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5"
+                        >
+                          預約參觀
+                        </Link>
+                      </>
+                    </Disclosure.Panel>
+                  )}
+                </AnimatePresence>
               </div>
             </>
           )}
