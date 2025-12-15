@@ -1,13 +1,14 @@
 import Link from "next/link";
 import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
-import { Disclosure } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { useEffect, useState, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
   const [scroll, setScroll] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,6 +122,15 @@ export default function Navbar() {
                         >
                           預約參觀
                         </Link>
+
+                        <div className="w-full mt-4 border-t border-gray-200 dark:border-gray-700 pt-4">
+                          <button
+                            onClick={() => setShowAboutModal(true)}
+                            className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+                          >
+                            Debug: About this site
+                          </button>
+                        </div>
                       </>
                     </Disclosure.Panel>
                   )}
@@ -142,6 +152,9 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+            <li className="mr-3 nav__item">
+              <DebugMenu onOpenModal={() => setShowAboutModal(true)} />
+            </li>
           </ul>
         </div>
 
@@ -155,6 +168,88 @@ export default function Navbar() {
           <ThemeChanger />
         </div>
       </nav>
+      <AboutModal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} />
     </div>
+  );
+}
+
+function DebugMenu({ onOpenModal }) {
+  return (
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <Menu.Button className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none">
+          Debug
+        </Menu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:divide-gray-700">
+          <div className="px-1 py-1 ">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? 'bg-indigo-500 text-white' : 'text-gray-900 dark:text-gray-200'
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={onOpenModal}
+                >
+                  About this site
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+}
+
+function AboutModal({ isOpen, onClose }) {
+  const branch = process.env.NEXT_PUBLIC_GIT_BRANCH || "Unknown";
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+            onClick={onClose}
+          />
+          <div className="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm mx-4 pointer-events-auto"
+            >
+              <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-2">About this site</h3>
+              <div className="mt-2 space-y-2">
+                <p className="text-sm text-gray-500 dark:text-gray-300">
+                  Git Branch: <span className="font-mono font-bold">{branch}</span>
+                </p>
+              </div>
+              <div className="mt-6 flex justify-end">
+                <button
+                  type="button"
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-indigo-900 bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                  onClick={onClose}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
