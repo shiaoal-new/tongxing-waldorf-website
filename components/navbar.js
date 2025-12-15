@@ -33,7 +33,14 @@ export default function Navbar() {
         <Disclosure>
           {({ open }) => (
             <>
-              <div className="flex flex-wrap items-center justify-between w-full lg:w-auto">
+              {open && (
+                <Disclosure.Button
+                  as="div"
+                  className="fixed inset-0 z-0 bg-black/80 w-full h-full touch-none cursor-default"
+                  aria-hidden="true"
+                />
+              )}
+              <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
                   className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
@@ -72,7 +79,7 @@ export default function Navbar() {
                   </svg>
                 </Disclosure.Button>
 
-                <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
+                <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20">
                   <>
                     {navigation.map((item, index) => (
                       <Link
