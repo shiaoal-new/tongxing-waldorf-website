@@ -2,11 +2,13 @@ import Link from "next/link";
 import React from "react";
 import Container from "./container";
 
-export default function Footer() {
+// Helper component for footer content to avoid duplication in code
+function FooterContent() {
   const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
   const legal = ["隱私權政策", "使用條款"];
+
   return (
-    <div className="relative">
+    <>
       <Container>
         <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-gray-100 dark:border-trueGray-700 lg:grid-cols-5">
           <div className="lg:col-span-2">
@@ -102,6 +104,39 @@ export default function Footer() {
       </Container>
       {/* Do not remove this */}
       <Backlink />
+    </>
+  );
+}
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+export default function Footer() {
+  const spacerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: spacerRef,
+    offset: ["start end", "end end"]
+  });
+
+  // Parallax effect: Footer starts 50% down (visually lower) and moves up to 0% (normal position)
+  // as the user scrolls through the footer height.
+  // This creates a "slower move up" effect compared to the main content.
+  const y = useTransform(scrollYProgress, [0, 1], ["50%", "0%"]);
+
+  return (
+    <div className="relative">
+      {/* Invisible spacer footer that takes up space in the document flow */}
+      <div ref={spacerRef} className="invisible relative z-[-1]" aria-hidden="true">
+        <FooterContent />
+      </div>
+
+      {/* Visible fixed footer that sits behind the content and animates */}
+      <motion.div
+        className="fixed bottom-0 w-full z-0 block bg-white dark:bg-trueGray-900 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
+        style={{ y }}
+      >
+        <FooterContent />
+      </motion.div>
     </div>
   );
 }
