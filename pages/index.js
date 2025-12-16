@@ -40,7 +40,7 @@ export default function Home({ facultyList, faqList }) {
       </Head>
 
       <Navbar />
-      <div className="relative z-10 bg-white dark:bg-trueGray-900">
+      <div className="bg-white dark:bg-trueGray-900">
         <Hero />
         <SectionTitle
           direction="left"

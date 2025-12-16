@@ -40,7 +40,7 @@ export default function Navbar() {
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
+                  className="flex items-center space-x-2 text-2xl font-medium text-primary-500 dark:text-gray-100">
                   <span>
                     <img
                       src="./img/logo.svg"
@@ -55,7 +55,7 @@ export default function Navbar() {
 
                 <Disclosure.Button
                   aria-label="Toggle Menu"
-                  className="px-2 py-1 ml-auto text-gray-500 rounded-md lg:hidden hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:text-gray-300 dark:focus:bg-trueGray-700">
+                  className="px-2 py-1 ml-auto text-gray-500 rounded-md lg:hidden hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:text-gray-300 dark:focus:bg-trueGray-700">
                   <svg
                     className="w-6 h-6 fill-current"
                     xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +99,14 @@ export default function Navbar() {
                           <Link
                             key={index}
                             href="/"
-                            className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+                            className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
                           >
                             {item}
                           </Link>
                         ))}
                         <Link
                           href="/"
-                          className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5"
+                          className="w-full px-6 py-2 mt-3 text-center text-white bg-primary-600 rounded-md lg:ml-5"
                         >
                           預約參觀
                         </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
                           <Disclosure>
                             {({ open }) => (
                               <>
-                                <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                                   <span>Debug</span>
                                   <ChevronDownIcon
                                     className={`${open ? "transform rotate-180" : ""
@@ -125,7 +125,7 @@ export default function Navbar() {
                                 <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-gray-500">
                                   <button
                                     onClick={() => setShowAboutModal(true)}
-                                    className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+                                    className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
                                   >
                                     About this site
                                   </button>
@@ -147,7 +147,7 @@ export default function Navbar() {
                     <li className="mr-3 nav__item" key={index}>
                       <Link
                         href="/"
-                        className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none">
+                        className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none">
                         {menu}
                       </Link>
                     </li>
@@ -161,7 +161,7 @@ export default function Navbar() {
               <div className="hidden mr-3 space-x-3 lg:flex nav__item">
                 <Link
                   href="/"
-                  className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
+                  className="px-6 py-2 text-white bg-primary-600 rounded-md md:ml-5">
                   預約參觀
                 </Link>
 
@@ -214,7 +214,7 @@ function DebugMenu({ onOpenModal }) {
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="inline-flex items-center px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none">
+            <Menu.Button className="inline-flex items-center px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none">
               <span>Debug</span>
               <ChevronDownIcon
                 className={`${open ? "transform rotate-180" : ""
@@ -237,7 +237,7 @@ function DebugMenu({ onOpenModal }) {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      className={`${active ? "bg-indigo-500 text-white" : "text-gray-900 dark:text-gray-200"
+                      className={`${active ? "bg-primary-500 text-white" : "text-gray-900 dark:text-gray-200"
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                       onClick={onOpenModal}
                     >
@@ -284,7 +284,7 @@ function AboutModal({ isOpen, onClose }) {
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
-                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-indigo-900 bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-primary-900 bg-primary-100 border border-transparent rounded-md hover:bg-primary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
                   onClick={onClose}
                 >
                   Close

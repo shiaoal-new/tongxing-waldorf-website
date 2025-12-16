@@ -21,7 +21,7 @@ export default function Visit() {
 
             <Navbar />
 
-            <div className="pt-20"> {/* Add padding top to account for fixed navbar */}
+            <div className="pt-20 bg-white dark:bg-trueGray-900"> {/* Add padding top to account for fixed navbar */}
                 <VisitHero />
 
                 <SectionTitle

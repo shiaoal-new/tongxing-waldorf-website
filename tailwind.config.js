@@ -9,7 +9,13 @@ module.exports = {
     extend: {
       colors: {
         trueGray: colors.stone,
-        indigo: colors.amber,
+        neutral: colors.stone,
+        primary: colors.amber,
+        secondary: colors.indigo,
+        success: colors.emerald,
+        info: colors.blue,
+        warning: colors.yellow,
+        error: colors.red,
       },
       keyframes: {
         slideInLeft: {

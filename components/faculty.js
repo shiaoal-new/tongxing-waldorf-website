@@ -25,7 +25,7 @@ function FacultyCard({ faculty }) {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
             {/* 头像区域 */}
-            <div className="relative h-64 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900 dark:to-purple-900">
+            <div className="relative h-64 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900">
                 {photo ? (
                     <Image
                         src={photo}
@@ -36,7 +36,7 @@ function FacultyCard({ faculty }) {
                     />
                 ) : (
                     <div className="flex items-center justify-center h-full">
-                        <UserIcon className="w-32 h-32 text-indigo-300 dark:text-indigo-600" />
+                        <UserIcon className="w-32 h-32 text-primary-300 dark:text-primary-600" />
                     </div>
                 )}
             </div>
@@ -48,7 +48,7 @@ function FacultyCard({ faculty }) {
                     <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                         {name}
                     </h3>
-                    <p className="text-lg text-indigo-600 dark:text-indigo-400 font-medium">
+                    <p className="text-lg text-primary-600 dark:text-primary-400 font-medium">
                         {title}
                     </p>
                 </div>
@@ -58,10 +58,10 @@ function FacultyCard({ faculty }) {
                     <div className="mb-4 space-y-2">
                         {email && (
                             <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <MailIcon className="w-5 h-5 mr-2 text-indigo-500" />
+                                <MailIcon className="w-5 h-5 mr-2 text-primary-500" />
                                 <a
                                     href={`mailto:${email}`}
-                                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                                    className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                 >
                                     {email}
                                 </a>
@@ -69,7 +69,7 @@ function FacultyCard({ faculty }) {
                         )}
                         {extension && (
                             <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <PhoneIcon className="w-5 h-5 mr-2 text-indigo-500" />
+                                <PhoneIcon className="w-5 h-5 mr-2 text-primary-500" />
                                 <span>分機: {extension}</span>
                             </div>
                         )}
@@ -86,7 +86,7 @@ function FacultyCard({ faculty }) {
                             {expertise.map((item, index) => (
                                 <span
                                     key={index}
-                                    className="px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-full"
+                                    className="px-3 py-1 text-sm bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full"
                                 >
                                     {item.area}
                                 </span>

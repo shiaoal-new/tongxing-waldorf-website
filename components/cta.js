@@ -5,7 +5,7 @@ import Button, { BookVisitButton } from "./button";
 export default function Cta() {
   return (
     <Container>
-      <div className="flex flex-wrap items-center justify-between w-full max-w-4xl gap-5 mx-auto text-white bg-indigo-600 px-7 py-7 lg:px-12 lg:py-12 lg:flex-nowrap rounded-xl">
+      <div className="flex flex-wrap items-center justify-between w-full max-w-4xl gap-5 mx-auto text-white bg-primary-600 px-7 py-7 lg:px-12 lg:py-12 lg:flex-nowrap rounded-xl">
         <div className="flex-grow text-center lg:text-left">
           <h2 className="text-2xl font-medium lg:text-3xl">
             誠摯邀請您
@@ -15,7 +15,7 @@ export default function Cta() {
           </p>
         </div>
         <div className="flex-shrink-0 w-full text-center lg:w-auto">
-          <BookVisitButton className="mx-auto text-indigo-600 bg-white hover:bg-indigo-50" />
+          <BookVisitButton className="mx-auto text-primary-600 bg-white hover:bg-primary-50" />
         </div>
       </div>
     </Container>

@@ -33,7 +33,7 @@ export default function SectionTitle(props) {
         className="w-full flex flex-col items-center"
       >
         {props.pretitle && (
-          <div className={`text-sm font-bold tracking-wider text-indigo-600 uppercase ${props.align === "left" ? "self-start" : ""}`}>
+          <div className={`text-sm font-bold tracking-wider text-primary-600 uppercase ${props.align === "left" ? "self-start" : ""}`}>
             {props.pretitle}
           </div>
         )}

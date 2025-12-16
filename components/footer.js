@@ -16,7 +16,7 @@ function FooterContent() {
               {" "}
               <Link
                 href="/"
-                className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
+                className="flex items-center space-x-2 text-2xl font-medium text-primary-500 dark:text-gray-100">
                 <span>
                   <img
                     src="./img/logo.svg"
@@ -41,7 +41,7 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                   {item}
                 </Link>
               ))}
@@ -53,7 +53,7 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                   {item}
                 </Link>
               ))}
@@ -132,7 +132,7 @@ export default function Footer() {
 
       {/* Visible fixed footer that sits behind the content and animates */}
       <motion.div
-        className="fixed bottom-0 w-full z-0 block bg-white dark:bg-trueGray-900 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
+        className="fixed bottom-0 w-full z-[-1] block bg-secondary-100 dark:bg-neutral-800 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
         style={{ y }}
       >
         <FooterContent />

@@ -35,7 +35,7 @@ export default function VisitProcess() {
             <div className="grid gap-10 lg:grid-cols-2 xl:grid-cols-4">
                 {steps.map((item, index) => (
                     <div key={index} className="flex flex-col items-center justify-top text-center bg-gray-50 dark:bg-trueGray-800 p-8 rounded-xl">
-                        <div className="flex items-center justify-center w-16 h-16 p-4 mb-6 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-200">
+                        <div className="flex items-center justify-center w-16 h-16 p-4 mb-6 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-200">
                             {item.icon}
                         </div>
                         <h3 className="text-xl font-bold text-gray-800 dark:text-white">{item.title}</h3>
