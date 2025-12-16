@@ -13,19 +13,9 @@ module.exports = {
   env: {
     NEXT_PUBLIC_GIT_BRANCH: gitBranch,
   },
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
+
   output: process.env.NEXT_OUTPUT === 'export' ? 'export' : undefined,
-  basePath: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}` : '',
-  // target: "serverless",
-  // webpack: (config, { isServer }) => {
-  //   if (!isServer) {
-  //     config.resolve.fallback.fs = false;
-  //   }
-  //   return config;
-  // },
+  // basePath: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}` : '',
   images: {
     unoptimized: true,
   },

@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "tongxing-waldorf-website"
+  },
+  "targets": {
+    "tongxing-waldorf-website": {
+      "hosting": {
+        "prod": [
+          "tongxing-waldorf-website"
+        ],
+        "dev": [
+          "tongxing-waldorf-website-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

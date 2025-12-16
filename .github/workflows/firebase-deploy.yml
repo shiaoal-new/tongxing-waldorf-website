@@ -1,0 +1,43 @@
+name: Firebase Hosting Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 取得程式碼
+      - uses: actions/checkout@v3
+
+      # 2. 安裝 Node.js
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. 安裝依賴
+      - run: npm ci
+
+      # 4. 依 branch 做 build/export
+      - name: Build & Export
+        run: |
+          npm run build
+          npm run export
+
+      # 5. 安裝 Firebase CLI
+      - run: npm install -g firebase-tools
+
+      # 6. 部署到對應 site
+      - name: Firebase Deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          if [ "${GITHUB_REF##*/}" == "main" ]; then
+            firebase deploy --only hosting:prod
+          elif [ "${GITHUB_REF##*/}" == "dev" ]; then
+            firebase deploy --only hosting:dev
+          fi
