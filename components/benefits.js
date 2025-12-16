@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
+import { DotLottiePlayer } from "@dotlottie/react-player";
 
 export default function Benefits(props) {
   const { data } = props;
@@ -16,15 +17,24 @@ export default function Benefits(props) {
           viewport={{ once: true }}
           className={`flex items-center justify-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:order-1" : ""
             }`}>
-          <div>
-            <Image
-              src={data.image}
-              width="521"
-              height="482"
-              alt="Benefits"
-              layout="intrinsic"
-              placeholder="blur"
-            />
+          <div className="w-full">
+            {data.lottie ? (
+              <DotLottiePlayer
+                src={data.lottie}
+                autoplay
+                loop
+                style={{ width: '100%', height: '100%' }}
+              />
+            ) : (
+              <Image
+                src={data.image}
+                width="521"
+                height="482"
+                alt="Benefits"
+                layout="intrinsic"
+                placeholder="blur"
+              />
+            )}
           </div>
         </motion.div>
 

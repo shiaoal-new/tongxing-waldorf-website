@@ -37,7 +37,7 @@ const benefitOne = {
 const benefitTwo = {
   title: "健康與自然的物質環境滋養",
   desc: "華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力",
-  image: benefitTwoImg,
+  lottie: "https://lottie.host/6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy.lottie",
   bullets: [
     {
       title: "食材選擇",
