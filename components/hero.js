@@ -10,7 +10,7 @@ export default function Hero() {
         loop
         muted
         playsInline
-        poster="./img/video-poster.jpg"
+        poster="./img/video-poster.webp"
         className="absolute top-0 left-0 w-full h-full object-cover z-0 "
       >
         <source
