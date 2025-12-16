@@ -56,7 +56,8 @@ const benefitTwo = {
 const benefitThree = {
   title: "強大且互助的「村莊」社群",
   desc: "在現代小家庭孤立的社會結構下，同心華德福提供了「一個村子來共同養育一個孩子」的強大社群支持",
-  image: benefitThreeImg,
+  // image: benefitThreeImg,
+  lottie: "https://lottie.host/2af4b53e-d889-415f-a8be-053ffa90f166/D4jSQcnUjK.lottie",
   bullets: [
     {
       title: "親師生三元合作",
