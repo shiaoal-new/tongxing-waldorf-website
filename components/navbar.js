@@ -31,8 +31,9 @@ export default function Navbar() {
     <Disclosure>
       {({ open }) => (
         <>
+          <ScrollLock isOpen={open} />
           <div
-            className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${scroll ? "bg-white/60 dark:bg-gray-900 shadow-lg backdrop-blur-md" : "bg-transparent"
+            className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-white/60 dark:bg-gray-900 shadow-lg backdrop-blur-md" : "bg-transparent"
               }`}>
             <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
               {/* Logo  */}
@@ -91,7 +92,7 @@ export default function Navbar() {
                         opacity: 0,
                         transition: { duration: 0.5, ease: "easeInOut" },
                       }}
-                      className="flex flex-wrap w-full my-5 lg:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20"
+                      className="absolute top-full left-0 w-full z-[100] overscroll-contain flex flex-wrap my-5 lg:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20"
                     >
                       <>
                         {navigation.map((item, index) => (
@@ -188,6 +189,24 @@ export default function Navbar() {
     </Disclosure>
   );
 }
+
+function ScrollLock({ isOpen }) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isOpen]);
+  return null;
+}
+
 
 function DebugMenu({ onOpenModal }) {
   return (
