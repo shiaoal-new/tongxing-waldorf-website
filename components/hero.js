@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Typed from "typed.js";
 import Container from "./container";
 import { BookVisitButton } from "./button";
@@ -6,6 +7,8 @@ import Link from "next/link";
 
 export default function Hero() {
   const el = useRef(null);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 400]);
 
   useEffect(() => {
     const typed = new Typed(el.current, {
@@ -27,7 +30,8 @@ export default function Hero() {
 
   return (
     <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-end">
-      <video
+      <motion.video
+        style={{ y }}
         autoPlay
         loop
         muted
@@ -40,7 +44,7 @@ export default function Hero() {
           src="./img/Leigham%20Primary%20Web%20Banner.mp4"
           type="video/mp4"
         />
-      </video>
+      </motion.video>
       <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
           <div className="flex flex-col items-start w-full lg:w-2/5">
