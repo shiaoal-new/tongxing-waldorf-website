@@ -1,8 +1,30 @@
+import { useEffect, useRef } from "react";
+import Typed from "typed.js";
 import Container from "./container";
 import { BookVisitButton } from "./button";
 import Link from "next/link";
 
 export default function Hero() {
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [
+        "手、心、腦的平衡發展",
+        "自由的探索與學習",
+        "真實的生命體驗",
+        "愛與溫暖的教學環境",
+      ],
+      typeSpeed: 100,
+      backSpeed: 50,
+      loop: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
+
   return (
     <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-end">
       <video
@@ -21,13 +43,13 @@ export default function Hero() {
       </video>
       <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
-          <div className="flex flex-col items-left lg:w-2/5">
-            <div className="max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 animate-slideInLeft">
+          <div className="flex flex-col items-start w-full lg:w-2/5">
+            <div className="w-full max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 animate-slideInLeft">
               {/* <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
                 同心華德福
               </h1> */}
               <p className="py-5 text-xl leading-normal lg:text-xl xl:text-2xl text-white">
-                依循身心靈發展，以藝術體驗滋養情感意志，鍛鍊獨立與自我認知
+                我們重視<br /><span ref={el} />
               </p>
 
               <div className="flex flex-col items-center justify-center space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
