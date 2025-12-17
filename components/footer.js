@@ -91,16 +91,6 @@ function FooterContent() {
           </div>
         </div>
 
-        <div className="my-10 text-sm text-center text-gray-600 dark:text-gray-400">
-          Copyright © {new Date().getFullYear()}. Made with ♥ by{" "}
-          <a href="https://web3templates.com/" target="_blank" rel="noopener">
-            Web3Templates.
-          </a>{" "}
-          Illustrations from{" "}
-          <a href="https://www.glazestock.com/" target="_blank" rel="noopener ">
-            Glazestock
-          </a>
-        </div>
       </Container>
       {/* Do not remove this */}
       <Backlink />
@@ -132,7 +122,7 @@ export default function Footer() {
 
       {/* Visible fixed footer that sits behind the content and animates */}
       <motion.div
-        className="fixed bottom-0 w-full z-[-1] block bg-secondary-100 dark:bg-neutral-800 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
+        className="fixed bottom-0 w-full z-0 block bg-secondary-100 dark:bg-neutral-800 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
         style={{ y }}
       >
         <FooterContent />
