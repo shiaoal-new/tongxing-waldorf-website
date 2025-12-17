@@ -24,6 +24,7 @@ jobs:
       # 4. 依 branch 做 build/export
       - name: Build & Export
         run: |
+          export NEXT_PUBLIC_ACTION_RUN_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           npm run build
 
       # 5. 安裝 Firebase CLI

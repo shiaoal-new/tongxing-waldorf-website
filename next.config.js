@@ -16,8 +16,9 @@ try {
 module.exports = {
   env: {
     NEXT_PUBLIC_GIT_BRANCH: gitBranch,
-    NEXT_PUBLIC_GIT_COMMIT_MSG: gitCommitMsg,
     NEXT_PUBLIC_GIT_COMMIT_TIME: gitCommitTime,
+    NEXT_PUBLIC_BUILD_TIME: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+    NEXT_PUBLIC_ACTION_RUN_TIME: process.env.NEXT_PUBLIC_ACTION_RUN_TIME || null,
   },
 
   output: process.env.NEXT_OUTPUT === 'export' ? 'export' : undefined,

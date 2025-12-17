@@ -35,6 +35,16 @@ export default function AboutContent({ isOpen, onClose }) {
                                 <p className="text-sm text-gray-500 dark:text-gray-300">
                                     Time: <span className="font-mono font-bold">{commitTime}</span>
                                 </p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                    Build Time: <span className="font-mono font-bold">
+                                        {process.env.NEXT_PUBLIC_BUILD_TIME || "Not Set (Restart Server to update)"}
+                                    </span>
+                                </p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                    Action Time: <span className="font-mono font-bold">
+                                        {process.env.NEXT_PUBLIC_ACTION_RUN_TIME || "Local Dev (Not in GitHub Actions)"}
+                                    </span>
+                                </p>
                             </div>
                             <div className="mt-6 flex justify-end">
                                 <button
