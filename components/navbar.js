@@ -256,6 +256,8 @@ function DebugMenu({ onOpenModal }) {
 
 function AboutModal({ isOpen, onClose }) {
   const branch = process.env.NEXT_PUBLIC_GIT_BRANCH || "Unknown";
+  const commitMsg = process.env.NEXT_PUBLIC_GIT_COMMIT_MSG || "Unknown";
+  const commitTime = process.env.NEXT_PUBLIC_GIT_COMMIT_TIME || "Unknown";
 
   return (
     <AnimatePresence>
@@ -279,6 +281,12 @@ function AboutModal({ isOpen, onClose }) {
               <div className="mt-2 space-y-2">
                 <p className="text-sm text-gray-500 dark:text-gray-300">
                   Git Branch: <span className="font-mono font-bold">{branch}</span>
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-300">
+                  Last Commit: <span className="font-mono font-bold">{commitMsg}</span>
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-300">
+                  Time: <span className="font-mono font-bold">{commitTime}</span>
                 </p>
               </div>
               <div className="mt-6 flex justify-end">
