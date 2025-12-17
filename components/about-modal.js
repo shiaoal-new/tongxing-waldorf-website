@@ -1,6 +1,26 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 
+const formatTime = (timeStr) => {
+    if (!timeStr || timeStr === 'Unknown') return null;
+    try {
+        const date = new Date(timeStr);
+        // Check if date is valid
+        if (isNaN(date.getTime())) return timeStr;
+        return date.toLocaleString('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    } catch (e) {
+        return timeStr;
+    }
+};
+
 export default function AboutContent({ isOpen, onClose }) {
     const branch = process.env.NEXT_PUBLIC_GIT_BRANCH || "Unknown";
     const commitMsg = process.env.NEXT_PUBLIC_GIT_COMMIT_MSG || "Unknown";
@@ -33,16 +53,16 @@ export default function AboutContent({ isOpen, onClose }) {
                                     Last Commit: <span className="font-mono font-bold">{commitMsg}</span>
                                 </p>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">
-                                    Time: <span className="font-mono font-bold">{commitTime}</span>
+                                    Time: <span className="font-mono font-bold">{formatTime(commitTime)}</span>
                                 </p>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">
                                     Build Time: <span className="font-mono font-bold">
-                                        {process.env.NEXT_PUBLIC_BUILD_TIME || "Not Set (Restart Server to update)"}
+                                        {formatTime(process.env.NEXT_PUBLIC_BUILD_TIME)}
                                     </span>
                                 </p>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">
                                     Action Time: <span className="font-mono font-bold">
-                                        {process.env.NEXT_PUBLIC_ACTION_RUN_TIME || "Local Dev (Not in GitHub Actions)"}
+                                        {formatTime(process.env.NEXT_PUBLIC_ACTION_RUN_TIME) || "Local Dev"}
                                     </span>
                                 </p>
                             </div>
