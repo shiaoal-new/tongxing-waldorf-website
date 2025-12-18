@@ -3,25 +3,7 @@ import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
 import { DotLottiePlayer } from "@dotlottie/react-player";
-import {
-  HeartIcon,
-  HandIcon,
-  AcademicCapIcon,
-  SparklesIcon,
-  SunIcon,
-  UserGroupIcon,
-  ChatAlt2Icon,
-} from "@heroicons/react/outline";
-
-const iconMap = {
-  Heart: <HeartIcon />,
-  Hand: <HandIcon />,
-  AcademicCap: <AcademicCapIcon />,
-  Sparkles: <SparklesIcon />,
-  Sun: <SunIcon />,
-  UserGroup: <UserGroupIcon />,
-  ChatAlt2: <ChatAlt2Icon />,
-};
+import { Icon } from "@iconify/react";
 
 export default function Benefits(props) {
   const { data } = props;
@@ -77,7 +59,7 @@ export default function Benefits(props) {
 
             <div className="w-full mt-5">
               {data.bullets.map((item, index) => (
-                <Benefit key={index} title={item.title} iconName={item.icon}>
+                <Benefit key={index} title={item.title} icon={item.icon}>
                   {item.desc}
                 </Benefit>
               ))}
@@ -90,14 +72,11 @@ export default function Benefits(props) {
 }
 
 function Benefit(props) {
-  const icon = iconMap[props.iconName] || <HeartIcon />;
   return (
     <>
       <div className="flex items-start mt-8 space-x-3">
         <div className="flex items-center justify-center flex-shrink-0 mt-1 bg-primary-500 rounded-md w-11 h-11 ">
-          {React.cloneElement(icon, {
-            className: "w-7 h-7 text-primary-50",
-          })}
+          <Icon icon={props.icon} className="w-7 h-7 text-primary-50" />
         </div>
         <div>
           <h4 className="text-xl font-medium text-gray-800 dark:text-gray-200">
@@ -111,4 +90,5 @@ function Benefit(props) {
     </>
   );
 }
+
 
