@@ -7,8 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
 
-export default function Navbar() {
-  const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
+export default function Navbar({ pages = [] }) {
+  const navigation = [
+    { name: "首頁", href: "/" },
+    ...pages.map(page => ({
+      name: page.title,
+      href: `/p/${page.slug}`
+    }))
+  ];
   const [scroll, setScroll] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
 
@@ -44,7 +50,7 @@ export default function Navbar() {
                   className="flex items-center space-x-2 text-2xl font-medium text-primary-500 dark:text-gray-100">
                   <span>
                     <img
-                      src="./img/logo.svg"
+                      src="/img/logo.svg"
                       alt="N"
                       width="32"
                       height="32"
@@ -99,14 +105,14 @@ export default function Navbar() {
                         {navigation.map((item, index) => (
                           <Link
                             key={index}
-                            href="/"
+                            href={item.href || "/"}
                             className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
                           >
-                            {item}
+                            {item.name || item}
                           </Link>
                         ))}
                         <Link
-                          href="/"
+                          href="/visit"
                           className="w-full px-6 py-2 mt-3 text-center text-white bg-primary-600 rounded-md lg:ml-5"
                         >
                           預約參觀
@@ -147,9 +153,9 @@ export default function Navbar() {
                   {navigation.map((menu, index) => (
                     <li className="mr-3 nav__item" key={index}>
                       <Link
-                        href="/"
+                        href={menu.href || "/"}
                         className="inline-block px-4 py-2 text-lg font-normal text-gray-800 no-underline rounded-md dark:text-gray-200 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none">
-                        {menu}
+                        {menu.name || menu}
                       </Link>
                     </li>
                   ))}
@@ -161,7 +167,7 @@ export default function Navbar() {
 
               <div className="hidden mr-3 space-x-3 lg:flex nav__item">
                 <Link
-                  href="/"
+                  href="/visit"
                   className="px-6 py-2 text-white bg-primary-600 rounded-md md:ml-5">
                   預約參觀
                 </Link>

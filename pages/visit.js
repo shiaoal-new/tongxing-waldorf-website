@@ -4,13 +4,15 @@ import VisitProcess from "../components/visitProcess";
 import VisitSchedule from "../components/visitSchedule";
 import SectionTitle from "../components/sectionTitle";
 import Layout from "../components/layout";
+import { getAllPages } from "../lib/pages";
 
-export default function Visit() {
+export default function Visit({ pages }) {
     return (
         <Layout
             title="預約參觀 - 台北市同心華德福實驗教育機構"
             description="預約參觀台北市同心華德福實驗教育機構，親自體驗我們的教育環境與理念。"
             navbarPadding={true}
+            pages={pages}
         >
             <VisitHero />
 
@@ -29,4 +31,13 @@ export default function Visit() {
             <VisitSchedule />
         </Layout>
     );
+}
+
+export async function getStaticProps() {
+    const pages = getAllPages();
+    return {
+        props: {
+            pages,
+        },
+    };
 }

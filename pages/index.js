@@ -8,11 +8,12 @@ import Faq from "../components/faq";
 import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
 import { getAllBenefits } from "../lib/benefits";
+import { getAllPages } from "../lib/pages";
 import Layout from "../components/layout";
 
-export default function Home({ facultyList, faqList, benefitsList }) {
+export default function Home({ facultyList, faqList, benefitsList, pages }) {
   return (
-    <Layout>
+    <Layout pages={pages}>
       <Hero />
       <SectionTitle
         direction="left"
@@ -59,11 +60,13 @@ export async function getStaticProps() {
   const facultyList = getAllFaculty();
   const faqList = getAllFaq();
   const benefitsList = getAllBenefits();
+  const pages = getAllPages();
   return {
     props: {
       facultyList,
       faqList,
       benefitsList,
+      pages,
     },
   };
 }
