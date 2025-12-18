@@ -19,9 +19,7 @@ backend:
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
   # 啟用或禁用文件鎖定 (可選，用於多人編輯)
-  # enable_rollback: true 
-
-local_backend: true # 只有在本地執行 npx decap-server 時會生效
+  enable_rollback: true 
 
 # Enable PKCE fields (optional, recommended)
 auth:
