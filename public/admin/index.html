@@ -11,45 +11,42 @@
     <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 </head>
 
-<body>
-    <script src="https://unpkg.com/decap-cms@^3.0/dist/decap-cms.js"></script>
-    <script>
-        async function initCMS() {
-            try {
-                // 加載基礎配置
-                const configBaseResponse = await fetch('config.base.yml');
-                const configBaseText = await configBaseResponse.text();
-                const config = jsyaml.load(configBaseText);
+<script>
+    // 告知 CMS 我們要手動初始化，避免它自動抓取 default config.yml
+    window.CMS_MANUAL_INIT = true;
+</script>
+<script src="https://unpkg.com/decap-cms@^3.0/dist/decap-cms.js"></script>
+<script>
+    async function initCMS() {
+        try {
+            // 加載配置
+            const [configBaseRes, collectionsRes] = await Promise.all([
+                fetch('config.base.yml'),
+                fetch('collections.yml')
+            ]);
 
-                // 加載 collections 配置
-                const collectionsResponse = await fetch('collections.yml');
-                const collectionsText = await collectionsResponse.text();
-                const collections = jsyaml.load(collectionsText);
+            const [configBaseText, collectionsText] = await Promise.all([
+                configBaseRes.text(),
+                collectionsRes.text()
+            ]);
 
-                // 合併配置
-                config.collections = collections;
+            const config = jsyaml.load(configBaseText);
+            const collections = jsyaml.load(collectionsText);
 
-                // 初始化 CMS
+            config.collections = collections;
+
+            // 確保 CMS 已經準備好 init 方法
+            if (window.CMS) {
                 window.CMS.init({ config });
-            } catch (error) {
-                console.error("CMS 初始化失敗:", error);
             }
+        } catch (error) {
+            console.error("CMS 初始化失敗:", error);
         }
+    }
 
-        // 等待 CMS 腳本加載完成後執行
-        if (window.CMS) {
-            initCMS();
-        } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                const checkCMS = setInterval(() => {
-                    if (window.CMS) {
-                        clearInterval(checkCMS);
-                        initCMS();
-                    }
-                }, 100);
-            });
-        }
-    </script>
+    // 執行初始化
+    initCMS();
+</script>
 </body>
 
 </html>
