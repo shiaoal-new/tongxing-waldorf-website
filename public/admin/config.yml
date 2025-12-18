@@ -21,7 +21,7 @@ backend:
   # 啟用或禁用文件鎖定 (可選，用於多人編輯)
   # enable_rollback: true 
 
-local_backend: true local_backend: true # 只有在本地執行 npx decap-server 時會生效
+local_backend: true # 只有在本地執行 npx decap-server 時會生效
 
 # Enable PKCE fields (optional, recommended)
 auth:
