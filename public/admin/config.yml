@@ -79,4 +79,32 @@ collections:
       - { label: "答案", name: "answer", widget: "markdown", required: true }
       - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
   
-  # ... 您之前設計的 events 和 faculty collections ...
+  - name: "benefits"
+    label: "教育特色 (Benefits)"
+    folder: "src/data/benefits"
+    create: true
+    delete: true
+    identifier_field: title
+    fields:
+      - { label: "標題", name: "title", widget: "string", required: true }
+      - { label: "描述", name: "desc", widget: "text", required: true }
+      - { label: "圖片", name: "image", widget: "image", required: false }
+      - { label: "Lottie 動畫連結", name: "lottie", widget: "string", required: false }
+      - label: "特點列表"
+        name: "bullets"
+        widget: "list"
+        fields:
+          - { label: "標題", name: "title", widget: "string", required: true }
+          - { label: "描述", name: "desc", widget: "text", required: true }
+          - label: "圖示 (Heroicon 名稱)"
+            name: "icon"
+            widget: "select"
+            options:
+              - { label: "愛心", value: "Heart" }
+              - { label: "手掌", value: "Hand" }
+              - { label: "教育帽", value: "AcademicCap" }
+              - { label: "閃爍", value: "Sparkles" }
+              - { label: "太陽", value: "Sun" }
+              - { label: "人群", value: "UserGroup" }
+              - { label: "對話", value: "ChatAlt2" }
+      - { label: "排序", name: "order", widget: "number", value_type: "int", default: 0 }

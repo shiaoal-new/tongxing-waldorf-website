@@ -3,6 +3,25 @@ import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
 import { DotLottiePlayer } from "@dotlottie/react-player";
+import {
+  HeartIcon,
+  HandIcon,
+  AcademicCapIcon,
+  SparklesIcon,
+  SunIcon,
+  UserGroupIcon,
+  ChatAlt2Icon,
+} from "@heroicons/react/outline";
+
+const iconMap = {
+  Heart: <HeartIcon />,
+  Hand: <HandIcon />,
+  AcademicCap: <AcademicCapIcon />,
+  Sparkles: <SparklesIcon />,
+  Sun: <SunIcon />,
+  UserGroup: <UserGroupIcon />,
+  ChatAlt2: <ChatAlt2Icon />,
+};
 
 export default function Benefits(props) {
   const { data } = props;
@@ -26,14 +45,14 @@ export default function Benefits(props) {
                 style={{ width: '100%', height: '100%' }}
               />
             ) : (
-              <Image
-                src={data.image}
-                width="521"
-                height="482"
-                alt="Benefits"
-                layout="intrinsic"
-                placeholder="blur"
-              />
+              <div className="relative w-full h-[300px] lg:h-[482px]">
+                <Image
+                  src={data.image}
+                  alt="Benefits"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
             )}
           </div>
         </motion.div>
@@ -58,7 +77,7 @@ export default function Benefits(props) {
 
             <div className="w-full mt-5">
               {data.bullets.map((item, index) => (
-                <Benefit key={index} title={item.title} icon={item.icon}>
+                <Benefit key={index} title={item.title} iconName={item.icon}>
                   {item.desc}
                 </Benefit>
               ))}
@@ -71,11 +90,12 @@ export default function Benefits(props) {
 }
 
 function Benefit(props) {
+  const icon = iconMap[props.iconName] || <HeartIcon />;
   return (
     <>
       <div className="flex items-start mt-8 space-x-3">
         <div className="flex items-center justify-center flex-shrink-0 mt-1 bg-primary-500 rounded-md w-11 h-11 ">
-          {React.cloneElement(props.icon, {
+          {React.cloneElement(icon, {
             className: "w-7 h-7 text-primary-50",
           })}
         </div>
@@ -91,3 +111,4 @@ function Benefit(props) {
     </>
   );
 }
+

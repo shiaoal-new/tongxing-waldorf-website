@@ -1,15 +1,16 @@
 import Hero from "../components/hero";
 import SectionTitle from "../components/sectionTitle";
-import { benefitOne, benefitTwo, benefitThree } from "../components/data";
+import { videoData } from "../components/data";
 import Video from "../components/video";
 import Benefits from "../components/benefits";
 import Cta from "../components/cta";
 import Faq from "../components/faq";
 import { getAllFaculty } from "../lib/faculty";
-import { getAllFaq } from "../lib/faq"; // Keep this import as getStaticProps needs it
+import { getAllFaq } from "../lib/faq";
+import { getAllBenefits } from "../lib/benefits";
 import Layout from "../components/layout";
 
-export default function Home({ facultyList, faqList }) {
+export default function Home({ facultyList, faqList, benefitsList }) {
   return (
     <Layout>
       <Hero />
@@ -19,9 +20,13 @@ export default function Home({ facultyList, faqList }) {
         title="為什麼要選擇同心華德福">
         選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
       </SectionTitle>
-      <Benefits data={benefitOne} />
-      <Benefits imgPos="right" data={benefitTwo} />
-      <Benefits data={benefitThree} />
+      {benefitsList.map((benefit, index) => (
+        <Benefits
+          key={benefit.id}
+          imgPos={index % 2 === 1 ? "right" : "left"}
+          data={benefit}
+        />
+      ))}
       <SectionTitle
         direction="right"
         pretitle="深入了解華德福"
@@ -53,10 +58,12 @@ export default function Home({ facultyList, faqList }) {
 export async function getStaticProps() {
   const facultyList = getAllFaculty();
   const faqList = getAllFaq();
+  const benefitsList = getAllBenefits();
   return {
     props: {
       facultyList,
       faqList,
+      benefitsList,
     },
   };
 }
