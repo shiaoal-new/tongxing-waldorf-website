@@ -7,7 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
 
-export default function Navbar({ pages = [] }) {
+export default function Navbar({ pages = [], isHeroPage = true }) {
+  const [scroll, setScroll] = useState(!isHeroPage);
+  const [showAboutModal, setShowAboutModal] = useState(false);
+
   const navigation = [
     { name: "首頁", href: "/" },
     ...pages.map(page => ({
@@ -15,24 +18,31 @@ export default function Navbar({ pages = [] }) {
       href: `/p/${page.slug}`
     }))
   ];
-  const [scroll, setScroll] = useState(false);
-  const [showAboutModal, setShowAboutModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      // If not a hero page, always show background
+      if (!isHeroPage) {
+        setScroll(true);
+        return;
+      }
+
       // Check if scroll position is greater than viewport height
-      if (window.scrollY > window.innerHeight) {
+      if (window.scrollY > window.innerHeight - 100) {
         setScroll(true);
       } else {
         setScroll(false);
       }
     };
 
+    // Initialize state
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isHeroPage]);
 
   return (
     <Disclosure>

@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../../lib/pages";
 import { getAllFaculty } from "../../lib/faculty";
+import PageHero from "../../components/pageHero";
 
 export default function DynamicPage({ page, pages, facultyList }) {
     const router = useRouter();
@@ -34,16 +35,28 @@ export default function DynamicPage({ page, pages, facultyList }) {
         };
     };
 
+    const heroData = page.hero;
+    const sections = page.sections || [];
+
+    // Fallback: if hero exists but has no title, use page title
+    const effectiveHeroData = heroData ? {
+        title: page.title,
+        ...heroData
+    } : null;
+
     return (
-        <Layout pages={pages} title={page.title} navbarPadding={true}>
+        <Layout pages={pages} title={page.title} navbarPadding={!effectiveHeroData}>
+            {effectiveHeroData && <PageHero data={effectiveHeroData} />}
             <Container>
                 <div className="max-w-4xl mx-auto py-10">
-                    <SectionTitle title={page.title} align="left">
-                        {page.description}
-                    </SectionTitle>
+                    {!effectiveHeroData && (
+                        <SectionTitle title={page.title} align="left">
+                            {page.description}
+                        </SectionTitle>
+                    )}
 
                     <div className="mt-10">
-                        {page.sections && page.sections.map((section, index) => {
+                        {sections.map((section, index) => {
                             if (section.type === "text_block") {
                                 return (
                                     <div key={index} className="mb-16">

@@ -15,7 +15,7 @@ export default function Layout({ children, title, description, navbarPadding = f
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Navbar pages={pages} />
+            <Navbar pages={pages} isHeroPage={!navbarPadding} />
 
             {/* 
          Main content wrapper with parallax settings:

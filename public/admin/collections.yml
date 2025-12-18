@@ -61,6 +61,16 @@
   fields:
     - { label: "頁面標題", name: "title", widget: "string" }
     - { label: "網址路徑 (Slug)", name: "slug", widget: "string", hint: "例如：parents-association" }
+    - label: "頁面 Hero 區塊"
+      name: "hero"
+      widget: "object"
+      required: false
+      fields:
+        - { label: "主標題", name: "title", widget: "string" }
+        - { label: "副標題", name: "sub_title", widget: "string" }
+        - { label: "描述文字", name: "description", widget: "text" }
+        - { label: "背景圖片", name: "bg_image", widget: "image", required: false }
+        - { label: "背景影片 (MP4)", name: "bg_video", widget: "string", required: false }
     - label: "頁面內容區塊"
       name: "sections"
       widget: "list" # 讓 Admin 可以一直新增 Section
