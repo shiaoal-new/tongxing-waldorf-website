@@ -2,7 +2,7 @@
 
 backend:
   name: git-gateway
-  branch: main # 您的 GitHub 主分支名稱
+  branch: dev # 修改為您目前使用的開發分支
   repo: shiaoal-new/tongxing-waldorf-website
   auth_type: pkce
   base_url: https://auth.decapbridge.com
