@@ -52,3 +52,37 @@
           hint: "請輸入 Iconify 圖標 ID，例如 'mdi:heart' 或 'lucide:sparkles'。可至 https://icon-sets.iconify.design/ 搜尋。"
           required: true
     - { label: "排序", name: "order", widget: "number", value_type: "int", default: 0 }
+
+- name: "pages"
+  label: "自定義頁面"
+  folder: "src/data/pages"
+  create: true # 關鍵：允許 Admin 點擊「新增」按鈕
+  identifier_field: title
+  fields:
+    - { label: "頁面標題", name: "title", widget: "string" }
+    - { label: "網址路徑 (Slug)", name: "slug", widget: "string", hint: "例如：parents-association" }
+    - label: "頁面內容區塊"
+      name: "sections"
+      widget: "list" # 讓 Admin 可以一直新增 Section
+      types:
+        - label: "文字介紹區塊"
+          name: "text_block"
+          widget: "object"
+          fields:
+            - { label: "標題", name: "header", widget: "string" }
+            - { label: "附標題", name: "sub_header", widget: "string" }
+            - { label: "內文", name: "content", widget: "markdown" }
+        - label: "成員清單區塊"
+          name: "member_block"
+          widget: "object"
+          fields:
+            - { label: "區塊標題", name: "header", widget: "string" }
+            - { label: "呈現樣式", name: "style", widget: "select", options: ["卡片", "列表"] }
+            - label: "選擇成員"
+              name: "members"
+              widget: "relation"
+              collection: "faculty" # 關聯到你現有的教職員/成員名單
+              multiple: true
+              value_field: "name"
+              display_fields: ["name"]
+              search_fields: ["name"]
