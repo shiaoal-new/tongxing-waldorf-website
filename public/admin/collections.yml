@@ -1,0 +1,54 @@
+- name: "faculty"
+  label: "教職員名單"
+  folder: "src/data/faculty"
+  delete: true
+  create: true
+  identifier_field: name
+  fields:
+    - { label: "姓名", name: "name", widget: "string", required: true }
+    - { label: "職稱", name: "title", widget: "string", required: true }
+    - { label: "頭像", name: "photo", widget: "image", required: false }
+    - { label: "電子郵件", name: "email", widget: "email", required: false }
+    - { label: "辦公室分機", name: "extension", widget: "string", required: false }
+    - { label: "簡介/專長", name: "bio", widget: "markdown", required: false }
+    - label: "專業領域"
+      name: "expertise"
+      widget: "list"
+      fields:
+        - { label: "領域名稱", name: "area", widget: "string" }
+    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0 }
+
+- name: "faq"
+  label: "常見問答"
+  folder: "src/data/faq"
+  delete: true
+  create: true
+  identifier_field: question
+  fields:
+    - { label: "問題", name: "question", widget: "string", required: true }
+    - { label: "答案", name: "answer", widget: "markdown", required: true }
+    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
+
+- name: "benefits"
+  label: "教育特色 (Benefits)"
+  folder: "src/data/benefits"
+  create: true
+  delete: true
+  identifier_field: title
+  fields:
+    - { label: "標題", name: "title", widget: "string", required: true }
+    - { label: "描述", name: "desc", widget: "text", required: true }
+    - { label: "圖片", name: "image", widget: "image", required: false }
+    - { label: "Lottie 動畫連結", name: "lottie", widget: "string", required: false }
+    - label: "特點列表"
+      name: "bullets"
+      widget: "list"
+      fields:
+        - { label: "標題", name: "title", widget: "string", required: true }
+        - { label: "描述", name: "desc", widget: "text", required: true }
+        - label: "圖示 (Iconify ID)"
+          name: "icon"
+          widget: "string"
+          hint: "請輸入 Iconify 圖標 ID，例如 'mdi:heart' 或 'lucide:sparkles'。可至 https://icon-sets.iconify.design/ 搜尋。"
+          required: true
+    - { label: "排序", name: "order", widget: "number", value_type: "int", default: 0 }

@@ -7,10 +7,49 @@
     <title>學校網站內容管理</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hithismani/responsive-decap@main/dist/responsive.css">
+    <!-- 引入 YAML 解析器 -->
+    <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 </head>
 
 <body>
     <script src="https://unpkg.com/decap-cms@^3.0/dist/decap-cms.js"></script>
+    <script>
+        async function initCMS() {
+            try {
+                // 加載基礎配置
+                const configBaseResponse = await fetch('config.base.yml');
+                const configBaseText = await configBaseResponse.text();
+                const config = jsyaml.load(configBaseText);
+
+                // 加載 collections 配置
+                const collectionsResponse = await fetch('collections.yml');
+                const collectionsText = await collectionsResponse.text();
+                const collections = jsyaml.load(collectionsText);
+
+                // 合併配置
+                config.collections = collections;
+
+                // 初始化 CMS
+                window.CMS.init({ config });
+            } catch (error) {
+                console.error("CMS 初始化失敗:", error);
+            }
+        }
+
+        // 等待 CMS 腳本加載完成後執行
+        if (window.CMS) {
+            initCMS();
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                const checkCMS = setInterval(() => {
+                    if (window.CMS) {
+                        clearInterval(checkCMS);
+                        initCMS();
+                    }
+                }, 100);
+            });
+        }
+    </script>
 </body>
 
 </html>
