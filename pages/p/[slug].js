@@ -108,9 +108,9 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
 
                                     {section.type === "benefits_block" && (
                                         <div className="flex flex-col gap-10">
-                                            {benefitsList.map((benefit, bIndex) => (
+                                            {(section.benefits || benefitsList).map((benefit, bIndex) => (
                                                 <Benefits
-                                                    key={benefit.id}
+                                                    key={benefit.id || bIndex}
                                                     imgPos={bIndex % 2 === 1 ? "right" : "left"}
                                                     data={benefit}
                                                 />
@@ -119,11 +119,11 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                     )}
 
                                     {section.type === "video_block" && (
-                                        <Video />
+                                        <Video videoList={section.videos} />
                                     )}
 
                                     {section.type === "faq_block" && (
-                                        <Faq faqList={faqList} />
+                                        <Faq faqList={section.faqs || faqList} />
                                     )}
                                 </div>
                             </Section>

@@ -2,11 +2,12 @@ import { useState } from "react";
 import Container from "./container";
 import { videoData } from "./data";
 
-export default function Video() {
+export default function Video({ videoList }) {
+  const data = videoList || videoData;
   return (
     <Container>
       <div className="grid gap-10 lg:grid-cols-3">
-        {videoData.map((video, index) => (
+        {data.map((video, index) => (
           <VideoItem key={index} video={video} />
         ))}
       </div>

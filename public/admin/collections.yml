@@ -88,31 +88,78 @@
         - { label: "背景影片 (MP4)", name: "bg_video", widget: "string", required: false }
     - label: "頁面內容區塊"
       name: "sections"
-      widget: "list" # 讓 Admin 可以一直新增 Section
+      widget: "list"
       types:
-        - label: "文字介紹區塊"
+        - label: "文字介紹區塊 (Markdown)"
           name: "text_block"
           widget: "object"
           fields:
             - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
             - { label: "標題", name: "header", widget: "string" }
             - { label: "附標題", name: "sub_header", widget: "string" }
-            - { label: "內文", name: "content", widget: "markdown" }
+            - { label: "描述文字", name: "description", widget: "text", required: false }
+            - { label: "內文 (Markdown)", name: "content", widget: "markdown" }
+        - label: "圖文列表區塊 (原 Benefits)"
+          name: "benefits_block"
+          widget: "object"
+          fields:
+            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "標題", name: "header", widget: "string" }
+            - { label: "附標題", name: "sub_header", widget: "string" }
+            - { label: "描述文字", name: "description", widget: "text", required: false }
+            - label: "主要項目列表"
+              name: "benefits"
+              widget: "list"
+              fields:
+                - { label: "標題", name: "title", widget: "string" }
+                - { label: "性別/副標 (選填)", name: "subtitle", widget: "string", required: false }
+                - { label: "描述", name: "desc", widget: "text" }
+                - { label: "圖片", name: "image", widget: "image", required: false }
+                - { label: "Lottie 動畫", name: "lottie", widget: "string", required: false }
+                - label: "嵌套子項列表 (如 Bullets)"
+                  name: "bullets"
+                  widget: "list"
+                  required: false
+                  fields:
+                    - { label: "子項標題", name: "title", widget: "string" }
+                    - { label: "子項描述", name: "desc", widget: "text" }
+                    - { label: "圖示 (Icon ID)", name: "icon", widget: "string", hint: "例如 'lucide:check'" }
+        - label: "常見問答區塊 (FAQ)"
+          name: "faq_block"
+          widget: "object"
+          fields:
+            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "標題", name: "header", widget: "string" }
+            - { label: "附標題", name: "sub_header", widget: "string" }
+            - { label: "描述文字", name: "description", widget: "text", required: false }
+            - label: "問答內容"
+              name: "faqs"
+              widget: "list"
+              fields:
+                - { label: "問題", name: "question", widget: "string" }
+                - { label: "答案", name: "answer", widget: "markdown" }
         - label: "成員清單區塊"
           name: "member_block"
           widget: "object"
           fields:
             - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
             - { label: "區塊標題", name: "header", widget: "string" }
-            - { label: "呈現樣式", name: "style", widget: "select", options: ["卡片", "列表"] }
-            - label: "選擇成員"
-              name: "members"
-              widget: "relation"
-              collection: "faculty" # 關聯到你現有的教職員/成員名單
-              multiple: true
-              value_field: "name"
-              display_fields: ["name"]
-              search_fields: ["name"]
+            - { label: "附標題", name: "sub_header", widget: "string" }
+            - label: "選擇成員 (從名單選取)", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
+        - label: "影音列表區塊"
+          name: "video_block"
+          widget: "object"
+          fields:
+            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "標題", name: "header", widget: "string" }
+            - { label: "內文描述", name: "description", widget: "text" }
+            - label: "影片列表"
+              name: "videos"
+              widget: "list"
+              fields:
+                - { label: "影片標題", name: "title", widget: "string" }
+                - { label: "YouTube 連結", name: "url", widget: "string" }
+                - { label: "簡介", name: "description", widget: "text" }
 
 - name: "section_layouts"
   label: "區塊版面模板 (Style)"
