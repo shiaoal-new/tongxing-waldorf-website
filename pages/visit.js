@@ -2,7 +2,7 @@ import Link from "next/link";
 import VisitHero from "../components/visitHero";
 import VisitProcess from "../components/visitProcess";
 import VisitSchedule from "../components/visitSchedule";
-import SectionTitle from "../components/sectionTitle";
+import Section from "../components/section";
 import Layout from "../components/layout";
 import { getAllPages } from "../lib/pages";
 
@@ -16,19 +16,19 @@ export default function Visit({ pages }) {
         >
             <VisitHero />
 
-            <SectionTitle
+            <Section
                 title="參觀流程"
-                align="center">
-                我們歡迎家長親自來到學校，透過實際的走訪與對話，深入了解同心華德福的教育內涵。
-            </SectionTitle>
-            <VisitProcess />
+                align="center"
+                description="我們歡迎家長親自來到學校，透過實際的走访與對話，深入了解同心華德福的教育內涵。">
+                <VisitProcess />
+            </Section>
 
-            <SectionTitle
+            <Section
                 title="參觀場次"
-                align="center">
-                請選擇適合您的場次進行預約，名額有限，額滿為止。
-            </SectionTitle>
-            <VisitSchedule />
+                align="center"
+                description="請選擇適合您的場次進行預約，名額有限，額滿為止。">
+                <VisitSchedule />
+            </Section>
         </Layout>
     );
 }

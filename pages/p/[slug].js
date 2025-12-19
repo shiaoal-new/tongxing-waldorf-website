@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Layout from "../../components/layout";
 import Container from "../../components/container";
-import SectionTitle from "../../components/sectionTitle";
+import Section from "../../components/section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../../lib/pages";
@@ -50,9 +50,7 @@ export default function DynamicPage({ page, pages, facultyList }) {
             <Container>
                 <div className="max-w-4xl mx-auto py-10">
                     {!effectiveHeroData && (
-                        <SectionTitle title={page.title} align="left">
-                            {page.description}
-                        </SectionTitle>
+                        <Section title={page.title} align="left" description={page.description} />
                     )}
 
                     <div className="mt-10">
@@ -60,28 +58,18 @@ export default function DynamicPage({ page, pages, facultyList }) {
                             const layout = section._layout || {};
                             const wrapperClass = layout.wrapper_class || "mb-16";
 
-                            // SectionTitle props from layout
-                            const titleProps = {
-                                title: section.header,
-                                pretitle: section.sub_header,
-                                align: "left",
-                                containerClassName: layout.container_class || "",
-                                wrapperClassName: "",
-                                titleClassName: layout.title_class || "text-3xl font-bold text-primary-600 dark:text-primary-400 border-b-2 border-primary-100 dark:border-primary-800 pb-2 mb-8",
-                                pretitleClassName: layout.pretitle_class || "",
-                            };
-
-                            const contentClass = layout.content_class || "prose prose-lg dark:prose-invert max-w-none";
-
                             return (
-                                <div key={index} className={wrapperClass}>
-                                    {(section.header || section.sub_header) && (
-                                        <SectionTitle {...titleProps} />
-                                    )}
-
+                                <Section
+                                    key={index}
+                                    layout={layout}
+                                    title={section.header}
+                                    pretitle={section.sub_header}
+                                    align="left"
+                                    className={wrapperClass}
+                                >
                                     <div className="mt-6 px-4 md:px-0">
                                         {section.type === "text_block" && (
-                                            <div className={contentClass}>
+                                            <div className="prose prose-lg dark:prose-invert max-w-none">
                                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                                     {section.content}
                                                 </ReactMarkdown>
@@ -110,7 +98,7 @@ export default function DynamicPage({ page, pages, facultyList }) {
                                             </div>
                                         )}
                                     </div>
-                                </div>
+                                </Section>
                             );
                         })}
 
