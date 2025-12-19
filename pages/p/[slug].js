@@ -12,6 +12,7 @@ import PageHero from "../../components/pageHero";
 import Benefits from "../../components/benefits";
 import Video from "../../components/video";
 import Faq from "../../components/faq";
+import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 
 export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
     const router = useRouter();
@@ -61,8 +62,6 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                 <div className="mt-10">
                     {sections.map((section, index) => {
                         const layout = section._layout || {};
-                        const wrapperClass = layout.wrapper_class || "mb-16";
-
                         return (
                             <Section
                                 key={index}
@@ -70,8 +69,9 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                 title={section.header}
                                 pretitle={section.sub_header}
                                 description={section.description}
-                                align={section.type === "benefits_block" || section.type === "text_block" || section.type === "member_block" ? "left" : "center"}
-                                className={wrapperClass}
+                                align={section.type === "list_block" && section.display_mode === "alternating" || section.type === "text_block" || section.type === "member_block" ? "left" : "center"}
+                                buttons={section.buttons}
+                                className="mb-16"
                             >
                                 <div className="mt-6 px-4 md:px-0">
                                     {section.type === "text_block" && (
@@ -209,7 +209,6 @@ export async function getStaticProps({ params }) {
     const facultyList = getAllFaculty();
     const faqList = getAllFaq();
     const benefitsList = getAllBenefits();
-    const { getSectionLayoutByTitle } = require("../../lib/sectionLayouts");
 
     // Resolve layout templates for each section
     if (page && page.sections) {

@@ -107,6 +107,14 @@
             - { label: "附標題", name: "sub_header", widget: "string" }
             - { label: "描述文字", name: "description", widget: "text", required: false }
             - { label: "內文 (Markdown)", name: "content", widget: "markdown" }
+            - label: "行動按鈕 (Actions)"
+              name: "buttons"
+              widget: "list"
+              required: false
+              fields:
+                - { label: "按鈕文字", name: "text", widget: "string" }
+                - { label: "連結 (網址)", name: "link", widget: "string" }
+                - { label: "樣式", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
         - label: "通用列表區塊 (Page Builder)"
           name: "list_block"
           widget: "object"
@@ -139,6 +147,14 @@
                     - { label: "細項標題", name: "title", widget: "string" }
                     - { label: "細項描述", name: "desc", widget: "text" }
                     - { label: "圖示", name: "icon", widget: "string", hint: "例如 'lucide:check'" }
+            - label: "行動按鈕 (Actions)"
+              name: "buttons"
+              widget: "list"
+              required: false
+              fields:
+                - { label: "按鈕文字", name: "text", widget: "string" }
+                - { label: "連結 (網址)", name: "link", widget: "string" }
+                - { label: "樣式", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
         - label: "成員/教職員清單"
           name: "member_block"
           widget: "object"

@@ -61,3 +61,11 @@ sections:
         desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
       - title: 學校提供校車嗎？
         desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
+  - type: text_block
+    layout: 紫色大型看板 (CTA)
+    header: 誠摯邀請您
+    description: 歡迎預約參觀，親身感受同心華德福的教育場域。
+    buttons:
+      - text: 預約參觀
+        link: /visit
+        style: white
