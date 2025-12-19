@@ -1,12 +1,11 @@
----
 title: 動態首頁
 slug: dynamic-home
 hero:
   title: 同心華德福
   sub_title: 手、心、腦的平衡發展
   description: 台北市同心華德福實驗教育機構，致力於培育身、心、靈全面發展的孩子。
-  bg_images:
-    - https://images.unsplash.com/photo-1524486361537-8ad15938e1a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80
+  bg_images: []
+  bg_video: /img/Leigham%20Primary%20Web%20Banner.mp4
 sections:
   - type: list_block
     display_mode: alternating
@@ -62,4 +61,3 @@ sections:
         desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
       - title: 學校提供校車嗎？
         desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
----

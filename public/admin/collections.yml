@@ -1,6 +1,8 @@
 - name: "faculty"
   label: "教職員名單"
   folder: "src/data/faculty"
+  extension: "yml"
+  format: "yml"
   delete: true
   create: true
   identifier_field: name
@@ -21,6 +23,8 @@
 - name: "faq"
   label: "常見問答"
   folder: "src/data/faq"
+  extension: "yml"
+  format: "yml"
   delete: true
   create: true
   identifier_field: question
@@ -32,6 +36,8 @@
 - name: "benefits"
   label: "教育特色 (Benefits)"
   folder: "src/data/benefits"
+  extension: "yml"
+  format: "yml"
   create: true
   delete: true
   identifier_field: title
@@ -56,6 +62,8 @@
 - name: "pages"
   label: "自定義頁面"
   folder: "src/data/pages"
+  extension: "yml"
+  format: "yml"
   create: true # 關鍵：允許 Admin 點擊「新增」按鈕
   identifier_field: title
   fields:
@@ -143,6 +151,8 @@
 - name: "section_layouts"
   label: "區塊版面模板 (Style)"
   folder: "src/data/section_layouts"
+  extension: "yml"
+  format: "yml"
   create: true
   identifier_field: title
   fields:
