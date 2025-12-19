@@ -6,9 +6,14 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../../lib/pages";
 import { getAllFaculty } from "../../lib/faculty";
+import { getAllFaq } from "../../lib/faq";
+import { getAllBenefits } from "../../lib/benefits";
 import PageHero from "../../components/pageHero";
+import Benefits from "../../components/benefits";
+import Video from "../../components/video";
+import Faq from "../../components/faq";
 
-export default function DynamicPage({ page, pages, facultyList }) {
+export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
     const router = useRouter();
 
     if (router.isFallback) {
@@ -47,36 +52,38 @@ export default function DynamicPage({ page, pages, facultyList }) {
     return (
         <Layout pages={pages} title={page.title} navbarPadding={!effectiveHeroData}>
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
-            <Container>
-                <div className="max-w-4xl mx-auto py-10">
-                    {!effectiveHeroData && (
-                        <Section title={page.title} align="left" description={page.description} />
-                    )}
 
-                    <div className="mt-10">
-                        {sections.map((section, index) => {
-                            const layout = section._layout || {};
-                            const wrapperClass = layout.wrapper_class || "mb-16";
+            <div className="w-full py-10">
+                {!effectiveHeroData && (
+                    <Section title={page.title} align="left" description={page.description} />
+                )}
 
-                            return (
-                                <Section
-                                    key={index}
-                                    layout={layout}
-                                    title={section.header}
-                                    pretitle={section.sub_header}
-                                    align="left"
-                                    className={wrapperClass}
-                                >
-                                    <div className="mt-6 px-4 md:px-0">
-                                        {section.type === "text_block" && (
-                                            <div className="prose prose-lg dark:prose-invert max-w-none">
-                                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                                    {section.content}
-                                                </ReactMarkdown>
-                                            </div>
-                                        )}
+                <div className="mt-10">
+                    {sections.map((section, index) => {
+                        const layout = section._layout || {};
+                        const wrapperClass = layout.wrapper_class || "mb-16";
 
-                                        {section.type === "member_block" && (
+                        return (
+                            <Section
+                                key={index}
+                                layout={layout}
+                                title={section.header}
+                                pretitle={section.sub_header}
+                                description={section.description}
+                                align={section.type === "benefits_block" || section.type === "text_block" || section.type === "member_block" ? "left" : "center"}
+                                className={wrapperClass}
+                            >
+                                <div className="mt-6 px-4 md:px-0">
+                                    {section.type === "text_block" && (
+                                        <div className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {section.content}
+                                            </ReactMarkdown>
+                                        </div>
+                                    )}
+
+                                    {section.type === "member_block" && (
+                                        <div className="max-w-4xl mx-auto">
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                                 {section.members && section.members.map((memberName, mIndex) => {
                                                     const member = getMemberDetails(memberName);
@@ -96,22 +103,44 @@ export default function DynamicPage({ page, pages, facultyList }) {
                                                     );
                                                 })}
                                             </div>
-                                        )}
-                                    </div>
-                                </Section>
-                            );
-                        })}
+                                        </div>
+                                    )}
 
-                        {!page.sections && page.content && (
+                                    {section.type === "benefits_block" && (
+                                        <div className="flex flex-col gap-10">
+                                            {benefitsList.map((benefit, bIndex) => (
+                                                <Benefits
+                                                    key={benefit.id}
+                                                    imgPos={bIndex % 2 === 1 ? "right" : "left"}
+                                                    data={benefit}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {section.type === "video_block" && (
+                                        <Video />
+                                    )}
+
+                                    {section.type === "faq_block" && (
+                                        <Faq faqList={faqList} />
+                                    )}
+                                </div>
+                            </Section>
+                        );
+                    })}
+
+                    {!page.sections && page.content && (
+                        <div className="max-w-4xl mx-auto px-4">
                             <div className="prose prose-lg dark:prose-invert max-w-none">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                     {page.content}
                                 </ReactMarkdown>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
-            </Container>
+            </div>
         </Layout>
     );
 }
@@ -130,6 +159,8 @@ export async function getStaticProps({ params }) {
     const page = getPageBySlug(slug);
     const pages = getAllPages();
     const facultyList = getAllFaculty();
+    const faqList = getAllFaq();
+    const benefitsList = getAllBenefits();
     const { getSectionLayoutByTitle } = require("../../lib/sectionLayouts");
 
     // Resolve layout templates for each section
@@ -150,6 +181,8 @@ export async function getStaticProps({ params }) {
             page,
             pages,
             facultyList,
+            faqList,
+            benefitsList,
         },
     };
 }
