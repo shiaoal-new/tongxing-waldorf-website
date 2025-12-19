@@ -1,12 +1,13 @@
 import Container from "./container";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 
 export default function PageHero({ data }) {
-    const { title, sub_title, description, bg_image, bg_video } = data;
+    const { title, sub_title, description, bg_images, bg_video, transition_type = 'fade' } = data;
     const ref = useRef(null);
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 500], [0, 200]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const getImagePath = (path) => {
         if (!path) return path;
@@ -16,8 +17,54 @@ export default function PageHero({ data }) {
         return path;
     };
 
-    const imageUrl = getImagePath(bg_image);
+    // Normalize images list
+    const images = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
     const videoUrl = getImagePath(bg_video);
+
+    useEffect(() => {
+        if (!videoUrl && images.length > 1) {
+            const timer = setInterval(() => {
+                setCurrentIndex((prev) => (prev + 1) % images.length);
+            }, 5000);
+            return () => clearInterval(timer);
+        }
+    }, [images.length, videoUrl]);
+
+    // Transition Variants mapping
+    const variants = {
+        fade: {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            exit: { opacity: 0 },
+            transition: { duration: 1.5 }
+        },
+        slide: {
+            initial: { x: "100%", opacity: 0 },
+            animate: { x: 0, opacity: 1 },
+            exit: { x: "-100%", opacity: 0 },
+            transition: { duration: 0.8, ease: "easeInOut" }
+        },
+        zoom: {
+            initial: { scale: 1.2, opacity: 0 },
+            animate: { scale: 1, opacity: 1 },
+            exit: { scale: 0.8, opacity: 0 },
+            transition: { duration: 1, ease: "easeOut" }
+        },
+        slide_up: {
+            initial: { y: "100%", opacity: 0 },
+            animate: { y: 0, opacity: 1 },
+            exit: { y: "-50%", opacity: 0 },
+            transition: { duration: 0.8, ease: "circOut" }
+        },
+        blur: {
+            initial: { filter: "blur(20px)", opacity: 0, scale: 1.1 },
+            animate: { filter: "blur(0px)", opacity: 1, scale: 1 },
+            exit: { filter: "blur(20px)", opacity: 0 },
+            transition: { duration: 1.2 }
+        }
+    };
+
+    const currentVariant = variants[transition_type] || variants.fade;
 
     return (
         <div ref={ref} className="relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-gray-900">
@@ -33,16 +80,25 @@ export default function PageHero({ data }) {
                         playsInline
                         className="object-cover w-full h-full"
                     />
-                ) : imageUrl ? (
-                    <motion.img
-                        style={{ y }}
-                        src={imageUrl}
-                        alt={title}
-                        className="object-cover w-full h-full"
-                        initial={{ scale: 1 }}
-                        animate={{ scale: 1.1 }}
-                        transition={{ duration: 5, ease: "easeOut" }}
-                    />
+                ) : images.length > 0 ? (
+                    <AnimatePresence mode="popLayout">
+                        <motion.div
+                            key={currentIndex}
+                            style={{ y }}
+                            variants={currentVariant}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            transition={currentVariant.transition}
+                            className="absolute inset-0 w-full h-full"
+                        >
+                            <img
+                                src={images[currentIndex]}
+                                alt={`${title} background ${currentIndex}`}
+                                className="object-cover w-full h-full"
+                            />
+                        </motion.div>
+                    </AnimatePresence>
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-primary-600 to-primary-900"></div>
                 )}
@@ -72,6 +128,25 @@ export default function PageHero({ data }) {
                     </motion.div>
                 </div>
             </Container>
+
+            {/* Indicators */}
+            {!videoUrl && images.length > 1 && (
+                <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-center space-x-4">
+                    {images.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentIndex(index)}
+                            className="group relative flex items-center justify-center w-6 h-6 focus:outline-none"
+                            aria-label={`Go to slide ${index + 1}`}
+                        >
+                            <div className={`absolute inset-0 rounded-full border-2 border-white transition-all duration-500 scale-100 ${currentIndex === index ? "opacity-100 scale-110" : "opacity-0 scale-50 group-hover:opacity-30"
+                                }`} />
+                            <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${currentIndex === index ? "bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-white/40 group-hover:bg-white/60"
+                                }`} />
+                        </button>
+                    ))}
+                </div>
+            )}
 
             {/* Bottom Gradient Overlay */}
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white dark:from-gray-900 to-transparent pointer-events-none"></div>

@@ -69,7 +69,22 @@
         - { label: "主標題", name: "title", widget: "string" }
         - { label: "副標題", name: "sub_title", widget: "string" }
         - { label: "描述文字", name: "description", widget: "text" }
-        - { label: "背景圖片", name: "bg_image", widget: "image", required: false }
+        - label: "背景圖片列表"
+          name: "bg_images"
+          widget: "list"
+          required: false
+          field: { label: "圖片", name: "image", widget: "image" }
+        - label: "輪播轉換效果"
+          name: "transition_type"
+          widget: "select"
+          required: false
+          options:
+            - { label: "淡入淡出 (Fade)", value: "fade" }
+            - { label: "水平滑動 (Slide)", value: "slide" }
+            - { label: "縮放切換 (Zoom)", value: "zoom" }
+            - { label: "垂直滑動 (Slide Up)", value: "slide_up" }
+            - { label: "模糊切換 (Blur)", value: "blur" }
+          default: "fade"
         - { label: "背景影片 (MP4)", name: "bg_video", widget: "string", required: false }
     - label: "頁面內容區塊"
       name: "sections"
