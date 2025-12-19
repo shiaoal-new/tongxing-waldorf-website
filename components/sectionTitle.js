@@ -24,30 +24,30 @@ export default function SectionTitle(props) {
   return (
     <Container
       className={`flex w-full flex-col mt-4 ${props.align === "left" ? "" : "items-center justify-center text-center"
-        }`}>
+        } ${props.containerClassName || ""}`}>
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={variants}
-        className="w-full flex flex-col items-center"
+        className={`w-full flex flex-col items-center ${props.wrapperClassName || ""}`}
       >
         {props.pretitle && (
-          <div className={`text-sm font-bold tracking-wider text-primary-600 uppercase ${props.align === "left" ? "self-start" : ""}`}>
+          <div className={`${props.pretitleClassName || "text-sm font-bold tracking-wider text-primary-600 uppercase"} ${props.align === "left" ? "self-start" : ""}`}>
             {props.pretitle}
           </div>
         )}
 
         {props.title && (
-          <h2 className={`max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl dark:text-white ${props.align === "left" ? "self-start" : ""}`}>
+          <h2 className={`${props.titleClassName || "max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl dark:text-white"} ${props.align === "left" ? "self-start" : ""}`}>
             {props.title}
           </h2>
         )}
 
         {props.children && (
-          <p className={`max-w-2xl py-4 text-lg leading-normal text-gray-500 lg:text-xl xl:text-xl dark:text-gray-300 ${props.align === "left" ? "self-start" : ""}`}>
+          <div className={`${props.childrenClassName || "max-w-2xl py-4 text-lg leading-normal text-gray-500 lg:text-xl xl:text-xl dark:text-gray-300"} ${props.align === "left" ? "self-start" : ""}`}>
             {props.children}
-          </p>
+          </div>
         )}
       </motion.div>
     </Container>

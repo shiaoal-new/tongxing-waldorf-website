@@ -94,6 +94,7 @@
           name: "text_block"
           widget: "object"
           fields:
+            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
             - { label: "標題", name: "header", widget: "string" }
             - { label: "附標題", name: "sub_header", widget: "string" }
             - { label: "內文", name: "content", widget: "markdown" }
@@ -101,6 +102,7 @@
           name: "member_block"
           widget: "object"
           fields:
+            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
             - { label: "區塊標題", name: "header", widget: "string" }
             - { label: "呈現樣式", name: "style", widget: "select", options: ["卡片", "列表"] }
             - label: "選擇成員"
@@ -111,3 +113,15 @@
               value_field: "name"
               display_fields: ["name"]
               search_fields: ["name"]
+
+- name: "section_layouts"
+  label: "區塊版面模板 (Style)"
+  folder: "src/data/section_layouts"
+  create: true
+  identifier_field: title
+  fields:
+    - { label: "模板名稱", name: "title", widget: "string", required: true }
+    - label: "CSS 類別定義"
+      name: "css_classes"
+      widget: "text"
+      hint: "請使用 .class_name { classes } 語法，例如：.container_class{ py-12 } .title_class{ text-xl }"

@@ -1,0 +1,9 @@
+---
+title: "突出標題風格"
+css_classes: |
+  .container_class{ py-12 bg-primary-50 dark:bg-primary-900/10 rounded-3xl }
+  .wrapper_class{ mb-20 px-4 }
+  .title_class{ text-4xl font-extrabold text-primary-700 dark:text-primary-300 border-l-8 border-primary-500 pl-6 mb-10 }
+  .pretitle_class{ text-primary-500 font-bold tracking-widest ml-1 }
+  .content_class{ prose prose-xl prose-primary dark:prose-invert max-w-none }
+---
