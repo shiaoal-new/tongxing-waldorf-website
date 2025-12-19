@@ -106,6 +106,54 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                         </div>
                                     )}
 
+                                    {section.type === "list_block" && (
+                                        <div className="mt-6 px-4 md:px-0">
+                                            {section.display_mode === "alternating" && (
+                                                <div className="flex flex-col gap-16">
+                                                    {section.items?.map((item, bIndex) => (
+                                                        <Benefits
+                                                            key={bIndex}
+                                                            imgPos={bIndex % 2 === 1 ? "right" : "left"}
+                                                            data={{
+                                                                ...item,
+                                                                bullets: item.sub_items
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {section.display_mode === "accordion" && (
+                                                <Faq faqList={section.items?.map(item => ({
+                                                    question: item.title,
+                                                    answer: item.desc
+                                                }))} />
+                                            )}
+
+                                            {section.display_mode === "videos" && (
+                                                <Video videoList={section.items?.map(item => ({
+                                                    title: item.title,
+                                                    url: item.video_url,
+                                                    description: item.desc
+                                                }))} />
+                                            )}
+
+                                            {section.display_mode === "grid_cards" && (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                                                    {section.items?.map((item, idx) => (
+                                                        <div key={idx} className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center transition-all hover:shadow-md">
+                                                            {item.image && <img src={getImagePath(item.image)} alt={item.title} className="w-16 h-16 mb-4 object-contain" />}
+                                                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{item.title}</h3>
+                                                            {item.subtitle && <p className="text-primary-600 dark:text-primary-400 text-sm font-medium mb-3">{item.subtitle}</p>}
+                                                            <p className="text-gray-600 dark:text-gray-400 text-sm">{item.desc}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Legacy Blocks Support */}
                                     {section.type === "benefits_block" && (
                                         <div className="flex flex-col gap-10">
                                             {(section.benefits || benefitsList).map((benefit, bIndex) => (
