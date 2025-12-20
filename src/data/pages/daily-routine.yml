@@ -113,9 +113,10 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        header: 誠摯邀請您
-        description: 想更進一步了解同心華德福的日常作息嗎？歡迎預約參觀，親身體驗。
+        header: 親自來感受
+        description: 文字與表格無法完整傳達校園裡那種安靜而專注的氛圍。我們誠摯邀請您參與我們的說明會，看見孩子如何在規律中長出自由的靈魂。
         buttons:
           - text: 預約參觀
             link: /visit
             style: white
+        sub_header: 下一步
