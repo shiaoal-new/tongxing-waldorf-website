@@ -20,9 +20,18 @@
 <script>
     async function initCMS() {
         try {
+            // 判斷是否為本地開發環境
+            const isLocal = window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1';
+
+            // 根據環境選擇配置文件
+            const configFile = isLocal ? 'config.local.yml' : 'config.base.yml';
+
+            console.log(`載入配置: ${configFile} (環境: ${isLocal ? '本地開發' : '生產環境'})`);
+
             // 加載配置
             const [configBaseRes, collectionsRes] = await Promise.all([
-                fetch('config.base.yml'),
+                fetch(configFile),
                 fetch('collections.yml')
             ]);
 
@@ -48,39 +57,42 @@
     // 執行初始化
     initCMS();
 
-    // 高級優化：自動將 Label 文字填充到空的 Placeholder 中，並優化 UI 體驗
-    const observer = new MutationObserver(() => {
-        const controls = document.querySelectorAll('[class*="ControlContainer"]');
-        controls.forEach(container => {
-            const label = container.querySelector('label[class*="FieldLabel-"]');
-            const input = container.querySelector('input, textarea, select');
+    // 等待 DOM 準備好後再啟動 MutationObserver
+    document.addEventListener('DOMContentLoaded', () => {
+        // 高級優化:自動將 Label 文字填充到空的 Placeholder 中,並優化 UI 體驗
+        const observer = new MutationObserver(() => {
+            const controls = document.querySelectorAll('[class*="ControlContainer"]');
+            controls.forEach(container => {
+                const label = container.querySelector('label[class*="FieldLabel-"]');
+                const input = container.querySelector('input, textarea, select');
 
-            if (label && input) {
-                const rawText = label.textContent || "";
-                const isOptional = rawText.includes("(optional)");
-                const cleanText = rawText.replace("(optional)", "").trim();
+                if (label && input) {
+                    const rawText = label.textContent || "";
+                    const isOptional = rawText.includes("(optional)");
+                    const cleanText = rawText.replace("(optional)", "").trim();
 
-                // 自動填充 Placeholder (如果為空)
-                if (!input.placeholder) {
-                    input.placeholder = cleanText;
+                    // 自動填充 Placeholder (如果為空)
+                    if (!input.placeholder) {
+                        input.placeholder = cleanText;
+                    }
+
+                    // 將 Label 文字設為原生 Tooltip (title 屬性)
+                    if (!input.title) {
+                        input.title = cleanText;
+                    }
+
+                    // 處理必填紅星:如果原本不含 (optional) 且還沒加過星號,就加一個
+                    if (!isOptional && !label.querySelector(".required-star")) {
+                        label.insertAdjacentHTML("beforeend", '<span class="required-star">*</span>');
+                    }
                 }
-
-                // 將 Label 文字設為原生 Tooltip (title 屬性)
-                if (!input.title) {
-                    input.title = cleanText;
-                }
-
-                // 處理必填紅星：如果原本不含 (optional) 且還沒加過星號，就加一個
-                if (!isOptional && !label.querySelector(".required-star")) {
-                    label.insertAdjacentHTML("beforeend", '<span class="required-star">*</span>');
-                }
-            }
+            });
         });
-    });
 
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
     });
 </script>
 </body>

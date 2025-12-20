@@ -18,6 +18,10 @@ export default function Video({ videoList }) {
 function VideoItem({ video }) {
   const [playVideo, setPlayVideo] = useState(false);
 
+  // Normalize media data
+  const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
+  const videoUrl = mediaData.url || mediaData.video;
+
   // Helper function to extract YouTube Video ID
   const getYoutubeId = (url) => {
     if (!url) return null;
@@ -26,9 +30,9 @@ function VideoItem({ video }) {
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  const videoId = getYoutubeId(video.url);
-  const embedUrl = videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1` : video.url;
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+  const videoId = getYoutubeId(videoUrl);
+  const embedUrl = videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1` : videoUrl;
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : (mediaData.type === 'image' ? mediaData.image : null);
 
   return (
     <div className="flex flex-col w-full overflow-hidden rounded-xl shadow-lg h-full">

@@ -1,0 +1,19 @@
+# 本地開發配置
+backend:
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
+
+# 啟用本地後端
+local_backend: true
+
+# Better Decap + Bridge logo (optional)
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+
+# Add site links in Decap CMS (optional)
+site_url: http://localhost:3000
+
+# 本地開發不使用 editorial_workflow,直接編輯模式
+# publish_mode: editorial_workflow
+
+media_folder: "public/img/uploads" # 媒體檔案儲存位置(相對路徑)
+public_folder: "/img/uploads"     # 網站上可訪問的媒體路徑

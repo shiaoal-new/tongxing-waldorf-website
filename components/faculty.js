@@ -26,12 +26,12 @@ function FacultyCard({ faculty }) {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
             {/* 头像区域 */}
             <div className="relative h-64 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-primary-900 dark:to-purple-900">
-                {photo ? (
+                {(faculty.media?.image || photo) ? (
                     <Image
-                        src={photo}
+                        src={faculty.media?.image || photo}
                         alt={name}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: 'cover' }}
                         className="transition-opacity duration-300"
                     />
                 ) : (

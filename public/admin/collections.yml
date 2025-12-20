@@ -10,7 +10,25 @@
   fields:
     - { label: "姓名", name: "name", widget: "string", required: true }
     - { label: "職稱", name: "title", widget: "string", required: true }
-    - { label: "頭像", name: "photo", widget: "image", required: false }
+    - label: "媒體資源"
+      name: "media"
+      widget: "object"
+      required: false
+      summary: "{{type}}"
+      fields:
+        - label: "媒體類型"
+          name: "type"
+          widget: "select"
+          options:
+            - { label: "🖼️ 圖片", value: "image" }
+            - { label: "🎥 影片檔", value: "video" }
+            - { label: "📽️ YouTube", value: "youtube" }
+            - { label: "✨ Lottie 動畫", value: "lottie" }
+          default: "image"
+        - { label: "圖片文件", name: "image", widget: "image", required: false }
+        - { label: "影片文件", name: "video", widget: "file", required: false }
+        - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
+        - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
     - { label: "電子郵件", name: "email", widget: "email", required: false }
     - { label: "辦公室分機", name: "extension", widget: "string", required: false }
     - { label: "簡介/專長", name: "bio", widget: "markdown", required: false }
@@ -49,8 +67,25 @@
   fields:
     - { label: "標題", name: "title", widget: "string", required: true }
     - { label: "简短描述", name: "desc", widget: "text", required: true }
-    - { label: "圖片", name: "image", widget: "image", required: false }
-    - { label: "Lottie 動畫連結", name: "lottie", widget: "string", required: false, hint: "若有填寫則優先顯示動畫" }
+    - label: "媒體資源"
+      name: "media"
+      widget: "object"
+      required: false
+      summary: "{{type}}"
+      fields:
+        - label: "媒體類型"
+          name: "type"
+          widget: "select"
+          options:
+            - { label: "🖼️ 圖片", value: "image" }
+            - { label: "🎥 影片檔", value: "video" }
+            - { label: "📽️ YouTube", value: "youtube" }
+            - { label: "✨ Lottie 動畫", value: "lottie" }
+          default: "image"
+        - { label: "圖片文件", name: "image", widget: "image", required: false }
+        - { label: "影片文件", name: "video", widget: "file", required: false }
+        - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
+        - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
     - label: "特點細項列表"
       name: "bullets"
       widget: "list"
@@ -86,20 +121,24 @@
         - { label: "主標題", name: "title", widget: "string" }
         - { label: "副標題", name: "sub_title", widget: "string" }
         - { label: "背景描述 (SEO用)", name: "description", widget: "text" }
-        - label: "背景圖片輪播"
-          name: "bg_images"
+        - label: "背景媒體列表 (Carousel)"
+          name: "media_list"
           widget: "list"
-          summary: "圖片 {{index}}"
-          field: { label: "上傳圖片", name: "image", widget: "image" }
-        - label: "輪播切換效果"
-          name: "transition_type"
-          widget: "select"
-          options:
-            - { label: "淡入淡出 (Fade)", value: "fade" }
-            - { label: "水平滑動 (Slide)", value: "slide" }
-            - { label: "縮放切換 (Zoom)", value: "zoom" }
-          default: "fade"
-        - { label: "背景影片網址 (MP4)", name: "bg_video", widget: "string", required: false, hint: "若填寫則會覆蓋背景圖片" }
+          summary: "{{type}}"
+          fields:
+            - label: "媒體類型"
+              name: "type"
+              widget: "select"
+              options:
+                - { label: "🖼️ 圖片", value: "image" }
+                - { label: "🎥 影片檔", value: "video" }
+                - { label: "📽️ YouTube", value: "youtube" }
+                - { label: "✨ Lottie 動畫", value: "lottie" }
+              default: "image"
+            - { label: "圖片文件", name: "image", widget: "image", required: false }
+            - { label: "影片文件", name: "video", widget: "file", required: false }
+            - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
+            - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
@@ -146,9 +185,25 @@
                 - { label: "項目名稱/標題", name: "title", widget: "string" }
                 - { label: "小字備註", name: "subtitle", widget: "string", required: false }
                 - { label: "內文描述", name: "desc", widget: "text" }
-                - { label: "圖片上傳", name: "image", widget: "image", required: false }
-                - { label: "動畫連結 (Lottie)", name: "lottie", widget: "string", required: false }
-                - { label: "YouTube 連結 (僅限影片模式)", name: "video_url", widget: "string", required: false }
+                - label: "媒體資源"
+                  name: "media"
+                  widget: "object"
+                  required: false
+                  summary: "{{type}}"
+                  fields:
+                    - label: "媒體類型"
+                      name: "type"
+                      widget: "select"
+                      options:
+                        - { label: "🖼️ 圖片", value: "image" }
+                        - { label: "🎥 影片檔", value: "video" }
+                        - { label: "📽️ YouTube", value: "youtube" }
+                        - { label: "✨ Lottie 動畫", value: "lottie" }
+                      default: "image"
+                    - { label: "圖片文件", name: "image", widget: "image", required: false }
+                    - { label: "影片文件", name: "video", widget: "file", required: false }
+                    - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
+                    - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
                 - label: "次級小清單 (選填)"
                   name: "sub_items"
                   widget: "list"

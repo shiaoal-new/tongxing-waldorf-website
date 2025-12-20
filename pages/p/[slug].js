@@ -13,6 +13,7 @@ import Benefits from "../../components/benefits";
 import Video from "../../components/video";
 import Faq from "../../components/faq";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
+import MediaRenderer from "../../components/mediaRenderer";
 
 export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
     const router = useRouter();
@@ -35,9 +36,10 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
 
     const getMemberDetails = (name) => {
         const member = facultyList.find(f => f.name === name) || { name };
+        const media = member.media || (member.photo ? { type: 'image', image: getImagePath(member.photo) } : null);
         return {
             ...member,
-            photo: getImagePath(member.photo)
+            media
         };
     };
 
@@ -89,10 +91,11 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                                     const member = getMemberDetails(memberName);
                                                     return (
                                                         <div key={mIndex} className="flex items-start p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg ">
-                                                            {member.photo && (
-                                                                <div className="flex-shrink-0 mr-4">
-                                                                    <img src={member.photo} alt={member.name} className="w-16 h-16 rounded-full object-cover border-2 border-primary-100" />
-                                                                </div>
+                                                            {member.media && (
+                                                                <MediaRenderer
+                                                                    media={member.media}
+                                                                    className="flex-shrink-0 mr-4 w-16 h-16 rounded-full overflow-hidden border-2 border-primary-100"
+                                                                />
                                                             )}
                                                             <div>
                                                                 <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">{member.name}</h3>
@@ -133,7 +136,7 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             {section.display_mode === "videos" && (
                                                 <Video videoList={section.items?.map(item => ({
                                                     title: item.title,
-                                                    url: item.video_url,
+                                                    media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
                                                     description: item.desc
                                                 }))} />
                                             )}
@@ -142,7 +145,11 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                                                     {section.items?.map((item, idx) => (
                                                         <div key={idx} className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center transition-all hover:shadow-md">
-                                                            {item.image && <img src={getImagePath(item.image)} alt={item.title} className="w-16 h-16 mb-4 object-contain" />}
+                                                            <MediaRenderer
+                                                                media={item.media || (item.image ? { type: 'image', image: getImagePath(item.image) } : null)}
+                                                                className="w-16 h-16 mb-4"
+                                                                imgClassName="object-contain"
+                                                            />
                                                             <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{item.title}</h3>
                                                             {item.subtitle && <p className="text-primary-600 dark:text-primary-400 text-sm font-medium mb-3">{item.subtitle}</p>}
                                                             <p className="text-gray-600 dark:text-gray-400 text-sm">{item.desc}</p>

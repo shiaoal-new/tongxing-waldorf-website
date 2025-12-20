@@ -66,7 +66,6 @@ function Avatar(props) {
           width="40"
           height="40"
           alt="Avatar"
-          layout="responsive"
           placeholder="blur"
         />
       </div>

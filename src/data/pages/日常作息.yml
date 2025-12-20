@@ -4,10 +4,13 @@ hero:
   title: 日常作息
   sub_title: 一呼一吸的節奏...在同心華德福的學習生活
   description: 同心的學習在於一呼一吸的節奏，讓孩子能在每堂課吸收訊息同時又能透過活動呼出，呼應生命呼吸的自然學習狀態。並依著兒童發展圖像，於「情感」、「意志」、「思考」以實作的務實鍛鍊，螺旋式堆疊每一個學習階段的發展能力。
-  bg_images:
-    - https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg
-    - https://preview.colorlib.com/theme/coffeeblend/images/bg_2.jpg
-    - https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
+  media_list:
+    - type: image
+      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg
+    - type: image
+      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_2.jpg
+    - type: image
+      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
   transition_type: slide
 sections:
   - type: list_block
@@ -18,16 +21,24 @@ sections:
     items:
       - title: 晨間儀式 (08:10)
         desc: 全校皆以「早晨祝福」與「全校晨頌」開啟一天。透過詩歌、肢體律動與精神上的匯聚，讓孩子準備好進入一整天的學習。
-        image: /img/benefit-one.png
+        media:
+          type: image
+          image: /img/benefit-one.png
       - title: 大時段主課程 (Main Lesson)
         desc: 晨間最精華的時段（約 90-120 分鐘）保留給主課程。這段時間孩子會專注於特定主題（如文學、數學、科學等）進行深入探究。
-        image: /img/benefit-two.png
+        media:
+          type: image
+          image: /img/benefit-two.png
       - title: 休息與遊戲的平衡
         desc: 所有的年級都設有充足的「早點心時間與自由遊戲」以及「午餐與午休活動」。這段時間是「吐氣」的過程，讓孩子在消化學習。
-        image: /img/benefit-three.png
+        media:
+          type: image
+          image: /img/benefit-three.png
       - title: 整潔與結束儀式
         desc: 下午放學前皆設有整潔活動與「結束圈」，透過感恩與反思，圓滿地結束一天的校園生活。
-        image: /img/benefit-one.png
+        media:
+          type: image
+          image: /img/benefit-one.png
   - type: list_block
     display_mode: grid_cards
     header: 年段差異：隨生命階段調整

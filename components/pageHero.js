@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect } from "react";
 
 export default function PageHero({ data }) {
-    const { title, sub_title, description, bg_images, bg_video, transition_type = 'fade' } = data;
+    const { title, sub_title, description, media_list = [], bg_images, bg_video, transition_type = 'fade' } = data;
     const ref = useRef(null);
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 500], [0, 200]);
@@ -11,24 +11,41 @@ export default function PageHero({ data }) {
 
     const getImagePath = (path) => {
         if (!path) return path;
+        if (typeof path !== 'string') return null;
         if (path.startsWith('./')) {
             return path.substring(1);
         }
         return path;
     };
 
-    // Normalize images list
-    const images = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
-    const videoUrl = getImagePath(bg_video);
+    // Normalize media list from new structure
+    const normalizedMedia = (media_list || []).map(m => {
+        if (m.type === 'image') return { ...m, src: getImagePath(m.image) };
+        if (m.type === 'video') return { ...m, src: getImagePath(m.video) };
+        if (m.type === 'youtube') return { ...m, src: m.url };
+        return m;
+    }).filter(m => m.src || m.image || m.video);
+
+    // Legacy fallback
+    const legacyImages = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
+    const legacyVideo = getImagePath(bg_video);
+
+    const items = normalizedMedia.length > 0 ? normalizedMedia : [
+        ...(legacyVideo ? [{ type: 'video', src: legacyVideo }] : []),
+        ...legacyImages.map(img => ({ type: 'image', src: img }))
+    ];
+
+    const currentItem = items[currentIndex] || {};
+    const isVideo = currentItem.type === 'video' || currentItem.type === 'youtube';
 
     useEffect(() => {
-        if (!videoUrl && images.length > 1) {
+        if (items.length > 1) {
             const timer = setInterval(() => {
-                setCurrentIndex((prev) => (prev + 1) % images.length);
-            }, 5000);
+                setCurrentIndex((prev) => (prev + 1) % items.length);
+            }, 6000);
             return () => clearInterval(timer);
         }
-    }, [images.length, videoUrl]);
+    }, [items.length]);
 
     // Transition Variants mapping
     const variants = {
@@ -70,17 +87,7 @@ export default function PageHero({ data }) {
         <div ref={ref} className="relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-gray-900">
             {/* Background Media */}
             <div className="absolute inset-0 w-full h-full">
-                {videoUrl ? (
-                    <motion.video
-                        style={{ y }}
-                        src={videoUrl}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="object-cover w-full h-full"
-                    />
-                ) : images.length > 0 ? (
+                {items.length > 0 ? (
                     <AnimatePresence mode="popLayout">
                         <motion.div
                             key={currentIndex}
@@ -92,11 +99,33 @@ export default function PageHero({ data }) {
                             transition={currentVariant.transition}
                             className="absolute inset-0 w-full h-full"
                         >
-                            <img
-                                src={images[currentIndex]}
-                                alt={`${title} background ${currentIndex}`}
-                                className="object-cover w-full h-full"
-                            />
+                            {currentItem.type === 'video' && (
+                                <video
+                                    src={currentItem.src}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="object-cover w-full h-full"
+                                />
+                            )}
+                            {currentItem.type === 'image' && (
+                                <img
+                                    src={currentItem.src}
+                                    alt={`${title} background ${currentIndex}`}
+                                    className="object-cover w-full h-full"
+                                />
+                            )}
+                            {currentItem.type === 'youtube' && (
+                                <div className="w-full h-full pointer-events-none scale-150">
+                                    <iframe
+                                        src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
+                                        className="w-full h-full"
+                                        frameBorder="0"
+                                        allow="autoplay"
+                                    />
+                                </div>
+                            )}
                         </motion.div>
                     </AnimatePresence>
                 ) : (
@@ -130,9 +159,9 @@ export default function PageHero({ data }) {
             </Container>
 
             {/* Indicators */}
-            {!videoUrl && images.length > 1 && (
+            {items.length > 1 && (
                 <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex items-center space-x-4">
-                    {images.map((_, index) => (
+                    {items.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentIndex(index)}

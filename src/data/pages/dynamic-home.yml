@@ -4,8 +4,9 @@ hero:
   title: 同心華德福
   sub_title: 手、心、腦的平衡發展
   description: 台北市同心華德福實驗教育機構，致力於培育身、心、靈全面發展的孩子。
-  bg_images: []
-  bg_video: /img/Leigham%20Primary%20Web%20Banner.mp4
+  media_list:
+    - type: video
+      video: /img/Leigham%20Primary%20Web%20Banner.mp4
 sections:
   - type: list_block
     display_mode: alternating
@@ -15,7 +16,9 @@ sections:
     items:
       - title: 順應發展的體驗式學習
         desc: 同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求。
-        image: /img/benefit-one.png
+        media:
+          type: image
+          image: /img/benefit-one.png
         sub_items:
           - title: 中低年級的情感工作
             desc: 對於中低年級（一到四年級），教學重點放在情感面和意願面的工作，避免過早要求孩子進行抽象的「頭部上的思考」。
@@ -28,7 +31,9 @@ sections:
             icon: lucide:graduation-cap
       - title: 健康與自然的物質環境滋養
         desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
-        lottie: https://lottie.host/6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy.lottie
+        media:
+          type: lottie
+          url: 6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy
         sub_items:
           - title: 食材選擇
             desc: 學校在食材選擇上極為謹慎，優先採用實行生機互動農法（BD 農法）或小農提供的天然無毒食材，特別是在米飯和蔬果方面
@@ -43,13 +48,19 @@ sections:
     description: 透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。從幼兒教育到中學發展，讓我們一起探索孩子的生命歷程。
     items:
       - title: 同心華德福教育8分鐘精華
-        video_url: https://youtu.be/oermgcwIkC8
+        media:
+          type: youtube
+          url: https://youtu.be/oermgcwIkC8
         desc: 您是否也在找尋教育孩子的不同路徑？您想改變嗎？您願意更勇敢的面對父母的角色嗎？
       - title: 與孩子的黃金線
-        video_url: https://youtu.be/atLmqSjhnxs
+        media:
+          type: youtube
+          url: https://youtu.be/atLmqSjhnxs
         desc: 小學階段的老師與孩子間會有一條親密又隱形的黃金線，支持著孩子從事有感的活動。
       - title: 中學的自我革命
-        video_url: https://youtu.be/-kLpchWvdh4
+        media:
+          type: youtube
+          url: https://youtu.be/-kLpchWvdh4
         desc: 中學是開始更進入探索自我的年紀，我們該如何引導他認識自己、挑戰自己？
   - type: list_block
     display_mode: accordion

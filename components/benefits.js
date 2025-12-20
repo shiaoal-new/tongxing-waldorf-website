@@ -1,12 +1,14 @@
-import Image from "next/image";
+import MediaRenderer from "./mediaRenderer";
 import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
-import { DotLottiePlayer } from "@dotlottie/react-player";
 import { Icon } from "@iconify/react";
 
 export default function Benefits(props) {
   const { data } = props;
+
+  // Media data normalization
+  const mediaData = data.media || (data.lottie ? { type: 'lottie', url: data.lottie } : (data.image ? { type: 'image', image: data.image } : null));
 
   return (
     <>
@@ -19,23 +21,11 @@ export default function Benefits(props) {
           className={`flex items-center justify-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:order-1" : ""
             }`}>
           <div className="w-full">
-            {data.lottie ? (
-              <DotLottiePlayer
-                src={data.lottie}
-                autoplay
-                loop
-                style={{ width: '100%', height: '100%' }}
-              />
-            ) : (
-              <div className="relative w-full h-[300px] lg:h-[482px]">
-                <Image
-                  src={data.image}
-                  alt="Benefits"
-                  fill
-                  style={{ objectFit: 'contain' }}
-                />
-              </div>
-            )}
+            <MediaRenderer
+              media={mediaData}
+              className="w-full h-[300px] lg:h-[482px]"
+              imgClassName="object-contain"
+            />
           </div>
         </motion.div>
 
