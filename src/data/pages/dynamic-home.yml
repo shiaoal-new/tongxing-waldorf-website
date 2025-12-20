@@ -7,76 +7,90 @@ hero:
   media_list:
     - type: video
       video: /img/Leigham%20Primary%20Web%20Banner.mp4
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
-  - type: list_block
-    display_mode: alternating
-    header: 為什麼要選擇同心華德福
-    sub_header: 教育特色
-    description: 選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
-    items:
-      - title: 順應發展的體驗式學習
-        desc: 同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求。
-        media:
-          type: image
-          image: /img/benefit-one.png
-        sub_items:
-          - title: 中低年級的情感工作
-            desc: 對於中低年級（一到四年級），教學重點放在情感面和意願面的工作，避免過早要求孩子進行抽象的「頭部上的思考」。
-            icon: lucide:heart
-          - title: 肢體經驗的學習
-            desc: 學習主要透過肢體經驗和行動來進行，讓孩子在大量實踐中累積感受，並將這些感受凝結成回憶儲存於大腦。
-            icon: lucide:hand
-          - title: 高年級的深化
-            desc: 孩子們在親身經歷世界後，即便在高年級面對抽象的學術內容，也能夠很快地產生情感連結與共鳴。
-            icon: lucide:graduation-cap
-      - title: 健康與自然的物質環境滋養
-        desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
-        media:
-          type: lottie
-          url: 6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy
-        sub_items:
-          - title: 食材選擇
-            desc: 學校在食材選擇上極為謹慎，優先採用實行生機互動農法（BD 農法）或小農提供的天然無毒食材，特別是在米飯和蔬果方面
-            icon: lucide:sparkles
-          - title: 食農教育
-            desc: 學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。
-            icon: lucide:sun
-  - type: list_block
-    display_mode: videos
-    header: 同心影音專區
-    sub_header: 深入了解華德福
-    description: 透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。從幼兒教育到中學發展，讓我們一起探索孩子的生命歷程。
-    items:
-      - title: 同心華德福教育8分鐘精華
-        media:
-          type: youtube
-          url: https://youtu.be/oermgcwIkC8
-        desc: 您是否也在找尋教育孩子的不同路徑？您想改變嗎？您願意更勇敢的面對父母的角色嗎？
-      - title: 與孩子的黃金線
-        media:
-          type: youtube
-          url: https://youtu.be/atLmqSjhnxs
-        desc: 小學階段的老師與孩子間會有一條親密又隱形的黃金線，支持著孩子從事有感的活動。
-      - title: 中學的自我革命
-        media:
-          type: youtube
-          url: https://youtu.be/-kLpchWvdh4
-        desc: 中學是開始更進入探索自我的年紀，我們該如何引導他認識自己、挑戰自己？
-  - type: list_block
-    display_mode: accordion
-    header: 常見問答
-    sub_header: FAQ
-    description: 這裡彙整了家長們最常詢問的問題，希望能協助您更深入了解同心華德福的教育理念與入學相關資訊。
-    items:
-      - title: 同心華德福的學費是多少？
-        desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
-      - title: 學校提供校車嗎？
-        desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
-  - type: text_block
-    layout: 紫色大型看板 (CTA)
-    header: 誠摯邀請您
-    description: 歡迎預約參觀，親身感受同心華德福的教育場域。
-    buttons:
-      - text: 預約參觀
-        link: /visit
-        style: white
+  - section_id: features
+    blocks:
+      - type: text_block
+        header: 為什麼要選擇同心華德福
+        sub_header: 教育特色
+        description: 選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
+      - type: list_block
+        display_mode: alternating
+        items:
+          - title: 順應發展的體驗式學習
+            desc: 同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求。
+            media:
+              type: image
+              image: /img/benefit-one.png
+            sub_items:
+              - title: 中低年級的情感工作
+                desc: 對於中低年級（一到四年級），教學重點放在情感面和意願面的工作，避免過早要求孩子進行抽象的「頭部上的思考」。
+                icon: lucide:heart
+              - title: 肢體經驗的學習
+                desc: 學習主要透過肢體經驗和行動來進行，讓孩子在大量實踐中累積感受，並將這些感受凝結成回憶儲存於大腦。
+                icon: lucide:hand
+              - title: 高年級的深化
+                desc: 孩子們在親身經歷世界後，即便在高年級面對抽象的學術內容，也能夠很快地產生情感連結與共鳴。
+                icon: lucide:graduation-cap
+          - title: 健康與自然的物質環境滋養
+            desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
+            media:
+              type: lottie
+              url: 6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy
+            sub_items:
+              - title: 食材選擇
+                desc: 學校在食材選擇上極為謹慎，優先採用實行生機互動農法（BD 農法）或小農提供的天然無毒食材，特別是在米飯和蔬果方面
+                icon: lucide:sparkles
+              - title: 食農教育
+                desc: 學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。
+                icon: lucide:sun
+  - section_id: videos
+    blocks:
+      - type: text_block
+        header: 同心影音專區
+        sub_header: 深入了解華德福
+        description: 透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。從幼兒教育到中學發展，讓我們一起探索孩子的生命歷程。
+      - type: list_block
+        display_mode: videos
+        items:
+          - title: 同心華德福教育8分鐘精華
+            media:
+              type: youtube
+              url: https://youtu.be/oermgcwIkC8
+            desc: 您是否也在找尋教育孩子的不同路徑？您想改變嗎？您願意更勇敢的面對父母的角色嗎？
+          - title: 與孩子的黃金線
+            media:
+              type: youtube
+              url: https://youtu.be/atLmqSjhnxs
+            desc: 小學階段的老師與孩子間會有一條親密又隱形的黃金線，支持著孩子從事有感的活動。
+          - title: 中學的自我革命
+            media:
+              type: youtube
+              url: https://youtu.be/-kLpchWvdh4
+            desc: 中學是開始更進入探索自我的年紀，我們該如何引導他認識自己、挑戰自己？
+  - section_id: faq
+    blocks:
+      - type: text_block
+        header: 常見問答
+        sub_header: FAQ
+        description: 這裡彙整了家長們最常詢問的問題，希望能協助您更深入了解同心華德福的教育理念與入學相關資訊。
+      - type: list_block
+        display_mode: accordion
+        items:
+          - title: 同心華德福的學費是多少？
+            desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
+          - title: 學校提供校車嗎？
+            desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
+    # media_list:
+    #   - type: video
+    #     video: /img/Leigham%20Primary%20Web%20Banner.mp4
+  - layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        header: 誠摯邀請您
+        description: 歡迎預約參觀，親身感受同心華德福的教育場域。
+        buttons:
+          - text: 預約參觀
+            link: /visit
+            style: white

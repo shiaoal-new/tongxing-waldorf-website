@@ -3,7 +3,31 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect } from "react";
 
 export default function PageHero({ data }) {
-    const { title, sub_title, description, media_list = [], bg_images, bg_video, transition_type = 'fade' } = data;
+    const {
+        layout,
+        header,
+        sub_header,
+        // Legacy support
+        title: legacyTitle,
+        sub_title: legacySubTitle,
+        description,
+        media_list = [],
+        bg_images,
+        bg_video,
+        transition_type = 'fade'
+    } = data;
+
+    // Resolve content 
+    const effectiveTitle = header || legacyTitle;
+    const effectiveSubTitle = sub_header || legacySubTitle;
+
+    // Resolve Layout CSS
+    const layoutClasses = layout || {};
+    const title_class = layoutClasses.title_class || "text-4xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl mb-6";
+    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-4 text-sm font-bold tracking-wider text-primary-200 uppercase bg-primary-900/40 rounded-full border border-primary-500/30";
+    const description_class = layoutClasses.description_class || "text-lg leading-relaxed text-gray-100 lg:text-xl xl:text-2xl opacity-90";
+    const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
+    const container_class = layoutClasses.container_class || "items-center justify-center";
     const ref = useRef(null);
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 500], [0, 200]);
@@ -84,7 +108,7 @@ export default function PageHero({ data }) {
     const currentVariant = variants[transition_type] || variants.fade;
 
     return (
-        <div ref={ref} className="relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-gray-900">
+        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden bg-gray-900 ${container_class}`}>
             {/* Background Media */}
             <div className="absolute inset-0 w-full h-full">
                 {items.length > 0 ? (
@@ -109,10 +133,11 @@ export default function PageHero({ data }) {
                                     className="object-cover w-full h-full"
                                 />
                             )}
+
                             {currentItem.type === 'image' && (
                                 <img
                                     src={currentItem.src}
-                                    alt={`${title} background ${currentIndex}`}
+                                    alt={`${effectiveTitle} background ${currentIndex}`}
                                     className="object-cover w-full h-full"
                                 />
                             )}
@@ -134,23 +159,23 @@ export default function PageHero({ data }) {
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
             </div>
 
-            <Container className="relative z-10 py-20">
-                <div className="max-w-3xl">
+            <Container className="relative z-10 py-20 flex w-full h-full">
+                <div className={`w-full flex flex-col ${wrapper_class}`}>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        {sub_title && (
-                            <span className="inline-block px-3 py-1 mb-4 text-sm font-bold tracking-wider text-primary-200 uppercase bg-primary-900/40 rounded-full border border-primary-500/30">
-                                {sub_title}
+                        {effectiveSubTitle && (
+                            <span className={pretitle_class}>
+                                {effectiveSubTitle}
                             </span>
                         )}
-                        <h1 className="text-4xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl mb-6">
-                            {title}
+                        <h1 className={title_class}>
+                            {effectiveTitle}
                         </h1>
                         {description && (
-                            <p className="text-lg leading-relaxed text-gray-100 lg:text-xl xl:text-2xl opacity-90">
+                            <p className={description_class}>
                                 {description}
                             </p>
                         )}

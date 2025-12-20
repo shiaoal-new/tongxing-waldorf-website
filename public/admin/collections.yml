@@ -1,3 +1,4 @@
+
 - name: "faculty"
   label: "教職員名單"
   folder: "src/data/faculty"
@@ -10,12 +11,13 @@
   fields:
     - { label: "姓名", name: "name", widget: "string", required: true }
     - { label: "職稱", name: "title", widget: "string", required: true }
-    - label: "媒體資源"
+    - &media_field  # 定義可重用的媒體欄位錨點
+      label: "媒體資源"
       name: "media"
       widget: "object"
       required: false
       summary: "{{type}}"
-      fields:
+      fields: &media_inner_fields
         - label: "媒體類型"
           name: "type"
           widget: "select"
@@ -25,6 +27,7 @@
             - { label: "📽️ YouTube", value: "youtube" }
             - { label: "✨ Lottie 動畫", value: "lottie" }
           default: "image"
+          required: false
         - { label: "圖片文件", name: "image", widget: "image", required: false }
         - { label: "影片文件", name: "video", widget: "file", required: false }
         - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
@@ -67,25 +70,7 @@
   fields:
     - { label: "標題", name: "title", widget: "string", required: true }
     - { label: "简短描述", name: "desc", widget: "text", required: true }
-    - label: "媒體資源"
-      name: "media"
-      widget: "object"
-      required: false
-      summary: "{{type}}"
-      fields:
-        - label: "媒體類型"
-          name: "type"
-          widget: "select"
-          options:
-            - { label: "🖼️ 圖片", value: "image" }
-            - { label: "🎥 影片檔", value: "video" }
-            - { label: "📽️ YouTube", value: "youtube" }
-            - { label: "✨ Lottie 動畫", value: "lottie" }
-          default: "image"
-        - { label: "圖片文件", name: "image", widget: "image", required: false }
-        - { label: "影片文件", name: "video", widget: "file", required: false }
-        - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
-        - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
+    - *media_field  # 重用媒體欄位定義
     - label: "特點細項列表"
       name: "bullets"
       widget: "list"
@@ -118,118 +103,88 @@
       collapsed: true
       required: false
       fields:
-        - { label: "主標題", name: "title", widget: "string" }
-        - { label: "副標題", name: "sub_title", widget: "string" }
-        - { label: "背景描述 (SEO用)", name: "description", widget: "text" }
-        - label: "背景媒體列表 (Carousel)"
+        - &layout_field { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+        - &header_field { label: "大標題", name: "header", widget: "string", required: false }
+        - &subheader_field { label: "小標題", name: "sub_header", widget: "string", required: false }
+        - &description_field { label: "描述內容", name: "description", widget: "text", required: false }
+        - &media_list_field
+          label: "背景媒體列表 (Carousel)"
           name: "media_list"
           widget: "list"
           summary: "{{type}}"
-          fields:
-            - label: "媒體類型"
-              name: "type"
-              widget: "select"
-              options:
-                - { label: "🖼️ 圖片", value: "image" }
-                - { label: "🎥 影片檔", value: "video" }
-                - { label: "📽️ YouTube", value: "youtube" }
-                - { label: "✨ Lottie 動畫", value: "lottie" }
-              default: "image"
-            - { label: "圖片文件", name: "image", widget: "image", required: false }
-            - { label: "影片文件", name: "video", widget: "file", required: false }
-            - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
-            - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
+          fields: *media_inner_fields
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
-      summary: "{{header}}"
-      types:
-        - label: "📄 純文字/介紹區塊"
-          name: "text_block"
-          widget: "object"
-          fields:
-            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-            - { label: "大標題", name: "header", widget: "string" }
-            - { label: "小標題 (Pretitle)", name: "sub_header", widget: "string" }
-            - { label: "段落簡介 (選填)", name: "description", widget: "text", required: false }
-            - { label: "詳細內容 (Markdown)", name: "content", widget: "markdown" }
-            - label: "下方行動按鈕 (Actions)"
-              name: "buttons"
-              widget: "list"
-              collapsed: true
-              summary: "{{text}}"
+      summary: "{{section_id}} ({{layout}})"
+      fields:
+        - *layout_field
+        - { label: "段落識別 ID", name: "section_id", widget: "string", required: false, hint: "用於錨點連結，例如 'about'" }
+        - *media_list_field
+        - label: "區塊內容 (Blocks)"
+          name: "blocks"
+          widget: "list"
+          types:
+            - label: "📄 純文字/介紹區塊"
+              name: "text_block"
+              widget: "object"
               fields:
-                - { label: "按鈕文字", name: "text", widget: "string" }
-                - { label: "連結網址", name: "link", widget: "string" }
-                - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
-        - label: "📦 通用列表區塊 (特色/影音/FAQ)"
-          name: "list_block"
-          widget: "object"
-          fields:
-            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-            - { label: "🖼️ 顯示模式", name: "display_mode", widget: "select", options: [
-                {label: "圖文左右交錯 (教育特色模式)", value: "alternating"},
-                {label: "三欄網格卡片 (概覽模式)", value: "grid_cards"},
-                {label: "垂直摺疊面板 (常見問答模式)", value: "accordion"},
-                {label: "影片橫排網格 (影音專區模式)", value: "videos"}
-              ], default: "alternating" }
-            - { label: "區塊標題", name: "header", widget: "string" }
-            - { label: "副標題", name: "sub_header", widget: "string" }
-            - { label: "區塊描述文字", name: "description", widget: "text", required: false }
-            - label: "列表項目"
-              name: "items"
-              widget: "list"
-              collapsed: true
-              summary: "{{title}}"
-              fields:
-                - { label: "項目名稱/標題", name: "title", widget: "string" }
-                - { label: "小字備註", name: "subtitle", widget: "string", required: false }
-                - { label: "內文描述", name: "desc", widget: "text" }
-                - label: "媒體資源"
-                  name: "media"
-                  widget: "object"
-                  required: false
-                  summary: "{{type}}"
+                - *header_field
+                - *subheader_field
+                - *description_field
+                - { label: "詳細內容 (Markdown)", name: "content", widget: "markdown" ,required: false }
+                - label: "下方行動按鈕 (Actions)"
+                  name: "buttons"
+                  widget: "list"
+                  collapsed: true
+                  summary: "{{text}}"
                   fields:
-                    - label: "媒體類型"
-                      name: "type"
-                      widget: "select"
-                      options:
-                        - { label: "🖼️ 圖片", value: "image" }
-                        - { label: "🎥 影片檔", value: "video" }
-                        - { label: "📽️ YouTube", value: "youtube" }
-                        - { label: "✨ Lottie 動畫", value: "lottie" }
-                      default: "image"
-                    - { label: "圖片文件", name: "image", widget: "image", required: false }
-                    - { label: "影片文件", name: "video", widget: "file", required: false }
-                    - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
-                    - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
-                - label: "次級小清單 (選填)"
-                  name: "sub_items"
+                    - { label: "按鈕文字", name: "text", widget: "string" }
+                    - { label: "連結網址", name: "link", widget: "string" }
+                    - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+            - label: "📦 通用列表區塊 (特色/影音/FAQ)"
+              name: "list_block"
+              widget: "object"
+              fields:
+                - { label: "🖼️ 顯示模式", name: "display_mode", widget: "select", options: [
+                    {label: "圖文左右交錯 (教育特色模式)", value: "alternating"},
+                    {label: "三欄網格卡片 (概覽模式)", value: "grid_cards"},
+                    {label: "垂直摺疊面板 (常見問答模式)", value: "accordion"},
+                    {label: "影片橫排網格 (影音專區模式)", value: "videos"}
+                  ], default: "alternating" }
+                - label: "列表項目"
+                  name: "items"
                   widget: "list"
                   collapsed: true
                   summary: "{{title}}"
                   fields:
-                    - { label: "小標題", name: "title", widget: "string" }
-                    - { label: "小描述", name: "desc", widget: "text" }
-                    - { label: "小圖示 ID", name: "icon", widget: "string" }
-            - label: "區塊底部按鈕"
-              name: "buttons"
-              widget: "list"
-              collapsed: true
-              summary: "{{text}}"
+                    - { label: "項目名稱/標題", name: "title", widget: "string" }
+                    - { label: "小字備註", name: "subtitle", widget: "string", required: false }
+                    - { label: "內文描述", name: "desc", widget: "text" }
+                    - *media_field  # 重用媒體欄位定義
+                    - label: "次級小清單 (選填)"
+                      name: "sub_items"
+                      widget: "list"
+                      collapsed: true
+                      summary: "{{title}}"
+                      fields:
+                        - { label: "小標題", name: "title", widget: "string" ,required: false}
+                        - { label: "小描述", name: "desc", widget: "text" }
+                        - { label: "小圖示 ID", name: "icon", widget: "string" }
+                - label: "區塊底部按鈕"
+                  name: "buttons"
+                  widget: "list"
+                  collapsed: true
+                  summary: "{{text}}"
+                  fields:
+                    - { label: "按鈕文字", name: "text", widget: "string" }
+                    - { label: "連結", name: "link", widget: "string" }
+                    - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+            - label: "👥 成員/教職員名單區塊"
+              name: "member_block"
+              widget: "object"
               fields:
-                - { label: "按鈕文字", name: "text", widget: "string" }
-                - { label: "連結", name: "link", widget: "string" }
-                - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
-        - label: "👥 成員/教職員名單區塊"
-          name: "member_block"
-          widget: "object"
-          fields:
-            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-            - { label: "區塊標題", name: "header", widget: "string" }
-            - { label: "副標題", name: "sub_header", widget: "string" }
-            - { label: "選擇教職員 (可複選)", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
+                - { label: "選擇教職員 (可複選)", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"

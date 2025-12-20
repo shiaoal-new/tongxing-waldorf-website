@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
+import BackgroundCarousel from "./backgroundCarousel";
 
 export default function Section(props) {
     const {
@@ -13,6 +14,7 @@ export default function Section(props) {
         direction,
         anchor,
         buttons,
+        media_list,
         ...rest
     } = props;
 
@@ -20,9 +22,14 @@ export default function Section(props) {
     const classes = layout || {};
     const container_class = classes.container_class || "";
     const wrapper_class = classes.wrapper_class || "";
-    const pretitle_class = classes.pretitle_class || "text-sm font-bold tracking-wider text-primary-600 uppercase";
-    const title_class = classes.title_class || "max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl dark:text-white";
-    const description_class = classes.description_class || "max-w-2xl py-4 text-lg leading-normal text-gray-500 lg:text-xl xl:text-xl dark:text-gray-300";
+    // If background media is present, default to white text for better visibility
+    const defaultTitleColor = media_list?.length > 0 ? "text-white" : "text-gray-800 dark:text-white";
+    const defaultDescColor = media_list?.length > 0 ? "text-gray-100" : "text-gray-500 dark:text-gray-300";
+    const defaultPretitleColor = media_list?.length > 0 ? "text-primary-200" : "text-primary-600";
+
+    const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-wider ${defaultPretitleColor} uppercase`;
+    const title_class = classes.title_class || `max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight ${defaultTitleColor} lg:leading-tight lg:text-4xl`;
+    const description_class = classes.description_class || `max-w-2xl py-4 text-lg leading-normal ${defaultDescColor} lg:text-xl xl:text-xl`;
 
     // Define animation variants based on direction
     const variants = {
@@ -52,11 +59,15 @@ export default function Section(props) {
     return (
         <section
             id={anchor}
-            className={`w-full section_container ${container_class}`}
+            className={`w-full relative overflow-hidden section_container ${container_class}`}
             {...rest}
         >
+            {media_list && media_list.length > 0 && (
+                <BackgroundCarousel media_list={media_list} />
+            )}
+
             <Container
-                className={`flex w-full flex-col mt-4 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
+                className={`flex w-full flex-col mt-4 relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
@@ -110,7 +121,7 @@ export default function Section(props) {
             </Container>
 
             {bodyContent && (
-                <div className={`w-full content_class ${classes.content_class || ""}`}>
+                <div className={`w-full relative z-10 content_class ${classes.content_class || ""}`}>
                     {bodyContent}
                 </div>
             )}
