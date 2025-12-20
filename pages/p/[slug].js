@@ -124,10 +124,53 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                     {contentBlocks.map((block, bIndex) => (
                                         <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
                                             {block.type === "text_block" && (
-                                                <div className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
-                                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                                        {block.content}
-                                                    </ReactMarkdown>
+                                                <div className={`max-w-4xl mx-auto ${align === 'left' ? 'text-left' : 'text-center'}`}>
+                                                    {block.sub_header && (
+                                                        <div className="text-sm font-bold tracking-wider text-primary-600 uppercase">
+                                                            {block.sub_header}
+                                                        </div>
+                                                    )}
+                                                    {block.header && (
+                                                        <h3 className="mt-3 text-2xl font-bold leading-snug tracking-tight text-gray-800 dark:text-white lg:leading-tight lg:text-3xl">
+                                                            {block.header}
+                                                        </h3>
+                                                    )}
+                                                    {block.description && (
+                                                        <div className="py-4 text-lg leading-normal text-gray-500 dark:text-gray-300">
+                                                            {block.description}
+                                                        </div>
+                                                    )}
+                                                    {block.content && (
+                                                        <div className={`prose prose-lg dark:prose-invert max-w-none ${align === 'left' ? '' : 'mx-auto'}`}>
+                                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                                {block.content}
+                                                            </ReactMarkdown>
+                                                        </div>
+                                                    )}
+                                                    {block.buttons && block.buttons.length > 0 && (
+                                                        <div className={`mt-6 flex flex-wrap gap-4 ${align === "left" ? "justify-start" : "justify-center"}`}>
+                                                            {block.buttons.map((btn, idx) => {
+                                                                const isPrimary = btn.style === "primary";
+                                                                const isWhite = btn.style === "white";
+                                                                return (
+                                                                    <a
+                                                                        key={idx}
+                                                                        href={btn.link}
+                                                                        target={btn.link?.startsWith("http") ? "_blank" : "_self"}
+                                                                        rel="noopener noreferrer"
+                                                                        className={`px-8 py-3 text-lg font-medium text-center rounded-md transition-all ${isPrimary
+                                                                            ? "bg-primary-600 text-white hover:bg-primary-700"
+                                                                            : isWhite
+                                                                                ? "bg-white text-primary-600 hover:bg-gray-50"
+                                                                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                                            }`}
+                                                                    >
+                                                                        {btn.text}
+                                                                    </a>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
 

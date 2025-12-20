@@ -77,6 +77,24 @@ sections:
             title: 年段任務 / 結束圈
             desc: 專題研究、社會責任與感恩反思。
             type: out
+      - type: text_block
+        header: 華德福小字典
+        sub_header: ""
+        description: 這些名詞對孩子意味著什麼？
+      - type: list_block
+        display_mode: accordion
+        items:
+          - media:
+              type:
+            title: 主課程
+            subtitle: Main Lesson
+            desc: 這不是傳統的分科教學，而是「沉浸式學習」。孩子在 3-4 週內每天早上專注探究同一個學科，讓知識不再碎片化，而是深刻的圖像記憶。
+          - title: 一呼一吸
+            subtitle: Rhythm
+            desc: 我們不希望孩子整天坐著不動。透過課表的動靜交替，保護神經系統不因過度學習而疲累，讓孩子維持長久的學習動機。
+          - title: 形線畫
+            subtitle: Form Drawing
+            desc: 低年級特有的課程，透過畫出流動的線條，鍛鍊手眼協調與空間感，這是邏輯思考與幾何學的基礎。
   - section_id: daily-rhythm
     blocks:
       - type: text_block
