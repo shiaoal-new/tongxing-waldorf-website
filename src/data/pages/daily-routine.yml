@@ -85,7 +85,7 @@ sections:
         display_mode: accordion
         items:
           - media:
-              type:
+              ? type
             title: 主課程
             subtitle: Main Lesson
             desc: 這不是傳統的分科教學，而是「沉浸式學習」。孩子在 3-4 週內每天早上專注探究同一個學科，讓知識不再碎片化，而是深刻的圖像記憶。
@@ -95,68 +95,20 @@ sections:
           - title: 形線畫
             subtitle: Form Drawing
             desc: 低年級特有的課程，透過畫出流動的線條，鍛鍊手眼協調與空間感，這是邏輯思考與幾何學的基礎。
-  - section_id: daily-rhythm
+  - section_id: senior-transition
     blocks:
       - type: text_block
-        header: 共同特色：穩定心靈的節奏
-        sub_header: 呼吸的律動
-        description: 不論年級高低，同心華德福的作息皆遵循著「呼吸」的韻律，強調動靜平衡。
-      - type: list_block
-        display_mode: alternating
-        items:
-          - title: 晨間儀式 (08:10)
-            desc: 全校皆以「早晨祝福」與「全校晨頌」開啟一天。透過詩歌、肢體律動與精神上的匯聚，讓孩子準備好進入一整天的學習。
-            media:
-              type: image
-              image: /img/benefit-one.png
-          - title: 大時段主課程 (Main Lesson)
-            desc: 晨間最精華的時段（約 90-120 分鐘）保留給主課程。這段時間孩子會專注於特定主題（如文學、數學、科學等）進行深入探究。
-            media:
-              type: image
-              image: /img/benefit-two.png
-          - title: 休息與遊戲的平衡
-            desc: 所有的年級都設有充足的「早點心時間與自由遊戲」以及「午餐與午休活動」。這段時間是「吐氣」的過程，讓孩子在消化學習。
-            media:
-              type: image
-              image: /img/benefit-three.png
-          - title: 整潔與結束儀式
-            desc: 下午放學前皆設有整潔活動與「結束圈」，透過感恩與反思，圓滿地結束一天的校園生活。
-            media:
-              type: image
-              image: /img/benefit-one.png
-  - section_id: grade-differences
-    blocks:
-      - type: text_block
-        header: 年段差異：隨生命階段調整
-        sub_header: 成長的步調
-        description: 隨著孩子從兒童期邁入青春期，作息與課程內容也因應生命發展階段產生了調整。
+        header: 走向成熟：高年級的轉化與銜接
+        description: 隨著孩子步入青春期，同心提供更紮實的磨練，幫助他們從「感受世界」轉向「思考世界」：
       - type: list_block
         display_mode: grid_cards
         items:
-          - title: 中低年段 (1-4年級)
-            subtitle: 感官與藝術導向
-            desc: 主課程約 90-100 分鐘。課表中充滿大量手作與藝術課程，如形線畫、濕水彩、自然日等，強調透過感官體驗連結世界。
-          - title: 高年段 (5-9年級)
-            subtitle: 思辨與社會連結
-            desc: 主課程延長至 120 分鐘。加入學科深化、專業技藝（木工、泥塑）與自我探索（年段任務、班會），提升學習強度與社會責任。
-          - title: 外語與季節專項
-            subtitle: 循環教學設計
-            desc: 高年級增加英文課頻率，並加入季節性循環課程（如秋冬泥塑、春夏木工），將教學與大自然季節交替密切結合。
-  - section_id: other-routines
-    blocks:
-      - type: text_block
-        header: 其他生活作息
-        sub_header: 每日點滴
-        description: 確保孩子在校園生活中獲得充足的放鬆、社交與課後支援。
-      - type: list_block
-        display_mode: accordion
-        items:
-          - title: 午間時光 (12:30 - 13:30)
-            desc: 為午餐、整潔、靜心休息與自由遊戲時間，確保孩子有充足的放鬆與社交機會。
-          - title: 放學安排
-            desc: 除了週三於 14:00 放學外，其餘工作日在 15:30 進行「結束圈」，收整整天的學習。
-          - title: 安親時間
-            desc: 因應低年段家庭需求，同心提供課後安親至 15:40 分，讓家長能安心安排接送。
+          - title: 年段任務
+            desc: 8 年級的「大專題」與 9 年級的「社會實習」，讓孩子走出校園，與真實社會連結，培養解決問題的實戰力。
+          - title: 學術銜接與資訊素養
+            desc: 7 年級後逐步增加學科輔導與資訊工具應用，確保孩子在擁有健全人格的同時，也具備銜接高中教育的學術硬實力。
+          - title: 工藝與意志
+            desc: 在專業的木工坊與泥塑課中，孩子學習與物質對抗、合作，建立強韌的意志力。
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
