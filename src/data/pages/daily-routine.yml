@@ -13,6 +13,70 @@ hero:
       image: https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
   transition_type: slide
 sections:
+  - section_id: interactive-schedule
+    blocks:
+      - type: text_block
+        header: 孩子在同心的一天
+        description: 規律是健康的基礎，我們在「一呼一吸」的節奏中，陪伴孩子在安定中成長。透過下表，您可以看見我們如何針對不同發展階段的孩子，設計最適切的「呼吸節奏」。
+      - type: schedule_block
+        low:
+          - time: 08:10
+            title: 晨間儀式
+            desc: 早晨祝福與全校晨頌，喚醒一天的精神。
+            type: in
+          - time: 08:45
+            title: 大時段主課程
+            desc: 語文、數學、形線畫，三週一單元的深度學習。
+            type: in
+          - time: 10:30
+            title: 早點心與遊戲
+            desc: 戶外自由玩耍，讓孩子在自然中「吐氣」。
+            type: out
+          - time: 11:10
+            title: 專科課程
+            desc: 濕水彩、手工、養生，鍛鍊感官與意志。
+            type: in
+          - time: 12:00
+            title: 午餐與午休
+            desc: 享用美味午膳，靜心休息補充能量。
+            type: out
+          - time: 13:20
+            title: 自然日 / 整理
+            desc: 與大地連結，學習照顧環境與生活。
+            type: out
+          - time: 14:00
+            title: 感恩放學
+            desc: 結束圈儀式，帶著圓滿的心情回歸家庭。
+            type: out
+        high:
+          - time: 08:10
+            title: 晨間儀式
+            desc: 匯聚精神，透過詩歌與律動開啟高專注的一天。
+            type: in
+          - time: 08:45
+            title: 大時段主課程
+            desc: 科學探究、文學思辨、史地人文專題。
+            type: in
+          - time: 10:45
+            title: 點心與社交
+            desc: 青少年期的自主交流時間，轉換學習頻率。
+            type: out
+          - time: 11:10
+            title: 專業技藝課
+            desc: 木工、泥塑、外語練習，追求工藝精神。
+            type: in
+          - time: 12:10
+            title: 午餐與休息
+            desc: 營養補給，為下午更緊湊的課程做準備。
+            type: out
+          - time: 13:20
+            title: 學科練習 / 社團
+            desc: 數學練習、武術、合奏與自主社團活動。
+            type: in
+          - time: 15:40
+            title: 年段任務 / 結束圈
+            desc: 專題研究、社會責任與感恩反思。
+            type: out
   - section_id: daily-rhythm
     blocks:
       - type: text_block
@@ -60,98 +124,6 @@ sections:
           - title: 外語與季節專項
             subtitle: 循環教學設計
             desc: 高年級增加英文課頻率，並加入季節性循環課程（如秋冬泥塑、春夏木工），將教學與大自然季節交替密切結合。
-  - section_id: interactive-schedule
-    blocks:
-      - type: text_block
-        header: 孩子在同心的一天
-        description: 規律是健康的基礎，我們在「一呼一吸」的節奏中，陪伴孩子在安定中成長。
-      - type: schedule_block
-        low:
-          - {
-              time: "08:10",
-              title: "晨間儀式",
-              desc: "早晨祝福與全校晨頌，喚醒一天的精神。",
-              type: "in",
-            }
-          - {
-              time: "08:45",
-              title: "大時段主課程",
-              desc: "語文、數學、形線畫，三週一單元的深度學習。",
-              type: "in",
-            }
-          - {
-              time: "10:30",
-              title: "早點心與遊戲",
-              desc: "戶外自由玩耍，讓孩子在自然中「吐氣」。",
-              type: "out",
-            }
-          - {
-              time: "11:10",
-              title: "專科課程",
-              desc: "濕水彩、手工、養生，鍛鍊感官與意志。",
-              type: "in",
-            }
-          - {
-              time: "12:00",
-              title: "午餐與午休",
-              desc: "享用美味午膳，靜心休息補充能量。",
-              type: "out",
-            }
-          - {
-              time: "13:20",
-              title: "自然日 / 整理",
-              desc: "與大地連結，學習照顧環境與生活。",
-              type: "out",
-            }
-          - {
-              time: "14:00",
-              title: "感恩放學",
-              desc: "結束圈儀式，帶著圓滿的心情回歸家庭。",
-              type: "out",
-            }
-        high:
-          - {
-              time: "08:10",
-              title: "晨間儀式",
-              desc: "匯聚精神，透過詩歌與律動開啟高專注的一天。",
-              type: "in",
-            }
-          - {
-              time: "08:45",
-              title: "大時段主課程",
-              desc: "科學探究、文學思辨、史地人文專題。",
-              type: "in",
-            }
-          - {
-              time: "10:45",
-              title: "點心與社交",
-              desc: "青少年期的自主交流時間，轉換學習頻率。",
-              type: "out",
-            }
-          - {
-              time: "11:10",
-              title: "專業技藝課",
-              desc: "木工、泥塑、外語練習，追求工藝精神。",
-              type: "in",
-            }
-          - {
-              time: "12:10",
-              title: "午餐與休息",
-              desc: "營養補給，為下午更緊湊的課程做準備。",
-              type: "out",
-            }
-          - {
-              time: "13:20",
-              title: "學科練習 / 社團",
-              desc: "數學練習、武術、合奏與自主社團活動。",
-              type: "in",
-            }
-          - {
-              time: "15:40",
-              title: "年段任務 / 結束圈",
-              desc: "專題研究、社會責任與感恩反思。",
-              type: "out",
-            }
   - section_id: other-routines
     blocks:
       - type: text_block
