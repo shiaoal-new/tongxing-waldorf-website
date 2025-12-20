@@ -15,6 +15,8 @@ export default function Section(props) {
         anchor,
         buttons,
         media_list,
+        parallax_ratio,
+        className,
         ...rest
     } = props;
 
@@ -59,11 +61,11 @@ export default function Section(props) {
     return (
         <section
             id={anchor}
-            className={`w-full relative overflow-hidden section_container ${container_class}`}
+            className={`w-full relative overflow-hidden section_container ${container_class} ${className || ""}`}
             {...rest}
         >
             {media_list && media_list.length > 0 && (
-                <BackgroundCarousel media_list={media_list} />
+                <BackgroundCarousel media_list={media_list} parallax_ratio={parallax_ratio} />
             )}
 
             <Container

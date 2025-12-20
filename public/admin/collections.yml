@@ -1,4 +1,3 @@
-
 - name: "faculty"
   label: "教職員名單"
   folder: "src/data/faculty"
@@ -11,7 +10,7 @@
   fields:
     - { label: "姓名", name: "name", widget: "string", required: true }
     - { label: "職稱", name: "title", widget: "string", required: true }
-    - &media_field  # 定義可重用的媒體欄位錨點
+    - &media_field # 定義可重用的媒體欄位錨點
       label: "媒體資源"
       name: "media"
       widget: "object"
@@ -30,10 +29,25 @@
           required: false
         - { label: "圖片文件", name: "image", widget: "image", required: false }
         - { label: "影片文件", name: "video", widget: "file", required: false }
-        - { label: "URL / YouTube ID / Lottie URL", name: "url", widget: "string", required: false }
-        - { label: "替代文字 (Alt)", name: "alt", widget: "string", required: false }
+        - {
+            label: "URL / YouTube ID / Lottie URL",
+            name: "url",
+            widget: "string",
+            required: false,
+          }
+        - {
+            label: "替代文字 (Alt)",
+            name: "alt",
+            widget: "string",
+            required: false,
+          }
     - { label: "電子郵件", name: "email", widget: "email", required: false }
-    - { label: "辦公室分機", name: "extension", widget: "string", required: false }
+    - {
+        label: "辦公室分機",
+        name: "extension",
+        widget: "string",
+        required: false,
+      }
     - { label: "簡介/專長", name: "bio", widget: "markdown", required: false }
     - label: "專業領域"
       name: "expertise"
@@ -42,7 +56,13 @@
       summary: "{{area}}"
       fields:
         - { label: "領域名稱", name: "area", widget: "string" }
-    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0 }
+    - {
+        label: "顯示順序",
+        name: "order",
+        widget: "number",
+        value_type: "int",
+        min: 0,
+      }
 
 - name: "faq"
   label: "常見問答"
@@ -54,9 +74,27 @@
   identifier_field: question
   summary: "{{question}}"
   fields:
-    - { label: "問題 (標題)", name: "question", widget: "string", required: true }
-    - { label: "答案 (內容)", name: "answer", widget: "markdown", required: true }
-    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0, hint: "數字越小越前面" }
+    - {
+        label: "問題 (標題)",
+        name: "question",
+        widget: "string",
+        required: true,
+      }
+    - {
+        label: "答案 (內容)",
+        name: "answer",
+        widget: "markdown",
+        required: true,
+      }
+    - {
+        label: "顯示順序",
+        name: "order",
+        widget: "number",
+        value_type: "int",
+        min: 0,
+        default: 0,
+        hint: "數字越小越前面",
+      }
 
 - name: "benefits"
   label: "教育特色庫 (Benefits)"
@@ -70,7 +108,7 @@
   fields:
     - { label: "標題", name: "title", widget: "string", required: true }
     - { label: "简短描述", name: "desc", widget: "text", required: true }
-    - *media_field  # 重用媒體欄位定義
+    - *media_field # 重用媒體欄位定義
     - label: "特點細項列表"
       name: "bullets"
       widget: "list"
@@ -84,7 +122,13 @@
           widget: "string"
           hint: "請輸入圖標 ID，例如 'mdi:heart'。可至 https://icon-sets.iconify.design/ 搜尋。"
           required: true
-    - { label: "排序", name: "order", widget: "number", value_type: "int", default: 0 }
+    - {
+        label: "排序",
+        name: "order",
+        widget: "number",
+        value_type: "int",
+        default: 0,
+      }
 
 - name: "pages"
   label: "頁面管理 (Page Builder)"
@@ -95,32 +139,85 @@
   identifier_field: title
   summary: "{{title}} ({{slug}})"
   fields:
-    - { label: "頁面名稱", name: "title", widget: "string", hint: "僅供後台識別使用" }
-    - { label: "網址路徑 (Slug)", name: "slug", widget: "string", hint: "例如：about-us。這會決定網址的最後一部分" }
+    - {
+        label: "頁面名稱",
+        name: "title",
+        widget: "string",
+        hint: "僅供後台識別使用",
+      }
+    - {
+        label: "網址路徑 (Slug)",
+        name: "slug",
+        widget: "string",
+        hint: "例如：about-us。這會決定網址的最後一部分",
+      }
     - label: "頁面最上方英雄區塊 (Hero)"
       name: "hero"
       widget: "object"
       collapsed: true
       required: false
       fields:
-        - &layout_field { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-        - &header_field { label: "大標題", name: "header", widget: "string", required: false }
-        - &subheader_field { label: "小標題", name: "sub_header", widget: "string", required: false }
-        - &description_field { label: "描述內容", name: "description", widget: "text", required: false }
+        - &layout_field {
+            label: "🎨 版面風格模板",
+            name: "layout",
+            widget: "relation",
+            collection: "section_layouts",
+            search_fields: ["title"],
+            value_field: "title",
+            display_fields: ["title"],
+            required: false,
+          }
+        - &header_field {
+            label: "大標題",
+            name: "header",
+            widget: "string",
+            required: false,
+          }
+        - &subheader_field {
+            label: "小標題",
+            name: "sub_header",
+            widget: "string",
+            required: false,
+          }
+        - &description_field {
+            label: "描述內容",
+            name: "description",
+            widget: "text",
+            required: false,
+          }
         - &media_list_field
           label: "背景媒體列表 (Carousel)"
           name: "media_list"
           widget: "list"
           summary: "{{type}}"
           fields: *media_inner_fields
+        - &parallax_field {
+            label: "視差滾動速率 (-2~2)",
+            name: "parallax_ratio",
+            widget: "number",
+            value_type: "float",
+            default: 0,
+            min: -2,
+            max: 2,
+            step: 0.1,
+            hint: "1=固定背景(Fixed), 0=隨頁面捲動(Static), 0.5=半速視差",
+            required: false,
+          }
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
       summary: "{{section_id}} ({{layout}})"
       fields:
         - *layout_field
-        - { label: "段落識別 ID", name: "section_id", widget: "string", required: false, hint: "用於錨點連結，例如 'about'" }
+        - {
+            label: "段落識別 ID",
+            name: "section_id",
+            widget: "string",
+            required: false,
+            hint: "用於錨點連結，例如 'about'",
+          }
         - *media_list_field
+        - *parallax_field
         - label: "區塊內容 (Blocks)"
           name: "blocks"
           widget: "list"
@@ -132,7 +229,12 @@
                 - *header_field
                 - *subheader_field
                 - *description_field
-                - { label: "詳細內容 (Markdown)", name: "content", widget: "markdown" ,required: false }
+                - {
+                    label: "詳細內容 (Markdown)",
+                    name: "content",
+                    widget: "markdown",
+                    required: false,
+                  }
                 - label: "下方行動按鈕 (Actions)"
                   name: "buttons"
                   widget: "list"
@@ -141,34 +243,73 @@
                   fields:
                     - { label: "按鈕文字", name: "text", widget: "string" }
                     - { label: "連結網址", name: "link", widget: "string" }
-                    - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+                    - {
+                        label: "按鈕顏色",
+                        name: "style",
+                        widget: "select",
+                        options: ["primary", "secondary", "white"],
+                        default: "primary",
+                      }
             - label: "📦 通用列表區塊 (特色/影音/FAQ)"
               name: "list_block"
               widget: "object"
               fields:
-                - { label: "🖼️ 顯示模式", name: "display_mode", widget: "select", options: [
-                    {label: "圖文左右交錯 (教育特色模式)", value: "alternating"},
-                    {label: "三欄網格卡片 (概覽模式)", value: "grid_cards"},
-                    {label: "垂直摺疊面板 (常見問答模式)", value: "accordion"},
-                    {label: "影片橫排網格 (影音專區模式)", value: "videos"}
-                  ], default: "alternating" }
+                - {
+                    label: "🖼️ 顯示模式",
+                    name: "display_mode",
+                    widget: "select",
+                    options:
+                      [
+                        {
+                          label: "圖文左右交錯 (教育特色模式)",
+                          value: "alternating",
+                        },
+                        {
+                          label: "三欄網格卡片 (概覽模式)",
+                          value: "grid_cards",
+                        },
+                        {
+                          label: "垂直摺疊面板 (常見問答模式)",
+                          value: "accordion",
+                        },
+                        {
+                          label: "影片橫排網格 (影音專區模式)",
+                          value: "videos",
+                        },
+                      ],
+                    default: "alternating",
+                  }
                 - label: "列表項目"
                   name: "items"
                   widget: "list"
                   collapsed: true
                   summary: "{{title}}"
                   fields:
-                    - { label: "項目名稱/標題", name: "title", widget: "string" }
-                    - { label: "小字備註", name: "subtitle", widget: "string", required: false }
+                    - {
+                        label: "項目名稱/標題",
+                        name: "title",
+                        widget: "string",
+                      }
+                    - {
+                        label: "小字備註",
+                        name: "subtitle",
+                        widget: "string",
+                        required: false,
+                      }
                     - { label: "內文描述", name: "desc", widget: "text" }
-                    - *media_field  # 重用媒體欄位定義
+                    - *media_field # 重用媒體欄位定義
                     - label: "次級小清單 (選填)"
                       name: "sub_items"
                       widget: "list"
                       collapsed: true
                       summary: "{{title}}"
                       fields:
-                        - { label: "小標題", name: "title", widget: "string" ,required: false}
+                        - {
+                            label: "小標題",
+                            name: "title",
+                            widget: "string",
+                            required: false,
+                          }
                         - { label: "小描述", name: "desc", widget: "text" }
                         - { label: "小圖示 ID", name: "icon", widget: "string" }
                 - label: "區塊底部按鈕"
@@ -179,12 +320,27 @@
                   fields:
                     - { label: "按鈕文字", name: "text", widget: "string" }
                     - { label: "連結", name: "link", widget: "string" }
-                    - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+                    - {
+                        label: "按鈕顏色",
+                        name: "style",
+                        widget: "select",
+                        options: ["primary", "secondary", "white"],
+                        default: "primary",
+                      }
             - label: "👥 成員/教職員名單區塊"
               name: "member_block"
               widget: "object"
               fields:
-                - { label: "選擇教職員 (可複選)", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
+                - {
+                    label: "選擇教職員 (可複選)",
+                    name: "members",
+                    widget: "relation",
+                    collection: "faculty",
+                    multiple: true,
+                    value_field: "name",
+                    display_fields: ["name"],
+                    search_fields: ["name"],
+                  }
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"

@@ -1,10 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
-export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4 }) {
+export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 1 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const { scrollY } = useScroll();
-    const y = useTransform(scrollY, [0, 500], [0, 200]); // Parallax effect
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+
+    // We want the background to be taller than the container to allow movement space.
+    // 10vh shift per ratio unit is a good balance.
+    const effectiveRatio = parallax_ratio || 1;
+    const shift = effectiveRatio * 15; // 15vh of padding per ratio
+
+    // Transform y from positive shift to negative shift as we scroll past the section.
+    // This makes the background move slower/faster than the scroll.
+    const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `-${shift}vh`]);
 
     const getImagePath = (path) => {
         if (!path) return path;
@@ -32,8 +44,6 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
         ...legacyImages.map(img => ({ type: 'image', src: img }))
     ];
 
-    if (items.length === 0) return null;
-
     useEffect(() => {
         if (items.length > 1) {
             const timer = setInterval(() => {
@@ -43,8 +53,9 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
         }
     }, [items.length]);
 
-    const itemsSafe = items.length > 0 ? items : [];
-    const currentItem = itemsSafe[currentIndex] || {};
+    if (items.length === 0) return null;
+
+    const currentItem = items[currentIndex] || {};
 
     const variants = {
         fade: {
@@ -82,55 +93,64 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
     const currentVariant = variants[transition_type] || variants.fade;
 
     return (
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <AnimatePresence mode="popLayout">
-                <motion.div
-                    key={currentIndex}
-                    style={{ y }} // Apply parallax only to the container
-                    variants={currentVariant}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={currentVariant.transition}
-                    className="absolute inset-0 w-full h-full"
-                >
-                    {currentItem.type === 'video' && (
-                        <video
-                            src={currentItem.src}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="object-cover w-full h-full"
-                        />
-                    )}
-
-                    {currentItem.type === 'image' && (
-                        <img
-                            src={currentItem.src}
-                            alt=""
-                            className="object-cover w-full h-full"
-                        />
-                    )}
-                    {currentItem.type === 'youtube' && (
-                        <div className="w-full h-full pointer-events-none scale-150">
-                            <iframe
-                                src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
-                                className="w-full h-full"
-                                frameBorder="0"
-                                allow="autoplay"
+        <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
+            {/* Parallax Container: it's taller than the section and shifted up */}
+            <motion.div
+                style={{
+                    y,
+                    height: `calc(100vh + ${shift * 2}vh)`,
+                    top: `-${shift}vh`
+                }}
+                className="w-full absolute inset-x-0"
+            >
+                <AnimatePresence mode="popLayout">
+                    <motion.div
+                        key={currentIndex}
+                        variants={currentVariant}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={currentVariant.transition}
+                        className="absolute inset-0 w-full h-full"
+                    >
+                        {currentItem.type === 'video' && (
+                            <video
+                                src={currentItem.src}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="object-cover w-full h-full"
                             />
-                        </div>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                        )}
 
-            <div
-                className="absolute inset-0 bg-black backdrop-blur-[0px]"
-                style={{ opacity: overlay_opacity }}
-            ></div>
+                        {currentItem.type === 'image' && (
+                            <img
+                                src={currentItem.src}
+                                alt=""
+                                className="object-cover w-full h-full"
+                            />
+                        )}
+                        {currentItem.type === 'youtube' && (
+                            <div className="w-full h-full pointer-events-none scale-150">
+                                <iframe
+                                    src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
+                                    className="w-full h-full"
+                                    frameBorder="0"
+                                    allow="autoplay"
+                                />
+                            </div>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
 
-            {/* Indicators */}
+                <div
+                    className="absolute inset-0 bg-black"
+                    style={{ opacity: overlay_opacity }}
+                ></div>
+            </motion.div>
+
+            {/* Indicators - Keep outside motion.div so they don't parallax */}
             {items.length > 1 && (
                 <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex items-center space-x-4">
                     {items.map((_, index) => (

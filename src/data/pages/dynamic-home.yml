@@ -8,6 +8,7 @@ hero:
     - type: video
       video: /img/Leigham%20Primary%20Web%20Banner.mp4
   layout: "Hero: 左下方文字方塊 (首頁風格)"
+  parallax_ratio: 2
 sections:
   - section_id: features
     blocks:
@@ -82,9 +83,9 @@ sections:
             desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
           - title: 學校提供校車嗎？
             desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
-    # media_list:
-    #   - type: video
-    #     video: /img/Leigham%20Primary%20Web%20Banner.mp4
+    media_list:
+      - type: video
+        video: /img/Leigham%20Primary%20Web%20Banner.mp4
   - layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block

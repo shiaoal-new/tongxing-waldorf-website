@@ -67,6 +67,7 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                         const blocks = section.blocks || [];
                         const sectionId = section.section_id;
                         const mediaList = section.media_list;
+                        const parallaxRatio = section.parallax_ratio;
 
                         if (mediaList) {
                             console.log(`Section ${index} (${sectionId}) has media_list:`, mediaList);
@@ -112,6 +113,7 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                 layout={layout}
                                 anchor={sectionId}
                                 media_list={mediaList}
+                                parallax_ratio={parallaxRatio}
                                 align={align}
                                 {...headerProps}
                                 className="mb-16"
