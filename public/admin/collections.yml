@@ -192,15 +192,15 @@
           summary: "{{type}}"
           fields: *media_inner_fields
         - &parallax_field {
-            label: "視差滾動速率 (-2~2)",
+            label: "視差滾動速率 (0~2)",
             name: "parallax_ratio",
             widget: "number",
             value_type: "float",
             default: 0,
-            min: -2,
+            min: 0,
             max: 2,
             step: 0.1,
-            hint: "1=固定背景(Fixed), 0=隨頁面捲動(Static), 0.5=半速視差",
+            hint: "0=固定背景(Fixed), 1=隨頁面捲動(Static), 0.5=半速視差",
             required: false,
           }
     - label: "頁面內容段落 (Sections)"

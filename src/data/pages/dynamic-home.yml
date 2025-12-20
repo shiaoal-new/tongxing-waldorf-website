@@ -8,7 +8,7 @@ hero:
     - type: video
       video: /img/Leigham%20Primary%20Web%20Banner.mp4
   layout: "Hero: 左下方文字方塊 (首頁風格)"
-  parallax_ratio: 2
+  parallax_ratio: 0
 sections:
   - section_id: features
     blocks:
