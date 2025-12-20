@@ -14,6 +14,8 @@ import Video from "../../components/video";
 import Faq from "../../components/faq";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import MediaRenderer from "../../components/mediaRenderer";
+import ScheduleBlock from "../../components/scheduleBlock";
+
 
 export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
     const router = useRouter();
@@ -203,6 +205,9 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                                         </div>
                                                     )}
                                                 </div>
+                                            )}
+                                            {block.type === "schedule_block" && (
+                                                <ScheduleBlock data={block} />
                                             )}
                                         </div>
                                     ))}

@@ -341,6 +341,40 @@
                     display_fields: ["name"],
                     search_fields: ["name"],
                   }
+            - label: "📅 課程作息區塊"
+              name: "schedule_block"
+              widget: "object"
+              fields:
+                - label: "中低年級作息 (1-4年級)"
+                  name: "low"
+                  widget: "list"
+                  collapsed: true
+                  summary: "{{time}} - {{title}}"
+                  fields:
+                    - { label: "時間", name: "time", widget: "string" }
+                    - { label: "標題", name: "title", widget: "string" }
+                    - { label: "描述", name: "desc", widget: "text" }
+                    - label: "呼吸類型"
+                      name: "type"
+                      widget: "select"
+                      options:
+                        - { label: "吸氣 (In)", value: "in" }
+                        - { label: "吐氣 (Out)", value: "out" }
+                - label: "高年級作息 (5-9年級)"
+                  name: "high"
+                  widget: "list"
+                  collapsed: true
+                  summary: "{{time}} - {{title}}"
+                  fields:
+                    - { label: "時間", name: "time", widget: "string" }
+                    - { label: "標題", name: "title", widget: "string" }
+                    - { label: "描述", name: "desc", widget: "text" }
+                    - label: "呼吸類型"
+                      name: "type"
+                      widget: "select"
+                      options:
+                        - { label: "吸氣 (In)", value: "in" }
+                        - { label: "吐氣 (Out)", value: "out" }
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"
