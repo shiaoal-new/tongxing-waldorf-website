@@ -3,45 +3,63 @@ slug: daily-routine
 hero:
   title: 日常作息
   sub_title: 一呼一吸的節奏...在同心華德福的學習生活
-  description: 同心的學習在於一呼一吸的節奏，讓孩子能在每堂課吸收訊息同時又能透過活動呼出，呼應生命呼吸的自然學習狀態。並依著兒童發展圖像，於「情感」、「意志」、「思考」以實作的務實鍛鍊，讓孩子經驗真實的學習歷程。
+  description: 同心的學習在於一呼一吸的節奏，讓孩子能在每堂課吸收訊息同時又能透過活動呼出，呼應生命呼吸的自然學習狀態。並依著兒童發展圖像，於「情感」、「意志」、「思考」以實作的務實鍛鍊，螺旋式堆疊每一個學習階段的發展能力。
   bg_images:
     - https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg
     - https://preview.colorlib.com/theme/coffeeblend/images/bg_2.jpg
     - https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
   transition_type: slide
 sections:
+  - type: list_block
+    display_mode: alternating
+    header: 共同特色：穩定心靈的節奏
+    sub_header: 呼吸的律動
+    description: 不論年級高低，同心華德福的作息皆遵循著「呼吸」的韻律，強調動靜平衡。
+    items:
+      - title: 晨間儀式 (08:10)
+        desc: 全校皆以「早晨祝福」與「全校晨頌」開啟一天。透過詩歌、肢體律動與精神上的匯聚，讓孩子準備好進入一整天的學習。
+        image: /img/benefit-one.png
+      - title: 大時段主課程 (Main Lesson)
+        desc: 晨間最精華的時段（約 90-120 分鐘）保留給主課程。這段時間孩子會專注於特定主題（如文學、數學、科學等）進行深入探究。
+        image: /img/benefit-two.png
+      - title: 休息與遊戲的平衡
+        desc: 所有的年級都設有充足的「早點心時間與自由遊戲」以及「午餐與午休活動」。這段時間是「吐氣」的過程，讓孩子在消化學習。
+        image: /img/benefit-three.png
+      - title: 整潔與結束儀式
+        desc: 下午放學前皆設有整潔活動與「結束圈」，透過感恩與反思，圓滿地結束一天的校園生活。
+        image: /img/benefit-one.png
+  - type: list_block
+    display_mode: grid_cards
+    header: 年段差異：隨生命階段調整
+    sub_header: 成長的步調
+    description: 隨著孩子從兒童期邁入青春期，作息與課程內容也因應生命發展階段產生了調整。
+    items:
+      - title: 中低年段 (1-4年級)
+        subtitle: 感官與藝術導向
+        desc: 主課程約 90-100 分鐘。課表中充滿大量手作與藝術課程，如形線畫、濕水彩、自然日等，強調透過感官體驗連結世界。
+      - title: 高年段 (5-9年級)
+        subtitle: 思辨與社會連結
+        desc: 主課程延長至 120 分鐘。加入學科深化、專業技藝（木工、泥塑）與自我探索（年段任務、班會），提升學習強度與社會責任。
+      - title: 外語與季節專項
+        subtitle: 循環教學設計
+        desc: 高年級增加英文課頻率，並加入季節性循環課程（如秋冬泥塑、春夏木工），將教學與大自然季節交替密切結合。
+  - type: list_block
+    display_mode: accordion
+    header: 其他生活作息
+    sub_header: 每日點滴
+    description: 確保孩子在校園生活中獲得充足的放鬆、社交與課後支援。
+    items:
+      - title: 午間時光 (12:30 - 13:30)
+        desc: 為午餐、整潔、靜心休息與自由遊戲時間，確保孩子有充足的放鬆與社交機會。
+      - title: 放學安排
+        desc: 除了週三於 14:00 放學外，其餘工作日在 15:30 進行「結束圈」，收整整天的學習。
+      - title: 安親時間
+        desc: 因應低年段家庭需求，同心提供課後安親至 15:40 分，讓家長能安心安排接送。
   - type: text_block
-    header: 晨間與主課程學習
-    content: >-
-      ### **晨間與主課程學習**
-
-
-      學生的校園生活從 08:10 開始，以 10 分鐘的「早晨祝福與晨圈」開啟一天的活動。
-
-
-      隨後是 90 分鐘的「主課程」（08:20-10:20），這是華德福教育中最核心的學習時段，讓學生能深度沉浸在特定主題中。在主課程結束後，30 分鐘的早點時間與自由遊戲，作為動靜轉換的調節。
-    sub_header: test
-    layout: 突出標題風格
-  - type: text_block
-    header: 副課程學習
-    content: |-
-      中低年段
-      上午後半段（10:50-12:30）與下午時段安排了豐富的藝術性課程：
-
-      語言與藝術： 包含英文課、音樂（合奏）、書法以及具備華德福特色的優律思美。
-
-      實作與意志： 下午課程偏重動手實作，例如手工、泥塑與繪畫。
-
-      環境與體能： 安排體育課與週三的「自然日」活動。
-
-      季節律動： 依據「秋冬」或「春夏」季節進行內容調整，如秋冬練習繪畫，春夏則進行書法或特定練習。
-
-
-      ◇ 高年段＊持續深化學科與社會實踐
-
-      語文與學科強化： 加入更多「語文練習」、「數學練習」以及針對特定需求的「學科輔導」課程。
-
-      藝術與技藝實作： 藝術課程更為分化與專業，包含泥塑、木工、手工及戲劇。進階的書法與藝術課程，並依「秋冬」與「春夏」季節交替進行。
-
-      社會與體能發展： 課表中可見「資訊素養」、「社會練習」，展現出對學生公民素養與集體責任的重視。此外，也包含體育、武術與合奏課程。
-    sub_header: test
+    layout: 紫色大型看板 (CTA)
+    header: 誠摯邀請您
+    description: 想更進一步了解同心華德福的日常作息嗎？歡迎預約參觀，親身體驗。
+    buttons:
+      - text: 預約參觀
+        link: /visit
+        style: white

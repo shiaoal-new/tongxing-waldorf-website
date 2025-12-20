@@ -6,6 +6,7 @@
   delete: true
   create: true
   identifier_field: name
+  summary: "{{name}} - {{title}}"
   fields:
     - { label: "姓名", name: "name", widget: "string", required: true }
     - { label: "職稱", name: "title", widget: "string", required: true }
@@ -16,6 +17,8 @@
     - label: "專業領域"
       name: "expertise"
       widget: "list"
+      collapsed: true
+      summary: "{{area}}"
       fields:
         - { label: "領域名稱", name: "area", widget: "string" }
     - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0 }
@@ -28,152 +31,162 @@
   delete: true
   create: true
   identifier_field: question
+  summary: "{{question}}"
   fields:
-    - { label: "問題", name: "question", widget: "string", required: true }
-    - { label: "答案", name: "answer", widget: "markdown", required: true }
-    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0 }
+    - { label: "問題 (標題)", name: "question", widget: "string", required: true }
+    - { label: "答案 (內容)", name: "answer", widget: "markdown", required: true }
+    - { label: "顯示順序", name: "order", widget: "number", value_type: "int", min: 0, default: 0, hint: "數字越小越前面" }
 
 - name: "benefits"
-  label: "教育特色 (Benefits)"
+  label: "教育特色庫 (Benefits)"
   folder: "src/data/benefits"
   extension: "yml"
   format: "yml"
   create: true
   delete: true
   identifier_field: title
+  summary: "{{title}}"
   fields:
     - { label: "標題", name: "title", widget: "string", required: true }
-    - { label: "描述", name: "desc", widget: "text", required: true }
+    - { label: "简短描述", name: "desc", widget: "text", required: true }
     - { label: "圖片", name: "image", widget: "image", required: false }
-    - { label: "Lottie 動畫連結", name: "lottie", widget: "string", required: false }
-    - label: "特點列表"
+    - { label: "Lottie 動畫連結", name: "lottie", widget: "string", required: false, hint: "若有填寫則優先顯示動畫" }
+    - label: "特點細項列表"
       name: "bullets"
       widget: "list"
+      collapsed: true
+      summary: "{{title}}"
       fields:
-        - { label: "標題", name: "title", widget: "string", required: true }
-        - { label: "描述", name: "desc", widget: "text", required: true }
-        - label: "圖示 (Iconify ID)"
+        - { label: "細項標題", name: "title", widget: "string", required: true }
+        - { label: "細項描述", name: "desc", widget: "text", required: true }
+        - label: "圖示 (Icon ID)"
           name: "icon"
           widget: "string"
-          hint: "請輸入 Iconify 圖標 ID，例如 'mdi:heart' 或 'lucide:sparkles'。可至 https://icon-sets.iconify.design/ 搜尋。"
+          hint: "請輸入圖標 ID，例如 'mdi:heart'。可至 https://icon-sets.iconify.design/ 搜尋。"
           required: true
     - { label: "排序", name: "order", widget: "number", value_type: "int", default: 0 }
 
 - name: "pages"
-  label: "自定義頁面"
+  label: "頁面管理 (Page Builder)"
   folder: "src/data/pages"
   extension: "yml"
   format: "yml"
-  create: true # 關鍵：允許 Admin 點擊「新增」按鈕
+  create: true
   identifier_field: title
+  summary: "{{title}} ({{slug}})"
   fields:
-    - { label: "頁面標題", name: "title", widget: "string" }
-    - { label: "網址路徑 (Slug)", name: "slug", widget: "string", hint: "例如：parents-association" }
-    - label: "頁面 Hero 區塊"
+    - { label: "頁面名稱", name: "title", widget: "string", hint: "僅供後台識別使用" }
+    - { label: "網址路徑 (Slug)", name: "slug", widget: "string", hint: "例如：about-us。這會決定網址的最後一部分" }
+    - label: "頁面最上方英雄區塊 (Hero)"
       name: "hero"
       widget: "object"
+      collapsed: true
       required: false
       fields:
         - { label: "主標題", name: "title", widget: "string" }
         - { label: "副標題", name: "sub_title", widget: "string" }
-        - { label: "描述文字", name: "description", widget: "text" }
-        - label: "背景圖片列表"
+        - { label: "背景描述 (SEO用)", name: "description", widget: "text" }
+        - label: "背景圖片輪播"
           name: "bg_images"
           widget: "list"
-          required: false
-          field: { label: "圖片", name: "image", widget: "image" }
-        - label: "輪播轉換效果"
+          summary: "圖片 {{index}}"
+          field: { label: "上傳圖片", name: "image", widget: "image" }
+        - label: "輪播切換效果"
           name: "transition_type"
           widget: "select"
-          required: false
           options:
             - { label: "淡入淡出 (Fade)", value: "fade" }
             - { label: "水平滑動 (Slide)", value: "slide" }
             - { label: "縮放切換 (Zoom)", value: "zoom" }
-            - { label: "垂直滑動 (Slide Up)", value: "slide_up" }
-            - { label: "模糊切換 (Blur)", value: "blur" }
           default: "fade"
-        - { label: "背景影片 (MP4)", name: "bg_video", widget: "string", required: false }
-    - label: "頁面內容區塊"
+        - { label: "背景影片網址 (MP4)", name: "bg_video", widget: "string", required: false, hint: "若填寫則會覆蓋背景圖片" }
+    - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
+      summary: "【{{type}}】{{header}}"
       types:
-        - label: "純文字/介紹區塊"
+        - label: "📄 純文字/介紹區塊"
           name: "text_block"
           widget: "object"
           fields:
-            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-            - { label: "標題", name: "header", widget: "string" }
-            - { label: "附標題", name: "sub_header", widget: "string" }
-            - { label: "描述文字", name: "description", widget: "text", required: false }
-            - { label: "內文 (Markdown)", name: "content", widget: "markdown" }
-            - label: "行動按鈕 (Actions)"
+            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "大標題", name: "header", widget: "string" }
+            - { label: "小標題 (Pretitle)", name: "sub_header", widget: "string" }
+            - { label: "段落簡介 (選填)", name: "description", widget: "text", required: false }
+            - { label: "詳細內容 (Markdown)", name: "content", widget: "markdown" }
+            - label: "下方行動按鈕 (Actions)"
               name: "buttons"
               widget: "list"
-              required: false
+              collapsed: true
+              summary: "{{text}}"
               fields:
                 - { label: "按鈕文字", name: "text", widget: "string" }
-                - { label: "連結 (網址)", name: "link", widget: "string" }
-                - { label: "樣式", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
-        - label: "通用列表區塊 (Page Builder)"
+                - { label: "連結網址", name: "link", widget: "string" }
+                - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+        - label: "📦 通用列表區塊 (特色/影音/FAQ)"
           name: "list_block"
           widget: "object"
           fields:
-            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
-            - { label: "展示模式", name: "display_mode", widget: "select", options: [
-                {label: "圖文交錯 (原 Benefits)", value: "alternating"},
-                {label: "網格卡片 (原特色介紹)", value: "grid_cards"},
-                {label: "摺疊面板 (原 FAQ)", value: "accordion"},
-                {label: "影音專區 (YouTube)", value: "videos"}
+            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "🖼️ 顯示模式", name: "display_mode", widget: "select", options: [
+                {label: "圖文左右交錯 (教育特色模式)", value: "alternating"},
+                {label: "三欄網格卡片 (概覽模式)", value: "grid_cards"},
+                {label: "垂直摺疊面板 (常見問答模式)", value: "accordion"},
+                {label: "影片橫排網格 (影音專區模式)", value: "videos"}
               ], default: "alternating" }
             - { label: "區塊標題", name: "header", widget: "string" }
-            - { label: "附標題", name: "sub_header", widget: "string" }
-            - { label: "區塊描述", name: "description", widget: "text", required: false }
-            - label: "項目列表"
+            - { label: "副標題", name: "sub_header", widget: "string" }
+            - { label: "區塊描述文字", name: "description", widget: "text", required: false }
+            - label: "列表項目"
               name: "items"
               widget: "list"
+              collapsed: true
+              summary: "{{title}}"
               fields:
-                - { label: "主標題", name: "title", widget: "string" }
-                - { label: "副標題", name: "subtitle", widget: "string", required: false }
-                - { label: "描述文字", name: "desc", widget: "text" }
-                - { label: "圖片", name: "image", widget: "image", required: false }
-                - { label: "Lottie 動畫", name: "lottie", widget: "string", required: false }
-                - { label: "影片網址 (僅用於影音模式)", name: "video_url", widget: "string", required: false }
-                - label: "細項列表 (子列表)"
+                - { label: "項目名稱/標題", name: "title", widget: "string" }
+                - { label: "小字備註", name: "subtitle", widget: "string", required: false }
+                - { label: "內文描述", name: "desc", widget: "text" }
+                - { label: "圖片上傳", name: "image", widget: "image", required: false }
+                - { label: "動畫連結 (Lottie)", name: "lottie", widget: "string", required: false }
+                - { label: "YouTube 連結 (僅限影片模式)", name: "video_url", widget: "string", required: false }
+                - label: "次級小清單 (選填)"
                   name: "sub_items"
                   widget: "list"
-                  required: false
+                  collapsed: true
+                  summary: "{{title}}"
                   fields:
-                    - { label: "細項標題", name: "title", widget: "string" }
-                    - { label: "細項描述", name: "desc", widget: "text" }
-                    - { label: "圖示", name: "icon", widget: "string", hint: "例如 'lucide:check'" }
-            - label: "行動按鈕 (Actions)"
+                    - { label: "小標題", name: "title", widget: "string" }
+                    - { label: "小描述", name: "desc", widget: "text" }
+                    - { label: "小圖示 ID", name: "icon", widget: "string" }
+            - label: "區塊底部按鈕"
               name: "buttons"
               widget: "list"
-              required: false
+              collapsed: true
+              summary: "{{text}}"
               fields:
                 - { label: "按鈕文字", name: "text", widget: "string" }
-                - { label: "連結 (網址)", name: "link", widget: "string" }
-                - { label: "樣式", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
-        - label: "成員/教職員清單"
+                - { label: "連結", name: "link", widget: "string" }
+                - { label: "按鈕顏色", name: "style", widget: "select", options: ["primary", "secondary", "white"], default: "primary" }
+        - label: "👥 成員/教職員名單區塊"
           name: "member_block"
           widget: "object"
           fields:
-            - { label: "版面模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
+            - { label: "🎨 版面風格模板", name: "layout", widget: "relation", collection: "section_layouts", search_fields: ["title"], value_field: "title", display_fields: ["title"], required: false }
             - { label: "區塊標題", name: "header", widget: "string" }
-            - { label: "附標題", name: "sub_header", widget: "string" }
-            - { label: "選擇成員", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
+            - { label: "副標題", name: "sub_header", widget: "string" }
+            - { label: "選擇教職員 (可複選)", name: "members", widget: "relation", collection: "faculty", multiple: true, value_field: "name", display_fields: ["name"], search_fields: ["name"] }
 
 - name: "section_layouts"
-  label: "區塊版面模板 (Style)"
+  label: "版面模板管理 (Developers Only)"
   folder: "src/data/section_layouts"
   extension: "yml"
   format: "yml"
   create: true
   identifier_field: title
+  summary: "{{title}}"
   fields:
     - { label: "模板名稱", name: "title", widget: "string", required: true }
     - label: "CSS 類別定義"
       name: "css_classes"
       widget: "text"
-      hint: "請使用 .class_name { classes } 語法，例如：.container_class{ py-12 } .title_class{ text-xl }"
+      hint: "請使用 .class_name { classes } 語法"
