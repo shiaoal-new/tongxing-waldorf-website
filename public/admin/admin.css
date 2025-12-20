@@ -23,13 +23,13 @@
 }
 
 /* 標籤對齊 */
-[class*="IndicatorsContainer"] {
+/* [class*="IndicatorsContainer"] {
     height: 22px !important;
-}
+} */
 
 [class*="indicatorContainer"],
 [class*="DropdownIndicator"] {
-    padding: 2px !important;
+    padding: 0px !important;
 }
 
 /* 恢復原本的規則並微調 */
@@ -245,8 +245,13 @@ svg[class*="Icon"] {
 /* 列表新增按鈕與按鈕欄位 */
 button[class*="StyledButton"],
 [class*="Button-"] {
-    padding: 2px 10px !important;
-    font-size: 12px !important;
-    height: auto !important;
-    min-height: 24px !important;
+    padding: 0px 12px !important;
+    font-size: 10px !important;
+    /* height: 16 !important; */
+}
+
+[class*="TopBarContainer"] {
+    margin: 0 !important;
+    padding: 0 !important;
+
 }
