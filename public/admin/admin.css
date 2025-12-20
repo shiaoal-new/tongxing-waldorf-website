@@ -1,0 +1,252 @@
+/* 整體容器極致緊湊化 */
+[class*="ControlContainer"] {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 1px 0 !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #f8f8f8 !important;
+}
+
+/* 針對下拉選單 (React-Select) 的極致壓縮 */
+#nc-root [class*="control"],
+#nc-root [class*="ValueContainer"],
+#nc-root [class*="Input"],
+#nc-root [class*="SingleValue"],
+#nc-root [class*="placeholder"] {
+    padding: 0 4px !important;
+    margin: 0 !important;
+    min-height: 22px !important;
+    height: 22px !important;
+    line-height: 22px !important;
+    font-size: 13px !important;
+}
+
+/* 標籤對齊 */
+[class*="IndicatorsContainer"] {
+    height: 22px !important;
+}
+
+[class*="indicatorContainer"],
+[class*="DropdownIndicator"] {
+    padding: 2px !important;
+}
+
+/* 恢復原本的規則並微調 */
+#nc-root input,
+#nc-root textarea,
+#nc-root select,
+#nc-root .css-83wr9v {
+    padding: 2px 4px !important;
+    margin: 0 !important;
+    min-height: 22px !important;
+    height: 22px !important;
+    font-size: 13px !important;
+    line-height: normal !important;
+}
+
+#nc-root textarea {
+    padding: 4px 6px !important;
+    margin: 0 !important;
+    min-height: 40px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+/* 簡單欄位的標籤：僅針對非結構性標籤 */
+[class*="ControlContainer"]>label {
+    width: 75px !important;
+    min-width: 75px !important;
+    margin: 0 4px 0 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    color: #666 !important;
+    text-align: right !important;
+    display: inline-block !important;
+}
+
+/* 恢復 Object/List 標題欄的顯示 */
+[class*="ObjectControl"]>label,
+[class*="ListControl"]>label,
+[class*="ListItem-"]>label {
+    width: 100% !important;
+    text-align: left !important;
+    display: block !important;
+    background: #eee !important;
+    padding: 4px 8px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    margin-bottom: 5px !important;
+}
+
+/* 確保折疊切換按鈕與圖標正常顯示 */
+[class*="ExpandButton"],
+button[class*="ExpandButton"],
+svg[class*="Icon"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* 排除結構型組件，但縮小其間距 */
+[data-widget="markdown"],
+[class*="EditorContainer"],
+[class*="ListControl"],
+[class*="ObjectControl"] {
+    display: block !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+/* 嵌套列表/對象的標題標籤 */
+[class*="ListControl"]>[class*="FieldLabel-"],
+[class*="ObjectControl"]>[class*="FieldLabel-"],
+[class*="EditorContainer"]>[class*="FieldLabel-"] {
+    width: 100% !important;
+    text-align: left !important;
+    margin-bottom: 4px !important;
+    font-size: 14px !important;
+    color: #333 !important;
+    background: #fdfdfd !important;
+    padding: 2px 4px !important;
+    border-left: 3px solid #ddd !important;
+}
+
+/* 圖片預覽縮圖化 (Thumbnail) */
+[class*="ImageWrapper"] {
+    max-width: 40px !important;
+    max-height: 40px !important;
+    min-height: auto !important;
+    margin-right: 8px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+}
+
+[class*="StyledImage"] {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* 讓按鈕與縮圖並排，並確保按鈕不換行 */
+[class*="ImageWrapper"]+div {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+}
+
+[class*="FileWidgetButton"],
+[class*="FileWidgetButtonRemove"] {
+    padding: 2px 6px !important;
+    font-size: 10px !important;
+    /* 再縮小一點點 */
+    margin: 0 !important;
+    height: 20px !important;
+    min-height: 20px !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+
+/* 隐藏提示，仅悬停显示 */
+[class*="Hint-"] {
+    display: none !important;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    z-index: 1000;
+}
+
+[class*="ControlContainer"]:hover [class*="Hint-"] {
+    display: block !important;
+    top: -20px;
+    left: 90px;
+}
+
+[class*="FieldLabel-"] span {
+    display: none !important;
+}
+
+.required-star {
+    color: #f00 !important;
+    margin-left: 2px;
+}
+
+/* 列表項目排版緊湊化 */
+[class*="ListItem-"] {
+    padding: 2px !important;
+    margin-bottom: 3px !important;
+    border: 1px solid #eee !important;
+    background: #fafafa !important;
+    position: relative !important;
+    padding-top: 0 !important;
+}
+
+/* 1. 把類型標籤 (📦 通用列表...) 移到標題欄位 */
+[class*="ListItem-"]>label {
+    position: absolute !important;
+    top: 2px !important;
+    left: 35px !important;
+    /* 避開箭頭 */
+    width: auto !important;
+    height: 22px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    color: #333 !important;
+    background: rgba(220, 220, 220, 0.4) !important;
+    border-radius: 4px;
+    padding: 0 6px !important;
+    line-height: 22px !important;
+    font-weight: bold !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    border: none !important;
+    display: block !important;
+}
+
+/* 2. 標題欄 (TopBar) 容器優化 */
+[class*="StyledListItemTopBar"] {
+    min-height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    background: #f0f0f0 !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+/* 3. 如果有 Summary 文字，將其往後推開，避免重疊 */
+[class*="StyledListItemTopBar"]::after {
+    content: "" !important;
+    /* 這是一個佔位符技巧，如果需要動態 Summary 可能需要 JS，先用 CSS 留白 */
+}
+
+[class*="StyledListItemTopBar"]>span,
+[class*="StyledListItemTopBar"]>div:not([role="button"]) {
+    margin-left: 200px !important;
+    /* 為左側的類型標籤留出 200px 空間 */
+    font-size: 11px !important;
+    color: #666 !important;
+}
+
+/* 3. 隱藏列表項頂部的多餘線條或空隙 */
+[class*="ListItem-"]>div:first-of-type {
+    margin-top: 0 !important;
+}
+
+/* 列表新增按鈕與按鈕欄位 */
+button[class*="StyledButton"],
+[class*="Button-"] {
+    padding: 2px 10px !important;
+    font-size: 12px !important;
+    height: auto !important;
+    min-height: 24px !important;
+}

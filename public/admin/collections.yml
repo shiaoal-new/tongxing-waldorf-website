@@ -103,7 +103,7 @@
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
-      summary: "【{{type}}】{{header}}"
+      summary: "{{header}}"
       types:
         - label: "📄 純文字/介紹區塊"
           name: "text_block"
