@@ -3,20 +3,29 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 
 export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 1 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [sectionBounds, setSectionBounds] = useState(null);
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
     });
 
-    // We want the background to be taller than the container to allow movement space.
-    // 10vh shift per ratio unit is a good balance.
-    const effectiveRatio = parallax_ratio || 1;
-    const shift = effectiveRatio * 15; // 15vh of padding per ratio
+    // Parallax ratio logic:
+    // 0 = fixed (handled separately with position:fixed)
+    // 1 = no parallax (background moves at same speed as content)
+    // >1 = background moves faster than content
+    // <1 = background moves slower than content
+    const effectiveRatio = parallax_ratio ?? 1;
 
-    // Transform y from positive shift to negative shift as we scroll past the section.
-    // This makes the background move slower/faster than the scroll.
-    const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `-${shift}vh`]);
+    // For ratio = 1, we want no movement (shift = 0)
+    // For ratio > 1, we want more movement (positive shift)
+    // The shift represents how much extra the background moves
+    const shift = (effectiveRatio - 1) * 30; // 30vh per ratio unit above 1
+
+    // When scrolling down (progress 0->1), background should move UP faster
+    // This creates the effect of background "overtaking" the content upward
+    // Transform from positive to negative: background moves up as we scroll down
+    const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
 
     const getImagePath = (path) => {
         if (!path) return path;
@@ -43,6 +52,32 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
         ...(legacyVideo ? [{ type: 'video', src: legacyVideo }] : []),
         ...legacyImages.map(img => ({ type: 'image', src: img }))
     ];
+
+    // Track section bounds for fixed background clipping
+    useEffect(() => {
+        if (effectiveRatio !== 0) return;
+
+        const updateBounds = () => {
+            if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                setSectionBounds({
+                    top: rect.top,
+                    left: rect.left,
+                    width: rect.width,
+                    height: rect.height
+                });
+            }
+        };
+
+        updateBounds();
+        window.addEventListener('scroll', updateBounds);
+        window.addEventListener('resize', updateBounds);
+
+        return () => {
+            window.removeEventListener('scroll', updateBounds);
+            window.removeEventListener('resize', updateBounds);
+        };
+    }, [effectiveRatio]);
 
     useEffect(() => {
         if (items.length > 1) {
@@ -92,63 +127,124 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
 
     const currentVariant = variants[transition_type] || variants.fade;
 
+    // When ratio is 0, use fixed positioning for a truly static background
+    const isFixed = effectiveRatio === 0;
+
     return (
         <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
-            {/* Parallax Container: it's taller than the section and shifted up */}
-            <motion.div
-                style={{
-                    y,
-                    height: `calc(100vh + ${shift * 2}vh)`,
-                    top: `-${shift}vh`
-                }}
-                className="w-full absolute inset-x-0"
-            >
-                <AnimatePresence mode="popLayout">
-                    <motion.div
-                        key={currentIndex}
-                        variants={currentVariant}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={currentVariant.transition}
-                        className="absolute inset-0 w-full h-full"
+            {isFixed ? (
+                // Fixed background - truly stationary relative to viewport, clipped to section bounds
+                sectionBounds && (
+                    <div
+                        className="fixed inset-0 w-screen h-screen"
+                        style={{
+                            clipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`
+                        }}
                     >
-                        {currentItem.type === 'video' && (
-                            <video
-                                src={currentItem.src}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                className="object-cover w-full h-full"
-                            />
-                        )}
+                        <AnimatePresence mode="popLayout">
+                            <motion.div
+                                key={currentIndex}
+                                variants={currentVariant}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                transition={currentVariant.transition}
+                                className="absolute inset-0 w-full h-full"
+                            >
+                                {currentItem.type === 'video' && (
+                                    <video
+                                        src={currentItem.src}
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="object-cover w-full h-full"
+                                    />
+                                )}
 
-                        {currentItem.type === 'image' && (
-                            <img
-                                src={currentItem.src}
-                                alt=""
-                                className="object-cover w-full h-full"
-                            />
-                        )}
-                        {currentItem.type === 'youtube' && (
-                            <div className="w-full h-full pointer-events-none scale-150">
-                                <iframe
-                                    src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
-                                    className="w-full h-full"
-                                    frameBorder="0"
-                                    allow="autoplay"
+                                {currentItem.type === 'image' && (
+                                    <img
+                                        src={currentItem.src}
+                                        alt=""
+                                        className="object-cover w-full h-full"
+                                    />
+                                )}
+                                {currentItem.type === 'youtube' && (
+                                    <div className="w-full h-full pointer-events-none scale-150">
+                                        <iframe
+                                            src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
+                                            className="w-full h-full"
+                                            frameBorder="0"
+                                            allow="autoplay"
+                                        />
+                                    </div>
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
+
+                        <div
+                            className="absolute inset-0 bg-black"
+                            style={{ opacity: overlay_opacity }}
+                        ></div>
+                    </div>
+                )
+            ) : (
+                // Parallax background - moves with scroll
+                <motion.div
+                    style={{
+                        y,
+                        height: `calc(100vh + ${Math.abs(shift) * 2}vh)`,
+                        top: `-${Math.abs(shift)}vh`
+                    }}
+                    className="w-full absolute inset-x-0"
+                >
+                    <AnimatePresence mode="popLayout">
+                        <motion.div
+                            key={currentIndex}
+                            variants={currentVariant}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            transition={currentVariant.transition}
+                            className="absolute inset-0 w-full h-full"
+                        >
+                            {currentItem.type === 'video' && (
+                                <video
+                                    src={currentItem.src}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="object-cover w-full h-full"
                                 />
-                            </div>
-                        )}
-                    </motion.div>
-                </AnimatePresence>
+                            )}
 
-                <div
-                    className="absolute inset-0 bg-black"
-                    style={{ opacity: overlay_opacity }}
-                ></div>
-            </motion.div>
+                            {currentItem.type === 'image' && (
+                                <img
+                                    src={currentItem.src}
+                                    alt=""
+                                    className="object-cover w-full h-full"
+                                />
+                            )}
+                            {currentItem.type === 'youtube' && (
+                                <div className="w-full h-full pointer-events-none scale-150">
+                                    <iframe
+                                        src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
+                                        className="w-full h-full"
+                                        frameBorder="0"
+                                        allow="autoplay"
+                                    />
+                                </div>
+                            )}
+                        </motion.div>
+                    </AnimatePresence>
+
+                    <div
+                        className="absolute inset-0 bg-black"
+                        style={{ opacity: overlay_opacity }}
+                    ></div>
+                </motion.div>
+            )}
 
             {/* Indicators - Keep outside motion.div so they don't parallax */}
             {items.length > 1 && (
