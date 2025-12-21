@@ -127,8 +127,8 @@ sections:
         buttons:
           - text: 預約參觀
             link: /visit
-            style: white
+            style: btn-white
           - text: 課程介紹
             link: /p/curriculum-development
-            style: "primary"
+            style: btn-primary
         sub_header: 下一步

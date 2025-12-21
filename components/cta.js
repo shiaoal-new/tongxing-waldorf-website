@@ -15,7 +15,7 @@ export default function Cta() {
           </p>
         </div>
         <div className="flex-shrink-0 w-full text-center lg:w-auto">
-          <BookVisitButton className="mx-auto text-primary-600 bg-white hover:bg-primary-50" />
+          <BookVisitButton className="mx-auto" />
         </div>
       </div>
     </Container>

@@ -291,8 +291,8 @@
                         label: "按鈕顏色",
                         name: "style",
                         widget: "select",
-                        options: ["primary", "secondary", "white"],
-                        default: "primary",
+                        options: ["btn-primary", "btn-secondary", "btn-white"],
+                        default: "btn-primary",
                       }
             - label: "📦 通用列表區塊 (特色/影音/FAQ)"
               name: "list_block"
@@ -368,8 +368,8 @@
                         label: "按鈕顏色",
                         name: "style",
                         widget: "select",
-                        options: ["primary", "secondary", "white"],
-                        default: "primary",
+                        options: ["btn-primary", "btn-secondary", "btn-white"],
+                        default: "btn-primary",
                       }
             - label: "👥 成員/教職員名單區塊"
               name: "member_block"

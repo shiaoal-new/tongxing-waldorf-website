@@ -37,7 +37,7 @@ sections:
             buttons:
               - text: 了解同心的課程設計
                 link: /p/curriculum-development
-                style: primary
+                style: btn-primary
           - title: 健康與自然的物質環境滋養
             desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
             media:
@@ -99,4 +99,4 @@ sections:
         buttons:
           - text: 預約參觀
             link: /visit
-            style: white
+            style: btn-white

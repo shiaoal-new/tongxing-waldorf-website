@@ -139,7 +139,7 @@ const CurriculumBlock = ({ data }) => {
                             </div>
                             <button
                                 onClick={() => showDetail(row.year)}
-                                className="w-full py-3 bg-primary-600 text-white rounded-xl font-bold shadow-md shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all mt-4"
+                                className="w-full btn-white"
                             >
                                 詳細解析
                             </button>
@@ -159,7 +159,7 @@ const CurriculumBlock = ({ data }) => {
                 <div className="mt-10 pt-6 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
                     <button
                         onClick={closeModal}
-                        className="px-8 py-3 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all"
+                        className="px-8 btn-primary rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none active:scale-95"
                     >
                         關閉解析
                     </button>

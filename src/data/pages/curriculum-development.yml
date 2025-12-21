@@ -48,5 +48,5 @@ sections:
         buttons:
           - text: 預約參觀
             link: /visit
-            style: white
+            style: btn-white
         sub_header: 下一步

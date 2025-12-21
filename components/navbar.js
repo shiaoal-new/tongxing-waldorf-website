@@ -135,7 +135,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                             e.preventDefault();
                             setTimeout(() => router.push("/visit"), 400);
                           }}
-                          className="w-full px-6 py-2 mt-3 text-center text-white bg-primary-600 rounded-md lg:ml-5 block"
+                          className="w-full btn-primary"
                         >
                           預約參觀
                         </Disclosure.Button>
@@ -190,7 +190,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
               <div className="hidden mr-3 space-x-3 lg:flex nav__item">
                 <Link
                   href="/visit"
-                  className="px-6 py-2 text-white bg-primary-600 rounded-md md:ml-5">
+                  className="btn-primary">
                   預約參觀
                 </Link>
 
