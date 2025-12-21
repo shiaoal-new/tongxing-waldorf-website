@@ -86,7 +86,7 @@ sections:
         display_mode: accordion
         items:
           - media:
-              ? type
+              type:
             title: 主課程
             subtitle: Main Lesson
             desc: 這不是傳統的分科教學，而是「沉浸式學習」。孩子在 3-4 週內每天早上專注探究同一個學科，讓知識不再碎片化，而是深刻的圖像記憶。
@@ -128,4 +128,7 @@ sections:
           - text: 預約參觀
             link: /visit
             style: white
+          - text: 課程介紹
+            link: /p/curriculum-development
+            style: "primary"
         sub_header: 下一步
