@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Typed from "typed.js";
 import Container from "./container";
-import { BookVisitButton } from "./button";
+import ActionButtons from "./actionButtons";
 import Link from "next/link";
 
 export default function Hero() {
@@ -57,7 +57,7 @@ export default function Hero() {
               </p>
 
               <div className="flex flex-col items-center justify-center space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-                <BookVisitButton />
+                <ActionButtons buttons={[{ text: "預約參觀", link: "/visit", style: "btn-white" }]} />
                 {/* <a
                   href="http://"
                   target="_blank"

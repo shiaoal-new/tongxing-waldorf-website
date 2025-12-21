@@ -2,6 +2,7 @@ import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
 import BackgroundCarousel from "./backgroundCarousel";
+import ActionButtons from "./actionButtons";
 
 export default function Section(props) {
     const {
@@ -96,21 +97,11 @@ export default function Section(props) {
                     )}
 
                     {buttons && buttons.length > 0 && (
-                        <div className={`mt-6 flex flex-wrap gap-4 ${align === "left" ? "justify-start" : "justify-center text-center"}`}>
-                            {buttons.map((btn, idx) => {
-                                return (
-                                    <a
-                                        key={idx}
-                                        href={btn.link}
-                                        target={btn.link?.startsWith("http") ? "_blank" : "_self"}
-                                        rel="noopener noreferrer"
-                                        className={`${btn.style || "btn-primary"}`}
-                                    >
-                                        {btn.text}
-                                    </a>
-                                );
-                            })}
-                        </div>
+                        <ActionButtons
+                            buttons={buttons}
+                            align={align === "left" ? "left" : "center"}
+                            className="mt-6"
+                        />
                     )}
                 </motion.div>
             </Container>

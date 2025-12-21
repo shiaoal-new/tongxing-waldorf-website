@@ -56,7 +56,7 @@ export default function Benefits(props) {
               ))}
             </div>
 
-            <ActionButtons buttons={data.buttons} align="left" />
+            <ActionButtons buttons={data.buttons} align="left" className="mt-8" />
           </div>
         </motion.div>
       </Container>

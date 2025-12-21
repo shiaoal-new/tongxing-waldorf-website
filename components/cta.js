@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "./container";
-import Button, { BookVisitButton } from "./button";
+import ActionButtons from "./actionButtons";
 
 export default function Cta() {
   return (
@@ -15,7 +15,7 @@ export default function Cta() {
           </p>
         </div>
         <div className="flex-shrink-0 w-full text-center lg:w-auto">
-          <BookVisitButton className="mx-auto" />
+          <ActionButtons buttons={[{ text: "預約參觀", link: "/visit", style: "btn-white" }]} />
         </div>
       </div>
     </Container>

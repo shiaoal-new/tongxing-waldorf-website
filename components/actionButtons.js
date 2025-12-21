@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./button";
 
 export default function ActionButtons({ buttons, align = "center", className = "" }) {
     if (!buttons || buttons.length === 0) return null;
@@ -6,19 +7,19 @@ export default function ActionButtons({ buttons, align = "center", className = "
     const justifyContent = align === "left" ? "justify-start" : "justify-center";
 
     return (
-        <div className={`mt-8 flex flex-wrap gap-4 ${justifyContent} ${className}`}>
+        <div className={`flex flex-wrap gap-4 ${justifyContent} ${className}`}>
             {buttons.map((btn, idx) => {
+                const target = btn.link?.startsWith("http") ? "_blank" : "_self";
                 return (
-                    <a
+                    <Button
                         key={idx}
                         href={btn.link}
-                        target={btn.link?.startsWith("http") ? "_blank" : "_self"}
-                        rel="noopener noreferrer"
-                        className={`px-8 py-3 text-lg font-medium text-center rounded-md transition-all ${btn.style || "btn-primary"
-                            }`}
+                        target={target}
+                        rel={target === "_blank" ? "noopener noreferrer" : undefined}
+                        className={`${btn.style || "btn-primary"}`}
                     >
                         {btn.text}
-                    </a>
+                    </Button>
                 );
             })}
         </div>
