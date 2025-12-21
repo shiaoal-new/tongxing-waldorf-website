@@ -23,10 +23,19 @@ sections:
         items:
           - title: 意志 (Will) - 手的做為
             desc: 透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。
+            media:
+              type: lottie
+              lottie: /lottie/SculptingArt.lottie
           - title: 情感 (Feeling) - 心的感受
             desc: 在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。
+            media:
+              type: lottie
+              lottie: /lottie/Painting.lottie
           - title: 思考 (Thinking) - 頭的清晰
             desc: 從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。
+            media:
+              type: lottie
+              lottie: /lottie/Thinking.lottie
   - section_id: curriculum-main
     blocks:
       - type: curriculum_block
