@@ -1,8 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon } from "@heroicons/react/outline";
-import { Dialog, Transition } from "@headlessui/react";
 import VisitRegistrationForm from "./visitRegistrationForm";
+import Modal from "./modal";
 
 import initialDates from "./initialVisitDates.json";
 
@@ -18,6 +18,7 @@ export default function VisitSchedule() {
 
     const closeModal = () => {
         setIsOpen(false);
+        // We don't need a timeout here as Modal handles animation and lifecycle
         setTimeout(() => setSelectedSession(null), 300);
     };
 
@@ -35,8 +36,6 @@ export default function VisitSchedule() {
         };
 
         // Submit to Apps Script
-        // Note: 'no-cors' mode is used because Google Apps Script redirects. 
-        // This means we won't get a readable response JSON in the browser, but the request will succeed.
         if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_WEB_APP_URL") {
             fetch(APPS_SCRIPT_URL, {
                 method: "POST",
@@ -60,7 +59,7 @@ export default function VisitSchedule() {
         closeModal();
         setTimeout(() => {
             alert("報名成功！確認信將發送至 " + data.email);
-        }, 300);
+        }, 500);
     };
 
     const renderButton = (item) => {
@@ -76,7 +75,7 @@ export default function VisitSchedule() {
             return (
                 <button
                     disabled
-                    className="inline-block rounded bg-gray-400 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md cursor-not-allowed w-full sm:w-auto">
+                    className="inline-block rounded bg-neutral-400 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md cursor-not-allowed w-full sm:w-auto">
                     額滿
                 </button>
             );
@@ -90,9 +89,9 @@ export default function VisitSchedule() {
                 {/* Mobile View: Cards */}
                 <div className="block md:hidden space-y-4">
                     {dates.map((item) => (
-                        <div key={item.id} className="bg-white dark:bg-trueGray-800 rounded-lg shadow p-5 border border-gray-100 dark:border-gray-700">
+                        <div key={item.id} className="bg-white dark:bg-neutral-800 rounded-lg shadow p-5 border border-neutral-100 dark:border-neutral-700">
                             <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center text-lg font-bold text-gray-800 dark:text-white">
+                                <div className="flex items-center text-lg font-bold text-neutral-800 dark:text-white">
                                     <CalendarIcon className="w-5 h-5 mr-2 text-primary-500" />
                                     {item.date}
                                 </div>
@@ -102,11 +101,11 @@ export default function VisitSchedule() {
                             </div>
 
                             <div className="space-y-3 mb-6">
-                                <div className="flex items-center text-gray-600 dark:text-gray-400">
+                                <div className="flex items-center text-neutral-600 dark:text-neutral-400">
                                     <ClockIcon className="w-5 h-5 mr-2" />
                                     {item.time}
                                 </div>
-                                <div className="flex items-center text-gray-600 dark:text-gray-400">
+                                <div className="flex items-center text-neutral-600 dark:text-neutral-400">
                                     <UserGroupIcon className="w-5 h-5 mr-2" />
                                     剩餘名額：<span className={item.quota > 0 ? "text-green-600 font-bold ml-1" : "text-red-500 font-bold ml-1"}>{item.quota}</span> / {item.total}
                                 </div>
@@ -122,9 +121,9 @@ export default function VisitSchedule() {
                 {/* Desktop View: Table */}
                 <div className="hidden md:block overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div className="overflow-hidden bg-white dark:bg-trueGray-800 rounded-lg shadow">
+                        <div className="overflow-hidden bg-white dark:bg-neutral-800 rounded-lg shadow">
                             <table className="min-w-full text-center text-sm font-light text-surface dark:text-white">
-                                <thead className="border-b border-neutral-200 font-medium dark:border-white/10 dark:bg-trueGray-700">
+                                <thead className="border-b border-neutral-200 font-medium dark:border-white/10 dark:bg-neutral-700">
                                     <tr>
                                         <th scope="col" className="px-6 py-4">日期</th>
                                         <th scope="col" className="px-6 py-4">時間</th>
@@ -134,7 +133,7 @@ export default function VisitSchedule() {
                                 </thead>
                                 <tbody>
                                     {dates.map((item) => (
-                                        <tr key={item.id} className="border-b border-neutral-200 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-trueGray-700">
+                                        <tr key={item.id} className="border-b border-neutral-200 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-700">
                                             <td className="whitespace-nowrap px-6 py-4 font-medium">{item.date}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{item.time}</td>
                                             <td className="whitespace-nowrap px-6 py-4">
@@ -155,66 +154,18 @@ export default function VisitSchedule() {
                 </div>
             </div>
 
-            {/* Registration Modal */}
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={closeModal}>
-                    <div className="min-h-screen px-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
-                            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-                        </Transition.Child>
-
-                        {/* This element is to trick the browser into centering the modal contents. */}
-                        <span
-                            className="inline-block h-screen align-middle"
-                            aria-hidden="true"
-                        >
-                            &#8203;
-                        </span>
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl relative">
-                                <button
-                                    onClick={closeModal}
-                                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
-                                >
-                                    <span className="sr-only">Close</span>
-                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900 mb-4"
-                                >
-                                    預約參觀 - {selectedSession?.date}
-                                </Dialog.Title>
-
-                                {selectedSession && (
-                                    <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
-                                        <VisitRegistrationForm onComplete={handleFormComplete} />
-                                    </div>
-                                )}
-                            </div>
-                        </Transition.Child>
+            <Modal
+                isOpen={isOpen}
+                onClose={closeModal}
+                title={`預約參觀 - ${selectedSession?.date}`}
+                maxWidth="max-w-md"
+            >
+                {selectedSession && (
+                    <div className="mt-2">
+                        <VisitRegistrationForm onComplete={handleFormComplete} />
                     </div>
-                </Dialog>
-            </Transition>
+                )}
+            </Modal>
         </Container>
     );
 }

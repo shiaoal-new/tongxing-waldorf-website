@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { motion, AnimatePresence } from "framer-motion";
+import Modal from "./modal";
 
 const CurriculumBlock = ({ data }) => {
     const [activeYear, setActiveYear] = useState(null);
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const detailData = {
-        // ... (data remains the same)
         'G1': {
             title: '一年級 發展圖像 (發展任務：合一)',
             content: '在第一個七年，孩子學習熟悉身體、發展空間的方向感和養成身體直立、說話和思考的基本發展能力。孩子所處的環境狀態就是他的學習情境。模仿的作用足以把他所學的銘印在孩子的意志中。\n\n在第七年左右，孩子進入最堅硬的部分－－換牙階段。他們在生長發育上已具足了足夠的生命力，轉而向外在世界開展。在一年級，授課重點不在多，而是透過遊戲、肢體活動、模仿，給孩子較寬闊、與其現階段生命相呼應的醒知；同時養成良好的班級生活習慣。'
@@ -65,68 +58,11 @@ const CurriculumBlock = ({ data }) => {
 
     const showDetail = (year) => {
         setActiveYear(year);
-        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setActiveYear(null);
-        document.body.style.overflow = 'auto';
     };
-
-    // Modal portal content
-    const modalContent = (
-        <AnimatePresence>
-            {activeYear && (
-                <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 touch-none">
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={closeModal}
-                        className="absolute inset-0 bg-black/60 backdrop-blur-md"
-                    />
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="bg-white dark:bg-neutral-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden relative z-10"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="relative p-6 md:p-10">
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-500 hover:text-neutral-800 dark:hover:text-white transition-colors text-2xl"
-                            >
-                                &times;
-                            </button>
-
-                            <div className="border-l-8 border-warning-500 pl-6 mb-8">
-                                <h3 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-white leading-tight">
-                                    {detailData[activeYear]?.title}
-                                </h3>
-                            </div>
-
-                            <div className="max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
-                                <div className="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
-                                    {detailData[activeYear]?.content}
-                                </div>
-                            </div>
-
-                            <div className="mt-10 pt-6 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
-                                <button
-                                    onClick={closeModal}
-                                    className="px-8 py-3 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all"
-                                >
-                                    關閉解析
-                                </button>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </AnimatePresence>
-    );
 
     return (
         <div className="container mx-auto px-4 py-10">
@@ -237,8 +173,23 @@ const CurriculumBlock = ({ data }) => {
                 ))}
             </div>
 
-            {/* Render Modal via Portal */}
-            {mounted && createPortal(modalContent, document.body)}
+            <Modal
+                isOpen={!!activeYear}
+                onClose={closeModal}
+                title={detailData[activeYear]?.title}
+            >
+                <div className="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
+                    {detailData[activeYear]?.content}
+                </div>
+                <div className="mt-10 pt-6 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
+                    <button
+                        onClick={closeModal}
+                        className="px-8 py-3 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all"
+                    >
+                        關閉解析
+                    </button>
+                </div>
+            </Modal>
         </div>
     );
 };
