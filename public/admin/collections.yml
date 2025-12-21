@@ -375,6 +375,17 @@
                       options:
                         - { label: "吸氣 (In)", value: "in" }
                         - { label: "吐氣 (Out)", value: "out" }
+            - label: "📜 課程發展圖像區塊"
+              name: "curriculum_block"
+              widget: "object"
+              fields:
+                - {
+                    label: "標題備註",
+                    name: "note",
+                    widget: "string",
+                    required: false,
+                    hint: "僅供後台備註",
+                  }
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"

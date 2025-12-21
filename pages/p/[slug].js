@@ -15,6 +15,7 @@ import Faq from "../../components/faq";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import MediaRenderer from "../../components/mediaRenderer";
 import ScheduleBlock from "../../components/scheduleBlock";
+import CurriculumBlock from "../../components/curriculumBlock";
 
 
 export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
@@ -251,6 +252,9 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             )}
                                             {block.type === "schedule_block" && (
                                                 <ScheduleBlock data={block} />
+                                            )}
+                                            {block.type === "curriculum_block" && (
+                                                <CurriculumBlock data={block} />
                                             )}
                                         </div>
                                     ))}
