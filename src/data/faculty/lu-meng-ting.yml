@@ -1,5 +1,9 @@
 name: "呂孟庭"
 title: "1-6年級主帶教師"
+media:
+  type: image
+  image: "/img/teacher-photos/呂孟庭.jpg"
+
 group: "full_time"
 education: "國立政治大學教育學系碩士"
 experience: |

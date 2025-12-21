@@ -1,5 +1,9 @@
 name: "廖容"
 title: "業務部主任"
+media:
+  type: image
+  image: "/img/teacher-photos/廖容.jpg"
+
 group: "admin"
 education: "台灣大學財務金融系"
 experience: |

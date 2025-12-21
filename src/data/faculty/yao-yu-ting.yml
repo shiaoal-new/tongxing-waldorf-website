@@ -1,5 +1,9 @@
 name: "姚昱廷"
 title: "華德福國小教師"
+media:
+  type: image
+  image: "/img/teacher-photos/姚昱廷.jpg"
+
 group: "full_time"
 education: |
   清華大學幼兒教育學系

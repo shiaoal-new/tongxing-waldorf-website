@@ -1,5 +1,9 @@
 name: "吳俊輝"
 title: "研究助理"
+media:
+  type: image
+  image: "/img/teacher-photos/吳俊輝.jpg"
+
 group: "admin"
 education: "法國格勒諾布爾第三大學語言科學系所碩士"
 experience: |

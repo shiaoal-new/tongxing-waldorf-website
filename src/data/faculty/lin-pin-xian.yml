@@ -1,5 +1,9 @@
 name: "林品嫻"
 title: "主帶老師"
+media:
+  type: image
+  image: "/img/teacher-photos/林品嫻.jpg"
+
 group: "full_time"
 education: "國立臺灣藝術大學工藝設計學系學士"
 experience: |

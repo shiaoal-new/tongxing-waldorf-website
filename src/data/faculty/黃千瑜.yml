@@ -1,5 +1,9 @@
 name: "黃千瑜"
 title: "教師"
+media:
+  type: image
+  image: "/img/teacher-photos/黃千瑜.jpg"
+
 group: "full_time"
 education: |
   國立政治大學社會系碩士

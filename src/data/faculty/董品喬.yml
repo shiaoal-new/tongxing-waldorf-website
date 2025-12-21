@@ -1,5 +1,9 @@
 name: "董品喬"
 title: "事業部經理"
+media:
+  type: image
+  image: "/img/teacher-photos/董品喬.jpg"
+
 group: "admin"
 education: "國立臺北商業大學 國際貿易系"
 experience: |

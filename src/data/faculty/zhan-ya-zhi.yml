@@ -1,5 +1,9 @@
 name: "詹雅智"
 title: "執行長"
+media:
+  type: image
+  image: "/img/teacher-photos/詹雅智.jpg"
+
 group: "admin"
 education: |
   德國斯圖加特自由華德福教育大學優律思美教育碩士

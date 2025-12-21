@@ -1,5 +1,9 @@
 name: "周天禧"
 title: "主帶教師"
+media:
+  type: image
+  image: "/img/teacher-photos/周天禧.jpg"
+
 group: "full_time"
 education: "華梵大學美術與文創學系學士"
 experience: |

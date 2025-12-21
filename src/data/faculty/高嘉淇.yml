@@ -1,5 +1,9 @@
 name: "高嘉淇"
 title: "英語與藝術教師"
+media:
+  type: image
+  image: "/img/teacher-photos/高嘉淇.jpg"
+
 group: "part_time"
 education: |
   台北市立士林高級商業中學

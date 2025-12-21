@@ -1,5 +1,9 @@
 name: "姜怡伶"
 title: "7-8年級主帶教師"
+media:
+  type: image
+  image: "/img/teacher-photos/姜怡伶.jpg"
+
 group: "full_time"
 education: "逢甲大學企業管理學系學士"
 experience: |
