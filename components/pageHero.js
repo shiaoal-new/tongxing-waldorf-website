@@ -2,6 +2,7 @@ import Container from "./container";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import BackgroundCarousel from "./backgroundCarousel";
+import { ArrowDownIcon } from "@heroicons/react/solid";
 
 export default function PageHero({ data }) {
     const {
@@ -64,6 +65,21 @@ export default function PageHero({ data }) {
                     </motion.div>
                 </div>
             </Container>
+
+            <motion.div
+                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-colors duration-300"
+                initial={{ opacity: 0.5, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                whileTap={{ scale: 0.9 }}
+                transition={{
+                    y: { delay: 1, duration: 1, repeat: Infinity, repeatType: "reverse" },
+                    default: { duration: 0.2 }
+                }}
+                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+            >
+                <ArrowDownIcon className="w-8 h-8 text-white shadow-sm" />
+            </motion.div>
 
         </div>
     );
