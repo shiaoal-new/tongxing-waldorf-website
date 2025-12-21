@@ -16,10 +16,13 @@ import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import MediaRenderer from "../../components/mediaRenderer";
 import ScheduleBlock from "../../components/scheduleBlock";
 import CurriculumBlock from "../../components/curriculumBlock";
+import Modal from "../../components/modal";
+import { useState } from "react";
 
 
 export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
     const router = useRouter();
+    const [selectedMember, setSelectedMember] = useState(null);
 
     if (router.isFallback) {
         return <div>Loading...</div>;
@@ -177,50 +180,38 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
 
                                             {block.type === "member_block" && (
                                                 <div className="max-w-6xl mx-auto">
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                                         {block.members && block.members.map((memberName, mIndex) => {
                                                             const member = getMemberDetails(memberName);
                                                             return (
-                                                                <div key={mIndex} className="flex flex-col sm:flex-row items-start p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1 group">
-                                                                    <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
+                                                                <div
+                                                                    key={mIndex}
+                                                                    onClick={() => setSelectedMember(member)}
+                                                                    className="flex flex-col items-center text-center p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-50 dark:border-gray-700 transition-all hover:shadow-lg hover:-translate-y-1 group cursor-pointer"
+                                                                >
+                                                                    <div className="relative mb-4">
                                                                         {member.media ? (
                                                                             <MediaRenderer
                                                                                 media={member.media}
-                                                                                className="w-24 h-24 rounded-2xl overflow-hidden border-4 border-primary-50 shadow-inner group-hover:border-primary-100 transition-colors"
+                                                                                className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden border-4 border-primary-50 group-hover:border-primary-100 transition-colors shadow-sm"
                                                                             />
                                                                         ) : (
-                                                                            <div className="w-24 h-24 rounded-2xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center border-4 border-primary-50 dark:border-primary-900/50">
+                                                                            <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center border-4 border-primary-50 dark:border-primary-900/50">
                                                                                 <span className="text-primary-300 text-3xl font-bold">{member.name?.[0]}</span>
                                                                             </div>
                                                                         )}
-                                                                    </div>
-                                                                    <div className="flex-grow">
-                                                                        <div className="mb-3">
-                                                                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-primary-700 transition-colors">{member.name}</h3>
-                                                                            {member.title && <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm tracking-wide">{member.title}</p>}
+                                                                        <div className="absolute -bottom-2 right-0 w-8 h-8 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                            <svg className="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                                                            </svg>
                                                                         </div>
-
-                                                                        {(member.education || member.experience) && (
-                                                                            <div className="mb-3 space-y-2">
-                                                                                {member.education && (
-                                                                                    <div className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                                                                                        <span className="font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">學歷:</span>
-                                                                                        {member.education}
-                                                                                    </div>
-                                                                                )}
-                                                                                {member.experience && (
-                                                                                    <div className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                                                                                        <span className="font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">背景:</span>
-                                                                                        {member.experience}
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                        )}
-
-                                                                        {member.bio && (
-                                                                            <div className="mt-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed border-t border-gray-50 dark:border-gray-700/50 pt-3 italic">
-                                                                                {member.bio}
-                                                                            </div>
+                                                                    </div>
+                                                                    <div className="mt-2">
+                                                                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 group-hover:text-primary-700 transition-colors leading-tight">{member.name}</h3>
+                                                                        {member.title && (
+                                                                            <p className="mt-1 text-xs text-primary-600 dark:text-primary-400 font-medium tracking-tight whitespace-pre-wrap">
+                                                                                {member.title}
+                                                                            </p>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -304,6 +295,71 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                     )}
                 </div>
             </div>
+
+            <Modal
+                isOpen={!!selectedMember}
+                onClose={() => setSelectedMember(null)}
+                title={selectedMember?.name}
+            >
+                {selectedMember && (
+                    <div className="flex flex-col md:flex-row gap-8 items-start">
+                        <div className="w-full md:w-1/3 flex-shrink-0">
+                            {selectedMember.media ? (
+                                <MediaRenderer
+                                    media={selectedMember.media}
+                                    className="w-full aspect-square rounded-3xl overflow-hidden border-8 border-primary-50 shadow-sm"
+                                />
+                            ) : (
+                                <div className="w-full aspect-square rounded-3xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center border-8 border-primary-50 dark:border-primary-900/50">
+                                    <span className="text-primary-300 text-6xl font-bold">{selectedMember.name?.[0]}</span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex-grow">
+                            <div className="mb-6">
+                                <h4 className="text-xl font-bold text-primary-700 dark:text-primary-400 mb-1">{selectedMember.title}</h4>
+                                <div className="h-1 w-20 bg-warning-500 rounded-full"></div>
+                            </div>
+
+                            <div className="space-y-6">
+                                {selectedMember.education && (
+                                    <div>
+                                        <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center">
+                                            <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
+                                            學學背景與資格
+                                        </h5>
+                                        <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
+                                            {selectedMember.education}
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedMember.experience && (
+                                    <div>
+                                        <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center">
+                                            <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
+                                            專業經歷
+                                        </h5>
+                                        <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
+                                            {selectedMember.experience}
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedMember.bio && (
+                                    <div>
+                                        <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center">
+                                            <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
+                                            教育理念 / 心語
+                                        </h5>
+                                        <div className="text-gray-600 dark:text-gray-400 italic leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
+                                            {selectedMember.bio}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </Modal>
         </Layout>
     );
 }
