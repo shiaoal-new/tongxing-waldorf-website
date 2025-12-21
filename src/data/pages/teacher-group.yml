@@ -52,20 +52,101 @@ sections:
           - "吳星螢"
 
   - section_id: part-time
+    layout: "突出標題風格"
     blocks:
       - type: text_block
         header: "兼任教師群"
         sub_header: "Part-time & Specialist Teachers"
+        description: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
+
       - type: list_block
-        display_mode: grid_cards
+        header: "人文、自然與外語"
+        display_mode: compact_grid
         items:
-          - title: "文史 / 自然"
-            desc: "王振叡、蔡孟宏、陳心恬、王大偉、劉得光"
-          - title: "藝術 / 書法 / 手工"
-            desc: "朱道興、林祐竹、江玄文、張又予、常茵茵、林孟廷、楊慧如、吳庭豪"
-          - title: "優律思美 / 體育 / 園藝"
-            desc: "林育姍、周欣穎、趙奕瑋、林孟廷"
-          - title: "音樂 / 合奏"
-            desc: "陳乃欣、李軒、陳宇璿、陳宇捷、許靖敏、李虹霈、郭星吾、黃弈涵"
-          - title: "安親代理"
-            desc: "余明儒、江采芹"
+          - title: "王振叡"
+            subtitle: "文史"
+          - title: "蔡孟宏"
+            subtitle: "文史"
+          - title: "陳心恬"
+            subtitle: "自然"
+          - title: "王大偉"
+            subtitle: "自然"
+          - title: "劉得光"
+            subtitle: "自然"
+          - title: "林佩芬"
+            subtitle: "英文"
+
+      - type: list_block
+        header: "藝術、手作與生活"
+        display_mode: compact_grid
+        items:
+          - title: "朱道興"
+            subtitle: "書法"
+          - title: "林祐竹"
+            subtitle: "藝術"
+          - title: "江玄文"
+            subtitle: "藝術"
+          - title: "張又予"
+            subtitle: "藝術"
+          - title: "常茵茵"
+            subtitle: "藝術"
+          - title: "楊慧如"
+            subtitle: "手工"
+          - title: "吳庭豪"
+            subtitle: "木工"
+          - title: "董佳琳"
+            subtitle: "戲劇"
+
+      - type: list_block
+        header: "肢體、動能與環境"
+        display_mode: compact_grid
+        items:
+          - title: "林育姍"
+            subtitle: "優律思美"
+          - title: "周欣穎"
+            subtitle: "優律思美"
+          - title: "趙奕瑋"
+            subtitle: "體育"
+          - title: "林孟廷"
+            subtitle: "藝術 / 體育 / 園藝"
+
+      - type: list_block
+        header: "音樂與合奏"
+        display_mode: compact_grid
+        items:
+          - title: "陳乃欣"
+            subtitle: "音樂（豎笛）"
+          - title: "李軒"
+            subtitle: "音樂"
+          - title: "陳宇璿"
+            subtitle: "音樂"
+          - title: "陳宇捷"
+            subtitle: "合奏（小提琴・中提琴）"
+          - title: "許靖敏"
+            subtitle: "合奏 (小提琴)"
+          - title: "李虹霈"
+            subtitle: "合奏 (大提琴)"
+          - title: "郭星吾"
+            subtitle: "合奏"
+          - title: "黃弈涵"
+            subtitle: "合奏（長笛）"
+
+      - type: list_block
+        header: "安親課後輔導"
+        display_mode: compact_grid
+        items:
+          - title: "余明儒"
+            subtitle: "安親"
+          - title: "江采芹"
+            subtitle: "安親"
+  - section_id: cta
+    layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        header: 親眼見證，孩子生命力的綻放
+        description: 您是否也在尋找一種能尊重孩子個體本質的教育？與其聽說，不如現場參與。同心的大門為每一位關心教育的家長敞開。
+        buttons:
+          - text: 預約參觀
+            link: /visit
+            style: white
+        sub_header: 下一步

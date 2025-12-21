@@ -223,6 +223,20 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
 
                                             {block.type === "list_block" && (
                                                 <div className="px-4 md:px-0">
+                                                    {(block.header || block.subtitle) && (
+                                                        <div className={`max-w-4xl mx-auto mb-8 ${align === 'left' ? 'text-left' : 'text-center'}`}>
+                                                            {block.subtitle && (
+                                                                <div className="text-xs font-bold tracking-wider text-primary-500 uppercase mb-1">
+                                                                    {block.subtitle}
+                                                                </div>
+                                                            )}
+                                                            {block.header && (
+                                                                <h4 className="text-xl font-bold text-gray-800 dark:text-white border-l-4 border-warning-400 pl-4">
+                                                                    {block.header}
+                                                                </h4>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                     {block.display_mode === "alternating" && (
                                                         <div className="flex flex-col gap-16">
                                                             {block.items?.map((item, iIndex) => (
@@ -265,6 +279,18 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                                                     <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{item.title}</h3>
                                                                     {item.subtitle && <p className="text-primary-600 dark:text-primary-400 text-sm font-medium mb-3">{item.subtitle}</p>}
                                                                     <p className="text-gray-600 dark:text-gray-400 text-sm">{item.desc}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+
+                                                    {block.display_mode === "compact_grid" && (
+                                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                                                            {block.items?.map((item, idx) => (
+                                                                <div key={idx} className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-50 dark:border-gray-700 flex flex-col items-start transition-all hover:bg-primary-50/30 dark:hover:bg-primary-900/10">
+                                                                    <div className="text-xs font-bold text-primary-600 dark:text-primary-400 mb-1 uppercase tracking-wider">{item.subtitle}</div>
+                                                                    <h3 className="text-base font-bold text-gray-800 dark:text-gray-100">{item.title}</h3>
+                                                                    {item.desc && <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">{item.desc}</p>}
                                                                 </div>
                                                             ))}
                                                         </div>
