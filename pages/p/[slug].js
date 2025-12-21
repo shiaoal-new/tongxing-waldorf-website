@@ -333,8 +333,17 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
                                             學歷背景與資格
                                         </h5>
-                                        <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
-                                            {selectedMember.education}
+                                        <div className="text-gray-700 dark:text-gray-300 leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700 text-sm">
+                                            {selectedMember.education.split('\n').filter(line => line.trim()).map((line, idx) => (
+                                                <div key={idx} className="flex items-start mb-2 group/item">
+                                                    <span className="text-primary-500 mr-2 mt-1.5 flex-shrink-0">
+                                                        <svg className="w-1.5 h-1.5" fill="currentColor" viewBox="0 0 8 8">
+                                                            <circle cx="4" cy="4" r="3" />
+                                                        </svg>
+                                                    </span>
+                                                    <span>{line.replace(/^[-\*\+]\s*/, '')}</span>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 )}
@@ -344,8 +353,17 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
                                             專業經歷
                                         </h5>
-                                        <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
-                                            {selectedMember.experience}
+                                        <div className="text-gray-700 dark:text-gray-300 leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700 text-sm">
+                                            {selectedMember.experience.split('\n').filter(line => line.trim()).map((line, idx) => (
+                                                <div key={idx} className="flex items-start mb-2">
+                                                    <span className="text-primary-500 mr-2 mt-1.5 flex-shrink-0">
+                                                        <svg className="w-1.5 h-1.5" fill="currentColor" viewBox="0 0 8 8">
+                                                            <circle cx="4" cy="4" r="3" />
+                                                        </svg>
+                                                    </span>
+                                                    <span>{line.replace(/^[-\*\+]\s*/, '')}</span>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 )}
