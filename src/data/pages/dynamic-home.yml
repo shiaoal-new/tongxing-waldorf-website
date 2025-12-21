@@ -34,6 +34,10 @@ sections:
               - title: 高年級的深化
                 desc: 孩子們在親身經歷世界後，即便在高年級面對抽象的學術內容，也能夠很快地產生情感連結與共鳴。
                 icon: lucide:graduation-cap
+            buttons:
+              - text: 了解同心的課程設計
+                link: /p/curriculum-development
+                style: primary
           - title: 健康與自然的物質環境滋養
             desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
             media:
