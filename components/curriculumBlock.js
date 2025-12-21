@@ -66,11 +66,6 @@ const CurriculumBlock = ({ data }) => {
 
     return (
         <div className="container mx-auto px-4 py-10">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">給孩子一份受用一生的禮物</h2>
-                <p className="text-lg text-neutral-600 dark:text-neutral-400">在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。</p>
-            </div>
-
             {/* 核心願景 */}
             <div className="bg-neutral-50 dark:bg-neutral-800 p-8 rounded-2xl mb-16 border-t-8 border-primary-600 shadow-sm">
                 <h3 className="text-2xl font-bold text-primary-700 text-center mb-8">核心教育目標：三元力量的平衡</h3>

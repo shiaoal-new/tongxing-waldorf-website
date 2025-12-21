@@ -1,5 +1,5 @@
-slug: curriculum-development
 title: 學生發展圖像與課程脈絡
+slug: curriculum-development
 description: 給孩子一份受用一生的禮物。陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。
 hero:
   title: 學生發展圖像與課程脈絡
@@ -7,6 +7,11 @@ hero:
   media_list:
     - type: image
       image: /img/curriculum-hero.png
+  parallax_ratio: 0
+  header: 學生發展圖像與課程脈絡
+  sub_header: 給孩子一份受用一生的禮物
+  description: 在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: curriculum-main
     blocks:
