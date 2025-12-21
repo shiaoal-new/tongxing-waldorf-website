@@ -54,7 +54,31 @@
         widget: "string",
         required: false,
       }
-    - { label: "簡介/專長", name: "bio", widget: "markdown", required: false }
+    - {
+        label: "教師群組",
+        name: "group",
+        widget: "select",
+        options:
+          [
+            { label: "專任教師", value: "full_time" },
+            { label: "行政教師", value: "admin" },
+            { label: "兼任教師", value: "part_time" },
+          ],
+        default: "full_time",
+      }
+    - { label: "學歷背景", name: "education", widget: "text", required: false }
+    - {
+        label: "專業背景/經歷",
+        name: "experience",
+        widget: "text",
+        required: false,
+      }
+    - {
+        label: "簡介/核心價值",
+        name: "bio",
+        widget: "markdown",
+        required: false,
+      }
     - label: "專業領域"
       name: "expertise"
       widget: "list"

@@ -1,0 +1,71 @@
+title: "教師團隊"
+slug: "teacher-group"
+hero:
+  title: "同心教師團"
+  sub_title: "真心陪伴，守護文化的自由"
+  description: "同心有一群真摯又有活力的老師們，抱持著對教育的理想與自我成長的期許，彼此支持、互相學習。"
+  media_list:
+    - type: image
+      image: /img/faculty-hero.png
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+sections:
+  - section_id: intro
+    blocks:
+      - type: text_block
+        header: "守護文化精神自由"
+        description: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
+
+  - section_id: full-time
+    layout: "突出標題風格"
+    blocks:
+      - type: text_block
+        header: "專任教師群"
+        sub_header: "Full-time Faculty"
+      - type: member_block
+        members:
+          - "詹雅智"
+          - "連涓妏"
+          - "姚昱廷"
+          - "林品嫻"
+          - "黃郁容"
+          - "呂孟庭"
+          - "周天禧"
+          - "游鈞桓"
+          - "姜怡伶"
+          - "黃千瑜"
+          - "高縈婕"
+          - "陸文婧"
+          - "高嘉淇"
+
+  - section_id: administrative
+    blocks:
+      - type: text_block
+        header: "行政教師群"
+        sub_header: "Administration"
+      - type: member_block
+        members:
+          - "吳俊輝"
+          - "廖容"
+          - "董品喬"
+          - "曾本瑜"
+          - "羅貞婷"
+          - "吳星螢"
+
+  - section_id: part-time
+    blocks:
+      - type: text_block
+        header: "兼任教師群"
+        sub_header: "Part-time & Specialist Teachers"
+      - type: list_block
+        display_mode: grid_cards
+        items:
+          - title: "文史 / 自然"
+            desc: "王振叡、蔡孟宏、陳心恬、王大偉、劉得光"
+          - title: "藝術 / 書法 / 手工"
+            desc: "朱道興、林祐竹、江玄文、張又予、常茵茵、林孟廷、楊慧如、吳庭豪"
+          - title: "優律思美 / 體育 / 園藝"
+            desc: "林育姍、周欣穎、趙奕瑋、林孟廷"
+          - title: "音樂 / 合奏"
+            desc: "陳乃欣、李軒、陳宇璿、陳宇捷、許靖敏、李虹霈、郭星吾、黃弈涵"
+          - title: "安親代理"
+            desc: "余明儒、江采芹"

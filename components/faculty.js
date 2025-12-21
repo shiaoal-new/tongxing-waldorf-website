@@ -20,7 +20,7 @@ export default function Faculty({ facultyList }) {
 }
 
 function FacultyCard({ faculty }) {
-    const { name, title, photo, email, extension, bio, expertise } = faculty;
+    const { name, title, photo, email, extension, bio, expertise, education, experience } = faculty;
 
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -95,12 +95,41 @@ function FacultyCard({ faculty }) {
                     </div>
                 )}
 
+                {/* 學歷與經歷 */}
+                {(education || experience) && (
+                    <div className="mb-4 space-y-3">
+                        {education && (
+                            <div>
+                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">
+                                    學歷背景
+                                </h4>
+                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {education}
+                                </p>
+                            </div>
+                        )}
+                        {experience && (
+                            <div>
+                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">
+                                    專業背景/經歷
+                                </h4>
+                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {experience}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 {/* 简介 */}
                 {bio && (
                     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">
+                            個人簡介
+                        </h4>
+                        <div className="text-gray-600 dark:text-gray-400 text-sm prose prose-sm dark:prose-invert max-w-none">
                             {bio}
-                        </p>
+                        </div>
                     </div>
                 )}
             </div>

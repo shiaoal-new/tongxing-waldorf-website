@@ -176,22 +176,52 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             )}
 
                                             {block.type === "member_block" && (
-                                                <div className="max-w-4xl mx-auto">
-                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                                <div className="max-w-6xl mx-auto">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                         {block.members && block.members.map((memberName, mIndex) => {
                                                             const member = getMemberDetails(memberName);
                                                             return (
-                                                                <div key={mIndex} className="flex items-start p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg ">
-                                                                    {member.media && (
-                                                                        <MediaRenderer
-                                                                            media={member.media}
-                                                                            className="flex-shrink-0 mr-4 w-16 h-16 rounded-full overflow-hidden border-2 border-primary-100"
-                                                                        />
-                                                                    )}
-                                                                    <div>
-                                                                        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">{member.name}</h3>
-                                                                        {member.title && <p className="text-primary-600 dark:text-primary-400 font-medium text-sm">{member.title}</p>}
-                                                                        {member.bio && <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">{member.bio}</div>}
+                                                                <div key={mIndex} className="flex flex-col sm:flex-row items-start p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1 group">
+                                                                    <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
+                                                                        {member.media ? (
+                                                                            <MediaRenderer
+                                                                                media={member.media}
+                                                                                className="w-24 h-24 rounded-2xl overflow-hidden border-4 border-primary-50 shadow-inner group-hover:border-primary-100 transition-colors"
+                                                                            />
+                                                                        ) : (
+                                                                            <div className="w-24 h-24 rounded-2xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center border-4 border-primary-50 dark:border-primary-900/50">
+                                                                                <span className="text-primary-300 text-3xl font-bold">{member.name?.[0]}</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="flex-grow">
+                                                                        <div className="mb-3">
+                                                                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-primary-700 transition-colors">{member.name}</h3>
+                                                                            {member.title && <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm tracking-wide">{member.title}</p>}
+                                                                        </div>
+
+                                                                        {(member.education || member.experience) && (
+                                                                            <div className="mb-3 space-y-2">
+                                                                                {member.education && (
+                                                                                    <div className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                                                                                        <span className="font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">學歷:</span>
+                                                                                        {member.education}
+                                                                                    </div>
+                                                                                )}
+                                                                                {member.experience && (
+                                                                                    <div className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                                                                                        <span className="font-bold text-gray-400 dark:text-gray-500 uppercase mr-1">背景:</span>
+                                                                                        {member.experience}
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        )}
+
+                                                                        {member.bio && (
+                                                                            <div className="mt-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed border-t border-gray-50 dark:border-gray-700/50 pt-3 italic">
+                                                                                {member.bio}
+                                                                            </div>
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                             );
