@@ -65,27 +65,7 @@ const CurriculumBlock = ({ data }) => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-10">
-            {/* 核心願景 */}
-            <div className="bg-neutral-50 dark:bg-neutral-800 p-8 rounded-2xl mb-16 border-t-8 border-primary-600 shadow-sm">
-                <h3 className="text-2xl font-bold text-primary-700 text-center mb-8">核心教育目標：三元力量的平衡</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">意志 (Will) - 手的做為</h4>
-                        <p className="text-neutral-600 dark:text-neutral-300">透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。</p>
-                    </div>
-                    <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">情感 (Feeling) - 心的感受</h4>
-                        <p className="text-neutral-600 dark:text-neutral-300">在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。</p>
-                    </div>
-                    <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">思考 (Thinking) - 頭的清晰</h4>
-                        <p className="text-neutral-600 dark:text-neutral-300">從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。</p>
-                    </div>
-                </div>
-            </div>
-
-
+        <div className="w-full">
             <h3 className="text-2xl font-bold text-primary-700 border-l-8 border-warning-500 pl-4 mb-8">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}

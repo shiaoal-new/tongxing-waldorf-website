@@ -13,6 +13,20 @@ hero:
   description: 在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
+  - section_id: core-vision
+    layout: "突出標題風格"
+    blocks:
+      - type: text_block
+        header: 核心教育目標：三元力量的平衡
+      - type: list_block
+        display_mode: grid_cards
+        items:
+          - title: 意志 (Will) - 手的做為
+            desc: 透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。
+          - title: 情感 (Feeling) - 心的感受
+            desc: 在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。
+          - title: 思考 (Thinking) - 頭的清晰
+            desc: 從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。
   - section_id: curriculum-main
     blocks:
       - type: curriculum_block
