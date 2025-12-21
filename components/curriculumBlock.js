@@ -96,24 +96,24 @@ const CurriculumBlock = ({ data }) => {
                         <div className="relative p-6 md:p-10">
                             <button
                                 onClick={closeModal}
-                                className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-neutral-700 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors text-2xl"
+                                className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-500 hover:text-neutral-800 dark:hover:text-white transition-colors text-2xl"
                             >
                                 &times;
                             </button>
 
                             <div className="border-l-8 border-warning-500 pl-6 mb-8">
-                                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white leading-tight">
+                                <h3 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-white leading-tight">
                                     {detailData[activeYear]?.title}
                                 </h3>
                             </div>
 
                             <div className="max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
-                                <div className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                                <div className="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
                                     {detailData[activeYear]?.content}
                                 </div>
                             </div>
 
-                            <div className="mt-10 pt-6 border-t border-gray-100 dark:border-neutral-700 flex justify-end">
+                            <div className="mt-10 pt-6 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
                                 <button
                                     onClick={closeModal}
                                     className="px-8 py-3 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all"
@@ -132,24 +132,24 @@ const CurriculumBlock = ({ data }) => {
         <div className="container mx-auto px-4 py-10">
             <div className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">給孩子一份受用一生的禮物</h2>
-                <p className="text-lg text-gray-600">在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。</p>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400">在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。</p>
             </div>
 
             {/* 核心願景 */}
-            <div className="bg-gray-50 dark:bg-neutral-800 p-8 rounded-2xl mb-16 border-t-8 border-primary-600 shadow-sm">
+            <div className="bg-neutral-50 dark:bg-neutral-800 p-8 rounded-2xl mb-16 border-t-8 border-primary-600 shadow-sm">
                 <h3 className="text-2xl font-bold text-primary-700 text-center mb-8">核心教育目標：三元力量的平衡</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-gray-100 dark:border-neutral-600 pb-3 mb-4">意志 (Will) - 手的做為</h4>
-                        <p className="text-gray-600 dark:text-gray-300">透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。</p>
+                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">意志 (Will) - 手的做為</h4>
+                        <p className="text-neutral-600 dark:text-neutral-300">透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。</p>
                     </div>
                     <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-gray-100 dark:border-neutral-600 pb-3 mb-4">情感 (Feeling) - 心的感受</h4>
-                        <p className="text-gray-600 dark:text-gray-300">在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。</p>
+                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">情感 (Feeling) - 心的感受</h4>
+                        <p className="text-neutral-600 dark:text-neutral-300">在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。</p>
                     </div>
                     <div className="bg-white dark:bg-neutral-700 p-6 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-gray-100 dark:border-neutral-600 pb-3 mb-4">思考 (Thinking) - 頭的清晰</h4>
-                        <p className="text-gray-600 dark:text-gray-300">從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。</p>
+                        <h4 className="text-xl font-bold text-primary-600 border-b-2 border-neutral-100 dark:border-neutral-600 pb-3 mb-4">思考 (Thinking) - 頭的清晰</h4>
+                        <p className="text-neutral-600 dark:text-neutral-300">從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。</p>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ const CurriculumBlock = ({ data }) => {
             <h3 className="text-2xl font-bold text-primary-700 border-l-8 border-warning-500 pl-4 mb-8">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}
-            <div className="hidden lg:block overflow-hidden bg-white dark:bg-neutral-900 rounded-xl shadow-md border border-gray-200 dark:border-neutral-700">
+            <div className="hidden lg:block overflow-hidden bg-white dark:bg-neutral-900 rounded-xl shadow-md border border-neutral-200 dark:border-neutral-700">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-primary-600 text-white">
@@ -174,14 +174,14 @@ const CurriculumBlock = ({ data }) => {
                     </thead>
                     <tbody>
                         {curriculumData.map((row, idx) => (
-                            <tr key={idx} className="border-b border-gray-100 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
+                            <tr key={idx} className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
                                 <td className="p-4 font-bold text-primary-700 bg-primary-50 dark:bg-primary-900/20 text-center">{row.year}</td>
                                 <td className="p-4 text-warning-700 dark:text-warning-500 font-medium text-sm">{row.state}</td>
-                                <td className="p-4 font-bold whitespace-nowrap">{row.task}</td>
-                                <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{row.objective}</td>
-                                <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{row.history}</td>
-                                <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{row.math}</td>
-                                <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{row.nature}</td>
+                                <td className="p-4 font-bold whitespace-nowrap text-neutral-800 dark:text-neutral-200">{row.task}</td>
+                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.objective}</td>
+                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.history}</td>
+                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.math}</td>
+                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.nature}</td>
                                 <td className="p-4">
                                     <button
                                         onClick={() => showDetail(row.year)}
@@ -200,30 +200,30 @@ const CurriculumBlock = ({ data }) => {
             <div className="lg:hidden space-y-6">
                 {curriculumData.map((row, idx) => (
                     <div key={idx} className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg border-t-4 border-primary-600 overflow-hidden">
-                        <div className="bg-primary-50 dark:bg-primary-900/40 p-4 flex justify-between items-center border-b border-gray-100 dark:border-neutral-700">
+                        <div className="bg-primary-50 dark:bg-primary-900/40 p-4 flex justify-between items-center border-b border-neutral-100 dark:border-neutral-700">
                             <div className="flex items-center gap-3">
                                 <span className="text-2xl font-black text-primary-700">{row.year}</span>
                                 <span className="bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-500 text-xs px-2 py-1 rounded font-bold">{row.state}</span>
                             </div>
-                            <span className="text-sm font-bold text-gray-500 dark:text-gray-400">任務：{row.task}</span>
+                            <span className="text-sm font-bold text-neutral-500 dark:text-neutral-400">任務：{row.task}</span>
                         </div>
                         <div className="p-5 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">年段目標</label>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{row.objective}</p>
+                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.objective}</p>
                                 </div>
                                 <div>
                                     <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">文史</label>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{row.history}</p>
+                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.history}</p>
                                 </div>
                                 <div>
                                     <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">數學</label>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{row.math}</p>
+                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.math}</p>
                                 </div>
                                 <div>
                                     <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">自然</label>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{row.nature}</p>
+                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.nature}</p>
                                 </div>
                             </div>
                             <button
