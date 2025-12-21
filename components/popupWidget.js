@@ -150,8 +150,8 @@ export default function PopupWidget() {
                             maxLength: 80,
                           })}
                           className={`w-full px-3 py-2 placeholder-gray-300 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring   ${errors.name
-                              ? "border-red-600 focus:border-red-600 ring-red-100"
-                              : "border-gray-300 focus:border-primary-600 ring-primary-100"
+                            ? "border-red-600 focus:border-red-600 ring-red-100"
+                            : "border-gray-300 focus:border-primary-600 ring-primary-100"
                             }`}
                         />
                         {errors.name && (
@@ -179,8 +179,8 @@ export default function PopupWidget() {
                           })}
                           placeholder="you@company.com"
                           className={`w-full px-3 py-2 placeholder-gray-300 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring   ${errors.email
-                              ? "border-red-600 focus:border-red-600 ring-red-100"
-                              : "border-gray-300 focus:border-primary-600 ring-primary-100"
+                            ? "border-red-600 focus:border-red-600 ring-red-100"
+                            : "border-gray-300 focus:border-primary-600 ring-primary-100"
                             }`}
                         />
 
@@ -206,8 +206,8 @@ export default function PopupWidget() {
                           })}
                           placeholder="請輸入您的訊息..."
                           className={`w-full px-3 py-2 placeholder-gray-300 bg-white border border-gray-300 rounded-md h-28 focus:outline-none focus:ring   ${errors.message
-                              ? "border-red-600 focus:border-red-600 ring-red-100"
-                              : "border-gray-300 focus:border-primary-600 ring-primary-100"
+                            ? "border-red-600 focus:border-red-600 ring-red-100"
+                            : "border-gray-300 focus:border-primary-600 ring-primary-100"
                             }`}
                           required></textarea>
                         {errors.message && (

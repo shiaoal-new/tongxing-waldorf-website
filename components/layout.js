@@ -29,7 +29,7 @@ export default function Layout({ children, title, description, navbarPadding = f
             </div>
 
             <Footer />
-            <PopupWidget />
+            {/* <PopupWidget /> */}
         </>
     );
 }

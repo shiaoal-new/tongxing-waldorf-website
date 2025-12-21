@@ -3,6 +3,7 @@ import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useEffect, useState, Fragment } from "react";
+import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
@@ -10,6 +11,7 @@ import AboutModal from "./about-modal";
 export default function Navbar({ pages = [], isHeroPage = true }) {
   const [scroll, setScroll] = useState(!isHeroPage);
   const [showAboutModal, setShowAboutModal] = useState(false);
+  const router = useRouter();
 
   const navigation = [
     { name: "首頁", href: "/" },
@@ -113,20 +115,30 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                     >
                       <>
                         {navigation.map((item, index) => (
-                          <Link
+                          <Disclosure.Button
                             key={index}
+                            as="a"
                             href={item.href || "/"}
-                            className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setTimeout(() => router.push(item.href || "/"), 400);
+                            }}
+                            className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
                           >
                             {item.name || item}
-                          </Link>
+                          </Disclosure.Button>
                         ))}
-                        <Link
+                        <Disclosure.Button
+                          as="a"
                           href="/visit"
-                          className="w-full px-6 py-2 mt-3 text-center text-white bg-primary-600 rounded-md lg:ml-5"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTimeout(() => router.push("/visit"), 400);
+                          }}
+                          className="w-full px-6 py-2 mt-3 text-center text-white bg-primary-600 rounded-md lg:ml-5 block"
                         >
                           預約參觀
-                        </Link>
+                        </Disclosure.Button>
 
                         <div className="w-full mt-4 border-t border-gray-200 dark:border-gray-700 pt-4">
                           <Disclosure>
@@ -141,7 +153,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                                 </Disclosure.Button>
                                 <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-gray-500">
                                   <button
-                                    onClick={() => setShowAboutModal(true)}
+                                    onClick={() => { setShowAboutModal(true); }}
                                     className="w-full px-4 py-2 text-left text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
                                   >
                                     About this site
