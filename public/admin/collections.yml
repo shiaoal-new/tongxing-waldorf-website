@@ -30,7 +30,13 @@
         - { label: "圖片文件", name: "image", widget: "image", required: false }
         - { label: "影片文件", name: "video", widget: "file", required: false }
         - {
-            label: "URL / YouTube ID / Lottie URL",
+            label: "Lottie 文件",
+            name: "lottie",
+            widget: "file",
+            required: false,
+          }
+        - {
+            label: "URL / YouTube ID / Lottie ID",
             name: "url",
             widget: "string",
             required: false,

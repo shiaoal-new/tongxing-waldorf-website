@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { DotLottiePlayer } from "@dotlottie/react-player";
 
 export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 1 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,8 +34,15 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
         if (m.type === 'image') return { ...m, src: getImagePath(m.image) };
         if (m.type === 'video') return { ...m, src: getImagePath(m.video) };
         if (m.type === 'youtube') return { ...m, src: m.url };
+        if (m.type === 'lottie') {
+            let src = m.lottie || m.url;
+            if (src && typeof src === 'string' && !src.startsWith('/') && !src.startsWith('http') && src.includes('-')) {
+                src = `https://lottie.host/${src}.lottie`;
+            }
+            return { ...m, src };
+        }
         return m;
-    }).filter(m => m.src || m.image || m.video);
+    }).filter(m => m.src || m.image || m.video || m.lottie || (m.type === 'lottie' && m.url));
 
     // Legacy fallback
     const legacyImages = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
@@ -146,6 +154,16 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                         {currentItem.type === 'image' && (
                                             <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
                                         )}
+                                        {currentItem.type === 'lottie' && (
+                                            <div className="w-full h-full">
+                                                <DotLottiePlayer
+                                                    src={currentItem.src}
+                                                    autoplay
+                                                    loop
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                />
+                                            </div>
+                                        )}
                                         {currentItem.type === 'youtube' && (
                                             <div className="w-full h-full pointer-events-none scale-150">
                                                 <iframe
@@ -185,6 +203,16 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                     )}
                                     {currentItem.type === 'image' && (
                                         <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
+                                    )}
+                                    {currentItem.type === 'lottie' && (
+                                        <div className="w-full h-full">
+                                            <DotLottiePlayer
+                                                src={currentItem.src}
+                                                autoplay
+                                                loop
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            />
+                                        </div>
                                     )}
                                     {currentItem.type === 'youtube' && (
                                         <div className="w-full h-full pointer-events-none scale-150">

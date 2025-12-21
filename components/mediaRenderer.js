@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { DotLottiePlayer } from "@dotlottie/react-player";
 
 const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
     if (!media || !media.type) return null;
@@ -54,27 +55,23 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
             );
 
         case "lottie":
-            if (!media.url) return null;
+            if (!media.lottie && !media.url) return null;
 
-            let lottieId = media.url;
+            let source = media.lottie || media.url;
 
-
-            if (lottieId) {
-                return (
-                    <div className={`w-full h-full ${className}`}>
-                        <iframe
-                            src={`https://lottie.host/embed/${lottieId}.lottie`}
-                            className="w-full h-full"
-                            frameBorder="0"
-                        ></iframe>
-                    </div>
-                );
+            // If it's a lottie.host ID (contains hyphen but not starting with http/slash)
+            if (source && typeof source === 'string' && !source.startsWith('/') && !source.startsWith('http') && source.includes('-')) {
+                source = `https://lottie.host/${source}.lottie`;
             }
 
-            // Fallback for invalid lottie data
             return (
-                <div className={`w-full h-full flex items-center justify-center ${className}`}>
-                    <p className="text-xs text-gray-400">Lottie Anim: {media.url}</p>
+                <div className={`w-full h-full ${className}`}>
+                    <DotLottiePlayer
+                        src={source}
+                        autoplay
+                        loop
+                        style={{ width: '100%', height: '100%' }}
+                    />
                 </div>
             );
 
