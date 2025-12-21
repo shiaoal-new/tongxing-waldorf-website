@@ -303,17 +303,22 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
             >
                 {selectedMember && (
                     <div className="flex flex-col md:flex-row gap-8 items-start">
-                        <div className="w-full md:w-1/3 flex-shrink-0">
-                            {selectedMember.media ? (
-                                <MediaRenderer
-                                    media={selectedMember.media}
-                                    className="w-full aspect-square rounded-3xl overflow-hidden border-8 border-primary-50 shadow-sm"
-                                />
-                            ) : (
-                                <div className="w-full aspect-square rounded-3xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center border-8 border-primary-50 dark:border-primary-900/50">
-                                    <span className="text-primary-300 text-6xl font-bold">{selectedMember.name?.[0]}</span>
-                                </div>
-                            )}
+                        <div className="w-full md:w-5/12 flex-shrink-0">
+                            <div
+                                className="relative w-full rounded-3xl overflow-hidden border-4 border-primary-50 shadow-md bg-gray-50 dark:bg-gray-800"
+                                style={{ aspectRatio: '1/1' }}
+                            >
+                                {selectedMember.media ? (
+                                    <MediaRenderer
+                                        media={selectedMember.media}
+                                        className="absolute inset-0 w-full h-full"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-primary-50 dark:bg-primary-900/30">
+                                        <span className="text-primary-300 text-6xl font-bold">{selectedMember.name?.[0]}</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className="flex-grow">
                             <div className="mb-6">
@@ -326,7 +331,7 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                     <div>
                                         <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center">
                                             <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
-                                            學學背景與資格
+                                            學歷背景與資格
                                         </h5>
                                         <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
                                             {selectedMember.education}
