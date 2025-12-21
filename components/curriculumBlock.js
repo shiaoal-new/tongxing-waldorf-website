@@ -141,7 +141,7 @@ const CurriculumBlock = ({ data }) => {
                                 onClick={() => showDetail(row.year)}
                                 className="w-full py-3 bg-primary-600 text-white rounded-xl font-bold shadow-md shadow-primary-200 dark:shadow-none hover:bg-primary-700 active:scale-95 transition-all mt-4"
                             >
-                                查看詳細年段解析
+                                詳細解析
                             </button>
                         </div>
                     </div>
