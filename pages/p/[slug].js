@@ -368,14 +368,19 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                     </div>
                                 )}
                                 {selectedMember.bio && (
-                                    <div>
-                                        <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center">
-                                            <span className="w-2 h-2 bg-primary-400 rounded-full mr-2"></span>
-                                            教育理念 / 心語
-                                        </h5>
-                                        <div className="text-gray-600 dark:text-gray-400 italic leading-relaxed pl-4 border-l border-gray-100 dark:border-gray-700">
-                                            {selectedMember.bio}
+                                    <div className="bg-primary-50/30 dark:bg-primary-900/10 p-5 md:p-8 rounded-3xl relative overflow-hidden">
+                                        <div className="relative z-10">
+                                            <h5 className="text-xs font-bold text-primary-500/60 uppercase tracking-widest mb-4 flex items-center">
+                                                <span className="w-4 h-px bg-primary-200 mr-2"></span>
+                                                教育理念 / 心語
+                                            </h5>
+                                            <div className="text-gray-700 dark:text-gray-200 italic leading-relaxed whitespace-pre-line text-sm md:text-base">
+                                                {selectedMember.bio}
+                                            </div>
                                         </div>
+                                        <svg className="absolute -bottom-4 -right-2 w-24 h-24 text-primary-100/50 dark:text-primary-900/20 pointer-events-none" fill="currentColor" viewBox="0 0 32 32">
+                                            <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H7.2c.5-1.5 1.7-2.8 3.2-3.2V8zm18 0c-3.3 0-6 2.7-6 6v10h10V14h-6.8c.5-1.5 1.7-2.8 3.2-3.2V8z" />
+                                        </svg>
                                     </div>
                                 )}
                             </div>
