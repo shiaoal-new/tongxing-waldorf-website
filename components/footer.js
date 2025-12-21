@@ -112,6 +112,8 @@ export default function Footer() {
   // as the user scrolls through the footer height.
   // This creates a "slower move up" effect compared to the main content.
   const y = useTransform(scrollYProgress, [0, 1], ["50%", "0%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
 
   return (
     <div className="relative">
@@ -123,7 +125,7 @@ export default function Footer() {
       {/* Visible fixed footer that sits behind the content and animates */}
       <motion.div
         className="fixed bottom-0 w-full z-0 block bg-secondary-100 dark:bg-neutral-800 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
-        style={{ y }}
+        style={{ y, opacity, scale }}
       >
         <FooterContent />
       </motion.div>
