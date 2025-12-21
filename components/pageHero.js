@@ -1,5 +1,5 @@
 import Container from "./container";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import BackgroundCarousel from "./backgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
@@ -16,8 +16,11 @@ export default function PageHero({ data }) {
         media_list = [],
         bg_images,
         bg_video,
-        transition_type = 'fade'
+        transition_type = 'fade',
+        scrolling_effect = 'fadeToWhite' // none, fadeToDark, fadeToWhite
     } = data;
+
+    const effect = scrolling_effect;
 
     // Resolve content 
     const effectiveTitle = header || legacyTitle;
@@ -32,15 +35,34 @@ export default function PageHero({ data }) {
     const container_class = layoutClasses.container_class || "items-center justify-center";
     const ref = useRef(null);
 
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start start", "end start"]
+    });
+
+    const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+    // Determine background color based on effect
+    let bgClass = "bg-gray-900";
+    if (effect === 'fadeToDark') bgClass = "bg-black";
+    if (effect === 'fadeToWhite') bgClass = "bg-white";
+
     return (
-        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden bg-gray-900 ${container_class}`}>
-            <BackgroundCarousel
-                media_list={media_list}
-                bg_images={bg_images}
-                bg_video={bg_video}
-                transition_type={transition_type}
-                parallax_ratio={data.parallax_ratio}
-            />
+        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden ${bgClass} ${container_class}`}>
+            <motion.div
+                className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+                style={{ opacity: effect !== 'none' ? bgOpacity : 1 }}
+            >
+                <BackgroundCarousel
+                    media_list={media_list}
+                    bg_images={bg_images}
+                    bg_video={bg_video}
+                    transition_type={transition_type}
+                    parallax_ratio={data.parallax_ratio}
+                />
+            </motion.div>
+
+
 
             <Container className="relative z-10 py-20 flex w-full h-full">
                 <div className={`w-full flex flex-col ${wrapper_class}`}>
@@ -84,3 +106,4 @@ export default function PageHero({ data }) {
         </div>
     );
 }
+

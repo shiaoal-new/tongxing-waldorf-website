@@ -233,6 +233,20 @@
             hint: "0=固定背景(Fixed), 1=隨頁面捲動(Static), 0.5=半速視差",
             required: false,
           }
+        - {
+            label: "捲動特效 (Scrolling Effect)",
+            name: "scrolling_effect",
+            widget: "select",
+            options:
+              [
+                { label: "無特效 (None)", value: "none" },
+                { label: "漸變至黑 (Fade to Dark)", value: "fadeToDark" },
+                { label: "漸變至白 (Fade to White)", value: "fadeToWhite" },
+              ],
+            default: "fadeToWhite",
+            required: false,
+            hint: "選擇向下捲動時的背景漸變效果",
+          }
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"
