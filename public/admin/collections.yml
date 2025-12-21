@@ -284,7 +284,7 @@
                   widget: "list"
                   collapsed: true
                   summary: "{{text}}"
-                  fields:
+                  fields: &button_fields
                     - { label: "按鈕文字", name: "text", widget: "string" }
                     - { label: "連結網址", name: "link", widget: "string" }
                     - {
@@ -361,16 +361,7 @@
                   widget: "list"
                   collapsed: true
                   summary: "{{text}}"
-                  fields:
-                    - { label: "按鈕文字", name: "text", widget: "string" }
-                    - { label: "連結", name: "link", widget: "string" }
-                    - {
-                        label: "按鈕顏色",
-                        name: "style",
-                        widget: "select",
-                        options: ["btn-primary", "btn-secondary", "btn-white"],
-                        default: "btn-primary",
-                      }
+                  fields: *button_fields
             - label: "👥 成員/教職員名單區塊"
               name: "member_block"
               widget: "object"

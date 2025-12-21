@@ -3,6 +3,7 @@ import React from "react";
 import Container from "./container";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import ActionButtons from "./actionButtons";
 
 export default function Benefits(props) {
   const { data } = props;
@@ -55,30 +56,7 @@ export default function Benefits(props) {
               ))}
             </div>
 
-            {data.buttons && data.buttons.length > 0 && (
-              <div className="mt-8 flex flex-wrap gap-4 justify-start">
-                {data.buttons.map((btn, idx) => {
-                  const isPrimary = btn.style === "primary";
-                  const isWhite = btn.style === "white";
-                  return (
-                    <a
-                      key={idx}
-                      href={btn.link}
-                      target={btn.link?.startsWith("http") ? "_blank" : "_self"}
-                      rel="noopener noreferrer"
-                      className={`px-8 py-3 text-lg font-medium text-center rounded-md transition-all ${isPrimary
-                        ? "bg-primary-600 text-white hover:bg-primary-700"
-                        : isWhite
-                          ? "bg-white text-primary-600 hover:bg-gray-50"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                    >
-                      {btn.text}
-                    </a>
-                  );
-                })}
-              </div>
-            )}
+            <ActionButtons buttons={data.buttons} align="left" />
           </div>
         </motion.div>
       </Container>
