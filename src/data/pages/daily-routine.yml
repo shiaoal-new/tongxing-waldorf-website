@@ -12,6 +12,7 @@ hero:
     - type: image
       image: https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
   transition_type: slide
+  parallax_ratio: 0.5
 sections:
   - section_id: interactive-schedule
     blocks:
@@ -109,6 +110,14 @@ sections:
             desc: 7 年級後逐步增加學科輔導與資訊工具應用，確保孩子在擁有健全人格的同時，也具備銜接高中教育的學術硬實力。
           - title: 工藝與意志
             desc: 在專業的木工坊與泥塑課中，孩子學習與物質對抗、合作，建立強韌的意志力。
+  - section_id: parent-sharing
+    layout: 突出標題風格
+    blocks:
+      - type: text_block
+        header: 家長分享
+        description: >
+          「以前總擔心孩子只會玩，但看到他在 8 年級專題發表時那種自信與邏輯，我才發現，華德福給了他最紮實的底層能力——獨立思考與對生命的熱情。」
+          —— 九年級畢業生家長
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
