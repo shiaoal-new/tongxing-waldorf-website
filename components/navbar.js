@@ -52,6 +52,11 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
         <>
           <ScrollLock isOpen={open} />
           <div
+            onClick={(e) => {
+              if (!e.target.closest("a") && !e.target.closest("button")) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-white/60 dark:bg-gray-900 shadow-lg backdrop-blur-md" : "bg-transparent"
               }`}>
             <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
