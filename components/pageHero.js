@@ -89,11 +89,12 @@ export default function PageHero({ data }) {
             </Container>
 
             <motion.div
-                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
-                initial={{ opacity: 0.5, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
-                whileTap={{ scale: 0.9 }}
+                className="absolute bottom-10 left-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
+                style={{ x: "-50%" }}
+                initial={{ opacity: 0.5, y: -20, x: "-50%" }}
+                animate={{ opacity: 1, y: 0, x: "-50%" }}
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)", x: "-50%" }}
+                whileTap={{ scale: 0.9, x: "-50%" }}
                 transition={{
                     y: { delay: 1, duration: 1, repeat: Infinity, repeatType: "reverse" },
                     default: { duration: 0.2 }
