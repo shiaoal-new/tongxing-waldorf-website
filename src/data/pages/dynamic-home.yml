@@ -50,6 +50,18 @@ sections:
               - title: 食農教育
                 desc: 學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。
                 icon: lucide:sun
+          - title: "強大且互助的「村莊」社群"
+            desc: "在現代小家庭孤立的社會結構下，同心華德福提供了「一個村子來共同養育一個孩子」的強大社群支持"
+            media:
+              type: lottie
+              url: "2af4b53e-d889-415f-a8be-053ffa90f166/D4jSQcnUjK"
+            sub_items:
+              - title: "親師生三元合作"
+                desc: "親師生工作關係非常密切。老師不僅在教學上投入，也花費大量時間與家長建立信任與溝通。家長之間也形成強大的橫向聯繫，不僅踴躍參與校務（如午餐小組、環境美化），甚至在課後互相支援，提供從放電、晚餐到洗澡的「一條龍服務」。這種充足的安全感與支持，讓孩子能踏出穩固的步伐。"
+                icon: "lucide:users"
+              - title: "學習面對與處理衝突"
+                desc: "當孩子在人際互動中出現衝突時，老師會引導他們學習如何表達感受、傾聽對方，並為自己的行為負起責任，甚至要求道歉的品質。"
+                icon: "lucide:message-square"
   - section_id: videos
     blocks:
       - type: text_block
