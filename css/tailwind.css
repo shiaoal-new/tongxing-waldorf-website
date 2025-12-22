@@ -3,11 +3,33 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* 品牌主色調 (Primary Colors) */
+    --color-brand-accent: #F2A154;
+    /* 同心暖陽 - 強調主色 */
+    --color-brand-structural: #2D5A27;
+    /* 森林深綠 - 骨幹主色 */
 
+    /* 品牌輔助色 (Secondary Colors) */
+    --color-brand-gold: #FFD700;
+    /* 晨曦金 */
+    --color-brand-taupe: #8D7B68;
+    /* 大地灰褐 */
+    --color-brand-blue: #A2C2E1;
+    /* 天空粉藍 */
+
+    /* 品牌中性色 (Neutrals) */
+    --color-brand-bg: #FDFCF8;
+    /* 紙漿白 - 網頁底色 */
+    --color-brand-text: #333333;
+    /* 木炭灰 - 主要文字顏色 */
+  }
 
   html,
   body {
     @apply dark:bg-trueGray-900 overflow-x-hidden;
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
   }
 }
 

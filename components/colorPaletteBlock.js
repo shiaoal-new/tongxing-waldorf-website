@@ -101,11 +101,11 @@ export default function ColorPaletteBlock({ data }) {
                 <ColorRow title="主色" subtitle="Brand Primary">
                     <ColorScale
                         label="Tunghin Amber / 同心暖陽"
-                        colors={{ "Default": themeColors['tunghin-amber'] }}
+                        colors={{ "Default": themeColors['brand-accent'] }}
                     />
                     <ColorScale
                         label="Forest Green / 森林深綠"
-                        colors={{ "Default": themeColors['forest-green'] }}
+                        colors={{ "Default": themeColors['brand-structural'] }}
                     />
                 </ColorRow>
 
@@ -113,8 +113,8 @@ export default function ColorPaletteBlock({ data }) {
                     <ColorScale
                         label="Paper White & Charcoal"
                         colors={{
-                            "Paper White": themeColors['paper-white'],
-                            "Charcoal": themeColors['charcoal-text']
+                            "Paper White": themeColors['brand-bg'],
+                            "Charcoal": themeColors['brand-text']
                         }}
                     />
                     <ColorScale
@@ -136,9 +136,9 @@ export default function ColorPaletteBlock({ data }) {
                     <ColorScale
                         label="Brand Accents"
                         colors={{
-                            "Morning Gold": themeColors['morning-gold'],
-                            "Earthy Taupe": themeColors['earthy-taupe'],
-                            "Ethereal Blue": themeColors['ethereal-blue']
+                            "Morning Gold": themeColors['brand-gold'],
+                            "Earthy Taupe": themeColors['brand-taupe'],
+                            "Ethereal Blue": themeColors['brand-blue']
                         }}
                     />
                     <ColorScale
