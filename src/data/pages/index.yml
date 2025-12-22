@@ -3,7 +3,7 @@ slug: index
 hero:
   title: 同心華德福
   sub_title: 手、心、腦的平衡發展
-  description: 台北市同心華德福實驗教育機構，致力於培育身、心、靈全面發展的孩子。
+  description: 在這個連大人都焦慮的時代，我們想陪孩子慢慢長成一個完整的人。
   media_list:
     - type: video
       video: /img/Leigham%20Primary%20Web%20Banner.mp4
@@ -12,61 +12,61 @@ sections:
   - section_id: features
     blocks:
       - type: text_block
-        header: 為什麼要選擇同心華德福
+        header: 為什麼選擇同心華德福
         sub_header: 教育特色
-        description: 選擇同心華德福教育，是為孩子選擇了一條以身心靈全面發展為核心，順應生命節奏、重視內在意志培養的教育路徑，旨在幫助他們在充滿挑戰的現代社會中，長成健康、獨立且擁有堅實自我認知的個體。
+        description: 說實話，沒有一種教育是完美的。但如果你也覺得「考試成績」不該是童年的全部，如果你希望孩子長大後不只會考試、更懂得生活——那我們想邀請你，一起走這條比較慢、但更踏實的路。
       - type: list_block
         display_mode: alternating
         items:
           - title: 順應發展的體驗式學習
-            desc: 同心華德福的課程設計並非單純的知識灌輸，而是緊密扣合孩子不同年齡的發展需求。
+            desc: 我們不急著把孩子塞滿知識。因為真正記得住的，往往是那些「親手做過」「親身經歷」的事。
             media:
               type: lottie
               lottie: /lottie/Study.lottie
             sub_items:
               - title: 中低年級的情感工作
-                desc: 對於中低年級（一到四年級），教學重點放在情感面和意願面的工作，避免過早要求孩子進行抽象的「頭部上的思考」。
+                desc: 一到四年級的孩子，大腦還在長。我們不逼他們「想破頭」，而是讓他們用身體、用感受去認識世界。
                 icon: lucide:heart
               - title: 肢體經驗的學習
-                desc: 學習主要透過肢體經驗和行動來進行，讓孩子在大量實踐中累積感受，並將這些感受凝結成回憶儲存於大腦。
+                desc: 動手做、親身試，比背一百遍課本還深刻。這些經驗會變成孩子一輩子帶得走的記憶。
                 icon: lucide:hand
               - title: 高年級的深化
-                desc: 孩子們在親身經歷世界後，即便在高年級面對抽象的學術內容，也能夠很快地產生情感連結與共鳴。
+                desc: 等孩子準備好了，抽象的知識反而變得容易。因為他們早就用身體「懂」了，現在只是換個方式說出來。
                 icon: lucide:graduation-cap
             buttons:
               - text: 了解同心的課程設計
                 link: /curriculum-development
                 style: btn-primary
           - title: 健康與自然的物質環境滋養
-            desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
+            desc: 你吃什麼、看什麼、摸什麼，都會影響你變成什麼樣的人。所以我們對孩子入口、入眼的東西，都很認真。
             media:
               type: lottie
               url: 6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy
             sub_items:
               - title: 食材選擇
-                desc: 學校在食材選擇上極為謹慎，優先採用實行生機互動農法（BD 農法）或小農提供的天然無毒食材，特別是在米飯和蔬果方面
+                desc: 我們的午餐不走「便宜大碗」路線。米飯和蔬果盡量選小農、無毒的，因為孩子的身體，值得吃得更好。
                 icon: lucide:sparkles
               - title: 食農教育
-                desc: 學校積極開展食農教育與校園綠手作，讓孩子與土地產生連結。
+                desc: 讓孩子知道飯不是從便利商店來的，菜也不是長在塑膠袋裡。摸過土、種過菜，才懂得珍惜。
                 icon: lucide:sun
           - title: "強大且互助的「村莊」社群"
-            desc: "在現代小家庭孤立的社會結構下，同心華德福提供了「一個村子來共同養育一個孩子」的強大社群支持"
+            desc: "現代父母最累的是什麼？孤軍奮戰。在同心，你會發現——原來養小孩，真的可以不用那麼孤單。"
             media:
               type: lottie
               url: "2af4b53e-d889-415f-a8be-053ffa90f166/D4jSQcnUjK"
             sub_items:
               - title: "親師生三元合作"
-                desc: "親師生工作關係非常密切。老師不僅在教學上投入，也花費大量時間與家長建立信任與溝通。家長之間也形成強大的橫向聯繫，不僅踴躍參與校務（如午餐小組、環境美化），甚至在課後互相支援，提供從放電、晚餐到洗澡的「一條龍服務」。這種充足的安全感與支持，讓孩子能踏出穩固的步伐。"
+                desc: "老師不只教書，還會跟你聊孩子的狀況。家長之間也會互相幫忙——今天你接我的孩子、明天我煮飯給你家吃。這種「互助育兒」的感覺，真的很暖。"
                 icon: "lucide:users"
               - title: "學習面對與處理衝突"
-                desc: "當孩子在人際互動中出現衝突時，老師會引導他們學習如何表達感受、傾聽對方，並為自己的行為負起責任，甚至要求道歉的品質。"
+                desc: "孩子吵架了怎麼辦？我們不會叫他們「去跟對方說對不起就好」。而是陪他們好好說出感受、聽懂對方，學會真正的和解。"
                 icon: "lucide:message-square"
   - section_id: videos
     blocks:
       - type: text_block
         header: 同心影音專區
         sub_header: 深入了解華德福
-        description: 透過影像紀錄，帶您一窺同心華德福的教育現場，感受親師生之間真實的互動與成長點滴。從幼兒教育到中學發展，讓我們一起探索孩子的生命歷程。
+        description: 文字說再多，不如親眼看看。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，但都是真的。
       - type: list_block
         display_mode: videos
         items:
@@ -74,23 +74,23 @@ sections:
             media:
               type: youtube
               url: https://youtu.be/oermgcwIkC8
-            desc: 您是否也在找尋教育孩子的不同路徑？您想改變嗎？您願意更勇敢的面對父母的角色嗎？
+            desc: 如果你也在想「除了補習、考試，還有別的路嗎？」——這支影片或許能給你一些答案。
           - title: 與孩子的黃金線
             media:
               type: youtube
               url: https://youtu.be/atLmqSjhnxs
-            desc: 小學階段的老師與孩子間會有一條親密又隱形的黃金線，支持著孩子從事有感的活動。
+            desc: 小學老師跟孩子之間，有種說不出的默契。那條看不見的連結，會陪著孩子走過整個童年。
           - title: 中學的自我革命
             media:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4
-            desc: 中學是開始更進入探索自我的年紀，我們該如何引導他認識自己、挑戰自己？
+            desc: 青春期的孩子開始問「我是誰」。我們不給標準答案，而是陪他們自己找到答案。
   - section_id: faq
     blocks:
       - type: text_block
         header: 常見問答
         sub_header: FAQ
-        description: 這裡彙整了家長們最常詢問的問題，希望能協助您更深入了解同心華德福的教育理念與入學相關資訊。
+        description: 學費多少？會不會跟不上進度？畢業後怎麼辦？——這些你想問但不好意思問的，我們都整理好了。
       - type: list_block
         display_mode: accordion
         faq_ids:
@@ -103,8 +103,8 @@ sections:
   - layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        header: 誠摯邀請您
-        description: 歡迎預約參觀，親身感受同心華德福的教育場域。
+        header: 來看看吧
+        description: 網站看再久，都不如親自走一趟。歡迎預約參觀，感受一下這裡的氛圍——也許你會喜歡。
         buttons:
           - text: 預約參觀
             link: /visit

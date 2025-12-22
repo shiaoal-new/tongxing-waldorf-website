@@ -1,6 +1,6 @@
 title: 學生發展圖像與課程脈絡
 slug: curriculum-development
-description: 給孩子一份受用一生的禮物。陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。
+description: 我們想給孩子的，不只是考試成績，而是一輩子帶得走的能力——懂得動手做、懂得感受、也懂得思考。
 hero:
   title: 學生發展圖像與課程脈絡
   subtitle: 1-12 年級脈絡表
@@ -9,7 +9,7 @@ hero:
       image: /img/curriculum-hero.png
   header: 學生發展圖像與課程脈絡
   sub_header: 給孩子一份受用一生的禮物
-  description: 在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。
+  description: 世界變得太快，我們不知道十年後孩子需要什麼技能。但我們知道，一個懂得動手做、懂得感受、也懂得思考的孩子，到哪裡都活得下去。
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: core-vision
@@ -21,17 +21,17 @@ sections:
         display_mode: grid_cards
         items:
           - title: 意志 (Will) - 手的做為
-            desc: 透過真實勞動與實作，培養孩子「即知即行」的底氣與堅毅行動力。
+            desc: 動手做、親身試，培養「說到做到」的堅毅。
             media:
               type: lottie
               lottie: /lottie/SculptingArt.lottie
           - title: 情感 (Feeling) - 心的感受
-            desc: 在藝術與節律中，滋養對萬物的崇敬，建立內外平衡與感知的敏銳度。
+            desc: 透過藝術、音樂、節慶，滋養對世界的感受力。
             media:
               type: lottie
               lottie: /lottie/Painting.lottie
           - title: 思考 (Thinking) - 頭的清晰
-            desc: 從經驗轉化為抽象思考，培養洞察本質的生命智慧與獨立判斷力。
+            desc: 從經驗中長出智慧，培養獨立判斷的能力。
             media:
               type: lottie
               lottie: /lottie/Thinking.lottie
@@ -43,7 +43,7 @@ sections:
     blocks:
       - type: text_block
         header: 親自來感受
-        description: 文字與表格無法完整傳達校園裡那種安靜而專注的氛圍。我們誠摯邀請您參與我們的說明會，看見孩子如何在規律中長出自由的靈魂。
+        description: 課程表看完了，但真實的感覺是什麼樣？歡迎來學校走走，看看孩子們學習的樣子——那種專注又充滿生命力的氛圍，真的要親眼看過才懂。
         buttons:
           - text: 預約參觀
             link: /visit
