@@ -12,6 +12,7 @@ import CurriculumBlock from "./curriculumBlock";
 import ColorPaletteBlock from "./colorPaletteBlock";
 import Modal from "./modal";
 import ActionButtons from "./actionButtons";
+import Faq from "./faq";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, facultyList, faqList, benefitsList }) {
@@ -382,21 +383,3 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
     );
 }
 
-function Faq({ faqList }) {
-    return (
-        <div className="max-w-4xl mx-auto space-y-4">
-            {faqList.map((item, index) => (
-                <div key={index} className="bg-brand-bg dark:bg-brand-structural rounded-2xl border border-brand-taupe/10 overflow-hidden">
-                    <div className="p-6">
-                        <h4 className="text-lg font-bold text-brand-text dark:text-brand-bg">{item.question}</h4>
-                        <div className="mt-4 prose prose-sm dark:prose-invert max-w-none text-brand-taupe dark:text-brand-taupe">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                {item.answer}
-                            </ReactMarkdown>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-}
