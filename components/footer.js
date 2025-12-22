@@ -93,7 +93,7 @@ function FooterContent() {
 
       </Container>
       {/* Do not remove this */}
-      <Backlink />
+      {/* <Backlink /> */}
     </>
   );
 }
