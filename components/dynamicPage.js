@@ -15,6 +15,8 @@ import ActionButtons from "./actionButtons";
 import Faq from "./faq";
 import VisitProcess from "./visitProcess";
 import VisitSchedule from "./visitSchedule";
+import SpacingDemoBlock from "./spacingDemoBlock";
+import TypographyDemoBlock from "./typographyDemoBlock";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList }) {
@@ -275,6 +277,12 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
                                             {block.type === "visit_schedule_block" && (
                                                 <VisitSchedule />
+                                            )}
+                                            {block.type === "spacing_demo_block" && (
+                                                <SpacingDemoBlock data={block} />
+                                            )}
+                                            {block.type === "typography_demo_block" && (
+                                                <TypographyDemoBlock data={block} />
                                             )}
                                         </div>
                                     ))}

@@ -9,5 +9,6 @@ items:
     children:
       - slug: "colors"
       - slug: "layout-spacing"
+      - slug: "typography"
   - title: "預約參觀"
     path: "/visit"

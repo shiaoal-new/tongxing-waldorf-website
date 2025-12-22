@@ -1,0 +1,37 @@
+title: 品牌字體系統
+slug: typography
+hero:
+  header: Typography System
+  sub_header: Design System Tokens
+  description: 同心華德福設計系統字體規範。結合思源宋體的人文氣息與思源黑體的清晰閱讀感，建立身心靈平衡的排版美學。
+  layout: Hero Default
+  media_list:
+    - type: image
+      image: /img/typography.jpg
+
+sections:
+  - section_id: font-families
+    blocks:
+      - type: text_block
+        header: 品牌字體選擇
+        sub_header: Brand Typefaces
+        content: |
+          ### 核心原則
+          我們選擇具有人文溫度的字體，同時確保在數位載具上的易讀性。
+
+          - **標題 (Heading)**: **思源宋體 (Source Han Serif)** - 展現優雅與人文質感，適合傳達教育理念與深刻內涵。
+          - **內文 (Body)**: **思源黑體 (Source Han Sans)** - 提供現代、清晰的閱讀體驗，確保資訊傳遞準確無誤。
+      - type: typography_demo_block
+        category: font_family
+
+  - section_id: type-scale
+    blocks:
+      - type: text_block
+        header: 字體大小階層
+        sub_header: Typographic Scale
+        content: |
+          ### 響應式階層
+          為了在不同裝置上維持視覺和諧，我們定義了基於桌機與手機的專屬字體大小。
+          所有標題預設使用「森林深綠」，內文使用「木炭灰」。
+      - type: typography_demo_block
+        category: type_scale

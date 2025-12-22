@@ -12,9 +12,9 @@ export default function DynamicPage(props) {
 
 export async function getStaticPaths() {
     const pages = getAllPages();
-    // Filter out 'index' slug as it's handled by index.js
+    const excludedSlugs = ["index", "colors", "layout-spacing", "typography", "visit"];
     const paths = pages
-        .filter((page) => page.slug !== "index")
+        .filter((page) => !excludedSlugs.includes(page.slug))
         .map((page) => ({
             params: { slug: page.slug },
         }));

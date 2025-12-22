@@ -5,6 +5,10 @@ hero:
   sub_header: Design System Tokens
   description: 同心華德福設計系統佈局與間距規範。基於 8px 比例系統，確保網站的「呼吸感」與視覺一致性。
   layout: Hero Default
+  media_list:
+    - type: image
+      image: /img/wireframe.png
+
 sections:
   - section_id: layout-overview
     blocks:
