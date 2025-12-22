@@ -61,6 +61,22 @@ module.exports = {
         warning: colors.yellow,
         error: colors.red,
       },
+      spacing: {
+        'section': 'var(--spacing-section)',
+        'component': 'var(--spacing-component)',
+        'paragraph': 'var(--spacing-paragraph)',
+        'desktop-margin': 'var(--spacing-desktop-margin)',
+        'mobile-margin': 'var(--spacing-mobile-margin)',
+      },
+      maxWidth: {
+        'brand': 'var(--layout-max-width)',
+      },
+      lineHeight: {
+        'brand': 'var(--typography-line-height)',
+      },
+      letterSpacing: {
+        'brand': 'var(--typography-letter-spacing)',
+      },
       keyframes: {
         slideInLeft: {
           '0%': {

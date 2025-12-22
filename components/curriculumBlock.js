@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Modal from "./modal";
+import Container from "./container";
 
 const CurriculumBlock = ({ data }) => {
     const [activeYear, setActiveYear] = useState(null);
@@ -65,34 +66,34 @@ const CurriculumBlock = ({ data }) => {
     };
 
     return (
-        <div className="w-full">
-            <h3 className="text-2xl font-bold text-brand-accent border-l-8 border-warning-500 pl-4 mb-8">1-9 年級課程脈絡與發展任務</h3>
+        <Container className="w-full">
+            <h3 className="text-2xl font-bold text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component leading-brand tracking-brand">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}
-            <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-neutral-900 rounded-xl shadow-md border border-neutral-200 dark:border-neutral-700">
+            <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-md border border-brand-taupe/10">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-brand-accent text-brand-bg">
-                            <th className="p-4 whitespace-nowrap">年段</th>
-                            <th className="p-4 whitespace-nowrap">發展狀態</th>
-                            <th className="p-4 whitespace-nowrap">發展任務</th>
-                            <th className="p-4 whitespace-nowrap">年段目標</th>
-                            <th className="p-4 whitespace-nowrap">文史</th>
-                            <th className="p-4 whitespace-nowrap">數學</th>
-                            <th className="p-4 whitespace-nowrap">自然</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">年段</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">發展狀態</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">發展任務</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">年段目標</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">文史</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">數學</th>
+                            <th className="p-4 whitespace-nowrap leading-brand">自然</th>
                             <th className="p-4"> </th>
                         </tr>
                     </thead>
                     <tbody>
                         {curriculumData.map((row, idx) => (
-                            <tr key={idx} className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
-                                <td className="p-4 font-bold text-brand-accent bg-brand-accent/10 dark:bg-primary-900/20 text-center">{row.year}</td>
-                                <td className="p-4 text-warning-700 dark:text-warning-500 font-medium text-sm">{row.state}</td>
-                                <td className="p-4 font-bold whitespace-nowrap text-neutral-800 dark:text-neutral-200">{row.task}</td>
-                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.objective}</td>
-                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.history}</td>
-                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.math}</td>
-                                <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.nature}</td>
+                            <tr key={idx} className="border-b border-brand-taupe/10 dark:border-brand-structural/50 hover:bg-brand-accent/5 dark:hover:bg-brand-structural/40 transition-colors">
+                                <td className="p-4 font-bold text-brand-accent bg-brand-accent/5 text-center">{row.year}</td>
+                                <td className="p-4 text-brand-accent/80 font-bold text-sm leading-brand">{row.state}</td>
+                                <td className="p-4 font-bold whitespace-nowrap text-brand-text dark:text-brand-bg leading-brand">{row.task}</td>
+                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.objective}</td>
+                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.history}</td>
+                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.math}</td>
+                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.nature}</td>
                                 <td className="p-4">
                                     <button
                                         onClick={() => showDetail(row.year)}
@@ -108,38 +109,38 @@ const CurriculumBlock = ({ data }) => {
             </div>
 
             {/* 1-9 年級脈絡表 - 行動版 (Card Layout) */}
-            <div className="lg:hidden space-y-6">
+            <div className="lg:hidden space-y-component mt-component">
                 {curriculumData.map((row, idx) => (
-                    <div key={idx} className="bg-brand-bg dark:bg-neutral-900 rounded-2xl shadow-lg border-t-4 border-brand-accent overflow-hidden">
-                        <div className="bg-brand-accent/10 dark:bg-primary-900/40 p-4 flex justify-between items-center border-b border-neutral-100 dark:border-neutral-700">
+                    <div key={idx} className="bg-brand-bg dark:bg-brand-structural/20 rounded-2xl shadow-sm border border-brand-taupe/10 border-t-4 border-t-brand-accent overflow-hidden">
+                        <div className="bg-brand-accent/5 dark:bg-brand-structural/40 p-component flex justify-between items-center border-b border-brand-taupe/10">
                             <div className="flex items-center gap-3">
                                 <span className="text-2xl font-black text-brand-accent">{row.year}</span>
-                                <span className="bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-500 text-xs px-2 py-1 rounded font-bold">{row.state}</span>
+                                <span className="bg-brand-accent/10 text-brand-accent text-[10px] px-2 py-1 rounded font-bold uppercase tracking-brand">{row.state}</span>
                             </div>
-                            <span className="text-sm font-bold text-neutral-500 dark:text-neutral-400">任務：{row.task}</span>
+                            <span className="text-sm font-bold text-brand-taupe">任務：{row.task}</span>
                         </div>
-                        <div className="p-5 space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className="p-component space-y-component">
+                            <div className="grid grid-cols-2 gap-component">
                                 <div>
-                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">年段目標</label>
-                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.objective}</p>
+                                    <label className="text-[10px] font-bold text-brand-accent uppercase tracking-brand block mb-1">年段目標</label>
+                                    <p className="text-sm text-brand-text dark:text-brand-bg leading-brand">{row.objective}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">文史</label>
-                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.history}</p>
+                                    <label className="text-[10px] font-bold text-brand-accent uppercase tracking-brand block mb-1">文史</label>
+                                    <p className="text-sm text-brand-text dark:text-brand-bg leading-brand">{row.history}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">數學</label>
-                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.math}</p>
+                                    <label className="text-[10px] font-bold text-brand-accent uppercase tracking-brand block mb-1">數學</label>
+                                    <p className="text-sm text-brand-text dark:text-brand-bg leading-brand">{row.math}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">自然</label>
-                                    <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.nature}</p>
+                                    <label className="text-[10px] font-bold text-brand-accent uppercase tracking-brand block mb-1">自然</label>
+                                    <p className="text-sm text-brand-text dark:text-brand-bg leading-brand">{row.nature}</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => showDetail(row.year)}
-                                className="w-full btn-white"
+                                className="w-full btn-white rounded-xl py-3 font-bold transition-all"
                             >
                                 詳細解析
                             </button>
@@ -156,16 +157,16 @@ const CurriculumBlock = ({ data }) => {
                 <div className="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
                     {detailData[activeYear]?.content}
                 </div>
-                <div className="mt-10 pt-6 border-t border-neutral-100 dark:border-neutral-700 flex justify-end">
+                <div className="mt-10 pt-6 border-t border-brand-taupe/10 dark:border-brand-structural/50 flex justify-end">
                     <button
                         onClick={closeModal}
-                        className="px-8 btn-primary rounded-2xl font-bold shadow-lg shadow-primary-200 dark:shadow-none active:scale-95"
+                        className="px-8 btn-primary rounded-2xl font-bold shadow-lg shadow-brand-accent/20 dark:shadow-none active:scale-95"
                     >
                         關閉解析
                     </button>
                 </div>
             </Modal>
-        </div>
+        </Container>
     );
 };
 

@@ -59,7 +59,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
             }}
             className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-brand-bg/60 dark:bg-brand-structural shadow-lg backdrop-blur-md" : "bg-transparent"
               }`}>
-            <nav className="container relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
+            <nav className="max-w-brand mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4">
               {/* Logo  */}
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link

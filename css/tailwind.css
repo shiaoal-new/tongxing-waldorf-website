@@ -23,6 +23,18 @@
     /* #FDFCF8 - 紙漿白 */
     --color-brand-text: 51, 51, 51;
     /* #333333 - 木炭灰 */
+
+    /* 佈局與間距規範 (Layout & Spacing) */
+    --layout-max-width: 1200px;
+    --spacing-desktop-margin: 80px;
+    --spacing-mobile-margin: 20px;
+    --spacing-section: 80px;
+    --spacing-component: 24px;
+    --spacing-paragraph: 24px;
+
+    /* 文字間距與行高 (Typography Spacing) */
+    --typography-line-height: 1.7;
+    --typography-letter-spacing: 0.05em;
   }
 
   html,
@@ -30,6 +42,8 @@
     @apply dark:bg-trueGray-900 overflow-x-hidden;
     background-color: rgb(var(--color-brand-bg));
     color: rgb(var(--color-brand-text));
+    line-height: var(--typography-line-height);
+    letter-spacing: var(--typography-letter-spacing);
   }
 }
 

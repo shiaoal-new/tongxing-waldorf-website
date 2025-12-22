@@ -30,9 +30,9 @@ export default function Section(props) {
     const defaultDescColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
     const defaultPretitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
 
-    const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-wider ${defaultPretitleColor} uppercase`;
-    const title_class = classes.title_class || `max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight ${defaultTitleColor} lg:leading-tight lg:text-4xl`;
-    const description_class = classes.description_class || `max-w-2xl py-4 text-lg leading-normal ${defaultDescColor} lg:text-xl xl:text-xl`;
+    const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-brand ${defaultPretitleColor} uppercase`;
+    const title_class = classes.title_class || `max-w-2xl mt-component text-3xl font-bold leading-brand tracking-brand ${defaultTitleColor} lg:leading-brand lg:text-4xl`;
+    const description_class = classes.description_class || `max-w-2xl py-component text-lg leading-brand ${defaultDescColor} lg:text-xl xl:text-xl`;
 
     // Define animation variants based on direction
     const variants = {
@@ -62,7 +62,7 @@ export default function Section(props) {
     return (
         <section
             id={anchor}
-            className={`w-full relative overflow-hidden section_container ${container_class} ${className || ""}`}
+            className={`w-full relative overflow-hidden section_container py-section ${container_class} ${className || ""}`}
             {...rest}
         >
             {media_list && media_list.length > 0 && (
@@ -70,7 +70,7 @@ export default function Section(props) {
             )}
 
             <Container
-                className={`flex w-full flex-col mt-4 relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
+                className={`flex w-full flex-col relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
