@@ -13,6 +13,7 @@ import ColorPaletteBlock from "./colorPaletteBlock";
 import Modal from "./modal";
 import ActionButtons from "./actionButtons";
 import Faq from "./faq";
+import AccordionList from "./accordionList";
 import VisitProcess from "./visitProcess";
 import VisitSchedule from "./visitSchedule";
 import SpacingDemoBlock from "./spacingDemoBlock";
@@ -216,13 +217,14 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                     )}
 
                                                     {block.display_mode === "accordion" && (
-                                                        <Faq faqList={block.faq_ids ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
-                                                            question: f.question,
-                                                            answer: f.answer
-                                                        })) : block.items?.map(item => ({
-                                                            question: item.title,
-                                                            answer: item.desc
-                                                        }))} />
+                                                        block.faq_ids ? (
+                                                            <Faq faqList={block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
+                                                                question: f.question,
+                                                                answer: f.answer
+                                                            }))} />
+                                                        ) : (
+                                                            <AccordionList items={block.items} />
+                                                        )
                                                     )}
 
                                                     {block.display_mode === "videos" && (
