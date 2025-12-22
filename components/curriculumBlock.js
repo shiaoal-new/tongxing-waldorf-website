@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Modal from "./modal";
-import Container from "./container";
 
 const CurriculumBlock = ({ data }) => {
     const [activeYear, setActiveYear] = useState(null);
@@ -66,7 +65,7 @@ const CurriculumBlock = ({ data }) => {
     };
 
     return (
-        <Container className="w-full">
+        <div className="w-full">
             <h3 className="text-2xl font-bold text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component leading-brand tracking-brand">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}
@@ -166,7 +165,7 @@ const CurriculumBlock = ({ data }) => {
                     </button>
                 </div>
             </Modal>
-        </Container>
+        </div>
     );
 };
 

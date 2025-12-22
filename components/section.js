@@ -107,9 +107,9 @@ export default function Section(props) {
             </Container>
 
             {bodyContent && (
-                <div className={`w-full relative z-10 content_class ${classes.content_class || ""}`}>
+                <Container className={`relative z-10 content_class ${classes.content_class || ""}`}>
                     {bodyContent}
-                </div>
+                </Container>
             )}
         </section>
     );
