@@ -39,11 +39,11 @@ export default function Benefits(props) {
             }`}>
           <div>
             <div className="flex flex-col w-full mt-4">
-              <h3 className="max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-brand-text lg:leading-tight lg:text-4xl dark:text-brand-bg">
+              <h3 className="max-w-2xl mt-3 text-brand-text dark:text-brand-bg">
                 {data.title}
               </h3>
 
-              <p className="max-w-2xl py-4 text-lg leading-normal text-brand-taupe lg:text-xl xl:text-xl dark:text-brand-taupe">
+              <p className="max-w-2xl py-4 text-lg text-brand-taupe lg:text-xl xl:text-xl dark:text-brand-taupe">
                 {data.desc}
               </p>
             </div>
@@ -72,7 +72,7 @@ function Benefit(props) {
           <Icon icon={props.icon} className="w-7 h-7 text-primary-50" />
         </div>
         <div>
-          <h4 className="text-xl font-medium text-brand-text dark:text-brand-bg">
+          <h4 className="text-brand-text dark:text-brand-bg">
             {props.title}
           </h4>
           <p className="mt-1 text-brand-taupe dark:text-brand-taupe">

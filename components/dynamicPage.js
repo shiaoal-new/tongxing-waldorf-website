@@ -117,12 +117,12 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                                                         </div>
                                                     )}
                                                     {block.header && (
-                                                        <h3 className="mt-3 text-2xl font-bold leading-snug tracking-tight text-brand-text dark:text-brand-bg lg:leading-tight lg:text-3xl">
+                                                        <h3 className="mt-3 text-brand-text dark:text-brand-bg">
                                                             {block.header}
                                                         </h3>
                                                     )}
                                                     {block.description && (
-                                                        <div className="py-4 text-lg leading-normal text-brand-taupe dark:text-brand-taupe">
+                                                        <div className="py-4 text-lg text-brand-taupe dark:text-brand-taupe">
                                                             {block.description}
                                                         </div>
                                                     )}
@@ -166,7 +166,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                                                                         </div>
                                                                     </div>
                                                                     <div className="mt-2">
-                                                                        <h3 className="text-lg font-bold text-brand-text dark:text-brand-bg group-hover:text-brand-accent transition-colors leading-tight">{member.name}</h3>
+                                                                        <h3 className="font-bold text-brand-text dark:text-brand-bg group-hover:text-brand-accent transition-colors">{member.name}</h3>
                                                                         {member.title && (
                                                                             <p className="mt-1 text-xs text-brand-accent dark:text-brand-accent font-medium tracking-tight whitespace-pre-wrap">
                                                                                 {member.title}
@@ -190,7 +190,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                                                                 </div>
                                                             )}
                                                             {block.header && (
-                                                                <h4 className="text-xl font-bold text-brand-text dark:text-brand-bg border-l-4 border-warning-400 pl-4">
+                                                                <h4 className="font-bold text-brand-text dark:text-brand-bg border-l-4 border-warning-400 pl-4">
                                                                     {block.header}
                                                                 </h4>
                                                             )}
@@ -238,7 +238,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                                                                         className="w-16 h-16 mb-4"
                                                                         imgClassName="object-contain"
                                                                     />
-                                                                    <h3 className="text-xl font-bold text-brand-text dark:text-brand-bg mb-2">{item.title}</h3>
+                                                                    <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{item.title}</h3>
                                                                     {item.subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{item.subtitle}</p>}
                                                                     <p className="text-brand-taupe dark:text-brand-taupe text-sm">{item.desc}</p>
                                                                 </div>
@@ -251,7 +251,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                                                             {block.items?.map((item, idx) => (
                                                                 <div key={idx} className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
                                                                     <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>
-                                                                    <h3 className="text-base font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
+                                                                    <h3 className="font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
                                                                     {item.desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{item.desc}</p>}
                                                                 </div>
                                                             ))}
@@ -313,7 +313,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
                         </div>
                         <div className="flex-grow">
                             <div className="mb-6">
-                                <h4 className="text-xl font-bold text-brand-accent dark:text-brand-accent mb-1">{selectedMember.title}</h4>
+                                <h4 className="font-bold text-brand-accent dark:text-brand-accent mb-1">{selectedMember.title}</h4>
                                 <div className="h-1 w-20 bg-warning-500 rounded-full"></div>
                             </div>
 

@@ -30,7 +30,7 @@ function FooterContent() {
               </Link>
             </div>
 
-            <div className="max-w-md mt-4 text-brand-taupe dark:text-brand-taupe">
+            <div className="max-w-md mt-4 text-brand-taupe dark:text-brand-taupe text-sm leading-brand">
               同心華德福為一所致力於實踐華德福教育理念的實驗教育機構，期盼親師生共同成長，創造良善的教育社群。
             </div>
           </div>
@@ -41,7 +41,7 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
                   {item}
                 </Link>
               ))}
@@ -53,14 +53,14 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
                   {item}
                 </Link>
               ))}
             </div>
           </div>
           <div className="">
-            <div>Follow us</div>
+            <div className="font-bold text-brand-text dark:text-brand-bg uppercase tracking-widest text-xs mb-4">Follow us</div>
             <div className="flex mt-5 space-x-5 text-brand-taupe dark:text-brand-taupe">
               <a
                 href="https://twitter.com/web3templates"

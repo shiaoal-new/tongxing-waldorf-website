@@ -183,7 +183,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                     <li className="mr-3 nav__item" key={index}>
                       <Link
                         href={menu.href || "/"}
-                        className="inline-block px-4 py-2 text-lg font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
+                        className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
                         {menu.name || menu}
                       </Link>
                     </li>
@@ -250,7 +250,7 @@ function DebugMenu({ onOpenModal }) {
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="inline-flex items-center px-4 py-2 text-lg font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
+            <Menu.Button className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
               <span>Debug</span>
               <ChevronDownIcon
                 className={`${open ? "transform rotate-180" : ""

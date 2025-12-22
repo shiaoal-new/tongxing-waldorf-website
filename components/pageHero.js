@@ -28,7 +28,7 @@ export default function PageHero({ data }) {
 
     // Resolve Layout CSS
     const layoutClasses = layout || {};
-    const title_class = layoutClasses.title_class || "text-4xl font-bold leading-brand tracking-brand text-brand-bg lg:text-5xl xl:text-6xl mb-component";
+    const title_class = layoutClasses.title_class || "mb-component text-brand-bg";
     const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/40 uppercase bg-brand-structural/40 rounded-full border border-brand-accent/20";
     const description_class = layoutClasses.description_class || "text-lg leading-brand tracking-brand text-brand-bg lg:text-xl xl:text-2xl opacity-90";
     const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";

@@ -44,11 +44,44 @@
 
   html,
   body {
-    @apply dark:bg-trueGray-900 overflow-x-hidden;
+    @apply dark:bg-trueGray-900 overflow-x-hidden font-body;
     background-color: rgb(var(--color-brand-bg));
     color: rgb(var(--color-brand-text));
     line-height: var(--typography-line-height);
     letter-spacing: var(--typography-letter-spacing);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold leading-brand tracking-brand;
+  }
+
+  h1 {
+    @apply text-3xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl lg:text-2xl;
+  }
+
+  h4 {
+    @apply text-lg lg:text-xl;
+  }
+
+  h5 {
+    @apply text-base lg:text-lg;
+  }
+
+  h6 {
+    @apply text-sm lg:text-base;
   }
 }
 

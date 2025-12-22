@@ -31,8 +31,8 @@ export default function Section(props) {
     const defaultPretitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
 
     const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-brand ${defaultPretitleColor} uppercase`;
-    const title_class = classes.title_class || `max-w-2xl mt-component text-3xl font-bold leading-brand tracking-brand ${defaultTitleColor} lg:leading-brand lg:text-4xl`;
-    const description_class = classes.description_class || `max-w-2xl py-component text-lg leading-brand ${defaultDescColor} lg:text-xl xl:text-xl`;
+    const title_class = classes.title_class || `max-w-2xl mt-component ${defaultTitleColor}`;
+    const description_class = classes.description_class || `max-w-2xl py-component text-lg ${defaultDescColor} lg:text-xl xl:text-xl`;
 
     // Define animation variants based on direction
     const variants = {

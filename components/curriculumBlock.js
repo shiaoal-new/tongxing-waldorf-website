@@ -66,7 +66,7 @@ const CurriculumBlock = ({ data }) => {
 
     return (
         <div className="w-full">
-            <h3 className="text-2xl font-bold text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component leading-brand tracking-brand">1-9 年級課程脈絡與發展任務</h3>
+            <h3 className="text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}
             <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-md border border-brand-taupe/10">

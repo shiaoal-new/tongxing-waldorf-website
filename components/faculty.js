@@ -45,7 +45,7 @@ function FacultyCard({ faculty }) {
             <div className="p-6">
                 {/* 姓名和职称 */}
                 <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-brand-text dark:text-brand-bg mb-1">
+                    <h3 className="font-bold text-brand-text dark:text-brand-bg mb-1">
                         {name}
                     </h3>
                     <p className="text-lg text-brand-accent dark:text-brand-accent font-medium">
