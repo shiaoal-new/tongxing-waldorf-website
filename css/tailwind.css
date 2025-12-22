@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    /* 品牌主色調 (Primary Colors) */
-    --color-brand-accent: #F2A154;
-    /* 同心暖陽 - 強調主色 */
-    --color-brand-structural: #2D5A27;
-    /* 森林深綠 - 骨幹主色 */
+    /* 品牌主色調 (Primary Colors) - 使用 RGB 格式以支援 Tailwind 透明度 */
+    --color-brand-accent: 242, 161, 84;
+    /* #F2A154 - 同心暖陽 */
+    --color-brand-structural: 45, 90, 39;
+    /* #2D5A27 - 森林深綠 */
 
     /* 品牌輔助色 (Secondary Colors) */
-    --color-brand-gold: #FFD700;
-    /* 晨曦金 */
-    --color-brand-taupe: #8D7B68;
-    /* 大地灰褐 */
-    --color-brand-blue: #A2C2E1;
-    /* 天空粉藍 */
+    --color-brand-gold: 255, 215, 0;
+    /* #FFD700 - 晨曦金 */
+    --color-brand-taupe: 141, 123, 104;
+    /* #8D7B68 - 大地灰褐 */
+    --color-brand-blue: 162, 194, 225;
+    /* #A2C2E1 - 天空粉藍 */
 
     /* 品牌中性色 (Neutrals) */
-    --color-brand-bg: #FDFCF8;
-    /* 紙漿白 - 網頁底色 */
-    --color-brand-text: #333333;
-    /* 木炭灰 - 主要文字顏色 */
+    --color-brand-bg: 253, 252, 248;
+    /* #FDFCF8 - 紙漿白 */
+    --color-brand-text: 51, 51, 51;
+    /* #333333 - 木炭灰 */
   }
 
   html,
   body {
     @apply dark:bg-trueGray-900 overflow-x-hidden;
-    background-color: var(--color-brand-bg);
-    color: var(--color-brand-text);
+    background-color: rgb(var(--color-brand-bg));
+    color: rgb(var(--color-brand-text));
   }
 }
 
@@ -39,14 +39,14 @@
   }
 
   .btn-primary {
-    @apply btn-base border-white/60 text-white bg-primary-600 hover:bg-primary-700;
+    @apply btn-base border-brand-bg/60 text-brand-bg bg-brand-accent hover:opacity-90;
   }
 
   .btn-secondary {
-    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+    @apply btn-base bg-brand-bg text-brand-text border-brand-taupe/20 hover:bg-brand-taupe/10;
   }
 
   .btn-white {
-    @apply btn-base border-primary-600 text-primary-600 bg-white hover:border-white hover:bg-primary-600 hover:text-white;
+    @apply btn-base border-brand-accent text-brand-accent bg-brand-bg hover:border-brand-bg hover:bg-brand-accent hover:text-brand-bg;
   }
 }

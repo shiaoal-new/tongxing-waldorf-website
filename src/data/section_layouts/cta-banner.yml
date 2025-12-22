@@ -1,7 +1,7 @@
 title: 紫色大型看板 (CTA)
 css_classes: |
   .container_class{ max-w-5xl mx-auto py-12 px-4 }
-  .wrapper_class{ bg-primary-600 text-white rounded-2xl p-8 lg:p-14 flex flex-col items-center text-center shadow-xl }
-  .title_class{ text-3xl lg:text-4xl font-bold text-white mb-4 }
-  .description_class{ text-white/90 text-lg lg:text-xl max-w-2xl mb-4 }
-  .pretitle_class{ text-white/80 font-bold tracking-widest mb-2 }
+  .wrapper_class{ bg-brand-accent text-brand-bg rounded-2xl p-8 lg:p-14 flex flex-col items-center text-center shadow-xl }
+  .title_class{ text-3xl lg:text-4xl font-bold text-brand-bg mb-4 }
+  .description_class{ text-brand-bg/90 text-lg lg:text-xl max-w-2xl mb-4 }
+  .pretitle_class{ text-brand-bg/80 font-bold tracking-widest mb-2 }

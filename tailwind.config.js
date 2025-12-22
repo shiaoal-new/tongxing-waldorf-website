@@ -15,6 +15,15 @@ const tunghinAmberScale = {
   950: '#401809',
 };
 
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${variableName}), ${opacityValue})`;
+    }
+    return `rgb(var(${variableName}))`;
+  };
+}
+
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class", // or 'media' or 'class'
@@ -22,13 +31,13 @@ module.exports = {
     extend: {
       colors: {
         // 品牌設計系統色彩 (對應 docs/design-system.md)
-        'brand-accent': 'var(--color-brand-accent)',         // 同心暖陽 (強調主色)
-        'brand-structural': 'var(--color-brand-structural)', // 森林深綠 (骨幹主色)
-        'brand-gold': 'var(--color-brand-gold)',             // 晨曦金
-        'brand-taupe': 'var(--color-brand-taupe)',           // 大地灰褐
-        'brand-blue': 'var(--color-brand-blue)',             // 天空粉藍
-        'brand-bg': 'var(--color-brand-bg)',                 // 紙漿白
-        'brand-text': 'var(--color-brand-text)',             // 木炭灰
+        'brand-accent': withOpacity('--color-brand-accent'),
+        'brand-structural': withOpacity('--color-brand-structural'),
+        'brand-gold': withOpacity('--color-brand-gold'),
+        'brand-taupe': withOpacity('--color-brand-taupe'),
+        'brand-blue': withOpacity('--color-brand-blue'),
+        'brand-bg': withOpacity('--color-brand-bg'),
+        'brand-text': withOpacity('--color-brand-text'),
 
         // Tailwind 預設色彩系統 (保留作為輔助)
         trueGray: colors.stone,

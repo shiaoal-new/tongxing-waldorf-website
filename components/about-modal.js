@@ -42,25 +42,25 @@ export default function AboutContent({ isOpen, onClose }) {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm mx-4 pointer-events-auto"
+                            className="bg-brand-bg dark:bg-brand-structural p-6 rounded-lg shadow-xl w-full max-w-sm mx-4 pointer-events-auto"
                         >
-                            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-2">About this site</h3>
+                            <h3 className="text-lg font-medium leading-6 text-brand-text dark:text-brand-bg mb-2">About this site</h3>
                             <div className="mt-2 space-y-2">
-                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                <p className="text-sm text-brand-taupe dark:text-brand-taupe">
                                     Git Branch: <span className="font-mono font-bold">{branch}</span>
                                 </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                <p className="text-sm text-brand-taupe dark:text-brand-taupe">
                                     Last Commit: <span className="font-mono font-bold">{commitMsg}</span>
                                 </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                <p className="text-sm text-brand-taupe dark:text-brand-taupe">
                                     Time: <span className="font-mono font-bold">{formatTime(commitTime)}</span>
                                 </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                <p className="text-sm text-brand-taupe dark:text-brand-taupe">
                                     Build Time: <span className="font-mono font-bold">
                                         {formatTime(process.env.NEXT_PUBLIC_BUILD_TIME)}
                                     </span>
                                 </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-300">
+                                <p className="text-sm text-brand-taupe dark:text-brand-taupe">
                                     Action Time: <span className="font-mono font-bold">
                                         {formatTime(process.env.NEXT_PUBLIC_ACTION_RUN_TIME) || "Local Dev"}
                                     </span>

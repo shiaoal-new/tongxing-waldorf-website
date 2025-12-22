@@ -49,17 +49,17 @@ export default function ColorsDynamicPage({ page, pages }) {
                                             {block.type === "text_block" && (
                                                 <div className="max-w-4xl mx-auto text-center">
                                                     {block.sub_header && (
-                                                        <div className="text-sm font-bold tracking-wider text-primary-600 uppercase">
+                                                        <div className="text-sm font-bold tracking-wider text-brand-accent uppercase">
                                                             {block.sub_header}
                                                         </div>
                                                     )}
                                                     {block.header && (
-                                                        <h3 className="mt-3 text-2xl font-bold text-gray-800 lg:text-3xl">
+                                                        <h3 className="mt-3 text-2xl font-bold text-brand-text lg:text-3xl">
                                                             {block.header}
                                                         </h3>
                                                     )}
                                                     {block.description && (
-                                                        <div className="py-4 text-lg text-gray-500">
+                                                        <div className="py-4 text-lg text-brand-taupe">
                                                             {block.description}
                                                         </div>
                                                     )}

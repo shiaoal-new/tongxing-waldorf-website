@@ -19,14 +19,14 @@ export default function Faq({ faqList }) {
             <Disclosure>
               {({ open }) => (
                 <>
-                  <Disclosure.Button className="flex items-center justify-between w-full px-4 py-4 text-lg text-left text-gray-800 rounded-lg bg-gray-50 hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-primary-100 focus-visible:ring-opacity-75 dark:bg-trueGray-800 dark:text-gray-200">
+                  <Disclosure.Button className="flex items-center justify-between w-full px-4 py-4 text-lg text-left text-brand-text rounded-lg bg-brand-bg hover:bg-brand-bg focus:outline-none focus-visible:ring focus-visible:ring-primary-100 focus-visible:ring-opacity-75 dark:bg-trueGray-800 dark:text-brand-bg">
                     <span>{item.question}</span>
                     <ChevronUpIcon
                       className={`${open ? "transform rotate-180" : ""
-                        } w-5 h-5 text-primary-500`}
+                        } w-5 h-5 text-brand-accent`}
                     />
                   </Disclosure.Button>
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-gray-500 dark:text-gray-300 prose prose-sm dark:prose-invert max-w-none">
+                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-brand-taupe dark:text-brand-taupe prose prose-sm dark:prose-invert max-w-none">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
@@ -34,7 +34,7 @@ export default function Faq({ faqList }) {
                         a: ({ node, ...props }) => (
                           <a
                             {...props}
-                            className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 underline"
+                            className="text-brand-accent hover:text-primary-800 dark:text-brand-accent dark:hover:text-brand-accent/60 underline"
                             target="_blank"
                             rel="noopener noreferrer"
                           />
@@ -46,17 +46,17 @@ export default function Faq({ faqList }) {
                         // 自定義表格樣式
                         table: ({ node, ...props }) => (
                           <div className="overflow-x-auto my-4">
-                            <table {...props} className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700" />
+                            <table {...props} className="min-w-full divide-y divide-brand-taupe/20 dark:divide-gray-700 border border-brand-taupe/20 dark:border-brand-structural" />
                           </div>
                         ),
                         thead: ({ node, ...props }) => (
-                          <thead {...props} className="bg-gray-50 dark:bg-gray-800" />
+                          <thead {...props} className="bg-brand-bg dark:bg-brand-structural" />
                         ),
                         th: ({ node, ...props }) => (
-                          <th {...props} className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider border-b border-gray-200 dark:border-gray-700" />
+                          <th {...props} className="px-6 py-3 text-left text-xs font-medium text-brand-taupe dark:text-brand-taupe uppercase tracking-wider border-b border-brand-taupe/20 dark:border-brand-structural" />
                         ),
                         td: ({ node, ...props }) => (
-                          <td {...props} className="px-6 py-4 whitespace-normal text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700" />
+                          <td {...props} className="px-6 py-4 whitespace-normal text-sm text-brand-taupe dark:text-brand-taupe border-b border-brand-taupe/20 dark:border-brand-structural" />
                         ),
                       }}
                     >

@@ -43,14 +43,14 @@ const Modal = ({
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className={`bg-white dark:bg-neutral-800 w-full ${maxWidth} rounded-3xl shadow-2xl overflow-hidden relative z-10`}
+                        className={`bg-brand-bg dark:bg-neutral-800 w-full ${maxWidth} rounded-3xl shadow-2xl overflow-hidden relative z-10`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className={`relative ${padding}`}>
                             {showCloseButton && (
                                 <button
                                     onClick={onClose}
-                                    className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-500 hover:text-neutral-800 dark:hover:text-white transition-colors text-2xl z-20"
+                                    className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-500 hover:text-neutral-800 dark:hover:text-brand-bg transition-colors text-2xl z-20"
                                 >
                                     &times;
                                 </button>
@@ -58,7 +58,7 @@ const Modal = ({
 
                             {title && (
                                 <div className="border-l-8 border-warning-500 pl-6 mb-8">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-white leading-tight">
+                                    <h3 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-brand-bg leading-tight">
                                         {title}
                                     </h3>
                                 </div>

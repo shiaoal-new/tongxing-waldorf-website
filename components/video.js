@@ -50,7 +50,7 @@ function VideoItem({ video }) {
             {/* Overlay for better text/icon visibility */}
             <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
 
-            <button className="absolute inset-auto text-white transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+            <button className="absolute inset-auto text-brand-bg transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-16 h-16 drop-shadow-lg"
@@ -77,11 +77,11 @@ function VideoItem({ video }) {
           ></iframe>
         )}
       </div>
-      <div className="p-5 bg-white dark:bg-trueGray-800 flex-grow border-t dark:border-trueGray-700">
-        <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">
+      <div className="p-5 bg-brand-bg dark:bg-trueGray-800 flex-grow border-t dark:border-trueGray-700">
+        <h3 className="text-lg font-bold text-brand-text dark:text-brand-bg mb-2 line-clamp-2">
           {video.title}
         </h3>
-        <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-4 leading-relaxed">
+        <p className="text-brand-taupe dark:text-brand-taupe text-sm line-clamp-4 leading-relaxed">
           {video.description}
         </p>
       </div>

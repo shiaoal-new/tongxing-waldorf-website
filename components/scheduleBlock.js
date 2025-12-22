@@ -25,14 +25,14 @@ const ScheduleBlock = ({ data }) => {
             <div className="flex border-b border-neutral-200 dark:border-neutral-700">
                 <button
                     onClick={() => setActiveGrade("low")}
-                    className={`flex-1 py-4 text-center transition-all ${activeGrade === "low" ? "border-b-4 border-primary-500 text-primary-600 font-bold" : "text-neutral-500 hover:text-primary-500"
+                    className={`flex-1 py-4 text-center transition-all ${activeGrade === "low" ? "border-b-4 border-brand-accent/200 text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
                         }`}
                 >
                     中低年級 (1-4年級)
                 </button>
                 <button
                     onClick={() => setActiveGrade("high")}
-                    className={`flex-1 py-4 text-center transition-all ${activeGrade === "high" ? "border-b-4 border-primary-500 text-primary-600 font-bold" : "text-neutral-500 hover:text-primary-500"
+                    className={`flex-1 py-4 text-center transition-all ${activeGrade === "high" ? "border-b-4 border-brand-accent/200 text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
                         }`}
                 >
                     高年級 (5-9年級)
@@ -42,8 +42,8 @@ const ScheduleBlock = ({ data }) => {
             {/* 內容渲染 */}
             <div className="mt-8 space-y-4 pb-12">
                 {activeData && activeData.map((item, index) => (
-                    <div key={index} className="bg-white dark:bg-neutral-800 p-5 rounded-2xl shadow-sm border border-primary-50 dark:border-neutral-700 flex items-center gap-4 hover:translate-y-[-5px] transition-transform">
-                        <div className="text-xl font-bold text-primary-600 w-20 flex-shrink-0">{item.time}</div>
+                    <div key={index} className="bg-brand-bg dark:bg-neutral-800 p-5 rounded-2xl shadow-sm border border-brand-accent/20 dark:border-neutral-700 flex items-center gap-4 hover:translate-y-[-5px] transition-transform">
+                        <div className="text-xl font-bold text-brand-accent w-20 flex-shrink-0">{item.time}</div>
                         <div className="flex-1 border-l-2 border-primary-100 dark:border-neutral-700 pl-4">
                             <div className="flex items-center gap-2 mb-1">
                                 <h3 className="font-bold text-lg text-neutral-800 dark:text-neutral-100">{item.title}</h3>

@@ -19,12 +19,12 @@ export default function Layout({ children, title, description, navbarPadding = f
 
             {/* 
          Main content wrapper with parallax settings:
-         - bg-white/dark:bg-trueGray-900: Ensures opacity to cover the fixed footer.
+         - bg-brand-bg/dark:bg-trueGray-900: Ensures opacity to cover the fixed footer.
          - relative: Establishes stacking context.
          - shadow-[...]: Casts a drop shadow onto the footer to enhance depth.
          - Navbar padding logic to handle sticky/fixed navbar overlapping content.
       */}
-            <div className={`${navbarPadding ? "pt-20" : ""} bg-white dark:bg-trueGray-900 relative z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]`}>
+            <div className={`${navbarPadding ? "pt-20" : ""} bg-brand-bg dark:bg-trueGray-900 relative z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]`}>
                 {children}
             </div>
 

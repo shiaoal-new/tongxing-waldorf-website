@@ -66,13 +66,13 @@ const CurriculumBlock = ({ data }) => {
 
     return (
         <div className="w-full">
-            <h3 className="text-2xl font-bold text-primary-700 border-l-8 border-warning-500 pl-4 mb-8">1-9 年級課程脈絡與發展任務</h3>
+            <h3 className="text-2xl font-bold text-brand-accent border-l-8 border-warning-500 pl-4 mb-8">1-9 年級課程脈絡與發展任務</h3>
 
             {/* 1-9 年級脈絡表 - 桌面版 */}
-            <div className="hidden lg:block overflow-hidden bg-white dark:bg-neutral-900 rounded-xl shadow-md border border-neutral-200 dark:border-neutral-700">
+            <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-neutral-900 rounded-xl shadow-md border border-neutral-200 dark:border-neutral-700">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-primary-600 text-white">
+                        <tr className="bg-brand-accent text-brand-bg">
                             <th className="p-4 whitespace-nowrap">年段</th>
                             <th className="p-4 whitespace-nowrap">發展狀態</th>
                             <th className="p-4 whitespace-nowrap">發展任務</th>
@@ -86,7 +86,7 @@ const CurriculumBlock = ({ data }) => {
                     <tbody>
                         {curriculumData.map((row, idx) => (
                             <tr key={idx} className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
-                                <td className="p-4 font-bold text-primary-700 bg-primary-50 dark:bg-primary-900/20 text-center">{row.year}</td>
+                                <td className="p-4 font-bold text-brand-accent bg-brand-accent/10 dark:bg-primary-900/20 text-center">{row.year}</td>
                                 <td className="p-4 text-warning-700 dark:text-warning-500 font-medium text-sm">{row.state}</td>
                                 <td className="p-4 font-bold whitespace-nowrap text-neutral-800 dark:text-neutral-200">{row.task}</td>
                                 <td className="p-4 text-sm text-neutral-700 dark:text-neutral-300">{row.objective}</td>
@@ -96,7 +96,7 @@ const CurriculumBlock = ({ data }) => {
                                 <td className="p-4">
                                     <button
                                         onClick={() => showDetail(row.year)}
-                                        className="px-3 py-1.5 border border-primary-600 text-primary-600 rounded-md text-xs font-bold hover:bg-primary-600 hover:text-white transition-all whitespace-nowrap"
+                                        className="px-3 py-1.5 border border-brand-accent text-brand-accent rounded-md text-xs font-bold hover:bg-brand-accent hover:text-brand-bg transition-all whitespace-nowrap"
                                     >
                                         深度解析
                                     </button>
@@ -110,10 +110,10 @@ const CurriculumBlock = ({ data }) => {
             {/* 1-9 年級脈絡表 - 行動版 (Card Layout) */}
             <div className="lg:hidden space-y-6">
                 {curriculumData.map((row, idx) => (
-                    <div key={idx} className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg border-t-4 border-primary-600 overflow-hidden">
-                        <div className="bg-primary-50 dark:bg-primary-900/40 p-4 flex justify-between items-center border-b border-neutral-100 dark:border-neutral-700">
+                    <div key={idx} className="bg-brand-bg dark:bg-neutral-900 rounded-2xl shadow-lg border-t-4 border-brand-accent overflow-hidden">
+                        <div className="bg-brand-accent/10 dark:bg-primary-900/40 p-4 flex justify-between items-center border-b border-neutral-100 dark:border-neutral-700">
                             <div className="flex items-center gap-3">
-                                <span className="text-2xl font-black text-primary-700">{row.year}</span>
+                                <span className="text-2xl font-black text-brand-accent">{row.year}</span>
                                 <span className="bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-500 text-xs px-2 py-1 rounded font-bold">{row.state}</span>
                             </div>
                             <span className="text-sm font-bold text-neutral-500 dark:text-neutral-400">任務：{row.task}</span>
@@ -121,19 +121,19 @@ const CurriculumBlock = ({ data }) => {
                         <div className="p-5 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">年段目標</label>
+                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">年段目標</label>
                                     <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.objective}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">文史</label>
+                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">文史</label>
                                     <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.history}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">數學</label>
+                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">數學</label>
                                     <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.math}</p>
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-primary-600 uppercase tracking-wider block mb-1">自然</label>
+                                    <label className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">自然</label>
                                     <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{row.nature}</p>
                                 </div>
                             </div>

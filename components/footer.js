@@ -10,13 +10,13 @@ function FooterContent() {
   return (
     <>
       <Container>
-        <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-gray-100 dark:border-trueGray-700 lg:grid-cols-5">
+        <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-brand-taupe/10 dark:border-trueGray-700 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <div>
               {" "}
               <Link
                 href="/"
-                className="flex items-center space-x-2 text-2xl font-medium text-primary-500 dark:text-gray-100">
+                className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg">
                 <span>
                   <img
                     src="/img/logo.svg"
@@ -30,7 +30,7 @@ function FooterContent() {
               </Link>
             </div>
 
-            <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
+            <div className="max-w-md mt-4 text-brand-taupe dark:text-brand-taupe">
               同心華德福為一所致力於實踐華德福教育理念的實驗教育機構，期盼親師生共同成長，創造良善的教育社群。
             </div>
           </div>
@@ -41,7 +41,7 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                   {item}
                 </Link>
               ))}
@@ -53,7 +53,7 @@ function FooterContent() {
                 <Link
                   key={index}
                   href="/"
-                  className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-primary-500 focus:text-primary-500 focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                   {item}
                 </Link>
               ))}
@@ -61,7 +61,7 @@ function FooterContent() {
           </div>
           <div className="">
             <div>Follow us</div>
-            <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
+            <div className="flex mt-5 space-x-5 text-brand-taupe dark:text-brand-taupe">
               <a
                 href="https://twitter.com/web3templates"
                 target="_blank"
@@ -124,7 +124,7 @@ export default function Footer() {
 
       {/* Visible fixed footer that sits behind the content and animates */}
       <motion.div
-        className="fixed bottom-0 w-full z-0 block bg-secondary-100 dark:bg-neutral-800 border-t border-gray-100 dark:border-trueGray-700 shadow-t-lg"
+        className="fixed bottom-0 w-full z-0 block bg-brand-taupe/10 dark:bg-brand-structural border-t border-brand-taupe/10 dark:border-trueGray-700 shadow-t-lg"
         style={{ y, opacity, scale }}
       >
         <FooterContent />
@@ -182,7 +182,7 @@ const Backlink = () => {
       href="https://web3templates.com"
       target="_blank"
       rel="noopener"
-      className="absolute flex px-3 py-1 space-x-2 text-sm font-semibold text-gray-900 bg-white border border-gray-300 rounded shadow-sm place-items-center left-5 bottom-5 dark:bg-trueGray-900 dark:border-trueGray-700 dark:text-trueGray-300">
+      className="absolute flex px-3 py-1 space-x-2 text-sm font-semibold text-brand-text bg-brand-bg border border-brand-taupe/30 rounded shadow-sm place-items-center left-5 bottom-5 dark:bg-trueGray-900 dark:border-trueGray-700 dark:text-trueGray-300">
       <svg
         width="20"
         height="20"

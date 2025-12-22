@@ -28,9 +28,9 @@ export default function PageHero({ data }) {
 
     // Resolve Layout CSS
     const layoutClasses = layout || {};
-    const title_class = layoutClasses.title_class || "text-4xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl mb-6";
-    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-4 text-sm font-bold tracking-wider text-primary-200 uppercase bg-primary-900/40 rounded-full border border-primary-500/30";
-    const description_class = layoutClasses.description_class || "text-lg leading-relaxed text-gray-100 lg:text-xl xl:text-2xl opacity-90";
+    const title_class = layoutClasses.title_class || "text-4xl font-bold leading-tight text-brand-bg lg:text-5xl xl:text-6xl mb-6";
+    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-4 text-sm font-bold tracking-wider text-brand-accent/40 uppercase bg-primary-900/40 rounded-full border border-brand-accent/200/30";
+    const description_class = layoutClasses.description_class || "text-lg leading-relaxed text-brand-bg lg:text-xl xl:text-2xl opacity-90";
     const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
     const container_class = layoutClasses.container_class || "items-center justify-center";
     const ref = useRef(null);
@@ -43,9 +43,9 @@ export default function PageHero({ data }) {
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
     // Determine background color based on effect
-    let bgClass = "bg-gray-900";
+    let bgClass = "bg-brand-structural";
     if (effect === 'fadeToDark') bgClass = "bg-black";
-    if (effect === 'fadeToWhite') bgClass = "bg-white";
+    if (effect === 'fadeToWhite') bgClass = "bg-brand-bg";
 
     return (
         <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden ${bgClass} ${container_class}`}>
@@ -89,7 +89,7 @@ export default function PageHero({ data }) {
             </Container>
 
             <motion.div
-                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-colors duration-300"
+                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
                 initial={{ opacity: 0.5, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
@@ -100,7 +100,7 @@ export default function PageHero({ data }) {
                 }}
                 onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
             >
-                <ArrowDownIcon className="w-8 h-8 text-white shadow-sm" />
+                <ArrowDownIcon className="w-8 h-8 text-brand-bg shadow-sm" />
             </motion.div>
 
         </div>

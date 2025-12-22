@@ -4,8 +4,11 @@ import tailwindConfig from "../tailwind.config.js";
 
 const fullConfig = resolveConfig(tailwindConfig);
 
-const ColorBrick = ({ shade, hex }) => {
+const ColorBrick = ({ shade, hex: inputHex }) => {
     const [copied, setCopied] = React.useState(false);
+
+    // Resolve color if it's a function (Tailwind withOpacity)
+    const hex = typeof inputHex === 'function' ? inputHex({ opacityValue: 1 }) : inputHex;
 
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
@@ -13,16 +16,41 @@ const ColorBrick = ({ shade, hex }) => {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const isDark = (hex) => {
-        if (!hex) return false;
-        const c = hex.substring(1);
-        const rgb = parseInt(c, 16);
-        const r = (rgb >> 16) & 0xff;
-        const g = (rgb >> 8) & 0xff;
-        const b = (rgb >> 0) & 0xff;
-        const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        return luma < 128;
+    const isDark = (colorValue) => {
+        if (!colorValue || typeof colorValue !== 'string') return false;
+
+        // Handle HEX
+        if (colorValue.startsWith('#')) {
+            const c = colorValue.substring(1);
+            const rgb = parseInt(c, 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >> 8) & 0xff;
+            const b = (rgb >> 0) & 0xff;
+            const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            return luma < 128;
+        }
+
+        // Handle RGB/RGBA
+        if (colorValue.startsWith('rgb')) {
+            const match = colorValue.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (match) {
+                const r = parseInt(match[1]);
+                const g = parseInt(match[2]);
+                const b = parseInt(match[3]);
+                const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                return luma < 128;
+            }
+        }
+
+        // Handle CSS variables (approximation based on brand defaults)
+        if (colorValue.includes('--color-brand-structural') || colorValue.includes('--color-brand-text')) {
+            return true;
+        }
+
+        return false;
     };
+
+    const dark = isDark(hex);
 
     return (
         <div
@@ -33,15 +61,15 @@ const ColorBrick = ({ shade, hex }) => {
                 className="h-20 p-2 flex flex-col justify-between transition-transform group-hover:scale-[1.02]"
                 style={{ backgroundColor: hex }}
             >
-                <span className={`text-[10px] font-bold ${isDark(hex) ? "text-white/70" : "text-black/40"}`}>
+                <span className={`text-[10px] font-bold ${dark ? "text-brand-bg/70" : "text-black/40"}`}>
                     {shade}
                 </span>
-                <span className={`text-[10px] font-mono uppercase ${isDark(hex) ? "text-white/90" : "text-black/80"}`}>
-                    {hex}
+                <span className={`text-[10px] font-mono uppercase ${dark ? "text-brand-bg/90" : "text-black/80"}`}>
+                    {typeof hex === 'string' && hex.startsWith('var') ? shade : hex}
                 </span>
             </div>
             {copied && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20 text-white text-[10px] font-bold backdrop-blur-[2px]">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 text-brand-bg text-[10px] font-bold backdrop-blur-[2px]">
                     COPIED!
                 </div>
             )}
@@ -53,7 +81,7 @@ const ColorScale = ({ colors, label }) => {
     if (!colors) return null;
     return (
         <div className="mb-6 last:mb-0">
-            <div className="flex bg-white rounded-sm overflow-hidden shadow-sm border border-gray-100">
+            <div className="flex bg-brand-bg rounded-sm overflow-hidden shadow-sm border border-brand-taupe/10">
                 {typeof colors === 'string' ? (
                     <ColorBrick shade="Default" hex={colors} />
                 ) : (
@@ -62,7 +90,7 @@ const ColorScale = ({ colors, label }) => {
                     ))
                 )}
             </div>
-            {label && <p className="text-[10px] mt-2 text-gray-400 font-semibold tracking-wide uppercase">{label}</p>}
+            {label && <p className="text-[10px] mt-2 text-brand-taupe font-semibold tracking-wide uppercase">{label}</p>}
         </div>
     );
 };
@@ -72,7 +100,7 @@ const ColorRow = ({ title, subtitle, children }) => {
         <div className="flex flex-col md:flex-row mb-16 last:mb-0">
             <div className="w-full md:w-56 mb-4 md:mb-0 pr-8">
                 <h2 className="text-2xl font-bold text-[#333333] leading-none mb-1">{title}</h2>
-                <p className="text-xs text-gray-400 font-medium tracking-wider uppercase">{subtitle}</p>
+                <p className="text-xs text-brand-taupe font-medium tracking-wider uppercase">{subtitle}</p>
             </div>
             <div className="flex-1">
                 {children}

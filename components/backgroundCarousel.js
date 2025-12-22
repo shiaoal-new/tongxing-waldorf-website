@@ -241,8 +241,8 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                             className="group relative flex items-center justify-center w-4 h-4 focus:outline-none"
                             aria-label={`Go to slide ${index + 1}`}
                         >
-                            <div className={`absolute inset-0 rounded-full border border-white transition-all duration-500 scale-100 ${currentIndex === index ? "opacity-100 scale-125" : "opacity-0 scale-50 group-hover:opacity-30"}`} />
-                            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentIndex === index ? "bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-white/40 group-hover:bg-white/60"}`} />
+                            <div className={`absolute inset-0 rounded-full border border-brand-bg transition-all duration-500 scale-100 ${currentIndex === index ? "opacity-100 scale-125" : "opacity-0 scale-50 group-hover:opacity-30"}`} />
+                            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentIndex === index ? "bg-brand-bg shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-brand-bg/40 group-hover:bg-brand-bg/60"}`} />
                         </button>
                     ))}
                 </div>

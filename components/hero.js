@@ -29,7 +29,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900 h-screen flex items-end">
+    <div className="relative overflow-hidden bg-brand-bg dark:bg-brand-structural h-screen flex items-end">
       <motion.video
         style={{ y }}
         autoPlay
@@ -48,11 +48,11 @@ export default function Hero() {
       <div className="relative z-10 w-full">
         <Container className="flex flex-wrap ">
           <div className="flex flex-col items-start w-full lg:w-2/5">
-            <div className="w-full max-w-3xl mb-8 p-8 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 animate-slideInLeft">
-              {/* <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
+            <div className="w-full max-w-3xl mb-8 p-8 bg-brand-bg/40 dark:bg-black/40 backdrop-blur-md rounded-2xl shadow-xl border border-brand-bg/20 animate-slideInLeft">
+              {/* <h1 className="text-4xl font-bold leading-snug tracking-tight text-brand-text lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-brand-bg">
                 同心華德福
               </h1> */}
-              <p className="py-5 text-xl leading-normal lg:text-xl xl:text-2xl text-white">
+              <p className="py-5 text-xl leading-normal lg:text-xl xl:text-2xl text-brand-bg">
                 我們重視<br /><span ref={el} />
               </p>
 
@@ -62,7 +62,7 @@ export default function Hero() {
                   href="http://"
                   target="_blank"
                   rel="noopener"
-                  className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
+                  className="flex items-center space-x-2 text-brand-taupe dark:text-brand-taupe">
                   <svg
                     role="img"
                     width="24"
@@ -83,25 +83,25 @@ export default function Hero() {
         </Container>
         {/* <Container>
           <div className="flex flex-col justify-center">
-            <div className="text-xl text-center text-gray-700 dark:text-white">
-              Trusted by <span className="text-primary-600">2000+</span> customers
+            <div className="text-xl text-center text-brand-text dark:text-brand-bg">
+              Trusted by <span className="text-brand-accent">2000+</span> customers
               worldwide
             </div>
 
             <div className="flex flex-wrap justify-center gap-5 mt-10 md:justify-around">
-              <div className="pt-2 text-gray-400 dark:text-gray-400">
+              <div className="pt-2 text-brand-taupe dark:text-brand-taupe">
                 <AmazonLogo />
               </div>
-              <div className="text-gray-400 dark:text-gray-400">
+              <div className="text-brand-taupe dark:text-brand-taupe">
                 <VerizonLogo />
               </div>
-              <div className="text-gray-400 dark:text-gray-400">
+              <div className="text-brand-taupe dark:text-brand-taupe">
                 <MicrosoftLogo />
               </div>
-              <div className="pt-1 text-gray-400 dark:text-gray-400">
+              <div className="pt-1 text-brand-taupe dark:text-brand-taupe">
                 <NetflixLogo />
               </div>
-              <div className="pt-2 text-gray-400 dark:text-gray-400">
+              <div className="pt-2 text-brand-taupe dark:text-brand-taupe">
                 <SonyLogo />
               </div>
             </div>

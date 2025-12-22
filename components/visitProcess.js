@@ -34,12 +34,12 @@ export default function VisitProcess() {
         <Container>
             <div className="grid gap-10 lg:grid-cols-2 xl:grid-cols-4">
                 {steps.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center justify-top text-center bg-gray-50 dark:bg-trueGray-800 p-8 rounded-xl">
-                        <div className="flex items-center justify-center w-16 h-16 p-4 mb-6 rounded-full bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-200">
+                    <div key={index} className="flex flex-col items-center justify-top text-center bg-brand-bg dark:bg-trueGray-800 p-8 rounded-xl">
+                        <div className="flex items-center justify-center w-16 h-16 p-4 mb-6 rounded-full bg-primary-100 text-brand-accent dark:bg-primary-900 dark:text-brand-accent/40">
                             {item.icon}
                         </div>
-                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">{item.title}</h3>
-                        <p className="mt-4 text-gray-500 dark:text-gray-400">
+                        <h3 className="text-xl font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
+                        <p className="mt-4 text-brand-taupe dark:text-brand-taupe">
                             {item.desc}
                         </p>
                     </div>

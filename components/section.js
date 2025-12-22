@@ -26,9 +26,9 @@ export default function Section(props) {
     const container_class = classes.container_class || "";
     const wrapper_class = classes.wrapper_class || "";
     // If background media is present, default to white text for better visibility
-    const defaultTitleColor = media_list?.length > 0 ? "text-white" : "text-gray-800 dark:text-white";
-    const defaultDescColor = media_list?.length > 0 ? "text-gray-100" : "text-gray-500 dark:text-gray-300";
-    const defaultPretitleColor = media_list?.length > 0 ? "text-primary-200" : "text-primary-600";
+    const defaultTitleColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
+    const defaultDescColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
+    const defaultPretitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
 
     const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-wider ${defaultPretitleColor} uppercase`;
     const title_class = classes.title_class || `max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight ${defaultTitleColor} lg:leading-tight lg:text-4xl`;
