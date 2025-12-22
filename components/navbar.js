@@ -165,6 +165,14 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                   >
                                     About this site
                                   </button>
+                                  <Link
+                                    href="/admin/index.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                                  >
+                                    CMS 後台管理
+                                  </Link>
                                 </Disclosure.Panel>
                               </>
                             )}
@@ -436,6 +444,8 @@ function DebugMenu({ onOpenModal }) {
                   {({ active }) => (
                     <Link
                       href="/admin/index.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
                     >

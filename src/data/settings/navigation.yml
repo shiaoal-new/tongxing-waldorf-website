@@ -10,5 +10,4 @@ items:
       - slug: "colors"
       - slug: "layout-spacing"
       - slug: "typography"
-  - title: "預約參觀"
-    path: "/visit"
+  - slug: "visit"
