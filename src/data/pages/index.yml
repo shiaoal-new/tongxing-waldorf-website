@@ -101,10 +101,6 @@ sections:
           - enrollment
           - graduates
           - transition
-    media_list:
-      - type: image
-        image: https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg
-    parallax_ratio: 0.1
   - layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
