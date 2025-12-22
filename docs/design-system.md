@@ -82,11 +82,26 @@
 * **段落間距 (Paragraph Spacing):** 24px。  
 * **字間距 (Letter Spacing):** 0.05em (適度放寬字距增加通透感)。
 
-### **5\. 字體系統 (Typography)**
+### **5\. 字體系統 (Typography Scale)**
 
-* **標題 (Headings):** 思源宋體 (Source Han Serif)，展現人文底蘊。  
-* **內文 (Body Text):** 思源黑體 (Source Han Sans)，確保跨裝置清晰度。  
-* **手寫強調 (Accents):** 少量手寫體，增加手感的溫度。
+為了確保良好的閱讀體驗，我們定義了基於手機與桌機的字體層次。標題統一使用「森林深綠」，內文使用「木炭灰」。
+
+#### **5.1 字體選擇**
+* **標題 Font:** 思源宋體 (Source Han Serif) - 展現人文質感。
+* **內文 Font:** 思源黑體 (Source Han Sans) - 確保數位閱讀清晰度。
+
+#### **5.2 字體大小階層 (Typographic Scale)**
+| 類型 | 桌機大小 (Desktop) | 手機大小 (Mobile) | 粗細 (Weight) | 用途 |
+| :--- | :--- | :--- | :--- | :--- |
+| **H1 大標題** | 48px | 32px | Bold (700) | 頁面主要大標題 |
+| **H2 中標題** | 32px | 24px | Medium (500) | 章節主要標題 |
+| **H3 小標題** | 24px | 20px | Medium (500) | 卡片或小節標題 |
+| **Body 內文** | 18px | 16px | Regular (400) | 主要段落文字 |
+| **Small 輔助** | 14px | 14px | Regular (400) | 註解、頁腳微小文字 |
+
+#### **5.3 閱讀優化**
+* **行高 (Line Height):** 內文建議為 1.75，增加視覺舒適度。
+* **段落間距:** 統一為 24px。
 
 ### **6\. 介面組件規範 (Component Guidelines)**
 

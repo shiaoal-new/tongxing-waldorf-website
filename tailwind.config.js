@@ -94,7 +94,11 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      sans: ['var(--font-body)', "Inter", ...defaultTheme.fontFamily.sans],
+      serif: ['var(--font-heading)', ...defaultTheme.fontFamily.serif],
+      heading: ['var(--font-heading)', ...defaultTheme.fontFamily.serif],
+      body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+      accent: ['var(--font-accent)', 'cursive'],
       stock: [defaultTheme.fontFamily.sans],
     },
   },

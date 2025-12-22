@@ -35,6 +35,11 @@
     /* 文字間距與行高 (Typography Spacing) */
     --typography-line-height: 1.7;
     --typography-letter-spacing: 0.05em;
+
+    /* 字體系統 (Typography Fonts) */
+    --font-heading: "Source Han Serif TC", "Noto Serif TC", serif;
+    --font-body: "Source Han Sans TC", "Noto Sans TC", sans-serif;
+    --font-accent: "Zeyada", "Indie Flower", "Handwriting", cursive;
   }
 
   html,
