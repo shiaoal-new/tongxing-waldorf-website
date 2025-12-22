@@ -1,34 +1,21 @@
 import { useRouter } from "next/router";
-import Layout from "../../components/layout";
-import Container from "../../components/container";
-import Section from "../../components/section";
+import Layout from "./layout";
+import Section from "./section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getAllPages, getPageBySlug } from "../../lib/pages";
-import { getAllFaculty } from "../../lib/faculty";
-import { getAllFaq } from "../../lib/faq";
-import { getAllBenefits } from "../../lib/benefits";
-import PageHero from "../../components/pageHero";
-import Benefits from "../../components/benefits";
-import Video from "../../components/video";
-import Faq from "../../components/faq";
-import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
-import MediaRenderer from "../../components/mediaRenderer";
-import ScheduleBlock from "../../components/scheduleBlock";
-import CurriculumBlock from "../../components/curriculumBlock";
-import ColorPaletteBlock from "../../components/colorPaletteBlock";
-import Modal from "../../components/modal";
-import ActionButtons from "../../components/actionButtons";
+import PageHero from "./pageHero";
+import Benefits from "./benefits";
+import Video from "./video";
+import MediaRenderer from "./mediaRenderer";
+import ScheduleBlock from "./scheduleBlock";
+import CurriculumBlock from "./curriculumBlock";
+import ColorPaletteBlock from "./colorPaletteBlock";
+import Modal from "./modal";
+import ActionButtons from "./actionButtons";
 import { useState } from "react";
 
-
-export default function DynamicPage({ page, pages, facultyList, faqList, benefitsList }) {
-    const router = useRouter();
+export default function DynamicPageContent({ page, pages, facultyList, faqList, benefitsList }) {
     const [selectedMember, setSelectedMember] = useState(null);
-
-    if (router.isFallback) {
-        return <div>Loading...</div>;
-    }
 
     if (!page) {
         return <div>Page not found</div>;
@@ -56,7 +43,7 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
 
     // Fallback: if hero exists but has no title, use page title
     const effectiveHeroData = heroData ? {
-        title: page.title,
+        header: page.title,
         ...heroData
     } : null;
 
@@ -76,13 +63,6 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                         const sectionId = section.section_id;
                         const mediaList = section.media_list;
                         const parallaxRatio = section.parallax_ratio;
-
-                        if (mediaList) {
-                            console.log(`Section ${index} (${sectionId}) has media_list:`, mediaList);
-                        } else {
-                            console.log(`Section ${index} (${sectionId}) has NO media_list`);
-                        }
-
 
                         // Identify if the first block is a header (text_block with header/subheader)
                         const firstBlock = blocks[0];
@@ -105,7 +85,6 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                         }
 
                         // Determine alignment based on the first CONTENT block (if any)
-                        // If the first content block is "alternating" list or "text_block" (prose), usually left align looks better.
                         if (contentBlocks.length > 0) {
                             const firstContent = contentBlocks[0];
                             if (firstContent.type === 'text_block' ||
@@ -403,43 +382,21 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
     );
 }
 
-export async function getStaticPaths() {
-    const pages = getAllPages();
-    const paths = pages.map((page) => ({
-        params: { slug: page.slug },
-    }));
-
-    return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-    const { slug } = params;
-    const page = getPageBySlug(slug);
-    const pages = getAllPages();
-    const facultyList = getAllFaculty();
-    const faqList = getAllFaq();
-    const benefitsList = getAllBenefits();
-
-    // Resolve layout templates for each section
-    if (page && page.sections) {
-        page.sections = page.sections.map(section => {
-            if (section.layout) {
-                const layoutData = getSectionLayoutByTitle(section.layout);
-                if (layoutData) {
-                    return { ...section, _layout: layoutData };
-                }
-            }
-            return section;
-        });
-    }
-
-    return {
-        props: {
-            page,
-            pages,
-            facultyList,
-            faqList,
-            benefitsList,
-        },
-    };
+function Faq({ faqList }) {
+    return (
+        <div className="max-w-4xl mx-auto space-y-4">
+            {faqList.map((item, index) => (
+                <div key={index} className="bg-brand-bg dark:bg-brand-structural rounded-2xl border border-brand-taupe/10 overflow-hidden">
+                    <div className="p-6">
+                        <h4 className="text-lg font-bold text-brand-text dark:text-brand-bg">{item.question}</h4>
+                        <div className="mt-4 prose prose-sm dark:prose-invert max-w-none text-brand-taupe dark:text-brand-taupe">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {item.answer}
+                            </ReactMarkdown>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
 }

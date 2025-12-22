@@ -15,10 +15,12 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
 
   const navigation = [
     { name: "首頁", href: "/" },
-    ...pages.map(page => ({
-      name: page.title,
-      href: `/p/${page.slug}`
-    }))
+    ...pages
+      .filter(page => page.slug !== "index")
+      .map(page => ({
+        name: page.title,
+        href: `/${page.slug}`
+      }))
   ];
 
   useEffect(() => {

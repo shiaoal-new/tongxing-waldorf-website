@@ -1,5 +1,5 @@
-title: 動態首頁
-slug: dynamic-home
+title: 首頁
+slug: index
 hero:
   title: 同心華德福
   sub_title: 手、心、腦的平衡發展
@@ -36,7 +36,7 @@ sections:
                 icon: lucide:graduation-cap
             buttons:
               - text: 了解同心的課程設計
-                link: /p/curriculum-development
+                link: /curriculum-development
                 style: btn-primary
           - title: 健康與自然的物質環境滋養
             desc: 華德福教育深信外在的物質世界會滋養孩子的內在氛圍，因此對孩子的飲食和生活環境投入極大的心力
