@@ -13,6 +13,8 @@ import ColorPaletteBlock from "./colorPaletteBlock";
 import Modal from "./modal";
 import ActionButtons from "./actionButtons";
 import Faq from "./faq";
+import VisitProcess from "./visitProcess";
+import VisitSchedule from "./visitSchedule";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList }) {
@@ -267,6 +269,12 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
                                             {block.type === "color_palette_block" && (
                                                 <ColorPaletteBlock data={block} />
+                                            )}
+                                            {block.type === "visit_process_block" && (
+                                                <VisitProcess />
+                                            )}
+                                            {block.type === "visit_schedule_block" && (
+                                                <VisitSchedule />
                                             )}
                                         </div>
                                     ))}

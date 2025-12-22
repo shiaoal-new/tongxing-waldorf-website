@@ -1,0 +1,27 @@
+title: 預約參觀
+slug: visit
+description: 預約參觀台北市同心華德福實驗教育機構，親自體驗我們的教育環境與理念。
+hero:
+  title: 預約參觀
+  description: 親自走訪同心華德福，感受獨特的教育氛圍與校園環境。
+  media_list:
+    - type: image
+      image: /img/visit.jpg
+  layout:
+    wrapper_class: "max-w-3xl text-center"
+    container_class: "items-center justify-center"
+sections:
+  - section_id: process
+    blocks:
+      - type: text_block
+        header: 參觀流程
+        sub_header: 流程說明
+        description: 我們歡迎家長親自來到學校，透過實際的走访與對話，深入了解同心華德福的教育內涵。
+      - type: visit_process_block
+  - section_id: schedule
+    blocks:
+      - type: text_block
+        header: 參觀場次
+        sub_header: 預約場次
+        description: 請選擇適合您的場次進行預約，名額有限，額滿為止。
+      - type: visit_schedule_block
