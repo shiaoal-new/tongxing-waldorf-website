@@ -16,6 +16,7 @@ import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import MediaRenderer from "../../components/mediaRenderer";
 import ScheduleBlock from "../../components/scheduleBlock";
 import CurriculumBlock from "../../components/curriculumBlock";
+import ColorPaletteBlock from "../../components/colorPaletteBlock";
 import Modal from "../../components/modal";
 import ActionButtons from "../../components/actionButtons";
 import { useState } from "react";
@@ -280,6 +281,9 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                             )}
                                             {block.type === "curriculum_block" && (
                                                 <CurriculumBlock data={block} />
+                                            )}
+                                            {block.type === "color_palette_block" && (
+                                                <ColorPaletteBlock data={block} />
                                             )}
                                         </div>
                                     ))}

@@ -421,6 +421,13 @@
                     required: false,
                     hint: "僅供後台備註",
                   }
+            - label: "🎨 品牌調色盤區塊"
+              name: "color_palette_block"
+              widget: "object"
+              fields:
+                - { label: "區塊標題", name: "header", widget: "string" }
+                - { label: "小標題", name: "sub_header", widget: "string" }
+                - { label: "描述文字", name: "description", widget: "text" }
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"
