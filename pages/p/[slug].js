@@ -232,7 +232,10 @@ export default function DynamicPage({ page, pages, facultyList, faqList, benefit
                                                     )}
 
                                                     {block.display_mode === "accordion" && (
-                                                        <Faq faqList={block.items?.map(item => ({
+                                                        <Faq faqList={block.faq_ids ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
+                                                            question: f.question,
+                                                            answer: f.answer
+                                                        })) : block.items?.map(item => ({
                                                             question: item.title,
                                                             answer: item.desc
                                                         }))} />

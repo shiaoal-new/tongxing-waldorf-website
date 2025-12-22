@@ -94,11 +94,13 @@ sections:
         description: 這裡彙整了家長們最常詢問的問題，希望能協助您更深入了解同心華德福的教育理念與入學相關資訊。
       - type: list_block
         display_mode: accordion
-        items:
-          - title: 同心華德福的學費是多少？
-            desc: 同心華德福是一間不以營利為目的的教育機構，學費主要用於支付教師薪資與校務運作。
-          - title: 學校提供校車嗎？
-            desc: 目前學校並無提供校車服務，但家長之間常有共乘的傳統。
+        faq_ids:
+          - tuition
+          - school-bus
+          - curriculum
+          - enrollment
+          - graduates
+          - transition
     media_list:
       - type: image
         image: https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg

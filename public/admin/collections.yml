@@ -299,6 +299,17 @@
               widget: "object"
               fields:
                 - {
+                    label: "選擇常見問答 (可選)",
+                    name: "faq_ids",
+                    widget: "relation",
+                    collection: "faq",
+                    multiple: true,
+                    value_field: "id",
+                    display_fields: ["question"],
+                    search_fields: ["question"],
+                    required: false,
+                  }
+                - {
                     label: "🖼️ 顯示模式",
                     name: "display_mode",
                     widget: "select",
