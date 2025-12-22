@@ -7,7 +7,6 @@ hero:
   media_list:
     - type: image
       image: /img/curriculum-hero.png
-  parallax_ratio: 0
   header: 學生發展圖像與課程脈絡
   sub_header: 給孩子一份受用一生的禮物
   description: 在快速變動的時代，同心華德福陪伴孩子透過「意志、情感、思考」的平衡發展，找回內在的自由與生命的力量。

@@ -6,7 +6,7 @@ hero:
   description: "同心有一群真摯又有活力的老師們，抱持著對教育的理想與自我成長的期許，彼此支持、互相學習。"
   media_list:
     - type: image
-      image: /img/faculty-hero.png
+      image: /img/teacher.jpg
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: intro

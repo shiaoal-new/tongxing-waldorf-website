@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { DotLottiePlayer } from "@dotlottie/react-player";
 
-export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 1 }) {
+export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 0 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [sectionBounds, setSectionBounds] = useState(null);
     const containerRef = useRef(null);
@@ -16,7 +16,7 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
     // 1 = no parallax (background moves at same speed as content)
     // >1 = background moves faster than content
     // <1 = background moves slower than content
-    const effectiveRatio = parallax_ratio ?? 1;
+    const effectiveRatio = parallax_ratio ?? 0;
     const shift = (effectiveRatio - 1) * 30; // 30vh per ratio unit above 1
     const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
 

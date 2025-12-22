@@ -6,13 +6,7 @@ hero:
   description: 在同心華德福，學習不只是知識的填入，而是一場關於身、心、靈的深度對話。我們將一天的生活比喻為「呼吸」，讓孩子在專注（吸）與活動（呼）之間平衡發展，建立一輩子受用的身心穩定力。
   media_list:
     - type: image
-      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_1.jpg
-    - type: image
-      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_2.jpg
-    - type: image
-      image: https://preview.colorlib.com/theme/coffeeblend/images/bg_3.jpg
-  transition_type: slide
-  parallax_ratio: 0.5
+      image: /img/daily-routine.jpg
 sections:
   - section_id: interactive-schedule
     blocks:
