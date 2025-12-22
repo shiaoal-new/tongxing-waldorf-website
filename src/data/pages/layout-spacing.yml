@@ -1,0 +1,54 @@
+title: 佈局與間距規範
+slug: layout-spacing
+hero:
+  header: Layout & Spacing
+  sub_header: Design System Tokens
+  description: 同心華德福設計系統佈局與間距規範。基於 8px 比例系統，確保網站的「呼吸感」與視覺一致性。
+  layout: Hero Default
+sections:
+  - section_id: layout-overview
+    blocks:
+      - type: text_block
+        header: 頁面容器與邊距
+        sub_header: Containers & Margins
+        content: |
+          ### 核心定義
+          為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。
+
+          - **最大寬度 (Max-Width)**: `1200px` (`max-w-brand`)
+          - **桌機邊距 (Desktop Margin)**: `80px` (`px-desktop-margin`)
+          - **手機邊距 (Mobile Margin)**: `20px` (`px-mobile-margin`)
+
+          這些變數確保內容在不同螢幕尺寸下都能保有適當的留白。
+      - type: spacing_demo_block
+        category: page_margins
+        title: 頁面邊距示範
+  - section_id: section-spacing
+    blocks:
+      - type: text_block
+        header: 區塊與組件間距
+        sub_header: Section & Component Spacing
+        content: |
+          ### 間距階層
+          我們使用語義化的間距名稱來代表不同的佈局需求：
+
+          - **區塊間隔 (Section Gap)**: `80px` (`gap-section` / `py-section`) - 用於大主題區塊之間。
+          - **組件間隔 (Component Gap)**: `24px` (`gap-component`) - 用於標題與卡片群等組件之間。
+          - **段落間距 (Paragraph Spacing)**: `24px` (`space-y-paragraph`) - 用於文字段落之間。
+      - type: spacing_demo_block
+        category: component_spacing
+        title: 組件間距示範
+  - section_id: typography-spacing
+    blocks:
+      - type: text_block
+        header: 文字排版間距
+        sub_header: Typography Spacing
+        content: |
+          ### 閱讀優化
+          寬鬆的行高與字距是營造「溫潤感」的關鍵。
+
+          - **行高 (Line Height)**: `1.7` (`leading-brand`)
+          - **字間距 (Letter Spacing)**: `0.05em` (`tracking-brand`)
+      - type: spacing_demo_block
+        category: typography
+        title: 排版間距示範
