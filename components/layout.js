@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import PopupWidget from "./popupWidget";
 
-export default function Layout({ children, title, description, navbarPadding = false, pages }) {
+export default function Layout({ children, title, description, navbarPadding = false, pages, navigation }) {
     return (
         <>
             <Head>
@@ -15,7 +15,7 @@ export default function Layout({ children, title, description, navbarPadding = f
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Navbar pages={pages} isHeroPage={!navbarPadding} />
+            <Navbar pages={pages} navigation={navigation} isHeroPage={!navbarPadding} />
 
             {/* 
          Main content wrapper with parallax settings:

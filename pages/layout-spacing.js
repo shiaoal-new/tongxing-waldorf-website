@@ -8,8 +8,9 @@ import { getAllPages, getPageBySlug } from "../lib/pages";
 import PageHero from "../components/pageHero";
 import SpacingDemoBlock from "../components/spacingDemoBlock";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
+import { getNavigation } from "../lib/settings";
 
-export default function LayoutSpacingPage({ page, pages }) {
+export default function LayoutSpacingPage({ page, pages, navigation }) {
     const [isMobileSim, setIsMobileSim] = useState(false);
 
     if (!page) return <div>Page data not found</div>;
@@ -19,7 +20,7 @@ export default function LayoutSpacingPage({ page, pages }) {
     const effectiveHeroData = heroData ? { title: page.title, ...heroData } : null;
 
     return (
-        <Layout pages={pages} title={page.title || "Layout & Spacing"} navbarPadding={!effectiveHeroData}>
+        <Layout pages={pages} navigation={navigation} title={page.title || "Layout & Spacing"} navbarPadding={!effectiveHeroData}>
             <Head>
                 <title>{page.title || "Layout & Spacing"} | Tung-Hsin Waldorf</title>
             </Head>
@@ -114,6 +115,7 @@ export default function LayoutSpacingPage({ page, pages }) {
 export async function getStaticProps() {
     const page = getPageBySlug("layout-spacing") || null;
     const pages = getAllPages();
+    const navigation = getNavigation();
 
     if (page && page.sections) {
         page.sections = page.sections.map(section => {
@@ -131,6 +133,7 @@ export async function getStaticProps() {
         props: {
             page,
             pages,
+            navigation,
         },
     };
 }

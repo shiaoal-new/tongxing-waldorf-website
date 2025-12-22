@@ -3,6 +3,7 @@ import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
 import { getAllBenefits } from "../lib/benefits";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
+import { getNavigation } from "../lib/settings";
 import DynamicPageContent from "../components/dynamicPage";
 
 export default function DynamicPage(props) {
@@ -25,6 +26,7 @@ export async function getStaticProps({ params }) {
     const { slug } = params;
     const page = getPageBySlug(slug);
     const pages = getAllPages();
+    const navigation = getNavigation();
     const facultyList = getAllFaculty();
     const faqList = getAllFaq();
     const benefitsList = getAllBenefits();
@@ -45,6 +47,7 @@ export async function getStaticProps({ params }) {
         props: {
             page: page || null,
             pages,
+            navigation,
             facultyList,
             faqList,
             benefitsList,

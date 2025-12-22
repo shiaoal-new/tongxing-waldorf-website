@@ -1,0 +1,13 @@
+items:
+  - slug: "index"
+  - title: "校園生活"
+    children:
+      - slug: "daily-routine"
+      - slug: "curriculum-development"
+  - slug: "teacher-group"
+  - title: "設計規範"
+    children:
+      - slug: "colors"
+      - slug: "layout-spacing"
+  - title: "預約參觀"
+    path: "/visit"

@@ -454,3 +454,99 @@
       name: "css_classes"
       widget: "text"
       hint: "請使用 .class_name { classes } 語法"
+
+- name: "settings"
+  label: "全站設定"
+  delete: false
+  editor:
+    preview: false
+  files:
+    - name: "navigation"
+      label: "標題選單 (Header Menu)"
+      file: "src/data/settings/navigation.yml"
+      fields:
+        - label: "選單項目"
+          name: "items"
+          widget: "list"
+          summary: "{{title}} {{slug}} {{path}}"
+          fields:
+            - {
+                label: "關聯頁面 (Slug)",
+                name: "slug",
+                widget: "relation",
+                collection: "pages",
+                search_fields: ["title", "slug"],
+                value_field: "slug",
+                display_fields: ["title"],
+                required: false,
+              }
+            - {
+                label: "顯示名稱",
+                name: "title",
+                widget: "string",
+                required: false,
+                hint: "若有指定『關聯頁面』且此欄留空，將使用該頁面的標題",
+              }
+            - {
+                label: "自定義連結",
+                name: "path",
+                widget: "string",
+                required: false,
+                hint: "例如：/visit。若有指定『關聯頁面』且此欄留空，將自動生成路徑",
+              }
+            - label: "子選單"
+              name: "children"
+              widget: "list"
+              required: false
+              summary: "{{title}} {{slug}} {{path}}"
+              fields:
+                - {
+                    label: "關聯頁面 (Slug)",
+                    name: "slug",
+                    widget: "relation",
+                    collection: "pages",
+                    search_fields: ["title", "slug"],
+                    value_field: "slug",
+                    display_fields: ["title"],
+                    required: false,
+                  }
+                - {
+                    label: "顯示名稱",
+                    name: "title",
+                    widget: "string",
+                    required: false,
+                  }
+                - {
+                    label: "自定義連結",
+                    name: "path",
+                    widget: "string",
+                    required: false,
+                  }
+                - label: "二級子選單 (可選)"
+                  name: "children"
+                  widget: "list"
+                  required: false
+                  summary: "{{title}} {{slug}} {{path}}"
+                  fields:
+                    - {
+                        label: "關聯頁面",
+                        name: "slug",
+                        widget: "relation",
+                        collection: "pages",
+                        search_fields: ["title", "slug"],
+                        value_field: "slug",
+                        display_fields: ["title"],
+                        required: false,
+                      }
+                    - {
+                        label: "顯示名稱",
+                        name: "title",
+                        widget: "string",
+                        required: false,
+                      }
+                    - {
+                        label: "自定義連結",
+                        name: "path",
+                        widget: "string",
+                        required: false,
+                      }

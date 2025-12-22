@@ -9,8 +9,9 @@ import PageHero from "../components/pageHero";
 import ColorPaletteBlock from "../components/colorPaletteBlock";
 import ActionButtons from "../components/actionButtons";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
+import { getNavigation } from "../lib/settings";
 
-export default function ColorsDynamicPage({ page, pages }) {
+export default function ColorsDynamicPage({ page, pages, navigation }) {
     if (!page) return <div>Page data not found</div>;
 
     const heroData = page.hero;
@@ -18,7 +19,7 @@ export default function ColorsDynamicPage({ page, pages }) {
     const effectiveHeroData = heroData ? { title: page.title, ...heroData } : null;
 
     return (
-        <Layout pages={pages} title={page.title || "Colors"} navbarPadding={!effectiveHeroData}>
+        <Layout pages={pages} navigation={navigation} title={page.title || "Colors"} navbarPadding={!effectiveHeroData}>
             <Head>
                 <title>{page.title || "Color Palette"} | Tung-Hsin Waldorf</title>
             </Head>
@@ -92,6 +93,7 @@ export default function ColorsDynamicPage({ page, pages }) {
 export async function getStaticProps() {
     const page = getPageBySlug("colors") || null;
     const pages = getAllPages();
+    const navigation = getNavigation();
 
     if (page && page.sections) {
         page.sections = page.sections.map(section => {
@@ -109,6 +111,7 @@ export async function getStaticProps() {
         props: {
             page,
             pages,
+            navigation,
         },
     };
 }

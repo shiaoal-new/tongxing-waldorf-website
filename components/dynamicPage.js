@@ -15,7 +15,7 @@ import ActionButtons from "./actionButtons";
 import Faq from "./faq";
 import { useState } from "react";
 
-export default function DynamicPageContent({ page, pages, facultyList, faqList, benefitsList }) {
+export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList }) {
     const [selectedMember, setSelectedMember] = useState(null);
 
     if (!page) {
@@ -49,7 +49,7 @@ export default function DynamicPageContent({ page, pages, facultyList, faqList, 
     } : null;
 
     return (
-        <Layout pages={pages} title={page.title} navbarPadding={!effectiveHeroData}>
+        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
             <div className="w-full py-10">

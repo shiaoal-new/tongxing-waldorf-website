@@ -8,18 +8,40 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
 
-export default function Navbar({ pages = [], isHeroPage = true }) {
+export default function Navbar({ pages = [], navigation: customNavigation, isHeroPage = true }) {
   const [scroll, setScroll] = useState(!isHeroPage);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const router = useRouter();
 
-  const navigation = [
-    { name: "首頁", href: "/" },
+  const resolveItem = (item) => {
+    let resolvedTitle = item.title;
+    let resolvedPath = item.path;
+
+    if (item.slug) {
+      const page = pages.find(p => p.slug === item.slug);
+      if (page) {
+        if (!resolvedTitle) resolvedTitle = page.title;
+        if (!resolvedPath) resolvedPath = item.slug === 'index' ? '/' : `/${item.slug}`;
+      }
+    }
+
+    const resolvedChildren = item.children ? item.children.map(resolveItem) : undefined;
+
+    return {
+      ...item,
+      title: resolvedTitle,
+      path: resolvedPath,
+      children: resolvedChildren
+    };
+  };
+
+  const navigation = customNavigation?.items?.map(resolveItem) || [
+    { title: "首頁", path: "/" },
     ...pages
       .filter(page => page.slug !== "index")
       .map(page => ({
-        name: page.title,
-        href: `/${page.slug}`
+        title: page.title,
+        path: `/${page.slug}`
       }))
   ];
 
@@ -122,30 +144,8 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                     >
                       <>
                         {navigation.map((item, index) => (
-                          <Disclosure.Button
-                            key={index}
-                            as="a"
-                            href={item.href || "/"}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setTimeout(() => router.push(item.href || "/"), 400);
-                            }}
-                            className="w-full px-4 py-2 -ml-4 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
-                          >
-                            {item.name || item}
-                          </Disclosure.Button>
+                          <MobileNavbarItem key={index} item={item} router={router} />
                         ))}
-                        <Disclosure.Button
-                          as="a"
-                          href="/visit"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTimeout(() => router.push("/visit"), 400);
-                          }}
-                          className="w-full btn-primary"
-                        >
-                          預約參觀
-                        </Disclosure.Button>
 
                         <div className="w-full mt-4 border-t border-brand-taupe/20 dark:border-brand-structural pt-4">
                           <Disclosure>
@@ -181,11 +181,7 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
                 <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
                   {navigation.map((menu, index) => (
                     <li className="mr-3 nav__item" key={index}>
-                      <Link
-                        href={menu.href || "/"}
-                        className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
-                        {menu.name || menu}
-                      </Link>
+                      <NavbarListItem item={menu} />
                     </li>
                   ))}
                   <li className="mr-3 nav__item">
@@ -195,12 +191,6 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
               </div>
 
               <div className="hidden mr-3 space-x-3 lg:flex nav__item">
-                <Link
-                  href="/visit"
-                  className="btn-primary">
-                  預約參觀
-                </Link>
-
                 <ThemeChanger />
               </div>
             </nav>
@@ -223,6 +213,167 @@ export default function Navbar({ pages = [], isHeroPage = true }) {
         </>
       )}
     </Disclosure>
+  );
+}
+
+function NavbarListItem({ item }) {
+  if (item.children && item.children.length > 0) {
+    return (
+      <Menu as="div" className="relative inline-block text-left group">
+        {({ open }) => (
+          <>
+            <Menu.Button className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
+              <span>{item.title}</span>
+              <ChevronDownIcon
+                className={`${open ? "transform rotate-180" : ""
+                  } w-5 h-5 ml-1 transition-transform duration-200`}
+                aria-hidden="true"
+              />
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute left-0 w-48 mt-2 origin-top-left bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700 overflow-hidden">
+                <div className="py-1">
+                  {item.children.map((child, idx) => (
+                    <Menu.Item key={idx}>
+                      {({ active }) => (
+                        <div className="relative group/sub">
+                          <Link
+                            href={child.path || "#"}
+                            className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
+                              } flex items-center justify-between w-full px-4 py-2 text-sm transition-colors`}
+                          >
+                            <span>{child.title}</span>
+                            {child.children && child.children.length > 0 && (
+                              <ChevronDownIcon className="w-4 h-4 -rotate-90" />
+                            )}
+                          </Link>
+
+                          {/* Level 2 Submenu */}
+                          {child.children && child.children.length > 0 && (
+                            <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
+                              <div className="py-1">
+                                {child.children.map((grandChild, gIdx) => (
+                                  <Link
+                                    key={gIdx}
+                                    href={grandChild.path || "#"}
+                                    className="block px-4 py-2 text-sm text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg transition-colors"
+                                  >
+                                    {grandChild.title}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </>
+        )}
+      </Menu>
+    );
+  }
+
+  return (
+    <Link
+      href={item.path || "/"}
+      className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
+      {item.title}
+    </Link>
+  );
+}
+
+function MobileNavbarItem({ item, router }) {
+  if (item.children && item.children.length > 0) {
+    return (
+      <Disclosure>
+        {({ open }) => (
+          <>
+            <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+              <span>{item.title}</span>
+              <ChevronDownIcon
+                className={`${open ? "transform rotate-180" : ""
+                  } w-5 h-5`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
+              {item.children.map((child, idx) => (
+                <div key={idx} className="mb-1">
+                  {child.children && child.children.length > 0 ? (
+                    <Disclosure>
+                      {({ open: subOpen }) => (
+                        <>
+                          <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                            <span>{child.title}</span>
+                            <ChevronDownIcon
+                              className={`${subOpen ? "transform rotate-180" : ""
+                                } w-4 h-4`}
+                            />
+                          </Disclosure.Button>
+                          <Disclosure.Panel className="px-6 pt-1 pb-1 text-xs text-brand-taupe border-l border-brand-taupe/20 ml-4">
+                            {child.children.map((grandChild, gIdx) => (
+                              <Disclosure.Button
+                                key={gIdx}
+                                as="a"
+                                href={grandChild.path || "#"}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setTimeout(() => router.push(grandChild.path || "#"), 400);
+                                }}
+                                className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                              >
+                                {grandChild.title}
+                              </Disclosure.Button>
+                            ))}
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  ) : (
+                    <Disclosure.Button
+                      as="a"
+                      href={child.path || "#"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setTimeout(() => router.push(child.path || "#"), 400);
+                      }}
+                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                    >
+                      {child.title}
+                    </Disclosure.Button>
+                  )}
+                </div>
+              ))}
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    );
+  }
+
+  return (
+    <Disclosure.Button
+      as="a"
+      href={item.path || "/"}
+      onClick={(e) => {
+        e.preventDefault();
+        setTimeout(() => router.push(item.path || "/"), 400);
+      }}
+      className="w-full px-4 py-2 -ml-4 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+    >
+      {item.title}
+    </Disclosure.Button>
   );
 }
 
@@ -273,12 +424,23 @@ function DebugMenu({ onOpenModal }) {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      className={`${active ? "bg-brand-accent/100 text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
                       onClick={onOpenModal}
                     >
                       About this site
                     </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/admin/index.html"
+                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
+                    >
+                      CMS 後台管理
+                    </Link>
                   )}
                 </Menu.Item>
               </div>
