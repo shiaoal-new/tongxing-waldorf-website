@@ -30,6 +30,13 @@
         - { label: "圖片文件", name: "image", widget: "image", required: false }
         - { label: "影片文件", name: "video", widget: "file", required: false }
         - {
+            label: "影片封面圖 (Poster)",
+            name: "poster",
+            widget: "image",
+            required: false,
+            hint: "視頻加載時顯示的占位圖片",
+          }
+        - {
             label: "Lottie 文件",
             name: "lottie",
             widget: "file",

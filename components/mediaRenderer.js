@@ -25,11 +25,13 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
             return (
                 <video
                     src={media.video}
+                    poster={media.poster}
                     className={`w-full h-full object-cover ${className}`}
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                 />
             );
 

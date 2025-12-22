@@ -32,7 +32,7 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
     // Normalize media list from new structure
     const normalizedMedia = (media_list || []).map(m => {
         if (m.type === 'image') return { ...m, src: getImagePath(m.image) };
-        if (m.type === 'video') return { ...m, src: getImagePath(m.video) };
+        if (m.type === 'video') return { ...m, src: getImagePath(m.video), poster: getImagePath(m.poster) };
         if (m.type === 'youtube') return { ...m, src: m.url };
         if (m.type === 'lottie') {
             let src = m.lottie || m.url;
@@ -149,7 +149,7 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                         className="absolute inset-0 w-full h-full"
                                     >
                                         {currentItem.type === 'video' && (
-                                            <video src={currentItem.src} autoPlay loop muted playsInline className="object-cover w-full h-full" />
+                                            <video src={currentItem.src} poster={currentItem.poster} autoPlay loop muted playsInline preload="metadata" className="object-cover w-full h-full" />
                                         )}
                                         {currentItem.type === 'image' && (
                                             <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
@@ -199,7 +199,7 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                     className="absolute inset-0 w-full h-full"
                                 >
                                     {currentItem.type === 'video' && (
-                                        <video src={currentItem.src} autoPlay loop muted playsInline className="object-cover w-full h-full" />
+                                        <video src={currentItem.src} poster={currentItem.poster} autoPlay loop muted playsInline preload="metadata" className="object-cover w-full h-full" />
                                     )}
                                     {currentItem.type === 'image' && (
                                         <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
