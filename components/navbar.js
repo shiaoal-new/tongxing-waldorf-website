@@ -370,7 +370,7 @@ function MobileNavbarItem({ item, router }) {
         e.preventDefault();
         setTimeout(() => router.push(item.path || "/"), 400);
       }}
-      className="w-full px-4 py-2 -ml-4 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
     >
       {item.title}
     </Disclosure.Button>
