@@ -111,6 +111,13 @@ const ColorRow = ({ title, subtitle, children }) => {
 
 export default function ColorPaletteBlock({ data }) {
     const themeColors = fullConfig.theme.colors;
+    const brandMeta = tailwindConfig.brand || {};
+
+    const getColorLabel = (key) => {
+        const meta = brandMeta[key];
+        if (!meta) return key;
+        return `${meta.en} / ${meta.name}`;
+    };
 
     const filterShades = (colorObj) => {
         if (!colorObj) return {};
@@ -128,18 +135,18 @@ export default function ColorPaletteBlock({ data }) {
             <div className="space-y-12">
                 <ColorRow title="主色" subtitle="Brand Primary">
                     <ColorScale
-                        label="Tunghin Amber / 同心暖陽"
+                        label={getColorLabel('brand-accent')}
                         colors={{ "Default": themeColors['brand-accent'] }}
                     />
                     <ColorScale
-                        label="Forest Green / 森林深綠"
+                        label={getColorLabel('brand-structural')}
                         colors={{ "Default": themeColors['brand-structural'] }}
                     />
                 </ColorRow>
 
                 <ColorRow title="中性色" subtitle="Neutral">
                     <ColorScale
-                        label="Paper White & Charcoal"
+                        label={`${getColorLabel('brand-bg')} & ${brandMeta['brand-text']?.name || 'Charcoal'}`}
                         colors={{
                             "Paper White": themeColors['brand-bg'],
                             "Charcoal": themeColors['brand-text']
@@ -164,9 +171,9 @@ export default function ColorPaletteBlock({ data }) {
                     <ColorScale
                         label="Brand Accents"
                         colors={{
-                            "Morning Gold": themeColors['brand-gold'],
-                            "Earthy Taupe": themeColors['brand-taupe'],
-                            "Ethereal Blue": themeColors['brand-blue']
+                            [brandMeta['brand-gold']?.en || 'Morning Gold']: themeColors['brand-gold'],
+                            [brandMeta['brand-taupe']?.en || 'Earthy Taupe']: themeColors['brand-taupe'],
+                            [brandMeta['brand-blue']?.en || 'Ethereal Blue']: themeColors['brand-blue']
                         }}
                     />
                     <ColorScale
