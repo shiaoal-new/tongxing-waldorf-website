@@ -111,7 +111,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                 {...headerProps}
                                 className="mb-16"
                             >
-                                <div className="mt-6 px-4 md:px-0">
+                                <div className="mt-6">
                                     {contentBlocks.map((block, bIndex) => (
                                         <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
                                             {block.type === "text_block" && (
@@ -186,7 +186,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
 
                                             {block.type === "list_block" && (
-                                                <div className="px-0 md:px-4">
+                                                <>
                                                     {(block.header || block.subtitle) && (
                                                         <div className={`max-w-4xl mx-auto mb-8 ${align === 'left' ? 'text-left' : 'text-center'}`}>
                                                             {block.subtitle && (
@@ -263,7 +263,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                             ))}
                                                         </div>
                                                     )}
-                                                </div>
+                                                </>
                                             )}
                                             {block.type === "schedule_block" && (
                                                 <ScheduleBlock data={block} />
