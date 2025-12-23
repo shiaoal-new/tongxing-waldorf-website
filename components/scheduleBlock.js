@@ -43,8 +43,8 @@ const ScheduleBlock = ({ data }) => {
                 </div>
             </div>
 
-            {/* 桌面與手機版 (XL 以下)：分頁切換 */}
-            <div className="xl:hidden max-w-2xl mx-auto px-4">
+            {/* Desktop and Mobile (default 1-column layout) */}
+            <div className="max-w-2xl mx-auto px-4">
                 <div className="flex border-b border-neutral-200 dark:border-neutral-700">
                     <button
                         onClick={() => setActiveGrade("low")}
@@ -65,12 +65,6 @@ const ScheduleBlock = ({ data }) => {
                 <div className="mt-8 pb-12">
                     <ScheduleList data={activeData} />
                 </div>
-            </div>
-
-            {/* 超寬與大螢幕 (XL 以上)：雙欄並列 */}
-            <div className="hidden xl:grid xl:grid-cols-2 gap-12 pb-12">
-                <ScheduleList data={scheduleData.low} title="中低年級 (1-4年級)" />
-                <ScheduleList data={scheduleData.high} title="高年級 (5-9年級)" />
             </div>
         </div>
     );

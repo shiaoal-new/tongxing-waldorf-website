@@ -48,7 +48,7 @@ export default function Benefits(props) {
               </p>
             </div>
 
-            <div className="w-full mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 3xl:grid-cols-2 gap-x-12">
+            <div className="w-full mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-12">
               {data.bullets?.map((item, index) => (
                 <Benefit key={index} title={item.title} icon={item.icon}>
                   {item.desc}

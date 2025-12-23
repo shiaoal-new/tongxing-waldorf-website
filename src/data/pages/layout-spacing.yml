@@ -17,15 +17,15 @@ sections:
         sub_header: Containers & Margins
         content: |
           ### 核心定義
-          為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。針對寬螢幕採取「非中心化」的擴展策略。
+          為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。針對寬螢幕採取「全比例自動縮放 (Auto-Zoom)」策略。
 
-          - **最大總寬度 (Max-Width)**: `無限制 (Uncapped)` - 確保高解析度螢幕下的空間潛力。
-          - **區塊限寬 (Block Constraint)**: `1200px` (`max-w-brand`) - 確保最佳閱讀掃描線。
-          - **超大螢幕邊距 (Ultra-wide > 1920px)**: `180px` (`px-ultrawide-margin`)
-          - **桌機邊距 (Desktop Margin)**: `120px` (`px-desktop-margin`)
-          - **手機邊距 (Mobile Margin)**: `20px` (`px-mobile-margin`)
+          - **最大總寬度 (Max-Width)**: `動態 (Dynamic)` - 隨視窗寬度等比放大。
+          - **區塊限寬 (Block Constraint)**: `75rem` (`max-w-brand`) - 基準為 1200px，超寬螢幕下等比例放大。
+          - **超寬螢幕比例 (Ultrawide > 1200px)**: `動態縮放` - 維持 1200px 的視覺比例。
+          - **桌機邊距 (Desktop Margin)**: `7.5rem` (`px-desktop-margin`) - 基準為 120px。
+          - **手機邊距 (Mobile Margin)**: `1.25rem` (`px-mobile-margin`) - 固定為 20px。
 
-          這些變數確保內容在不同螢幕尺寸下都能保有適當的留白。
+          這些變數確保內容在不同螢幕尺寸下都能保有完美的留白與結構比例。
       - type: spacing_demo_block
         category: page_margins
         title: 頁面邊距示範
@@ -50,14 +50,14 @@ sections:
         header: 大螢幕佈局優化
         sub_header: Wide Screen Optimization
         content: |
-          ### 橫向優先佈局
-          當水平空間充裕時，系統會自動轉換為橫向並列佈局，提升資訊密度並減少垂直捲動勞動。
+          ### 比例維護佈局
+          當水平空間超過 1200px 時，系統會自動進入「全場景比例縮放」模式，提升沉浸感並維持設計精確度。
 
-          - **多欄擴展**: 重複性模組（如特色、師資）在大螢幕下會自動由雙欄轉向三欄或四欄並列。針對「圖文交替」模組，其子清單在大螢幕下也會自動切換為雙欄並列。
-          - **視覺平衡**: 避免極端拉伸文字區塊，透過增加 Gap 或配置輔助區塊來維持溫潤感。
+          - **結構一致性**: 為了維持最佳閱讀節奏，大螢幕下**不增加**額外的列數（Column）。原本的佈局會隨螢幕等比變大。
+          - **沉浸式體驗**: 圖像、文字與間距同步放大，確保在 2K/4K 螢幕上仍能享有如同專業畫冊般的排版質感。
       - type: spacing_demo_block
         category: wide_layout
-        title: 大螢幕橫向佈局示範
+        title: 大螢幕比例縮放示範
   - section_id: typography-spacing
     blocks:
       - type: text_block

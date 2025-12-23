@@ -25,13 +25,20 @@
     /* #333333 - 木炭灰 */
 
     /* 佈局與間距規範 (Layout & Spacing) */
-    --layout-max-width: 1200px;
-    --spacing-ultrawide-margin: 180px;
-    --spacing-desktop-margin: 120px;
-    --spacing-mobile-margin: 20px;
-    --spacing-section: 100px;
-    --spacing-component: 32px;
-    --spacing-paragraph: 24px;
+    --layout-max-width: 75rem;
+    /* 1200px */
+    --spacing-ultrawide-margin: 7.5rem;
+    /* 120px - Now scaling with zoom */
+    --spacing-desktop-margin: 7.5rem;
+    /* 120px */
+    --spacing-mobile-margin: 1.25rem;
+    /* 20px */
+    --spacing-section: 6.25rem;
+    /* 100px */
+    --spacing-component: 2rem;
+    /* 32px */
+    --spacing-paragraph: 1.5rem;
+    /* 24px */
 
     /* 文字間距與行高 (Typography Spacing) */
     --typography-line-height: 1.8;
@@ -43,7 +50,19 @@
     --font-accent: "Zeyada", "Indie Flower", "Handwriting", cursive;
   }
 
-  html,
+  html {
+    /* 當螢幕寬度超過 1200px 時，自動計算 zoom in 大小以維持 1200px layout */
+    @apply antialiased;
+    font-size: 16px;
+  }
+
+  @media (min-width: 1201px) {
+    html {
+      /* 1200px 時為 16px (1rem), 則 100vw 時為 (100vw / 1200) * 16px = 100vw / 75 */
+      font-size: calc(100vw / 75);
+    }
+  }
+
   body {
     @apply dark:bg-trueGray-900 overflow-x-hidden font-body;
     background-color: rgb(var(--color-brand-bg));

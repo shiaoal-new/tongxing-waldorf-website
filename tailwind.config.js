@@ -70,8 +70,13 @@ module.exports = {
         'mobile-margin': 'var(--spacing-mobile-margin)',
       },
       screens: {
-        '3xl': '1920px',
-        ...defaultTheme.screens,
+        'sm': '40rem',   // 640px
+        'md': '48rem',   // 768px
+        'lg': '64rem',   // 1024px
+        // 寬度超過 1200px 時使用動態縮放，因此停用更高的中斷點以維持 1200px 的佈局結構
+        'xl': '9999rem',
+        '2xl': '9999rem',
+        '3xl': '9999rem',
       },
       maxWidth: {
         'brand': 'var(--layout-max-width)',
