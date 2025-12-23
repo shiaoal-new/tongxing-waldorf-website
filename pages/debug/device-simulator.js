@@ -3,10 +3,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const DEVICE_PRESETS = {
-    iphone14: { name: 'iPhone 14', width: 390, height: 844 },
-    iphone14pro: { name: 'iPhone 14 Pro', width: 393, height: 852 },
-    pixel7: { name: 'Pixel 7', width: 412, height: 915 },
-    s23ultra: { name: 'S23 Ultra', width: 384, height: 854 },
+    iphone14: { name: 'iPhone 14', width: 390, height: 844, browser: 'safari' },
+    iphone14pro: { name: 'iPhone 14 Pro', width: 393, height: 852, browser: 'safari' },
+    pixel7: { name: 'Pixel 7', width: 412, height: 915, browser: 'chrome' },
+    s23ultra: { name: 'S23 Ultra', width: 384, height: 854, browser: 'chrome' },
 };
 
 const SCALES = [1, 0.75, 0.5];
@@ -20,6 +20,19 @@ export default function DeviceSimulator() {
     const [horizontalSplit, setHorizontalSplit] = useState(66.66);
     const [verticalSplit, setVerticalSplit] = useState(60);
 
+    // Persist splitters
+    useEffect(() => {
+        const savedH = localStorage.getItem('simulator_h_split');
+        const savedV = localStorage.getItem('simulator_v_split');
+        if (savedH) setHorizontalSplit(parseFloat(savedH));
+        if (savedV) setVerticalSplit(parseFloat(savedV));
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('simulator_h_split', horizontalSplit);
+        localStorage.setItem('simulator_v_split', verticalSplit);
+    }, [horizontalSplit, verticalSplit]);
+
     // Individual scales
     const [scaleUltrawide, setScaleUltrawide] = useState(1);
     const [scaleDesktop, setScaleDesktop] = useState(1);
@@ -27,7 +40,8 @@ export default function DeviceSimulator() {
 
     // Mobile settings
     const [mobileDevice, setMobileDevice] = useState('iphone14');
-    const [mobileBrowser, setMobileBrowser] = useState('safari'); // 'safari' or 'chrome'
+    const currentMobilePreset = DEVICE_PRESETS[mobileDevice];
+    const mobileBrowser = currentMobilePreset.browser;
 
     const iframeUltrawide = useRef(null);
     const iframeDesktop = useRef(null);
@@ -138,8 +152,6 @@ export default function DeviceSimulator() {
         const iframes = document.querySelectorAll('iframe');
         iframes.forEach(f => f.style.pointerEvents = 'none');
     };
-
-    const currentMobilePreset = DEVICE_PRESETS[mobileDevice];
 
     return (
         <div className={`fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden ${isResizing ? 'select-none' : ''}`}>
@@ -336,14 +348,6 @@ export default function DeviceSimulator() {
                                         <option key={key} value={key} className="bg-slate-800">{info.name}</option>
                                     ))}
                                 </select>
-                                <select
-                                    className="bg-transparent text-[10px] font-bold text-indigo-400 focus:outline-none cursor-pointer"
-                                    value={mobileBrowser}
-                                    onChange={(e) => setMobileBrowser(e.target.value)}
-                                >
-                                    <option value="safari" className="bg-slate-800">Safari</option>
-                                    <option value="chrome" className="bg-slate-800">Chrome</option>
-                                </select>
                             </div>
                             <div className="flex items-center bg-slate-900/50 rounded-lg p-0.5 border border-white/5">
                                 {SCALES.map(s => (
@@ -358,14 +362,15 @@ export default function DeviceSimulator() {
                             </div>
                         </div>
 
-                        <div className="flex-1 overflow-auto p-12">
+                        <div className="flex-1 overflow-hidden p-4 lg:p-8 flex items-center justify-center bg-slate-900/40">
                             <div
                                 style={{
-                                    width: `${currentMobilePreset.width}px`,
-                                    height: `${currentMobilePreset.height}px`,
-                                    margin: '0 auto'
+                                    aspectRatio: `${currentMobilePreset.width} / ${currentMobilePreset.height}`,
+                                    margin: '0 auto',
+                                    maxHeight: '100%',
+                                    maxWidth: '100%',
                                 }}
-                                className="relative"
+                                className="relative h-full"
                             >
                                 {/* Device Frame */}
                                 <div className="absolute inset-0 border-[10px] border-[#0f172a] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/20 bg-white overflow-hidden">
@@ -374,11 +379,11 @@ export default function DeviceSimulator() {
                                     <div className="flex flex-col h-full pointer-events-auto">
                                         {mobileBrowser === 'safari' ? (
                                             <div className="h-full flex flex-col bg-white">
-                                                <div className="h-10 bg-white shrink-0 flex items-center justify-between px-8 text-black font-semibold text-xs">
+                                                <div className="h-8 bg-white shrink-0 flex items-center justify-between px-8 text-black font-semibold text-[10px]">
                                                     <span>9:41</span>
                                                     <div className="flex items-center space-x-1.5">
-                                                        <div className="w-4 h-4 bg-black rounded-full scale-50" />
-                                                        <div className="w-4 h-2 bg-black rounded-sm" />
+                                                        <div className="w-3 h-3 bg-black rounded-full scale-50" />
+                                                        <div className="w-3 h-1.5 bg-black rounded-sm" />
                                                     </div>
                                                 </div>
                                                 <div className="flex-1 overflow-hidden relative">
@@ -396,40 +401,39 @@ export default function DeviceSimulator() {
                                                     />
                                                 </div>
                                                 {/* Safari Bottom Bar */}
-                                                <div className="h-24 bg-slate-50/95 backdrop-blur-xl border-t border-black/5 flex flex-col items-center shrink-0 p-4">
-                                                    <div className="w-full h-10 bg-white shadow-sm border border-black/5 rounded-xl flex items-center px-4 mb-2">
+                                                <div className="h-20 bg-slate-50/95 backdrop-blur-xl border-t border-black/5 flex flex-col items-center shrink-0 p-3">
+                                                    <div className="w-full h-8 bg-white shadow-sm border border-black/5 rounded-xl flex items-center px-4 mb-2">
                                                         <svg className="w-3 h-3 text-slate-400 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>
-                                                        <span className="text-[10px] text-slate-500 font-medium truncate">{currentUrl}</span>
+                                                        <span className="text-[9px] text-slate-500 font-medium truncate">{currentUrl}</span>
                                                     </div>
                                                     <div className="flex w-full justify-between items-center px-2">
-                                                        {/* Safari Icons Simplified */}
-                                                        <div className="w-5 h-5 text-indigo-500 flex items-center justify-center">❮</div>
-                                                        <div className="w-5 h-5 text-indigo-500 flex items-center justify-center">❯</div>
-                                                        <div className="w-5 h-5 text-indigo-500 flex items-center justify-center">↑</div>
-                                                        <div className="w-5 h-5 text-indigo-500 flex items-center justify-center">📖</div>
-                                                        <div className="w-5 h-5 text-indigo-500 flex items-center justify-center">▢</div>
+                                                        <div className="w-4 h-4 text-indigo-500 flex items-center justify-center text-xs">❮</div>
+                                                        <div className="w-4 h-4 text-indigo-500 flex items-center justify-center text-xs">❯</div>
+                                                        <div className="w-4 h-4 text-indigo-500 flex items-center justify-center text-xs">↑</div>
+                                                        <div className="w-4 h-4 text-indigo-500 flex items-center justify-center text-xs">📖</div>
+                                                        <div className="w-4 h-4 text-indigo-500 flex items-center justify-center text-xs">▢</div>
                                                     </div>
                                                 </div>
-                                                <div className="h-1.5 w-1/3 bg-black/20 rounded-full mx-auto mb-2" />
+                                                <div className="h-1 w-1/3 bg-black/20 rounded-full mx-auto mb-1" />
                                             </div>
                                         ) : (
                                             <div className="h-full flex flex-col bg-slate-900">
                                                 {/* Chrome Top Bar */}
-                                                <div className="h-20 bg-slate-800 flex flex-col pt-6 px-4 shrink-0">
-                                                    <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-[10px] text-white">9:41</span>
+                                                <div className="h-16 bg-slate-800 flex flex-col pt-4 px-4 shrink-0">
+                                                    <div className="flex items-center justify-between mb-1">
+                                                        <span className="text-[9px] text-white">9:41</span>
                                                         <div className="flex space-x-1 items-center">
-                                                            <div className="w-2 h-2 bg-white rounded-full opacity-50" />
-                                                            <div className="w-3 h-2 bg-white rounded-sm" />
+                                                            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-50" />
+                                                            <div className="w-2.5 h-1.5 bg-white rounded-sm" />
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center space-x-3">
-                                                        <div className="flex-1 h-9 bg-slate-700/50 rounded-full flex items-center px-4 border border-white/5">
-                                                            <svg className="w-3 h-3 text-slate-400 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" /></svg>
-                                                            <span className="text-[10px] text-slate-300 font-medium truncate">{currentUrl}</span>
+                                                        <div className="flex-1 h-7 bg-slate-700/50 rounded-full flex items-center px-3 border border-white/5">
+                                                            <svg className="w-2.5 h-2.5 text-slate-400 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" /></svg>
+                                                            <span className="text-[9px] text-slate-300 font-medium truncate">{currentUrl}</span>
                                                         </div>
-                                                        <div className="w-6 h-6 border-2 border-slate-500 rounded flex items-center justify-center text-[8px] font-bold text-slate-400">1</div>
-                                                        <svg className="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                                                        <div className="w-5 h-5 border border-slate-500 rounded flex items-center justify-center text-[7px] font-bold text-slate-400">1</div>
+                                                        <svg className="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                                                     </div>
                                                 </div>
                                                 <div className="flex-1 overflow-hidden relative">
@@ -447,10 +451,10 @@ export default function DeviceSimulator() {
                                                     />
                                                 </div>
                                                 {/* Android Nav Bar */}
-                                                <div className="h-12 bg-black flex justify-around items-center shrink-0">
-                                                    <div className="w-4 h-4 text-white/50 flex items-center justify-center font-bold">◃</div>
-                                                    <div className="w-3.5 h-3.5 rounded-full border-2 border-white/50" />
-                                                    <div className="w-3 h-3 border-2 border-white/50 rounded-sm" />
+                                                <div className="h-10 bg-black flex justify-around items-center shrink-0">
+                                                    <div className="w-3 h-3 text-white/50 flex items-center justify-center font-bold text-xs">◃</div>
+                                                    <div className="w-2.5 h-2.5 rounded-full border border-white/50" />
+                                                    <div className="w-2.5 h-2.5 border border-white/50 rounded-sm" />
                                                 </div>
                                             </div>
                                         )}
@@ -458,8 +462,8 @@ export default function DeviceSimulator() {
                                 </div>
 
                                 {/* Dynamic Island / Hardware */}
-                                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-7 bg-[#0f172a] rounded-full z-20 flex items-center justify-end px-4">
-                                    <div className="w-2 h-2 rounded-full bg-slate-800" />
+                                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[25%] h-6 bg-[#0f172a] rounded-full z-20 flex items-center justify-end px-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
                                 </div>
                             </div>
                         </div>
