@@ -4,7 +4,8 @@ const Container = React.forwardRef((props, ref) => {
   return (
     <div
       ref={ref}
-      className={`max-w-brand mx-auto px-mobile-margin lg:px-desktop-margin ${props.className ? props.className : ""
+      className={`w-full mx-auto px-mobile-margin lg:px-desktop-margin 3xl:px-ultrawide-margin ${props.limit ? "max-w-brand" : ""
+        } ${props.className ? props.className : ""
         }`}>
       {props.children}
     </div>

@@ -18,6 +18,7 @@ export default function Section(props) {
         media_list,
         parallax_ratio,
         className,
+        limit,
         ...rest
     } = props;
 
@@ -70,6 +71,7 @@ export default function Section(props) {
             )}
 
             <Container
+                limit={limit}
                 className={`flex w-full flex-col relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"
@@ -107,7 +109,7 @@ export default function Section(props) {
             </Container>
 
             {bodyContent && (
-                <Container className={`relative z-10 content_class ${classes.content_class || ""}`}>
+                <Container limit={limit} className={`relative z-10 content_class ${classes.content_class || ""}`}>
                     {bodyContent}
                 </Container>
             )}

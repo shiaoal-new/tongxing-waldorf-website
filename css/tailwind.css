@@ -26,14 +26,15 @@
 
     /* 佈局與間距規範 (Layout & Spacing) */
     --layout-max-width: 1200px;
-    --spacing-desktop-margin: 80px;
+    --spacing-ultrawide-margin: 180px;
+    --spacing-desktop-margin: 120px;
     --spacing-mobile-margin: 20px;
-    --spacing-section: 80px;
-    --spacing-component: 24px;
+    --spacing-section: 100px;
+    --spacing-component: 32px;
     --spacing-paragraph: 24px;
 
     /* 文字間距與行高 (Typography Spacing) */
-    --typography-line-height: 1.7;
+    --typography-line-height: 1.8;
     --typography-letter-spacing: 0.05em;
 
     /* 字體系統 (Typography Fonts) */

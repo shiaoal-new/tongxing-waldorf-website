@@ -109,8 +109,9 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                 media_list={mediaList}
                                 parallax_ratio={parallaxRatio}
                                 align={align}
+                                limit={section.limit}
                                 {...headerProps}
-                                className="mb-16"
+                                className="mb-section"
                             >
                                 <div className="mt-6">
                                     {contentBlocks.map((block, bIndex) => (
@@ -144,8 +145,8 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
 
                                             {block.type === "member_block" && (
-                                                <div className="max-w-6xl mx-auto">
-                                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                                <div className="max-w-brand 3xl:max-w-none mx-auto">
+                                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 3xl:grid-cols-6 gap-6">
                                                         {block.members && block.members.map((memberName, mIndex) => {
                                                             const member = getMemberDetails(memberName);
                                                             return (
@@ -237,7 +238,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                     )}
 
                                                     {block.display_mode === "grid_cards" && (
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-8 max-w-brand 3xl:max-w-none mx-auto">
                                                             {block.items?.map((item, idx) => (
                                                                 <div key={idx} className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
                                                                     <MediaRenderer
@@ -254,7 +255,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                     )}
 
                                                     {block.display_mode === "compact_grid" && (
-                                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 3xl:grid-cols-8 gap-4 max-w-brand 3xl:max-w-none mx-auto">
                                                             {block.items?.map((item, idx) => (
                                                                 <div key={idx} className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
                                                                     <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>

@@ -83,7 +83,7 @@ export default function VisitSchedule() {
     };
 
     return (
-        <Container>
+        <Container limit>
             <div className="flex flex-col w-full mt-component">
 
                 {/* Mobile View: Cards */}

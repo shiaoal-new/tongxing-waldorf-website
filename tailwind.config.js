@@ -65,8 +65,13 @@ module.exports = {
         'section': 'var(--spacing-section)',
         'component': 'var(--spacing-component)',
         'paragraph': 'var(--spacing-paragraph)',
+        'ultrawide-margin': 'var(--spacing-ultrawide-margin)',
         'desktop-margin': 'var(--spacing-desktop-margin)',
         'mobile-margin': 'var(--spacing-mobile-margin)',
+      },
+      screens: {
+        '3xl': '1920px',
+        ...defaultTheme.screens,
       },
       maxWidth: {
         'brand': 'var(--layout-max-width)',

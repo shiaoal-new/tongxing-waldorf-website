@@ -17,10 +17,12 @@ sections:
         sub_header: Containers & Margins
         content: |
           ### 核心定義
-          為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。
+          為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。針對寬螢幕採取「非中心化」的擴展策略。
 
-          - **最大寬度 (Max-Width)**: `1200px` (`max-w-brand`)
-          - **桌機邊距 (Desktop Margin)**: `80px` (`px-desktop-margin`)
+          - **最大總寬度 (Max-Width)**: `無限制 (Uncapped)` - 確保高解析度螢幕下的空間潛力。
+          - **區塊限寬 (Block Constraint)**: `1200px` (`max-w-brand`) - 確保最佳閱讀掃描線。
+          - **超大螢幕邊距 (Ultra-wide > 1920px)**: `180px` (`px-ultrawide-margin`)
+          - **桌機邊距 (Desktop Margin)**: `120px` (`px-desktop-margin`)
           - **手機邊距 (Mobile Margin)**: `20px` (`px-mobile-margin`)
 
           這些變數確保內容在不同螢幕尺寸下都能保有適當的留白。
@@ -36,12 +38,26 @@ sections:
           ### 間距階層
           我們使用語義化的間距名稱來代表不同的佈局需求：
 
-          - **區塊間隔 (Section Gap)**: `80px` (`gap-section` / `py-section`) - 用於大主題區塊之間。
-          - **組件間隔 (Component Gap)**: `24px` (`gap-component`) - 用於標題與卡片群等組件之間。
+          - **區塊間隔 (Section Gap)**: `100px` (`gap-section` / `py-section`) - 用於大主題區塊之間，營造休息感。
+          - **組件間隔 (Component Gap)**: `32px` (`gap-component`) - 用於標題與卡片群等組件之間。
           - **段落間距 (Paragraph Spacing)**: `24px` (`space-y-paragraph`) - 用於文字段落之間。
       - type: spacing_demo_block
         category: component_spacing
         title: 組件間距示範
+  - section_id: wide-screen-optimization
+    blocks:
+      - type: text_block
+        header: 大螢幕佈局優化
+        sub_header: Wide Screen Optimization
+        content: |
+          ### 橫向優先佈局
+          當水平空間充裕時，系統會自動轉換為橫向並列佈局，提升資訊密度並減少垂直捲動勞動。
+
+          - **多欄擴展**: 重複性模組（如特色、師資）在大螢幕下會自動由雙欄轉向三欄或四欄並列。
+          - **視覺平衡**: 避免極端拉伸文字區塊，透過增加 Gap 或配置輔助區塊來維持溫潤感。
+      - type: spacing_demo_block
+        category: wide_layout
+        title: 大螢幕橫向佈局示範
   - section_id: typography-spacing
     blocks:
       - type: text_block
@@ -51,7 +67,7 @@ sections:
           ### 閱讀優化
           寬鬆的行高與字距是營造「溫潤感」的關鍵。
 
-          - **行高 (Line Height)**: `1.7` (`leading-brand`)
+          - **行高 (Line Height)**: `1.8` (`leading-brand`)
           - **字間距 (Letter Spacing)**: `0.05em` (`tracking-brand`)
       - type: spacing_demo_block
         category: typography

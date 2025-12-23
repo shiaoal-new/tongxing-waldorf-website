@@ -13,7 +13,7 @@ export default function Benefits(props) {
 
   return (
     <>
-      <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
+      <Container limit className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
         <motion.div
           initial={{ opacity: 0, x: props.imgPos === "right" ? 100 : -100 }}
           whileInView={{ opacity: 1, x: 0 }}
