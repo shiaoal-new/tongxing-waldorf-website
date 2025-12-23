@@ -88,9 +88,14 @@ export default function DeviceSimulator() {
 
     const isResizingH = useRef(false);
     const isResizingV = useRef(false);
+    const [isResizing, setIsResizing] = useState(false);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
+            if (isResizingH.current || isResizingV.current) {
+                e.preventDefault(); // Prevent text selection
+            }
+
             if (isResizingH.current) {
                 const newSplit = (e.clientX / window.innerWidth) * 100;
                 setHorizontalSplit(Math.min(Math.max(newSplit, 20), 80));
@@ -104,6 +109,7 @@ export default function DeviceSimulator() {
         const handleMouseUp = () => {
             isResizingH.current = false;
             isResizingV.current = false;
+            setIsResizing(false);
             document.body.style.cursor = 'default';
             const iframes = document.querySelectorAll('iframe');
             iframes.forEach(f => f.style.pointerEvents = 'auto');
@@ -119,6 +125,7 @@ export default function DeviceSimulator() {
 
     const startResizingH = () => {
         isResizingH.current = true;
+        setIsResizing(true);
         document.body.style.cursor = 'col-resize';
         const iframes = document.querySelectorAll('iframe');
         iframes.forEach(f => f.style.pointerEvents = 'none');
@@ -126,6 +133,7 @@ export default function DeviceSimulator() {
 
     const startResizingV = () => {
         isResizingV.current = true;
+        setIsResizing(true);
         document.body.style.cursor = 'row-resize';
         const iframes = document.querySelectorAll('iframe');
         iframes.forEach(f => f.style.pointerEvents = 'none');
@@ -134,7 +142,7 @@ export default function DeviceSimulator() {
     const currentMobilePreset = DEVICE_PRESETS[mobileDevice];
 
     return (
-        <div className="fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden">
+        <div className={`fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden ${isResizing ? 'select-none' : ''}`}>
             <Head>
                 <title>多裝置展示模式 | 同心華德福</title>
             </Head>
