@@ -217,21 +217,29 @@ export default function DeviceSimulator() {
                             ))}
                         </div>
                     </div>
-                    <div className="flex-1 overflow-auto bg-[url('https://grainy-gradients.vercel.app/noise.svg')] flex items-center justify-center p-12">
+                    <div className="flex-1 overflow-auto bg-[url('https://grainy-gradients.vercel.app/noise.svg')] p-12">
                         <div
                             style={{
                                 width: '3440px',
                                 height: '1440px',
-                                transform: `scale(${scaleUltrawide})`,
-                                transformOrigin: 'center center',
+                                margin: '0 auto'
                             }}
-                            className="bg-white border-[16px] border-[#1e293b] rounded-[2rem] shadow-[0_60px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden pointer-events-none ring-1 ring-white/10"
+                            className="bg-white border-[16px] border-[#1e293b] rounded-[2rem] shadow-[0_60px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden ring-1 ring-white/10"
                         >
-                            <iframe
-                                ref={iframeUltrawide}
-                                src="/"
-                                className="w-full h-full pointer-events-auto"
-                            />
+                            <div className="w-full h-full relative overflow-hidden">
+                                <iframe
+                                    ref={iframeUltrawide}
+                                    src="/"
+                                    style={{
+                                        width: `${100 / scaleUltrawide}%`,
+                                        height: `${100 / scaleUltrawide}%`,
+                                        transform: `scale(${scaleUltrawide})`,
+                                        transformOrigin: 'top left',
+                                        border: 'none',
+                                    }}
+                                    className="absolute top-0 left-0"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -271,21 +279,29 @@ export default function DeviceSimulator() {
                                 ))}
                             </div>
                         </div>
-                        <div className="flex-1 overflow-auto flex items-center justify-center p-12">
+                        <div className="flex-1 overflow-auto p-12">
                             <div
                                 style={{
                                     width: '1920px',
                                     height: '1080px',
-                                    transform: `scale(${scaleDesktop})`,
-                                    transformOrigin: 'center center',
+                                    margin: '0 auto'
                                 }}
-                                className="bg-white border-[12px] border-[#1e293b] rounded-[1.5rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] overflow-hidden pointer-events-none ring-1 ring-white/10"
+                                className="bg-white border-[12px] border-[#1e293b] rounded-[1.5rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] overflow-hidden ring-1 ring-white/10"
                             >
-                                <iframe
-                                    ref={iframeDesktop}
-                                    src="/"
-                                    className="w-full h-full pointer-events-auto"
-                                />
+                                <div className="w-full h-full relative overflow-hidden">
+                                    <iframe
+                                        ref={iframeDesktop}
+                                        src="/"
+                                        style={{
+                                            width: `${100 / scaleDesktop}%`,
+                                            height: `${100 / scaleDesktop}%`,
+                                            transform: `scale(${scaleDesktop})`,
+                                            transformOrigin: 'top left',
+                                            border: 'none',
+                                        }}
+                                        className="absolute top-0 left-0"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -338,15 +354,14 @@ export default function DeviceSimulator() {
                             </div>
                         </div>
 
-                        <div className="flex-1 overflow-auto flex items-center justify-center p-12">
+                        <div className="flex-1 overflow-auto p-12">
                             <div
                                 style={{
                                     width: `${currentMobilePreset.width}px`,
                                     height: `${currentMobilePreset.height}px`,
-                                    transform: `scale(${scaleMobile})`,
-                                    transformOrigin: 'center center',
+                                    margin: '0 auto'
                                 }}
-                                className="relative group pointer-events-none"
+                                className="relative"
                             >
                                 {/* Device Frame */}
                                 <div className="absolute inset-0 border-[10px] border-[#0f172a] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/20 bg-white overflow-hidden">
@@ -366,7 +381,14 @@ export default function DeviceSimulator() {
                                                     <iframe
                                                         ref={iframeMobile}
                                                         src="/"
-                                                        className="w-full h-full"
+                                                        style={{
+                                                            width: `${100 / scaleMobile}%`,
+                                                            height: `${100 / scaleMobile}%`,
+                                                            transform: `scale(${scaleMobile})`,
+                                                            transformOrigin: 'top left',
+                                                            border: 'none',
+                                                        }}
+                                                        className="absolute top-0 left-0"
                                                     />
                                                 </div>
                                                 {/* Safari Bottom Bar */}
@@ -410,7 +432,14 @@ export default function DeviceSimulator() {
                                                     <iframe
                                                         ref={iframeMobile}
                                                         src="/"
-                                                        className="w-full h-full"
+                                                        style={{
+                                                            width: `${100 / scaleMobile}%`,
+                                                            height: `${100 / scaleMobile}%`,
+                                                            transform: `scale(${scaleMobile})`,
+                                                            transformOrigin: 'top left',
+                                                            border: 'none',
+                                                        }}
+                                                        className="absolute top-0 left-0"
                                                     />
                                                 </div>
                                                 {/* Android Nav Bar */}
