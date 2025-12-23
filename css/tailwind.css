@@ -57,7 +57,7 @@
   }
 
   @media (min-width: 1201px) {
-    html {
+    html:not(.is-simulator) {
       /* 1200px 時為 16px (1rem), 則 100vw 時為 (100vw / 1200) * 16px = 100vw / 75 */
       font-size: calc(100vw / 75);
     }

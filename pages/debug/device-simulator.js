@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const DEVICE_PRESETS = {
-    iphone14: { name: 'iPhone 14', width: 390, height: 844, browser: 'safari' },
-    iphone14pro: { name: 'iPhone 14 Pro', width: 393, height: 852, browser: 'safari' },
+    iphone16e: { name: 'iPhone 16e', width: 390, height: 844, browser: 'safari', bezelType: 'notch' },
+    iphone17promax: { name: 'iPhone 17 Pro Max', width: 440, height: 956, browser: 'safari', bezelType: 'island-wide' },
     pixel7: { name: 'Pixel 7', width: 412, height: 915, browser: 'chrome' },
     s23ultra: { name: 'S23 Ultra', width: 384, height: 854, browser: 'chrome' },
 };
@@ -33,6 +33,11 @@ export default function DeviceSimulator() {
 
     // Persistence
     useEffect(() => {
+        document.documentElement.classList.add('is-simulator');
+        return () => document.documentElement.classList.remove('is-simulator');
+    }, []);
+
+    useEffect(() => {
         const savedH = localStorage.getItem('simulator_h_split_v2');
         const savedWD = localStorage.getItem('simulator_w_desktop_v2');
         if (savedH) setHorizontalSplit(parseFloat(savedH));
@@ -59,7 +64,7 @@ export default function DeviceSimulator() {
     }, [horizontalSplit]);
 
     // Mobile settings
-    const [mobileDevice, setMobileDevice] = useState('iphone14');
+    const [mobileDevice, setMobileDevice] = useState('iphone17promax');
     const currentMobilePreset = DEVICE_PRESETS[mobileDevice];
     const mobileBrowser = currentMobilePreset.browser;
 
@@ -156,6 +161,11 @@ export default function DeviceSimulator() {
 
     // Calculate scale
     const scaleD = panelSizes.desktop.w / widthDesktop || 1;
+    const paddingM = 40; // Saftey margin for mobile view
+    const scaleM = Math.min(
+        (panelSizes.mobile.w - paddingM) / currentMobilePreset.width,
+        (panelSizes.mobile.h - paddingM) / currentMobilePreset.height
+    ) || 1;
 
     return (
         <div className={`fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden ${isResizing ? 'select-none' : ''}`}>
@@ -301,22 +311,25 @@ export default function DeviceSimulator() {
                         </div>
                     </div>
 
-                    <div ref={containerRefMobile} className="flex-1 overflow-hidden p-4 lg:p-8 flex items-center justify-center">
+                    <div ref={containerRefMobile} className="flex-1 relative overflow-hidden bg-slate-950">
                         <div
                             style={{
-                                aspectRatio: `${currentMobilePreset.width} / ${currentMobilePreset.height}`,
-                                margin: '0 auto',
-                                maxHeight: '100%',
-                                maxWidth: '100%',
+                                width: `${currentMobilePreset.width}px`,
+                                height: `${currentMobilePreset.height}px`,
+                                transform: `scale(${scaleM}) translate(-50%, -50%)`,
+                                transformOrigin: 'top left',
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%'
                             }}
-                            className="relative h-full"
+                            className="transition-transform duration-300"
                         >
                             {/* Device Frame */}
-                            <div className="absolute inset-0 border-[10px] border-[#0f172a] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/20 bg-white overflow-hidden">
+                            <div className="absolute inset-0 border-[8px] border-[#0f172a] rounded-[2.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/20 bg-white overflow-hidden">
                                 <div className="flex flex-col h-full pointer-events-auto">
                                     {mobileBrowser === 'safari' ? (
                                         <div className="h-full flex flex-col bg-white">
-                                            <div className="h-8 bg-white shrink-0 flex items-center justify-between px-8 text-black font-semibold text-[10px]">
+                                            <div className="h-8 bg-white shrink-0 flex items-center justify-between px-6 text-black font-bold text-[10px]">
                                                 <span>9:41</span>
                                                 <div className="flex items-center space-x-1.5">
                                                     <div className="w-3 h-3 bg-black rounded-full scale-50" />
@@ -390,9 +403,31 @@ export default function DeviceSimulator() {
                                     )}
                                 </div>
                             </div>
-                            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[25%] h-6 bg-[#0f172a] rounded-full z-20 flex items-center justify-end px-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-slate-800" />
-                            </div>
+
+                            {currentMobilePreset.bezelType === 'notch' && (
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[52%] h-[28px] bg-[#0f172a] rounded-b-[1rem] z-20 flex flex-col items-center shadow-md">
+                                    {/* Concave Corner Transitions */}
+                                    <div className="absolute top-0 -left-2.5 w-2.5 h-2.5 rounded-tr-[10px] shadow-[4px_0_0_0_#0f172a]" />
+                                    <div className="absolute top-0 -right-2.5 w-2.5 h-2.5 rounded-tl-[10px] shadow-[-4px_0_0_0_#0f172a]" />
+
+                                    {/* Speaker Grille */}
+                                    <div className="w-12 h-[3px] bg-slate-800/40 rounded-full mt-1.5 border border-black/10" />
+
+                                    {/* Camera/Sensor area */}
+                                    <div className="absolute right-[25%] top-[8px] w-2.5 h-2.5 rounded-full bg-[#1a1f2e] shadow-inner flex items-center justify-center border border-white/5">
+                                        <div className="w-1 h-1 rounded-full bg-blue-900/30" />
+                                    </div>
+                                </div>
+                            )}
+
+                            {currentMobilePreset.bezelType?.startsWith('island') && (
+                                <div
+                                    className={`absolute top-2.5 left-1/2 -translate-x-1/2 h-[22px] bg-[#0f172a] rounded-full z-20 flex items-center justify-end px-3 transition-all duration-500 shadow-lg ${currentMobilePreset.bezelType === 'island-wide' ? 'w-[32%]' : 'w-[22%]'
+                                        }`}
+                                >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-[#1e293b]" />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
