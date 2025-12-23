@@ -166,6 +166,13 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                     About this site
                                   </button>
                                   <Link
+                                    href="/debug/device-simulator"
+                                    target="_blank"
+                                    className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                                  >
+                                    多裝置展示模式 (Simulator)
+                                  </Link>
+                                  <Link
                                     href="/admin/index.html"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -429,6 +436,18 @@ function DebugMenu({ onOpenModal }) {
           >
             <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700">
               <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="/debug/device-simulator"
+                      target="_blank"
+                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
+                    >
+                      多裝置展示模式 (Simulator)
+                    </Link>
+                  )}
+                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <button
