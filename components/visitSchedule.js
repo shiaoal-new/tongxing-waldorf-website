@@ -67,7 +67,7 @@ export default function VisitSchedule() {
             return (
                 <button
                     onClick={() => openModal(item)}
-                    className="inline-block rounded-md bg-brand-accent px-6 py-2.5 text-xs font-bold uppercase leading-brand tracking-brand text-brand-bg shadow-md transition duration-150 ease-in-out hover:opacity-90 hover:shadow-lg focus:outline-none w-full sm:w-auto">
+                    className="btn-primary w-full sm:w-auto px-6 py-2.5 uppercase tracking-brand shadow-md">
                     立即報名
                 </button>
             );
