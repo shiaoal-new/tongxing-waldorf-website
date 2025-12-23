@@ -71,7 +71,7 @@ export default function Section(props) {
             )}
 
             <Container
-                limit={limit}
+                limit
                 className={`flex w-full flex-col relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"

@@ -101,6 +101,19 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                             }
                         }
 
+                        // Determine if we should limit the section body width
+                        // Generally, text-heavy or alternating layouts should be limited to 1200px (brand max-width)
+                        // Grid-based collections and specific overview blocks should be wide (uncapped)
+                        let sectionLimit = section.limit;
+                        if (sectionLimit === undefined) {
+                            const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
+                            const hasWideBlock = blocks.some(b =>
+                                wideBlocks.includes(b.type) ||
+                                (b.type === "list_block" && ["grid_cards", "compact_grid", "videos", "alternating"].includes(b.display_mode))
+                            );
+                            sectionLimit = !hasWideBlock;
+                        }
+
                         return (
                             <Section
                                 key={index}
@@ -109,7 +122,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                 media_list={mediaList}
                                 parallax_ratio={parallaxRatio}
                                 align={align}
-                                limit={section.limit}
+                                limit={sectionLimit}
                                 {...headerProps}
                                 className="mb-section"
                             >

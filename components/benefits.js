@@ -13,7 +13,7 @@ export default function Benefits(props) {
 
   return (
     <>
-      <Container limit className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
+      <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
         <motion.div
           initial={{ opacity: 0, x: props.imgPos === "right" ? 100 : -100 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,7 +48,7 @@ export default function Benefits(props) {
               </p>
             </div>
 
-            <div className="w-full mt-5">
+            <div className="w-full mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 3xl:grid-cols-2 gap-x-12">
               {data.bullets?.map((item, index) => (
                 <Benefit key={index} title={item.title} icon={item.icon}>
                   {item.desc}
