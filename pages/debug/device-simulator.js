@@ -203,7 +203,7 @@ export default function DeviceSimulator() {
                     <div className="bg-[#1e293b]/50 backdrop-blur-md px-4 py-2 text-[10px] uppercase font-bold tracking-[0.2em] flex justify-between items-center border-b border-white/5 text-slate-400">
                         <div className="flex items-center space-x-2">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                            <span>Ultrawide • 3440 x 1440</span>
+                            <span>Ultrawide</span>
                         </div>
                         <div className="flex items-center bg-slate-900/50 rounded-lg p-0.5 border border-white/5">
                             {SCALES.map(s => (
@@ -217,29 +217,27 @@ export default function DeviceSimulator() {
                             ))}
                         </div>
                     </div>
-                    <div className="flex-1 overflow-auto bg-[url('https://grainy-gradients.vercel.app/noise.svg')] p-12">
+                    <div className="flex-1 relative bg-slate-950 overflow-hidden">
                         <div
                             style={{
-                                width: '3440px',
-                                height: '1440px',
-                                margin: '0 auto'
+                                width: `${100 / scaleUltrawide}%`,
+                                height: `${100 / scaleUltrawide}%`,
+                                transform: `scale(${scaleUltrawide})`,
+                                transformOrigin: 'top left',
+                                position: 'absolute',
+                                top: 0,
+                                left: 0
                             }}
-                            className="bg-white border-[16px] border-[#1e293b] rounded-[2rem] shadow-[0_60px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden ring-1 ring-white/10"
                         >
-                            <div className="w-full h-full relative overflow-hidden">
-                                <iframe
-                                    ref={iframeUltrawide}
-                                    src="/"
-                                    style={{
-                                        width: `${100 / scaleUltrawide}%`,
-                                        height: `${100 / scaleUltrawide}%`,
-                                        transform: `scale(${scaleUltrawide})`,
-                                        transformOrigin: 'top left',
-                                        border: 'none',
-                                    }}
-                                    className="absolute top-0 left-0"
-                                />
-                            </div>
+                            <iframe
+                                ref={iframeUltrawide}
+                                src="/"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    border: 'none',
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
@@ -265,7 +263,7 @@ export default function DeviceSimulator() {
                         <div className="bg-[#1e293b]/50 backdrop-blur-md px-4 py-2 text-[10px] uppercase font-bold tracking-[0.2em] flex justify-between items-center border-b border-white/5 text-slate-400">
                             <div className="flex items-center space-x-2">
                                 <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                                <span>Desktop • 1920 x 1080</span>
+                                <span>Desktop</span>
                             </div>
                             <div className="flex items-center bg-slate-900/50 rounded-lg p-0.5 border border-white/5">
                                 {SCALES.map(s => (
@@ -279,29 +277,27 @@ export default function DeviceSimulator() {
                                 ))}
                             </div>
                         </div>
-                        <div className="flex-1 overflow-auto p-12">
+                        <div className="flex-1 relative bg-slate-950 overflow-hidden">
                             <div
                                 style={{
-                                    width: '1920px',
-                                    height: '1080px',
-                                    margin: '0 auto'
+                                    width: `${100 / scaleDesktop}%`,
+                                    height: `${100 / scaleDesktop}%`,
+                                    transform: `scale(${scaleDesktop})`,
+                                    transformOrigin: 'top left',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0
                                 }}
-                                className="bg-white border-[12px] border-[#1e293b] rounded-[1.5rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] overflow-hidden ring-1 ring-white/10"
                             >
-                                <div className="w-full h-full relative overflow-hidden">
-                                    <iframe
-                                        ref={iframeDesktop}
-                                        src="/"
-                                        style={{
-                                            width: `${100 / scaleDesktop}%`,
-                                            height: `${100 / scaleDesktop}%`,
-                                            transform: `scale(${scaleDesktop})`,
-                                            transformOrigin: 'top left',
-                                            border: 'none',
-                                        }}
-                                        className="absolute top-0 left-0"
-                                    />
-                                </div>
+                                <iframe
+                                    ref={iframeDesktop}
+                                    src="/"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        border: 'none',
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
