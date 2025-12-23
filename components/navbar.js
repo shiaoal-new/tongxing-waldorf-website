@@ -88,7 +88,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg">
+                  className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg micro-hover-flow">
                   <span>
                     <img
                       src="/img/logo.svg"
@@ -256,7 +256,7 @@ function NavbarListItem({ item }) {
                           <Link
                             href={child.path || "#"}
                             className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                              } flex items-center justify-between w-full px-4 py-2 text-sm transition-colors`}
+                              } flex items-center justify-between w-full px-4 py-2 text-sm transition-colors micro-hover-link`}
                           >
                             <span>{child.title}</span>
                             {child.children && child.children.length > 0 && (
@@ -296,7 +296,7 @@ function NavbarListItem({ item }) {
   return (
     <Link
       href={item.path || "/"}
-      className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
+      className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none micro-hover-link">
       {item.title}
     </Link>
   );

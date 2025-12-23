@@ -9,4 +9,5 @@ items:
       - slug: "colors"
       - slug: "layout-spacing"
       - slug: "typography"
+      - slug: "micro-interactions"
   - slug: "visit"

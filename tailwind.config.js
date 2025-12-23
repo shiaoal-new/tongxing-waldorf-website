@@ -92,6 +92,9 @@ module.exports = {
       animation: {
         slideInLeft: 'slideInLeft 1s ease-out',
       },
+      scale: {
+        '98': '0.98',
+      },
     },
     fontFamily: {
       sans: ['var(--font-body)', "Inter", ...defaultTheme.fontFamily.sans],

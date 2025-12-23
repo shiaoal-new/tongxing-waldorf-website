@@ -1,0 +1,20 @@
+title: Micro Interactions
+slug: micro-interactions
+sections:
+  - section_id: demo
+    blocks:
+      - type: text_block
+        header: Micro Interactions Demo
+        sub_header: Design System
+        description: Demonstrating the organic and fluid interactions defined in our design system.
+      - type: micro_interactions_block
+        items:
+          - type: organic_fade_in
+            title: "1. Organic Fade-in (吸入式淡入)"
+            description: "Elements fade in with a subtle 10px upward movement, simulating organic growth."
+          - type: hover_flow
+            title: "2. Hover Flow (懸停流動)"
+            description: "Interactive elements have a fluid 0.3s ease-in-out transition, like watercolors spreading."
+          - type: click_feedback
+            title: "3. Click Feedback (點擊回饋)"
+            description: "Tactile response with a scale-down effect (0.98) on click."

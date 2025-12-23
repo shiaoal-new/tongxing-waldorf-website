@@ -87,7 +87,7 @@
 
 @layer components {
   .btn-base {
-    @apply px-3 py-1.5 border rounded-md text-xs text-center font-bold transition-all whitespace-nowrap;
+    @apply px-3 py-1.5 border rounded-md text-xs text-center font-bold whitespace-nowrap micro-hover-flow micro-click-press;
   }
 
   .btn-primary {
@@ -100,5 +100,31 @@
 
   .btn-white {
     @apply btn-base border-brand-accent text-brand-accent bg-brand-bg hover:border-brand-bg hover:bg-brand-accent hover:text-brand-bg;
+  }
+
+  /* Micro Interactions (微互動) */
+
+  /* 懸停流動 (Hover Flow) - 用於按鈕或區塊 */
+  .micro-hover-flow {
+    @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105;
+  }
+
+  /* 懸停流動 (Hover Flow) - 用於連結底線 */
+  .micro-hover-link {
+    @apply relative inline-block cursor-pointer decoration-0;
+  }
+
+  .micro-hover-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 ease-in-out;
+  }
+
+  .micro-hover-link:hover::after {
+    @apply w-full;
+  }
+
+  /* 點擊回饋 (Click Feedback) */
+  .micro-click-press {
+    @apply transition-transform duration-100 ease-linear active:scale-98;
   }
 }

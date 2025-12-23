@@ -18,6 +18,7 @@ import VisitProcess from "./visitProcess";
 import VisitSchedule from "./visitSchedule";
 import SpacingDemoBlock from "./spacingDemoBlock";
 import TypographyDemoBlock from "./typographyDemoBlock";
+import MicroInteractionsBlock from "./microInteractionsBlock";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList }) {
@@ -285,6 +286,9 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
                                             {block.type === "typography_demo_block" && (
                                                 <TypographyDemoBlock data={block} />
+                                            )}
+                                            {block.type === "micro_interactions_block" && (
+                                                <MicroInteractionsBlock data={block} />
                                             )}
                                         </div>
                                     ))}
