@@ -1,5 +1,4 @@
 items:
-  - slug: "index"
   - title: "校園生活"
     children:
       - slug: "daily-routine"
