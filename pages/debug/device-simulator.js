@@ -60,7 +60,7 @@ export default function DeviceSimulator() {
                     }
                 }
             }
-        }, 500); // Check every 500ms
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [currentUrl, syncEnabled]);
