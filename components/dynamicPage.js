@@ -19,24 +19,16 @@ import VisitSchedule from "./visitSchedule";
 import SpacingDemoBlock from "./spacingDemoBlock";
 import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
+import TabbedContentBlock from "./tabbedContentBlock";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
-    const [selectedCourse, setSelectedCourse] = useState(null);
 
     const handleButtonClick = (link) => {
         if (!link) return false;
 
-        // Pattern for course details
-        if (link.startsWith("#course:")) {
-            const courseId = link.replace("#course:", "");
-            const course = coursesList.find(c => c.id === courseId);
-            if (course) {
-                setSelectedCourse(course);
-                return true;
-            }
-        }
+        // Pattern for member details or other special triggers can go here
 
         return false;
     };
@@ -243,10 +235,15 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                                         ...item,
                                                                         bullets: item.sub_items?.map(bullet => ({
                                                                             ...bullet,
-                                                                            buttons: bullet.buttons?.map(btn => ({
-                                                                                ...btn,
-                                                                                onClick: () => handleButtonClick(btn.link)
-                                                                            }))
+                                                                            buttons: bullet.buttons?.map(btn => {
+                                                                                if (btn.link?.startsWith("#")) {
+                                                                                    return {
+                                                                                        ...btn,
+                                                                                        onClick: () => handleButtonClick(btn.link)
+                                                                                    };
+                                                                                }
+                                                                                return btn;
+                                                                            })
                                                                         }))
                                                                     }}
                                                                 />
@@ -326,6 +323,9 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                             )}
                                             {block.type === "micro_interactions_block" && (
                                                 <MicroInteractionsBlock data={block} />
+                                            )}
+                                            {block.type === "tabbed_content_block" && (
+                                                <TabbedContentBlock data={block} />
                                             )}
                                         </div>
                                     ))}
@@ -439,19 +439,6 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                 )}
             </Modal>
 
-            <Modal
-                isOpen={!!selectedCourse}
-                onClose={() => setSelectedCourse(null)}
-                title={selectedCourse?.title}
-            >
-                {selectedCourse && (
-                    <div className="prose prose-lg dark:prose-invert max-w-none">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {selectedCourse.content}
-                        </ReactMarkdown>
-                    </div>
-                )}
-            </Modal>
         </Layout>
     );
 }

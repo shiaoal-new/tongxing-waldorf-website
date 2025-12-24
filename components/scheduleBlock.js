@@ -4,7 +4,7 @@ const ScheduleList = ({ data, title }) => (
     <div className="flex-1">
         {title && <h4 className="text-center font-bold text-brand-accent mb-6 text-lg uppercase tracking-widest">{title}</h4>}
         <div className="space-y-4">
-            {data.map((item, index) => (
+            {data && data.map((item, index) => (
                 <div key={index} className="bg-brand-bg dark:bg-neutral-800 p-5 rounded-2xl shadow-sm border border-brand-accent/20 dark:border-neutral-700 flex items-center gap-4 hover:translate-y-[-5px] transition-transform h-full">
                     <div className="text-xl font-bold text-brand-accent w-20 flex-shrink-0">{item.time}</div>
                     <div className="flex-1 border-l-2 border-primary-100 dark:border-neutral-700 pl-4">
