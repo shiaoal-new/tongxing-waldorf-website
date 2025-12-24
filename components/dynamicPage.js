@@ -133,7 +133,6 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                 align={align}
                                 limit={sectionLimit}
                                 {...headerProps}
-                                className="mb-section"
                             >
                                 <div className="mt-6">
                                     {contentBlocks.map((block, bIndex) => (

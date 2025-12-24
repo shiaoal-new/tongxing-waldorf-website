@@ -38,7 +38,7 @@ sections:
           ### 間距階層
           我們使用語義化的間距名稱來代表不同的佈局需求：
 
-          - **區塊間隔 (Section Gap)**: `100px` (`gap-section` / `py-section`) - 用於大主題區塊之間，營造休息感。
+          - **區塊間隔 (Section Gap)**: `100px` (由相鄰區塊各 50px 的 `py-section` 構成) - 用於大主題區塊之間，營造休息感。
           - **組件間隔 (Component Gap)**: `32px` (`gap-component`) - 用於標題與卡片群等組件之間。
           - **段落間距 (Paragraph Spacing)**: `24px` (`space-y-paragraph`) - 用於文字段落之間。
       - type: spacing_demo_block
