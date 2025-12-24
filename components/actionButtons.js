@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./button";
 
-export default function ActionButtons({ buttons, align = "center", className = "" }) {
+export default function ActionButtons({ buttons, align = "center", className = "", size = "lg" }) {
     if (!buttons || buttons.length === 0) return null;
 
     const justifyContent = align === "left" ? "justify-start" : "justify-center";
@@ -13,10 +13,12 @@ export default function ActionButtons({ buttons, align = "center", className = "
                 return (
                     <Button
                         key={idx}
-                        href={btn.link}
+                        href={btn.onClick ? undefined : btn.link}
+                        onClick={btn.onClick}
                         target={target}
                         rel={target === "_blank" ? "noopener noreferrer" : undefined}
                         className={`${btn.style || "btn-primary"}`}
+                        size={btn.size || size}
                     >
                         {btn.text}
                     </Button>

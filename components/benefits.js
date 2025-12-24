@@ -50,7 +50,7 @@ export default function Benefits(props) {
 
             <div className="w-full mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-12">
               {data.bullets?.map((item, index) => (
-                <Benefit key={index} title={item.title} icon={item.icon}>
+                <Benefit key={index} title={item.title} icon={item.icon} buttons={item.buttons}>
                   {item.desc}
                 </Benefit>
               ))}
@@ -71,13 +71,16 @@ function Benefit(props) {
         <div className="flex items-center justify-center flex-shrink-0 mt-1 bg-brand-accent/100 rounded-md w-11 h-11 ">
           <Icon icon={props.icon} className="w-7 h-7 text-primary-50" />
         </div>
-        <div>
+        <div className="flex-grow">
           <h4 className="text-brand-text dark:text-brand-bg">
             {props.title}
           </h4>
           <p className="mt-1 text-brand-taupe dark:text-brand-taupe">
             {props.children}
           </p>
+          {props.buttons && props.buttons.length > 0 && (
+            <ActionButtons buttons={props.buttons} align="left" className="mt-3" size="sm" />
+          )}
         </div>
       </div>
     </>

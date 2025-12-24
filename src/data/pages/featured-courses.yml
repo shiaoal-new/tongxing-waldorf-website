@@ -40,6 +40,10 @@ sections:
               - title: 優律思美 (Eurythmy)
                 desc: 「看得見的語言與音樂」，建立內在平衡。
                 icon: mdi:human-handsup
+                buttons:
+                  - text: 瞭解更多細節
+                    link: "#course:eurythmy"
+                    style: btn-outline-primary
               - title: 泥塑課 (Clay Modeling)
                 desc: 與泥土工作訓練意志力。
                 icon: mdi:brush

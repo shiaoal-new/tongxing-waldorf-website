@@ -21,8 +21,25 @@ import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import { useState } from "react";
 
-export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList }) {
+export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
+    const handleButtonClick = (link) => {
+        if (!link) return false;
+
+        // Pattern for course details
+        if (link.startsWith("#course:")) {
+            const courseId = link.replace("#course:", "");
+            const course = coursesList.find(c => c.id === courseId);
+            if (course) {
+                setSelectedCourse(course);
+                return true;
+            }
+        }
+
+        return false;
+    };
 
     if (!page) {
         return <div>Page not found</div>;
@@ -224,7 +241,13 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                                     imgPos={iIndex % 2 === 1 ? "right" : "left"}
                                                                     data={{
                                                                         ...item,
-                                                                        bullets: item.sub_items
+                                                                        bullets: item.sub_items?.map(bullet => ({
+                                                                            ...bullet,
+                                                                            buttons: bullet.buttons?.map(btn => ({
+                                                                                ...btn,
+                                                                                onClick: () => handleButtonClick(btn.link)
+                                                                            }))
+                                                                        }))
                                                                     }}
                                                                 />
                                                             ))}
@@ -412,6 +435,20 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                 )}
                             </div>
                         </div>
+                    </div>
+                )}
+            </Modal>
+
+            <Modal
+                isOpen={!!selectedCourse}
+                onClose={() => setSelectedCourse(null)}
+                title={selectedCourse?.title}
+            >
+                {selectedCourse && (
+                    <div className="prose prose-lg dark:prose-invert max-w-none">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {selectedCourse.content}
+                        </ReactMarkdown>
                     </div>
                 )}
             </Modal>

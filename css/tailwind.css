@@ -106,20 +106,31 @@
 }
 
 @layer components {
+
+  /* 基礎按鈕樣式 */
   .btn-base {
-    @apply px-3 py-1.5 border rounded-md text-xs text-center font-bold whitespace-nowrap micro-hover-flow micro-click-press;
+    @apply inline-flex items-center justify-center rounded-full transition-all duration-200 font-bold text-center cursor-pointer active:scale-95;
   }
 
+  /* 橘色主按鈕 (填滿) */
   .btn-primary {
-    @apply btn-base border-brand-bg/60 text-brand-bg bg-brand-accent hover:opacity-90;
+    @apply btn-base bg-brand-accent text-white border-2 border-brand-accent hover:opacity-90 shadow-md hover:shadow-lg;
   }
 
+  /* 淺色/地灰色按鈕 */
   .btn-secondary {
-    @apply btn-base bg-brand-bg text-brand-text border-brand-taupe/20 hover:bg-brand-taupe/10;
+    @apply btn-base bg-brand-bg text-brand-text border border-brand-taupe/20 hover:bg-brand-taupe/10;
   }
 
+  /* 白色按鈕 */
   .btn-white {
-    @apply btn-base border-brand-accent text-brand-accent bg-brand-bg hover:border-brand-bg hover:bg-brand-accent hover:text-brand-bg;
+    @apply btn-base bg-white text-brand-accent border-2 border-brand-accent hover:bg-brand-accent hover:text-white shadow-sm;
+  }
+
+  /* 橘色邊框按鈕 (鏤空) */
+  .btn-outline-primary {
+    @apply btn-base border-2 border-brand-accent text-brand-accent bg-transparent hover:bg-brand-accent hover:text-white shadow-sm hover:shadow-md;
+    padding: 0.5rem 1.25rem;
   }
 
   /* Micro Interactions (微互動) */
