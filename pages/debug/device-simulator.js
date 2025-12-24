@@ -159,6 +159,130 @@ export default function DeviceSimulator() {
         iframes.forEach(f => f.style.pointerEvents = 'none');
     };
 
+    // --- Mobile Touch Emulation ---
+    const [isMobileMouseDown, setIsMobileMouseDown] = useState(false);
+    const lastMobilePos = useRef({ x: 0, y: 0, startX: 0, startY: 0 });
+    const pressedElementRef = useRef(null);
+
+    const proxyToMobile = (e, type) => {
+        const iframe = iframeMobile.current;
+        if (!iframe || !iframe.contentDocument) return;
+
+        const rect = iframe.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / scaleM;
+        const y = (e.clientY - rect.top) / scaleM;
+
+        const target = iframe.contentDocument.elementFromPoint(x, y);
+        if (!target) return;
+
+        const event = new CustomEvent(type, {
+            bubbles: true,
+            cancelable: true,
+        });
+
+        const touch = {
+            identifier: Date.now(),
+            target: target,
+            clientX: x,
+            clientY: y,
+            screenX: e.screenX,
+            screenY: e.screenY,
+            pageX: x + (iframe.contentWindow?.scrollX || 0),
+            pageY: y + (iframe.contentWindow?.scrollY || 0),
+        };
+
+        // Populate touch lists
+        event.touches = [touch];
+        event.targetTouches = [touch];
+        event.changedTouches = [touch];
+
+        target.dispatchEvent(event);
+        return target;
+    };
+
+    const onMobileMouseDown = (e) => {
+        setIsMobileMouseDown(true);
+        lastMobilePos.current = {
+            x: e.clientX,
+            y: e.clientY,
+            startX: e.clientX,
+            startY: e.clientY
+        };
+        const target = proxyToMobile(e, 'touchstart');
+        if (target && target.classList) {
+            target.classList.add('simulator-pressed');
+            pressedElementRef.current = target;
+        }
+    };
+
+    const onMobileMouseMove = (e) => {
+        if (!isMobileMouseDown) return;
+
+        const dx = lastMobilePos.current.x - e.clientX;
+        const dy = lastMobilePos.current.y - e.clientY;
+
+        const iframe = iframeMobile.current;
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.scrollBy(dx, dy);
+        }
+
+        lastMobilePos.current.x = e.clientX;
+        lastMobilePos.current.y = e.clientY;
+
+        proxyToMobile(e, 'touchmove');
+    };
+
+    const cleanupPressed = () => {
+        setIsMobileMouseDown(false);
+        if (pressedElementRef.current) {
+            try {
+                pressedElementRef.current.classList.remove('simulator-pressed');
+            } catch (e) { }
+            pressedElementRef.current = null;
+        }
+    };
+
+    const onMobileMouseUp = (e) => {
+        if (!isMobileMouseDown) return;
+        cleanupPressed();
+
+        proxyToMobile(e, 'touchend');
+
+        // click detection
+        const dist = Math.sqrt(
+            Math.pow(e.clientX - lastMobilePos.current.startX, 2) +
+            Math.pow(e.clientY - lastMobilePos.current.startY, 2)
+        );
+
+        if (dist < 10) {
+            const iframe = iframeMobile.current;
+            if (iframe && iframe.contentDocument) {
+                const rect = iframe.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / scaleM;
+                const y = (e.clientY - rect.top) / scaleM;
+                const target = iframe.contentDocument.elementFromPoint(x, y);
+                if (target && typeof target.click === 'function') {
+                    target.click();
+                    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.contentEditable === 'true') {
+                        target.focus();
+                    }
+                }
+            }
+        }
+    };
+
+    const onMobileWheel = (e) => {
+        const iframe = iframeMobile.current;
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.scrollBy({
+                left: e.deltaX,
+                top: e.deltaY,
+                behavior: 'auto'
+            });
+        }
+    };
+    // ------------------------------
+
     // Calculate scale
     const scaleD = panelSizes.desktop.w / widthDesktop || 1;
     const paddingM = 40; // Saftey margin for mobile view
@@ -202,25 +326,10 @@ export default function DeviceSimulator() {
                     -webkit-tap-highlight-color: rgba(128, 128, 128, 0.2) !important;
                 }
                 
-                /* 禁用懸停效果以模擬觸控螢幕 (aggressive) */
-                html body *:hover, 
-                html body *[class~="group"]:hover * {
-                    transition: none !important;
-                    transform: none !important;
-                    filter: none !important;
-                    box-shadow: none !important;
-                    outline: none !important;
-                    text-decoration: inherit !important;
-
-                    /* Destructive overrides - revert to browser defaults on hover */
-                    background-color: transparent !important;
-                    color: initial !important;
-                    border-color: transparent !important;
-                }
-
-                /* Restore background for html/body if it gets hovered, to prevent page flashing */
-                html:hover, body:hover {
-                    background-color: initial !important;
+                /* Hover effect is now blocked by the overlay layer in the simulator. */
+                /* We keep simple active feedback here. */
+                a, button, [role="button"], input, select, textarea {
+                    cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
                 }
 
                 a, button, [role="button"], input, select, textarea {
@@ -228,8 +337,9 @@ export default function DeviceSimulator() {
                 }
 
                 /* 保持點擊時的 active 饋送 */
-                *:active {
+                *:active, .simulator-pressed {
                     opacity: 0.7 !important;
+                    transition: opacity 0.1s !important;
                 }
             `;
             if (style.textContent !== css) {
@@ -428,6 +538,16 @@ export default function DeviceSimulator() {
                                                     }}
                                                     className="absolute top-0 left-0"
                                                 />
+                                                {/* Touch Emulation Overlay */}
+                                                <div
+                                                    className={`absolute inset-0 z-30 ${isResizing ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                                                    onMouseDown={onMobileMouseDown}
+                                                    onMouseMove={onMobileMouseMove}
+                                                    onMouseUp={onMobileMouseUp}
+                                                    onMouseLeave={cleanupPressed}
+                                                    onWheel={onMobileWheel}
+                                                    style={{ cursor: `url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto` }}
+                                                />
                                             </div>
                                             <div className="h-20 bg-slate-50/95 backdrop-blur-xl border-t border-black/5 flex flex-col items-center shrink-0 p-3">
                                                 <div className="w-full h-8 bg-white shadow-sm border border-black/5 rounded-xl flex items-center px-4 mb-2">
@@ -474,6 +594,16 @@ export default function DeviceSimulator() {
                                                         border: 'none',
                                                     }}
                                                     className="absolute top-0 left-0"
+                                                />
+                                                {/* Touch Emulation Overlay */}
+                                                <div
+                                                    className={`absolute inset-0 z-30 ${isResizing ? 'pointer-events-none' : 'pointer-events-auto'}`}
+                                                    onMouseDown={onMobileMouseDown}
+                                                    onMouseMove={onMobileMouseMove}
+                                                    onMouseUp={onMobileMouseUp}
+                                                    onMouseLeave={cleanupPressed}
+                                                    onWheel={onMobileWheel}
+                                                    style={{ cursor: `url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto` }}
                                                 />
                                             </div>
                                             <div className="h-10 bg-black flex justify-around items-center shrink-0">
