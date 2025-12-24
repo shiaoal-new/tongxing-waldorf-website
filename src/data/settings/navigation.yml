@@ -3,6 +3,7 @@ items:
     children:
       - slug: "daily-routine"
       - slug: "curriculum-development"
+      - slug: "featured-courses"
   - slug: "teacher-group"
   - title: "設計規範"
     children:

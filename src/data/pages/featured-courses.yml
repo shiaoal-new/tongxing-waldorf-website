@@ -1,0 +1,102 @@
+title: 特色課程
+slug: featured-courses
+description: 同心華德福提供了許多與一般體制內學校截然不同的特色課程。強調「身心靈平衡」與「真實生活體驗」。
+hero:
+  title: 特色課程介紹
+  sub_header: 給孩子一份受用一生的禮物
+  media_list:
+    - type: image
+      image: /img/featured-outdoor.png
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+sections:
+  - section_id: curriculum-intro
+    blocks:
+      - type: text_block
+        header: 特色課程介紹
+        description: 同心華德福提供了許多與一般體制內學校截然不同的特色課程。這些課程並非為了考試而設計，而是為了呼應孩子不同階段的發展需求，強調「身心靈平衡」與「真實生活體驗」。
+  - section_id: course-list
+    blocks:
+      - type: list_block
+        display_mode: alternating
+        items:
+          - title: 1. 節奏與深度的學術架構
+            desc: 同心沒有統一的教科書，而是由老師自行設計教案。每天早上的前兩小時是主課程時間，會在數週內持續探索同一個主題，讓學習像「走螺旋」一樣深度內化，而非破碎的知識切片。
+            media:
+              type: image
+              image: /img/featured-academic.png
+            sub_items:
+              - title: 週期主課程 (Main Lesson)
+                desc: 深度的專題探索，非破碎的知識。
+                icon: mdi:book-open-page-variant
+              - title: 現象導向的科學觀測
+                desc: 透過「有意識的觀察」歸納真理.
+                icon: mdi:flask-outline
+          - title: 2. 意志與藝術的實作課程
+            desc: 透過藝術與動作，幫助孩子建立內在與外在世界的連結與平衡。
+            media:
+              type: image
+              image: /img/featured-artistic.png
+            sub_items:
+              - title: 優律思美 (Eurythmy)
+                desc: 「看得見的語言與音樂」，建立內在平衡。
+                icon: mdi:human-handsup
+              - title: 泥塑課 (Clay Modeling)
+                desc: 與泥土工作訓練意志力。
+                icon: mdi:brush
+              - title: 戲劇課
+                desc: 團隊合作教育，每個人都是不可或缺的零件。
+                icon: mdi:theater
+          - title: 3. 與土地連結的生存技能
+            desc: 從校園農耕到建築實作，讓孩子具備在生活中「自給自足」的能力與自信。
+            media:
+              type: image
+              image: /img/featured-nature.png
+            sub_items:
+              - title: 農耕與園藝課
+                desc: 學習 BD 農法，了解食物與生命來源。
+                icon: mdi:sprout
+              - title: 建築課
+                desc: 親手蓋遮蔽處，認識各行各業與生存技能。
+                icon: mdi:home-city
+              - title: 獨輪車
+                desc: 鍛鍊體魄、平衡感與專注力.
+                icon: mdi:bike
+          - title: 4. 跨越挑戰的戶外課程（自然日）
+            desc: 同心堅持每週三為「自然日」，並隨年段增加難度，讓孩子在移動中看見世界與尋找自我。
+            media:
+              type: image
+              image: /img/featured-outdoor.png
+            sub_items:
+              - title: 台北大縱走（五年級）
+                desc: 7 天 6 夜長途徒步，透過汗水與意志力重新認知地景。
+                icon: mdi:map-marker-path
+              - title: 長程壯遊（六至九年級）
+                desc: 山林生活、大航海時代海洋探索及馬偕之路。
+                icon: mdi:ship-wheel
+          - title: 5. 自我探索的專題課程
+            desc: 不同於大人的指派，孩子需自行找尋感興趣的主題，是向自由與負責邁進的重要歷程。
+            media:
+              type: image
+              image: /img/featured-exploration.png
+            sub_items:
+              - title: 專題研究 (Projects)
+                desc: 八、九、十一年級自主收集、整理並發表知識。
+                icon: mdi:lightbulb-on
+              - title: 高中部特色挑戰
+                desc: 包含航海、獨木舟及十一年級 48 小時「獨處」任務。
+                icon: mdi:star-face
+  - section_id: conclusion
+    blocks:
+      - type: text_block
+        header: 結語：為未來「自轉」的能力
+        description: 同心的課程不急著讓孩子在考卷上填寫標準答案，而是邀請他們親自走入自然、操弄土與木、參與戲劇與長途跋涉。這些課程是為了在孩子心中埋下種子，讓他們在成年後具備「自轉」的能力，即便面對未知的世界，也能清楚知道「我是誰」以及「要往哪裡去」。
+  - section_id: cta
+    layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        header: 親自來感受
+        description: 想要更深入了解這些課程嗎？歡迎預約參觀，親自看見孩子們學習的樣子。
+        buttons:
+          - text: 預約參觀
+            link: /visit
+            style: btn-white
