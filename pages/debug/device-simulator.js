@@ -14,6 +14,7 @@ const DESKTOP_WIDTHS = [960, 1024, 1200, 1440, 1920];
 export default function DeviceSimulator() {
     const router = useRouter();
     const [currentUrl, setCurrentUrl] = useState('/');
+    const [currentSection, setCurrentSection] = useState('');
     const [syncEnabled, setSyncEnabled] = useState(true);
 
     // Splitter position (percentage)
@@ -71,7 +72,7 @@ export default function DeviceSimulator() {
     const iframeDesktop = useRef(null);
     const iframeMobile = useRef(null);
 
-    // Polling interval for URL sync
+    // Polling interval for URL and Section sync
     useEffect(() => {
         if (!syncEnabled) return;
 
@@ -86,21 +87,57 @@ export default function DeviceSimulator() {
                 if (iframe && iframe.contentWindow) {
                     try {
                         const iframePath = iframe.contentWindow.location.pathname;
-                        // If one iframe moved to a new path, update the global state
+                        const iframeHash = iframe.contentWindow.location.hash;
+
+                        // Sync URL path
                         if (iframePath && iframePath !== currentUrl) {
-                            console.log(`Sync: Detected change in ${item.name} to ${iframePath}`);
+                            console.log(`Sync: Detected path change in ${item.name} to ${iframePath}`);
                             setCurrentUrl(iframePath);
-                            break; // Only pick one change at a time
+                            break;
+                        }
+
+                        // Detect visible section using IntersectionObserver
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        if (doc) {
+                            const sections = doc.querySelectorAll('section[id]');
+                            if (sections.length > 0) {
+                                let visibleSection = '';
+                                let maxVisibility = 0;
+
+                                sections.forEach(section => {
+                                    const rect = section.getBoundingClientRect();
+                                    const viewportHeight = iframe.contentWindow.innerHeight;
+
+                                    // Calculate how much of the section is visible
+                                    const visibleTop = Math.max(0, rect.top);
+                                    const visibleBottom = Math.min(viewportHeight, rect.bottom);
+                                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                                    const visibilityRatio = visibleHeight / viewportHeight;
+
+                                    // The section that occupies the most viewport space is considered "current"
+                                    if (visibilityRatio > maxVisibility && visibilityRatio > 0.3) {
+                                        maxVisibility = visibilityRatio;
+                                        visibleSection = section.id;
+                                    }
+                                });
+
+                                // Update current section if changed
+                                if (visibleSection && visibleSection !== currentSection) {
+                                    console.log(`Sync: Detected section change in ${item.name} to #${visibleSection}`);
+                                    setCurrentSection(visibleSection);
+                                    break;
+                                }
+                            }
                         }
                     } catch (e) {
                         // Cross-origin or loading state - skip
                     }
                 }
             }
-        }, 1000);
+        }, 500); // Check more frequently for smoother section sync
 
         return () => clearInterval(interval);
-    }, [currentUrl, syncEnabled]);
+    }, [currentUrl, currentSection, syncEnabled]);
 
     // Force update other iframes when currentUrl changes
     useEffect(() => {
@@ -122,6 +159,49 @@ export default function DeviceSimulator() {
             }
         });
     }, [currentUrl, syncEnabled]);
+
+    // Sync section scrolling when currentSection changes
+    useEffect(() => {
+        if (!syncEnabled || !currentSection) return;
+
+        const iframes = [
+            { ref: iframeDesktop, name: 'desktop' },
+            { ref: iframeMobile, name: 'mobile' }
+        ];
+
+        iframes.forEach(item => {
+            const iframe = item.ref.current;
+            if (iframe && iframe.contentWindow) {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (doc) {
+                        const targetSection = doc.getElementById(currentSection);
+                        if (targetSection) {
+                            // Check if this section is already visible
+                            const rect = targetSection.getBoundingClientRect();
+                            const viewportHeight = iframe.contentWindow.innerHeight;
+                            const visibleTop = Math.max(0, rect.top);
+                            const visibleBottom = Math.min(viewportHeight, rect.bottom);
+                            const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                            const visibilityRatio = visibleHeight / viewportHeight;
+
+                            // Only scroll if the section is not sufficiently visible
+                            if (visibilityRatio < 0.5) {
+                                console.log(`Sync: Scrolling ${item.name} to section #${currentSection}`);
+                                targetSection.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }
+                    }
+                } catch (e) {
+                    // Cross-origin or loading state - skip
+                    console.log(`Sync: Could not scroll ${item.name} to section #${currentSection}`, e);
+                }
+            }
+        });
+    }, [currentSection, syncEnabled]);
 
     const isResizingH = useRef(false);
     const [isResizing, setIsResizing] = useState(false);
@@ -405,6 +485,13 @@ export default function DeviceSimulator() {
                         <input type="checkbox" className="hidden" checked={syncEnabled} onChange={() => setSyncEnabled(!syncEnabled)} />
                         <span className={`font-medium transition-colors ${syncEnabled ? 'text-indigo-400' : 'text-slate-400'}`}>Sync Navigation</span>
                     </label>
+
+                    {currentSection && syncEnabled && (
+                        <div className="flex items-center space-x-2 bg-slate-900/50 px-3 py-1.5 rounded-full border border-indigo-500/30">
+                            <span className="text-xs text-slate-500">Section:</span>
+                            <span className="text-xs font-mono text-indigo-400">#{currentSection}</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex items-center space-x-4">
