@@ -158,4 +158,14 @@
   .micro-click-press {
     @apply transition-transform duration-100 ease-linear active:scale-98;
   }
+
+  /* 隱藏捲軸 (Hide Scrollbar) */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
