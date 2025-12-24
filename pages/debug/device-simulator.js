@@ -167,6 +167,86 @@ export default function DeviceSimulator() {
         (panelSizes.mobile.h - paddingM) / currentMobilePreset.height
     ) || 1;
 
+    const mobileCursor = React.useMemo(() => {
+        const baseSize = 40;
+        const size = Math.max(10, Math.round(baseSize * scaleM));
+        const center = size / 2;
+        const r1 = (15 / 40) * size;
+        const r2 = (14 / 40) * size;
+        const sw1 = (2 / 40) * size;
+        const sw2 = (1.5 / 40) * size;
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${center}" cy="${center}" r="${r1}" fill="rgba(128, 128, 128, 0.3)" stroke="rgba(0, 0, 0, 0.3)" stroke-width="${sw1}"/><circle cx="${center}" cy="${center}" r="${r2}" fill="none" stroke="rgba(255, 255, 255, 0.7)" stroke-width="${sw2}"/></svg>`;
+
+        return {
+            url: `data:image/svg+xml;base64,${typeof btoa !== 'undefined' ? btoa(svg) : ''}`,
+            center: center
+        };
+    }, [scaleM]);
+
+    const injectMobileCursor = (iframe) => {
+        if (!iframe || !iframe.contentWindow || !mobileCursor.url) return;
+        try {
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            if (!doc) return;
+            const styleId = 'simulator-cursor-style';
+            let style = doc.getElementById(styleId);
+            if (!style) {
+                style = doc.createElement('style');
+                style.id = styleId;
+                doc.head.appendChild(style);
+            }
+            const css = `
+                * {
+                    cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
+                    -webkit-tap-highlight-color: rgba(128, 128, 128, 0.2) !important;
+                }
+                
+                /* 禁用懸停效果以模擬觸控螢幕 (aggressive) */
+                html body *:hover, 
+                html body *[class~="group"]:hover * {
+                    transition: none !important;
+                    transform: none !important;
+                    filter: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                    text-decoration: inherit !important;
+
+                    /* Destructive overrides - revert to browser defaults on hover */
+                    background-color: transparent !important;
+                    color: initial !important;
+                    border-color: transparent !important;
+                }
+
+                /* Restore background for html/body if it gets hovered, to prevent page flashing */
+                html:hover, body:hover {
+                    background-color: initial !important;
+                }
+
+                a, button, [role="button"], input, select, textarea {
+                    cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
+                }
+
+                /* 保持點擊時的 active 饋送 */
+                *:active {
+                    opacity: 0.7 !important;
+                }
+            `;
+            if (style.textContent !== css) {
+                style.textContent = css;
+            }
+        } catch (e) {
+            // Cross-origin issues
+        }
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            injectMobileCursor(iframeMobile.current);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [currentUrl, mobileDevice, mobileCursor]);
+
     return (
         <div className={`fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden ${isResizing ? 'select-none' : ''}`}>
             <Head>
@@ -297,7 +377,7 @@ export default function DeviceSimulator() {
                             </div>
                             <div className="h-4 w-px bg-white/10" />
                             <select
-                                className="bg-transparent text-[10px] font-bold text-indigo-400 focus:outline-none cursor-pointer"
+                                className="bg-transparent text-[10px] font-bold text-indigo-400 focus:outline-none cursor-point-reset"
                                 value={mobileDevice}
                                 onChange={(e) => setMobileDevice(e.target.value)}
                             >
@@ -311,7 +391,7 @@ export default function DeviceSimulator() {
                         </div>
                     </div>
 
-                    <div ref={containerRefMobile} className="flex-1 relative overflow-hidden bg-slate-950">
+                    <div ref={containerRefMobile} className="flex-1 relative overflow-hidden bg-slate-950 mobile-simulator-viewport">
                         <div
                             style={{
                                 width: `${currentMobilePreset.width}px`,
@@ -340,6 +420,7 @@ export default function DeviceSimulator() {
                                                 <iframe
                                                     ref={iframeMobile}
                                                     src="/"
+                                                    onLoad={(e) => injectMobileCursor(e.target)}
                                                     style={{
                                                         width: '100%',
                                                         height: '100%',
@@ -386,6 +467,7 @@ export default function DeviceSimulator() {
                                                 <iframe
                                                     ref={iframeMobile}
                                                     src="/"
+                                                    onLoad={(e) => injectMobileCursor(e.target)}
                                                     style={{
                                                         width: '100%',
                                                         height: '100%',
@@ -447,6 +529,15 @@ export default function DeviceSimulator() {
                 }
                 ::-webkit-scrollbar-thumb:hover {
                   background: rgba(255, 255, 255, 0.2);
+                }
+
+                .mobile-simulator-viewport, 
+                .mobile-simulator-viewport * {
+                    cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
+                }
+
+                .cursor-point-reset {
+                    cursor: pointer !important;
                 }
             `}</style>
         </div>
