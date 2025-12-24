@@ -37,7 +37,11 @@ function withOpacity(variableName) {
 
 module.exports = {
   brand: brandMeta,
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/data/**/*.{yml,yaml,md}"
+  ],
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
