@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { videoData } from "./data";
 
 export default function VideoList({ videoList }) {
   const data = videoList || videoData;
   return (
-    <div className="grid spacing-component md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid spacing-component gap-y-16 md:grid-cols-2 lg:grid-cols-3">
       {data.map((video, index) => (
-        <VideoItem key={index} video={video} />
+        <VideoItem
+          key={index}
+          video={video}
+          className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
+        />
       ))}
     </div>
   );
 }
 
-function VideoItem({ video }) {
+function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);
+
+  // Generate a random hue rotation value between 0 and 360 degrees
+  const randomHue = useMemo(() => Math.floor(Math.random() * 360), []);
 
   // Normalize media data
   const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
@@ -32,7 +39,10 @@ function VideoItem({ video }) {
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : (mediaData.type === 'image' ? mediaData.image : null);
 
   return (
-    <div className={`flex flex-col w-full rounded-xl h-full ${video.className || ''}`}>
+    <div
+      className={`flex flex-col w-full rounded-xl h-full ${video.className || ''} ${className || ''}`}
+      style={{ '--frame-hue': `${randomHue}deg` }}
+    >
       <div
         onClick={() => setPlayVideo(!playVideo)}
         className="relative cursor-pointer aspect-w-16 aspect-h-9 bg-gray-200 group"

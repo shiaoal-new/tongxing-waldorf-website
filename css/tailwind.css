@@ -190,5 +190,6 @@
     background-repeat: no-repeat;
     z-index: -1;
     pointer-events: none;
+    filter: hue-rotate(var(--frame-hue, 0deg));
   }
 }

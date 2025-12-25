@@ -38,23 +38,11 @@ sections:
               - text: 了解同心的課程設計
                 link: /curriculum-development
                 style: btn-primary
-          - title: 健康與自然的物質環境滋養
-            desc: 你吃什麼、看什麼、摸什麼，都會影響你變成什麼樣的人。所以我們對孩子入口、入眼的東西，都很認真。
-            media:
-              type: lottie
-              url: 6ea3c266-e8d8-48a4-a1e1-d460eecb9a49/RJJ5LzY7qy
-            sub_items:
-              - title: 食材選擇
-                desc: 我們的午餐不走「便宜大碗」路線。米飯和蔬果盡量選小農、無毒的，因為孩子的身體，值得吃得更好。
-                icon: lucide:sparkles
-              - title: 食農教育
-                desc: 讓孩子知道飯不是從便利商店來的，菜也不是長在塑膠袋裡。摸過土、種過菜，才懂得珍惜。
-                icon: lucide:sun
           - title: 拒絕當「育兒孤島」：在這裡，全村的人都是你的神隊友
             desc: 說真的，在現代城市裡養小孩，有時候覺得自己像在玩一場「荒野求生」。一旦工作加班、保母請假或小孩感冒，生活秩序瞬間就像骨牌一樣全倒。我們深知那種孤立無援的焦慮，所以「同心」不只是一間學校，它更像是一個找回失傳已久的「村落感」的地方。
             media:
-              type: lottie
-              url: "2af4b53e-d889-415f-a8be-053ffa90f166/D4jSQcnUjK"
+              type: image
+              image: /img/group-support.webp
             sub_items:
               - title: 老師不只懂孩子，還很懂你的不容易
                 desc: 這裡的老師不只是站在講台上的人，他們花大量時間跟家長「搏感情」。這種溝通不是為了發成績單，而是為了建立那種「我懂你的孩子，也理解你的難處」的革命情感。當老師跟家長成了隊友，教育才不會變成各彈各的調。
