@@ -124,8 +124,13 @@ export default function Footer() {
 
       {/* Visible fixed footer that sits behind the content and animates */}
       <motion.div
-        className="fixed bottom-0 w-full z-0 block bg-brand-taupe/10 dark:bg-brand-structural border-t border-brand-taupe/10 dark:border-trueGray-700 shadow-t-lg"
-        style={{ y, opacity, scale }}
+        className="fixed bottom-0 w-full z-0 block bg-cover bg-center bg-no-repeat bg-brand-taupe/10 dark:bg-brand-structural border-t border-brand-taupe/10 dark:border-trueGray-700 shadow-t-lg"
+        style={{
+          y,
+          opacity,
+          scale,
+          backgroundImage: "url('/img/background/footer.webp')"
+        }}
       >
         <FooterContent />
       </motion.div>

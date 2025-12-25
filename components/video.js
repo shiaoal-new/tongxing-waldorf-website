@@ -19,8 +19,8 @@ export default function VideoList({ videoList }) {
 function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);
 
-  // Generate a random hue rotation value between 0 and 360 degrees
-  const randomHue = useMemo(() => Math.floor(Math.random() * 360), []);
+  // Generate a random hue rotation value ensuring warm colors (approx -45deg to +15deg relative to yellow)
+  const randomHue = useMemo(() => Math.floor(Math.random() * 60) - 45, []);
 
   // Normalize media data
   const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
