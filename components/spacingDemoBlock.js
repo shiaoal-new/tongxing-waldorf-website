@@ -64,7 +64,7 @@ const ComponentSpacingDemo = () => (
             <div className="bg-brand-structural/5 p-4 rounded border border-brand-structural/10">
                 <h5 className="text-lg font-bold mb-paragraph">標題與首段 (Spacing: Component)</h5>
                 <div className="h-8 bg-brand-accent/10 border border-brand-accent/20 mb-paragraph flex items-center justify-center text-[10px] font-bold">
-                    gap-component / mb-component (32px)
+                    spacing-component / mb-component (32px)
                 </div>
                 <div className="space-y-paragraph">
                     <p className="text-sm border-l-2 border-brand-taupe/30 pl-3">第一段文字內容。段落與段落之間保留 24px 的呼吸空間。</p>

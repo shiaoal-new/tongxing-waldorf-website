@@ -9,7 +9,7 @@ import userThreeImg from "../public/img/user3.jpg";
 export default function Testimonials() {
   return (
     <Container className="mb-section">
-      <div className="grid gap-component lg:grid-cols-2">
+      <div className="grid spacing-component lg:grid-cols-2">
         <div className="lg:col-span-2">
           <div className="flex flex-col justify-between w-full h-full bg-brand-bg px-10 rounded-2xl py-10 dark:bg-trueGray-800 border border-brand-taupe/10">
             <p className="text-2xl leading-normal ">

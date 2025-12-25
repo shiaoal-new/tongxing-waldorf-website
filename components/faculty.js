@@ -10,7 +10,7 @@ export default function Faculty({ facultyList }) {
 
     return (
         <Container className="mb-section">
-            <div className="grid gap-component md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid spacing-component md:grid-cols-2 lg:grid-cols-3">
                 {facultyList.map((faculty) => (
                     <FacultyCard key={faculty.id} faculty={faculty} />
                 ))}

@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PageHero from "./pageHero";
 import Benefits from "./benefits";
-import Video from "./video";
+import VideoList from "./video";
 import MediaRenderer from "./mediaRenderer";
 import ScheduleBlock from "./scheduleBlock";
 import CurriculumBlock from "./curriculumBlock";
@@ -280,10 +280,11 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                     )}
 
                                                     {block.display_mode === "videos" && (
-                                                        <Video videoList={block.items?.map(item => ({
+                                                        <VideoList videoList={block.items?.map(item => ({
                                                             title: item.title,
                                                             media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
-                                                            description: item.desc
+                                                            description: item.desc,
+                                                            className: item.className
                                                         }))} />
                                                     )}
 

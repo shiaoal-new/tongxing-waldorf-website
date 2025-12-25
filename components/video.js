@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { videoData } from "./data";
 
-export default function Video({ videoList }) {
+export default function VideoList({ videoList }) {
   const data = videoList || videoData;
   return (
-    <div className="grid gap-component md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid spacing-component md:grid-cols-2 lg:grid-cols-3">
       {data.map((video, index) => (
         <VideoItem key={index} video={video} />
       ))}
@@ -32,7 +32,7 @@ function VideoItem({ video }) {
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : (mediaData.type === 'image' ? mediaData.image : null);
 
   return (
-    <div className="flex flex-col w-full overflow-hidden rounded-xl shadow-lg h-full">
+    <div className={`flex flex-col w-full rounded-xl h-full ${video.className || ''}`}>
       <div
         onClick={() => setPlayVideo(!playVideo)}
         className="relative cursor-pointer aspect-w-16 aspect-h-9 bg-gray-200 group"

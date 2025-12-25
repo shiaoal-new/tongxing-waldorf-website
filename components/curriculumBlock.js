@@ -119,7 +119,7 @@ const CurriculumBlock = ({ data }) => {
                             <span className="text-sm font-bold text-brand-taupe">任務：{row.task}</span>
                         </div>
                         <div className="p-component space-y-component">
-                            <div className="grid grid-cols-2 gap-component">
+                            <div className="grid grid-cols-2 spacing-component">
                                 <div>
                                     <label className="text-[10px] font-bold text-brand-accent uppercase tracking-brand block mb-1">年段目標</label>
                                     <p className="text-sm text-brand-text dark:text-brand-bg leading-brand">{row.objective}</p>

@@ -32,7 +32,7 @@ const steps = [
 export default function VisitProcess() {
     return (
         <Container>
-            <div className="grid gap-component lg:grid-cols-2 xl:grid-cols-4">
+            <div className="grid spacing-component lg:grid-cols-2 xl:grid-cols-4">
                 {steps.map((item, index) => (
                     <div key={index} className="flex flex-col items-center justify-top text-center bg-brand-bg dark:bg-brand-structural/20 p-component rounded-xl border border-brand-taupe/5">
                         <div className="flex items-center justify-center w-16 h-16 p-4 mb-component rounded-full bg-brand-accent/10 text-brand-accent dark:bg-brand-accent/20">

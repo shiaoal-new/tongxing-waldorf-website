@@ -22,8 +22,8 @@ sections:
           - title: 順應發展的體驗式學習
             desc: 我們不急著把孩子塞滿知識。因為真正記得住的，往往是那些「親手做過」「親身經歷」的事。
             media:
-              type: lottie
-              lottie: /lottie/Study.lottie
+              type: "image"
+              image: /img/experience-learning.webp
             sub_items:
               - title: 中低年級的情感工作
                 desc: 一到四年級的孩子，大腦還在長。我們不逼他們「想破頭」，而是讓他們用身體、用感受去認識世界。
@@ -72,16 +72,19 @@ sections:
         display_mode: videos
         items:
           - title: 同心華德福教育8分鐘精華
+            className: yellow-frame
             media:
               type: youtube
               url: https://youtu.be/oermgcwIkC8
             desc: 如果你也在想「除了補習、考試，還有別的路嗎？」——這支影片或許能給你一些答案。
           - title: 與孩子的黃金線
+            className: yellow-frame
             media:
               type: youtube
               url: https://youtu.be/atLmqSjhnxs
             desc: 小學老師跟孩子之間，有種說不出的默契。那條看不見的連結，會陪著孩子走過整個童年。
           - title: 中學的自我革命
+            className: yellow-frame
             media:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4

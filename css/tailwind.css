@@ -168,4 +168,27 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Yellow Frame Background */
+  .yellow-frame {
+    position: relative;
+    /* Ensure z-index context */
+    /* z-index: 3; */
+    padding: 2rem;
+  }
+
+  .yellow-frame::before {
+    content: '';
+    position: absolute;
+    /* Adjust these values based on the frame visual needs */
+    top: .5rem;
+    left: .5rem;
+    right: .5rem;
+    bottom: .5rem;
+    background-image: url('/img/background/yellow-frame.webp');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+    pointer-events: none;
+  }
 }

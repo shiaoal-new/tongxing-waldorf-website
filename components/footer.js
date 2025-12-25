@@ -10,7 +10,7 @@ function FooterContent() {
   return (
     <>
       <Container>
-        <div className="grid w-full grid-cols-1 gap-component pt-section mx-auto mt-component border-t border-brand-taupe/10 dark:border-brand-structural lg:grid-cols-5">
+        <div className="grid w-full grid-cols-1 spacing-component pt-section mx-auto mt-component border-t border-brand-taupe/10 dark:border-brand-structural lg:grid-cols-5">
           <div className="lg:col-span-2">
             <div>
               {" "}
