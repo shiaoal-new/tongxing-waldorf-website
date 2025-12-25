@@ -29,6 +29,15 @@ export default function DeviceSimulator() {
         mobile: { w: 0, h: 0 }
     });
 
+    // Track scroll positions for each URL
+    const [scrollPositions, setScrollPositions] = useState({});
+
+    // Flag to prevent detection during sync scrolling
+    const isSyncing = useRef(false);
+
+    // Track if URL change is from user navigation (should scroll to top) or reload (should restore position)
+    const isUserNavigation = useRef(false);
+
     const containerRefDesktop = useRef(null);
     const containerRefMobile = useRef(null);
 
@@ -41,14 +50,33 @@ export default function DeviceSimulator() {
     useEffect(() => {
         const savedH = localStorage.getItem('simulator_h_split_v2');
         const savedWD = localStorage.getItem('simulator_w_desktop_v2');
+        const savedScrollPos = localStorage.getItem('simulator_scroll_positions');
+        const savedUrl = localStorage.getItem('simulator_current_url');
+
         if (savedH) setHorizontalSplit(parseFloat(savedH));
         if (savedWD) setWidthDesktop(parseInt(savedWD));
+        if (savedUrl) setCurrentUrl(savedUrl);
+        if (savedScrollPos) {
+            try {
+                setScrollPositions(JSON.parse(savedScrollPos));
+            } catch (e) {
+                console.error('Failed to parse saved scroll positions:', e);
+            }
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem('simulator_h_split_v2', horizontalSplit);
         localStorage.setItem('simulator_w_desktop_v2', widthDesktop);
-    }, [horizontalSplit, widthDesktop]);
+        localStorage.setItem('simulator_current_url', currentUrl);
+    }, [horizontalSplit, widthDesktop, currentUrl]);
+
+    // Save scroll positions to localStorage
+    useEffect(() => {
+        if (Object.keys(scrollPositions).length > 0) {
+            localStorage.setItem('simulator_scroll_positions', JSON.stringify(scrollPositions));
+        }
+    }, [scrollPositions]);
 
     // Update panel sizes on resize or split change
     useEffect(() => {
@@ -72,11 +100,16 @@ export default function DeviceSimulator() {
     const iframeDesktop = useRef(null);
     const iframeMobile = useRef(null);
 
-    // Polling interval for URL and Section sync
+    // Polling interval for URL, Section sync, and scroll position tracking
     useEffect(() => {
         if (!syncEnabled) return;
 
         const interval = setInterval(() => {
+            // Skip detection if we're currently syncing to avoid ping-pong effect
+            if (isSyncing.current) {
+                return;
+            }
+
             const iframes = [
                 { ref: iframeDesktop, name: 'desktop' },
                 { ref: iframeMobile, name: 'mobile' }
@@ -92,9 +125,30 @@ export default function DeviceSimulator() {
                         // Sync URL path
                         if (iframePath && iframePath !== currentUrl) {
                             console.log(`Sync: Detected path change in ${item.name} to ${iframePath}`);
+                            isUserNavigation.current = true; // Mark as user navigation
                             setCurrentUrl(iframePath);
                             break;
                         }
+
+                        // Track scroll position
+                        const scrollX = iframe.contentWindow.scrollX || 0;
+                        const scrollY = iframe.contentWindow.scrollY || 0;
+
+                        setScrollPositions(prev => {
+                            const key = iframePath || currentUrl;
+                            const existing = prev[key];
+
+                            // Only update if position changed significantly (more than 5px)
+                            if (!existing ||
+                                Math.abs(existing.x - scrollX) > 5 ||
+                                Math.abs(existing.y - scrollY) > 5) {
+                                return {
+                                    ...prev,
+                                    [key]: { x: scrollX, y: scrollY }
+                                };
+                            }
+                            return prev;
+                        });
 
                         // Detect visible section using IntersectionObserver
                         const doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -164,6 +218,10 @@ export default function DeviceSimulator() {
     useEffect(() => {
         if (!syncEnabled || !currentSection) return;
 
+        // Set syncing flag to prevent detection during scroll
+        isSyncing.current = true;
+        console.log('Sync: Starting sync, disabling detection');
+
         const iframes = [
             { ref: iframeDesktop, name: 'desktop' },
             { ref: iframeMobile, name: 'mobile' }
@@ -201,7 +259,56 @@ export default function DeviceSimulator() {
                 }
             }
         });
+
+        // Re-enable detection after scroll animation completes (2 seconds for smooth scroll)
+        const timer = setTimeout(() => {
+            isSyncing.current = false;
+            console.log('Sync: Re-enabling detection');
+        }, 2000);
+
+        return () => clearTimeout(timer);
     }, [currentSection, syncEnabled]);
+
+    // Restore scroll position when iframe loads
+    const restoreScrollPosition = (iframe) => {
+        if (!iframe || !iframe.contentWindow) return;
+
+        try {
+            const iframePath = iframe.contentWindow.location.pathname;
+
+            // If this is user navigation (clicking menu), scroll to top
+            if (isUserNavigation.current) {
+                console.log(`User navigation to ${iframePath}, scrolling to top`);
+                requestAnimationFrame(() => {
+                    iframe.contentWindow.scrollTo({
+                        left: 0,
+                        top: 0,
+                        behavior: 'auto'
+                    });
+                });
+                // Reset flag after a short delay to allow both iframes to load
+                setTimeout(() => {
+                    isUserNavigation.current = false;
+                }, 500);
+                return;
+            }
+
+            // Otherwise, restore saved position (page reload)
+            const savedPosition = scrollPositions[iframePath];
+            if (savedPosition) {
+                console.log(`Restoring scroll position for ${iframePath}:`, savedPosition);
+                requestAnimationFrame(() => {
+                    iframe.contentWindow.scrollTo({
+                        left: savedPosition.x,
+                        top: savedPosition.y,
+                        behavior: 'auto'
+                    });
+                });
+            }
+        } catch (e) {
+            console.error('Failed to restore scroll position:', e);
+        }
+    };
 
     const isResizingH = useRef(false);
     const [isResizing, setIsResizing] = useState(false);
@@ -469,6 +576,7 @@ export default function DeviceSimulator() {
                         />
                         <button
                             onClick={() => {
+                                isUserNavigation.current = true; // Mark as user navigation
                                 const iframes = [iframeDesktop.current, iframeMobile.current];
                                 iframes.forEach(f => { if (f) f.src = currentUrl; });
                             }}
@@ -543,6 +651,7 @@ export default function DeviceSimulator() {
                             <iframe
                                 ref={iframeDesktop}
                                 src="/"
+                                onLoad={(e) => restoreScrollPosition(e.target)}
                                 style={{
                                     width: '100%',
                                     height: '100%',
@@ -617,7 +726,10 @@ export default function DeviceSimulator() {
                                                 <iframe
                                                     ref={iframeMobile}
                                                     src="/"
-                                                    onLoad={(e) => injectMobileCursor(e.target)}
+                                                    onLoad={(e) => {
+                                                        injectMobileCursor(e.target);
+                                                        restoreScrollPosition(e.target);
+                                                    }}
                                                     style={{
                                                         width: '100%',
                                                         height: '100%',
@@ -674,7 +786,10 @@ export default function DeviceSimulator() {
                                                 <iframe
                                                     ref={iframeMobile}
                                                     src="/"
-                                                    onLoad={(e) => injectMobileCursor(e.target)}
+                                                    onLoad={(e) => {
+                                                        injectMobileCursor(e.target);
+                                                        restoreScrollPosition(e.target);
+                                                    }}
                                                     style={{
                                                         width: '100%',
                                                         height: '100%',
