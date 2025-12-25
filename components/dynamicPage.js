@@ -20,6 +20,7 @@ import SpacingDemoBlock from "./spacingDemoBlock";
 import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
+import TableOfContents from "./tableOfContents";
 import { useState } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
@@ -36,6 +37,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     if (!page) {
         return <div>Page not found</div>;
     }
+
 
     const getImagePath = (path) => {
         if (!path) return path;
@@ -57,6 +59,21 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     const heroData = page.hero;
     const sections = page.sections || [];
 
+    // Extract TOC sections
+    const tocSections = sections.map(section => {
+        const blocks = section.blocks || [];
+        let title = "";
+        const firstBlock = blocks[0];
+        if (firstBlock && firstBlock.type === 'text_block') {
+            if (firstBlock.header) title = firstBlock.header;
+            else if (firstBlock.sub_header) title = firstBlock.sub_header;
+        }
+        return {
+            id: section.section_id,
+            title: title || section.section_id || "Section"
+        };
+    }).filter(s => s.id);
+
     // Fallback: if hero exists but has no title, use page title
     const effectiveHeroData = heroData ? {
         header: page.title,
@@ -65,6 +82,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
 
     return (
         <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
+            <TableOfContents sections={tocSections} />
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
             <div className="w-full py-10">
