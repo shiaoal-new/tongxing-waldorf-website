@@ -13,7 +13,7 @@ export default function Benefits(props) {
 
   return (
     <>
-      <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
+      <div className="w-full mx-auto flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
         <motion.div
           initial={{ opacity: 0, x: props.imgPos === "right" ? 100 : -100 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -59,7 +59,7 @@ export default function Benefits(props) {
             <ActionButtons buttons={data.buttons} align="left" className="mt-8" />
           </div>
         </motion.div>
-      </Container>
+      </div>
     </>
   );
 }
