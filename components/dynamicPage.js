@@ -81,7 +81,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     } : null;
 
     return (
-        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
+        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData} className="bg-page-texture">
             <TableOfContents sections={tocSections} />
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 

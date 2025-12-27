@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import PopupWidget from "./popupWidget";
 
-export default function Layout({ children, title, description, navbarPadding = false, pages, navigation }) {
+export default function Layout({ children, title, description, navbarPadding = false, pages, navigation, className }) {
     return (
         <>
             <Head>
@@ -24,7 +24,7 @@ export default function Layout({ children, title, description, navbarPadding = f
          - shadow-[...]: Casts a drop shadow onto the footer to enhance depth.
          - Navbar padding logic to handle sticky/fixed navbar overlapping content.
       */}
-            <div className={`${navbarPadding ? "pt-20" : ""} bg-brand-bg dark:bg-trueGray-900 relative z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]`}>
+            <div className={`${navbarPadding ? "pt-20" : ""} bg-brand-bg dark:bg-trueGray-900 relative z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] ${className || ""}`}>
                 {children}
             </div>
 
