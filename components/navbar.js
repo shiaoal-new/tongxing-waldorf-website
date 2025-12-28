@@ -12,6 +12,23 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
   const [scroll, setScroll] = useState(!isHeroPage);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const router = useRouter();
+  const [showBackgroundGrid, setShowBackgroundGrid] = useState(false);
+
+  // Sync with localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('debug_background_grid');
+      if (saved) setShowBackgroundGrid(saved === 'true');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('debug_background_grid', showBackgroundGrid.toString());
+      // Dispatch custom event to notify ParallaxBackground
+      window.dispatchEvent(new CustomEvent('debugGridToggle', { detail: showBackgroundGrid }));
+    }
+  }, [showBackgroundGrid]);
 
   const resolveItem = (item) => {
     let resolvedTitle = item.title;
@@ -165,6 +182,20 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                   >
                                     About this site
                                   </button>
+                                  <div className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                    <span className="text-sm">Background Grid</span>
+                                    <div className="relative">
+                                      <input
+                                        type="checkbox"
+                                        className="sr-only"
+                                        checked={showBackgroundGrid}
+                                        onChange={(e) => setShowBackgroundGrid(e.target.checked)}
+                                      />
+                                      <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
+                                        <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
+                                      </div>
+                                    </div>
+                                  </div>
                                   <Link
                                     href="/debug/device-simulator"
                                     target="_blank"
@@ -200,7 +231,11 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                     </li>
                   ))}
                   <li className="mr-3 nav__item">
-                    <DebugMenu onOpenModal={() => setShowAboutModal(true)} />
+                    <DebugMenu
+                      onOpenModal={() => setShowAboutModal(true)}
+                      showBackgroundGrid={showBackgroundGrid}
+                      setShowBackgroundGrid={setShowBackgroundGrid}
+                    />
                   </li>
                 </ul>
               </div>
@@ -410,7 +445,7 @@ function ScrollLock({ isOpen }) {
 }
 
 
-function DebugMenu({ onOpenModal }) {
+function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       {({ open }) => (
@@ -457,6 +492,24 @@ function DebugMenu({ onOpenModal }) {
                     >
                       About this site
                     </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"} group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors justify-between`}>
+                      <span>Background Grid</span>
+                      <div className="relative ml-2" onClick={(e) => e.stopPropagation()}>
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={showBackgroundGrid}
+                          onChange={(e) => setShowBackgroundGrid(e.target.checked)}
+                        />
+                        <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
+                          <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </Menu.Item>
                 <Menu.Item>

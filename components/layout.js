@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import PopupWidget from "./popupWidget";
 import ParallaxBackground from "./parallaxBackground";
-import DebugMenu from "./debugMenu";
+
 
 export default function Layout({ children, title, description, navbarPadding = false, pages, navigation, className, backgroundSrc, backgroundSpeed = 0.2 }) {
     return (
@@ -37,8 +37,7 @@ export default function Layout({ children, title, description, navbarPadding = f
             <Footer />
             {/* <PopupWidget /> */}
 
-            {/* Debug Menu */}
-            <DebugMenu />
+
         </>
     );
 }
