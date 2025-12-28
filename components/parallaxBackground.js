@@ -3,12 +3,12 @@ import React, { useRef, useState, useEffect } from "react";
 
 export default function ParallaxBackground({ src }) {
     const containerRef = useRef(null);
-    const [containerHeight, setContainerHeight] = useState(0);
-    const [showGrid, setShowGrid] = useState(false);
     const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+    const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
-    // Load image to get its natural dimensions
+    // 1. Get Image Dimensions to calculate Aspect Ratio
     useEffect(() => {
+        if (!src) return;
         const img = new Image();
         img.onload = () => {
             setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
@@ -16,151 +16,94 @@ export default function ParallaxBackground({ src }) {
         img.src = src;
     }, [src]);
 
-    // Measure container height
+    // 2. Track Window Size
     useEffect(() => {
-        if (!containerRef.current) return;
-
-        const updateHeight = () => {
-            const height = containerRef.current.scrollHeight;
-            setContainerHeight(height);
+        const handleResize = () => {
+            setWindowSize({ width: window.innerWidth, height: window.innerHeight });
         };
 
-        updateHeight();
+        window.addEventListener('resize', handleResize);
+        handleResize();
 
-        // Update on resize
-        const observer = new ResizeObserver(updateHeight);
-        observer.observe(containerRef.current);
-
-        return () => observer.disconnect();
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Listen for debug grid toggle
-    useEffect(() => {
-        const handleToggle = (e) => setShowGrid(e.detail);
-        window.addEventListener('debugGridToggle', handleToggle);
+    // 3. Scroll hook
+    const { scrollYProgress } = useScroll(); // 0 to 1 based on window scroll
 
-        // Check initial state from localStorage
-        const saved = localStorage.getItem('debug_background_grid');
-        if (saved) setShowGrid(saved === 'true');
+    // 4. Calculate Dimensions
+    // Requirement 1: "Ensure picture width equals container width" (Primary)
+    // Requirement 2: "No white space" (Constraint) -- This implies if height calculation is insufficient, we must scale up.
 
-        return () => window.removeEventListener('debugGridToggle', handleToggle);
-    }, []);
+    let bgWidth = windowSize.width;
+    const imageAspectRatio = imageDimensions.width > 0 ? imageDimensions.height / imageDimensions.width : 0;
+    let bgHeight = bgWidth * imageAspectRatio;
 
-    // Track scroll progress of the container relative to viewport
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
-    });
+    // Check if calculated height is enough to cover the screen
+    // Add a large buffer (300px) to account for mobile browser dynamic toolbars
+    const minHeight = windowSize.height + 300;
 
-    // Calculate background dimensions maintaining aspect ratio
-    const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 1000;
-    const containerWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
-
-    let bgWidth = containerWidth;
-    let bgHeight = containerHeight + viewportHeight * 2;
-
-    // If we have image dimensions, maintain aspect ratio
-    if (imageDimensions.width > 0 && imageDimensions.height > 0) {
-        const imageAspectRatio = imageDimensions.width / imageDimensions.height;
-
-        // Fit to container width and calculate height from aspect ratio
-        bgWidth = containerWidth;
-        const naturalHeight = bgWidth / imageAspectRatio;
-
-        // Use natural height, but ensure it's at least viewport height to cover the screen initially
-        // (Optional: depending on design requirement. If strict aspect ratio is key, use naturalHeight)
-        bgHeight = Math.max(naturalHeight, viewportHeight);
+    if (bgHeight < minHeight) {
+        // If image is too short, we MUST scale it up to cover vertical space + buffer
+        bgHeight = minHeight;
+        bgWidth = bgHeight / imageAspectRatio;
     }
 
-    // Calculate parallax shift
-    // Goal: When scrollYProgress = 0 (top), show top of background (y = 0)
-    //       When scrollYProgress = 1 (bottom), show bottom of background relative to container bottom
-    //
-    // At scroll=1, we want background bottom aligned with container bottom.
-    // Since background starts at top (0), we need to shift it by (containerHeight - bgHeight).
-    //
-    // If container > bg: shift is Positive (move down), background moves slower than content
-    // If container < bg: shift is Negative (move up), background moves faster than content
+    // 5. Calculate Parallax Shift (Fixed Position Strategy)
+    // Add overshoot (+100px) to ensure image extends below viewport even at full scroll
+    // This protects against Safari bottom bar resizing issues.
+    const targetShift = windowSize.height - bgHeight + 100;
+    const y = useTransform(scrollYProgress, [0, 1], [0, targetShift]);
 
-    // Note: containerHeight includes the whole scrollable area.
-    const targetShift = containerHeight - bgHeight;
-    const actualShift = useTransform(scrollYProgress, [0, 1], [0, targetShift]);
+    // Center horizontally if wider than window
+    const x = (windowSize.width - bgWidth) / 2;
 
-    // For debug display
-    const contentScrollDistance = containerHeight - viewportHeight;
-    const backgroundShiftNeeded = bgHeight - viewportHeight;
-    // Speed relative to viewport scroll
-    const parallaxSpeed = contentScrollDistance > 0 ? (bgHeight - viewportHeight) / contentScrollDistance : 1;
+    // Debugging Logs
+    useEffect(() => {
+        if (windowSize.width === 0) return;
 
-    // Generate grid lines at 10% intervals
-    const gridLines = [];
-    for (let i = 10; i <= 90; i += 10) {
-        gridLines.push(i);
+        console.log('[Parallax Debug]', {
+            windowWidth: windowSize.width,
+            windowHeight: windowSize.height,
+            imageWidth: imageDimensions.width,
+            imageHeight: imageDimensions.height,
+            calculatedBgWidth: bgWidth,
+            calculatedBgHeight: bgHeight,
+            targetShift: targetShift,
+            documentHeight: document.documentElement.scrollHeight
+        });
+    }, [windowSize, imageDimensions, bgWidth, bgHeight, targetShift]);
+
+    if (windowSize.width === 0 || imageDimensions.width === 0) {
+        return null;
     }
 
     return (
-        <div ref={containerRef} className="absolute inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none bg-brand-bg dark:bg-brand-structural">
+        <div
+            ref={containerRef}
+            className="fixed top-0 left-0 w-full h-[120vh] -z-10 overflow-hidden pointer-events-none bg-brand-bg dark:bg-brand-structural"
+        >
             <motion.div
                 style={{
-                    y: actualShift,
-                    height: `${bgHeight}px`,
-                    width: `${bgWidth}px`,
-
+                    y,
+                    x,
+                    width: bgWidth,  // Explicit pixel width from Window
+                    height: bgHeight, // Explicit pixel height from Aspect Ratio
                 }}
-                className="absolute top-0 opacity-100 dark:opacity-30 transition-opacity duration-700 will-change-transform"
+                className="absolute top-0 left-0 opacity-100 dark:opacity-30 will-change-transform"
             >
                 <img
                     src={src}
                     alt=""
                     className="w-full h-full"
                     style={{
-                        objectFit: 'contain',
+                        objectFit: 'cover', // ensure it fills the calculated box
                         objectPosition: 'top center',
                     }}
                 />
             </motion.div>
 
-            {/* Debug Grid Overlay */}
-            {showGrid && (
-                <div className="absolute inset-0 pointer-events-none z-10">
-                    {/* Vertical lines */}
-                    {gridLines.map(percent => (
-                        <div
-                            key={`v-${percent}`}
-                            className="absolute top-0 bottom-0 border-l-2 border-red-500"
-                            style={{ left: `${percent}%` }}
-                        >
-                            <span className="absolute top-2 -translate-x-1/2 bg-red-500 text-white text-xs px-1 rounded font-mono">
-                                X:{percent}%
-                            </span>
-                        </div>
-                    ))}
-
-                    {/* Horizontal lines */}
-                    {gridLines.map(percent => (
-                        <div
-                            key={`h-${percent}`}
-                            className="absolute left-0 right-0 border-t-2 border-blue-500"
-                            style={{ top: `${percent}%` }}
-                        >
-                            <span className="absolute left-2 -translate-y-1/2 bg-blue-500 text-white text-xs px-1 rounded font-mono">
-                                Y:{percent}%
-                            </span>
-                        </div>
-                    ))}
-
-                    {/* Debug info */}
-                    <div className="absolute top-4 right-4 bg-black/80 text-white text-xs p-2 rounded font-mono space-y-1">
-                        <div>Container: {containerWidth}x{containerHeight}px</div>
-                        <div>Image: {imageDimensions.width}x{imageDimensions.height}px</div>
-                        <div>BG: {Math.round(bgWidth)}x{Math.round(bgHeight)}px</div>
-                        <div>BG Shift: {Math.round(backgroundShiftNeeded)}px</div>
-                        <div>Speed: {parallaxSpeed.toFixed(2)}x</div>
-                    </div>
-                </div>
-            )}
-
-            {/* Subtle mask for dark mode readability */}
+            {/* Dark mode overlay */}
             <div className="absolute inset-0 bg-black/0 dark:bg-black/20 -z-10" />
         </div>
     );
