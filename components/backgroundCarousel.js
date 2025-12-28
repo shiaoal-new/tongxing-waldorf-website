@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { DotLottiePlayer } from "@dotlottie/react-player";
 
+import MediaRenderer from './mediaRenderer';
+
 export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 0 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [sectionBounds, setSectionBounds] = useState(null);
@@ -31,26 +33,26 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
 
     // Normalize media list from new structure
     const normalizedMedia = (media_list || []).map(m => {
-        if (m.type === 'image') return { ...m, src: getImagePath(m.image) };
-        if (m.type === 'video') return { ...m, src: getImagePath(m.video), poster: getImagePath(m.poster) };
-        if (m.type === 'youtube') return { ...m, src: m.url };
+        if (m.type === 'image') return { ...m, image: getImagePath(m.image) };
+        if (m.type === 'video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
+        if (m.type === 'youtube') return { ...m, url: m.url };
         if (m.type === 'lottie') {
             let src = m.lottie || m.url;
             if (src && typeof src === 'string' && !src.startsWith('/') && !src.startsWith('http') && src.includes('-')) {
                 src = `https://lottie.host/${src}.lottie`;
             }
-            return { ...m, src };
+            return { ...m, url: src };
         }
         return m;
-    }).filter(m => m.src || m.image || m.video || m.lottie || (m.type === 'lottie' && m.url));
+    }).filter(m => m.image || m.video || m.url || ((m.type === 'lottie') && m.url));
 
     // Legacy fallback
     const legacyImages = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
     const legacyVideo = getImagePath(bg_video);
 
     const items = normalizedMedia.length > 0 ? normalizedMedia : [
-        ...(legacyVideo ? [{ type: 'video', src: legacyVideo }] : []),
-        ...legacyImages.map(img => ({ type: 'image', src: img }))
+        ...(legacyVideo ? [{ type: 'video', video: legacyVideo }] : []),
+        ...legacyImages.map(img => ({ type: 'image', image: img }))
     ];
 
     // Track section bounds for fixed background clipping
@@ -148,32 +150,11 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                         transition={currentVariant.transition}
                                         className="absolute inset-0 w-full h-full"
                                     >
-                                        {currentItem.type === 'video' && (
-                                            <video src={currentItem.src} poster={currentItem.poster} autoPlay loop muted playsInline preload="metadata" className="object-cover w-full h-full" />
-                                        )}
-                                        {currentItem.type === 'image' && (
-                                            <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
-                                        )}
-                                        {currentItem.type === 'lottie' && (
-                                            <div className="w-full h-full">
-                                                <DotLottiePlayer
-                                                    src={currentItem.src}
-                                                    autoplay
-                                                    loop
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                />
-                                            </div>
-                                        )}
-                                        {currentItem.type === 'youtube' && (
-                                            <div className="w-full h-full pointer-events-none scale-150">
-                                                <iframe
-                                                    src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
-                                                    className="w-full h-full"
-                                                    frameBorder="0"
-                                                    allow="autoplay"
-                                                />
-                                            </div>
-                                        )}
+                                        <MediaRenderer
+                                            media={currentItem}
+                                            className={`w-full h-full ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
+                                            imgClassName="object-cover"
+                                        />
                                     </motion.div>
                                 </AnimatePresence>
                                 <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }}></div>
@@ -198,32 +179,11 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                     transition={currentVariant.transition}
                                     className="absolute inset-0 w-full h-full"
                                 >
-                                    {currentItem.type === 'video' && (
-                                        <video src={currentItem.src} poster={currentItem.poster} autoPlay loop muted playsInline preload="metadata" className="object-cover w-full h-full" />
-                                    )}
-                                    {currentItem.type === 'image' && (
-                                        <img src={currentItem.src} alt="" className="object-cover w-full h-full" />
-                                    )}
-                                    {currentItem.type === 'lottie' && (
-                                        <div className="w-full h-full">
-                                            <DotLottiePlayer
-                                                src={currentItem.src}
-                                                autoplay
-                                                loop
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                    )}
-                                    {currentItem.type === 'youtube' && (
-                                        <div className="w-full h-full pointer-events-none scale-150">
-                                            <iframe
-                                                src={`https://www.youtube.com/embed/${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}?autoplay=1&mute=1&loop=1&playlist=${currentItem.url.split('v=')[1] || currentItem.url.split('/').pop()}&controls=0&showinfo=0`}
-                                                className="w-full h-full"
-                                                frameBorder="0"
-                                                allow="autoplay"
-                                            />
-                                        </div>
-                                    )}
+                                    <MediaRenderer
+                                        media={currentItem}
+                                        className={`w-full h-full ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
+                                        imgClassName="object-cover"
+                                    />
                                 </motion.div>
                             </AnimatePresence>
                             <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }}></div>
