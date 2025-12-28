@@ -21,7 +21,8 @@ import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
 import TableOfContents from "./tableOfContents";
-import { useState } from "react";
+import ParallaxBackground from "./parallaxBackground";
+import { useState, useRef } from "react";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
@@ -81,11 +82,12 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     } : null;
 
     return (
-        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData} className="bg-page-texture">
+        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
             <TableOfContents sections={tocSections} />
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
-            <div className="w-full py-10">
+            <div className="w-full py-10 relative overflow-hidden">
+                <ParallaxBackground src="/img/background/background.webp" />
                 {!effectiveHeroData && (
                     <Section title={page.title} align="left" description={page.description} />
                 )}

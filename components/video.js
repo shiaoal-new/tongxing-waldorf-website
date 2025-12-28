@@ -19,8 +19,18 @@ export default function VideoList({ videoList }) {
 function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);
 
-  // Generate a random hue rotation value ensuring warm colors (approx -45deg to +15deg relative to yellow)
-  const randomHue = useMemo(() => Math.floor(Math.random() * 60) - 45, []);
+  // Generate a deterministic hue rotation value based on video title
+  // This ensures server and client render the same value (avoiding hydration mismatch)
+  const randomHue = useMemo(() => {
+    const str = video.title || '';
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    // Map hash to range -45 to +15 (warm colors)
+    return (Math.abs(hash) % 60) - 45;
+  }, [video.title]);
 
   // Normalize media data
   const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
