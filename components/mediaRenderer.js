@@ -26,7 +26,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
                 <video
                     src={media.video}
                     poster={media.poster}
-                    className={`w-full h-full object-cover ${className}`}
+                    className={`object-cover ${className}`}
                     autoPlay
                     loop
                     muted
@@ -67,7 +67,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
             }
 
             return (
-                <div className={`w-full h-full ${className}`}>
+                <div className={`${className}`}>
                     <DotLottiePlayer
                         src={source}
                         autoplay

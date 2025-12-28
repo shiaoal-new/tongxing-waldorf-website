@@ -152,7 +152,7 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
                                     >
                                         <MediaRenderer
                                             media={currentItem}
-                                            className={`w-full h-full ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
+                                            className={`h-[100lvh] ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
                                             imgClassName="object-cover"
                                         />
                                     </motion.div>
