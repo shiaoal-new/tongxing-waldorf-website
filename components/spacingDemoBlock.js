@@ -1,8 +1,4 @@
 import React from "react";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../tailwind.config.js";
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 const SpacingBar = ({ value, label, className = "" }) => (
     <div className="flex items-center space-x-4 mb-4">

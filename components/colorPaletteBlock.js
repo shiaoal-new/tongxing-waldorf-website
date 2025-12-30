@@ -1,8 +1,5 @@
 import React from "react";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../tailwind.config.js";
-
-const fullConfig = resolveConfig(tailwindConfig);
+import { brandMeta, tunghinAmberScale } from "../lib/brand-config";
 
 const ColorBrick = ({ shade, hex: inputHex }) => {
     const [copied, setCopied] = React.useState(false);
@@ -110,8 +107,47 @@ const ColorRow = ({ title, subtitle, children }) => {
 };
 
 export default function ColorPaletteBlock({ data }) {
-    const themeColors = fullConfig.theme.colors;
-    const brandMeta = tailwindConfig.brand || {};
+    // Basic set of Tailwind colors to mimic what fullConfig would provide
+    const themeColors = {
+        'brand-accent': 'var(--color-brand-accent)',
+        'brand-structural': 'var(--color-brand-structural)',
+        'brand-gold': 'var(--color-brand-gold)',
+        'brand-taupe': 'var(--color-brand-taupe)',
+        'brand-blue': 'var(--color-brand-blue)',
+        'brand-bg': 'var(--color-brand-bg)',
+        'brand-text': 'var(--color-brand-text)',
+        'primary': tunghinAmberScale,
+        'neutral': {
+            50: "#fafaf9",
+            100: "#f5f5f4",
+            200: "#e7e5e4",
+            300: "#d6d3d1",
+            400: "#a8a29e",
+            500: "#78716c",
+            600: "#57534e",
+            700: "#44403c",
+            800: "#292524",
+            900: "#1c1917",
+            950: "#0c0a09"
+        },
+        'secondary': {
+            50: "#eef2ff",
+            100: "#e0e7ff",
+            200: "#c7d2fe",
+            300: "#a5b4fc",
+            400: "#818cf8",
+            500: "#6366f1",
+            600: "#4f46e5",
+            700: "#4338ca",
+            800: "#3730a3",
+            900: "#312e81",
+            950: "#1e1b4b"
+        },
+        'success': { 500: "#10b981" },
+        'warning': { 500: "#f59e0b" },
+        'error': { 500: "#ef4444" },
+        'info': { 500: "#3b82f6" }
+    };
 
     const getColorLabel = (key) => {
         const meta = brandMeta[key];
