@@ -23,9 +23,11 @@ import TabbedContentBlock from "./tabbedContentBlock";
 import TableOfContents from "./tableOfContents";
 import ParallaxBackground from "./parallaxBackground";
 import { useState, useRef } from "react";
+import { useTheme } from "next-themes";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
+    const { theme } = useTheme();
 
     const handleButtonClick = (link) => {
         if (!link) return false;
@@ -87,7 +89,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
             <div className="w-full py-10 relative overflow-hidden">
-                <ParallaxBackground src="/img/background/background.webp" />
+                {theme === 'tongxing' && <ParallaxBackground src="/img/background/background.webp" />}
                 {!effectiveHeroData && (
                     <Section title={page.title} align="left" description={page.description} />
                 )}

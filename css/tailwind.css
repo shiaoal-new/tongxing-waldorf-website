@@ -202,8 +202,8 @@
     filter: hue-rotate(var(--frame-hue, 0deg));
   }
 
-  /* Page Texture Background - Solves the "long page cover" issue */
-  .bg-page-texture {
+  /* Page Texture Background - Exclusive to tongxing theme */
+  [data-theme="tongxing"] .bg-page-texture {
     background-image: url('/img/background/background.webp');
     background-attachment: fixed;
     background-size: cover;
@@ -211,8 +211,9 @@
     background-repeat: no-repeat;
   }
 
-  /* Add a subtle overlay in dark mode to keep text readable */
-  .dark .bg-page-texture {
+  /* Add a subtle overlay if someone force-applies dark class while in tongxing theme */
+  [data-theme="tongxing"].dark .bg-page-texture,
+  [data-theme="tongxing"] .dark .bg-page-texture {
     background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/background/background.webp');
   }
 }

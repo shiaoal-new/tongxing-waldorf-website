@@ -99,6 +99,7 @@ function FooterContent() {
 }
 
 import { useRef } from "react";
+import { useTheme } from "next-themes";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Footer() {
@@ -115,6 +116,8 @@ export default function Footer() {
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
 
+  const { theme } = useTheme();
+
   return (
     <div className="relative">
       {/* Invisible spacer footer that takes up space in the document flow */}
@@ -129,7 +132,7 @@ export default function Footer() {
           y,
           opacity,
           scale,
-          backgroundImage: "url('/img/background/footer.webp')"
+          backgroundImage: theme === 'tongxing' ? "url('/img/background/footer.webp')" : "none"
         }}
       >
         <FooterContent />
