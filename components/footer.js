@@ -132,7 +132,7 @@ export default function Footer() {
           y,
           opacity,
           scale,
-          backgroundImage: theme === 'tongxing' ? "url('/img/background/footer.webp')" : "none"
+          backgroundImage: theme === 'tongxing' ? "url('/img/themes/tongxing/background/footer.webp')" : "none"
         }}
       >
         <FooterContent />

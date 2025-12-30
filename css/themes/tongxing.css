@@ -13,7 +13,7 @@
                 left: .5rem;
                 right: .5rem;
                 bottom: .5rem;
-                background-image: url('/img/background/yellow-frame.webp');
+                background-image: url('/img/themes/tongxing/background/yellow-frame.webp');
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 z-index: -1;
@@ -24,7 +24,7 @@
 
         /* Page Texture Background */
         & .bg-page-texture {
-            background-image: url('/img/background/background.webp');
+            background-image: url('/img/themes/tongxing/background/background.webp');
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
@@ -34,7 +34,7 @@
         /* Dark Mode specific variants */
         &.dark .bg-page-texture,
         & .dark .bg-page-texture {
-            background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/background/background.webp');
+            background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/themes/tongxing/background/background.webp');
         }
     }
 }
