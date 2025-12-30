@@ -92,8 +92,8 @@ const TableOfContents = ({ sections }) => {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: 10 }}
                                         className={`mr-4 text-xs font-medium text-right transition-colors duration-200 ${isActive
-                                                ? 'text-brand-accent'
-                                                : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200'
+                                            ? 'text-brand-accent'
+                                            : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200'
                                             }`}
                                     >
                                         {section.title}
@@ -122,8 +122,7 @@ const TableOfContents = ({ sections }) => {
                 <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className={`
-            fixed right-4 bottom-8 z-40 p-3 rounded-full shadow-lg transition-transform duration-300
-            bg-brand-bg dark:bg-brand-structural border border-gray-200 dark:border-gray-700
+            btn btn-primary btn-circle fixed right-4 bottom-8 z-40 shadow-lg transition-transform duration-300
             ${isMobileMenuOpen ? 'scale-0' : 'scale-100'}
           `}
                 >
@@ -154,7 +153,7 @@ const TableOfContents = ({ sections }) => {
                             >
                                 <div className="flex justify-between items-center mb-6">
                                     <h3 className="text-lg font-bold text-brand-text dark:text-brand-bg">目錄</h3>
-                                    <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 -mr-2 text-gray-500">
+                                    <button onClick={() => setIsMobileMenuOpen(false)} className="btn btn-ghost btn-circle btn-sm -mr-2 text-gray-500">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                         </svg>
@@ -169,10 +168,10 @@ const TableOfContents = ({ sections }) => {
                                                 key={section.id}
                                                 onClick={() => scrollToSection(section.id)}
                                                 className={`
-                          w-full flex items-center p-3 rounded-xl transition-colors text-left
+                          btn btn-ghost btn-block btn-sm justify-start p-3 transition-colors text-left font-normal
                           ${isActive
                                                         ? 'bg-brand-accent/10 text-brand-accent font-bold'
-                                                        : 'text-brand-text dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800'
+                                                        : 'text-brand-text dark:text-gray-400'
                                                     }
                         `}
                                             >

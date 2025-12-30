@@ -120,7 +120,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
 
                 <Disclosure.Button
                   aria-label="Toggle Menu"
-                  className="px-2 py-1 ml-auto text-brand-taupe rounded-md lg:hidden hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700">
+                  className="btn btn-ghost btn-sm px-2 ml-auto text-brand-taupe lg:hidden hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700">
                   <svg
                     className="w-6 h-6 fill-current"
                     xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                           <Disclosure>
                             {({ open }) => (
                               <>
-                                <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                                   <span>Debug</span>
                                   <ChevronDownIcon
                                     className={`${open ? "transform rotate-180" : ""
@@ -179,7 +179,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                 <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
                                   <button
                                     onClick={() => { setShowAboutModal(true); }}
-                                    className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
+                                    className="btn btn-ghost btn-block btn-sm justify-start px-4 text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700"
                                   >
                                     About this site
                                   </button>
@@ -215,7 +215,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                   <Disclosure>
                                     {({ open }) => (
                                       <>
-                                        <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                        <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                                           <span>主題切換 (Themes)</span>
                                           <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
                                         </Disclosure.Button>
@@ -363,7 +363,7 @@ function MobileNavbarItem({ item, router }) {
       <Disclosure>
         {({ open }) => (
           <>
-            <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+            <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
               <span>{item.title}</span>
               <ChevronDownIcon
                 className={`${open ? "transform rotate-180" : ""
@@ -377,7 +377,7 @@ function MobileNavbarItem({ item, router }) {
                     <Disclosure>
                       {({ open: subOpen }) => (
                         <>
-                          <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                          <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
                             <span>{child.title}</span>
                             <ChevronDownIcon
                               className={`${subOpen ? "transform rotate-180" : ""
@@ -411,7 +411,7 @@ function MobileNavbarItem({ item, router }) {
                         e.preventDefault();
                         setTimeout(() => router.push(child.path || "#"), 400);
                       }}
-                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                      className="btn btn-ghost btn-sm btn-block justify-start px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
                     >
                       {child.title}
                     </Disclosure.Button>
@@ -433,7 +433,7 @@ function MobileNavbarItem({ item, router }) {
         e.preventDefault();
         setTimeout(() => router.push(item.path || "/"), 400);
       }}
-      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+      className="btn btn-ghost btn-sm btn-block justify-start px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
     >
       {item.title}
     </Disclosure.Button>
@@ -500,7 +500,7 @@ function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
                   {({ active }) => (
                     <button
                       className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
+                        } btn btn-ghost btn-sm btn-block justify-start px-2 py-2 transition-colors`}
                       onClick={onOpenModal}
                     >
                       About this site
@@ -542,7 +542,7 @@ function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
                   <Disclosure>
                     {({ open }) => (
                       <>
-                        <Disclosure.Button className="flex items-center justify-between w-full px-2 py-2 text-sm text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg rounded-md transition-colors">
+                        <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-2 text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg rounded-md transition-colors">
                           <span>主題切換 (Themes)</span>
                           <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
                         </Disclosure.Button>

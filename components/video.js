@@ -67,7 +67,7 @@ function VideoItem({ video, className }) {
             {/* Overlay for better text/icon visibility */}
             <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
 
-            <button className="absolute inset-auto text-brand-bg transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+            <button className="btn btn-ghost btn-circle absolute inset-auto text-brand-bg transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-16 h-16 drop-shadow-lg"

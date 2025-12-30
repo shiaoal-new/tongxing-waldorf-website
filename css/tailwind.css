@@ -118,30 +118,29 @@
 
 @layer components {
 
-  /* 基礎按鈕樣式 */
-  .btn-base {
-    @apply inline-flex items-center justify-center rounded-full transition-all duration-200 font-bold text-center cursor-pointer active:scale-95;
+  /* 基礎按鈕樣式 - 擴展 DaisyUI btn */
+  .btn {
+    @apply rounded-full font-bold transition-all duration-200 active:scale-95;
   }
 
   /* 橘色主按鈕 (填滿) */
   .btn-primary {
-    @apply btn-base bg-brand-accent text-white border-2 border-brand-accent hover:opacity-90 shadow-md hover:shadow-lg;
+    @apply bg-brand-accent text-white border-brand-accent hover:bg-brand-accent/90 hover:border-brand-accent/90 shadow-md hover:shadow-lg;
   }
 
   /* 淺色/地灰色按鈕 */
   .btn-secondary {
-    @apply btn-base bg-brand-bg text-brand-text border border-brand-taupe/20 hover:bg-brand-taupe/10;
+    @apply bg-brand-bg text-brand-text border-brand-taupe/20 hover:bg-brand-taupe/10 hover:border-brand-taupe/30;
   }
 
   /* 白色按鈕 */
   .btn-white {
-    @apply btn-base bg-white text-brand-accent border-2 border-brand-accent hover:bg-brand-accent hover:text-white shadow-sm;
+    @apply bg-white text-brand-accent border-brand-accent hover:bg-brand-accent hover:text-white shadow-sm;
   }
 
   /* 橘色邊框按鈕 (鏤空) */
   .btn-outline-primary {
-    @apply btn-base border-2 border-brand-accent text-brand-accent bg-transparent hover:bg-brand-accent hover:text-white shadow-sm hover:shadow-md;
-    padding: 0.5rem 1.25rem;
+    @apply bg-transparent border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
   }
 
   /* Micro Interactions (微互動) */

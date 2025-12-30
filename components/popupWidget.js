@@ -51,7 +51,7 @@ export default function PopupWidget() {
       <Disclosure>
         {({ open }) => (
           <>
-            <Disclosure.Button className="fixed z-40 flex items-center justify-center transition duration-300 bg-brand-accent/100 rounded-full shadow-lg right-5 bottom-5 w-14 h-14 focus:outline-none hover:bg-brand-accent focus:bg-brand-accent ease">
+            <Disclosure.Button className="btn btn-primary btn-circle fixed z-40 right-5 bottom-5 shadow-lg shadow-brand-accent/40 ease">
               <span className="sr-only">Open Contact form Widget</span>
               <Transition
                 show={!open}
@@ -219,7 +219,7 @@ export default function PopupWidget() {
                       <div className="mb-3">
                         <button
                           type="submit"
-                          className="w-full px-3 py-4 text-brand-bg bg-brand-accent/100 rounded-md focus:bg-brand-accent focus:outline-none">
+                          className="btn btn-primary btn-block h-14">
                           {isSubmitting ? (
                             <svg
                               className="w-5 h-5 mx-auto text-brand-bg animate-spin"
@@ -281,7 +281,7 @@ export default function PopupWidget() {
                         </h3>
                         <p className="text-brand-text md:px-3">{Message}</p>
                         <button
-                          className="mt-6 text-brand-accent focus:outline-none"
+                          className="btn btn-ghost mt-6 text-brand-accent"
                           onClick={() => reset()}>
                           返回
                         </button>
@@ -310,7 +310,7 @@ export default function PopupWidget() {
                       </h3>
                       <p className="text-brand-text md:px-3">{Message}</p>
                       <button
-                        className="mt-6 text-brand-accent focus:outline-none"
+                        className="btn btn-ghost mt-6 text-brand-accent"
                         onClick={() => reset()}>
                         Go back
                       </button>

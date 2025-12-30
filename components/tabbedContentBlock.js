@@ -15,7 +15,7 @@ const TabbedContentBlock = ({ data }) => {
                     <button
                         key={index}
                         onClick={() => setActiveTab(index)}
-                        className={`px-6 py-4 text-sm font-bold transition-all border-b-2 flex-shrink-0 whitespace-nowrap ${activeTab === index
+                        className={`btn btn-ghost px-6 py-4 text-sm font-bold transition-all border-b-2 rounded-none flex-shrink-0 whitespace-nowrap ${activeTab === index
                             ? "border-brand-accent text-brand-accent scale-105"
                             : "border-transparent text-gray-500 hover:text-brand-accent"
                             }`}

@@ -69,7 +69,7 @@ export default function AboutContent({ isOpen, onClose }) {
                             <div className="mt-6 flex justify-end">
                                 <button
                                     type="button"
-                                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-primary-900 bg-primary-100 border border-transparent rounded-md hover:bg-primary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
+                                    className="btn btn-primary btn-sm px-6"
                                     onClick={onClose}
                                 >
                                     Close

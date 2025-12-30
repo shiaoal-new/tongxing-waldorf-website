@@ -6,24 +6,24 @@ export default function Button({ href, children, className, size = "lg", ...prop
     const linkProps = href ? { href } : {};
 
     // Base layout styles
-    const baseLayout = "inline-flex items-center justify-center font-bold text-center cursor-pointer";
+    const baseLayout = "btn rounded-full transition-all duration-200 active:scale-95";
 
-    // Size variants (Padding & Font size)
+    // Size variants (DaisyUI sizes)
     const sizeClasses = size === "sm"
-        ? "py-2 px-5 text-sm"
-        : "py-4 px-8 lg:px-10 text-lg";
+        ? "btn-sm px-6"
+        : "btn-lg px-8 lg:px-10";
 
     // Determine the final style class
     // If className already includes a btn- class, we use it as is.
     // Otherwise, we default to btn-primary.
-    const hasBrandClass = /btn-(primary|secondary|white|outline-primary)/.test(className);
+    const hasBrandClass = /btn-(primary|secondary|white|outline-primary|ghost|link|info|success|warning|error)/.test(className);
     const finalStyleClass = hasBrandClass ? "" : "btn-primary";
 
     return (
         <Component
             {...linkProps}
             {...props}
-            className={`${baseLayout} ${sizeClasses} ${finalStyleClass} ${className}`}
+            className={`${baseLayout} ${sizeClasses} ${finalStyleClass} ${className || ""}`}
         >
             {children}
         </Component>

@@ -96,7 +96,7 @@ const CurriculumBlock = ({ data }) => {
                                 <td className="p-4">
                                     <button
                                         onClick={() => showDetail(row.year)}
-                                        className="px-3 py-1.5 border border-brand-accent text-brand-accent rounded-md text-xs font-bold hover:bg-brand-accent hover:text-brand-bg transition-all whitespace-nowrap"
+                                        className="btn btn-outline-primary btn-xs whitespace-nowrap"
                                     >
                                         深度解析
                                     </button>
@@ -139,7 +139,7 @@ const CurriculumBlock = ({ data }) => {
                             </div>
                             <button
                                 onClick={() => showDetail(row.year)}
-                                className="w-full btn-white rounded-xl py-3 font-bold transition-all"
+                                className="btn btn-white btn-block"
                             >
                                 詳細解析
                             </button>
@@ -159,7 +159,7 @@ const CurriculumBlock = ({ data }) => {
                 <div className="mt-10 pt-6 border-t border-brand-taupe/10 dark:border-brand-structural/50 flex justify-end">
                     <button
                         onClick={closeModal}
-                        className="px-8 btn-primary rounded-2xl font-bold shadow-lg shadow-brand-accent/20 dark:shadow-none active:scale-95"
+                        className="btn btn-primary px-8"
                     >
                         關閉解析
                     </button>

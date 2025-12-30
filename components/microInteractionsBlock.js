@@ -13,7 +13,7 @@ const OrganicFadeIn = ({ children, delay = 0 }) => (
 );
 
 const HoverFlowButton = () => (
-    <button className="px-8 py-4 text-white bg-brand-accent rounded-lg micro-hover-flow hover:bg-brand-accent/80">
+    <button className="btn btn-primary px-8 micro-hover-flow">
         Hover Flow Button
     </button>
 );
@@ -25,7 +25,7 @@ const HoverFlowLink = () => (
 );
 
 const ClickFeedbackButton = () => (
-    <button className="px-8 py-4 text-white bg-brand-structural rounded-lg micro-click-press hover:shadow-lg">
+    <button className="btn btn-secondary px-8 text-white bg-brand-structural hover:bg-brand-structural/90 micro-click-press hover:shadow-lg">
         Click Me (Scale 0.98)
     </button>
 );

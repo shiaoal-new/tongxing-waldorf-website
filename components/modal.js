@@ -50,7 +50,7 @@ const Modal = ({
                             {showCloseButton && (
                                 <button
                                     onClick={onClose}
-                                    className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-500 hover:text-neutral-800 dark:hover:text-brand-bg transition-colors text-2xl z-20"
+                                    className="btn btn-ghost btn-circle btn-sm absolute top-5 right-5 text-2xl z-20"
                                 >
                                     &times;
                                 </button>

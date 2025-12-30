@@ -48,14 +48,14 @@ const ScheduleBlock = ({ data }) => {
                 <div className="flex border-b border-neutral-200 dark:border-neutral-700">
                     <button
                         onClick={() => setActiveGrade("low")}
-                        className={`flex-1 py-4 text-center transition-all ${activeGrade === "low" ? "border-b-4 border-brand-accent/200 text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
+                        className={`btn btn-ghost flex-1 py-4 text-center transition-all rounded-none ${activeGrade === "low" ? "border-b-4 border-brand-accent text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
                             }`}
                     >
                         中低年級 (1-4)
                     </button>
                     <button
                         onClick={() => setActiveGrade("high")}
-                        className={`flex-1 py-4 text-center transition-all ${activeGrade === "high" ? "border-b-4 border-brand-accent/200 text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
+                        className={`btn btn-ghost flex-1 py-4 text-center transition-all rounded-none ${activeGrade === "high" ? "border-b-4 border-brand-accent text-brand-accent font-bold" : "text-neutral-500 hover:text-brand-accent"
                             }`}
                     >
                         高年級 (5-9)

@@ -29,9 +29,9 @@ export default function TypographyPage({ page, pages, navigation }) {
             <div className="fixed bottom-8 right-8 z-50 hidden lg:block">
                 <button
                     onClick={() => setIsMobileSim(!isMobileSim)}
-                    className={`px-6 py-3 rounded-full font-bold shadow-xl transition-all flex items-center space-x-2 ${isMobileSim
-                        ? "bg-brand-accent text-white ring-4 ring-brand-accent/30"
-                        : "bg-brand-structural text-white hover:bg-brand-structural/90"
+                    className={`btn btn-lg rounded-full shadow-xl flex items-center space-x-2 ${isMobileSim
+                        ? "btn-primary ring-4 ring-brand-accent/30"
+                        : "btn-secondary text-white bg-brand-structural hover:bg-brand-structural/90"
                         }`}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
