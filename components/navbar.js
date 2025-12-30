@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeChanger from "./DarkSwitch";
+import { ThemeList } from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useEffect, useState, Fragment } from "react";
@@ -164,6 +164,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                           <MobileNavbarItem key={index} item={item} router={router} />
                         ))}
 
+
                         <div className="w-full mt-4 border-t border-brand-taupe/20 dark:border-brand-structural pt-4">
                           <Disclosure>
                             {({ open }) => (
@@ -211,6 +212,21 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                                   >
                                     CMS 後台管理
                                   </Link>
+                                  <Disclosure>
+                                    {({ open }) => (
+                                      <>
+                                        <Disclosure.Button className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                          <span>主題切換 (Themes)</span>
+                                          <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
+                                        </Disclosure.Button>
+                                        <Disclosure.Panel className="px-2 pb-2">
+                                          <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-0">
+                                            <ThemeList />
+                                          </ul>
+                                        </Disclosure.Panel>
+                                      </>
+                                    )}
+                                  </Disclosure>
                                 </Disclosure.Panel>
                               </>
                             )}
@@ -240,9 +256,6 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 </ul>
               </div>
 
-              <div className="hidden mr-3 space-x-3 lg:flex nav__item">
-                <ThemeChanger />
-              </div>
             </nav>
             <AboutModal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} />
           </div>
@@ -469,7 +482,7 @@ function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700">
+            <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700">
               <div className="px-1 py-1 ">
                 <Menu.Item>
                   {({ active }) => (
@@ -525,6 +538,23 @@ function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
                     </Link>
                   )}
                 </Menu.Item>
+                <div className="border-t border-brand-taupe/10 my-1 pt-1">
+                  <Disclosure>
+                    {({ open }) => (
+                      <>
+                        <Disclosure.Button className="flex items-center justify-between w-full px-2 py-2 text-sm text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg rounded-md transition-colors">
+                          <span>主題切換 (Themes)</span>
+                          <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="mt-1">
+                          <ul className="menu menu-compact p-0">
+                            <ThemeList />
+                          </ul>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                </div>
               </div>
             </Menu.Items>
           </Transition>

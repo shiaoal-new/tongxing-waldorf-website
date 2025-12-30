@@ -49,6 +49,16 @@
     --font-accent: "Zeyada", "Indie Flower", "Handwriting", cursive;
   }
 
+  [data-theme="dark"] {
+    --color-brand-bg: 28, 25, 23;
+    /* Stone 900 */
+    --color-brand-text: 231, 229, 228;
+    /* Stone 200 */
+    --color-brand-taupe: 168, 162, 158;
+    /* Stone 400 */
+    --color-brand-structural: 168, 162, 158;
+  }
+
   html {
     /* 當螢幕寬度超過 1200px 時，自動計算 zoom in 大小以維持 1200px layout */
     @apply antialiased;

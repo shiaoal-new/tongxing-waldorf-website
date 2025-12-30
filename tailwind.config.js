@@ -19,7 +19,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./src/data/**/*.{yml,yaml,md}"
   ],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: ["class", '[data-theme="dark"]'], // Support both class and daisyUI dark theme
   theme: {
     extend: {
       colors: {
@@ -120,6 +120,33 @@ module.exports = {
       },
       "light",
       "dark",
+      "cupcake",
+      "bumblebee",
+      "emerald",
+      "corporate",
+      "synthwave",
+      "retro",
+      "cyberpunk",
+      "valentine",
+      "halloween",
+      "garden",
+      "forest",
+      "aqua",
+      "lofi",
+      "pastel",
+      "fantasy",
+      "wireframe",
+      "black",
+      "luxury",
+      "dracula",
+      "cmyk",
+      "autumn",
+      "business",
+      "acid",
+      "lemonade",
+      "night",
+      "coffee",
+      "winter",
     ],
   },
 };

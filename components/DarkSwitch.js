@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { Icon } from "@iconify/react";
+import { themes } from "../lib/brand-config";
+
+export const ThemeList = ({ onItemClick }) => {
+  const { theme, setTheme } = useTheme();
+  return (
+    <>
+      <li className="menu-title text-brand-accent px-4 py-2 text-xs font-bold uppercase tracking-wider">選擇主題 (Themes)</li>
+      <div className="max-h-60 overflow-y-auto mb-2 px-2">
+        {themes.map((t) => (
+          <li key={t}>
+            <button
+              className={`flex justify-between items-center w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${theme === t ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg hover:bg-brand-accent/10"}`}
+              onClick={() => {
+                setTheme(t);
+                if (onItemClick) onItemClick();
+              }}
+            >
+              <span className="capitalize">{t}</span>
+              {theme === t && <Icon icon="lucide:check" className="w-4 h-4 ml-2" />}
+            </button>
+          </li>
+        ))}
+      </div>
+    </>
+  );
+};
 
 const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
@@ -11,41 +37,13 @@ const ThemeChanger = () => {
   if (!mounted) return null;
 
   return (
-    <div className="flex items-center">
-      {theme === "dark" ? (
-        <button
-          onClick={() => setTheme("light")}
-          className="text-brand-taupe rounded-full outline-none focus:outline-none">
-          <span className="sr-only">Light Mode</span>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 20 20"
-            fill="currentColor">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-          </svg>
-        </button>
-      ) : (
-        <button
-          onClick={() => setTheme("dark")}
-          className="text-brand-taupe rounded-full outline-none focus:outline-none focus-visible:ring focus-visible:ring-gray-100 focus:ring-opacity-20">
-          <span className="sr-only">Dark Mode</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round">
-            <circle cx="12" cy="12" r="5" />
-            <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-          </svg>
-        </button>
-      )}
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle text-brand-taupe">
+        <Icon icon="lucide:palette" className="w-5 h-5" />
+      </div>
+      <ul tabIndex={0} className="dropdown-content z-[100] menu p-1 shadow-2xl bg-brand-bg dark:bg-brand-structural rounded-box w-52 mt-4 border border-brand-taupe/10">
+        <ThemeList />
+      </ul>
     </div>
   );
 };
