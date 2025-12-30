@@ -1,0 +1,40 @@
+@layer components {
+    [data-theme="tongxing"] {
+
+        /* Yellow Frame Background */
+        & .yellow-frame {
+            position: relative;
+            padding: 2rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: .5rem;
+                left: .5rem;
+                right: .5rem;
+                bottom: .5rem;
+                background-image: url('/img/background/yellow-frame.webp');
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                z-index: -1;
+                pointer-events: none;
+                filter: hue-rotate(var(--frame-hue, 0deg));
+            }
+        }
+
+        /* Page Texture Background */
+        & .bg-page-texture {
+            background-image: url('/img/background/background.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Dark Mode specific variants */
+        &.dark .bg-page-texture,
+        & .dark .bg-page-texture {
+            background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/background/background.webp');
+        }
+    }
+}
