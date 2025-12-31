@@ -98,7 +98,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            className={`fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-brand-bg/60 dark:bg-brand-structural shadow-lg backdrop-blur-md" : "bg-transparent"
+            className={`navbar-container fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-transparent" : "bg-transparent"
               }`}>
             <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4">
               {/* Logo  */}

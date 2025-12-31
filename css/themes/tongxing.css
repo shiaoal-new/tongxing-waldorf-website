@@ -31,6 +31,36 @@
             background-repeat: no-repeat;
         }
 
+        /* Navbar Blend Mode */
+        & .navbar-container {
+
+            /* mix-blend-mode: multiply; */
+            /* background-image: url('/img/themes/tongxing/background/menu-bg.png');
+            background-size: 100% 100%; */
+
+            /* mask-image: url('/img/themes/tongxing/background/menu-bg.png');
+            mask-size: 100% 100%; */
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: url('/img/themes/tongxing/background/menu-bg.png');
+                background-size: 100% 100%;
+                /* 只對背景套用濾鏡 */
+                /* filter: blur(1px); */
+                /* backdrop-filter: blur(8px); */
+                opacity: .8;
+
+                /* 建議將背景稍微放大，避免模糊後邊緣出現白邊 */
+                /* transform: scale(1.2); */
+
+                background-color: rgba(255, 255, 255, 0.01);
+
+                z-index: -1;
+                /* 確保背景在文字下方 */
+            }
+        }
+
         /* Header Menu Items Watercolor Effect - Shared Background */
         & .hidden.lg\:flex ul {
             position: relative;

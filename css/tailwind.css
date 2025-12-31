@@ -147,7 +147,7 @@
 
   /* 懸停流動 (Hover Flow) - 用於按鈕或區塊 */
   .micro-hover-flow {
-    @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105;
+    @apply transition-all duration-300 ease-in-out hover:scale-105;
   }
 
   /* 懸停流動 (Hover Flow) - 用於連結底線 */
