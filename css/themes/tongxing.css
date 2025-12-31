@@ -31,10 +31,54 @@
             background-repeat: no-repeat;
         }
 
+        /* Header Menu Items Watercolor Effect - Shared Background */
+        & .hidden.lg\:flex ul {
+            position: relative;
+            padding: 0.25rem 1.5rem;
+            margin-right: -1rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0 -1rem;
+                background-image: url('/img/themes/tongxing/background/horizontal-menu-bg.webp');
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                z-index: -1;
+                mix-blend-mode: multiply;
+                opacity: 1;
+                pointer-events: none;
+
+                mask-mode: luminance;
+                mask-image: url('/img/themes/tongxing/background/horizontal-menu-bg.webp');
+                mask-size: 100% 100%;
+            }
+        }
+
+        & .nav__item>a,
+        & .nav__item button {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: translateY(-1px);
+                color: var(--brand-accent);
+            }
+        }
+
         /* Dark Mode specific variants */
         &.dark .bg-page-texture,
         & .dark .bg-page-texture {
             background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/themes/tongxing/background/background.webp');
+        }
+
+        &.dark .hidden.lg\:flex ul::before,
+        & .dark .hidden.lg\:flex ul::before {
+            mix-blend-mode: screen;
+            filter: invert(1) brightness(1.5);
+            opacity: 0.4;
         }
     }
 }
