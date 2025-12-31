@@ -120,5 +120,9 @@
             filter: invert(1) brightness(1.5);
             opacity: 0.4;
         }
+
+        & .benefits-media-img {
+            mix-blend-mode: multiply;
+        }
     }
 }

@@ -72,7 +72,7 @@ export default function Section(props) {
 
             <Container
                 limit
-                className={`flex w-full flex-col relative z-10 ${align === "left" ? "" : "items-center justify-center text-center"}`}>
+                className={`flex w-full flex-col relative ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
@@ -109,7 +109,7 @@ export default function Section(props) {
             </Container>
 
             {bodyContent && (
-                <Container limit={limit} className={`relative z-10 content_class ${classes.content_class || ""}`}>
+                <Container limit={limit} className={`relative content_class ${classes.content_class || ""}`}>
                     {bodyContent}
                 </Container>
             )}

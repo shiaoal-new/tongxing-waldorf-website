@@ -35,7 +35,7 @@ export default function Benefits(props) {
             <MediaRenderer
               media={mediaData}
               className="w-full h-[300px] lg:h-[482px]"
-              imgClassName="object-contain"
+              imgClassName="object-contain benefits-media-img"
             />
           </div>
         </motion.div>
