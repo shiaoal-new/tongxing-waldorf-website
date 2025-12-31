@@ -4,8 +4,17 @@ import Container from "./container";
 
 // Helper component for footer content to avoid duplication in code
 function FooterContent() {
-  const navigation = ["關於我們", "課程介紹", "招生資訊", "師資團隊", "校園生活"];
-  const legal = ["隱私權政策", "使用條款"];
+  const navigation = [
+    { title: "關於我們", path: "/" },
+    { title: "課程介紹", path: "/featured-courses" },
+    { title: "招生資訊", path: "/visit" },
+    { title: "師資團隊", path: "/teacher-group" },
+    { title: "校園生活", path: "/daily-routine" }
+  ];
+  const legal = [
+    { title: "隱私權政策", path: "/" },
+    { title: "使用條款", path: "/" }
+  ];
 
   return (
     <>
@@ -40,9 +49,9 @@ function FooterContent() {
               {navigation.map((item, index) => (
                 <Link
                   key={index}
-                  href="/"
+                  href={item.path}
                   className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
-                  {item}
+                  {item.title}
                 </Link>
               ))}
             </div>
@@ -52,40 +61,43 @@ function FooterContent() {
               {legal.map((item, index) => (
                 <Link
                   key={index}
-                  href="/"
+                  href={item.path}
                   className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
-                  {item}
+                  {item.title}
                 </Link>
               ))}
             </div>
           </div>
           <div className="">
-            <div className="font-bold text-brand-text dark:text-brand-bg uppercase tracking-widest text-xs mb-4">Follow us</div>
+            <div className="font-bold text-brand-text dark:text-brand-bg uppercase tracking-widest text-xs mb-4">追蹤我們 (Follow us)</div>
             <div className="flex mt-5 space-x-5 text-brand-taupe dark:text-brand-taupe">
               <a
-                href="https://twitter.com/web3templates"
-                target="_blank"
-                rel="noopener">
-                <span className="sr-only">Twitter</span>
-                <Twitter />
-              </a>
-              <a
-                href="https://facebook.com/web3templates"
+                href="https://facebook.com/taipeiwaldorf/"
                 target="_blank"
                 rel="noopener">
                 <span className="sr-only">Facebook</span>
                 <Facebook />
               </a>
               <a
-                href="https://instagram.com/web3templates"
+                href="https://instagram.com/taipeiwaldorf/"
                 target="_blank"
                 rel="noopener">
                 <span className="sr-only">Instagram</span>
                 <Instagram />
               </a>
-              <a href="https://linkedin.com/" target="_blank" rel="noopener">
-                <span className="sr-only">Linkedin</span>
-                <Linkedin />
+              <a
+                href="https://www.youtube.com/@taipeiwaldorf"
+                target="_blank"
+                rel="noopener">
+                <span className="sr-only">YouTube</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
               </a>
             </div>
           </div>

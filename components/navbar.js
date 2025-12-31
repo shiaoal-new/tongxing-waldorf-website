@@ -165,73 +165,75 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                         ))}
 
 
-                        <div className="w-full mt-4 border-t border-brand-taupe/20 dark:border-brand-structural pt-4">
-                          <Disclosure>
-                            {({ open }) => (
-                              <>
-                                <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                  <span>Debug</span>
-                                  <ChevronDownIcon
-                                    className={`${open ? "transform rotate-180" : ""
-                                      } w-5 h-5`}
-                                  />
-                                </Disclosure.Button>
-                                <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
-                                  <button
-                                    onClick={() => { setShowAboutModal(true); }}
-                                    className="btn btn-ghost btn-block btn-sm justify-start px-4 text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700"
-                                  >
-                                    About this site
-                                  </button>
-                                  <div className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                    <span className="text-sm">Background Grid</span>
-                                    <div className="relative">
-                                      <input
-                                        type="checkbox"
-                                        className="sr-only"
-                                        checked={showBackgroundGrid}
-                                        onChange={(e) => setShowBackgroundGrid(e.target.checked)}
-                                      />
-                                      <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
-                                        <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
+                        {process.env.NODE_ENV === 'development' && (
+                          <div className="w-full mt-4 border-t border-brand-taupe/20 dark:border-brand-structural pt-4">
+                            <Disclosure>
+                              {({ open }) => (
+                                <>
+                                  <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                    <span>Debug</span>
+                                    <ChevronDownIcon
+                                      className={`${open ? "transform rotate-180" : ""
+                                        } w-5 h-5`}
+                                    />
+                                  </Disclosure.Button>
+                                  <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
+                                    <button
+                                      onClick={() => { setShowAboutModal(true); }}
+                                      className="btn btn-ghost btn-block btn-sm justify-start px-4 text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700"
+                                    >
+                                      About this site
+                                    </button>
+                                    <div className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                      <span className="text-sm">Background Grid</span>
+                                      <div className="relative">
+                                        <input
+                                          type="checkbox"
+                                          className="sr-only"
+                                          checked={showBackgroundGrid}
+                                          onChange={(e) => setShowBackgroundGrid(e.target.checked)}
+                                        />
+                                        <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
+                                          <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                  <Link
-                                    href="/debug/device-simulator"
-                                    target="_blank"
-                                    className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
-                                  >
-                                    多裝置展示模式 (Simulator)
-                                  </Link>
-                                  <Link
-                                    href="/admin/index.html"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
-                                  >
-                                    CMS 後台管理
-                                  </Link>
-                                  <Disclosure>
-                                    {({ open }) => (
-                                      <>
-                                        <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                          <span>主題切換 (Themes)</span>
-                                          <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
-                                        </Disclosure.Button>
-                                        <Disclosure.Panel className="px-2 pb-2">
-                                          <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-0">
-                                            <ThemeList />
-                                          </ul>
-                                        </Disclosure.Panel>
-                                      </>
-                                    )}
-                                  </Disclosure>
-                                </Disclosure.Panel>
-                              </>
-                            )}
-                          </Disclosure>
-                        </div>
+                                    <Link
+                                      href="/debug/device-simulator"
+                                      target="_blank"
+                                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                                    >
+                                      多裝置展示模式 (Simulator)
+                                    </Link>
+                                    <Link
+                                      href="/admin/index.html"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                                    >
+                                      CMS 後台管理
+                                    </Link>
+                                    <Disclosure>
+                                      {({ open }) => (
+                                        <>
+                                          <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
+                                            <span>主題切換 (Themes)</span>
+                                            <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
+                                          </Disclosure.Button>
+                                          <Disclosure.Panel className="px-2 pb-2">
+                                            <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-0">
+                                              <ThemeList />
+                                            </ul>
+                                          </Disclosure.Panel>
+                                        </>
+                                      )}
+                                    </Disclosure>
+                                  </Disclosure.Panel>
+                                </>
+                              )}
+                            </Disclosure>
+                          </div>
+                        )}
                       </>
                     </Disclosure.Panel>
                   )}
@@ -246,13 +248,15 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                       <NavbarListItem item={menu} />
                     </li>
                   ))}
-                  <li className="mr-3 nav__item">
-                    <DebugMenu
-                      onOpenModal={() => setShowAboutModal(true)}
-                      showBackgroundGrid={showBackgroundGrid}
-                      setShowBackgroundGrid={setShowBackgroundGrid}
-                    />
-                  </li>
+                  {process.env.NODE_ENV === 'development' && (
+                    <li className="mr-3 nav__item">
+                      <DebugMenu
+                        onOpenModal={() => setShowAboutModal(true)}
+                        showBackgroundGrid={showBackgroundGrid}
+                        setShowBackgroundGrid={setShowBackgroundGrid}
+                      />
+                    </li>
+                  )}
                 </ul>
               </div>
 
@@ -285,11 +289,11 @@ function NavbarListItem({ item }) {
       <Menu as="div" className="relative inline-block text-left group">
         {({ open }) => (
           <>
-            <Menu.Button className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
-              <span>{item.title}</span>
+            <Menu.Button className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none group">
+              <span className="micro-hover-link">{item.title}</span>
               <ChevronDownIcon
                 className={`${open ? "transform rotate-180" : ""
-                  } w-5 h-5 ml-1 transition-transform duration-200`}
+                  } w-5 h-5 ml-1 transition-transform duration-200 group-hover:text-brand-accent`}
                 aria-hidden="true"
               />
             </Menu.Button>
