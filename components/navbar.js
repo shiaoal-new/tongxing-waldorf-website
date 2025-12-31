@@ -92,20 +92,20 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
       {({ open }) => (
         <>
           <ScrollLock isOpen={open} />
-          <div
+          <NavBarContainer
+            open={open}
+            scroll={scroll}
             onClick={(e) => {
               if (!e.target.closest("a") && !e.target.closest("button")) {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
-            }}
-            className={`navbar-container fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-transparent" : "bg-transparent"
-              }`}>
+            }}>
             <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4">
               {/* Logo  */}
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg micro-hover-flow">
+                  className="flex items-center space-x-2 text-2xl font-medium font-accent dark:text-brand-bg micro-hover-flow">
                   <span>
                     <img
                       src="/img/logo.svg"
@@ -258,7 +258,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
 
             </nav>
             <AboutModal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} />
-          </div>
+          </NavBarContainer>
           <AnimatePresence>
             {open && (
               <Disclosure.Button
@@ -565,3 +565,13 @@ function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
 }
 
 
+function NavBarContainer({ children, open, scroll, onClick }) {
+  return (
+    <header
+      onClick={onClick}
+      className={`navbar-container fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-transparent" : "bg-transparent"
+        }`}>
+      {children}
+    </header>
+  );
+}
