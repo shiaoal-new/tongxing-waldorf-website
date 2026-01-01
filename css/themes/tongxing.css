@@ -1,6 +1,16 @@
 @font-face {
     font-family: kurewa-gothic;
     src: url(https://cdn.jsdelivr.net/gh/max32002/kurewa-gothic@1.071/webfont/CJK%20TC/KurewaGothicCjkTc-Regular.woff2) format("woff2");
+    size-adjust: 110%;
+}
+
+@font-face {
+    font-family: 'ChenYuluoyan';
+    src: url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
+    size-adjust: 150%;
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @layer components {
@@ -54,20 +64,19 @@
                 content: "";
                 position: absolute;
                 inset: 0;
-                background-image: url('/img/themes/tongxing/background/menu-bg.png');
-                background-size: 100% 100%;
-                /* 只對背景套用濾鏡 */
-                /* filter: blur(1px); */
-                /* backdrop-filter: blur(8px); */
-                opacity: .8;
-
-                /* 建議將背景稍微放大，避免模糊後邊緣出現白邊 */
-                /* transform: scale(1.2); */
-
-                background-color: rgba(255, 255, 255, 0.01);
-
-                z-index: -1;
-                /* 確保背景在文字下方 */
+                /* backdrop-filter 模糊背后的内容 */
+                backdrop-filter: blur(16px) brightness(1.2);
+                /* 使用背景图片作为遮罩效果 */
+                /* background-image: url('/img/themes/tongxing/background/menu-bg.png'); */
+                /* background-size: 100% 100%; */
+                background-blend-mode: multiply;
+                mask-image: url('/img/themes/tongxing/background/menu-bg.png');
+                mask-size: 100% 100%;
+                /* 半透明背景让 backdrop-filter 效果可见 */
+                /* background-color: rgba(255, 255, 255, 0.1); */
+                pointer-events: none;
+                z-index: 0;
+                /* 在内容下方但在背景上方 */
             }
         }
 
@@ -89,8 +98,9 @@
                 mix-blend-mode: multiply;
                 opacity: 1;
                 pointer-events: none;
+                filter: saturate(2);
 
-                mask-mode: luminance;
+                /* mask-mode: luminance; */
                 mask-image: url('/img/themes/tongxing/background/horizontal-menu-bg.webp');
                 mask-size: 100% 100%;
             }

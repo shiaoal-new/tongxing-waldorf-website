@@ -1,13 +1,5 @@
 @import "./themes/tongxing.css";
 
-@font-face {
-  font-family: 'ChenYuluoyan';
-  src: url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
-  size-adjust: 125%;
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @tailwind base;
 @tailwind components;

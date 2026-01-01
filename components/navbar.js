@@ -100,7 +100,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}>
-            <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4">
+            <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4 z-10">
               {/* Logo  */}
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
