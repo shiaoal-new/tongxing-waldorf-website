@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeChanger from "./DarkSwitch";
+import ThemeChanger, { ThemeList } from "./DarkSwitch";
 import Logo from "./logo";
 import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
