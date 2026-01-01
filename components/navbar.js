@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ThemeList } from "./DarkSwitch";
+import ThemeChanger from "./DarkSwitch";
+import Logo from "./logo";
 import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useEffect, useState, Fragment } from "react";
@@ -105,16 +106,8 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-2xl font-medium font-accent dark:text-brand-bg micro-hover-flow">
-                  <span>
-                    <img
-                      src="/img/logo.svg"
-                      alt="N"
-                      width="32"
-                      height="32"
-                      className="w-8"
-                    />
-                  </span>
+                  className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg micro-hover-flow">
+                  <Logo />
                   <span>同心華德福</span>
                 </Link>
 

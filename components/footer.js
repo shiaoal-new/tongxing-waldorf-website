@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Container from "./container";
+import Logo from "./logo";
 
 // Helper component for footer content to avoid duplication in code
 function FooterContent() {
@@ -26,15 +27,7 @@ function FooterContent() {
               <Link
                 href="/"
                 className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg">
-                <span>
-                  <img
-                    src="/img/logo.svg"
-                    alt="N"
-                    width="32"
-                    height="32"
-                    className="w-8"
-                  />
-                </span>
+                <Logo />
                 <span>同心華德福實驗教育機構</span>
               </Link>
             </div>
