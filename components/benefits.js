@@ -24,39 +24,30 @@ export default function Benefits(props) {
       </div>
 
       <div className="w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap ">
-        <motion.div
-          initial={{ opacity: 0, x: props.imgPos === "right" ? 100 : -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className={`flex items-center justify-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:order-1" : ""
-            }`}>
-          <div className="w-full">
-            <MediaRenderer
-              media={mediaData}
-              className="w-full h-[300px] lg:h-[482px]"
-              imgClassName="object-contain benefits-media-img"
-            />
-          </div>
-        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: props.imgPos === "right" ? -100 : 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className={`flex flex-wrap items-start w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:justify-end" : ""
+          className={`flex flex-wrap items-start w-full ${props.imgPos === "right" ? "lg:justify-end" : ""
             }`}>
           <div>
-            <div className="w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-12">
+            <div className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none lg:grid-cols-3 lg:gap-6 -mx-4 lg:mx-0">
+              {/* Spacer for first item to center */}
+              {/* <div className="min-w-[7.5%] flex-shrink-0 lg:hidden"></div> */}
+
               {data.bullets?.map((item, index) => (
-                <Benefit key={index} title={item.title} icon={item.icon} buttons={item.buttons}>
-                  {item.desc}
-                </Benefit>
+                <div key={index} id={`benefit-${index}`} className="min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0">
+                  <div className="w-full">
+                    <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
+                      {item.desc}
+                    </Benefit>
+                  </div>
+                </div>
               ))}
+
+              {/* Spacer for last item to center */}
+              {/* <div className="min-w-[7.5%] flex-shrink-0 lg:hidden"></div> */}
             </div>
 
-            <ActionButtons buttons={data.buttons} align="left" className="mt-8" />
+            <ActionButtons buttons={data.buttons} align="center" className="mt-8" />
           </div>
         </motion.div>
       </div>
@@ -67,11 +58,11 @@ export default function Benefits(props) {
 function Benefit(props) {
   return (
     <>
-      <div className="flex items-start mt-8 space-x-3">
-        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mt-1 w-11 h-11 ">
+      <div className="benefit-container flex flex-col mt-8 ">
+        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mb-3 w-16 h-16 mx-auto">
           <Icon icon={props.icon} className="w-7 h-7 text-primary-50" />
         </div>
-        <div className="flex-grow">
+        <div className="flex-grow text-center lg:text-left">
           <h4 className="text-brand-text dark:text-brand-bg">
             {props.title}
           </h4>
@@ -79,7 +70,9 @@ function Benefit(props) {
             {props.children}
           </p>
           {props.buttons && props.buttons.length > 0 && (
-            <ActionButtons buttons={props.buttons} align="left" className="mt-3" size="sm" />
+            <div className="flex justify-center lg:justify-start">
+              <ActionButtons buttons={props.buttons} align="left" className="mt-3" size="sm" />
+            </div>
           )}
         </div>
       </div>

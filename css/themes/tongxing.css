@@ -152,6 +152,39 @@
             mix-blend-mode: multiply;
         }
 
+        & .benefit-container {
+            position: relative;
+            /* z-index: 2; */
+            padding: 1rem;
+            /* 性能优化:限制重绘范围 */
+            contain: layout style paint;
+
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                opacity: .2;
+                /* backdrop-filter: blur(4px); */
+                z-index: -1;
+                /* height: 100%; */
+                /* border-width: 8px; */
+                /* border-style: solid; */
+                border-radius: 20px;
+                /*border-color: rgb(var(--color-brand-blue));
+                */
+                /* background-color: rgb(var(--color-brand-blue)); */
+
+                background: linear-gradient(172deg, rgb(var(--color-brand-blue)) 0%, rgb(var(--color-brand-taupe)) 100%);
+                /* filter: url(#watercolor-v2); */
+
+                /* 性能优化:提示浏览器预优化并强制 GPU 加速 */
+                /* will-change: filter;
+                transform: translateZ(0); */
+                backface-visibility: hidden;
+            }
+        }
+
         & .benefit-icon-container {
             position: relative;
         }
@@ -166,6 +199,8 @@
             z-index: -1;
             filter: url(#watercolor-v2);
         }
+
+
 
         /* Button Watercolor Effect - 按鈕水彩效果 */
         & .btn {
