@@ -18,7 +18,7 @@ import ActionButtons from "./actionButtons";
  * @param {number} props.columns - 桌面端的列数,默认为 3
  * @param {string} props.className - 额外的容器类名
  * @param {string} props.itemClassName - 额外的项目容器类名
- * @param {string} props.align - 对齐方式 "left" | "center" | "right"
+
  */
 export default function ScrollableGrid({
     items = [],
@@ -27,7 +27,7 @@ export default function ScrollableGrid({
     columns = 3,
     className = "",
     itemClassName = "",
-    align = "left",
+
 }) {
     // 根据列数生成对应的 grid-cols 类名
     const gridColsClass = {
@@ -39,16 +39,11 @@ export default function ScrollableGrid({
         6: "lg:grid-cols-6",
     }[columns] || "lg:grid-cols-3";
 
-    // 根据对齐方式设置 justify 类
-    const justifyClass = {
-        left: "",
-        center: "lg:justify-center",
-        right: "lg:justify-end",
-    }[align] || "";
+
 
     return (
         <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap ${className}`}>
-            <motion.div className={`flex flex-wrap items-start w-full ${justifyClass}`}>
+            <motion.div className="flex flex-wrap items-start w-full">
                 <div>
                     {/* 网格容器 */}
                     <div className={`flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none ${gridColsClass} lg:gap-6 -mx-4 lg:mx-0`}>

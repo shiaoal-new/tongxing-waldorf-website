@@ -33,7 +33,6 @@ export default function Benefits(props) {
         )}
         buttons={data.buttons}
         columns={3}
-        align={props.imgPos === "right" ? "right" : "left"}
       />
     </div>
   );

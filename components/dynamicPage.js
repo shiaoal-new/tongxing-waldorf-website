@@ -251,7 +251,6 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                             {block.items?.map((item, iIndex) => (
                                                                 <Benefits
                                                                     key={iIndex}
-                                                                    imgPos={iIndex % 2 === 1 ? "right" : "left"}
                                                                     data={{
                                                                         ...item,
                                                                         bullets: item.sub_items?.map(bullet => ({
