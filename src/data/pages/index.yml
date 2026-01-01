@@ -17,7 +17,7 @@ sections:
         sub_header: 教育特色
         description: 說實話，沒有一種教育是完美的。但如果你也覺得「考試成績」不該是童年的全部，如果你希望孩子長大後不只會考試、更懂得生活——那我們想邀請你，一起走這條比較慢、但更踏實的路。
       - type: list_block
-        display_mode: scrollable_grid
+        layout_method: scrollable_grid
         item_type: benefit
         items:
           - title: 別讓教育，成了孩子熄滅好奇心的過程
@@ -61,7 +61,7 @@ sections:
         sub_header: 深入了解華德福
         description: 文字說再多，不如親眼看看。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，但都是真的。
       - type: list_block
-        display_mode: scrollable_grid
+        layout_method: scrollable_grid
         item_type: video
         items:
           - title: 同心華德福教育8分鐘精華
@@ -89,7 +89,7 @@ sections:
         sub_header: FAQ
         description: 學費多少？會不會跟不上進度？畢業後怎麼辦？——這些你想問但不好意思問的，我們都整理好了。
       - type: list_block
-        display_mode: accordion
+        layout_method: accordion
         faq_ids:
           - tuition
           - school-bus

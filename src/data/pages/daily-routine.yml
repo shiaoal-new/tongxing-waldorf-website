@@ -77,7 +77,7 @@ sections:
         sub_header: ""
         description: 這些名詞聽起來很玄？其實沒那麼複雜，讓我們用白話文解釋給你聽。
       - type: list_block
-        display_mode: accordion
+        layout_method: accordion
         items:
           - media:
               type:
@@ -96,7 +96,7 @@ sections:
         header: 走向成熟：高年級的轉化與銜接
         description: 孩子長大了，課程也會跟著變。我們會給他們更多挑戰，幫助他們從「用身體感受世界」慢慢轉向「用腦袋思考世界」。
       - type: list_block
-        display_mode: grid_cards
+        layout_method: grid_cards
         items:
           - title: 年段任務
             desc: 8 年級要做大專題、9 年級要去社會實習——走出校園，去真實世界裡試試身手。

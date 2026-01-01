@@ -317,8 +317,8 @@
                     required: false,
                   }
                 - {
-                    label: "🖼️ 顯示模式",
-                    name: "display_mode",
+                    label: "🖼️ 佈局方式",
+                    name: "layout_method",
                     widget: "select",
                     options:
                       [

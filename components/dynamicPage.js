@@ -127,7 +127,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                         if (contentBlocks.length > 0) {
                             const firstContent = contentBlocks[0];
                             if (firstContent.type === 'text_block' ||
-                                (firstContent.type === 'list_block' && firstContent.display_mode === 'scrollable_grid' && firstContent.item_type === 'benefit') ||
+                                (firstContent.type === 'list_block' && firstContent.layout_method === 'scrollable_grid' && firstContent.item_type === 'benefit') ||
                                 (firstContent.type === 'member_block')) {
                                 align = "left";
                             }
@@ -141,7 +141,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                             const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
                             const hasWideBlock = blocks.some(b =>
                                 wideBlocks.includes(b.type) ||
-                                (b.type === "list_block" && ["grid_cards", "compact_grid", "scrollable_grid"].includes(b.display_mode))
+                                (b.type === "list_block" && ["grid_cards", "compact_grid", "scrollable_grid"].includes(b.layout_method))
                             );
                             sectionLimit = !hasWideBlock;
                         }
@@ -247,7 +247,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                             )}
                                                         </div>
                                                     )}
-                                                    {block.display_mode === "scrollable_grid" && (
+                                                    {block.layout_method === "scrollable_grid" && (
                                                         <ScrollableGrid
                                                             items={block.items || []}
                                                             renderItem={(item, index) => {
@@ -293,7 +293,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                         />
                                                     )}
 
-                                                    {block.display_mode === "accordion" && (
+                                                    {block.layout_method === "accordion" && (
                                                         block.faq_ids ? (
                                                             <Faq faqList={block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
                                                                 question: f.question,
@@ -306,7 +306,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
 
 
 
-                                                    {block.display_mode === "grid_cards" && (
+                                                    {block.layout_method === "grid_cards" && (
                                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-brand mx-auto">
                                                             {block.items?.map((item, idx) => (
                                                                 <div key={idx} className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
@@ -323,7 +323,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                         </div>
                                                     )}
 
-                                                    {block.display_mode === "compact_grid" && (
+                                                    {block.layout_method === "compact_grid" && (
                                                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-brand mx-auto">
                                                             {block.items?.map((item, idx) => (
                                                                 <div key={idx} className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">

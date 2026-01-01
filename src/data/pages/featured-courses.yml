@@ -17,7 +17,7 @@ sections:
   - section_id: course-list
     blocks:
       - type: list_block
-        display_mode: scrollable_grid
+        layout_method: scrollable_grid
         item_type: benefit
         items:
           - title: 1. 節奏與深度的學術架構

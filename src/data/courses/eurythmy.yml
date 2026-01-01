@@ -18,7 +18,7 @@ sections:
     blocks:
       - type: list_block
         header: 核心概念
-        display_mode: grid_cards
+        layout_method: grid_cards
         items:
           - title: 語言的轉化
             desc: 將子音與母音的發音特質轉化為特定動作。母音表達內在感受，子音模仿外在力量。
@@ -53,7 +53,7 @@ sections:
     blocks:
       - type: list_block
         header: 課程的教育與療癒功能
-        display_mode: scrollable_grid
+        layout_method: scrollable_grid
         item_type: benefit
         items:
           - title: 感官保護
