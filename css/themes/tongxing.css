@@ -150,6 +150,31 @@
             filter: url(#watercolor-v2);
         }
 
+        /* Button Watercolor Effect - 按鈕水彩效果 */
+        & .btn {
+            position: relative;
+            /* overflow: hidden; */
+            z-index: 1;
+
+            /* 創建背景層並套用濾鏡 */
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: inherit;
+                border-radius: 20px;
+                z-index: -1;
+
+                filter: url(#watercolor-v2);
+            }
+
+            /* 確保文字在上層,不受濾鏡影響 */
+            &>* {
+                position: relative;
+                z-index: 2;
+            }
+        }
+
         /* SVG Filters 使用说明
          * watercolor-v2 滤镜已在 components/svgFilters.js 中定义
          * 使用方法: filter: url(#watercolor-v2);
