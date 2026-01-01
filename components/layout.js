@@ -4,6 +4,7 @@ import Footer from "./footer";
 import PopupWidget from "./popupWidget";
 import ParallaxBackground from "./parallaxBackground";
 import SvgFilters from "./svgFilters";
+import PageContent from "./pageContent";
 
 
 export default function Layout({ children, title, description, navbarPadding = false, pages, navigation, className, backgroundSrc, backgroundSpeed = 0.2 }) {
@@ -34,9 +35,13 @@ export default function Layout({ children, title, description, navbarPadding = f
          - shadow-[...]: Casts a drop shadow onto the footer to enhance depth.
          - Navbar padding logic to handle sticky/fixed navbar overlapping content.
       */}
-            <div className={`${navbarPadding ? "pt-20" : ""} ${backgroundSrc ? "bg-transparent" : "bg-brand-bg dark:bg-trueGray-900"} relative z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] ${className || ""}`}>
+            <PageContent
+                navbarPadding={navbarPadding}
+                backgroundSrc={backgroundSrc}
+                className={className}
+            >
                 {children}
-            </div>
+            </PageContent>
 
             <Footer />
             {/* <PopupWidget /> */}
