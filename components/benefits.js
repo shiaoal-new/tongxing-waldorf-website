@@ -4,6 +4,7 @@ import Container from "./container";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import ActionButtons from "./actionButtons";
+import ScrollableGrid from "./scrollableGrid";
 
 export default function Benefits(props) {
   const { data } = props;
@@ -23,34 +24,17 @@ export default function Benefits(props) {
         </p>
       </div>
 
-      <div className="w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap ">
-
-        <motion.div
-          className={`flex flex-wrap items-start w-full ${props.imgPos === "right" ? "lg:justify-end" : ""
-            }`}>
-          <div>
-            <div className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none lg:grid-cols-3 lg:gap-6 -mx-4 lg:mx-0">
-              {/* Spacer for first item to center */}
-              {/* <div className="min-w-[7.5%] flex-shrink-0 lg:hidden"></div> */}
-
-              {data.bullets?.map((item, index) => (
-                <div key={index} id={`benefit-${index}`} className="min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0">
-                  <div className="w-full">
-                    <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
-                      {item.desc}
-                    </Benefit>
-                  </div>
-                </div>
-              ))}
-
-              {/* Spacer for last item to center */}
-              {/* <div className="min-w-[7.5%] flex-shrink-0 lg:hidden"></div> */}
-            </div>
-
-            <ActionButtons buttons={data.buttons} align="center" className="mt-8" />
-          </div>
-        </motion.div>
-      </div>
+      <ScrollableGrid
+        items={data.bullets || []}
+        renderItem={(item, index) => (
+          <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
+            {item.desc}
+          </Benefit>
+        )}
+        buttons={data.buttons}
+        columns={3}
+        align={props.imgPos === "right" ? "right" : "left"}
+      />
     </div>
   );
 }

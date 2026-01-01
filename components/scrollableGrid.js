@@ -1,0 +1,76 @@
+import React from "react";
+import { motion } from "framer-motion";
+import ActionButtons from "./actionButtons";
+
+/**
+ * ScrollableGrid - 一个通用的响应式网格组件
+ * 
+ * 功能:
+ * - 移动端:横向滚动的卡片列表
+ * - 桌面端:网格布局
+ * - 支持任意子组件
+ * - 可选的底部操作按钮
+ * 
+ * @param {Object} props
+ * @param {Array} props.items - 要渲染的数据项数组
+ * @param {Function} props.renderItem - 渲染每个项目的函数 (item, index) => ReactNode
+ * @param {Array} props.buttons - 可选的底部按钮配置
+ * @param {number} props.columns - 桌面端的列数,默认为 3
+ * @param {string} props.className - 额外的容器类名
+ * @param {string} props.itemClassName - 额外的项目容器类名
+ * @param {string} props.align - 对齐方式 "left" | "center" | "right"
+ */
+export default function ScrollableGrid({
+    items = [],
+    renderItem,
+    buttons,
+    columns = 3,
+    className = "",
+    itemClassName = "",
+    align = "left",
+}) {
+    // 根据列数生成对应的 grid-cols 类名
+    const gridColsClass = {
+        1: "lg:grid-cols-1",
+        2: "lg:grid-cols-2",
+        3: "lg:grid-cols-3",
+        4: "lg:grid-cols-4",
+        5: "lg:grid-cols-5",
+        6: "lg:grid-cols-6",
+    }[columns] || "lg:grid-cols-3";
+
+    // 根据对齐方式设置 justify 类
+    const justifyClass = {
+        left: "",
+        center: "lg:justify-center",
+        right: "lg:justify-end",
+    }[align] || "";
+
+    return (
+        <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap ${className}`}>
+            <motion.div className={`flex flex-wrap items-start w-full ${justifyClass}`}>
+                <div>
+                    {/* 网格容器 */}
+                    <div className={`flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none ${gridColsClass} lg:gap-6 -mx-4 lg:mx-0`}>
+                        {items.map((item, index) => (
+                            <div
+                                key={item.id || index}
+                                id={`grid-item-${index}`}
+                                className={`min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0 ${itemClassName}`}
+                            >
+                                <div className="w-full">
+                                    {renderItem(item, index)}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* 底部操作按钮 */}
+                    {buttons && buttons.length > 0 && (
+                        <ActionButtons buttons={buttons} align="center" className="mt-8" />
+                    )}
+                </div>
+            </motion.div>
+        </div>
+    );
+}

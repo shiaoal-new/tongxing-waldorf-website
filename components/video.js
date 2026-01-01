@@ -1,18 +1,23 @@
 import { useState, useMemo } from "react";
 import { videoData } from "./data";
+import ScrollableGrid from "./scrollableGrid";
 
 export default function VideoList({ videoList }) {
   const data = videoList || videoData;
+
   return (
-    <div className="grid spacing-component gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-      {data.map((video, index) => (
+    <ScrollableGrid
+      items={data}
+      renderItem={(video, index) => (
         <VideoItem
-          key={index}
           video={video}
           className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
         />
-      ))}
-    </div>
+      )}
+      columns={3}
+      className="spacing-component"
+      itemClassName="gap-y-16"
+    />
   );
 }
 
