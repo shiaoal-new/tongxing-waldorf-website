@@ -33,7 +33,7 @@
                 left: .5rem;
                 right: .5rem;
                 bottom: .5rem;
-                background-image: url('/img/themes/tongxing/background/yellow-frame.webp');
+                /* background-image: url('/img/themes/tongxing/background/yellow-frame.webp'); */
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 z-index: -1;
@@ -50,6 +50,23 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+
+        /* Main Element Paper Background - 主内容区纸张背景 */
+        & main {
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-color: var(--brand-bg);
+                filter: url(#paper-texture);
+                /* opacity: 0.5; */
+                z-index: -1;
+                pointer-events: none;
+            }
+        }
+
 
         /* Navbar Blend Mode */
         & .navbar-container {
