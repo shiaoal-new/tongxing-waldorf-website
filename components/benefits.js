@@ -68,7 +68,7 @@ function Benefit(props) {
   return (
     <>
       <div className="flex items-start mt-8 space-x-3">
-        <div className="flex items-center justify-center flex-shrink-0 mt-1 bg-brand-accent/100 rounded-md w-11 h-11 ">
+        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mt-1 w-11 h-11 ">
           <Icon icon={props.icon} className="w-7 h-7 text-primary-50" />
         </div>
         <div className="flex-grow">

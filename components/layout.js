@@ -3,11 +3,13 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import PopupWidget from "./popupWidget";
 import ParallaxBackground from "./parallaxBackground";
+import SvgFilters from "./svgFilters";
 
 
 export default function Layout({ children, title, description, navbarPadding = false, pages, navigation, className, backgroundSrc, backgroundSpeed = 0.2 }) {
     return (
         <>
+            <SvgFilters />
             <Head>
                 <title>{title || "台北市同心華德福實驗教育機構"}</title>
                 <meta
