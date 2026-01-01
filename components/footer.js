@@ -124,14 +124,14 @@ export default function Footer() {
   const { theme } = useTheme();
 
   return (
-    <div className="relative">
+    <footer className="relative">
       {/* Invisible spacer footer that takes up space in the document flow */}
       <div ref={spacerRef} className="invisible relative z-[-1]" aria-hidden="true">
         <FooterContent />
       </div>
 
       {/* Visible fixed footer that sits behind the content and animates */}
-      <motion.div
+      <motion.footer
         className="fixed bottom-0 w-full z-0 block bg-cover bg-center bg-no-repeat bg-brand-taupe/10 dark:bg-brand-structural border-t border-brand-taupe/10 dark:border-trueGray-700 shadow-t-lg"
         style={{
           y,
@@ -141,8 +141,8 @@ export default function Footer() {
         }}
       >
         <FooterContent />
-      </motion.div>
-    </div>
+      </motion.footer>
+    </footer>
   );
 }
 
