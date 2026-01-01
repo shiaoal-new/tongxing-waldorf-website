@@ -5,7 +5,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PageHero from "./pageHero";
 import Benefits from "./benefits";
-import VideoList from "./video";
+import ScrollableGrid from "./scrollableGrid";
+import VideoItem from "./video";
 import MediaRenderer from "./mediaRenderer";
 import ScheduleBlock from "./scheduleBlock";
 import CurriculumBlock from "./curriculumBlock";
@@ -126,7 +127,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                         if (contentBlocks.length > 0) {
                             const firstContent = contentBlocks[0];
                             if (firstContent.type === 'text_block' ||
-                                (firstContent.type === 'list_block' && firstContent.display_mode === 'alternating') ||
+                                (firstContent.type === 'list_block' && firstContent.display_mode === 'scrollable_grid' && firstContent.item_type === 'benefit') ||
                                 (firstContent.type === 'member_block')) {
                                 align = "left";
                             }
@@ -140,7 +141,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                             const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
                             const hasWideBlock = blocks.some(b =>
                                 wideBlocks.includes(b.type) ||
-                                (b.type === "list_block" && ["grid_cards", "compact_grid", "videos", "alternating"].includes(b.display_mode))
+                                (b.type === "list_block" && ["grid_cards", "compact_grid", "scrollable_grid"].includes(b.display_mode))
                             );
                             sectionLimit = !hasWideBlock;
                         }
@@ -246,29 +247,50 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                             )}
                                                         </div>
                                                     )}
-                                                    {block.display_mode === "alternating" && (
-                                                        <div className="flex flex-col gap-16">
-                                                            {block.items?.map((item, iIndex) => (
-                                                                <Benefits
-                                                                    key={iIndex}
-                                                                    data={{
-                                                                        ...item,
-                                                                        bullets: item.sub_items?.map(bullet => ({
-                                                                            ...bullet,
-                                                                            buttons: bullet.buttons?.map(btn => {
-                                                                                if (btn.link?.startsWith("#")) {
-                                                                                    return {
-                                                                                        ...btn,
-                                                                                        onClick: () => handleButtonClick(btn.link)
-                                                                                    };
-                                                                                }
-                                                                                return btn;
-                                                                            })
-                                                                        }))
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </div>
+                                                    {block.display_mode === "scrollable_grid" && (
+                                                        <ScrollableGrid
+                                                            items={block.items || []}
+                                                            renderItem={(item, index) => {
+                                                                if (block.item_type === "benefit") {
+                                                                    return (
+                                                                        <Benefits
+                                                                            key={index}
+                                                                            data={{
+                                                                                ...item,
+                                                                                bullets: item.sub_items?.map(bullet => ({
+                                                                                    ...bullet,
+                                                                                    buttons: bullet.buttons?.map(btn => {
+                                                                                        if (btn.link?.startsWith("#")) {
+                                                                                            return {
+                                                                                                ...btn,
+                                                                                                onClick: () => handleButtonClick(btn.link)
+                                                                                            };
+                                                                                        }
+                                                                                        return btn;
+                                                                                    })
+                                                                                }))
+                                                                            }}
+                                                                        />
+                                                                    );
+                                                                } else if (block.item_type === "video") {
+                                                                    return (
+                                                                        <VideoItem
+                                                                            video={{
+                                                                                title: item.title,
+                                                                                media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
+                                                                                description: item.desc,
+                                                                                className: item.className
+                                                                            }}
+                                                                            className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
+                                                                        />
+                                                                    );
+                                                                }
+                                                                return null;
+                                                            }}
+                                                            columns={3}
+                                                            className={block.item_type === "video" ? "spacing-component" : ""}
+                                                            itemClassName={block.item_type === "video" ? "gap-y-16" : ""}
+                                                        />
                                                     )}
 
                                                     {block.display_mode === "accordion" && (
@@ -282,14 +304,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                         )
                                                     )}
 
-                                                    {block.display_mode === "videos" && (
-                                                        <VideoList videoList={block.items?.map(item => ({
-                                                            title: item.title,
-                                                            media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
-                                                            description: item.desc,
-                                                            className: item.className
-                                                        }))} />
-                                                    )}
+
 
                                                     {block.display_mode === "grid_cards" && (
                                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-brand mx-auto">

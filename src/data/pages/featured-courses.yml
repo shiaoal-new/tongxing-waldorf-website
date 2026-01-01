@@ -17,7 +17,8 @@ sections:
   - section_id: course-list
     blocks:
       - type: list_block
-        display_mode: alternating
+        display_mode: scrollable_grid
+        item_type: benefit
         items:
           - title: 1. 節奏與深度的學術架構
             desc: 同心沒有統一的教科書，而是由老師自行設計教案。每天早上的前兩小時是主課程時間，會在數週內持續探索同一個主題，讓學習像「走螺旋」一樣深度內化，而非破碎的知識切片。

@@ -1,27 +1,7 @@
 import { useState, useMemo } from "react";
 import { videoData } from "./data";
-import ScrollableGrid from "./scrollableGrid";
 
-export default function VideoList({ videoList }) {
-  const data = videoList || videoData;
-
-  return (
-    <ScrollableGrid
-      items={data}
-      renderItem={(video, index) => (
-        <VideoItem
-          video={video}
-          className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
-        />
-      )}
-      columns={3}
-      className="spacing-component"
-      itemClassName="gap-y-16"
-    />
-  );
-}
-
-function VideoItem({ video, className }) {
+export default function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);
 
   // Generate a deterministic hue rotation value based on video title

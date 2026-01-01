@@ -17,7 +17,8 @@ sections:
         sub_header: 教育特色
         description: 說實話，沒有一種教育是完美的。但如果你也覺得「考試成績」不該是童年的全部，如果你希望孩子長大後不只會考試、更懂得生活——那我們想邀請你，一起走這條比較慢、但更踏實的路。
       - type: list_block
-        display_mode: alternating
+        display_mode: scrollable_grid
+        item_type: benefit
         items:
           - title: 別讓教育，成了孩子熄滅好奇心的過程
             desc: 說實話，這年頭「學習」這兩個字被搞得很沉重，像是背著裝滿考卷的磚頭在跑馬拉松。但在「同心」，我們更想聊聊怎麼幫孩子把那把名為「好奇」的火種留住，而不是用標準答案把它澆熄。
@@ -60,7 +61,8 @@ sections:
         sub_header: 深入了解華德福
         description: 文字說再多，不如親眼看看。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，但都是真的。
       - type: list_block
-        display_mode: videos
+        display_mode: scrollable_grid
+        item_type: video
         items:
           - title: 同心華德福教育8分鐘精華
             className: yellow-frame

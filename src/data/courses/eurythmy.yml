@@ -53,7 +53,8 @@ sections:
     blocks:
       - type: list_block
         header: 課程的教育與療癒功能
-        display_mode: alternating
+        display_mode: scrollable_grid
+        item_type: benefit
         items:
           - title: 感官保護
             desc: 在現代 3C 與資訊氾濫的干擾下，優律思美幫助孩子重新感知自己的身體與內心訊息。

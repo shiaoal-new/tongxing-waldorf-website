@@ -323,8 +323,8 @@
                     options:
                       [
                         {
-                          label: "圖文左右交錯 (教育特色模式)",
-                          value: "alternating",
+                          label: "可滾動網格 (通用模式)",
+                          value: "scrollable_grid",
                         },
                         {
                           label: "三欄網格卡片 (概覽模式)",
@@ -334,12 +334,20 @@
                           label: "垂直摺疊面板 (常見問答模式)",
                           value: "accordion",
                         },
-                        {
-                          label: "影片橫排網格 (影音專區模式)",
-                          value: "videos",
-                        },
                       ],
-                    default: "alternating",
+                    default: "scrollable_grid",
+                  }
+                - {
+                    label: "項目類型 (僅 scrollable_grid 需要)",
+                    name: "item_type",
+                    widget: "select",
+                    options:
+                      [
+                        { label: "教育特色 (Benefit)", value: "benefit" },
+                        { label: "影片 (Video)", value: "video" },
+                      ],
+                    default: "benefit",
+                    required: false,
                   }
                 - label: "列表項目"
                   name: "items"
