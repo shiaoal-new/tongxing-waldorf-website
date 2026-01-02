@@ -1,41 +1,6 @@
-import MediaRenderer from "./mediaRenderer";
 import React from "react";
-import Container from "./container";
-import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import ActionButtons from "./actionButtons";
-
-// export function Benefits(props) {
-//   const { data } = props;
-
-//   // Media data normalization
-//   const mediaData = data.media || (data.lottie ? { type: 'lottie', url: data.lottie } : (data.image ? { type: 'image', image: data.image } : null));
-
-//   return (
-//     <div className="flex flex-col mb-20">
-//       <div className="w-full mb-8">
-//         <h3 className="mt-3 text-brand-text dark:text-brand-bg">
-//           {data.title}
-//         </h3>
-
-//         <p className="py-4 text-lg text-brand-taupe lg:text-xl xl:text-xl dark:text-brand-taupe">
-//           {data.desc}
-//         </p>
-//       </div>
-
-//       <ScrollableGrid
-//         items={data.bullets || []}
-//         renderItem={(item, index) => (
-//           <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
-//             {item.desc}
-//           </Benefit>
-//         )}
-//         buttons={data.buttons}
-//         columns={3}
-//       />
-//     </div>
-//   );
-// }
 
 export default function Benefit(props) {
   return (
@@ -61,5 +26,3 @@ export default function Benefit(props) {
     </>
   );
 }
-
-

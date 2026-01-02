@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { videoData } from "./data";
 
 export default function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);

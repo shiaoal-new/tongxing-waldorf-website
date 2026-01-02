@@ -1,7 +1,6 @@
 import { getAllPages, getPageBySlug } from "../lib/pages";
 import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
-import { getAllBenefits } from "../lib/benefits";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
 import { getAllCourses } from "../lib/courses";
@@ -30,7 +29,6 @@ export async function getStaticProps({ params }) {
     const navigation = getNavigation();
     const facultyList = getAllFaculty();
     const faqList = getAllFaq();
-    const benefitsList = getAllBenefits();
     const coursesList = getAllCourses();
 
     if (page && page.sections) {
@@ -52,7 +50,6 @@ export async function getStaticProps({ params }) {
             navigation,
             facultyList,
             faqList,
-            benefitsList,
             coursesList,
         },
     };

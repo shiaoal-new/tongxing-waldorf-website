@@ -13,7 +13,7 @@ import { useTheme } from "next-themes";
 import { SectionBlock } from "./sectionRenderer";
 import { PageDataProvider } from "../contexts/PageDataContext";
 
-export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
+export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
     const { theme } = useTheme();
 

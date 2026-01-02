@@ -1,7 +1,6 @@
 import { getAllPages, getPageBySlug } from "../lib/pages";
 import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
-import { getAllBenefits } from "../lib/benefits";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
 import DynamicPageContent from "../components/dynamicPage";
@@ -16,7 +15,6 @@ export async function getStaticProps() {
   const navigation = getNavigation();
   const facultyList = getAllFaculty();
   const faqList = getAllFaq();
-  const benefitsList = getAllBenefits();
 
   if (page && page.sections) {
     page.sections = page.sections.map(section => {
@@ -37,7 +35,6 @@ export async function getStaticProps() {
       navigation,
       facultyList,
       faqList,
-      benefitsList,
     },
   };
 }
