@@ -4,7 +4,8 @@ import Section from "./section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PageHero from "./pageHero";
-import Benefits from "./benefits";
+// import Benefits from "./benefits";
+import Benefit from "./benefits";
 import ScrollableGrid from "./scrollableGrid";
 import VideoItem from "./video";
 import MediaRenderer from "./mediaRenderer";
@@ -233,6 +234,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
 
                                             {block.type === "list_block" && (
                                                 <>
+                                                    {/* todo: remove header/subtitle support, ask user to juse text_block */}
                                                     {(block.header || block.subtitle) && (
                                                         <div className={`max-w-4xl mx-auto mb-8 ${align === 'left' ? 'text-left' : 'text-center'}`}>
                                                             {block.subtitle && (
@@ -253,24 +255,29 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                             renderItem={(item, index) => {
                                                                 if (block.item_type === "benefit") {
                                                                     return (
-                                                                        <Benefits
-                                                                            key={index}
-                                                                            data={{
-                                                                                ...item,
-                                                                                bullets: item.sub_items?.map(bullet => ({
-                                                                                    ...bullet,
-                                                                                    buttons: bullet.buttons?.map(btn => {
-                                                                                        if (btn.link?.startsWith("#")) {
-                                                                                            return {
-                                                                                                ...btn,
-                                                                                                onClick: () => handleButtonClick(btn.link)
-                                                                                            };
-                                                                                        }
-                                                                                        return btn;
-                                                                                    })
-                                                                                }))
-                                                                            }}
-                                                                        />
+
+                                                                        <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
+                                                                            {item.desc}
+                                                                        </Benefit>
+
+
+                                                                        // <Benefits
+                                                                        //     data={{
+                                                                        //         ...item,
+                                                                        //         bullets: item.sub_items?.map(bullet => ({
+                                                                        //             ...bullet,
+                                                                        //             buttons: bullet.buttons?.map(btn => {
+                                                                        //                 if (btn.link?.startsWith("#")) {
+                                                                        //                     return {
+                                                                        //                         ...btn,
+                                                                        //                         onClick: () => handleButtonClick(btn.link)
+                                                                        //                     };
+                                                                        //                 }
+                                                                        //                 return btn;
+                                                                        //             })
+                                                                        //         }))
+                                                                        //     }}
+                                                                        // />
                                                                     );
                                                                 } else if (block.item_type === "video") {
                                                                     return (
@@ -288,8 +295,6 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                                 return null;
                                                             }}
                                                             columns={3}
-                                                            className={block.item_type === "video" ? "spacing-component" : ""}
-                                                            itemClassName={block.item_type === "video" ? "gap-y-16" : ""}
                                                         />
                                                     )}
 

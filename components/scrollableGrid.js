@@ -16,8 +16,6 @@ import ActionButtons from "./actionButtons";
  * @param {Function} props.renderItem - 渲染每个项目的函数 (item, index) => ReactNode
  * @param {Array} props.buttons - 可选的底部按钮配置
  * @param {number} props.columns - 桌面端的列数,默认为 3
- * @param {string} props.className - 额外的容器类名
- * @param {string} props.itemClassName - 额外的项目容器类名
 
  */
 export default function ScrollableGrid({
@@ -25,9 +23,6 @@ export default function ScrollableGrid({
     renderItem,
     buttons,
     columns = 3,
-    className = "",
-    itemClassName = "",
-
 }) {
     // 根据列数生成对应的 grid-cols 类名
     const gridColsClass = {
@@ -42,7 +37,7 @@ export default function ScrollableGrid({
 
 
     return (
-        <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap ${className}`}>
+        <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap spacing-component`}>
             <motion.div className="flex flex-wrap items-start w-full">
                 <div>
                     {/* 网格容器 */}
@@ -51,7 +46,7 @@ export default function ScrollableGrid({
                             <div
                                 key={item.id || index}
                                 id={`grid-item-${index}`}
-                                className={`min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0 ${itemClassName}`}
+                                className={`min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0`}
                             >
                                 <div className="w-full">
                                     {renderItem(item, index)}
