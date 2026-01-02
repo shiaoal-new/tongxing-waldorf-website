@@ -4,7 +4,6 @@ import Container from "./container";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import ActionButtons from "./actionButtons";
-import ScrollableGrid from "./scrollableGrid";
 
 // export function Benefits(props) {
 //   const { data } = props;

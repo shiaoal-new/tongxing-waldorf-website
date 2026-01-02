@@ -317,6 +317,18 @@
                     required: false,
                   }
                 - {
+                    label: "📐 排列方向",
+                    name: "direction",
+                    widget: "select",
+                    options:
+                      [
+                        { label: "橫向 (Horizontal)", value: "horizontal" },
+                        { label: "縱向 (Vertical)", value: "vertical" },
+                      ],
+                    default: "horizontal",
+                    hint: "橫向適合 benefit/video,縱向適合 FAQ/accordion",
+                  }
+                - {
                     label: "🖼️ 佈局方式",
                     name: "layout_method",
                     widget: "select",
