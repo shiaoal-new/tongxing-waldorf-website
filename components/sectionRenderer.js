@@ -232,78 +232,85 @@ function ListBlock({ block }) {
                         }))
                         : (block.items || []).map(item => ({
                             ...item,
-                            item_type: item.item_type || block.item_type
+                            // 如果是垂直排列且未指定類型，預設為 text
+                            item_type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit")
                         }))
                 }
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}
-                renderItem={(item, index) => {
-                    // 優先根據 item_type 渲染
-                    if (item.item_type === "faq") {
-                        return <MarkdownContent content={item.desc} />;
-                    }
-
-
-                    // Vertical 模式 (非 FAQ)
-                    if (block.direction === "vertical") {
-                        return (
-                            <>
-                                {item.subtitle && (
-                                    <div className="text-sm font-bold text-brand-accent mb-2">
-                                        {item.subtitle}
-                                    </div>
-                                )}
-                                <div className="text-brand-taupe dark:text-brand-taupe">
-                                    {item.desc}
-                                </div>
-                            </>
-                        );
-                    }
-
-                    // 根据 item_type 渲染不同类型的 item
-                    if (item.item_type === "benefit") {
-                        return (
-                            <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
-                                {item.desc}
-                            </Benefit>
-                        );
-                    } else if (item.item_type === "video") {
-                        return (
-                            <VideoItem
-                                video={{
-                                    title: item.title,
-                                    media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
-                                    description: item.desc,
-                                    className: item.className
-                                }}
-                                className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
-                            />
-                        );
-                    } else if (item.item_type === "card") {
-                        return (
-                            <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
-                                <MediaRenderer
-                                    media={item.media || (item.image ? { type: 'image', image: getImagePath(item.image) } : null)}
-                                    className="w-16 h-16 mb-4"
-                                    imgClassName="object-contain"
-                                />
-                                <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{item.title}</h3>
-                                {item.subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{item.subtitle}</p>}
-                                <p className="text-brand-taupe dark:text-brand-taupe text-sm">{item.desc}</p>
-                            </div>
-                        );
-                    } else if (item.item_type === "compact_card") {
-                        return (
-                            <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
-                                <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>
-                                <h3 className="font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
-                                {item.desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{item.desc}</p>}
-                            </div>
-                        );
-                    }
-                    return null;
-                }}
+                renderItem={(item, index) => (
+                    <ItemRenderer item={item} index={index} getImagePath={getImagePath} />
+                )}
             />
         </div>
     );
 }
+
+/**
+ * 根據 item_type 渲染不同類型的列表項
+ */
+function ItemRenderer({ item, index, getImagePath }) {
+    const { item_type, title, subtitle, desc, icon, buttons, media, image, video_url, className } = item;
+
+    switch (item_type) {
+        case "faq":
+        case "text":
+            return (
+                <>
+                    {subtitle && (
+                        <div className="text-sm font-bold text-brand-accent mb-2">
+                            {subtitle}
+                        </div>
+                    )}
+                    <MarkdownContent content={desc} />
+                </>
+            );
+
+        case "benefit":
+            return (
+                <Benefit title={title} icon={icon} buttons={buttons}>
+                    {desc}
+                </Benefit>
+            );
+
+        case "video":
+            return (
+                <VideoItem
+                    video={{
+                        title,
+                        media: media || (video_url ? { type: 'youtube', url: video_url } : null),
+                        description: desc,
+                        className
+                    }}
+                    className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
+                />
+            );
+
+        case "card":
+            return (
+                <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md h-full">
+                    <MediaRenderer
+                        media={media || (image ? { type: 'image', image: getImagePath(image) } : null)}
+                        className="w-16 h-16 mb-4"
+                        imgClassName="object-contain"
+                    />
+                    <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{title}</h3>
+                    {subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{subtitle}</p>}
+                    <p className="text-brand-taupe dark:text-brand-taupe text-sm">{desc}</p>
+                </div>
+            );
+
+        case "compact_card":
+            return (
+                <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10 h-full">
+                    <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{subtitle}</div>
+                    <h3 className="font-bold text-brand-text dark:text-brand-bg">{title}</h3>
+                    {desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{desc}</p>}
+                </div>
+            );
+
+        default:
+            return null;
+    }
+}
+
