@@ -289,19 +289,32 @@ function MemberBlock({ block }) {
 }
 
 /**
+ * 準備列表數據，將 FAQ 或普通項目統一轉化為規整的 Block 結構
+ */
+function prepareListItems(block, faqList, direction) {
+    if (block.faq_ids) {
+        return block.faq_ids
+            .map(id => {
+                const faq = faqList.find(f => f.id === id);
+                return faq ? { ...faq, type: 'faq_item' } : null;
+            })
+            .filter(Boolean);
+    }
+
+    return (block.items || []).map(item => ({
+        ...item,
+        type: item.item_type || block.item_type || "text"
+    }));
+}
+
+/**
  * 渲染列表塊
  */
 function ListBlock({ block }) {
     const { faqList } = usePageData();
     const direction = block.direction || (block.layout_method === "vertical" ? "vertical" : "horizontal");
 
-    // 準備列表數據，將 FAQ 或普通項目統一轉化為 Block 結構
-    const listItems = block.faq_ids
-        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({ ...f, type: 'faq_item' }))
-        : (block.items || []).map(item => ({
-            ...item,
-            type: item.item_type || block.item_type || (direction === "vertical" ? "text" : "benefit_item")
-        }));
+    const listItems = prepareListItems(block, faqList, direction);
 
     return (
         <div className="max-w-brand mx-auto">
