@@ -87,7 +87,8 @@ sections:
         subtitle: FAQ
         content: 學費多少？會不會跟不上進度？畢業後怎麼辦？——這些你想問但不好意思問的，我們都整理好了。
       - type: list_block
-        layout_method: accordion
+        layout_method: vertical
+        item_type: faq_item
         faq_ids:
           - tuition
           - school-bus

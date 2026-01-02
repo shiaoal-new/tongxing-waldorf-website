@@ -77,7 +77,8 @@ sections:
         subtitle: ""
         content: 這些名詞聽起來很玄？其實沒那麼複雜，讓我們用白話文解釋給你聽。
       - type: list_block
-        layout_method: accordion
+        layout_method: vertical
+        item_type: faq_item
         items:
           - media:
               type:

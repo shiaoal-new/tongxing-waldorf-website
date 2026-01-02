@@ -101,6 +101,7 @@ function BlockRenderer({ block, align = "center", context = "standalone" }) {
     switch (type) {
         case "text_block":
         case "text":
+        case "faq_item":
         case "faq":
             return <TextBlock data={block} align={isNested ? "left" : align} isNested={isNested} />;
 
@@ -292,13 +293,14 @@ function MemberBlock({ block }) {
  */
 function ListBlock({ block }) {
     const { faqList } = usePageData();
+    const direction = block.direction || (block.layout_method === "vertical" ? "vertical" : "horizontal");
 
     // 準備列表數據，將 FAQ 或普通項目統一轉化為 Block 結構
     const listItems = block.faq_ids
-        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({ ...f, type: 'faq' }))
+        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({ ...f, type: 'faq_item' }))
         : (block.items || []).map(item => ({
             ...item,
-            type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit_item")
+            type: item.item_type || block.item_type || (direction === "vertical" ? "text" : "benefit_item")
         }));
 
     return (
@@ -311,7 +313,7 @@ function ListBlock({ block }) {
                 </div>
             )}
             <ListRenderer
-                direction={block.direction || "horizontal"}
+                direction={direction}
                 items={listItems}
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}

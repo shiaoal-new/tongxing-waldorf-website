@@ -298,18 +298,19 @@
                           value: "grid_cards",
                         },
                         {
-                          label: "垂直摺疊面板 (常見問答模式)",
-                          value: "accordion",
+                          label: "縱向摺疊清單 (Vertical List)",
+                          value: "vertical",
                         },
                       ],
                     default: "scrollable_grid",
                   }
                 - {
-                    label: "项目类型",
+                    label: "項目類型",
                     name: "item_type",
                     widget: "select",
                     options:
                       [
+                        { label: "常見問答 (FAQ)", value: "faq_item" },
                         { label: "純文字/折疊內容", value: "text" },
                         { label: "教育特色 (Benefit)", value: "benefit_item" },
                         { label: "影片 (Video)", value: "video_item" },
