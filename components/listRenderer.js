@@ -55,7 +55,7 @@ export default function ListRenderer({
                 {items.map((item, index) => (
                     <Disclosure
                         key={item.id || index}
-                        title={item.title || item.question}
+                        title={item.title}
                         isOpen={activeIndex === index}
                         onToggle={() => toggleItem(index)}
                     >

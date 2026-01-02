@@ -16,6 +16,7 @@ import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
 import { usePageData } from "../contexts/PageDataContext";
+import MarkdownContent from "./markdownContent";
 
 /**
  * 渲染单个section及其内部的所有blocks
@@ -146,10 +147,8 @@ function TextBlock({ block, align }) {
                 </div>
             )}
             {block.content && (
-                <div className={`prose prose-lg dark:prose-invert max-w-none ${align === 'left' ? '' : 'mx-auto'}`}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {block.content}
-                    </ReactMarkdown>
+                <div className={`${align === 'left' ? '' : 'mx-auto'}`}>
+                    <MarkdownContent content={block.content} />
                 </div>
             )}
             <ActionButtons buttons={block.buttons} align={align === "left" ? "left" : "center"} className="mt-6" />
@@ -226,51 +225,22 @@ function ListBlock({ block }) {
                 items={
                     block.faq_ids
                         ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
-                            question: f.question,
-                            answer: f.answer,
-                            title: f.question // 为 accordion 提供 title
+                            ...f,
+                            title: f.question,
+                            desc: f.answer,
+                            item_type: 'faq'
                         }))
-                        : (block.items || [])
+                        : (block.items || []).map(item => ({
+                            ...item,
+                            item_type: item.item_type || block.item_type
+                        }))
                 }
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}
                 renderItem={(item, index) => {
-                    // FAQ 模式
-                    if (block.faq_ids) {
-                        return (
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                    a: ({ node, ...props }) => (
-                                        <a
-                                            {...props}
-                                            className="text-brand-accent hover:text-primary-800 dark:text-brand-accent dark:hover:text-brand-accent/60 underline"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        />
-                                    ),
-                                    p: ({ node, ...props }) => (
-                                        <p {...props} className="mb-3 last:mb-0" />
-                                    ),
-                                    table: ({ node, ...props }) => (
-                                        <div className="overflow-x-auto my-4">
-                                            <table {...props} className="min-w-full divide-y divide-brand-taupe/20 dark:divide-gray-700 border border-brand-taupe/20 dark:border-brand-structural" />
-                                        </div>
-                                    ),
-                                    thead: ({ node, ...props }) => (
-                                        <thead {...props} className="bg-brand-bg dark:bg-brand-structural" />
-                                    ),
-                                    th: ({ node, ...props }) => (
-                                        <th {...props} className="px-6 py-3 text-left text-xs font-medium text-brand-taupe dark:text-brand-taupe uppercase tracking-wider border-b border-brand-taupe/20 dark:border-brand-structural" />
-                                    ),
-                                    td: ({ node, ...props }) => (
-                                        <td {...props} className="px-6 py-4 whitespace-normal text-sm text-brand-taupe dark:text-brand-taupe border-b border-brand-taupe/20 dark:border-brand-structural" />
-                                    ),
-                                }}
-                            >
-                                {item.answer}
-                            </ReactMarkdown>
-                        );
+                    // 優先根據 item_type 渲染
+                    if (item.item_type === "faq") {
+                        return <MarkdownContent content={item.desc} />;
                     }
 
 
@@ -291,13 +261,13 @@ function ListBlock({ block }) {
                     }
 
                     // 根据 item_type 渲染不同类型的 item
-                    if (block.item_type === "benefit") {
+                    if (item.item_type === "benefit") {
                         return (
                             <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
                                 {item.desc}
                             </Benefit>
                         );
-                    } else if (block.item_type === "video") {
+                    } else if (item.item_type === "video") {
                         return (
                             <VideoItem
                                 video={{
@@ -309,7 +279,7 @@ function ListBlock({ block }) {
                                 className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
                             />
                         );
-                    } else if (block.item_type === "card") {
+                    } else if (item.item_type === "card") {
                         return (
                             <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
                                 <MediaRenderer
@@ -322,7 +292,7 @@ function ListBlock({ block }) {
                                 <p className="text-brand-taupe dark:text-brand-taupe text-sm">{item.desc}</p>
                             </div>
                         );
-                    } else if (block.item_type === "compact_card") {
+                    } else if (item.item_type === "compact_card") {
                         return (
                             <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
                                 <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>
