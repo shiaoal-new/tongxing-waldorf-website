@@ -234,50 +234,15 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
 
                                             {block.type === "list_block" && (
                                                 <>
-                                                    {/* todo: remove header/subtitle support, ask user to juse text_block */}
-                                                    {(block.header || block.subtitle) && (
-                                                        <div className={`max-w-4xl mx-auto mb-8 ${align === 'left' ? 'text-left' : 'text-center'}`}>
-                                                            {block.subtitle && (
-                                                                <div className="text-xs font-bold tracking-wider text-brand-accent uppercase mb-1">
-                                                                    {block.subtitle}
-                                                                </div>
-                                                            )}
-                                                            {block.header && (
-                                                                <h4 className="font-bold text-brand-text dark:text-brand-bg border-l-4 border-warning-400 pl-4">
-                                                                    {block.header}
-                                                                </h4>
-                                                            )}
-                                                        </div>
-                                                    )}
                                                     {block.layout_method === "scrollable_grid" && (
                                                         <ScrollableGrid
                                                             items={block.items || []}
                                                             renderItem={(item, index) => {
                                                                 if (block.item_type === "benefit") {
                                                                     return (
-
                                                                         <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
                                                                             {item.desc}
                                                                         </Benefit>
-
-
-                                                                        // <Benefits
-                                                                        //     data={{
-                                                                        //         ...item,
-                                                                        //         bullets: item.sub_items?.map(bullet => ({
-                                                                        //             ...bullet,
-                                                                        //             buttons: bullet.buttons?.map(btn => {
-                                                                        //                 if (btn.link?.startsWith("#")) {
-                                                                        //                     return {
-                                                                        //                         ...btn,
-                                                                        //                         onClick: () => handleButtonClick(btn.link)
-                                                                        //                     };
-                                                                        //                 }
-                                                                        //                 return btn;
-                                                                        //             })
-                                                                        //         }))
-                                                                        //     }}
-                                                                        // />
                                                                     );
                                                                 } else if (block.item_type === "video") {
                                                                     return (
