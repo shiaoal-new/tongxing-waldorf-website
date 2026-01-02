@@ -19,6 +19,7 @@ sections:
         header: 核心教育目標：三元力量的平衡
       - type: list_block
         layout_method: grid_cards
+        item_type: card
         items:
           - title: 意志 (Will) - 手的做為
             desc: 動手做、親身試，培養「說到做到」的堅毅。

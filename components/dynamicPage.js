@@ -10,7 +10,8 @@ import TableOfContents from "./tableOfContents";
 import ParallaxBackground from "./parallaxBackground";
 import { useState, useRef } from "react";
 import { useTheme } from "next-themes";
-import { renderSection } from "./sectionRenderer";
+import { SectionBlock } from "./sectionRenderer";
+import { PageDataProvider } from "../contexts/PageDataContext";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, benefitsList, coursesList = [] }) {
     const [selectedMember, setSelectedMember] = useState(null);
@@ -38,7 +39,11 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     };
 
     const getMemberDetails = (name) => {
+        console.log('[getMemberDetails] Looking for:', name);
+        console.log('[getMemberDetails] facultyList length:', facultyList?.length);
+        console.log('[getMemberDetails] facultyList names:', facultyList?.map(f => f.name));
         const member = facultyList.find(f => f.name === name) || { name };
+        console.log('[getMemberDetails] Found member:', member);
         const media = member.media || (member.photo ? { type: 'image', image: getImagePath(member.photo) } : null);
         return {
             ...member,
@@ -82,14 +87,16 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                 )}
 
                 <div className="mt-10">
-                    {sections.map((section, index) =>
-                        renderSection(section, index, {
-                            getMemberDetails,
-                            setSelectedMember,
-                            faqList,
-                            getImagePath
-                        })
-                    )}
+                    <PageDataProvider value={{
+                        getMemberDetails,
+                        setSelectedMember,
+                        faqList,
+                        getImagePath
+                    }}>
+                        {sections.map((section, index) =>
+                            <SectionBlock key={index} section={section} index={index} />
+                        )}
+                    </PageDataProvider>
 
                     {!page.sections && page.content && (
                         <div className="max-w-4xl mx-auto px-4">

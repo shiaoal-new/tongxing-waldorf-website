@@ -15,11 +15,12 @@ import SpacingDemoBlock from "./spacingDemoBlock";
 import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
+import { usePageData } from "../contexts/PageDataContext";
 
 /**
  * 渲染单个section及其内部的所有blocks
  */
-export function renderSection(section, index, { getMemberDetails, setSelectedMember, faqList, getImagePath }) {
+export function SectionBlock({ section, index }) {
     const layout = section._layout || {};
     const blocks = section.blocks || [];
     const sectionId = section.section_id;
@@ -57,8 +58,6 @@ export function renderSection(section, index, { getMemberDetails, setSelectedMem
     }
 
     // Determine if we should limit the section body width
-    // Generally, text-heavy or alternating layouts should be limited to 1200px (brand max-width)
-    // Grid-based collections and specific overview blocks should be wide (uncapped)
     let sectionLimit = section.limit;
     if (sectionLimit === undefined) {
         const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
@@ -83,7 +82,7 @@ export function renderSection(section, index, { getMemberDetails, setSelectedMem
             <div className="mt-6">
                 {contentBlocks.map((block, bIndex) => (
                     <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
-                        {renderBlock(block, align, { getMemberDetails, setSelectedMember, faqList, getImagePath })}
+                        <BlockRenderer block={block} align={align} />
                     </div>
                 ))}
             </div>
@@ -94,14 +93,14 @@ export function renderSection(section, index, { getMemberDetails, setSelectedMem
 /**
  * 根据block类型渲染对应的内容
  */
-function renderBlock(block, align, { getMemberDetails, setSelectedMember, faqList, getImagePath }) {
+function BlockRenderer({ block, align }) {
     switch (block.type) {
         case "text_block":
-            return renderTextBlock(block, align);
+            return <TextBlock block={block} align={align} />;
         case "member_block":
-            return renderMemberBlock(block, getMemberDetails, setSelectedMember);
+            return <MemberBlock block={block} />;
         case "list_block":
-            return renderListBlock(block, faqList, getImagePath);
+            return <ListBlock block={block} />;
         case "schedule_block":
             return <ScheduleBlock data={block} />;
         case "curriculum_block":
@@ -126,9 +125,9 @@ function renderBlock(block, align, { getMemberDetails, setSelectedMember, faqLis
 }
 
 /**
- * 渲染文本块
+ * 渲染文本塊
  */
-function renderTextBlock(block, align) {
+function TextBlock({ block, align }) {
     return (
         <div className={`max-w-4xl mx-auto ${align === 'left' ? 'text-left' : 'text-center'}`}>
             {block.sub_header && (
@@ -159,14 +158,16 @@ function renderTextBlock(block, align) {
 }
 
 /**
- * 渲染成员块
+ * 渲染成員塊
  */
-function renderMemberBlock(block, getMemberDetails, setSelectedMember) {
+function MemberBlock({ block }) {
+    const { getMemberDetails, setSelectedMember } = usePageData();
     return (
         <div className="max-w-brand mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {block.members && block.members.map((memberName, mIndex) => {
                     const member = getMemberDetails(memberName);
+                    if (!member) return null;
                     return (
                         <div
                             key={mIndex}
@@ -207,128 +208,132 @@ function renderMemberBlock(block, getMemberDetails, setSelectedMember) {
 }
 
 /**
- * 渲染列表块
+ * 渲染列表塊
  */
-function renderListBlock(block, faqList, getImagePath) {
+function ListBlock({ block }) {
+    const { faqList, getImagePath } = usePageData();
     return (
-        <ListRenderer
-            direction={block.direction || "horizontal"}
-            items={
-                block.faq_ids
-                    ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
-                        question: f.question,
-                        answer: f.answer,
-                        title: f.question // 为 accordion 提供 title
-                    }))
-                    : (block.items || [])
-            }
-            layout={block.layout_method || "scrollable_grid"}
-            columns={3}
-            renderItem={(item, index) => {
-                // FAQ 模式
-                if (block.faq_ids) {
-                    return (
-                        <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={{
-                                a: ({ node, ...props }) => (
-                                    <a
-                                        {...props}
-                                        className="text-brand-accent hover:text-primary-800 dark:text-brand-accent dark:hover:text-brand-accent/60 underline"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    />
-                                ),
-                                p: ({ node, ...props }) => (
-                                    <p {...props} className="mb-3 last:mb-0" />
-                                ),
-                                table: ({ node, ...props }) => (
-                                    <div className="overflow-x-auto my-4">
-                                        <table {...props} className="min-w-full divide-y divide-brand-taupe/20 dark:divide-gray-700 border border-brand-taupe/20 dark:border-brand-structural" />
+        <div className="max-w-brand mx-auto">
+            {block.header && (
+                <div className="mb-8">
+                    <h3 className="text-xl font-bold text-brand-text dark:text-brand-bg border-l-4 border-brand-accent pl-4">
+                        {block.header}
+                    </h3>
+                </div>
+            )}
+            <ListRenderer
+                direction={block.direction || "horizontal"}
+                items={
+                    block.faq_ids
+                        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
+                            question: f.question,
+                            answer: f.answer,
+                            title: f.question // 为 accordion 提供 title
+                        }))
+                        : (block.items || [])
+                }
+                layout={block.layout_method || "scrollable_grid"}
+                columns={3}
+                renderItem={(item, index) => {
+                    // FAQ 模式
+                    if (block.faq_ids) {
+                        return (
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                    a: ({ node, ...props }) => (
+                                        <a
+                                            {...props}
+                                            className="text-brand-accent hover:text-primary-800 dark:text-brand-accent dark:hover:text-brand-accent/60 underline"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        />
+                                    ),
+                                    p: ({ node, ...props }) => (
+                                        <p {...props} className="mb-3 last:mb-0" />
+                                    ),
+                                    table: ({ node, ...props }) => (
+                                        <div className="overflow-x-auto my-4">
+                                            <table {...props} className="min-w-full divide-y divide-brand-taupe/20 dark:divide-gray-700 border border-brand-taupe/20 dark:border-brand-structural" />
+                                        </div>
+                                    ),
+                                    thead: ({ node, ...props }) => (
+                                        <thead {...props} className="bg-brand-bg dark:bg-brand-structural" />
+                                    ),
+                                    th: ({ node, ...props }) => (
+                                        <th {...props} className="px-6 py-3 text-left text-xs font-medium text-brand-taupe dark:text-brand-taupe uppercase tracking-wider border-b border-brand-taupe/20 dark:border-brand-structural" />
+                                    ),
+                                    td: ({ node, ...props }) => (
+                                        <td {...props} className="px-6 py-4 whitespace-normal text-sm text-brand-taupe dark:text-brand-taupe border-b border-brand-taupe/20 dark:border-brand-structural" />
+                                    ),
+                                }}
+                            >
+                                {item.answer}
+                            </ReactMarkdown>
+                        );
+                    }
+
+
+                    // Vertical 模式 (非 FAQ)
+                    if (block.direction === "vertical") {
+                        return (
+                            <>
+                                {item.subtitle && (
+                                    <div className="text-sm font-bold text-brand-accent mb-2">
+                                        {item.subtitle}
                                     </div>
-                                ),
-                                thead: ({ node, ...props }) => (
-                                    <thead {...props} className="bg-brand-bg dark:bg-brand-structural" />
-                                ),
-                                th: ({ node, ...props }) => (
-                                    <th {...props} className="px-6 py-3 text-left text-xs font-medium text-brand-taupe dark:text-brand-taupe uppercase tracking-wider border-b border-brand-taupe/20 dark:border-brand-structural" />
-                                ),
-                                td: ({ node, ...props }) => (
-                                    <td {...props} className="px-6 py-4 whitespace-normal text-sm text-brand-taupe dark:text-brand-taupe border-b border-brand-taupe/20 dark:border-brand-structural" />
-                                ),
-                            }}
-                        >
-                            {item.answer}
-                        </ReactMarkdown>
-                    );
-                }
-
-
-                // Vertical 模式 (非 FAQ)
-                if (block.direction === "vertical") {
-                    return (
-                        <>
-                            {item.subtitle && (
-                                <div className="text-sm font-bold text-brand-accent mb-2">
-                                    {item.subtitle}
+                                )}
+                                <div className="text-brand-taupe dark:text-brand-taupe">
+                                    {item.desc}
                                 </div>
-                            )}
-                            <div className="text-brand-taupe dark:text-brand-taupe">
+                            </>
+                        );
+                    }
+
+                    // 根据 item_type 渲染不同类型的 item
+                    if (block.item_type === "benefit") {
+                        return (
+                            <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
                                 {item.desc}
-                            </div>
-                        </>
-                    );
-                }
-
-                // Grid Cards 模式
-                if (block.layout_method === "grid_cards") {
-                    return (
-                        <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
-                            <MediaRenderer
-                                media={item.media || (item.image ? { type: 'image', image: getImagePath(item.image) } : null)}
-                                className="w-16 h-16 mb-4"
-                                imgClassName="object-contain"
+                            </Benefit>
+                        );
+                    } else if (block.item_type === "video") {
+                        return (
+                            <VideoItem
+                                video={{
+                                    title: item.title,
+                                    media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
+                                    description: item.desc,
+                                    className: item.className
+                                }}
+                                className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
                             />
-                            <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{item.title}</h3>
-                            {item.subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{item.subtitle}</p>}
-                            <p className="text-brand-taupe dark:text-brand-taupe text-sm">{item.desc}</p>
-                        </div>
-                    );
-                }
-
-                // Compact Grid 模式
-                if (block.layout_method === "compact_grid") {
-                    return (
-                        <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
-                            <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>
-                            <h3 className="font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
-                            {item.desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{item.desc}</p>}
-                        </div>
-                    );
-                }
-
-                // Scrollable Grid 模式 - 根据 item_type
-                if (block.item_type === "benefit") {
-                    return (
-                        <Benefit title={item.title} icon={item.icon} buttons={item.buttons}>
-                            {item.desc}
-                        </Benefit>
-                    );
-                } else if (block.item_type === "video") {
-                    return (
-                        <VideoItem
-                            video={{
-                                title: item.title,
-                                media: item.media || (item.video_url ? { type: 'youtube', url: item.video_url } : null),
-                                description: item.desc,
-                                className: item.className
-                            }}
-                            className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
-                        />
-                    );
-                }
-                return null;
-            }}
-        />
+                        );
+                    } else if (block.item_type === "card") {
+                        return (
+                            <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md">
+                                <MediaRenderer
+                                    media={item.media || (item.image ? { type: 'image', image: getImagePath(item.image) } : null)}
+                                    className="w-16 h-16 mb-4"
+                                    imgClassName="object-contain"
+                                />
+                                <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{item.title}</h3>
+                                {item.subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{item.subtitle}</p>}
+                                <p className="text-brand-taupe dark:text-brand-taupe text-sm">{item.desc}</p>
+                            </div>
+                        );
+                    } else if (block.item_type === "compact_card") {
+                        return (
+                            <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10">
+                                <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{item.subtitle}</div>
+                                <h3 className="font-bold text-brand-text dark:text-brand-bg">{item.title}</h3>
+                                {item.desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{item.desc}</p>}
+                            </div>
+                        );
+                    }
+                    return null;
+                }}
+            />
+        </div>
     );
 }

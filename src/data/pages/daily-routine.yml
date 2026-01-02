@@ -97,6 +97,7 @@ sections:
         description: 孩子長大了，課程也會跟著變。我們會給他們更多挑戰，幫助他們從「用身體感受世界」慢慢轉向「用腦袋思考世界」。
       - type: list_block
         layout_method: grid_cards
+        item_type: card
         items:
           - title: 年段任務
             desc: 8 年級要做大專題、9 年級要去社會實習——走出校園，去真實世界裡試試身手。

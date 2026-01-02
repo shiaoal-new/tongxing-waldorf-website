@@ -62,6 +62,7 @@ sections:
       - type: list_block
         header: "人文、自然與外語"
         layout_method: compact_grid
+        item_type: compact_card
         items:
           - title: "王振叡"
             subtitle: "文史"
@@ -79,6 +80,7 @@ sections:
       - type: list_block
         header: "藝術、手作與生活"
         layout_method: compact_grid
+        item_type: compact_card
         items:
           - title: "朱道興"
             subtitle: "書法"
@@ -100,6 +102,7 @@ sections:
       - type: list_block
         header: "肢體、動能與環境"
         layout_method: compact_grid
+        item_type: compact_card
         items:
           - title: "林育姍"
             subtitle: "優律思美"
@@ -113,6 +116,7 @@ sections:
       - type: list_block
         header: "音樂與合奏"
         layout_method: compact_grid
+        item_type: compact_card
         items:
           - title: "陳乃欣"
             subtitle: "音樂（豎笛）"
@@ -134,6 +138,7 @@ sections:
       - type: list_block
         header: "安親課後輔導"
         layout_method: compact_grid
+        item_type: compact_card
         items:
           - title: "余明儒"
             subtitle: "安親"

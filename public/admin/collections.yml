@@ -350,16 +350,22 @@
                     default: "scrollable_grid",
                   }
                 - {
-                    label: "項目類型 (僅 scrollable_grid 需要)",
+                    label: "项目类型",
                     name: "item_type",
                     widget: "select",
                     options:
                       [
                         { label: "教育特色 (Benefit)", value: "benefit" },
                         { label: "影片 (Video)", value: "video" },
+                        { label: "卡片 (Card)", value: "card" },
+                        {
+                          label: "紧凑卡片 (Compact Card)",
+                          value: "compact_card",
+                        },
                       ],
                     default: "benefit",
                     required: false,
+                    hint: "决定项目的渲染样式。benefit/video 适合 scrollable_grid,card 适合 grid_cards,compact_card 适合紧凑网格",
                   }
                 - label: "列表項目"
                   name: "items"

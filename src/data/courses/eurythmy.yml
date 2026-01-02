@@ -19,6 +19,7 @@ sections:
       - type: list_block
         header: 核心概念
         layout_method: grid_cards
+        item_type: card
         items:
           - title: 語言的轉化
             desc: 將子音與母音的發音特質轉化為特定動作。母音表達內在感受，子音模仿外在力量。
