@@ -1,7 +1,7 @@
 import Section from "./section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Benefit from "./benefits";
+import BenefitItem from "./benefit";
 import ListRenderer from "./listRenderer";
 import VideoItem from "./video";
 import MediaRenderer from "./mediaRenderer";
@@ -49,7 +49,7 @@ export function SectionBlock({ section, index }) {
     if (contentBlocks.length > 0) {
         const firstContent = contentBlocks[0];
         if (firstContent.type === 'text_block' ||
-            (firstContent.type === 'list_block' && firstContent.layout_method === 'scrollable_grid' && firstContent.item_type === 'benefit') ||
+            (firstContent.type === 'list_block' && firstContent.layout_method === 'scrollable_grid' && (firstContent.item_type === 'benefit' || firstContent.item_type === 'benefit_item')) ||
             (firstContent.type === 'member_block')) {
             align = "left";
         }
@@ -104,13 +104,15 @@ function BlockRenderer({ block, align = "center", context = "standalone" }) {
         case "faq":
             return <TextBlock data={block} align={isNested ? "left" : align} isNested={isNested} />;
 
+        case "benefit_item":
         case "benefit":
             return (
-                <Benefit title={block.title} icon={block.icon} buttons={block.buttons}>
+                <BenefitItem title={block.title} icon={block.icon} buttons={block.buttons}>
                     {block.content}
-                </Benefit>
+                </BenefitItem>
             );
 
+        case "video_item":
         case "video":
             return (
                 <VideoItem
@@ -124,9 +126,11 @@ function BlockRenderer({ block, align = "center", context = "standalone" }) {
                 />
             );
 
+        case "card_item":
         case "card":
             return <CardItem data={block} />;
 
+        case "compact_card_item":
         case "compact_card":
             return <CompactCardItem data={block} />;
 
@@ -294,7 +298,7 @@ function ListBlock({ block }) {
         ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({ ...f, type: 'faq' }))
         : (block.items || []).map(item => ({
             ...item,
-            type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit")
+            type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit_item")
         }));
 
     return (

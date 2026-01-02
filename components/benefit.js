@@ -2,7 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import ActionButtons from "./actionButtons";
 
-export default function Benefit(props) {
+export default function BenefitItem(props) {
   return (
     <>
       <div className="benefit-container flex flex-col mt-8 ">

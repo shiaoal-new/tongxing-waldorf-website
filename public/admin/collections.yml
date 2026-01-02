@@ -310,18 +310,18 @@
                     widget: "select",
                     options:
                       [
-                        { label: "純文字/折疊內容 (Text)", value: "text" },
-                        { label: "教育特色 (Benefit)", value: "benefit" },
-                        { label: "影片 (Video)", value: "video" },
-                        { label: "卡片 (Card)", value: "card" },
+                        { label: "純文字/折疊內容", value: "text" },
+                        { label: "教育特色 (Benefit)", value: "benefit_item" },
+                        { label: "影片 (Video)", value: "video_item" },
+                        { label: "卡片 (Card)", value: "card_item" },
                         {
                           label: "紧凑卡片 (Compact Card)",
-                          value: "compact_card",
+                          value: "compact_card_item",
                         },
                       ],
-                    default: "benefit",
+                    default: "benefit_item",
                     required: false,
-                    hint: "决定项目的渲染样式。text 適合垂直折疊, benefit/video 适合 scrollable_grid, card 适合 grid_cards, compact_card 适合紧凑网格",
+                    hint: "决定项目的渲染样式。text 適合垂直折疊, benefit_item/video_item 适合 scrollable_grid, card_item 适合 grid_cards, compact_card_item 适合紧凑网格",
                   }
                 - label: "列表項目"
                   name: "items"

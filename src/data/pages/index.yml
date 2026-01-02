@@ -21,7 +21,7 @@ sections:
         content: 說實話，這年頭「學習」這兩個字被搞得很沉重，像是背著裝滿考卷的磚頭在跑馬拉松。但在「同心」，我們更想聊聊怎麼幫孩子把那把名為「好奇」的火種留住，而不是用標準答案把它澆熄。
       - type: list_block
         layout_method: scrollable_grid
-        item_type: benefit
+        item_type: benefit_item
         items:
           - title: 給孩子一套「導航系統」，而不是地圖
             content: 我們常說要鍛鍊孩子的「意志、情感與思考」，聽起來很玄，但說白了，就是希望孩子的手能勞動、心能感受（不是只靠貼圖的那種）、腦袋能真正轉動。我們帶著孩子跟著四季的節奏生活，讓他們知道食物是土裡長的，而不是超市塑膠袋裡生的。這種對萬物的「敬意」，會變成他們長大後面對混亂世界時，最穩定的導航系統。
@@ -41,7 +41,7 @@ sections:
         content: 說真的，在現代城市裡養小孩，有時候覺得自己像在玩一場「荒野求生」。一旦工作加班、保母請假或小孩感冒，生活秩序瞬間就像骨牌一樣全倒。我們深知那種孤立無援的焦慮，所以「同心」不只是一間學校，它更像是一個找回失傳已久的「村落感」的地方。
       - type: list_block
         layout_method: scrollable_grid
-        item_type: benefit
+        item_type: benefit_item
         items:
           - title: 老師不只懂孩子，還很懂你的不容易
             content: 這裡的老師不只是站在講台上的人，他們花大量時間跟家長「搏感情」。這種溝通不是為了發成績單，而是為了建立那種「我懂你的孩子，也理解你的難處」的革命情感。當老師跟家長成了隊友，教育才不會變成各彈各的調。
@@ -60,7 +60,7 @@ sections:
         content: 文字說再多，不如親眼看看。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，但都是真的。
       - type: list_block
         layout_method: scrollable_grid
-        item_type: video
+        item_type: video_item
         items:
           - title: 同心華德福教育8分鐘精華
             className: yellow-frame
