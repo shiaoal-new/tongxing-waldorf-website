@@ -15,7 +15,7 @@ const ScheduleList = ({ data, title }) => (
                                 {item.type === 'in' ? '吸氣' : '吐氣'}
                             </span>
                         </div>
-                        <p className="text-neutral-500 dark:text-neutral-400 text-sm">{item.desc}</p>
+                        <p className="text-neutral-500 dark:text-neutral-400 text-sm">{item.content}</p>
                     </div>
                 </div>
             ))}

@@ -84,7 +84,7 @@ export default function VideoItem({ video, className }) {
           {video.title}
         </h3>
         <p className="text-brand-taupe dark:text-brand-taupe text-sm line-clamp-4 leading-relaxed">
-          {video.description}
+          {video.content}
         </p>
       </div>
     </div>

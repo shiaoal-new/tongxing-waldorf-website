@@ -28,27 +28,24 @@ export function SectionBlock({ section, index }) {
     const mediaList = section.media_list;
     const parallaxRatio = section.parallax_ratio;
 
-    // Identify if the first block is a header (text_block with header/subheader)
+    // Identify if the first block is a header (text_block with title/subtitle)
     const firstBlock = blocks[0];
     let headerProps = {};
     let contentBlocks = blocks;
     let align = "center"; // Default alignment
 
     if (firstBlock && firstBlock.type === 'text_block') {
-        // If it has header properties, treat it as the section header
-        if (firstBlock.header || firstBlock.sub_header) {
+        if (firstBlock.title || firstBlock.subtitle) {
             headerProps = {
-                title: firstBlock.header,
-                pretitle: firstBlock.sub_header,
-                description: firstBlock.description,
+                title: firstBlock.title,
+                subtitle: firstBlock.subtitle,
+                content: firstBlock.content,
                 buttons: firstBlock.buttons
             };
-            // Consume the first block so it doesn't render again
             contentBlocks = blocks.slice(1);
         }
     }
 
-    // Determine alignment based on the first CONTENT block (if any)
     if (contentBlocks.length > 0) {
         const firstContent = contentBlocks[0];
         if (firstContent.type === 'text_block' ||
@@ -58,7 +55,6 @@ export function SectionBlock({ section, index }) {
         }
     }
 
-    // Determine if we should limit the section body width
     let sectionLimit = section.limit;
     if (sectionLimit === undefined) {
         const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
@@ -92,66 +88,147 @@ export function SectionBlock({ section, index }) {
 }
 
 /**
- * 根据block类型渲染对应的内容
+ * 核心渲染器 (Block Dispatcher)
+ * 負責將數據分配給各個 UI 組件
  */
-function BlockRenderer({ block, align }) {
-    switch (block.type) {
+function BlockRenderer({ block, align = "center", context = "standalone" }) {
+    if (!block) return null;
+
+    // 如果是 List 內部，某些樣式可能需要微調
+    const isNested = context === "list";
+    const type = block.type || block.item_type || "text_block";
+
+    switch (type) {
         case "text_block":
-            return <TextBlock block={block} align={align} />;
-        case "member_block":
-            return <MemberBlock block={block} />;
+        case "text":
+        case "faq":
+            return <TextBlock data={block} align={isNested ? "left" : align} isNested={isNested} />;
+
+        case "benefit":
+            return (
+                <Benefit title={block.title} icon={block.icon} buttons={block.buttons}>
+                    {block.content}
+                </Benefit>
+            );
+
+        case "video":
+            return (
+                <VideoItem
+                    video={{
+                        title: block.title,
+                        media: block.media,
+                        content: block.content,
+                        className: block.className
+                    }}
+                    className={!isNested ? "" : "md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"}
+                />
+            );
+
+        case "card":
+            return <CardItem data={block} />;
+
+        case "compact_card":
+            return <CompactCardItem data={block} />;
+
         case "list_block":
             return <ListBlock block={block} />;
+
+        case "member_block":
+            return <MemberBlock block={block} />;
+
         case "schedule_block":
             return <ScheduleBlock data={block} />;
+
         case "curriculum_block":
             return <CurriculumBlock data={block} />;
+
         case "color_palette_block":
             return <ColorPaletteBlock data={block} />;
+
         case "visit_process_block":
             return <VisitProcess />;
+
         case "visit_schedule_block":
             return <VisitSchedule />;
+
         case "spacing_demo_block":
             return <SpacingDemoBlock data={block} />;
+
         case "typography_demo_block":
             return <TypographyDemoBlock data={block} />;
+
         case "micro_interactions_block":
             return <MicroInteractionsBlock data={block} />;
+
         case "tabbed_content_block":
             return <TabbedContentBlock data={block} />;
+
         default:
             return null;
     }
 }
 
 /**
- * 渲染文本塊
+ * 提取的 UI 組件：文字區塊
  */
-function TextBlock({ block, align }) {
+function TextBlock({ data, align, isNested }) {
     return (
-        <div className={`max-w-4xl mx-auto ${align === 'left' ? 'text-left' : 'text-center'}`}>
-            {block.sub_header && (
-                <div className="text-sm font-bold tracking-wider text-brand-accent uppercase">
-                    {block.sub_header}
+        <div className={`${isNested ? '' : 'max-w-4xl mx-auto'} ${align === 'left' ? 'text-left' : 'text-center'}`}>
+            {data.subtitle && (
+                <div className="text-sm font-bold tracking-wider text-brand-accent uppercase mb-2">
+                    {data.subtitle}
                 </div>
             )}
-            {block.header && (
+            {data.title && !isNested && (
                 <h3 className="mt-3 text-brand-text dark:text-brand-bg">
-                    {block.header}
+                    {data.title}
                 </h3>
             )}
-            {block.description && (
-                <div className="py-4 text-lg text-brand-taupe dark:text-brand-taupe">
-                    {block.description}
+            {data.content && (
+                <div className={`py-2 ${isNested ? 'text-base' : 'text-lg'} text-brand-taupe dark:text-brand-taupe`}>
+                    <MarkdownContent content={data.content} />
                 </div>
             )}
-            {block.content && (
-                <div className={`${align === 'left' ? '' : 'mx-auto'}`}>
-                    <MarkdownContent content={block.content} />
+            {!isNested && <ActionButtons buttons={data.buttons} align={align === "left" ? "left" : "center"} className="mt-6" />}
+        </div>
+    );
+}
+
+/**
+ * 提取的 UI 組件：卡片
+ */
+function CardItem({ data }) {
+    return (
+        <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md h-full">
+            {data.media && (
+                <MediaRenderer
+                    media={data.media}
+                    className="w-16 h-16 mb-4"
+                    imgClassName="object-contain"
+                />
+            )}
+            <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{data.title}</h3>
+            {data.subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{data.subtitle}</p>}
+            <div className="text-brand-taupe dark:text-brand-taupe text-sm">
+                <MarkdownContent content={data.content} />
+            </div>
+        </div>
+    );
+}
+
+/**
+ * 提取的 UI 組件：緊湊卡片
+ */
+function CompactCardItem({ data }) {
+    return (
+        <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10 dark:hover:bg-primary-900/10 h-full">
+            <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{data.subtitle}</div>
+            <h3 className="font-bold text-brand-text dark:text-brand-bg">{data.title}</h3>
+            {data.content && (
+                <div className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">
+                    <MarkdownContent content={data.content} />
                 </div>
             )}
-            <ActionButtons buttons={block.buttons} align={align === "left" ? "left" : "center"} className="mt-6" />
         </div>
     );
 }
@@ -181,7 +258,7 @@ function MemberBlock({ block }) {
                                     />
                                 ) : (
                                     <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-brand-accent/10 dark:bg-primary-900/30 flex items-center justify-center border-4 border-brand-accent/20 dark:border-primary-900/50">
-                                        <span className="text-brand-accent/60 text-3xl font-bold">{member.name?.[0]}</span>
+                                        <span className="text-brand-accent/60 text-3xl font-bold">{member.title?.[0]}</span>
                                     </div>
                                 )}
                                 <div className="absolute -bottom-2 right-0 w-8 h-8 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -191,10 +268,10 @@ function MemberBlock({ block }) {
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <h3 className="font-bold text-brand-text dark:text-brand-bg group-hover:text-brand-accent transition-colors">{member.name}</h3>
-                                {member.title && (
+                                <h3 className="font-bold text-brand-text dark:text-brand-bg group-hover:text-brand-accent transition-colors">{member.title}</h3>
+                                {member.subtitle && (
                                     <p className="mt-1 text-xs text-brand-accent dark:text-brand-accent font-medium tracking-tight whitespace-pre-wrap">
-                                        {member.title}
+                                        {member.subtitle}
                                     </p>
                                 )}
                             </div>
@@ -210,107 +287,36 @@ function MemberBlock({ block }) {
  * 渲染列表塊
  */
 function ListBlock({ block }) {
-    const { faqList, getImagePath } = usePageData();
+    const { faqList } = usePageData();
+
+    // 準備列表數據，將 FAQ 或普通項目統一轉化為 Block 結構
+    const listItems = block.faq_ids
+        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({ ...f, type: 'faq' }))
+        : (block.items || []).map(item => ({
+            ...item,
+            type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit")
+        }));
+
     return (
         <div className="max-w-brand mx-auto">
-            {block.header && (
+            {block.title && (
                 <div className="mb-8">
                     <h3 className="text-xl font-bold text-brand-text dark:text-brand-bg border-l-4 border-brand-accent pl-4">
-                        {block.header}
+                        {block.title}
                     </h3>
                 </div>
             )}
             <ListRenderer
                 direction={block.direction || "horizontal"}
-                items={
-                    block.faq_ids
-                        ? block.faq_ids.map(id => faqList.find(f => f.id === id)).filter(Boolean).map(f => ({
-                            ...f,
-                            title: f.question,
-                            desc: f.answer,
-                            item_type: 'faq'
-                        }))
-                        : (block.items || []).map(item => ({
-                            ...item,
-                            // 如果是垂直排列且未指定類型，預設為 text
-                            item_type: item.item_type || block.item_type || (block.direction === "vertical" ? "text" : "benefit")
-                        }))
-                }
+                items={listItems}
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}
                 renderItem={(item, index) => (
-                    <ItemRenderer item={item} index={index} getImagePath={getImagePath} />
+                    <BlockRenderer block={item} context="list" />
                 )}
             />
         </div>
     );
 }
 
-/**
- * 根據 item_type 渲染不同類型的列表項
- */
-function ItemRenderer({ item, index, getImagePath }) {
-    const { item_type, title, subtitle, desc, icon, buttons, media, image, video_url, className } = item;
-
-    switch (item_type) {
-        case "faq":
-        case "text":
-            return (
-                <>
-                    {subtitle && (
-                        <div className="text-sm font-bold text-brand-accent mb-2">
-                            {subtitle}
-                        </div>
-                    )}
-                    <MarkdownContent content={desc} />
-                </>
-            );
-
-        case "benefit":
-            return (
-                <Benefit title={title} icon={icon} buttons={buttons}>
-                    {desc}
-                </Benefit>
-            );
-
-        case "video":
-            return (
-                <VideoItem
-                    video={{
-                        title,
-                        media: media || (video_url ? { type: 'youtube', url: video_url } : null),
-                        description: desc,
-                        className
-                    }}
-                    className="md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"
-                />
-            );
-
-        case "card":
-            return (
-                <div className="bg-brand-bg dark:bg-brand-structural p-8 rounded-2xl shadow-sm border border-brand-taupe/10 dark:border-brand-structural flex flex-col items-center text-center transition-all hover:shadow-md h-full">
-                    <MediaRenderer
-                        media={media || (image ? { type: 'image', image: getImagePath(image) } : null)}
-                        className="w-16 h-16 mb-4"
-                        imgClassName="object-contain"
-                    />
-                    <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2">{title}</h3>
-                    {subtitle && <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-3">{subtitle}</p>}
-                    <p className="text-brand-taupe dark:text-brand-taupe text-sm">{desc}</p>
-                </div>
-            );
-
-        case "compact_card":
-            return (
-                <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10/30 dark:hover:bg-primary-900/10 h-full">
-                    <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{subtitle}</div>
-                    <h3 className="font-bold text-brand-text dark:text-brand-bg">{title}</h3>
-                    {desc && <p className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">{desc}</p>}
-                </div>
-            );
-
-        default:
-            return null;
-    }
-}
 

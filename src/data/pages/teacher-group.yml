@@ -2,8 +2,8 @@ title: "教師團隊"
 slug: "teacher-group"
 hero:
   title: "同心教師團"
-  sub_title: "真心陪伴，守護文化的自由"
-  description: "同心有一群真摯又有活力的老師們，抱持著對教育的理想與自我成長的期許，彼此支持、互相學習。"
+  subtitle: "真心陪伴，守護文化的自由"
+  content: "同心有一群真摯又有活力的老師們，抱持著對教育的理想與自我成長的期許，彼此支持、互相學習。"
   media_list:
     - type: image
       image: /img/teacher.jpg
@@ -12,15 +12,15 @@ sections:
   - section_id: intro
     blocks:
       - type: text_block
-        header: "守護文化精神自由"
-        description: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
+        title: "守護文化精神自由"
+        content: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
 
   - section_id: full-time
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        header: "專任教師群"
-        sub_header: "Full-time Faculty"
+        title: "專任教師群"
+        subtitle: "Full-time Faculty"
       - type: member_block
         members:
           - "詹雅智"
@@ -40,8 +40,8 @@ sections:
   - section_id: administrative
     blocks:
       - type: text_block
-        header: "行政教師群"
-        sub_header: "Administration"
+        title: "行政教師群"
+        subtitle: "Administration"
       - type: member_block
         members:
           - "吳俊輝"
@@ -55,12 +55,12 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        header: "兼任教師群"
-        sub_header: "Part-time & Specialist Teachers"
-        description: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
+        title: "兼任教師群"
+        subtitle: "Part-time & Specialist Teachers"
+        content: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
 
       - type: list_block
-        header: "人文、自然與外語"
+        title: "人文、自然與外語"
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -78,7 +78,7 @@ sections:
             subtitle: "英文"
 
       - type: list_block
-        header: "藝術、手作與生活"
+        title: "藝術、手作與生活"
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -100,7 +100,7 @@ sections:
             subtitle: "戲劇"
 
       - type: list_block
-        header: "肢體、動能與環境"
+        title: "肢體、動能與環境"
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -114,7 +114,7 @@ sections:
             subtitle: "藝術 / 體育 / 園藝"
 
       - type: list_block
-        header: "音樂與合奏"
+        title: "音樂與合奏"
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -136,7 +136,7 @@ sections:
             subtitle: "合奏（長笛）"
 
       - type: list_block
-        header: "安親課後輔導"
+        title: "安親課後輔導"
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -148,10 +148,10 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        header: 親眼見證，孩子生命力的綻放
-        description: 您是否也在尋找一種能尊重孩子個體本質的教育？與其聽說，不如現場參與。同心的大門為每一位關心教育的家長敞開。
+        title: 親眼見證，孩子生命力的綻放
+        content: 您是否也在尋找一種能尊重孩子個體本質的教育？與其聽說，不如現場參與。同心的大門為每一位關心教育的家長敞開。
         buttons:
           - text: 預約參觀
             link: /visit
             style: btn-white
-        sub_header: 下一步
+        subtitle: 下一步

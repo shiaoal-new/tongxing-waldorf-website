@@ -1,9 +1,9 @@
 title: 品牌色彩系統
 slug: colors
 hero:
-  header: Color Palette
-  sub_header: Design System Tokens
-  description: 同心華德福設計系統色彩規範。點擊色塊即可複製 Hex Code，確保品牌視覺一致性。
+  title: Color Palette
+  subtitle: Design System Tokens
+  content: 同心華德福設計系統色彩規範。點擊色塊即可複製 Hex Code，確保品牌視覺一致性。
   layout: Hero Default
   media_list:
     - type: image
@@ -12,12 +12,12 @@ sections:
   - section_id: palette-main
     blocks:
       - type: color_palette_block
-        header: 系統色彩概覽
-        sub_header: Tung-Hsin Palette
-        description: 以下是我們目前在使用的全域色彩變數。
+        title: 系統色彩概覽
+        subtitle: Tung-Hsin Palette
+        content: 以下是我們目前在使用的全域色彩變數。
       - type: text_block
-        header: 使用指南
-        sub_header: Usage Policy
+        title: 使用指南
+        subtitle: Usage Policy
         content: |
           ### 如何使用這些色彩？
 

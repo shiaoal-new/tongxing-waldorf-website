@@ -7,12 +7,13 @@ import { ArrowDownIcon } from "@heroicons/react/solid";
 export default function PageHero({ data }) {
     const {
         layout,
-        header,
-        sub_header,
+        title,
+        subtitle,
+        content,
         // Legacy support
-        title: legacyTitle,
-        sub_title: legacySubTitle,
-        description,
+        header: legacyHeader,
+        sub_header: legacySubHeader,
+        description: legacyDescription,
         media_list = [],
         bg_images,
         bg_video,
@@ -23,8 +24,9 @@ export default function PageHero({ data }) {
     const effect = scrolling_effect;
 
     // Resolve content 
-    const effectiveTitle = header || legacyTitle;
-    const effectiveSubTitle = sub_header || legacySubTitle;
+    const effectiveTitle = title || legacyHeader;
+    const effectiveSubTitle = subtitle || legacySubHeader;
+    const effectiveContent = content || legacyDescription;
 
     // Resolve Layout CSS
     const layoutClasses = layout || {};
@@ -79,9 +81,9 @@ export default function PageHero({ data }) {
                         <h1 className={title_class}>
                             {effectiveTitle}
                         </h1>
-                        {description && (
+                        {effectiveContent && (
                             <p className={description_class}>
-                                {description}
+                                {effectiveContent}
                             </p>
                         )}
                     </motion.div>

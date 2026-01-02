@@ -1,5 +1,5 @@
-name: "吳俊輝"
-title: "總務"
+title: "吳俊輝"
+subtitle: "總務"
 media:
   type: image
   image: "/img/teacher-photos/吳俊輝.jpg"
@@ -9,5 +9,5 @@ education: "法國格勒諾布爾第三大學語言科學系所碩士"
 experience: |
   法國遠東學院 (EFEO) 台北中心研究助理
   國立臺北科技大學建築學系研究助理
-bio: "« Il est absolument possible qu’au-delà de ce que perçoivent nos sens se cachent des mondes insoupçonnés. »"
+content: "« Il est absolument possible qu’au-delà de ce que perçoivent nos sens se cachent des mondes insoupçonnés. »"
 order: 20

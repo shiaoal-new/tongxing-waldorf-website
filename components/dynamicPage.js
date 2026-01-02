@@ -38,11 +38,11 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
         return path;
     };
 
-    const getMemberDetails = (name) => {
-        console.log('[getMemberDetails] Looking for:', name);
+    const getMemberDetails = (title) => {
+        console.log('[getMemberDetails] Looking for:', title);
         console.log('[getMemberDetails] facultyList length:', facultyList?.length);
-        console.log('[getMemberDetails] facultyList names:', facultyList?.map(f => f.name));
-        const member = facultyList.find(f => f.name === name) || { name };
+        console.log('[getMemberDetails] facultyList names:', facultyList?.map(f => f.title));
+        const member = facultyList.find(f => f.title === title) || { title };
         console.log('[getMemberDetails] Found member:', member);
         const media = member.media || (member.photo ? { type: 'image', image: getImagePath(member.photo) } : null);
         return {
@@ -60,8 +60,8 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
         let title = "";
         const firstBlock = blocks[0];
         if (firstBlock && firstBlock.type === 'text_block') {
-            if (firstBlock.header) title = firstBlock.header;
-            else if (firstBlock.sub_header) title = firstBlock.sub_header;
+            if (firstBlock.title) title = firstBlock.title;
+            else if (firstBlock.subtitle) title = firstBlock.subtitle;
         }
         return {
             id: section.section_id,
@@ -71,7 +71,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
 
     // Fallback: if hero exists but has no title, use page title
     const effectiveHeroData = heroData ? {
-        header: page.title,
+        title: page.title,
         ...heroData
     } : null;
 
@@ -113,7 +113,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
             <Modal
                 isOpen={!!selectedMember}
                 onClose={() => setSelectedMember(null)}
-                title={selectedMember?.name}
+                title={selectedMember?.title}
             >
                 {selectedMember && (
                     <div className="flex flex-col md:flex-row gap-8 items-start">
@@ -129,14 +129,14 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center bg-brand-accent/10 dark:bg-primary-900/30">
-                                        <span className="text-brand-accent/60 text-6xl font-bold">{selectedMember.name?.[0]}</span>
+                                        <span className="text-brand-accent/60 text-6xl font-bold">{selectedMember.title?.[0]}</span>
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className="flex-grow">
                             <div className="mb-6">
-                                <h4 className="font-bold text-brand-accent dark:text-brand-accent mb-1">{selectedMember.title}</h4>
+                                <h4 className="font-bold text-brand-accent dark:text-brand-accent mb-1">{selectedMember.subtitle}</h4>
                                 <div className="h-1 w-20 bg-warning-500 rounded-full"></div>
                             </div>
 
@@ -181,7 +181,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                         </div>
                                     </div>
                                 )}
-                                {selectedMember.bio && (
+                                {selectedMember.content && (
                                     <div className="bg-brand-accent/10/30 dark:bg-primary-900/10 p-5 md:p-8 rounded-3xl relative overflow-hidden">
                                         <div className="relative z-10">
                                             <h5 className="text-xs font-bold text-brand-accent/60 uppercase tracking-widest mb-4 flex items-center">
@@ -189,7 +189,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                                                 教育理念 / 心語
                                             </h5>
                                             <div className="text-brand-text dark:text-brand-bg italic leading-relaxed whitespace-pre-line text-sm md:text-base">
-                                                {selectedMember.bio}
+                                                {selectedMember.content}
                                             </div>
                                         </div>
                                         <svg className="absolute -bottom-4 -right-2 w-24 h-24 text-primary-100/50 dark:text-primary-900/20 pointer-events-none" fill="currentColor" viewBox="0 0 32 32">

@@ -7,9 +7,9 @@ import ActionButtons from "./actionButtons";
 export default function Section(props) {
     const {
         layout,
-        pretitle,
+        subtitle,
         title,
-        description,
+        content,
         children,
         align,
         direction,
@@ -29,11 +29,11 @@ export default function Section(props) {
     // If background media is present, default to white text for better visibility
     const defaultTitleColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
     const defaultDescColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
-    const defaultPretitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
+    const defaultSubtitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
 
-    const pretitle_class = classes.pretitle_class || `text-sm font-bold tracking-brand ${defaultPretitleColor} uppercase`;
+    const subtitle_class = classes.subtitle_class || `text-sm font-bold tracking-brand ${defaultSubtitleColor} uppercase`;
     const title_class = classes.title_class || `max-w-2xl mt-component ${defaultTitleColor}`;
-    const description_class = classes.description_class || `max-w-4xl py-component text-lg ${defaultDescColor} lg:text-xl xl:text-xl`;
+    const content_class_default = classes.content_class || `max-w-4xl py-component text-lg ${defaultDescColor} lg:text-xl xl:text-xl`;
 
     // Define animation variants based on direction
     const variants = {
@@ -54,9 +54,9 @@ export default function Section(props) {
     };
 
     // Determine if children should be treated as description text
-    const isChildrenDescription = !description && typeof children === "string";
-    const effectiveDescription = description || (isChildrenDescription ? children : null);
-    const bodyContent = isChildrenDescription ? null : children;
+    const isChildrenContent = !content && typeof children === "string";
+    const effectiveContent = content || (isChildrenContent ? children : null);
+    const bodyContent = isChildrenContent ? null : children;
 
     const alignmentClasses = align === "left" ? "items-start text-left" : "items-center text-center";
 
@@ -80,9 +80,9 @@ export default function Section(props) {
                     variants={variants}
                     className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class}`}
                 >
-                    {pretitle && (
-                        <div className={`pretitle_class ${pretitle_class} ${align === "left" ? "self-start" : ""}`}>
-                            {pretitle}
+                    {subtitle && (
+                        <div className={`subtitle_class ${subtitle_class} ${align === "left" ? "self-start" : ""}`}>
+                            {subtitle}
                         </div>
                     )}
 
@@ -92,9 +92,9 @@ export default function Section(props) {
                         </h2>
                     )}
 
-                    {effectiveDescription && (
-                        <div className={`description_class ${description_class} ${align === "left" ? "self-start" : ""}`}>
-                            {effectiveDescription}
+                    {effectiveContent && (
+                        <div className={`description_class ${content_class_default} ${align === "left" ? "self-start" : ""}`}>
+                            {effectiveContent}
                         </div>
                     )}
 
@@ -109,7 +109,7 @@ export default function Section(props) {
             </Container>
 
             {bodyContent && (
-                <Container limit={limit} className={`relative content_class ${classes.content_class || ""}`}>
+                <Container limit={limit} className={`relative content_class ${classes.content_body_class || ""}`}>
                     {bodyContent}
                 </Container>
             )}

@@ -1,5 +1,5 @@
-name: "姚昱廷"
-title: "G1 晨光班導師"
+title: "姚昱廷"
+subtitle: "G1 晨光班導師"
 media:
   type: image
   image: "/img/teacher-photos/姚昱廷.jpg"
@@ -11,7 +11,7 @@ education: |
 experience: |
   錄取華德福幼兒園教師 2-6歲（幼幼班-大班）
   華德福國小教師 7-9歲（小一-小三）
-bio: |
+content: |
   以熱情對待生命、用真誠感動人心
   藉上天和全村子的力量來共構教育
 order: 4

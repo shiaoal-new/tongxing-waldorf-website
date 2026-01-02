@@ -1,9 +1,9 @@
 title: 優律思美 (Eurythmy)
 slug: eurythmy
-description: 看得見的語言與音樂 - 同心華德福特色課程
+content: 看得見的語言與音樂 - 同心華德福特色課程
 hero:
   title: 優律思美
-  sub_header: 看得見的語言與音樂
+  subtitle: 看得見的語言與音樂
   media_list:
     - type: image
       image: /img/featured-artistic.png # Using an existing image placeholder
@@ -12,29 +12,29 @@ sections:
   - section_id: opening
     blocks:
       - type: text_block
-        header: 什麼是優律思美？
-        description: 同心華德福的優律思美（Eurythmy）課程是一門深植於人智學背景的藝術課程，其名稱源自古希臘語，意為「和諧有律動的動作」。它不單純是舞蹈或戲劇，而是一種透過肢體將「看不見」的聲音、顏色與音樂轉化為「看得見」的藝術形式。
+        title: 什麼是優律思美？
+        content: 同心華德福的優律思美（Eurythmy）課程是一門深植於人智學背景的藝術課程，其名稱源自古希臘語，意為「和諧有律動的動作」。它不單純是舞蹈或戲劇，而是一種透過肢體將「看不見」的聲音、顏色與音樂轉化為「看得見」的藝術形式。
   - section_id: core-concepts
     blocks:
       - type: list_block
-        header: 核心概念
+        title: 核心概念
         layout_method: grid_cards
         item_type: card
         items:
           - title: 語言的轉化
-            desc: 將子音與母音的發音特質轉化為特定動作。母音表達內在感受，子音模仿外在力量。
+            content: 將子音與母音的發音特質轉化為特定動作。母音表達內在感受，子音模仿外在力量。
             image: /img/icons/language-transform.svg # Placeholder or icon if any
           - title: 音樂的呈現
-            desc: 將音符、節奏、音階與調性透過全身律動呈現，讓身體成為一個歌唱的樂器。
+            content: 將音符、節奏、音階與調性透過全身律動呈現，讓身體成為一個歌唱的樂器。
             image: /img/icons/music-rendering.svg
           - title: 正直的力道
-            desc: 帶給人一種正直的力量，讓人回歸內在的專注與平和，甚至能對抗虛偽。
+            content: 帶給人一種正直的力量，讓人回歸內在的專注與平和，甚至能對抗虛偽。
             image: /img/icons/inner-strength.svg
   - section_id: curriculum
     blocks:
       - type: text_block
-        header: 針對兒童發展的年段課綱設計
-        description: 同心的課程嚴格遵循孩子的發展需求進行設計，從一至十二年級各有重點。
+        title: 針對兒童發展的年段課綱設計
+        content: 同心的課程嚴格遵循孩子的發展需求進行設計，從一至十二年級各有重點。
       - type: tabbed_content_block
         tabs:
           - title: 低年級 (1-3)
@@ -53,29 +53,29 @@ sections:
   - section_id: features
     blocks:
       - type: list_block
-        header: 課程的教育與療癒功能
+        title: 課程的教育與療癒功能
         layout_method: scrollable_grid
         item_type: benefit
         items:
           - title: 感官保護
-            desc: 在現代 3C 與資訊氾濫的干擾下，優律思美幫助孩子重新感知自己的身體與內心訊息。
+            content: 在現代 3C 與資訊氾濫的干擾下，優律思美幫助孩子重新感知自己的身體與內心訊息。
             media:
               type: image
               image: /img/featured-protection.png
           - title: 意志力與和諧
-            desc: 透過意志力的鍛鍊（如精準的步法與手勢），達成內在心靈與外在動作的和諧。
+            content: 透過意志力的鍛鍊（如精準的步法與手勢），達成內在心靈與外在動作的和諧。
             media:
               type: image
               image: /img/featured-willpower.png
           - title: 社交練習
-            desc: 在團體隊形的變換中，孩子必須感知彼此的距離與節奏，這是一種深刻的社交學習。
+            content: 在團體隊形的變換中，孩子必須感知彼此的距離與節奏，這是一種深刻的社交學習。
             media:
               type: image
               image: /img/featured-social.png
   - section_id: community
     blocks:
       - type: text_block
-        header: 成人優律思美與社群連結
+        title: 成人優律思美與社群連結
         content: |
           同心不僅為孩子安排課程，也積極向家長與成人推廣。透過有節奏的行走與呼吸，幫助被現代生活「僵化」或「過度焦慮」的大人找回平衡，活化生命體。
 
@@ -84,8 +84,8 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        header: 親自來感受生命律動
-        description: 優律思美是同心孩子們最特別的體驗之一。
+        title: 親自來感受生命律動
+        content: 優律思美是同心孩子們最特別的體驗之一。
         buttons:
           - text: 返回特色課程
             link: /featured-courses

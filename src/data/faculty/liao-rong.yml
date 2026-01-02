@@ -1,5 +1,5 @@
-name: "廖容"
-title: "教學"
+title: "廖容"
+subtitle: "教學"
 media:
   type: image
   image: "/img/teacher-photos/廖容.jpg"
@@ -9,5 +9,5 @@ education: "台灣大學財務金融系"
 experience: |
   蓋世威股份有限公司 亞太區產品經理
   寶成國際股份有限公司 業務部主任
-bio: "不是所有人都可以做偉大的事，但我們可以用愛做很多小事 ～德蕾莎修女～"
+content: "不是所有人都可以做偉大的事，但我們可以用愛做很多小事 ～德蕾莎修女～"
 order: 15

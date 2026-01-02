@@ -1,5 +1,5 @@
-name: "姜怡伶"
-title: "G7 沐陽班導師 / 數學專任老師"
+title: "姜怡伶"
+subtitle: "G7 沐陽班導師 / 數學專任老師"
 media:
   type: image
   image: "/img/teacher-photos/姜怡伶.jpg"
@@ -14,7 +14,7 @@ experience: |
   基隆輔大聖心高中數學教師與輔導主任
   新北市汐止國中數學教師
   新北市雙溪高中數學教師
-bio: |
+content: |
   面對自然能全然打開自我 面對自我能虛心學習自然
   感知宇宙以大智若愚之姿 擁有所有願對外分享喜樂
 order: 9

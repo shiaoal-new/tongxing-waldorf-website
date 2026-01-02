@@ -1,5 +1,5 @@
-name: "呂孟庭"
-title: "行政主任 / G4 山嵐班導師"
+title: "呂孟庭"
+subtitle: "行政主任 / G4 山嵐班導師"
 media:
   type: image
   image: "/img/teacher-photos/呂孟庭.jpg"
@@ -11,5 +11,5 @@ experience: |
   臺北市同心華德福實驗教育機構1-6年級主帶教師
   教育部史懷哲精神教育服務計畫七年級教師
   基隆市五堵國民小學代課教師
-bio: "相信，改變。讓生命彼此引領"
+content: "相信，改變。讓生命彼此引領"
 order: 3

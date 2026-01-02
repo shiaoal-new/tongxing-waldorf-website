@@ -5,11 +5,11 @@
   format: "yml"
   delete: true
   create: true
-  identifier_field: name
-  summary: "{{name}} - {{title}}"
+  identifier_field: title
+  summary: "{{title}} - {{subtitle}}"
   fields:
-    - { label: "姓名", name: "name", widget: "string", required: true }
-    - { label: "職稱", name: "title", widget: "string", required: true }
+    - { label: "姓名", name: "title", widget: "string", required: true }
+    - { label: "職稱", name: "subtitle", widget: "string", required: true }
     - &media_field # 定義可重用的媒體欄位錨點
       label: "媒體資源"
       name: "media"
@@ -82,7 +82,7 @@
       }
     - {
         label: "簡介/核心價值",
-        name: "bio",
+        name: "content",
         widget: "markdown",
         required: false,
       }
@@ -108,18 +108,13 @@
   format: "yml"
   delete: true
   create: true
-  identifier_field: question
-  summary: "{{question}}"
+  identifier_field: title
+  summary: "{{title}}"
   fields:
-    - {
-        label: "問題 (標題)",
-        name: "question",
-        widget: "string",
-        required: true,
-      }
+    - { label: "問題 (標題)", name: "title", widget: "string", required: true }
     - {
         label: "答案 (內容)",
-        name: "answer",
+        name: "content",
         widget: "markdown",
         required: true,
       }
@@ -144,7 +139,7 @@
   summary: "{{title}}"
   fields:
     - { label: "標題", name: "title", widget: "string", required: true }
-    - { label: "简短描述", name: "desc", widget: "text", required: true }
+    - { label: "描述內容", name: "content", widget: "text", required: true }
     - *media_field # 重用媒體欄位定義
     - label: "特點細項列表"
       name: "bullets"
@@ -153,7 +148,7 @@
       summary: "{{title}}"
       fields:
         - { label: "細項標題", name: "title", widget: "string", required: true }
-        - { label: "細項描述", name: "desc", widget: "text", required: true }
+        - { label: "細項描述", name: "content", widget: "text", required: true }
         - label: "圖示 (Icon ID)"
           name: "icon"
           widget: "string"
@@ -204,22 +199,22 @@
             display_fields: ["title"],
             required: false,
           }
-        - &header_field {
+        - &title_field {
             label: "大標題",
-            name: "header",
+            name: "title",
             widget: "string",
             required: false,
           }
-        - &subheader_field {
+        - &subtitle_field {
             label: "小標題",
-            name: "sub_header",
+            name: "subtitle",
             widget: "string",
             required: false,
           }
-        - &description_field {
-            label: "描述內容",
-            name: "description",
-            widget: "text",
+        - &content_field {
+            label: "描述內容/內文",
+            name: "content",
+            widget: "markdown",
             required: false,
           }
         - &media_list_field
@@ -277,15 +272,9 @@
               name: "text_block"
               widget: "object"
               fields:
-                - *header_field
-                - *subheader_field
-                - *description_field
-                - {
-                    label: "詳細內容 (Markdown)",
-                    name: "content",
-                    widget: "markdown",
-                    required: false,
-                  }
+                - *title_field
+                - *subtitle_field
+                - *content_field
                 - label: "下方行動按鈕 (Actions)"
                   name: "buttons"
                   widget: "list"
@@ -312,8 +301,8 @@
                     collection: "faq",
                     multiple: true,
                     value_field: "id",
-                    display_fields: ["question"],
-                    search_fields: ["question"],
+                    display_fields: ["title"],
+                    search_fields: ["title"],
                     required: false,
                   }
                 - {
@@ -374,18 +363,9 @@
                   collapsed: true
                   summary: "{{title}}"
                   fields:
-                    - {
-                        label: "項目名稱/標題",
-                        name: "title",
-                        widget: "string",
-                      }
-                    - {
-                        label: "小字備註",
-                        name: "subtitle",
-                        widget: "string",
-                        required: false,
-                      }
-                    - { label: "內文描述", name: "desc", widget: "text" }
+                    - *title_field
+                    - *subtitle_field
+                    - *content_field
                     - *media_field # 重用媒體欄位定義
                     - label: "次級小清單 (選填)"
                       name: "sub_items"
@@ -399,7 +379,7 @@
                             widget: "string",
                             required: false,
                           }
-                        - { label: "小描述", name: "desc", widget: "text" }
+                        - { label: "小描述", name: "content", widget: "text" }
                         - { label: "小圖示 ID", name: "icon", widget: "string" }
                 - label: "區塊底部按鈕"
                   name: "buttons"
@@ -433,7 +413,7 @@
                   fields:
                     - { label: "時間", name: "time", widget: "string" }
                     - { label: "標題", name: "title", widget: "string" }
-                    - { label: "描述", name: "desc", widget: "text" }
+                    - { label: "描述", name: "content", widget: "text" }
                     - label: "呼吸類型"
                       name: "type"
                       widget: "select"
@@ -448,7 +428,7 @@
                   fields:
                     - { label: "時間", name: "time", widget: "string" }
                     - { label: "標題", name: "title", widget: "string" }
-                    - { label: "描述", name: "desc", widget: "text" }
+                    - { label: "描述", name: "content", widget: "text" }
                     - label: "呼吸類型"
                       name: "type"
                       widget: "select"
@@ -470,9 +450,9 @@
               name: "color_palette_block"
               widget: "object"
               fields:
-                - { label: "區塊標題", name: "header", widget: "string" }
-                - { label: "小標題", name: "sub_header", widget: "string" }
-                - { label: "描述文字", name: "description", widget: "text" }
+                - *title_field
+                - *subtitle_field
+                - *content_field
 
 - name: "section_layouts"
   label: "版面模板管理 (Developers Only)"

@@ -1,9 +1,9 @@
 title: 佈局與間距規範
 slug: layout-spacing
 hero:
-  header: Layout & Spacing
-  sub_header: Design System Tokens
-  description: 同心華德福設計系統佈局與間距規範。基於 8px 比例系統，確保網站的「呼吸感」與視覺一致性。
+  title: Layout & Spacing
+  subtitle: Design System Tokens
+  content: 同心華德福設計系統佈局與間距規範。基於 8px 比例系統，確保網站的「呼吸感」與視覺一致性。
   layout: Hero Default
   media_list:
     - type: image
@@ -13,8 +13,8 @@ sections:
   - section_id: layout-overview
     blocks:
       - type: text_block
-        header: 頁面容器與邊距
-        sub_header: Containers & Margins
+        title: 頁面容器與邊距
+        subtitle: Containers & Margins
         content: |
           ### 核心定義
           為了維持一致的閱讀體驗，我們定義了全域容器寬度與響應式邊距。針對寬螢幕採取「全比例自動縮放 (Auto-Zoom)」策略。
@@ -32,8 +32,8 @@ sections:
   - section_id: section-spacing
     blocks:
       - type: text_block
-        header: 區塊與組件間距
-        sub_header: Section & Component Spacing
+        title: 區塊與組件間距
+        subtitle: Section & Component Spacing
         content: |
           ### 間距階層
           我們使用語義化的間距名稱來代表不同的佈局需求：
@@ -47,8 +47,8 @@ sections:
   - section_id: wide-screen-optimization
     blocks:
       - type: text_block
-        header: 大螢幕佈局優化
-        sub_header: Wide Screen Optimization
+        title: 大螢幕佈局優化
+        subtitle: Wide Screen Optimization
         content: |
           ### 比例維護佈局
           當水平空間超過 1200px 時，系統會自動進入「全場景比例縮放」模式，提升沉浸感並維持設計精確度。
@@ -61,8 +61,8 @@ sections:
   - section_id: typography-spacing
     blocks:
       - type: text_block
-        header: 文字排版間距
-        sub_header: Typography Spacing
+        title: 文字排版間距
+        subtitle: Typography Spacing
         content: |
           ### 閱讀優化
           寬鬆的行高與字距是營造「溫潤感」的關鍵。
