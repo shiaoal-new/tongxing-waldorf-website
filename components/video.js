@@ -1,20 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 export default function VideoItem({ video, className }) {
   const [playVideo, setPlayVideo] = useState(false);
 
-  // Generate a deterministic hue rotation value based on video title
-  // This ensures server and client render the same value (avoiding hydration mismatch)
-  const randomHue = useMemo(() => {
-    const str = video.title || '';
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash = hash & hash; // Convert to 32bit integer
-    }
-    // Map hash to range -45 to +15 (warm colors)
-    return (Math.abs(hash) % 60) - 45;
-  }, [video.title]);
+
 
   // Normalize media data
   const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
@@ -37,7 +26,7 @@ export default function VideoItem({ video, className }) {
   return (
     <div
       className={`flex flex-col w-full rounded-xl h-full video-mask ${video.className || ''} ${className || ''}`}
-      style={{ '--frame-hue': `${randomHue}deg` }}
+
     >
       {/* Outer container: maintains 16:9 aspect ratio */}
       <div className="video-container relative w-full" style={{ paddingBottom: '56.25%' }}>
