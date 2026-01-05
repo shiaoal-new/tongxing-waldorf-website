@@ -81,31 +81,6 @@
             }
         }
 
-        /* Header Menu Items Watercolor Effect - Shared Background */
-        & .hidden.lg\:flex ul {
-            position: relative;
-            padding: 0.25rem 1.5rem;
-            margin-right: -1rem;
-
-            &::before {
-                content: '';
-                position: absolute;
-                inset: 0 -1rem;
-                background-image: url('/img/themes/tongxing/background/horizontal-menu-bg.webp');
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-position: center;
-                z-index: -1;
-                /* mix-blend-mode: multiply; */
-                opacity: .5;
-                pointer-events: none;
-                filter: blur(8px);
-
-                /* mask-mode: luminance; */
-                mask-image: url('/img/themes/tongxing/background/horizontal-menu-bg.webp');
-                mask-size: 100% 100%;
-            }
-        }
 
         & .nav__item>a,
         & .nav__item button {
