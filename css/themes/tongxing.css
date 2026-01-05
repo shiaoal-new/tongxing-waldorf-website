@@ -51,22 +51,6 @@
             background-repeat: no-repeat;
         }
 
-        /* Main Element Paper Background - 主内容区纸张背景 */
-        & main {
-            position: relative;
-
-            &::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background-color: var(--brand-bg);
-                filter: url(#paper-texture);
-                /* opacity: 0.5; */
-                z-index: -1;
-                pointer-events: none;
-            }
-        }
-
 
         /* Navbar Blend Mode */
         & .navbar-container {
@@ -86,9 +70,9 @@
                 /* 使用背景图片作为遮罩效果 */
                 /* background-image: url('/img/themes/tongxing/background/menu-bg.png'); */
                 /* background-size: 100% 100%; */
-                background-blend-mode: multiply;
+                /* background-blend-mode: multiply;
                 mask-image: url('/img/themes/tongxing/background/menu-bg.png');
-                mask-size: 100% 100%;
+                mask-size: 100% 100%; */
                 /* 半透明背景让 backdrop-filter 效果可见 */
                 /* background-color: rgba(255, 255, 255, 0.1); */
                 pointer-events: none;
