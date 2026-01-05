@@ -19,10 +19,10 @@ import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
 
 /**
- * 核心：頁面章節組件 (PageSection)
- * 負責將原始數據 (section data) 轉換為頁面組件，並協調內部的 Blocks
+ * SectionRenderer
+ * 負責將一個完整的 Section 數據解析並渲染成 UI 章節
  */
-export function PageSection({ section, index }) {
+export function SectionRenderer({ section, index }) {
     const {
         headerProps,
         contentBlocks,
