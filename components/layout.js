@@ -18,6 +18,10 @@ export default function Layout({ children, title, description, navbarPadding = f
                     content={description || "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。"}
                 />
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+                <meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)" />
+                <meta name="theme-color" content="#1c1917" media="(prefers-color-scheme: dark)" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 

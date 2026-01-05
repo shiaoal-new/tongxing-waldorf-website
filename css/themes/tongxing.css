@@ -22,14 +22,13 @@
         --font-heading: "ChenYuluoyan", cursive;
 
 
-        /* Page Texture Background */
-        & .bg-page-texture {
-            background-image: url('/img/themes/tongxing/background/background.webp');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+        /* Page Texture Background - Apply to both html and body for Mobile Safari consistency */
+        background-image: url('/img/themes/tongxing/background/background.webp');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: rgb(var(--color-brand-bg));
 
 
         /* Navbar Blend Mode */
@@ -75,8 +74,8 @@
         }
 
         /* Dark Mode specific variants */
-        &.dark .bg-page-texture,
-        & .dark .bg-page-texture {
+        &.dark,
+        & .dark {
             background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('/img/themes/tongxing/background/background.webp');
         }
 

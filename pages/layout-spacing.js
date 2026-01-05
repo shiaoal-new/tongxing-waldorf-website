@@ -44,7 +44,7 @@ export default function LayoutSpacingPage({ page, pages, navigation }) {
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
             <div className={`transition-all duration-500 ease-in-out ${isMobileSim ? "max-w-[400px] mx-auto border-x-8 border-gray-800 shadow-2xl overflow-hidden my-10 rounded-[3rem]" : "w-full"}`}>
-                <div className="w-full py-10 bg-brand-bg">
+                <div className="w-full py-10 ">
                     {!effectiveHeroData && (
                         <Section title={page.title} align="left" description={page.description} />
                     )}
