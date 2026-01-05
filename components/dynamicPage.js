@@ -81,7 +81,6 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
             {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
             <div className="w-full py-10 relative overflow-hidden">
-                {theme === 'tongxing' && <ParallaxBackground src="/img/background/background.webp" />}
                 {!effectiveHeroData && (
                     <Section title={page.title} align="left" description={page.description} />
                 )}
@@ -119,7 +118,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                     <div className="flex flex-col md:flex-row gap-8 items-start">
                         <div className="w-full md:w-5/12 flex-shrink-0">
                             <div
-                                className="relative w-full rounded-3xl overflow-hidden border-4 border-brand-accent/20 shadow-md bg-brand-bg dark:bg-brand-structural"
+                                className="relative w-full rounded-3xl overflow-hidden border-4 border-brand-accent/20 shadow-md"
                                 style={{ aspectRatio: '1/1' }}
                             >
                                 {selectedMember.media ? (
