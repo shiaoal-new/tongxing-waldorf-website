@@ -19,67 +19,30 @@ import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
 
 /**
- * 渲染单个section及其内部的所有blocks
+ * 核心：頁面章節組件 (PageSection)
+ * 負責將原始數據 (section data) 轉換為頁面組件，並協調內部的 Blocks
  */
-export function SectionBlock({ section, index }) {
-    const layout = section._layout || {};
-    const blocks = section.blocks || [];
-    const sectionId = section.section_id;
-    const mediaList = section.media_list;
-    const parallaxRatio = section.parallax_ratio;
-
-    // Identify if the first block is a header (text_block with title/subtitle)
-    const firstBlock = blocks[0];
-    let headerProps = {};
-    let contentBlocks = blocks;
-    let align = "center"; // Default alignment
-
-    if (firstBlock && firstBlock.type === 'text_block') {
-        if (firstBlock.title || firstBlock.subtitle) {
-            headerProps = {
-                title: firstBlock.title,
-                subtitle: firstBlock.subtitle,
-                content: firstBlock.content,
-                buttons: firstBlock.buttons
-            };
-            contentBlocks = blocks.slice(1);
-        }
-    }
-
-    if (contentBlocks.length > 0) {
-        const firstContent = contentBlocks[0];
-        if (firstContent.type === 'text_block' ||
-            (firstContent.type === 'list_block' && firstContent.layout_method === 'scrollable_grid' && (firstContent.item_type === 'benefit' || firstContent.item_type === 'benefit_item')) ||
-            (firstContent.type === 'member_block')) {
-            align = "left";
-        }
-    }
-
-    let sectionLimit = section.limit;
-    if (sectionLimit === undefined) {
-        const wideBlocks = ["member_block", "schedule_block", "curriculum_block", "visit_process_block", "spacing_demo_block", "typography_demo_block", "micro_interactions_block"];
-        const hasWideBlock = blocks.some(b =>
-            wideBlocks.includes(b.type) ||
-            (b.type === "list_block" && ["grid_cards", "compact_grid", "scrollable_grid"].includes(b.layout_method))
-        );
-        sectionLimit = !hasWideBlock;
-    }
+export function PageSection({ section, index }) {
+    const {
+        headerProps,
+        contentBlocks,
+        align,
+        sectionLimit,
+        sectionProps
+    } = resolveSectionData(section);
 
     return (
         <Section
             key={index}
-            layout={layout}
-            anchor={sectionId}
-            media_list={mediaList}
-            parallax_ratio={parallaxRatio}
             align={align}
             limit={sectionLimit}
+            {...sectionProps}
             {...headerProps}
         >
             <div className="mt-6">
                 {contentBlocks.map((block, bIndex) => (
                     <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
-                        <BlockRenderer block={block} align={align} />
+                        <BlockDispatcher block={block} align={align} />
                     </div>
                 ))}
             </div>
@@ -88,13 +51,99 @@ export function SectionBlock({ section, index }) {
 }
 
 /**
- * 核心渲染器 (Block Dispatcher)
- * 負責將數據分配給各個 UI 組件
+ * 資料轉換邏輯 (Data Transformer)
+ * 將原始 JSON/YAML 數據轉換為組件可以理解的 Props
  */
-function BlockRenderer({ block, align = "center", context = "standalone" }) {
+function resolveSectionData(section) {
+    const blocks = section.blocks || [];
+    const firstBlock = blocks[0];
+
+    // 1. 處理 Header 提取邏輯
+    let headerProps = {};
+    let contentBlocks = blocks;
+    if (firstBlock?.type === 'text_block' && (firstBlock.title || firstBlock.subtitle)) {
+        headerProps = {
+            title: firstBlock.title,
+            subtitle: firstBlock.subtitle,
+            content: firstBlock.content,
+            buttons: firstBlock.buttons
+        };
+        contentBlocks = blocks.slice(1);
+    }
+
+    // 2. 確定對齊方式 (Alignment)
+    const align = determineAlignment(contentBlocks);
+
+    // 3. 確定容器寬度限制 (Limit)
+    const sectionLimit = determineSectionLimit(blocks, section.limit);
+
+    return {
+        headerProps,
+        contentBlocks,
+        align,
+        sectionLimit,
+        sectionProps: {
+            layout: section._layout || {},
+            anchor: section.section_id,
+            media_list: section.media_list,
+            parallax_ratio: section.parallax_ratio,
+        }
+    };
+}
+
+/**
+ * 判斷對齊方式 Helper
+ */
+function determineAlignment(contentBlocks) {
+    if (contentBlocks.length === 0) return "center";
+
+    const firstContent = contentBlocks[0];
+    const leftAlignedTypes = ['text_block', 'member_block'];
+    const isSpecialList = firstContent.type === 'list_block' &&
+        firstContent.layout_method === 'scrollable_grid' &&
+        (firstContent.item_type === 'benefit' || firstContent.item_type === 'benefit_item');
+
+    if (leftAlignedTypes.includes(firstContent.type) || isSpecialList) {
+        return "left";
+    }
+
+    return "center";
+}
+
+/**
+ * 判斷寬度限制 Helper
+ */
+function determineSectionLimit(blocks, explicitLimit) {
+    if (explicitLimit !== undefined) return explicitLimit;
+
+    const wideBlockTypes = [
+        "member_block",
+        "schedule_block",
+        "curriculum_block",
+        "visit_process_block",
+        "spacing_demo_block",
+        "typography_demo_block",
+        "micro_interactions_block"
+    ];
+
+    const hasWideBlock = blocks.some(b => {
+        if (wideBlockTypes.includes(b.type)) return true;
+        if (b.type === "list_block") {
+            return ["grid_cards", "compact_grid", "scrollable_grid"].includes(b.layout_method);
+        }
+        return false;
+    });
+
+    return !hasWideBlock;
+}
+
+/**
+ * 內容分發器 (Block Dispatcher)
+ * 負責將數據根據類型分配給具體的 UI 組件
+ */
+function BlockDispatcher({ block, align = "center", context = "standalone" }) {
     if (!block) return null;
 
-    // 如果是 List 內部，某些樣式可能需要微調
     const isNested = context === "list";
     const type = block.type || block.item_type || "text_block";
 
@@ -172,6 +221,7 @@ function BlockRenderer({ block, align = "center", context = "standalone" }) {
             return null;
     }
 }
+
 
 /**
  * 提取的 UI 組件：文字區塊
@@ -331,7 +381,7 @@ function ListBlock({ block }) {
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}
                 renderItem={(item, index) => (
-                    <BlockRenderer block={item} context="list" />
+                    <BlockDispatcher block={item} context="list" />
                 )}
             />
         </div>

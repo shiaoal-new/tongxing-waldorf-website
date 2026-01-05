@@ -9,7 +9,7 @@ import TableOfContents from "./tableOfContents";
 import ParallaxBackground from "./parallaxBackground";
 import { useState, useRef } from "react";
 import { useTheme } from "next-themes";
-import { SectionBlock } from "./sectionRenderer";
+import { PageSection } from "./sectionRenderer";
 import { PageDataProvider } from "../contexts/PageDataContext";
 
 export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, coursesList = [] }) {
@@ -92,7 +92,7 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                         getImagePath
                     }}>
                         {sections.map((section, index) =>
-                            <SectionBlock key={index} section={section} index={index} />
+                            <PageSection key={index} section={section} index={index} />
                         )}
                     </PageDataProvider>
                 </div>
