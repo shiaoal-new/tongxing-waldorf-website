@@ -21,26 +21,6 @@
 
         --font-heading: "ChenYuluoyan", cursive;
 
-        /* Yellow Frame Background */
-        & .yellow-frame {
-            position: relative;
-            padding: 2rem;
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: .5rem;
-                left: .5rem;
-                right: .5rem;
-                bottom: .5rem;
-                /* background-image: url('/img/themes/tongxing/background/yellow-frame.webp'); */
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                z-index: -1;
-                pointer-events: none;
-                filter: hue-rotate(var(--frame-hue, 0deg));
-            }
-        }
 
         /* Page Texture Background */
         & .bg-page-texture {
@@ -194,5 +174,21 @@
          *     filter: url(#watercolor-v2);
          * }
          */
+
+        /* Video Mask Effect - 视频遮罩效果 */
+        & .video-mask {
+            position: relative;
+
+            /* 应用遮罩到视频容器 */
+            & .video-container {
+                mask-image: url('/img/themes/tongxing/mask/VideoFrameMask-1.webp');
+                /* 使用 contain 确保遮罩完整显示，不会裁剪视频 */
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                /* 确保遮罩使用 alpha 通道 */
+                mask-mode: alpha;
+            }
+        }
     }
 }
