@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import BackgroundCarousel from "./backgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
+import DevComment from "./DevComment";
 
 export default function PageHero({ data }) {
     const {
@@ -45,10 +46,14 @@ export default function PageHero({ data }) {
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
     return (
-        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden ${container_class}`}>
+        <div ref={ref} className={`relative flex min-h-[100vh] ${container_class}`}>
+
+            <DevComment text="Background Carousel" />
             <motion.div
                 className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-                style={{ opacity: effect !== 'none' ? bgOpacity : 1 }}
+                style={{
+                    opacity: effect !== 'none' ? bgOpacity : 1
+                }}
             >
                 <BackgroundCarousel
                     media_list={media_list}

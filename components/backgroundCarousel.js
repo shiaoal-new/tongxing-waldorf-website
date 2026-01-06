@@ -85,7 +85,7 @@ const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewpo
                 animate="animate"
                 exit="exit"
                 transition={currentVariant.transition}
-                className="absolute inset-0 w-full h-full"
+                className="inset-0 w-full h-full"
             >
                 <MediaRenderer
                     media={item}
@@ -185,26 +185,15 @@ export default function BackgroundCarousel({
     if (items.length === 0) return <div ref={containerRef} className="absolute inset-0 w-full h-full bg-black/10" />;
 
     return (
-        <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
+        <div ref={containerRef} className="inset-0 w-full h-full">
             {isFixed ? (
                 sectionBounds && (
-                    <div
-                        className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10"
-                        style={{
-                            clipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`,
-                            WebkitClipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`,
-                            transform: 'translate3d(0,0,0)',
-                            WebkitTransform: 'translate3d(0,0,0)'
-                        }}
-                    >
-                        <BackgroundMediaItem
-                            item={currentItem}
-                            transition_type={transition_type}
-                            currentIndex={currentIndex}
-                            isFullViewport={true}
-                        />
-                        {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
-                    </div>
+                    <BackgroundMediaItem
+                        item={currentItem}
+                        transition_type={transition_type}
+                        currentIndex={currentIndex}
+                        isFullViewport={true}
+                    />
                 )
             ) : (
                 <motion.div
