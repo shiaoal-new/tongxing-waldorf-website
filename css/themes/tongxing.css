@@ -21,16 +21,6 @@
 
         --font-heading: "ChenYuluoyan", cursive;
 
-
-        /* Page Texture Background - Apply to both html and body for Mobile Safari consistency */
-        background-image: url('/img/themes/tongxing/background/background.webp');
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: rgb(var(--color-brand-bg));
-
-
         /* Navbar Blend Mode */
         & .navbar-container {
 

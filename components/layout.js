@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Navbar from "./navbar";
 import Footer from "./footer";
-import PopupWidget from "./popupWidget";
+
 import ParallaxBackground from "./parallaxBackground";
 import SvgFilters from "./svgFilters";
 import PageContent from "./pageContent";
@@ -39,7 +39,7 @@ export default function Layout({ children, title, description, navbarPadding = f
             </PageContent>
 
             <Footer />
-            {/* <PopupWidget /> */}
+
 
 
         </>
