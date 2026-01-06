@@ -1,9 +1,72 @@
 import Container from "./container";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import BackgroundCarousel from "./backgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "./DevComment";
+
+/**
+ * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
+ * 用於讓背景延伸到狀態欄區域,並防止用戶向上滾動超過此高度
+ */
+function useStatusBarScrollLock() {
+    useEffect(() => {
+        // 只在客戶端且是首次載入時執行
+        if (typeof window !== 'undefined') {
+            // 檢測是否為 iOS 設備(iPhone/iPad)
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            // 檢測是否為 Safari 瀏覽器
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+            // 檢測是否為獨立模式(PWA)或瀏覽器模式
+            const isStandalone = window.navigator.standalone === true ||
+                window.matchMedia('(display-mode: standalone)').matches;
+
+            // 只在 iOS Safari 瀏覽器模式下執行(有狀態欄的情況)
+            // 獨立模式(PWA)通常沒有狀態欄,所以排除
+            if (isIOS && isSafari && !isStandalone) {
+                // iOS Safari 狀態欄高度通常是 44px (非瀏海屏) 或 47px (瀏海屏)
+                const statusBarHeight = 44;
+
+                // 立即滾動到狀態欄高度,不使用 smooth
+                window.scrollTo(0, statusBarHeight);
+
+                // 添加滾動事件監聽器,限制不能向上滾動超過 statusBarHeight
+                // 使用 scrollend 事件(滾動完成後觸發)
+                const handleScrollEnd = () => {
+                    if (window.scrollY < statusBarHeight) {
+                        // 如果滾動位置小於狀態欄高度,平滑滾動回到狀態欄高度
+                        window.scrollTo({ top: statusBarHeight, behavior: 'smooth' });
+                    }
+                };
+
+                // 監聽 scrollend 事件(現代瀏覽器支持)
+                window.addEventListener('scrollend', handleScrollEnd);
+
+                // 後備方案:使用 scroll 事件 + debounce(針對不支持 scrollend 的舊版瀏覽器)
+                let scrollTimeout;
+                const handleScrollDebounced = () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (window.scrollY < statusBarHeight) {
+                            window.scrollTo({ top: statusBarHeight, behavior: 'smooth' });
+                        }
+                    }, 150); // 滾動停止 150ms 後執行
+                };
+
+                window.addEventListener('scroll', handleScrollDebounced, { passive: true });
+
+                // 清理函數:組件卸載時移除事件監聽器
+                return () => {
+                    window.removeEventListener('scrollend', handleScrollEnd);
+                    window.removeEventListener('scroll', handleScrollDebounced);
+                    clearTimeout(scrollTimeout);
+                };
+            }
+        }
+    }, []); // 空依賴陣列,只在組件掛載時執行一次
+}
 
 export default function PageHero({ data }) {
     const {
@@ -44,6 +107,9 @@ export default function PageHero({ data }) {
     });
 
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+    // 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
+    useStatusBarScrollLock();
 
     return (
         <div ref={ref} className={`relative flex min-h-[100vh] ${container_class}`}>
