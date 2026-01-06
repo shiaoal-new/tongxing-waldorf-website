@@ -1,38 +1,51 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { DotLottiePlayer } from "@dotlottie/react-player";
-
 import MediaRenderer from './mediaRenderer';
 
-export default function BackgroundCarousel({ media_list = [], bg_images, bg_video, transition_type = 'fade', overlay_opacity = 0.4, parallax_ratio = 0 }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [sectionBounds, setSectionBounds] = useState(null);
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
+// --- Constants ---
 
-    // Parallax ratio logic:
-    // 0 = fixed (handled separately with position:fixed)
-    // 1 = no parallax (background moves at same speed as content)
-    // >1 = background moves faster than content
-    // <1 = background moves slower than content
-    const effectiveRatio = parallax_ratio ?? 0;
-    const shift = (effectiveRatio - 1) * 30; // 30vh per ratio unit above 1
-    const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
+const TRANSITION_VARIANTS = {
+    fade: {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 1.5 }
+    },
+    slide: {
+        initial: { x: "100%", opacity: 0 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: "-100%", opacity: 0 },
+        transition: { duration: 0.8, ease: "easeInOut" }
+    },
+    zoom: {
+        initial: { scale: 1.2, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        exit: { scale: 0.8, opacity: 0 },
+        transition: { duration: 1, ease: "easeOut" }
+    },
+    slide_up: {
+        initial: { y: "100%", opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        exit: { y: "-50%", opacity: 0 },
+        transition: { duration: 0.8, ease: "circOut" }
+    },
+    blur: {
+        initial: { filter: "blur(20px)", opacity: 0, scale: 1.1 },
+        animate: { filter: "blur(0px)", opacity: 1, scale: 1 },
+        exit: { filter: "blur(20px)", opacity: 0 },
+        transition: { duration: 1.2 }
+    }
+};
 
-    const getImagePath = (path) => {
-        if (!path) return path;
-        if (typeof path !== 'string') return null;
-        if (path.startsWith('./')) {
-            return path.substring(1);
-        }
-        return path;
-    };
+// --- Helpers ---
 
-    // Normalize media list from new structure
-    const normalizedMedia = (media_list || []).map(m => {
+const getImagePath = (path) => {
+    if (!path || typeof path !== 'string') return path;
+    return path.startsWith('./') ? path.substring(1) : path;
+};
+
+const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
+    const normalized = (media_list || []).map(m => {
         if (m.type === 'image') return { ...m, image: getImagePath(m.image) };
         if (m.type === 'video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
         if (m.type === 'youtube') return { ...m, url: m.url };
@@ -44,20 +57,98 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
             return { ...m, url: src };
         }
         return m;
-    }).filter(m => m.image || m.video || m.url || ((m.type === 'lottie') && m.url));
+    }).filter(m => m.image || m.video || m.url || (m.type === 'lottie' && m.url));
+
+    if (normalized.length > 0) return normalized;
 
     // Legacy fallback
     const legacyImages = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
     const legacyVideo = getImagePath(bg_video);
 
-    const items = normalizedMedia.length > 0 ? normalizedMedia : [
+    return [
         ...(legacyVideo ? [{ type: 'video', video: legacyVideo }] : []),
         ...legacyImages.map(img => ({ type: 'image', image: img }))
     ];
+};
 
-    // Track section bounds for fixed background clipping
+// --- Sub-components ---
+
+const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewport = false }) => {
+    const currentVariant = TRANSITION_VARIANTS[transition_type] || TRANSITION_VARIANTS.fade;
+
+    return (
+        <AnimatePresence mode="popLayout">
+            <motion.div
+                key={currentIndex}
+                variants={currentVariant}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={currentVariant.transition}
+                className="absolute inset-0 w-full h-full"
+            >
+                <MediaRenderer
+                    media={item}
+                    className={`${isFullViewport ? 'h-[100lvh]' : 'w-full h-full'} ${item.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
+                    imgClassName="object-cover"
+                />
+            </motion.div>
+        </AnimatePresence>
+    );
+};
+
+const CarouselPagination = ({ itemsCount, currentIndex, onSelect }) => {
+    if (itemsCount <= 1) return null;
+
+    return (
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex items-center space-x-4">
+            {Array.from({ length: itemsCount }).map((_, index) => (
+                <button
+                    key={index}
+                    onClick={() => onSelect(index)}
+                    className="group relative flex items-center justify-center w-4 h-4 focus:outline-none"
+                    aria-label={`Go to slide ${index + 1}`}
+                >
+                    <div className={`absolute inset-0 rounded-full border border-brand-bg transition-all duration-500 scale-100 ${currentIndex === index ? "opacity-100 scale-125" : "opacity-0 scale-50 group-hover:opacity-30"}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentIndex === index ? "bg-brand-bg shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-brand-bg/40 group-hover:bg-brand-bg/60"}`} />
+                </button>
+            ))}
+        </div>
+    );
+};
+
+// --- Main Component ---
+
+export default function BackgroundCarousel({
+    media_list = [],
+    bg_images,
+    bg_video,
+    transition_type = 'fade',
+    overlay_opacity = 0.4,
+    parallax_ratio = 0
+}) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [sectionBounds, setSectionBounds] = useState(null);
+    const containerRef = useRef(null);
+
+    const items = useMemo(() => normalizeMediaData(media_list, bg_images, bg_video), [media_list, bg_images, bg_video]);
+    const currentItem = items[currentIndex] || {};
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+
+    const effectiveRatio = parallax_ratio ?? 0;
+    const isFixed = effectiveRatio === 0;
+
+    // Parallax logic
+    const shift = (effectiveRatio - 1) * 30;
+    const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
+
+    // Handle section bounds for fixed background clipping
     useEffect(() => {
-        if (effectiveRatio !== 0) return;
+        if (!isFixed) return;
 
         const updateBounds = () => {
             if (containerRef.current) {
@@ -79,8 +170,9 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
             window.removeEventListener('scroll', updateBounds);
             window.removeEventListener('resize', updateBounds);
         };
-    }, [effectiveRatio]);
+    }, [isFixed]);
 
+    // Auto-play timer
     useEffect(() => {
         if (items.length > 1) {
             const timer = setInterval(() => {
@@ -90,123 +182,53 @@ export default function BackgroundCarousel({ media_list = [], bg_images, bg_vide
         }
     }, [items.length]);
 
-    const currentItem = items[currentIndex] || {};
-
-    const variants = {
-        fade: {
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-            transition: { duration: 1.5 }
-        },
-        slide: {
-            initial: { x: "100%", opacity: 0 },
-            animate: { x: 0, opacity: 1 },
-            exit: { x: "-100%", opacity: 0 },
-            transition: { duration: 0.8, ease: "easeInOut" }
-        },
-        zoom: {
-            initial: { scale: 1.2, opacity: 0 },
-            animate: { scale: 1, opacity: 1 },
-            exit: { scale: 0.8, opacity: 0 },
-            transition: { duration: 1, ease: "easeOut" }
-        },
-        slide_up: {
-            initial: { y: "100%", opacity: 0 },
-            animate: { y: 0, opacity: 1 },
-            exit: { y: "-50%", opacity: 0 },
-            transition: { duration: 0.8, ease: "circOut" }
-        },
-        blur: {
-            initial: { filter: "blur(20px)", opacity: 0, scale: 1.1 },
-            animate: { filter: "blur(0px)", opacity: 1, scale: 1 },
-            exit: { filter: "blur(20px)", opacity: 0 },
-            transition: { duration: 1.2 }
-        }
-    };
-
-    const currentVariant = variants[transition_type] || variants.fade;
-    const isFixed = effectiveRatio === 0;
+    if (items.length === 0) return <div ref={containerRef} className="absolute inset-0 w-full h-full bg-black/10" />;
 
     return (
         <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
-            {items.length > 0 && (
-                <>
-                    {isFixed ? (
-                        sectionBounds && (
-                            <div
-                                className="fixed inset-0 w-screen h-screen"
-                                style={{
-                                    clipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`
-                                }}
-                            >
-                                <AnimatePresence mode="popLayout">
-                                    <motion.div
-                                        key={currentIndex}
-                                        variants={currentVariant}
-                                        initial="initial"
-                                        animate="animate"
-                                        exit="exit"
-                                        transition={currentVariant.transition}
-                                        className="absolute inset-0 w-full h-full"
-                                    >
-                                        <MediaRenderer
-                                            media={currentItem}
-                                            className={`h-[100lvh] ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
-                                            imgClassName="object-cover"
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                                <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }}></div>
-                            </div>
-                        )
-                    ) : (
-                        <motion.div
-                            style={{
-                                y,
-                                height: `calc(100vh + ${Math.abs(shift) * 2}vh)`,
-                                top: `-${Math.abs(shift)}vh`
-                            }}
-                            className="w-full absolute inset-x-0"
-                        >
-                            <AnimatePresence mode="popLayout">
-                                <motion.div
-                                    key={currentIndex}
-                                    variants={currentVariant}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    transition={currentVariant.transition}
-                                    className="absolute inset-0 w-full h-full"
-                                >
-                                    <MediaRenderer
-                                        media={currentItem}
-                                        className={`w-full h-full ${currentItem.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
-                                        imgClassName="object-cover"
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
-                            <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }}></div>
-                        </motion.div>
-                    )}
-                </>
+            {isFixed ? (
+                sectionBounds && (
+                    <div
+                        className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10"
+                        style={{
+                            clipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`,
+                            WebkitClipPath: `inset(${sectionBounds.top}px ${window.innerWidth - sectionBounds.left - sectionBounds.width}px ${window.innerHeight - sectionBounds.top - sectionBounds.height}px ${sectionBounds.left}px)`,
+                            transform: 'translate3d(0,0,0)',
+                            WebkitTransform: 'translate3d(0,0,0)'
+                        }}
+                    >
+                        <BackgroundMediaItem
+                            item={currentItem}
+                            transition_type={transition_type}
+                            currentIndex={currentIndex}
+                            isFullViewport={true}
+                        />
+                        <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} />
+                    </div>
+                )
+            ) : (
+                <motion.div
+                    style={{
+                        y,
+                        height: `calc(100vh + ${Math.abs(shift) * 2}vh)`,
+                        top: `-${Math.abs(shift)}vh`
+                    }}
+                    className="w-full absolute inset-x-0"
+                >
+                    <BackgroundMediaItem
+                        item={currentItem}
+                        transition_type={transition_type}
+                        currentIndex={currentIndex}
+                    />
+                    <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} />
+                </motion.div>
             )}
 
-            {items.length > 1 && (
-                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex items-center space-x-4">
-                    {items.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentIndex(index)}
-                            className="group relative flex items-center justify-center w-4 h-4 focus:outline-none"
-                            aria-label={`Go to slide ${index + 1}`}
-                        >
-                            <div className={`absolute inset-0 rounded-full border border-brand-bg transition-all duration-500 scale-100 ${currentIndex === index ? "opacity-100 scale-125" : "opacity-0 scale-50 group-hover:opacity-30"}`} />
-                            <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentIndex === index ? "bg-brand-bg shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-brand-bg/40 group-hover:bg-brand-bg/60"}`} />
-                        </button>
-                    ))}
-                </div>
-            )}
+            <CarouselPagination
+                itemsCount={items.length}
+                currentIndex={currentIndex}
+                onSelect={setCurrentIndex}
+            />
         </div>
     );
 }
