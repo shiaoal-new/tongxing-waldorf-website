@@ -1,4 +1,7 @@
+import DevComment from "./DevComment";
+
 export default function VideoItem({ video, className }) {
+
   // Normalize media data
   const mediaData = video.media || { type: 'youtube', url: video.url || video.video_url };
   const videoUrl = mediaData.url || mediaData.video;
@@ -26,9 +29,13 @@ export default function VideoItem({ video, className }) {
     <div
       className={`flex flex-col w-full rounded-xl h-full video-mask ${video.className || ''} ${className || ''}`}
     >
+      <DevComment text="Video Outer Container (16:9 Aspect Ratio)" />
       {/* Outer container: maintains 16:9 aspect ratio */}
+
       <div className="video-container relative w-full" style={{ paddingBottom: '56.25%' }}>
+        <DevComment text="Video Inner Container & Overlay" />
         {/* Inner container: holds all content */}
+
         <div
           onClick={handleOpenVideo}
           className="absolute inset-0 cursor-pointer group"
@@ -38,7 +45,9 @@ export default function VideoItem({ video, className }) {
             backgroundPosition: 'center'
           }}
         >
+          <DevComment text="Dark overlay for text/icon visibility" />
           {/* Overlay for better text/icon visibility */}
+
           <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300"></div>
 
           <button className="btn btn-ghost btn-circle absolute inset-auto text-brand-bg transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 top-1/2 left-1/2 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">

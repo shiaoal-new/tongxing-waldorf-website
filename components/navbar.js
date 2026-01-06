@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
+import DevComment from "./DevComment";
+
 
 export default function Navbar({ pages = [], navigation: customNavigation, isHeroPage = true }) {
   const [scroll, setScroll] = useState(!isHeroPage);
@@ -102,7 +104,9 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               }
             }}>
             <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4 z-10">
+              <DevComment text="Navbar Logo Section" />
               {/* Logo  */}
+
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
@@ -233,7 +237,9 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 </AnimatePresence>
               </div>
 
+              <DevComment text="Desktop Navigation Menu" />
               {/* menu  */}
+
               <div className="hidden text-center lg:flex lg:items-center">
                 <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
                   {navigation.map((menu, index) => (
@@ -316,7 +322,9 @@ function NavbarListItem({ item }) {
                             )}
                           </Link>
 
+                          <DevComment text="Navbar Level 2 Submenu" />
                           {/* Level 2 Submenu */}
+
                           {child.children && child.children.length > 0 && (
                             <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
                               <div className="py-1">

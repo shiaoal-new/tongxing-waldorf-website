@@ -44,13 +44,8 @@ export default function PageHero({ data }) {
 
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-    // Determine background color based on effect
-    let bgClass = "bg-brand-structural";
-    if (effect === 'fadeToDark') bgClass = "bg-black";
-    if (effect === 'fadeToWhite') bgClass = "bg-brand-bg";
-
     return (
-        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden ${bgClass} ${container_class}`}>
+        <div ref={ref} className={`relative flex min-h-[100vh] overflow-hidden ${container_class}`}>
             <motion.div
                 className="absolute inset-0 w-full h-full z-0 pointer-events-none"
                 style={{ opacity: effect !== 'none' ? bgOpacity : 1 }}

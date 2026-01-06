@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import DevComment from './DevComment';
+
 
 const TableOfContents = ({ sections }) => {
     const [activeId, setActiveId] = useState('');
@@ -58,6 +60,8 @@ const TableOfContents = ({ sections }) => {
     return (
         <>
             {/* Desktop View - "Notion-like" Right Side Lines */}
+            <DevComment text="Desktop Table of Contents" />
+
             <div
                 className="hidden lg:flex fixed right-8 top-1/2 -translate-y-1/2 z-40 flex-col items-end gap-1.5 p-4 rounded-xl transition-all duration-300"
                 onMouseEnter={() => setIsHovered(true)}
@@ -117,6 +121,8 @@ const TableOfContents = ({ sections }) => {
             </div>
 
             {/* Mobile View - Floating Action Button & Modal */}
+            <DevComment text="Mobile Table of Contents" />
+
             <div className="lg:hidden absolute">
                 {/* FAB */}
                 <button

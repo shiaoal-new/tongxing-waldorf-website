@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import ActionButtons from "./actionButtons";
 import Disclosure from "./disclosure";
+import DevComment from "./DevComment";
+
 
 /**
  * ListRenderer - 一个通用的列表渲染组件
@@ -63,7 +65,9 @@ export default function ListRenderer({
                     </Disclosure>
                 ))}
 
+                <DevComment text="Vertical List Action Buttons" />
                 {/* 底部操作按钮 */}
+
                 {buttons && buttons.length > 0 && (
                     <ActionButtons buttons={buttons} align="center" className="mt-8" />
                 )}
@@ -83,7 +87,9 @@ export default function ListRenderer({
                     </div>
                 ))}
 
+                <DevComment text="Grid Cards Action Buttons" />
                 {/* 底部操作按钮 */}
+
                 {buttons && buttons.length > 0 && (
                     <div className="col-span-full">
                         <ActionButtons buttons={buttons} align="center" className="mt-8" />
@@ -103,7 +109,9 @@ export default function ListRenderer({
                     </div>
                 ))}
 
+                <DevComment text="Compact Grid Action Buttons" />
                 {/* 底部操作按钮 */}
+
                 {buttons && buttons.length > 0 && (
                     <div className="col-span-full">
                         <ActionButtons buttons={buttons} align="center" className="mt-8" />
@@ -118,7 +126,9 @@ export default function ListRenderer({
         <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap spacing-component`}>
             <motion.div className="flex flex-wrap items-start w-full">
                 <div>
+                    <DevComment text="Horizontal Scrollable Grid Container" />
                     {/* 网格容器 */}
+
                     <div className={`flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none ${gridColsClass} lg:gap-6 -mx-4 lg:mx-0`}>
                         {items.map((item, index) => (
                             <div
@@ -133,7 +143,9 @@ export default function ListRenderer({
                         ))}
                     </div>
 
+                    <DevComment text="Scrollable Grid Action Buttons" />
                     {/* 底部操作按钮 */}
+
                     {buttons && buttons.length > 0 && (
                         <ActionButtons buttons={buttons} align="center" className="mt-8" />
                     )}

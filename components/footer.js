@@ -2,8 +2,10 @@ import Link from "next/link";
 import React from "react";
 import Container from "./container";
 import Logo from "./logo";
+import DevComment from "./DevComment";
 
 // Helper component for footer content to avoid duplication in code
+
 function FooterContent() {
   const navigation = [
     { title: "關於我們", path: "/" },
@@ -97,8 +99,9 @@ function FooterContent() {
         </div>
 
       </Container>
-      {/* Do not remove this */}
+      <DevComment text="Footer Backlink (Hidden in production)" />
       {/* <Backlink /> */}
+
     </>
   );
 }
@@ -125,12 +128,16 @@ export default function Footer() {
 
   return (
     <footer className="relative">
+      <DevComment text="Invisible spacer footer (Physical space provider)" />
       {/* Invisible spacer footer that takes up space in the document flow */}
+
       <div ref={spacerRef} className="invisible relative z-[-1]" aria-hidden="true">
         <FooterContent />
       </div>
 
+      <DevComment text="Visible fixed footer with parallax animation" />
       {/* Visible fixed footer that sits behind the content and animates */}
+
       <motion.footer
         className="fixed bottom-0 w-full z-0 block bg-cover bg-center bg-no-repeat bg-brand-taupe/10 dark:bg-brand-structural border-t border-brand-taupe/10 dark:border-trueGray-700 shadow-t-lg"
         style={{

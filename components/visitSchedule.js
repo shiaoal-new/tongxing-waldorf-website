@@ -3,6 +3,8 @@ import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./visitRegistrationForm";
 import Modal from "./modal";
+import DevComment from "./DevComment";
+
 
 import initialDates from "./initialVisitDates.json";
 
@@ -86,7 +88,9 @@ export default function VisitSchedule() {
         <Container limit>
             <div className="flex flex-col w-full mt-component">
 
+                <DevComment text="Visit Schedule Mobile Cards View" />
                 {/* Mobile View: Cards */}
+
                 <div className="block md:hidden space-y-component">
                     {dates.map((item) => (
                         <div key={item.id} className="bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-sm p-component border border-brand-taupe/10">
@@ -118,7 +122,9 @@ export default function VisitSchedule() {
                     ))}
                 </div>
 
+                <DevComment text="Visit Schedule Desktop Table View" />
                 {/* Desktop View: Table */}
+
                 <div className="hidden md:block overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                         <div className="overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-sm border border-brand-taupe/10">

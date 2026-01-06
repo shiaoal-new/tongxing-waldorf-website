@@ -203,7 +203,7 @@ export default function BackgroundCarousel({
                             currentIndex={currentIndex}
                             isFullViewport={true}
                         />
-                        <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} />
+                        {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
                     </div>
                 )
             ) : (
@@ -220,7 +220,7 @@ export default function BackgroundCarousel({
                         transition_type={transition_type}
                         currentIndex={currentIndex}
                     />
-                    <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} />
+                    {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
                 </motion.div>
             )}
 

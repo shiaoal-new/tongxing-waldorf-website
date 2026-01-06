@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Modal from "./modal";
+import DevComment from "./DevComment";
+
 
 const CurriculumBlock = ({ data }) => {
     const [activeYear, setActiveYear] = useState(null);
@@ -68,7 +70,9 @@ const CurriculumBlock = ({ data }) => {
         <div className="w-full">
             <h3 className="text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component">1-9 年級課程脈絡與發展任務</h3>
 
+            <DevComment text="Curriculum Block Desktop Table View" />
             {/* 1-9 年級脈絡表 - 桌面版 */}
+
             <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-md border border-brand-taupe/10">
                 <table className="w-full text-left border-collapse">
                     <thead>
@@ -107,7 +111,9 @@ const CurriculumBlock = ({ data }) => {
                 </table>
             </div>
 
+            <DevComment text="Curriculum Block Mobile Card View" />
             {/* 1-9 年級脈絡表 - 行動版 (Card Layout) */}
+
             <div className="lg:hidden space-y-component mt-component">
                 {curriculumData.map((row, idx) => (
                     <div key={idx} className="bg-brand-bg dark:bg-brand-structural/20 rounded-2xl shadow-sm border border-brand-taupe/10 border-t-4 border-t-brand-accent overflow-hidden">
