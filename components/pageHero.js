@@ -26,8 +26,11 @@ function useStatusBarScrollLock() {
             // 只在 iOS Safari 瀏覽器模式下執行(有狀態欄的情況)
             // 獨立模式(PWA)通常沒有狀態欄,所以排除
             if (isIOS && isSafari && !isStandalone) {
-                // iOS Safari 狀態欄高度通常是 44px (非瀏海屏) 或 47px (瀏海屏)
-                const statusBarHeight = 44;
+                // 從 CSS 變數讀取狀態欄高度
+                const statusBarHeight = parseInt(
+                    getComputedStyle(document.documentElement)
+                        .getPropertyValue('--status-bar-height')
+                ) || 44; // 如果讀取失敗,使用預設值 44px
 
                 // 立即滾動到狀態欄高度,不使用 smooth
                 window.scrollTo(0, statusBarHeight);

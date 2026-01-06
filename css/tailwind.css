@@ -50,6 +50,9 @@
     --font-heading: "Source Han Serif TC", "Noto Serif TC", serif;
     --font-body: "Source Han Sans TC", "Noto Sans TC", sans-serif;
     --font-accent: "Zeyada", "Indie Flower", "Handwriting", cursive;
+
+    /* 狀態欄高度 (Status Bar Height) - iOS Safari */
+    --status-bar-height: env(safe-area-inset-top);
   }
 
   [data-theme="dark"] {
