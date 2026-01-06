@@ -117,7 +117,7 @@ const TableOfContents = ({ sections }) => {
             </div>
 
             {/* Mobile View - Floating Action Button & Modal */}
-            <div className="lg:hidden">
+            <div className="lg:hidden absolute">
                 {/* FAB */}
                 <button
                     onClick={() => setIsMobileMenuOpen(true)}
