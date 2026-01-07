@@ -62,7 +62,6 @@ export default function VideoItem({ video, className }) {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="sr-only">Open Video in YouTube</span>
           </button>
         </div>
       </div>
