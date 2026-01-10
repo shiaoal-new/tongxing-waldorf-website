@@ -4,7 +4,6 @@ import Modal from './modal';
 
 export default function QuestionnaireComponent({ data }) {
     const [answers, setAnswers] = useState({});
-    const [currentCategory, setCurrentCategory] = useState(0);
     const [showResult, setShowResult] = useState(false);
     const [result, setResult] = useState(null);
     const [activeTooltip, setActiveTooltip] = useState(null); // 用於移動端 tooltip 顯示
@@ -53,7 +52,6 @@ export default function QuestionnaireComponent({ data }) {
     // 重新開始
     const handleReset = () => {
         setAnswers({});
-        setCurrentCategory(0);
         setShowResult(false);
         setResult(null);
     };
@@ -142,40 +140,31 @@ export default function QuestionnaireComponent({ data }) {
                     />
                 </div>
 
-                {/* 分類標籤 */}
+                {/* 分類標籤 - 改為進度指示器 */}
                 <div className="category-tabs">
                     {data.categories.map((category, index) => (
-                        <button
+                        <div
                             key={category.id}
-                            onClick={() => setCurrentCategory(index)}
-                            className={`category-tab ${currentCategory === index ? 'active' : ''
-                                } ${isCategoryComplete(index) ? 'completed' : ''}`}
+                            className={`category-tab ${isCategoryComplete(index) ? 'completed' : ''}`}
                         >
                             <span className="category-number">{index + 1}</span>
                             <span className="category-title">{category.title}</span>
                             {isCategoryComplete(index) && (
                                 <span className="check-icon">✓</span>
                             )}
-                        </button>
+                        </div>
                     ))}
                 </div>
 
-                {/* 問題區域 */}
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentCategory}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
-                        className="questions-section"
-                    >
+                {/* 所有問題連續顯示 */}
+                {data.categories.map((category, categoryIndex) => (
+                    <div key={category.id} className="questions-section">
                         <h2 className="category-heading">
-                            {data.categories[currentCategory].title}
+                            {category.title}
                         </h2>
 
                         <div className="questions-list">
-                            {data.categories[currentCategory].questions.map((question, qIndex) => (
+                            {category.questions.map((question, qIndex) => (
                                 <div key={question.id} className="question-item">
                                     <div className="question-header">
                                         <span className="question-number">
@@ -227,37 +216,18 @@ export default function QuestionnaireComponent({ data }) {
                             <span className="scale-label-min">{data.scale.minLabel}</span>
                             <span className="scale-label-max">{data.scale.maxLabel}</span>
                         </div>
-                    </motion.div>
-                </AnimatePresence>
+                    </div>
+                ))}
 
-                {/* 導航按鈕 */}
+                {/* 提交按鈕 */}
                 <div className="navigation-buttons">
                     <button
-                        onClick={() => setCurrentCategory(prev => Math.max(0, prev - 1))}
-                        disabled={currentCategory === 0}
-                        className="btn btn-secondary"
+                        onClick={handleSubmit}
+                        disabled={calculateScore() === null}
+                        className="btn btn-primary"
                     >
-                        上一類別
+                        查看結果
                     </button>
-
-                    {currentCategory < data.categories.length - 1 ? (
-                        <button
-                            onClick={() => setCurrentCategory(prev =>
-                                Math.min(data.categories.length - 1, prev + 1)
-                            )}
-                            className="btn btn-primary"
-                        >
-                            下一類別
-                        </button>
-                    ) : (
-                        <button
-                            onClick={handleSubmit}
-                            disabled={calculateScore() === null}
-                            className="btn btn-primary"
-                        >
-                            查看結果
-                        </button>
-                    )}
                 </div>
             </div>
         </>

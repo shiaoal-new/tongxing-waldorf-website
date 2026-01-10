@@ -9,7 +9,7 @@ scale:
 
 categories:
   - id: learning_pace
-    title: 關於學習步調與身心發展
+    title: 學習步調與身心發展
     questions:
       - id: q1
         text: 我認為幼兒與低年級階段，肢體活動與感官探索比提早學習學術知識（如背單字、寫字）更重要。
@@ -23,7 +23,7 @@ categories:
         text: 我希望孩子能跟著同一位老師學習多年，建立深厚的親師生信任關係，而非每年更換導師。
 
   - id: digital_media
-    title: 關於數位媒體與環境感官
+    title: 數位媒體與環境感官
     questions:
       - id: q6
         text: 為了保護孩子的專注力與想像力，我願意嚴格限制（或不提供）孩子接觸手機、平版、電視與電玩。
@@ -37,7 +37,7 @@ categories:
         text: 我支持讓孩子依照季節節慶來生活，透過手作與活動感受大自然的循環。
 
   - id: family_rhythm
-    title: 關於家庭生活節奏與價值觀
+    title: 家庭生活節奏與價值觀
     questions:
       - id: q11
         text: 我願意在家庭中建立非常規律的作息（如每天固定的用餐與上床時間），這對我來說並不困難。
@@ -51,7 +51,7 @@ categories:
         text: 我重視孩子情感面的養成（如同理心、審美觀），重要程度不亞於學術成就。
 
   - id: parent_involvement
-    title: 關於家長參與與校園社群
+    title: 家長參與與校園社群
     questions:
       - id: q16
         text: 我願意花費比一般學校更多的時間與精力參與學校活動、工作日與家長面談。
