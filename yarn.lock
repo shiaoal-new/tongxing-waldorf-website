@@ -2426,6 +2426,11 @@ survey-react-ui@^2.5.0:
   resolved "https://registry.npmjs.org/survey-react-ui/-/survey-react-ui-2.5.0.tgz"
   integrity sha512-MItD4LEX98MXca1OUiLTWvFTde8oPu6280z5OOT/eXHbF6/bWBNORJ860Qc5A9Y9UbZJ4rrxAJWfVflJaKjzzA==
 
+swiper@^12.0.3:
+  version "12.0.3"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-12.0.3.tgz"
+  integrity sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg==
+
 tailwindcss@^3.4.17, tailwindcss@>=2.0.0, tailwindcss@>=3.3.1:
   version "3.4.17"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.17.tgz"

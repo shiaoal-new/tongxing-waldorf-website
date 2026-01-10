@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCards } from 'swiper/modules';
+
 import ActionButtons from "./actionButtons";
 import Disclosure from "./disclosure";
 import DevComment from "./DevComment";
@@ -121,34 +124,46 @@ export default function ListRenderer({
         );
     }
 
-    // Scrollable Grid 布局 (默认) - 移动端横向滚动,桌面端网格
+    // Scrollable Grid 布局 (使用 Swiper EffectCards)
+    if (layout === "scrollable_grid") {
+        return (
+            <div className="w-full mx-auto list-swiper-container">
+                <DevComment text="Swiper Effect Cards Container" />
+                <Swiper
+                    effect={'cards'}
+                    grabCursor={true}
+                    modules={[EffectCards]}
+                    className="swiper-cards-container"
+                >
+                    {items.map((item, index) => (
+                        <SwiperSlide key={item.id || index} className="list-swiper-slide">
+                            <div className="w-full h-full">
+                                {renderItem(item, index)}
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                <DevComment text="Scrollable Grid Action Buttons" />
+                {/* 底部操作按钮 */}
+
+                {buttons && buttons.length > 0 && (
+                    <ActionButtons buttons={buttons} align="center" className="mt-8" />
+                )}
+            </div>
+        );
+    }
+
+    // 默认回退 (通常不应该到达这里, 因为 scrollable_grid 是默认 layout)
     return (
         <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap spacing-component`}>
             <motion.div className="flex flex-wrap items-start w-full">
-                <div>
-                    <DevComment text="Horizontal Scrollable Grid Container" />
-                    {/* 网格容器 */}
-
-                    <div className={`flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none ${gridColsClass} lg:gap-6 -mx-4 lg:mx-0`}>
-                        {items.map((item, index) => (
-                            <div
-                                key={item.id || index}
-                                id={`grid-item-${index}`}
-                                className={`min-w-[85%] lg:min-w-0 w-[85%] lg:w-auto px-4 lg:px-0 snap-center flex-shrink-0`}
-                            >
-                                <div className="w-full">
-                                    {renderItem(item, index)}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <DevComment text="Scrollable Grid Action Buttons" />
-                    {/* 底部操作按钮 */}
-
-                    {buttons && buttons.length > 0 && (
-                        <ActionButtons buttons={buttons} align="center" className="mt-8" />
-                    )}
+                <div className="w-full">
+                    {items.map((item, index) => (
+                        <div key={item.id || index}>
+                            {renderItem(item, index)}
+                        </div>
+                    ))}
                 </div>
             </motion.div>
         </div>

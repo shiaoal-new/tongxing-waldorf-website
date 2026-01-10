@@ -1,6 +1,11 @@
 import { ThemeProvider } from "next-themes";
 import "../css/tailwind.css";
 
+// Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import '../components/listSwiper.css';
+
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="tongxing" enableSystem={false}>
