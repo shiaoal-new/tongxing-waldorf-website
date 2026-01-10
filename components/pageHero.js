@@ -34,6 +34,7 @@ function useStatusBarScrollLock() {
 
                 // 立即滾動到狀態欄高度,不使用 smooth
                 window.scrollTo(0, statusBarHeight);
+                //todo 把hero section 加高
 
                 // 添加滾動事件監聽器,限制不能向上滾動超過 statusBarHeight
                 // 使用 scrollend 事件(滾動完成後觸發)
@@ -112,10 +113,10 @@ export default function PageHero({ data }) {
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
     // 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
-    useStatusBarScrollLock();
+    // useStatusBarScrollLock();
 
     return (
-        <div ref={ref} className={`relative flex min-h-[100vh] ${container_class}`}>
+        <div ref={ref} className={`relative flex h-[100lvh] ${container_class}`}>
 
             <DevComment text="Background Carousel" />
             <motion.div
@@ -134,8 +135,8 @@ export default function PageHero({ data }) {
             </motion.div>
 
 
-
-            <Container className="relative z-10 py-20 flex w-full h-full">
+            <DevComment text="Texts" />
+            <Container className="relative z-10 py-20 flex w-full">
                 <div className={`w-full flex flex-col ${wrapper_class}`}>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -159,8 +160,9 @@ export default function PageHero({ data }) {
                 </div>
             </Container>
 
+            <DevComment text="Scroll Down Button" />
             <motion.div
-                className="absolute bottom-10 left-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
+                className="absolute bottom-20 left-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
                 style={{ x: "-50%" }}
                 initial={{ opacity: 0.5, y: -20, x: "-50%" }}
                 animate={{ opacity: 1, y: 0, x: "-50%" }}
