@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards } from 'swiper/modules';
+import { EffectCards, Pagination } from 'swiper/modules';
 
 import ActionButtons from "./actionButtons";
 import Disclosure from "./disclosure";
@@ -132,7 +132,10 @@ export default function ListRenderer({
                 <Swiper
                     effect={'cards'}
                     grabCursor={true}
-                    modules={[EffectCards]}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    modules={[EffectCards, Pagination]}
                     className="swiper-cards-container"
                 >
                     {items.map((item, index) => (

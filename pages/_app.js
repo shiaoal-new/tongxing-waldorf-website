@@ -4,6 +4,7 @@ import "../css/tailwind.css";
 // Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-cards';
+import 'swiper/css/pagination';
 import '../components/listSwiper.css';
 
 function MyApp({ Component, pageProps }) {

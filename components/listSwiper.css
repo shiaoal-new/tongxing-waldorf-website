@@ -46,3 +46,22 @@
 .swiper-slide-shadow {
     border-radius: 20px;
 }
+
+/* Pagination bullets styling */
+.swiper-cards-container .swiper-pagination {
+    bottom: -10px !important;
+}
+
+.swiper-cards-container .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.swiper-cards-container .swiper-pagination-bullet-active {
+    background: rgb(var(--color-brand-accent));
+    width: 24px;
+    border-radius: 5px;
+}
