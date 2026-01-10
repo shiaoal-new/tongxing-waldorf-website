@@ -294,6 +294,51 @@
     box-shadow: 0 6px 16px rgba(var(--color-brand-accent), 0.4);
 }
 
+/* 評分 Tooltip */
+.rating-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+    font-weight: 500;
+}
+
+.rating-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+/* 桌面端懸停顯示 tooltip */
+@media (hover: hover) and (pointer: fine) {
+    .rating-option:hover .rating-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* 移動端觸摸顯示 tooltip */
+@media (hover: none) and (pointer: coarse) {
+    .rating-tooltip.active {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
 /* 量表標籤 */
 .scale-labels {
     display: flex;

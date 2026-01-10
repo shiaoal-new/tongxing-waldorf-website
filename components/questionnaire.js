@@ -7,6 +7,7 @@ export default function QuestionnaireComponent({ data }) {
     const [currentCategory, setCurrentCategory] = useState(0);
     const [showResult, setShowResult] = useState(false);
     const [result, setResult] = useState(null);
+    const [activeTooltip, setActiveTooltip] = useState(null); // 用於移動端 tooltip 顯示
 
     // 計算總分
     const calculateScore = () => {
@@ -71,6 +72,29 @@ export default function QuestionnaireComponent({ data }) {
         );
         const answeredQuestions = Object.keys(answers).length;
         return (answeredQuestions / totalQuestions) * 100;
+    };
+
+    // 獲取評分標籤
+    const getRatingLabel = (value) => {
+        const labels = {
+            1: '完全不認同 / 難以做到',
+            2: '不太認同 / 較難做到',
+            3: '中立 / 偶爾能做到',
+            4: '認同 / 經常做到',
+            5: '非常認同 / 已經在實踐'
+        };
+        return labels[value];
+    };
+
+    // 處理移動端 tooltip 顯示
+    const handleTouchStart = (questionId, value) => {
+        setActiveTooltip(`${questionId}-${value}`);
+    };
+
+    const handleTouchEnd = (questionId, value) => {
+        setTimeout(() => {
+            setActiveTooltip(null);
+        }, 1000);
     };
 
     return (
@@ -161,25 +185,39 @@ export default function QuestionnaireComponent({ data }) {
                                     </div>
 
                                     <div className="rating-scale">
-                                        {[1, 2, 3, 4, 5].map(value => (
-                                            <label
-                                                key={value}
-                                                className={`rating-option ${answers[question.id] === value ? 'selected' : ''
-                                                    }`}
-                                            >
-                                                <input
-                                                    type="radio"
-                                                    name={question.id}
-                                                    value={value}
-                                                    checked={answers[question.id] === value}
-                                                    onChange={(e) => handleAnswerChange(
-                                                        question.id,
-                                                        e.target.value
-                                                    )}
-                                                />
-                                                <span className="rating-number">{value}</span>
-                                            </label>
-                                        ))}
+                                        {[1, 2, 3, 4, 5].map(value => {
+                                            const tooltipId = `${question.id}-${value}`;
+                                            const isTooltipActive = activeTooltip === tooltipId;
+
+                                            return (
+                                                <label
+                                                    key={value}
+                                                    className={`rating-option ${answers[question.id] === value ? 'selected' : ''}`}
+                                                    onTouchStart={() => handleTouchStart(question.id, value)}
+                                                    onTouchEnd={() => handleTouchEnd(question.id, value)}
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        name={question.id}
+                                                        value={value}
+                                                        checked={answers[question.id] === value}
+                                                        onChange={(e) => handleAnswerChange(
+                                                            question.id,
+                                                            e.target.value
+                                                        )}
+                                                    />
+                                                    <span className="rating-number">{value}</span>
+
+                                                    {/* Tooltip */}
+                                                    <span
+                                                        className={`rating-tooltip ${isTooltipActive ? 'active' : ''}`}
+                                                        data-tooltip={getRatingLabel(value)}
+                                                    >
+                                                        {getRatingLabel(value)}
+                                                    </span>
+                                                </label>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             ))}
