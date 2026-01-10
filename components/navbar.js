@@ -154,12 +154,14 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                         opacity: 0,
                         transition: { duration: 0.5, ease: "easeInOut" },
                       }}
-                      className="absolute top-full left-0 w-full z-[100] overscroll-contain flex flex-wrap my-5 lg:hidden bg-brand-bg/80 dark:bg-brand-structural/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-brand-bg/20"
+                      className="absolute top-full left-0 w-full z-[100] overscroll-contain flex flex-col my-5 lg:hidden bg-brand-bg/80 dark:bg-brand-structural/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-brand-bg/20"
                     >
                       <>
-                        {navigation.map((item, index) => (
-                          <MobileNavbarItem key={index} item={item} router={router} />
-                        ))}
+                        <ul className="menu bg-transparent w-full space-y-1">
+                          {navigation.map((item, index) => (
+                            <MobileNavbarItem key={index} item={item} router={router} />
+                          ))}
+                        </ul>
 
 
                         {process.env.NODE_ENV === 'development' && (
@@ -363,85 +365,98 @@ function NavbarListItem({ item }) {
 }
 
 function MobileNavbarItem({ item, router }) {
+  const isActive = router.pathname === item.path;
+
   if (item.children && item.children.length > 0) {
     return (
-      <Disclosure>
-        {({ open }) => (
-          <>
-            <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-              <span>{item.title}</span>
-              <ChevronDownIcon
-                className={`${open ? "transform rotate-180" : ""
-                  } w-5 h-5`}
-              />
-            </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
-              {item.children.map((child, idx) => (
-                <div key={idx} className="mb-1">
+      <li>
+        <details open className="group">
+          <summary className="list-none font-medium text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2.5 px-3 rounded-lg hover:bg-brand-accent/5 active:bg-brand-accent/10 [&::-webkit-details-marker]:hidden">
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              {item.title}
+            </span>
+          </summary>
+          <ul className="ml-4 mt-1 space-y-0.5 border-l-2 border-brand-taupe/10 dark:border-brand-structural/30 pl-3">
+            {item.children.map((child, idx) => {
+              const childIsActive = router.pathname === child.path;
+              return (
+                <li key={idx}>
                   {child.children && child.children.length > 0 ? (
-                    <Disclosure>
-                      {({ open: subOpen }) => (
-                        <>
-                          <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                            <span>{child.title}</span>
-                            <ChevronDownIcon
-                              className={`${subOpen ? "transform rotate-180" : ""
-                                } w-4 h-4`}
-                            />
-                          </Disclosure.Button>
-                          <Disclosure.Panel className="px-6 pt-1 pb-1 text-xs text-brand-taupe border-l border-brand-taupe/20 ml-4">
-                            {child.children.map((grandChild, gIdx) => (
-                              <Disclosure.Button
-                                key={gIdx}
-                                as="a"
+                    <details className="group/sub">
+                      <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden">
+                        <span className="flex items-center gap-2">
+                          <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                          {child.title}
+                        </span>
+                      </summary>
+                      <ul className="ml-3 mt-1 space-y-0.5 border-l border-brand-taupe/10 dark:border-brand-structural/20 pl-2">
+                        {child.children.map((grandChild, gIdx) => {
+                          const grandChildIsActive = router.pathname === grandChild.path;
+                          return (
+                            <li key={gIdx}>
+                              <a
                                 href={grandChild.path || "#"}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   setTimeout(() => router.push(grandChild.path || "#"), 400);
                                 }}
-                                className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
+                                className={`block text-xs py-1.5 px-2 rounded-md transition-all ${grandChildIsActive
+                                  ? 'text-brand-accent font-semibold bg-brand-accent/10'
+                                  : 'text-brand-taupe dark:text-brand-taupe hover:text-brand-accent hover:bg-brand-accent/5'
+                                  }`}
                               >
                                 {grandChild.title}
-                              </Disclosure.Button>
-                            ))}
-                          </Disclosure.Panel>
-                        </>
-                      )}
-                    </Disclosure>
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </details>
                   ) : (
-                    <Disclosure.Button
-                      as="a"
+                    <a
                       href={child.path || "#"}
                       onClick={(e) => {
                         e.preventDefault();
                         setTimeout(() => router.push(child.path || "#"), 400);
                       }}
-                      className="btn btn-ghost btn-sm btn-block justify-start px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
+                      className={`block text-sm py-2 px-2 rounded-md transition-all ${childIsActive
+                        ? 'text-brand-accent font-semibold bg-brand-accent/10'
+                        : 'text-brand-taupe dark:text-brand-taupe hover:text-brand-accent hover:bg-brand-accent/5'
+                        }`}
                     >
                       {child.title}
-                    </Disclosure.Button>
+                    </a>
                   )}
-                </div>
-              ))}
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      </li>
     );
   }
 
   return (
-    <Disclosure.Button
-      as="a"
-      href={item.path || "/"}
-      onClick={(e) => {
-        e.preventDefault();
-        setTimeout(() => router.push(item.path || "/"), 400);
-      }}
-      className="btn btn-ghost btn-sm btn-block justify-start px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700"
-    >
-      {item.title}
-    </Disclosure.Button>
+    <li>
+      <a
+        href={item.path || "/"}
+        onClick={(e) => {
+          e.preventDefault();
+          setTimeout(() => router.push(item.path || "/"), 400);
+        }}
+        className={`block font-medium py-2.5 px-3 rounded-lg transition-all ${isActive
+          ? 'text-brand-accent bg-brand-accent/10 font-semibold'
+          : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 active:bg-brand-accent/10'
+          }`}
+      >
+        {item.title}
+      </a>
+    </li>
   );
 }
 

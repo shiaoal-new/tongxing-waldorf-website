@@ -8,19 +8,20 @@ export const ThemeList = ({ onItemClick }) => {
   return (
     <>
       <li className="menu-title text-brand-accent px-4 py-2 text-xs font-bold uppercase tracking-wider">選擇主題 (Themes)</li>
-      <div className="max-h-60 overflow-y-auto mb-2 px-2">
+      <div className="max-h-60 overflow-y-auto mb-2">
         {themes.map((t) => (
           <li key={t}>
-            <button
-              className={`flex justify-between items-center w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${theme === t ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg hover:bg-brand-accent/10"}`}
-              onClick={() => {
+            <a
+              className={`flex justify-between items-center ${theme === t ? "active bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"}`}
+              onClick={(e) => {
+                e.preventDefault();
                 setTheme(t);
                 if (onItemClick) onItemClick();
               }}
             >
               <span className="capitalize">{t}</span>
               {theme === t && <Icon icon="lucide:check" className="w-4 h-4 ml-2" />}
-            </button>
+            </a>
           </li>
         ))}
       </div>

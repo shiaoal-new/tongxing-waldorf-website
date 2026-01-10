@@ -40,28 +40,30 @@ function FooterContent() {
           </div>
 
           <div>
-            <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
+            <ul className="menu bg-transparent p-0">
               {navigation.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.path}
-                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
-                  {item.title}
-                </Link>
+                <li key={index}>
+                  <Link
+                    href={item.path}
+                    className="text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent text-sm">
+                    {item.title}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
           <div>
-            <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
+            <ul className="menu bg-transparent p-0">
               {legal.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.path}
-                  className="w-full px-4 py-2 text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 text-sm">
-                  {item.title}
-                </Link>
+                <li key={index}>
+                  <Link
+                    href={item.path}
+                    className="text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent text-sm">
+                    {item.title}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
           <div className="">
             <div className="font-bold text-brand-text dark:text-brand-bg uppercase tracking-widest text-xs mb-4">追蹤我們 (Follow us)</div>

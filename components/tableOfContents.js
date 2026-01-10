@@ -168,27 +168,27 @@ const TableOfContents = ({ sections }) => {
                                     </button>
                                 </div>
 
-                                <div className="space-y-1">
+                                <ul className="menu bg-transparent rounded-box w-full">
                                     {validSections.map((section) => {
                                         const isActive = activeId === section.id;
                                         return (
-                                            <button
-                                                key={section.id}
-                                                onClick={() => scrollToSection(section.id)}
-                                                className={`
-                          btn btn-ghost btn-block btn-sm justify-start p-3 transition-colors text-left font-normal
-                          ${isActive
-                                                        ? 'bg-brand-accent/10 text-brand-accent font-bold'
-                                                        : 'text-brand-text dark:text-gray-400'
-                                                    }
-                        `}
-                                            >
-                                                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-brand-accent mr-3" />}
-                                                <span className={isActive ? '' : 'pl-4'}>{section.title}</span>
-                                            </button>
+                                            <li key={section.id}>
+                                                <a
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        scrollToSection(section.id);
+                                                    }}
+                                                    className={`
+                                                        ${isActive ? 'active bg-brand-accent/10 text-brand-accent font-bold' : 'text-brand-text dark:text-gray-400'}
+                                                    `}
+                                                >
+                                                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />}
+                                                    {section.title}
+                                                </a>
+                                            </li>
                                         );
                                     })}
-                                </div>
+                                </ul>
                             </motion.div>
                         </>
                     )}
