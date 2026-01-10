@@ -55,7 +55,9 @@ const TableOfContents = ({ sections }) => {
         }
     };
 
-    if (validSections.length === 0) return null;
+    if (validSections.length === 0) {
+        return null;
+    }
 
     return (
         <>
@@ -123,12 +125,12 @@ const TableOfContents = ({ sections }) => {
             {/* Mobile View - Floating Action Button & Modal */}
             <DevComment text="Mobile Table of Contents" />
 
-            <div className="lg:hidden absolute">
+            <div className="lg:hidden fixed right-8 bottom-8 z-40">
                 {/* FAB */}
                 <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     className={`
-            btn btn-primary btn-circle fixed right-4 bottom-8 z-40 shadow-lg transition-transform duration-300
+            btn btn-primary btn-circle fixed right-0 bottom-0 z-[45] shadow-lg transition-transform duration-300
             ${isMobileMenuOpen ? 'scale-0' : 'scale-100'}
           `}
                 >

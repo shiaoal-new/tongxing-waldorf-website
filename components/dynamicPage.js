@@ -75,35 +75,37 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
     } : null;
 
     return (
-        <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
+        <>
             <TableOfContents sections={tocSections} />
-            {effectiveHeroData && <PageHero data={effectiveHeroData} />}
+            <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
+                {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
-            <div className="w-full py-10 relative overflow-hidden">
-                {!effectiveHeroData && (
-                    <Section title={page.title} align="left" description={page.description} />
-                )}
+                <div className="w-full py-10 relative overflow-hidden">
+                    {!effectiveHeroData && (
+                        <Section title={page.title} align="left" description={page.description} />
+                    )}
 
-                <div className="mt-10">
-                    <PageDataProvider value={{
-                        getMemberDetails,
-                        setSelectedMember,
-                        faqList,
-                        getImagePath
-                    }}>
-                        {sections.map((section, index) => (
-                            <SectionRenderer key={index} section={section} index={index} />
-                        ))}
-                    </PageDataProvider>
+                    <div className="mt-10">
+                        <PageDataProvider value={{
+                            getMemberDetails,
+                            setSelectedMember,
+                            faqList,
+                            getImagePath
+                        }}>
+                            {sections.map((section, index) => (
+                                <SectionRenderer key={index} section={section} index={index} />
+                            ))}
+                        </PageDataProvider>
+                    </div>
                 </div>
-            </div>
 
-            <MemberDetailModal
-                selectedMember={selectedMember}
-                onClose={() => setSelectedMember(null)}
-            />
+                <MemberDetailModal
+                    selectedMember={selectedMember}
+                    onClose={() => setSelectedMember(null)}
+                />
 
-        </Layout >
+            </Layout>
+        </>
     );
 }
 
