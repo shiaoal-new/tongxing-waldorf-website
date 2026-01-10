@@ -5,10 +5,11 @@ items:
       - slug: "curriculum-development"
       - slug: "featured-courses"
   - slug: "teacher-group"
+  - slug: "waldorf-assessment"
+  - slug: "visit"
   - title: "設計規範"
     children:
       - slug: "colors"
       - slug: "layout-spacing"
       - slug: "typography"
       - slug: "micro-interactions"
-  - slug: "visit"

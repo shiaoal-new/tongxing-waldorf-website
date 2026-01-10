@@ -15,8 +15,10 @@ import SpacingDemoBlock from "./spacingDemoBlock";
 import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
+import QuestionnaireBlock from "./questionnaireBlock";
 import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
+
 
 /**
  * SectionRenderer
@@ -216,6 +218,9 @@ function BlockDispatcher({ block, align = "center", context = "standalone" }) {
 
         case "tabbed_content_block":
             return <TabbedContentBlock data={block} />;
+
+        case "questionnaire_block":
+            return <QuestionnaireBlock data={block} />;
 
         default:
             return null;

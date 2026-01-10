@@ -46,9 +46,11 @@ export async function getStaticProps({ params }) {
             course: course || null,
             pages,
             navigation,
-            facultyList,
-            faqList,
-            coursesList,
+            data: {
+                facultyList,
+                faqList,
+                coursesList,
+            },
         },
     };
 }

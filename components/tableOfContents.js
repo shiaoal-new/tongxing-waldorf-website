@@ -166,8 +166,8 @@ const TableOfContents = ({ sections }) => {
                         <button
                             onClick={() => setIsMobileMenuOpen(true)}
                             className={`
-            btn btn-secondary fixed right-0 bottom-0 z-[45] shadow-lg transition-all duration-300 
-            flex flex-col items-center justify-center gap-2 px-3 py-3 h-auto rounded-2xl backdrop-blur-sm bg-white/10
+            btn btn-secondary z-[45] shadow-lg transition-all duration-300 
+            flex items-center justify-center gap-2 px-3 py-3 h-auto rounded-2xl backdrop-blur-sm bg-white/10
             ${isMobileMenuOpen ? 'scale-0' : 'scale-100'}
           `}
                             aria-label="打開目錄"

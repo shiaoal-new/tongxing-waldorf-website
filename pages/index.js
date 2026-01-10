@@ -33,8 +33,10 @@ export async function getStaticProps() {
       page: page || null,
       pages,
       navigation,
-      facultyList,
-      faqList,
+      data: {
+        facultyList,
+        faqList,
+      },
     },
   };
 }

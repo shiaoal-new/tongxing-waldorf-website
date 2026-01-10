@@ -7,6 +7,9 @@ import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
 import '../components/listSwiper.css';
 
+// Questionnaire styles
+import '../css/questionnaire.css';
+
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="tongxing" enableSystem={false}>

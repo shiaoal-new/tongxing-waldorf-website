@@ -1,0 +1,227 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Modal from './modal';
+
+export default function QuestionnaireComponent({ data }) {
+    const [answers, setAnswers] = useState({});
+    const [currentCategory, setCurrentCategory] = useState(0);
+    const [showResult, setShowResult] = useState(false);
+    const [result, setResult] = useState(null);
+
+    // 計算總分
+    const calculateScore = () => {
+        const totalQuestions = data.categories.reduce(
+            (sum, cat) => sum + cat.questions.length,
+            0
+        );
+        const answeredQuestions = Object.keys(answers).length;
+
+        if (answeredQuestions < totalQuestions) {
+            return null;
+        }
+
+        const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0);
+        return totalScore;
+    };
+
+    // 獲取結果描述
+    const getResult = (score) => {
+        return data.results.find(
+            r => score >= r.minScore && score <= r.maxScore
+        );
+    };
+
+    // 處理答案變更
+    const handleAnswerChange = (questionId, value) => {
+        setAnswers(prev => ({
+            ...prev,
+            [questionId]: parseInt(value)
+        }));
+    };
+
+    // 提交問卷
+    const handleSubmit = () => {
+        const score = calculateScore();
+        if (score !== null) {
+            const resultData = getResult(score);
+            setResult({ score, ...resultData });
+            setShowResult(true);
+        }
+    };
+
+    // 重新開始
+    const handleReset = () => {
+        setAnswers({});
+        setCurrentCategory(0);
+        setShowResult(false);
+        setResult(null);
+    };
+
+    // 檢查當前分類是否完成
+    const isCategoryComplete = (categoryIndex) => {
+        const category = data.categories[categoryIndex];
+        return category.questions.every(q => answers[q.id] !== undefined);
+    };
+
+    // 計算進度
+    const progress = () => {
+        const totalQuestions = data.categories.reduce(
+            (sum, cat) => sum + cat.questions.length,
+            0
+        );
+        const answeredQuestions = Object.keys(answers).length;
+        return (answeredQuestions / totalQuestions) * 100;
+    };
+
+    return (
+        <>
+            {/* 結果 Modal */}
+            <Modal
+                isOpen={showResult && result}
+                onClose={() => setShowResult(false)}
+                maxWidth="max-w-3xl"
+                showCloseButton={true}
+                padding="p-0"
+            >
+                <div className="result-card">
+                    <div className={`result-header result-${result?.color}`}>
+                        <h2>評估結果</h2>
+                        <div className="score-display">
+                            <span className="score-number">{result?.score}</span>
+                            <span className="score-total">/ 100</span>
+                        </div>
+                    </div>
+
+                    <div className="result-content">
+                        <h3 className="result-level">{result?.level}</h3>
+                        <h4 className="result-title">{result?.title}</h4>
+                        <p className="result-description">{result?.description}</p>
+                    </div>
+
+                    <div className="result-actions">
+                        <button onClick={handleReset} className="btn btn-secondary">
+                            重新評估
+                        </button>
+                        <a href="/visit" className="btn btn-primary">
+                            預約參觀
+                        </a>
+                    </div>
+                </div>
+            </Modal>
+
+            <div className="questionnaire-container">
+                {/* 進度條 */}
+                <div className="progress-bar">
+                    <div
+                        className="progress-fill"
+                        style={{ width: `${progress()}%` }}
+                    />
+                </div>
+
+                {/* 分類標籤 */}
+                <div className="category-tabs">
+                    {data.categories.map((category, index) => (
+                        <button
+                            key={category.id}
+                            onClick={() => setCurrentCategory(index)}
+                            className={`category-tab ${currentCategory === index ? 'active' : ''
+                                } ${isCategoryComplete(index) ? 'completed' : ''}`}
+                        >
+                            <span className="category-number">{index + 1}</span>
+                            <span className="category-title">{category.title}</span>
+                            {isCategoryComplete(index) && (
+                                <span className="check-icon">✓</span>
+                            )}
+                        </button>
+                    ))}
+                </div>
+
+                {/* 問題區域 */}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentCategory}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="questions-section"
+                    >
+                        <h2 className="category-heading">
+                            {data.categories[currentCategory].title}
+                        </h2>
+
+                        <div className="questions-list">
+                            {data.categories[currentCategory].questions.map((question, qIndex) => (
+                                <div key={question.id} className="question-item">
+                                    <div className="question-header">
+                                        <span className="question-number">
+                                            {qIndex + 1}
+                                        </span>
+                                        <p className="question-text">{question.text}</p>
+                                    </div>
+
+                                    <div className="rating-scale">
+                                        {[1, 2, 3, 4, 5].map(value => (
+                                            <label
+                                                key={value}
+                                                className={`rating-option ${answers[question.id] === value ? 'selected' : ''
+                                                    }`}
+                                            >
+                                                <input
+                                                    type="radio"
+                                                    name={question.id}
+                                                    value={value}
+                                                    checked={answers[question.id] === value}
+                                                    onChange={(e) => handleAnswerChange(
+                                                        question.id,
+                                                        e.target.value
+                                                    )}
+                                                />
+                                                <span className="rating-number">{value}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="scale-labels">
+                            <span className="scale-label-min">{data.scale.minLabel}</span>
+                            <span className="scale-label-max">{data.scale.maxLabel}</span>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
+
+                {/* 導航按鈕 */}
+                <div className="navigation-buttons">
+                    <button
+                        onClick={() => setCurrentCategory(prev => Math.max(0, prev - 1))}
+                        disabled={currentCategory === 0}
+                        className="btn btn-secondary"
+                    >
+                        上一類別
+                    </button>
+
+                    {currentCategory < data.categories.length - 1 ? (
+                        <button
+                            onClick={() => setCurrentCategory(prev =>
+                                Math.min(data.categories.length - 1, prev + 1)
+                            )}
+                            className="btn btn-primary"
+                        >
+                            下一類別
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleSubmit}
+                            disabled={calculateScore() === null}
+                            className="btn btn-primary"
+                        >
+                            查看結果
+                        </button>
+                    )}
+                </div>
+            </div>
+        </>
+    );
+}

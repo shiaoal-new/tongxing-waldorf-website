@@ -12,7 +12,17 @@ import { useTheme } from "next-themes";
 import { SectionRenderer } from "./sectionRenderer";
 import { PageDataProvider } from "../contexts/PageDataContext";
 
-export default function DynamicPageContent({ page, pages, navigation, facultyList, faqList, coursesList = [] }) {
+export default function DynamicPageContent({ page, pages, navigation, data = {} }) {
+    // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
+    const {
+        facultyList = [],
+        faqList = [],
+        coursesList = [],
+        questionnaire = null,
+        // 未來可以在這裡輕鬆添加新的資料類型
+        // 例如：testimonials, events, gallery 等
+    } = data;
+
     const [selectedMember, setSelectedMember] = useState(null);
     const { theme } = useTheme();
 
@@ -90,7 +100,8 @@ export default function DynamicPageContent({ page, pages, navigation, facultyLis
                             getMemberDetails,
                             setSelectedMember,
                             faqList,
-                            getImagePath
+                            getImagePath,
+                            questionnaire
                         }}>
                             {sections.map((section, index) => (
                                 <SectionRenderer key={index} section={section} index={index} />
