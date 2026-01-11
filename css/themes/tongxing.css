@@ -165,6 +165,7 @@
          */
 
         /* Video Mask Effect - 视频遮罩效果 */
+
         & .video-mask {
             position: relative;
 
@@ -174,7 +175,7 @@
                 filter: drop-shadow(12px 12px 12px rgba(0, 0, 0, 0.8));
 
                 &>div {
-                    mask-image: url('/img/themes/tongxing/mask/VideoFrameMask-1.webp');
+                    /* mask-image: url('/img/themes/tongxing/mask/VideoFrameMask-1.webp'); */
                     /* 使用 contain 确保遮罩完整显示，不会裁剪视频 */
                     mask-size: contain;
                     mask-repeat: no-repeat;
