@@ -64,19 +64,36 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
     const sections = page.sections || [];
 
     // Extract TOC sections
-    const tocSections = sections.map(section => {
+    const tocSections = [];
+    sections.forEach(section => {
         const blocks = section.blocks || [];
         let title = "";
         const firstBlock = blocks[0];
+
+        // Standard text block title extraction
         if (firstBlock && firstBlock.type === 'text_block') {
             if (firstBlock.title) title = firstBlock.title;
             else if (firstBlock.subtitle) title = firstBlock.subtitle;
         }
-        return {
-            id: section.section_id,
-            title: title || section.section_id || "Section"
-        };
-    }).filter(s => s.id);
+
+        if (section.section_id) {
+            tocSections.push({
+                id: section.section_id,
+                title: title || section.section_id || "Section"
+            });
+        }
+
+        // If this section contains a questionnaire, add its categories to TOC
+        const hasQuestionnaire = blocks.some(b => b.type === 'questionnaire_block');
+        if (hasQuestionnaire && questionnaire?.categories) {
+            questionnaire.categories.forEach(cat => {
+                tocSections.push({
+                    id: `cat-${cat.id}`,
+                    title: `↳ ${cat.title}` // Indent nested items
+                });
+            });
+        }
+    });
 
     // Fallback: if hero exists but has no title, use page title
     const effectiveHeroData = heroData ? {

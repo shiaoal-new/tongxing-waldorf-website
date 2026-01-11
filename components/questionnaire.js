@@ -210,15 +210,23 @@ export default function QuestionnaireComponent({ data }) {
                     />
                 </div>
 
-                {/* 分類標籤 - 改為進度指示器 */}
+                {/* 分類標籤 - 充當內部目錄導航 */}
                 <div className="category-tabs">
                     {data.categories.map((category, index) => (
                         <div
                             key={category.id}
-                            className={`category-tab ${isCategoryComplete(index) ? 'completed' : ''}`}
+                            className={`category-tab ${isCategoryComplete(index) ? 'completed' : ''} cursor-pointer hover:shadow-md transition-all`}
+                            onClick={() => {
+                                document.getElementById(`cat-${category.id}`)?.scrollIntoView({ behavior: 'smooth' });
+                            }}
                         >
                             <span className="category-number">{index + 1}</span>
-                            <span className="category-title">{category.title}</span>
+                            <div className="category-info">
+                                <span className="category-title">{category.title}</span>
+                                <span className="category-status">
+                                    {isCategoryComplete(index) ? '已完成' : '進行中'}
+                                </span>
+                            </div>
                             {isCategoryComplete(index) && (
                                 <span className="check-icon">✓</span>
                             )}
@@ -228,7 +236,7 @@ export default function QuestionnaireComponent({ data }) {
 
                 {/* 所有問題連續顯示 */}
                 {data.categories.map((category, categoryIndex) => (
-                    <div key={category.id} className="questions-section">
+                    <div key={category.id} id={`cat-${category.id}`} className="questions-section scroll-mt-24">
                         <h2 className="category-heading">
                             {category.title}
                         </h2>
