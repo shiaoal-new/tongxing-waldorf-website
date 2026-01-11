@@ -55,7 +55,12 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
     };
   };
 
-  const navigation = customNavigation?.items?.map(resolveItem) || [
+  const isDev = process.env.NODE_ENV === 'development';
+  const navigation = (customNavigation?.items || [])
+    .filter(item => isDev || !item.debugOnly)
+    .map(resolveItem);
+
+  const finalNavigation = navigation.length > 0 ? navigation : [
     { title: "首頁", path: "/" },
     ...pages
       .filter(page => page.slug !== "index")
@@ -64,6 +69,12 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
         path: `/${page.slug}`
       }))
   ];
+
+  const actionHandlers = {
+    showAbout: () => setShowAboutModal(true),
+    toggleGrid: (current) => setShowBackgroundGrid(!current),
+    themeList: 'THEME_LIST_COMPONENT' // Special marker
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -158,81 +169,18 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                     >
                       <>
                         <ul className="menu bg-transparent w-full space-y-1">
-                          {navigation.map((item, index) => (
-                            <MobileNavbarItem key={index} item={item} router={router} />
+                          {finalNavigation.map((item, index) => (
+                            <MobileNavbarItem
+                              key={index}
+                              item={item}
+                              router={router}
+                              actionHandlers={actionHandlers}
+                              showBackgroundGrid={showBackgroundGrid}
+                            />
                           ))}
                         </ul>
 
 
-                        {process.env.NODE_ENV === 'development' && (
-                          <div className="w-full mt-4 border-t border-brand-taupe/20 dark:border-brand-structural pt-4">
-                            <Disclosure>
-                              {({ open }) => (
-                                <>
-                                  <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                    <span>Debug</span>
-                                    <ChevronDownIcon
-                                      className={`${open ? "transform rotate-180" : ""
-                                        } w-5 h-5`}
-                                    />
-                                  </Disclosure.Button>
-                                  <Disclosure.Panel className="px-4 pt-2 pb-2 text-sm text-brand-taupe">
-                                    <button
-                                      onClick={() => { setShowAboutModal(true); }}
-                                      className="btn btn-ghost btn-block btn-sm justify-start px-4 text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:text-brand-taupe dark:focus:bg-trueGray-700"
-                                    >
-                                      About this site
-                                    </button>
-                                    <div className="flex items-center justify-between w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                      <span className="text-sm">Background Grid</span>
-                                      <div className="relative">
-                                        <input
-                                          type="checkbox"
-                                          className="sr-only"
-                                          checked={showBackgroundGrid}
-                                          onChange={(e) => setShowBackgroundGrid(e.target.checked)}
-                                        />
-                                        <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
-                                          <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <Link
-                                      href="/debug/device-simulator"
-                                      target="_blank"
-                                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
-                                    >
-                                      多裝置展示模式 (Simulator)
-                                    </Link>
-                                    <Link
-                                      href="/admin/index.html"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="w-full px-4 py-2 text-left text-brand-taupe rounded-md dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700 block"
-                                    >
-                                      CMS 後台管理
-                                    </Link>
-                                    <Disclosure>
-                                      {({ open }) => (
-                                        <>
-                                          <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-4 text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none dark:focus:bg-trueGray-700">
-                                            <span>主題切換 (Themes)</span>
-                                            <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
-                                          </Disclosure.Button>
-                                          <Disclosure.Panel className="px-2 pb-2">
-                                            <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-0">
-                                              <ThemeList />
-                                            </ul>
-                                          </Disclosure.Panel>
-                                        </>
-                                      )}
-                                    </Disclosure>
-                                  </Disclosure.Panel>
-                                </>
-                              )}
-                            </Disclosure>
-                          </div>
-                        )}
                       </>
                     </Disclosure.Panel>
                   )}
@@ -244,20 +192,15 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
 
               <div className="hidden text-center lg:flex lg:items-center">
                 <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
-                  {navigation.map((menu, index) => (
+                  {finalNavigation.map((menu, index) => (
                     <li className="mr-3 nav__item" key={index}>
-                      <NavbarListItem item={menu} />
-                    </li>
-                  ))}
-                  {process.env.NODE_ENV === 'development' && (
-                    <li className="mr-3 nav__item">
-                      <DebugMenu
-                        onOpenModal={() => setShowAboutModal(true)}
+                      <NavbarListItem
+                        item={menu}
+                        actionHandlers={actionHandlers}
                         showBackgroundGrid={showBackgroundGrid}
-                        setShowBackgroundGrid={setShowBackgroundGrid}
                       />
                     </li>
-                  )}
+                  ))}
                 </ul>
               </div>
 
@@ -284,7 +227,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
   );
 }
 
-function NavbarListItem({ item }) {
+function NavbarListItem({ item, actionHandlers, showBackgroundGrid }) {
   if (item.children && item.children.length > 0) {
     return (
       <Menu as="div" className="relative inline-block text-left group">
@@ -313,31 +256,26 @@ function NavbarListItem({ item }) {
                     <Menu.Item key={idx}>
                       {({ active }) => (
                         <div className="relative group/sub">
-                          <Link
-                            href={child.path || "#"}
-                            className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                              } flex items-center justify-between w-full px-4 py-2 text-sm transition-colors micro-hover-link`}
-                          >
-                            <span>{child.title}</span>
-                            {child.children && child.children.length > 0 && (
-                              <ChevronDownIcon className="w-4 h-4 -rotate-90" />
-                            )}
-                          </Link>
-
-                          <DevComment text="Navbar Level 2 Submenu" />
-                          {/* Level 2 Submenu */}
+                          <NavbarActionItem
+                            item={child}
+                            active={active}
+                            actionHandlers={actionHandlers}
+                            showBackgroundGrid={showBackgroundGrid}
+                            className="text-sm px-4 py-2"
+                          />
 
                           {child.children && child.children.length > 0 && (
                             <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
                               <div className="py-1">
                                 {child.children.map((grandChild, gIdx) => (
-                                  <Link
+                                  <NavbarActionItem
                                     key={gIdx}
-                                    href={grandChild.path || "#"}
-                                    className="block px-4 py-2 text-sm text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg transition-colors"
-                                  >
-                                    {grandChild.title}
-                                  </Link>
+                                    item={grandChild}
+                                    active={false} // Handle sub-item active state if needed
+                                    actionHandlers={actionHandlers}
+                                    showBackgroundGrid={showBackgroundGrid}
+                                    className="text-sm px-4 py-2 block w-full text-left"
+                                  />
                                 ))}
                               </div>
                             </div>
@@ -356,21 +294,122 @@ function NavbarListItem({ item }) {
   }
 
   return (
+    <NavbarActionItem
+      item={item}
+      active={false}
+      actionHandlers={actionHandlers}
+      showBackgroundGrid={showBackgroundGrid}
+      className="text-base font-normal px-4 py-2"
+    />
+  );
+}
+
+function NavbarActionItem({ item, active, actionHandlers, showBackgroundGrid, className = "", isMobile = false, router }) {
+  const baseStyles = isMobile
+    ? `block rounded-md transition-all ${active
+      ? 'text-brand-accent font-semibold bg-brand-accent/10'
+      : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 active:bg-brand-accent/10'
+    }`
+    : `flex items-center justify-between transition-colors micro-hover-link rounded-md ${active
+      ? "bg-brand-accent text-brand-bg"
+      : "text-brand-text dark:text-brand-bg hover:text-brand-accent"
+    }`;
+
+  const combinedClassName = `${baseStyles} ${className}`;
+
+  if (item.action) {
+    if (item.action === 'themeList') {
+      return (
+        <div className="w-full">
+          {isMobile ? (
+            <details className="group/theme">
+              <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden flex justify-between items-center w-full">
+                <span>{item.title}</span>
+                <ChevronDownIcon className="w-4 h-4 group-open/theme:rotate-180 transition-transform" />
+              </summary>
+              <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-0 mt-1">
+                <ThemeList />
+              </ul>
+            </details>
+          ) : (
+            <div className="group/theme relative">
+              <div className={combinedClassName}>
+                <span>{item.title}</span>
+                <ChevronDownIcon className="w-4 h-4 -rotate-90" />
+              </div>
+              <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/theme:opacity-100 group-hover/theme:visible transition-all duration-200">
+                <ul className="menu menu-compact p-1">
+                  <ThemeList />
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (item.action === 'toggleGrid') {
+      return (
+        <div className={`${combinedClassName} flex items-center justify-between w-full`}>
+          <span>{item.title}</span>
+          <div className="relative ml-2" onClick={(e) => e.stopPropagation()}>
+            <input
+              type="checkbox"
+              className="sr-only"
+              checked={showBackgroundGrid}
+              readOnly
+            />
+            <div
+              onClick={() => actionHandlers.toggleGrid(showBackgroundGrid)}
+              className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}
+            >
+              <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <button
+        onClick={actionHandlers[item.action]}
+        className={`${combinedClassName} w-full text-left`}
+      >
+        {item.title}
+      </button>
+    );
+  }
+
+  const handleClick = (e) => {
+    if (isMobile && router) {
+      e.preventDefault();
+      setTimeout(() => router.push(item.path || "#"), 400);
+    }
+  };
+
+  return (
     <Link
-      href={item.path || "/"}
-      className="inline-block px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none micro-hover-link">
-      {item.title}
+      href={item.path || "#"}
+      target={item.target}
+      rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+      className={combinedClassName}
+      onClick={isMobile ? handleClick : undefined}
+    >
+      <span>{item.title}</span>
+      {item.children && item.children.length > 0 && !isMobile && (
+        <ChevronDownIcon className="w-4 h-4 -rotate-90" />
+      )}
     </Link>
   );
 }
 
-function MobileNavbarItem({ item, router }) {
+function MobileNavbarItem({ item, router, actionHandlers, showBackgroundGrid }) {
   const isActive = router.pathname === item.path;
 
   if (item.children && item.children.length > 0) {
     return (
       <li>
-        <details open className="group">
+        <details className="group">
           <summary className="list-none font-medium text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2.5 px-3 rounded-lg hover:bg-brand-accent/5 active:bg-brand-accent/10 [&::-webkit-details-marker]:hidden">
             <span className="flex items-center gap-2">
               <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -399,38 +438,30 @@ function MobileNavbarItem({ item, router }) {
                           const grandChildIsActive = router.pathname === grandChild.path;
                           return (
                             <li key={gIdx}>
-                              <a
-                                href={grandChild.path || "#"}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setTimeout(() => router.push(grandChild.path || "#"), 400);
-                                }}
-                                className={`block text-xs py-1.5 px-2 rounded-md transition-all ${grandChildIsActive
-                                  ? 'text-brand-accent font-semibold bg-brand-accent/10'
-                                  : 'text-brand-taupe dark:text-brand-taupe hover:text-brand-accent hover:bg-brand-accent/5'
-                                  }`}
-                              >
-                                {grandChild.title}
-                              </a>
+                              <NavbarActionItem
+                                item={grandChild}
+                                active={grandChildIsActive}
+                                actionHandlers={actionHandlers}
+                                showBackgroundGrid={showBackgroundGrid}
+                                className="text-xs py-1.5 px-2 mb-0.5"
+                                isMobile
+                                router={router}
+                              />
                             </li>
                           );
                         })}
                       </ul>
                     </details>
                   ) : (
-                    <a
-                      href={child.path || "#"}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setTimeout(() => router.push(child.path || "#"), 400);
-                      }}
-                      className={`block text-sm py-2 px-2 rounded-md transition-all ${childIsActive
-                        ? 'text-brand-accent font-semibold bg-brand-accent/10'
-                        : 'text-brand-taupe dark:text-brand-taupe hover:text-brand-accent hover:bg-brand-accent/5'
-                        }`}
-                    >
-                      {child.title}
-                    </a>
+                    <NavbarActionItem
+                      item={child}
+                      active={childIsActive}
+                      actionHandlers={actionHandlers}
+                      showBackgroundGrid={showBackgroundGrid}
+                      className="text-sm py-2 px-2 mb-0.5"
+                      isMobile
+                      router={router}
+                    />
                   )}
                 </li>
               );
@@ -443,19 +474,15 @@ function MobileNavbarItem({ item, router }) {
 
   return (
     <li>
-      <a
-        href={item.path || "/"}
-        onClick={(e) => {
-          e.preventDefault();
-          setTimeout(() => router.push(item.path || "/"), 400);
-        }}
-        className={`block font-medium py-2.5 px-3 rounded-lg transition-all ${isActive
-          ? 'text-brand-accent bg-brand-accent/10 font-semibold'
-          : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 active:bg-brand-accent/10'
-          }`}
-      >
-        {item.title}
-      </a>
+      <NavbarActionItem
+        item={item}
+        active={isActive}
+        actionHandlers={actionHandlers}
+        showBackgroundGrid={showBackgroundGrid}
+        className="font-medium py-2.5 px-3 mb-0.5"
+        isMobile
+        router={router}
+      />
     </li>
   );
 }
@@ -478,111 +505,6 @@ function ScrollLock({ isOpen }) {
 }
 
 
-function DebugMenu({ onOpenModal, showBackgroundGrid, setShowBackgroundGrid }) {
-  return (
-    <Menu as="div" className="relative inline-block text-left">
-      {({ open }) => (
-        <>
-          <div>
-            <Menu.Button className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none">
-              <span>Debug</span>
-              <ChevronDownIcon
-                className={`${open ? "transform rotate-180" : ""
-                  } w-5 h-5 ml-1 transition-transform duration-200`}
-                aria-hidden="true"
-              />
-            </Menu.Button>
-          </div>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700">
-              <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      href="/debug/device-simulator"
-                      target="_blank"
-                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
-                    >
-                      多裝置展示模式 (Simulator)
-                    </Link>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                        } btn btn-ghost btn-sm btn-block justify-start px-2 py-2 transition-colors`}
-                      onClick={onOpenModal}
-                    >
-                      About this site
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"} group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors justify-between`}>
-                      <span>Background Grid</span>
-                      <div className="relative ml-2" onClick={(e) => e.stopPropagation()}>
-                        <input
-                          type="checkbox"
-                          className="sr-only"
-                          checked={showBackgroundGrid}
-                          onChange={(e) => setShowBackgroundGrid(e.target.checked)}
-                        />
-                        <div onClick={() => setShowBackgroundGrid(!showBackgroundGrid)} className={`w-9 h-5 rounded-full transition-colors cursor-pointer ${showBackgroundGrid ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
-                          <div className={`w-3.5 h-3.5 bg-white rounded-full shadow-md transform transition-transform ${showBackgroundGrid ? 'translate-x-5' : 'translate-x-0.5'} mt-0.5`} />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      href="/admin/index.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${active ? "bg-brand-accent text-brand-bg" : "text-brand-text dark:text-brand-bg"
-                        } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors`}
-                    >
-                      CMS 後台管理
-                    </Link>
-                  )}
-                </Menu.Item>
-                <div className="border-t border-brand-taupe/10 my-1 pt-1">
-                  <Disclosure>
-                    {({ open }) => (
-                      <>
-                        <Disclosure.Button className="btn btn-ghost btn-sm btn-block justify-between px-2 text-brand-text dark:text-brand-bg hover:bg-brand-accent hover:text-brand-bg rounded-md transition-colors">
-                          <span>主題切換 (Themes)</span>
-                          <ChevronDownIcon className={`${open ? "transform rotate-180" : ""} w-4 h-4`} />
-                        </Disclosure.Button>
-                        <Disclosure.Panel className="mt-1">
-                          <ul className="menu menu-compact p-0">
-                            <ThemeList />
-                          </ul>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                </div>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </>
-      )}
-    </Menu>
-  );
-}
 
 
 function NavBarContainer({ children, open, scroll, onClick }) {
