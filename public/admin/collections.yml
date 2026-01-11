@@ -215,6 +215,55 @@
             required: false,
             hint: "選擇向下捲動時的背景漸變效果",
           }
+        - label: "進入特效 (Entry Effect)"
+          name: "entry_effect"
+          widget: "object"
+          collapsed: true
+          required: false
+          fields:
+            - {
+                label: "特效類型",
+                name: "type",
+                widget: "select",
+                options:
+                  [
+                    { label: "無 (None)", value: "none" },
+                    {
+                      label: "背景漸暗 (Background Dim)",
+                      value: "fade_to_dim",
+                    },
+                  ],
+                default: "fade_to_dim",
+              }
+            - {
+                label: "延遲啟動 (秒)",
+                name: "delay",
+                widget: "number",
+                value_type: "float",
+                default: 1,
+                min: 0,
+                step: 0.1,
+              }
+            - {
+                label: "漸變時長 (秒)",
+                name: "duration",
+                widget: "number",
+                value_type: "float",
+                default: 2,
+                min: 0,
+                step: 0.1,
+              }
+            - {
+                label: "結束亮度 (0~1)",
+                name: "brightness",
+                widget: "number",
+                value_type: "float",
+                default: 0.6,
+                min: 0,
+                max: 1,
+                step: 0.05,
+                hint: "1=不變暗, 0=全黑, 0.6=常見適中亮度",
+              }
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"

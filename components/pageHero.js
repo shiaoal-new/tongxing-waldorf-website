@@ -86,10 +86,17 @@ export default function PageHero({ data }) {
         bg_images,
         bg_video,
         transition_type = 'fade',
-        scrolling_effect = 'fadeToWhite' // none, fadeToDark, fadeToWhite
+        scrolling_effect = 'fadeToWhite', // none, fadeToDark, fadeToWhite
+        entry_effect = {}
     } = data;
 
     const effect = scrolling_effect;
+    const {
+        type: entryType = 'fade_to_dim',
+        delay: entryDelay = 1,
+        duration: entryDuration = 2,
+        brightness: entryBrightness = 0.6
+    } = entry_effect;
 
     // Resolve content 
     const effectiveTitle = title || legacyHeader;
@@ -132,6 +139,20 @@ export default function PageHero({ data }) {
                     transition_type={transition_type}
                     parallax_ratio={data.parallax_ratio}
                 />
+
+                {/* 背景進入特效層 (Entry Effect Overlay) */}
+                {entryType === 'fade_to_dim' && (
+                    <motion.div
+                        className="absolute inset-0 bg-black pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 - entryBrightness }}
+                        transition={{
+                            delay: entryDelay,
+                            duration: entryDuration,
+                            ease: "easeInOut"
+                        }}
+                    />
+                )}
             </motion.div>
 
 
