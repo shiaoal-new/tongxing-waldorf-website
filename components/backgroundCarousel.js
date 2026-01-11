@@ -89,7 +89,7 @@ const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewpo
             >
                 <MediaRenderer
                     media={item}
-                    className={`${isFullViewport ? 'h-[100lvh]' : 'w-full h-full'} ${item.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
+                    className={`${isFullViewport ? 'w-full h-[100lvh]' : 'w-full h-full'} ${item.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
                     imgClassName="object-cover"
                 />
             </motion.div>
@@ -128,7 +128,6 @@ export default function BackgroundCarousel({
     parallax_ratio = 0
 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [sectionBounds, setSectionBounds] = useState(null);
     const containerRef = useRef(null);
 
     const items = useMemo(() => normalizeMediaData(media_list, bg_images, bg_video), [media_list, bg_images, bg_video]);
@@ -139,38 +138,14 @@ export default function BackgroundCarousel({
         offset: ["start end", "end start"]
     });
 
-    const effectiveRatio = parallax_ratio ?? 0;
+    const effectiveRatio = parseFloat(parallax_ratio ?? 0);
     const isFixed = effectiveRatio === 0;
 
     // Parallax logic
     const shift = (effectiveRatio - 1) * 30;
     const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
 
-    // Handle section bounds for fixed background clipping
-    useEffect(() => {
-        if (!isFixed) return;
 
-        const updateBounds = () => {
-            if (containerRef.current) {
-                const rect = containerRef.current.getBoundingClientRect();
-                setSectionBounds({
-                    top: rect.top,
-                    left: rect.left,
-                    width: rect.width,
-                    height: rect.height
-                });
-            }
-        };
-
-        updateBounds();
-        window.addEventListener('scroll', updateBounds);
-        window.addEventListener('resize', updateBounds);
-
-        return () => {
-            window.removeEventListener('scroll', updateBounds);
-            window.removeEventListener('resize', updateBounds);
-        };
-    }, [isFixed]);
 
     // Auto-play timer
     useEffect(() => {
@@ -185,21 +160,23 @@ export default function BackgroundCarousel({
     if (items.length === 0) return <div ref={containerRef} className="absolute inset-0 w-full h-full bg-black/10" />;
 
     return (
-        <div ref={containerRef} className="inset-0 w-full h-full">
+        <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
             {isFixed ? (
-                sectionBounds && (
-                    <BackgroundMediaItem
-                        item={currentItem}
-                        transition_type={transition_type}
-                        currentIndex={currentIndex}
-                        isFullViewport={true}
-                    />
-                )
+                <div className="absolute inset-0" style={{ clipPath: 'inset(0)' }}>
+                    <div className="fixed inset-0 w-full h-full">
+                        <BackgroundMediaItem
+                            item={currentItem}
+                            transition_type={transition_type}
+                            currentIndex={currentIndex}
+                            isFullViewport={true}
+                        />
+                    </div>
+                </div>
             ) : (
                 <motion.div
                     style={{
                         y,
-                        height: `calc(100vh + ${Math.abs(shift) * 2}vh)`,
+                        height: `calc(100% + ${Math.abs(shift) * 2}vh)`,
                         top: `-${Math.abs(shift)}vh`
                     }}
                     className="w-full absolute inset-x-0"
