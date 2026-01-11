@@ -7,6 +7,8 @@ export default function QuestionnaireComponent({ data }) {
     const [showResult, setShowResult] = useState(false);
     const [result, setResult] = useState(null);
     const [activeTooltip, setActiveTooltip] = useState(null); // 用於移動端 tooltip 顯示
+    const [unansweredStats, setUnansweredStats] = useState({ above: 0, below: 0 });
+    const [showHints, setShowHints] = useState(false);
 
     const storageKey = `questionnaire_progress_${data.slug || 'default'}`;
 
@@ -31,6 +33,60 @@ export default function QuestionnaireComponent({ data }) {
             localStorage.setItem(storageKey, JSON.stringify(answers));
         }
     }, [answers, storageKey]);
+
+    // 監控未回答題目的位置
+    useEffect(() => {
+        const updateUnansweredStats = () => {
+            const questions = Array.from(document.querySelectorAll('.question-item'));
+            let above = 0;
+            let below = 0;
+
+            questions.forEach((el) => {
+                const id = el.getAttribute('data-question-id');
+                if (answers[id] === undefined) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.bottom < 0) {
+                        above++;
+                    } else if (rect.top > window.innerHeight) {
+                        below++;
+                    }
+                }
+            });
+
+            setUnansweredStats({ above, below });
+
+            // 只有捲動超過一段距離（接近 Hero 高度）後才顯示提示
+            if (window.scrollY > window.innerHeight - 200) {
+                setShowHints(true);
+            } else {
+                setShowHints(false);
+            }
+        };
+
+        window.addEventListener('scroll', updateUnansweredStats);
+        // 初始執行一次
+        updateUnansweredStats();
+
+        return () => window.removeEventListener('scroll', updateUnansweredStats);
+    }, [answers]);
+
+    const scrollToNextUnanswered = (direction) => {
+        const questions = Array.from(document.querySelectorAll('.question-item'));
+        const targetQuestions = questions.filter(el => {
+            const id = el.getAttribute('data-question-id');
+            if (answers[id] !== undefined) return false;
+            const rect = el.getBoundingClientRect();
+            return direction === 'up' ? rect.bottom < 0 : rect.top > window.innerHeight;
+        });
+
+        if (targetQuestions.length > 0) {
+            const target = direction === 'up'
+                ? targetQuestions[targetQuestions.length - 1] // 最接近上方的一個
+                : targetQuestions[0]; // 最接近下方的一個
+
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
 
     // 計算總分
     const calculateScore = () => {
@@ -243,7 +299,7 @@ export default function QuestionnaireComponent({ data }) {
 
                         <div className="questions-list">
                             {category.questions.map((question, qIndex) => (
-                                <div key={question.id} className="question-item">
+                                <div key={question.id} className="question-item" data-question-id={question.id}>
                                     <div className="question-header">
                                         <span className="question-number">
                                             {qIndex + 1}
@@ -307,6 +363,39 @@ export default function QuestionnaireComponent({ data }) {
                         查看結果
                     </button>
                 </div>
+
+                {/* 懸浮未回答提示 */}
+                <AnimatePresence>
+                    {showHints && unansweredStats.above > 0 && (
+                        <motion.button
+                            initial={{ opacity: 0, y: -20, x: '-50%' }}
+                            animate={{ opacity: 1, y: 0, x: '-50%' }}
+                            exit={{ opacity: 0, y: -20, x: '-50%' }}
+                            className="unanswered-hint hint-above"
+                            onClick={() => scrollToNextUnanswered('up')}
+                        >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+                            </svg>
+                            <span>上方還有 {unansweredStats.above} 題未填寫</span>
+                        </motion.button>
+                    )}
+
+                    {showHints && unansweredStats.below > 0 && (
+                        <motion.button
+                            initial={{ opacity: 0, y: 20, x: '-50%' }}
+                            animate={{ opacity: 1, y: 0, x: '-50%' }}
+                            exit={{ opacity: 0, y: 20, x: '-50%' }}
+                            className="unanswered-hint hint-below"
+                            onClick={() => scrollToNextUnanswered('down')}
+                        >
+                            <span>下方還有 {unansweredStats.below} 題未填寫</span>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </motion.button>
+                    )}
+                </AnimatePresence>
             </div>
         </>
     );

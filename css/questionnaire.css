@@ -638,3 +638,60 @@
     color: #4b5563;
     margin: 0;
 }
+
+/* 懸浮未回答提示 */
+.unanswered-hint {
+    position: fixed;
+    left: 50%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1.25rem;
+    background: rgba(var(--color-brand-accent), 0.9);
+    backdrop-filter: blur(8px);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(var(--color-brand-accent), 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.unanswered-hint:hover {
+    background: rgb(var(--color-brand-accent));
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(var(--color-brand-accent), 0.4);
+}
+
+.unanswered-hint svg {
+    width: 14px;
+    height: 14px;
+}
+
+.hint-above {
+    top: 100px;
+    /* 避開可能的導航欄 */
+}
+
+.hint-below {
+    bottom: 40px;
+}
+
+@media (max-width: 768px) {
+    .unanswered-hint {
+        width: calc(100% - 2rem);
+        max-width: 320px;
+        justify-content: center;
+    }
+
+    .hint-above {
+        top: 80px;
+    }
+
+    .hint-below {
+        bottom: 2rem;
+    }
+}
