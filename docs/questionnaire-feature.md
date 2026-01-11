@@ -21,6 +21,13 @@
   - 選中的評分按鈕會以品牌橘色高亮顯示
   - 完成的類別會顯示綠色勾選標記
   - 平滑的動畫過渡效果
+- **自動儲存進度**：
+  - 系統會自動將使用者的選擇儲存在瀏覽器的 `localStorage` 中
+  - 使用者即使離開頁面或刷新瀏覽器，下次回來後仍可繼續之前的進度
+- **深度回饋**：
+  - 針對使用者選擇較低分（1-3分）的題目，在結果彈窗中提供深度解析
+  - **為什麼這樣做**：解釋華德福教育背後的哲學動機
+  - **對孩子的好處**：說明該做法對孩子長遠發展的益處
 - **結果展示**：完成所有題目後，顯示總分和對應的評估結果
 
 ### 3. 設計整合
@@ -53,18 +60,19 @@ css/
 1. `pages/waldorf-assessment.js` 在 `getStaticProps` 中載入問卷資料
 2. 資料透過 `PageDataProvider` 傳遞給組件樹
 3. `QuestionnaireBlock` 從 context 獲取資料
-4. `QuestionnaireComponent` 處理問卷邏輯和 UI
+4. `QuestionnaireComponent` 處理問卷邏輯，並根據答案篩選出需要深度回饋的項目
+5. 結果 Modal 顯示總分與針對性建議
 
 ### 狀態管理
 - 使用 React Hooks (`useState`) 管理：
   - 使用者的答案
   - 當前顯示的類別
-  - 結果顯示狀態
+  - 結果顯示狀態（包含經篩選的反饋清單）
 - 即時計算進度和總分
 
 ## 如何修改問卷內容
 
-### 修改題目
+### 修改題目與反饋
 編輯 `src/data/questionnaire/waldorf-assessment.yml`：
 
 ```yaml
@@ -74,6 +82,8 @@ categories:
     questions:
       - id: q1
         text: 您的問題文字...
+        reason: 為什麼華德福這樣做...
+        benefit: 對孩子的好處...
 ```
 
 ### 修改評分標準

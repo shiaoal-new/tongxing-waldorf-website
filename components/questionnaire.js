@@ -8,6 +8,30 @@ export default function QuestionnaireComponent({ data }) {
     const [result, setResult] = useState(null);
     const [activeTooltip, setActiveTooltip] = useState(null); // 用於移動端 tooltip 顯示
 
+    const storageKey = `questionnaire_progress_${data.slug || 'default'}`;
+
+    // 從 localStorage 讀取進度
+    useEffect(() => {
+        const savedProgress = localStorage.getItem(storageKey);
+        if (savedProgress) {
+            try {
+                const parsedProgress = JSON.parse(savedProgress);
+                if (parsedProgress && typeof parsedProgress === 'object') {
+                    setAnswers(parsedProgress);
+                }
+            } catch (e) {
+                console.error('Failed to parse saved progress', e);
+            }
+        }
+    }, [storageKey]);
+
+    // 儲存進度到 localStorage
+    useEffect(() => {
+        if (Object.keys(answers).length > 0) {
+            localStorage.setItem(storageKey, JSON.stringify(answers));
+        }
+    }, [answers, storageKey]);
+
     // 計算總分
     const calculateScore = () => {
         const totalQuestions = data.categories.reduce(
@@ -44,7 +68,25 @@ export default function QuestionnaireComponent({ data }) {
         const score = calculateScore();
         if (score !== null) {
             const resultData = getResult(score);
-            setResult({ score, ...resultData });
+
+            // 收集得分較低（<=3）的題目反饋
+            const feedbackItems = [];
+            data.categories.forEach(cat => {
+                cat.questions.forEach(q => {
+                    const answer = answers[q.id];
+                    if (answer <= 3) {
+                        feedbackItems.push({
+                            id: q.id,
+                            question: q.text,
+                            reason: q.reason,
+                            benefit: q.benefit,
+                            score: answer
+                        });
+                    }
+                });
+            });
+
+            setResult({ score, ...resultData, feedbackItems });
             setShowResult(true);
         }
     };
@@ -54,6 +96,7 @@ export default function QuestionnaireComponent({ data }) {
         setAnswers({});
         setShowResult(false);
         setResult(null);
+        localStorage.removeItem(storageKey);
     };
 
     // 檢查當前分類是否完成
@@ -118,6 +161,33 @@ export default function QuestionnaireComponent({ data }) {
                         <h3 className="result-level">{result?.level}</h3>
                         <h4 className="result-title">{result?.title}</h4>
                         <p className="result-description">{result?.description}</p>
+
+                        {result?.feedbackItems?.length > 0 && (
+                            <div className="feedback-section">
+                                <div className="feedback-divider"></div>
+                                <h5 className="feedback-heading">針對您有所保留的部分，華德福教育的見解：</h5>
+                                <div className="feedback-list">
+                                    {result.feedbackItems.map((item) => (
+                                        <div key={item.id} className="feedback-item">
+                                            <div className="feedback-question-wrap">
+                                                <span className="feedback-q-icon">Q</span>
+                                                <p className="feedback-question">{item.question}</p>
+                                            </div>
+                                            <div className="feedback-details">
+                                                <div className="feedback-detail-block">
+                                                    <span className="detail-label">為什麼這樣做</span>
+                                                    <p>{item.reason}</p>
+                                                </div>
+                                                <div className="feedback-detail-block">
+                                                    <span className="detail-label">對孩子的好處</span>
+                                                    <p>{item.benefit}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="result-actions">
