@@ -4,8 +4,12 @@ instruction: 請根據您對教養的直覺與現狀，對以下描述進行評�
 scale:
   min: 1
   max: 5
-  minLabel: 完全不認同 / 難以做到
-  maxLabel: 非常認同 / 已經在實踐
+  labels:
+    1: 完全不認同 / 難以做到
+    2: 不太認同 / 較難做到
+    3: 中立 / 偶爾能做到
+    4: 認同 / 經常做到
+    5: 非常認同 / 已經在實踐
 
 categories:
   - id: learning_pace

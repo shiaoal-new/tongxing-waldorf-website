@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import Modal from './modal';
+
 
 export default function QuestionnaireComponent({ data }) {
     const [answers, setAnswers] = useState({});
@@ -10,6 +11,30 @@ export default function QuestionnaireComponent({ data }) {
     const [unansweredStats, setUnansweredStats] = useState({ above: 0, below: 0 });
     const [showHints, setShowHints] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
+    const scoreCount = useMotionValue(0);
+    const roundedScore = useTransform(scoreCount, (latest) => Math.round(latest));
+
+    // 背景顏色漸變 - 根據分數動態從 錯誤(紅) -> 警告(黃) -> 資訊(藍) -> 成功(綠)
+    const headerBg = useTransform(
+        scoreCount,
+        [0, 40, 60, 80, 100],
+        [
+            "linear-gradient(135deg, #ef4444, #dc2626)", // error
+            "linear-gradient(135deg, #f59e0b, #d97706)", // warning
+            "linear-gradient(135deg, #3b82f6, #2563eb)", // info
+            "linear-gradient(135deg, #10b981, #059669)", // success
+            "linear-gradient(135deg, #10b981, #059669)"
+        ]
+    );
+
+    // 當結果顯示時，觸發動畫
+    useEffect(() => {
+        if (showResult && result) {
+            scoreCount.set(0);
+            const controls = animate(scoreCount, result.score, { duration: 1.5, ease: "easeOut" });
+            return controls.stop;
+        }
+    }, [showResult, result, scoreCount]);
 
     const storageKey = `questionnaire_progress_${data.slug || 'default'}`;
 
@@ -194,14 +219,7 @@ export default function QuestionnaireComponent({ data }) {
 
     // 獲取評分標籤
     const getRatingLabel = (value) => {
-        const labels = {
-            1: '完全不認同 / 難以做到',
-            2: '不太認同 / 較難做到',
-            3: '中立 / 偶爾能做到',
-            4: '認同 / 經常做到',
-            5: '非常認同 / 已經在實踐'
-        };
-        return labels[value];
+        return data.scale.labels?.[value] || '';
     };
 
     // 處理移動端 tooltip 顯示
@@ -226,13 +244,16 @@ export default function QuestionnaireComponent({ data }) {
                 padding="p-0"
             >
                 <div className="result-card">
-                    <div className={`result-header result-${result?.color}`}>
+                    <motion.div
+                        className={`result-header result-${result?.color}`}
+                        style={{ background: headerBg }}
+                    >
                         <h2>評估結果</h2>
                         <div className="score-display">
-                            <span className="score-number">{result?.score}</span>
+                            <span className="score-number"><motion.span>{roundedScore}</motion.span></span>
                             <span className="score-total">/ 100</span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     <div className="result-content">
                         <h3 className="result-level">{result?.level}</h3>
@@ -329,7 +350,7 @@ export default function QuestionnaireComponent({ data }) {
                                     </div>
 
                                     <div className="rating-scale">
-                                        {[1, 2, 3, 4, 5].map(value => {
+                                        {Array.from({ length: (data.scale.max - data.scale.min + 1) }, (_, i) => data.scale.min + i).map(value => {
                                             const tooltipId = `${question.id}-${value}`;
                                             const isTooltipActive = activeTooltip === tooltipId;
 
