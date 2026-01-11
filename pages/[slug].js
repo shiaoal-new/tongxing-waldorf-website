@@ -12,7 +12,7 @@ export default function DynamicPage(props) {
 
 export async function getStaticPaths() {
     const pages = getAllPages();
-    const excludedSlugs = ["index", "colors", "layout-spacing", "typography"];
+    const excludedSlugs = ["index", "colors", "layout-spacing", "typography", "waldorf-assessment"];
     const paths = pages
         .filter((page) => !excludedSlugs.includes(page.slug))
         .map((page) => ({
