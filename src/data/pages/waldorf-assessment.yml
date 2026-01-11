@@ -4,6 +4,9 @@ hero:
   title: 華德福教育適合度評估
   subtitle: 兒童教養與生活哲學自我評估問卷
   content: 透過這份問卷，了解您的教養理念與華德福教育的契合度。這不是考試，而是一次誠實的自我對話。
+  media_list:
+    - type: image
+      image: /img/themes/tongxing/background/questionnaire.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: questionnaire
