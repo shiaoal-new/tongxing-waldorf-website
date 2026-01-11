@@ -9,6 +9,7 @@ export default function QuestionnaireComponent({ data }) {
     const [activeTooltip, setActiveTooltip] = useState(null); // 用於移動端 tooltip 顯示
     const [unansweredStats, setUnansweredStats] = useState({ above: 0, below: 0 });
     const [showHints, setShowHints] = useState(false);
+    const [isShaking, setIsShaking] = useState(false);
 
     const storageKey = `questionnaire_progress_${data.slug || 'default'}`;
 
@@ -144,6 +145,26 @@ export default function QuestionnaireComponent({ data }) {
 
             setResult({ score, ...resultData, feedbackItems });
             setShowResult(true);
+        } else {
+            // 如果未完成，觸發震動動畫並捲到第一個未回答的問題
+            setIsShaking(true);
+            setTimeout(() => setIsShaking(false), 500);
+
+            // 尋找第一個未回答的問題並捲動過去
+            const questions = Array.from(document.querySelectorAll('.question-item'));
+            const firstUnanswered = questions.find(el => {
+                const id = el.getAttribute('data-question-id');
+                return answers[id] === undefined;
+            });
+
+            if (firstUnanswered) {
+                firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // 短暫高亮該題目
+                firstUnanswered.classList.add('highlight-unanswered');
+                setTimeout(() => {
+                    firstUnanswered.classList.remove('highlight-unanswered');
+                }, 2000);
+            }
         }
     };
 
@@ -346,22 +367,18 @@ export default function QuestionnaireComponent({ data }) {
                             ))}
                         </div>
 
-                        <div className="scale-labels">
-                            <span className="scale-label-min">{data.scale.minLabel}</span>
-                            <span className="scale-label-max">{data.scale.maxLabel}</span>
-                        </div>
                     </div>
                 ))}
 
-                {/* 提交按鈕 */}
                 <div className="navigation-buttons">
-                    <button
+                    <motion.button
                         onClick={handleSubmit}
-                        disabled={calculateScore() === null}
-                        className="btn btn-primary"
+                        animate={isShaking ? { x: [-5, 5, -5, 5, 0] } : {}}
+                        transition={{ duration: 0.4 }}
+                        className={`btn btn-primary ${calculateScore() === null ? 'opacity-80' : ''}`}
                     >
-                        查看結果
-                    </button>
+                        {calculateScore() === null ? `請完成所有題目 (${Object.keys(answers).length}/${data.categories.reduce((s, c) => s + c.questions.length, 0)})` : '查看結果'}
+                    </motion.button>
                 </div>
 
                 {/* 懸浮未回答提示 */}
@@ -371,7 +388,7 @@ export default function QuestionnaireComponent({ data }) {
                             initial={{ opacity: 0, y: -20, x: '-50%' }}
                             animate={{ opacity: 1, y: 0, x: '-50%' }}
                             exit={{ opacity: 0, y: -20, x: '-50%' }}
-                            className="unanswered-hint hint-above"
+                            className="unanswered-hint hint-above btn btn-white"
                             onClick={() => scrollToNextUnanswered('up')}
                         >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -386,7 +403,7 @@ export default function QuestionnaireComponent({ data }) {
                             initial={{ opacity: 0, y: 20, x: '-50%' }}
                             animate={{ opacity: 1, y: 0, x: '-50%' }}
                             exit={{ opacity: 0, y: 20, x: '-50%' }}
-                            className="unanswered-hint hint-below"
+                            className="unanswered-hint hint-below btn btn-white"
                             onClick={() => scrollToNextUnanswered('down')}
                         >
                             <span>下方還有 {unansweredStats.below} 題未填寫</span>
