@@ -161,7 +161,7 @@ export default function SvgFilters() {
                 {/* Paper Texture Filter - 纸张纹理滤镜 */}
                 <filter id="paper-texture">
                     <feTurbulence type="fractalNoise" baseFrequency="0.2" numOctaves="5" result="noise" />
-                    <feDiffuseLighting in="noise" lighting-color="#fff" surfaceScale="1">
+                    <feDiffuseLighting in="noise" lightingColor="#fff" surfaceScale="1">
                         <feDistantLight azimuth="45" elevation="60" />
                     </feDiffuseLighting>
                 </filter>
