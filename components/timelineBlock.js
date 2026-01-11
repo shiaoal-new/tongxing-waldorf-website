@@ -1,31 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// 動態導入 Chrono 以避免 SSR 問題
-const Chrono = dynamic(
-    () => import('react-chrono').then((mod) => mod.Chrono),
-    { ssr: false }
-);
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 const TimelineBlock = ({ data }) => {
     const { theme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [selectedDetail, setSelectedDetail] = useState(null);
 
     const rawItems = data.items || [];
 
     useEffect(() => {
         setMounted(true);
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // 處理 ESC 鍵關閉 modal
     useEffect(() => {
         const handleEsc = (e) => {
             if (e.key === 'Escape') setSelectedDetail(null);
@@ -34,248 +23,250 @@ const TimelineBlock = ({ data }) => {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    // 為有詳情的卡片添加點擊事件
-    useEffect(() => {
-        if (!mounted) return;
-
-        // 等待 Chrono 渲染完成
-        const timer = setTimeout(() => {
-            // 移除所有已存在的圖標（防止重複）
-            document.querySelectorAll('.detail-indicator').forEach(el => el.remove());
-
-            const cards = document.querySelectorAll('.timeline-container [class*="timeline-card-content"]');
-
-            cards.forEach((card, index) => {
-                const item = rawItems[index];
-                if (!item || !item.detail) return;
-
-                // 添加點擊提示樣式
-                card.style.cursor = 'pointer';
-                card.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-
-                // 添加視覺提示圖標
-                const indicator = document.createElement('div');
-                indicator.className = 'detail-indicator';
-                indicator.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="5" cy="12" r="2"></circle>
-                        <circle cx="12" cy="12" r="2"></circle>
-                        <circle cx="19" cy="12" r="2"></circle>
-                    </svg>
-                `;
-                indicator.title = '點擊查看詳細故事';
-                card.appendChild(indicator);
-
-                // 添加 hover 效果
-                card.onmouseenter = () => {
-                    card.style.transform = 'translateY(-2px)';
-                    card.style.boxShadow = '0 4px 12px rgba(242, 161, 84, 0.2)';
-                };
-
-                card.onmouseleave = () => {
-                    card.style.transform = 'translateY(0)';
-                    card.style.boxShadow = '';
-                };
-
-                // 點擊事件 - 使用閉包確保正確的 item
-                card.onclick = (e) => {
-                    e.stopPropagation();
-                    setSelectedDetail(item);
-                };
-            });
-        }, 800);
-
-        return () => clearTimeout(timer);
-    }, [mounted, rawItems]);
-
     if (!mounted) return null;
 
-    const items = rawItems.map(item => ({
-        title: item.year || item.title,
-        cardTitle: item.cardTitle || item.title,
-        cardSubtitle: item.subtitle,
-        cardDetailedText: item.content,
-        media: item.media ? {
-            type: item.media.type === 'video' ? 'VIDEO' : 'IMAGE',
-            name: item.title,
-            source: {
-                url: item.media.image || item.media.video || item.media.url
-            }
-        } : undefined
-    }));
-
-    // 定義主題色彩 (與專案品牌色一致)
-    const timelineTheme = {
-        primary: '#f2a154', // brand-accent
-        secondary: '#2d5a27', // brand-secondary
-        cardBgColor: theme === 'dark' ? '#1a1a1a' : '#fff',
-        cardForeColor: theme === 'dark' ? '#fdfcf8' : '#333',
-        titleColor: '#f2a154',
-        titleColorActive: '#f2a154',
-        toolbarBgColor: 'transparent',
-        toolbarBtnColor: '#f2a154',
-        toolbarTextColor: '#f2a154',
-    };
-
     return (
-        <div className="w-full py-8 timeline-container max-w-7xl mx-auto px-4">
+        <div className="w-full py-8 timeline-container">
             <style jsx global>{`
-                /* 完全移除 react-chrono 的內部滾動 */
-                .timeline-container,
-                .timeline-container * {
-                    overflow: visible !important;
-                    overflow-x: visible !important;
-                    overflow-y: visible !important;
+                /* 時間軸容器樣式 */
+                .timeline-container {
+                    font-family: var(--font-body), sans-serif;
                 }
-                
-                .timeline-container .chrono-container,
-                .timeline-container .chrono-container > div,
-                .timeline-container [class*="timeline"],
-                .timeline-container [class*="wrapper"] {
-                   height: auto !important;
-                   max-height: none !important;
-                   min-height: 0 !important;
-                   font-family: var(--font-body), sans-serif !important;
+
+                /* 時間軸線條顏色 */
+                .vertical-timeline::before {
+                    background: #f2a154 !important;
                 }
-                
-                /* 強制所有內部容器自動高度 */
-                .timeline-container .rc-timeline-card-content,
-                .timeline-container .rc-timeline-item-content {
-                    height: auto !important;
-                    max-height: none !important;
+
+                /* 時間軸元素樣式 */
+                .vertical-timeline-element-content {
+                    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1) !important;
+                    border-radius: 8px !important;
+                    padding: 1.5rem !important;
+                    background: ${theme === 'dark' ? '#1a1a1a' : '#fff'} !important;
+                    color: ${theme === 'dark' ? '#fdfcf8' : '#333'} !important;
                 }
-                
-                .timeline-container .card-content-title {
-                    color: #f2a154 !important;
-                    font-weight: bold !important;
-                    font-size: 1.25rem !important;
-                    margin-bottom: 0.5rem !important;
+
+                .vertical-timeline-element-content-arrow {
+                    border-right-color: ${theme === 'dark' ? '#1a1a1a' : '#fff'} !important;
                 }
-                .timeline-container .card-subtitle {
-                    font-weight: 600 !important;
-                    color: #2d5a27 !important;
-                    margin-bottom: 1rem !important;
+
+                /* 時間軸圖標樣式 */
+                .vertical-timeline-element-icon {
+                    background: white !important;
+                    border: 3px solid #f2a154 !important;
+                    box-shadow: 0 2px 8px rgba(242, 161, 84, 0.3) !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    font-size: 1.5rem !important;
                 }
-                .timeline-container .card-description {
-                    line-height: 1.6 !important;
-                    font-size: 0.95rem !important;
+
+                /* 隱藏外部日期顯示 */
+                .vertical-timeline-element-date {
+                    display: none !important;
                 }
-                
-                /* 隱藏多餘的 Outline */
-                .timeline-container .rc-timeline-outline {
-                    display: none;
+
+                /* 標題樣式 */
+                .timeline-title {
+                    color: #f2a154;
+                    font-weight: bold;
+                    font-size: 1.25rem;
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    align-items: baseline;
+                    gap: 0.5rem;
                 }
-                
-                /* 為每個時間軸卡片添加相對定位 */
-                .timeline-container [class*="timeline-card-content"] {
-                    position: relative;
+
+                /* 年份樣式 */
+                .timeline-year {
+                    color: #f2a154;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    white-space: nowrap;
                 }
-                
-                /* 詳情提示圖標 */
-                .detail-indicator {
-                    position: absolute;
-                    top: 0.75rem;
-                    right: 0.75rem;
-                    width: 24px;
-                    height: 24px;
+
+                /* 副標題樣式 */
+                .timeline-subtitle {
+                    color: #2d5a27;
+                    font-weight: 600;
+                    margin-bottom: 1rem;
+                    font-size: 1rem;
+                }
+
+                /* 內容樣式 */
+                .timeline-content {
+                    line-height: 1.6;
+                    font-size: 0.95rem;
+                    color: ${theme === 'dark' ? '#fdfcf8' : '#666'};
+                }
+
+                /* 可點擊卡片樣式 */
+                .timeline-clickable {
+                    cursor: pointer;
+                }
+
+                /* 時間軸元素 hover 效果 */
+                .vertical-timeline-element-content:hover {
+                    box-shadow: 0 6px 16px rgba(242, 161, 84, 0.25) !important;
+                    transform: translateY(-2px);
+                    transition: all 0.2s ease;
+                }
+
+                /* 詳情提示 */
+                .detail-hint {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-top: 1rem;
+                    color: #f2a154;
+                    font-size: 0.9rem;
+                    opacity: 0.8;
+                }
+
+                /* Modal 樣式 */
+                .modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.7);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: #f2a154;
-                    opacity: 0.7;
-                    transition: all 0.3s ease;
-                    pointer-events: none;
-                    background: rgba(255, 255, 255, 0.9);
-                    border-radius: 50%;
-                    padding: 2px;
+                    z-index: 9999;
+                    padding: 1rem;
                 }
-                
-                .detail-indicator svg {
+
+                .modal-content {
+                    background: ${theme === 'dark' ? '#1a1a1a' : 'white'};
+                    color: ${theme === 'dark' ? '#fdfcf8' : '#333'};
+                    border-radius: 12px;
+                    max-width: 800px;
                     width: 100%;
-                    height: 100%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    padding: 2rem;
+                    position: relative;
                 }
-                
-                .timeline-container [class*="timeline-card-content"]:hover .detail-indicator {
+
+                .modal-close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    background: transparent;
+                    border: none;
+                    font-size: 2rem;
+                    cursor: pointer;
+                    color: ${theme === 'dark' ? '#fdfcf8' : '#333'};
+                    opacity: 0.6;
+                    transition: opacity 0.2s;
+                }
+
+                .modal-close:hover {
                     opacity: 1;
-                    transform: scale(1.15);
-                    background: rgba(242, 161, 84, 0.1);
                 }
-                
-                /* 修正在小螢幕下的文字溢出 */
-                @media (max-width: 640px) {
-                    .timeline-container .card-content-title {
-                        font-size: 1.1rem !important;
-                    }
+
+                .modal-title {
+                    color: #f2a154;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    margin-bottom: 0.5rem;
+                }
+
+                .modal-subtitle {
+                    color: #2d5a27;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin-bottom: 1.5rem;
+                }
+
+                .modal-detail {
+                    line-height: 1.8;
+                    font-size: 1rem;
+                    white-space: pre-wrap;
                 }
             `}</style>
 
-            {/* 時間軸組件 */}
-            <Chrono
-                items={items}
-                mode={isMobile ? "VERTICAL" : "VERTICAL_ALTERNATING"}
-                theme={timelineTheme}
-                cardHeight="auto"
-                cardWidth={isMobile ? 300 : 450}
-                disableToolbar={true}
-                disableClickOnCircle={true}
-                enableOutline={false}
-                useReadMore={false}
-                scrollable={false}
-                mediaSettings={{ align: 'center', fit: 'cover' }}
-                fontSizes={{
-                    cardSubtitle: '0.9rem',
-                    cardText: '0.95rem',
-                    cardTitle: '1.25rem',
-                    title: '1.1rem',
-                }}
-            />
+            <VerticalTimeline lineColor="#f2a154">
+                {rawItems.map((item, index) => (
+                    <VerticalTimelineElement
+                        key={index}
+                        date={item.year}
+                        icon={<span>{item.icon || '⭐'}</span>}
+                        iconStyle={{
+                            background: 'white',
+                            border: '3px solid #f2a154',
+                            boxShadow: '0 2px 8px rgba(242, 161, 84, 0.3)',
+                        }}
+                        contentStyle={{
+                            background: theme === 'dark' ? '#1a1a1a' : '#fff',
+                            color: theme === 'dark' ? '#fdfcf8' : '#333',
+                        }}
+                        contentArrowStyle={{
+                            borderRight: `7px solid ${theme === 'dark' ? '#1a1a1a' : '#fff'}`,
+                        }}
+                    >
+                        <div
+                            className={item.detail ? 'timeline-clickable' : ''}
+                            onClick={() => item.detail && setSelectedDetail(item)}
+                        >
+                            <h3 className="timeline-title">
+                                <span className="timeline-year">{item.year}</span>
+                                {' '}
+                                {item.title}
+                            </h3>
+                            {item.subtitle && (
+                                <h4 className="timeline-subtitle">{item.subtitle}</h4>
+                            )}
+                            <p className="timeline-content">{item.content}</p>
+                            {item.detail && (
+                                <div className="detail-hint">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="5" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="19" cy="12" r="2"></circle>
+                                    </svg>
+                                    <span>點擊查看詳細故事</span>
+                                </div>
+                            )}
+                        </div>
+                    </VerticalTimelineElement>
+                ))}
+            </VerticalTimeline>
 
             {/* Modal Dialog */}
             <AnimatePresence>
                 {selectedDetail && (
                     <motion.div
+                        className="modal-overlay"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
                         onClick={() => setSelectedDetail(null)}
                     >
                         <motion.div
+                            className="modal-content"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            transition={{ type: "spring", duration: 0.3 }}
-                            className="bg-brand-bg dark:bg-brand-structural rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* 關閉按鈕 */}
                             <button
+                                className="modal-close"
                                 onClick={() => setSelectedDetail(null)}
-                                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-brand-accent/10 hover:bg-brand-accent/20 transition-colors"
                                 aria-label="關閉"
                             >
-                                <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
+                                ×
                             </button>
-
-                            {/* 內容 */}
-                            <div className="pr-8">
-                                <div className="text-sm font-bold tracking-wider text-brand-accent uppercase mb-2">
-                                    {selectedDetail.year}
-                                </div>
-                                <h2 className="text-2xl font-bold text-brand-text dark:text-brand-bg mb-2">
-                                    {selectedDetail.title}
-                                </h2>
-                                <p className="text-brand-accent font-semibold mb-4">
-                                    {selectedDetail.subtitle}
-                                </p>
-                                <div className="prose prose-lg dark:prose-invert max-w-none">
-                                    <p className="text-brand-taupe dark:text-brand-taupe leading-relaxed whitespace-pre-wrap">
-                                        {selectedDetail.detail}
-                                    </p>
-                                </div>
+                            <div className="modal-title">
+                                {selectedDetail.year} - {selectedDetail.title}
                             </div>
+                            {selectedDetail.subtitle && (
+                                <div className="modal-subtitle">{selectedDetail.subtitle}</div>
+                            )}
+                            <div className="modal-detail">{selectedDetail.detail}</div>
                         </motion.div>
                     </motion.div>
                 )}
