@@ -16,6 +16,7 @@ import TypographyDemoBlock from "./typographyDemoBlock";
 import MicroInteractionsBlock from "./microInteractionsBlock";
 import TabbedContentBlock from "./tabbedContentBlock";
 import QuestionnaireBlock from "./questionnaireBlock";
+import TimelineBlock from "./timelineBlock";
 import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
 
@@ -125,7 +126,8 @@ function determineSectionLimit(blocks, explicitLimit) {
         "visit_process_block",
         "spacing_demo_block",
         "typography_demo_block",
-        "micro_interactions_block"
+        "micro_interactions_block",
+        "timeline_block"
     ];
 
     const hasWideBlock = blocks.some(b => {
@@ -221,6 +223,9 @@ function BlockDispatcher({ block, align = "center", context = "standalone" }) {
 
         case "questionnaire_block":
             return <QuestionnaireBlock data={block} />;
+
+        case "timeline_block":
+            return <TimelineBlock data={block} />;
 
         default:
             return null;

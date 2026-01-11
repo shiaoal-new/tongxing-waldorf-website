@@ -10,6 +10,9 @@ import '../components/listSwiper.css';
 // Questionnaire styles
 import '../css/questionnaire.css';
 
+// Chrono styles
+import "react-chrono/dist/style.css";
+
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="tongxing" enableSystem={false}>
