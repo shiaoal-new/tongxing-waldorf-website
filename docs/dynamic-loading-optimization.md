@@ -106,7 +106,7 @@ Next.js 會自動為每個動態組件創建獨立的 chunk:
 ```javascript
 const ComponentName = dynamic(() => import("./componentName"), {
     loading: () => <BlockLoadingFallback message="載入中..." />,
-    ssr: true  // 保持 SSR 支援
+    ssr: false // 改為 false 以避免 hydration mismatch 錯誤
 });
 ```
 
@@ -119,9 +119,9 @@ const ComponentName = dynamic(() => import("./componentName"), {
 ## 注意事項
 
 ### SSR 相容性
-- 所有動態組件都設定 `ssr: true`
-- 確保伺服器端渲染正常運作
-- 避免 hydration mismatch
+- 所有動態組件目前設定為 `ssr: false`
+- 原因：避免在載入 chunk 期間，伺服器渲染內容與客戶端 loading 狀態不一致導致的 hydration mismatch 錯誤
+- 這些組件多為互動性質，對首屏 SEO 影響較小
 
 ### 載入體驗
 - 首次訪問會有輕微延遲(通常 < 100ms)

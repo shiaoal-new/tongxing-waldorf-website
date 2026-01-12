@@ -19,7 +19,7 @@ import dynamic from "next/dynamic";
 const createDynamicBlock = (componentPath, loadingMessage = "載入中...") => {
     return dynamic(() => import(`./${componentPath}`), {
         loading: () => <BlockLoadingFallback message={loadingMessage} />,
-        ssr: true
+        ssr: false
     });
 };
 
