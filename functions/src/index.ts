@@ -1,13 +1,15 @@
-const { onRequest } = require("firebase-functions/v2/https");
-const admin = require("firebase-admin");
+import { onRequest } from "firebase-functions/v2/https";
+import * as admin from "firebase-admin";
 
-admin.initializeApp();
+if (!admin.apps.length) {
+    admin.initializeApp();
+}
 
 const db = admin.firestore();
 
 // 範例：獲取用戶資料
-exports.getUserProfile = onRequest(async (req, res) => {
-    const userId = req.query.uid;
+export const getUserProfile = onRequest(async (req, res) => {
+    const userId = req.query.uid as string;
     if (!userId) {
         res.status(400).send("Missing userId");
         return;
@@ -20,10 +22,10 @@ exports.getUserProfile = onRequest(async (req, res) => {
         } else {
             res.status(200).json(userDoc.data());
         }
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).send(error.toString());
     }
 });
 
-// 範例：Auth.js 如果需要在 Firebase Functions 上運行，可以導出一個 handler
-// 但通常 Next.js 部署到 Firebase 時會自動處理 API routes。
+// Auth.js handler
+export { default as auth } from "./auth";

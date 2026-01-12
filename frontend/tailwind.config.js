@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
-const { brandMeta, tunghinAmberScale } = require("./lib/brand-config");
+const { brandMeta, tunghinAmberScale } = require("./src/lib/brand-config");
 
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
@@ -15,8 +15,8 @@ function withOpacity(variableName) {
 module.exports = {
   brand: brandMeta,
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/data/**/*.{yml,yaml,md}"
   ],
   darkMode: ["class", '[data-theme="dark"]'], // Support both class and daisyUI dark theme
