@@ -20,11 +20,15 @@ import 'react-vertical-timeline-component/style.min.css';
 
 
 
-function MyApp({ Component, pageProps }) {
+import { SessionProvider } from "next-auth/react";
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SessionProvider session={session}>
+      <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 
