@@ -181,3 +181,79 @@
     font-size: 1rem;
     white-space: pre-wrap;
 }
+
+/* Phase Header Styles - Improved Separator Design */
+.phase-header-element {
+    margin-bottom: 4rem !important;
+    margin-top: 2rem !important;
+}
+
+/* Remove default card styles ONLY for header elements */
+.phase-header-element :global(.vertical-timeline-element-content) {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.phase-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    scroll-margin-top: 120px;
+    position: relative;
+    z-index: 5;
+}
+
+.phase-header-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #fff;
+    /* Premium Gradient */
+    background: linear-gradient(135deg, #f2a154 0%, #e68a2e 100%);
+    padding: 0.8rem 2.5rem;
+    border-radius: 100px;
+    display: inline-block;
+    z-index: 2;
+    box-shadow: 0 10px 25px rgba(242, 161, 84, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    border: 3px solid white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    margin: 0 !important;
+}
+
+.header-icon-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 1.4rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@media only screen and (min-width: 1170px) {
+    .phase-header-title {
+        font-size: 1.85rem;
+        padding: 1rem 4rem;
+    }
+
+    .header-icon-inner {
+        font-size: 1.8rem;
+    }
+
+    /* Target the specific container that react-vertical-timeline adds */
+    :global(.vertical-timeline--two-columns .vertical-timeline-element.phase-header-element .vertical-timeline-element-content) {
+        float: none !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+}
+
+/* Ensure the center line is visible behind headers if desired, or cover it */
+.phase-header-element :global(.vertical-timeline-element-icon) {
+    z-index: 10;
+}

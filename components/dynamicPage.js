@@ -93,6 +93,20 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
                 });
             });
         }
+
+        // If this section contains a timeline, add its phase headers to TOC
+        const timelineBlock = blocks.find(b => b.type === 'timeline_block');
+        if (timelineBlock && timelineBlock.items) {
+            timelineBlock.items.forEach((item, itemIndex) => {
+                if (item.type === 'header' && item.title) {
+                    const sectionId = section.section_id || 'timeline';
+                    tocSections.push({
+                        id: `${sectionId}-header-${itemIndex}`,
+                        title: `↳ ${item.title}`
+                    });
+                }
+            });
+        }
     });
 
     // Fallback: if hero exists but has no title, use page title

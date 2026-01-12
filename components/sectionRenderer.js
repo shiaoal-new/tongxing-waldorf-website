@@ -75,7 +75,11 @@ export function SectionRenderer({ section, index }) {
             <div className="mt-6">
                 {contentBlocks.map((block, bIndex) => (
                     <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
-                        <BlockDispatcher block={block} align={align} />
+                        <BlockDispatcher
+                            block={block}
+                            align={align}
+                            anchor={section.section_id}
+                        />
                     </div>
                 ))}
             </div>
@@ -175,7 +179,7 @@ function determineSectionLimit(blocks, explicitLimit) {
  * 內容分發器 (Block Dispatcher)
  * 負責將數據根據類型分配給具體的 UI 組件
  */
-function BlockDispatcher({ block, align = "center", context = "standalone" }) {
+function BlockDispatcher({ block, align = "center", context = "standalone", anchor = "" }) {
     if (!block) return null;
 
     const isNested = context === "list";
@@ -255,7 +259,7 @@ function BlockDispatcher({ block, align = "center", context = "standalone" }) {
             return <QuestionnaireBlock data={block} />;
 
         case "timeline_block":
-            return <TimelineBlock data={block} />;
+            return <TimelineBlock data={block} anchor={anchor} />;
 
         default:
             return null;
