@@ -119,56 +119,9 @@
 }
 
 /* Modal 樣式 */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 1rem;
-}
+/* Modal style removed, using shared Modal component */
 
-.modal-content {
-    background: var(--timeline-bg);
-    color: var(--timeline-text);
-    border-radius: 12px;
-    max-width: 800px;
-    width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
-    padding: 2rem;
-    position: relative;
-}
-
-.modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--timeline-text);
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.modal-close:hover {
-    opacity: 1;
-}
-
-.modal-title {
-    color: #f2a154;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
+/* Maintain content styles for use inside shared modal */
 .modal-subtitle {
     color: #2d5a27;
     font-size: 1.1rem;

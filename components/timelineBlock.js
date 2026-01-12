@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { motion, AnimatePresence } from 'framer-motion';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import styles from './timelineBlock.module.css';
+import Modal from './modal';
 
 
 const TimelineBlock = ({ data, anchor = 'timeline' }) => {
-    const { theme } = useTheme();
+    const { theme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [selectedDetail, setSelectedDetail] = useState(null);
 
@@ -105,41 +105,21 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
                 })}
             </VerticalTimeline>
 
-            {/* Modal Dialog */}
-            <AnimatePresence>
+            <Modal
+                isOpen={!!selectedDetail}
+                onClose={() => setSelectedDetail(null)}
+                title={selectedDetail ? `${selectedDetail.year} - ${selectedDetail.title}` : ''}
+                maxWidth="max-w-3xl"
+            >
                 {selectedDetail && (
-                    <motion.div
-                        className={styles['modal-overlay']}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setSelectedDetail(null)}
-                    >
-                        <motion.div
-                            className={styles['modal-content']}
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <button
-                                className={styles['modal-close']}
-                                onClick={() => setSelectedDetail(null)}
-                                aria-label="關閉"
-                            >
-                                ×
-                            </button>
-                            <div className={styles['modal-title']}>
-                                {selectedDetail.year} - {selectedDetail.title}
-                            </div>
-                            {selectedDetail.subtitle && (
-                                <div className={styles['modal-subtitle']}>{selectedDetail.subtitle}</div>
-                            )}
-                            <div className={styles['modal-detail']}>{selectedDetail.detail}</div>
-                        </motion.div>
-                    </motion.div>
+                    <div className="timeline-modal-body">
+                        {selectedDetail.subtitle && (
+                            <div className={styles['modal-subtitle']}>{selectedDetail.subtitle}</div>
+                        )}
+                        <div className={styles['modal-detail']}>{selectedDetail.detail}</div>
+                    </div>
                 )}
-            </AnimatePresence>
+            </Modal>
         </div>
     );
 };

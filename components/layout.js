@@ -7,8 +7,18 @@ import ParallaxBackground from "./parallaxBackground";
 import SvgFilters from "./svgFilters";
 import PageContent from "./pageContent";
 
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+
 //todo give a better name
 export default function Layout({ children, title, description, navbarPadding = false, pages, navigation, className, backgroundSpeed = 0.2 }) {
+    const { resolvedTheme } = useTheme();
+    const [themeColor, setThemeColor] = useState("#F2F2F0");
+
+    useEffect(() => {
+        setThemeColor(resolvedTheme === 'dark' ? '#1C1917' : '#F2F2F0');
+    }, [resolvedTheme]);
+
     return (
         <>
             <SvgFilters />
@@ -21,6 +31,7 @@ export default function Layout({ children, title, description, navbarPadding = f
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta name="theme-color" content={themeColor} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
