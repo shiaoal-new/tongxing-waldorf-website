@@ -142,7 +142,7 @@ export default function ListRenderer({
                 >
                     {items.map((item, index) => (
                         <SwiperSlide key={item.id || index} className={styles['list-swiper-slide']}>
-                            <div className="w-full h-full">
+                            <div className="w-full h-full flex flex-col">
                                 {renderItem(item, index)}
                             </div>
                         </SwiperSlide>
