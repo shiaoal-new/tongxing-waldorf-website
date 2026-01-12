@@ -11,6 +11,7 @@ import { useState, useRef } from "react";
 import { useTheme } from "next-themes";
 import { SectionRenderer } from "./sectionRenderer";
 import { PageDataProvider } from "../contexts/PageDataContext";
+import { useDynamicTOC } from "./useDynamicTOC";
 
 export default function DynamicPageContent({ page, pages, navigation, data = {} }) {
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
@@ -26,18 +27,19 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
     const [selectedMember, setSelectedMember] = useState(null);
     const { theme } = useTheme();
 
+    // 使用 useDynamicTOC Hook 生成目錄
+    const tocSections = useDynamicTOC(page, { questionnaire });
+
+
     const handleButtonClick = (link) => {
         if (!link) return false;
-
         // Pattern for member details or other special triggers can go here
-
         return false;
     };
 
     if (!page) {
         return <div>Page not found</div>;
     }
-
 
     const getImagePath = (path) => {
         if (!path) return path;
@@ -48,66 +50,13 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
     };
 
     const getMemberDetails = (title) => {
-        console.log('[getMemberDetails] Looking for:', title);
-        console.log('[getMemberDetails] facultyList length:', facultyList?.length);
-        console.log('[getMemberDetails] facultyList names:', facultyList?.map(f => f.title));
         const member = facultyList.find(f => f.title === title) || { title };
-        console.log('[getMemberDetails] Found member:', member);
         const media = member.media || (member.photo ? { type: 'image', image: getImagePath(member.photo) } : null);
-        return {
-            ...member,
-            media
-        };
+        return { ...member, media };
     };
 
     const heroData = page.hero;
     const sections = page.sections || [];
-
-    // Extract TOC sections
-    const tocSections = [];
-    sections.forEach(section => {
-        const blocks = section.blocks || [];
-        let title = "";
-        const firstBlock = blocks[0];
-
-        // Standard text block title extraction
-        if (firstBlock && firstBlock.type === 'text_block') {
-            if (firstBlock.title) title = firstBlock.title;
-            else if (firstBlock.subtitle) title = firstBlock.subtitle;
-        }
-
-        if (section.section_id) {
-            tocSections.push({
-                id: section.section_id,
-                title: title || section.section_id || "Section"
-            });
-        }
-
-        // If this section contains a questionnaire, add its categories to TOC
-        const hasQuestionnaire = blocks.some(b => b.type === 'questionnaire_block');
-        if (hasQuestionnaire && questionnaire?.categories) {
-            questionnaire.categories.forEach(cat => {
-                tocSections.push({
-                    id: `cat-${cat.id}`,
-                    title: `↳ ${cat.title}` // Indent nested items
-                });
-            });
-        }
-
-        // If this section contains a timeline, add its phase headers to TOC
-        const timelineBlock = blocks.find(b => b.type === 'timeline_block');
-        if (timelineBlock && timelineBlock.items) {
-            timelineBlock.items.forEach((item, itemIndex) => {
-                if (item.type === 'header' && item.title) {
-                    const sectionId = section.section_id || 'timeline';
-                    tocSections.push({
-                        id: `${sectionId}-header-${itemIndex}`,
-                        title: `↳ ${item.title}`
-                    });
-                }
-            });
-        }
-    });
 
     // Fallback: if hero exists but has no title, use page title
     const effectiveHeroData = heroData ? {

@@ -89,7 +89,7 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
                                     <h4 className={styles['timeline-subtitle']}>{item.subtitle}</h4>
                                 )}
                                 <p className={styles['timeline-content']}>{item.content}</p>
-                                {item.detail && (
+                                {/* {item.detail && (
                                     <div className={styles['detail-hint']}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                             <circle cx="5" cy="12" r="2"></circle>
@@ -98,7 +98,7 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
                                         </svg>
                                         <span>點擊查看詳細故事</span>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                         </VerticalTimelineElement>
                     );
@@ -125,3 +125,20 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
 };
 
 export default TimelineBlock;
+
+export function getTOC(block, sectionId) {
+    if (!block?.items) return [];
+
+    return block.items
+        .map((item, index) => {
+            if (item.type === 'header' && item.title) {
+                const id = sectionId || 'timeline';
+                return {
+                    id: `${id}-header-${index}`,
+                    title: `${item.title}`
+                };
+            }
+            return null;
+        })
+        .filter(Boolean);
+}

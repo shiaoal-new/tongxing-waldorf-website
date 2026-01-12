@@ -20,3 +20,14 @@ export default function QuestionnaireBlock({ data }) {
         </div>
     );
 }
+
+export function getTOC(block, sectionId, extraData) {
+    // extraData 應該是 questionnaire 物件 (從 page data 傳入)
+    const questionnaire = extraData;
+    if (!questionnaire?.categories) return [];
+
+    return questionnaire.categories.map(cat => ({
+        id: `cat-${cat.id}`,
+        title: `${cat.title}`
+    }));
+}
