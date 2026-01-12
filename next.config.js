@@ -27,6 +27,9 @@ module.exports = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    reactCompiler: true,
+  },
   async rewrites() {
     return [
       {
