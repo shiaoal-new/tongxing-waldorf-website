@@ -1,4 +1,5 @@
-import { ThemeProvider } from "next-themes";
+import dynamic from "next/dynamic";
+const ThemeProvider = dynamic(() => import("next-themes").then((mod) => mod.ThemeProvider), { ssr: false });
 import "../css/tailwind.css";
 
 // Swiper styles
@@ -21,7 +22,7 @@ import 'react-vertical-timeline-component/style.min.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="tongxing" enableSystem={false}>
+    <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
       <Component {...pageProps} />
     </ThemeProvider>
   );

@@ -32,14 +32,14 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="zh-TW" data-theme="tongxing">
+      <Html lang="zh-TW" suppressHydrationWarning>
         <Head>
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&family=Zeyada&display=swap"
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body suppressHydrationWarning>
           <Main />
           <NextScript />
         </body>
