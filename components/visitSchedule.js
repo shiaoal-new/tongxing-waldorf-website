@@ -28,6 +28,12 @@ export default function VisitSchedule() {
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP28DYxKx8A3ZcjJV2lqYYRUue6WHiMXFCpwWWt9HVpzOGvGw7ZVJjEOF4MaSafnlF/exec";
 
     const handleFormComplete = (data) => {
+        // Guard against null selectedSession
+        if (!selectedSession) {
+            console.error("No session selected");
+            return;
+        }
+
         const visitors = parseInt(data.visitors || 1);
 
         // Prepare data for submission
