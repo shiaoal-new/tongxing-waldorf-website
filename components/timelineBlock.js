@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import 'react-vertical-timeline-component/style.min.css';
-import './timelineBlock.css';
+import styles from './timelineBlock.module.css';
+
 
 const TimelineBlock = ({ data }) => {
     const { theme } = useTheme();
@@ -27,7 +27,7 @@ const TimelineBlock = ({ data }) => {
     if (!mounted) return null;
 
     return (
-        <div className="w-full py-8 timeline-container" data-theme={theme}>
+        <div className={`w-full py-8 ${styles['timeline-container']}`} data-theme={theme}>
             <VerticalTimeline lineColor="#f2a154">
                 {rawItems.map((item, index) => (
                     <VerticalTimelineElement
@@ -48,20 +48,20 @@ const TimelineBlock = ({ data }) => {
                         }}
                     >
                         <div
-                            className={item.detail ? 'timeline-clickable' : ''}
+                            className={item.detail ? styles['timeline-clickable'] : ''}
                             onClick={() => item.detail && setSelectedDetail(item)}
                         >
-                            <h3 className="timeline-title">
-                                <span className="timeline-year">{item.year}</span>
+                            <h3 className={styles['timeline-title']}>
+                                <span className={styles['timeline-year']}>{item.year}</span>
                                 {' '}
                                 {item.title}
                             </h3>
                             {item.subtitle && (
-                                <h4 className="timeline-subtitle">{item.subtitle}</h4>
+                                <h4 className={styles['timeline-subtitle']}>{item.subtitle}</h4>
                             )}
-                            <p className="timeline-content">{item.content}</p>
+                            <p className={styles['timeline-content']}>{item.content}</p>
                             {item.detail && (
-                                <div className="detail-hint">
+                                <div className={styles['detail-hint']}>
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                         <circle cx="5" cy="12" r="2"></circle>
                                         <circle cx="12" cy="12" r="2"></circle>
@@ -79,33 +79,33 @@ const TimelineBlock = ({ data }) => {
             <AnimatePresence>
                 {selectedDetail && (
                     <motion.div
-                        className="modal-overlay"
+                        className={styles['modal-overlay']}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setSelectedDetail(null)}
                     >
                         <motion.div
-                            className="modal-content"
+                            className={styles['modal-content']}
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button
-                                className="modal-close"
+                                className={styles['modal-close']}
                                 onClick={() => setSelectedDetail(null)}
                                 aria-label="關閉"
                             >
                                 ×
                             </button>
-                            <div className="modal-title">
+                            <div className={styles['modal-title']}>
                                 {selectedDetail.year} - {selectedDetail.title}
                             </div>
                             {selectedDetail.subtitle && (
-                                <div className="modal-subtitle">{selectedDetail.subtitle}</div>
+                                <div className={styles['modal-subtitle']}>{selectedDetail.subtitle}</div>
                             )}
-                            <div className="modal-detail">{selectedDetail.detail}</div>
+                            <div className={styles['modal-detail']}>{selectedDetail.detail}</div>
                         </motion.div>
                     </motion.div>
                 )}

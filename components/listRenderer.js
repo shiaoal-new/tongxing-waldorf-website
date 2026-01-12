@@ -6,6 +6,8 @@ import { EffectCards, Pagination } from 'swiper/modules';
 import ActionButtons from "./actionButtons";
 import Disclosure from "./disclosure";
 import DevComment from "./DevComment";
+import styles from "./listSwiper.module.css";
+
 
 
 /**
@@ -127,7 +129,7 @@ export default function ListRenderer({
     // Scrollable Grid 布局 (使用 Swiper EffectCards)
     if (layout === "scrollable_grid") {
         return (
-            <div className="w-full mx-auto list-swiper-container">
+            <div className={`w-full mx-auto ${styles['list-swiper-container']}`}>
                 <DevComment text="Swiper Effect Cards Container" />
                 <Swiper
                     effect={'cards'}
@@ -136,10 +138,10 @@ export default function ListRenderer({
                         clickable: true,
                     }}
                     modules={[EffectCards, Pagination]}
-                    className="swiper-cards-container"
+                    className={styles['swiper-cards-container']}
                 >
                     {items.map((item, index) => (
-                        <SwiperSlide key={item.id || index} className="list-swiper-slide">
+                        <SwiperSlide key={item.id || index} className={styles['list-swiper-slide']}>
                             <div className="w-full h-full">
                                 {renderItem(item, index)}
                             </div>

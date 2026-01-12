@@ -5,20 +5,50 @@ import BenefitItem from "./benefit";
 import ListRenderer from "./listRenderer";
 import VideoItem from "./video";
 import MediaRenderer from "./mediaRenderer";
-import ScheduleBlock from "./scheduleBlock";
-import CurriculumBlock from "./curriculumBlock";
-import ColorPaletteBlock from "./colorPaletteBlock";
 import ActionButtons from "./actionButtons";
-import VisitProcess from "./visitProcess";
-import VisitSchedule from "./visitSchedule";
-import SpacingDemoBlock from "./spacingDemoBlock";
-import TypographyDemoBlock from "./typographyDemoBlock";
-import MicroInteractionsBlock from "./microInteractionsBlock";
-import TabbedContentBlock from "./tabbedContentBlock";
-import QuestionnaireBlock from "./questionnaireBlock";
-import TimelineBlock from "./timelineBlock";
 import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
+import dynamic from "next/dynamic";
+
+/**
+ * Helper function: 創建動態載入的組件
+ * @param {string} componentPath - 組件路徑 (相對於 components 目錄)
+ * @param {string} loadingMessage - 載入時顯示的訊息
+ * @returns {React.Component} 動態載入的組件
+ */
+const createDynamicBlock = (componentPath, loadingMessage = "載入中...") => {
+    return dynamic(() => import(`./${componentPath}`), {
+        loading: () => <BlockLoadingFallback message={loadingMessage} />,
+        ssr: true
+    });
+};
+
+// 動態載入較少使用的組件,減少初始 bundle 大小
+const SpacingDemoBlock = createDynamicBlock("spacingDemoBlock");
+const TypographyDemoBlock = createDynamicBlock("typographyDemoBlock");
+const MicroInteractionsBlock = createDynamicBlock("microInteractionsBlock");
+const TabbedContentBlock = createDynamicBlock("tabbedContentBlock");
+const QuestionnaireBlock = createDynamicBlock("questionnaireBlock", "載入問卷中...");
+const TimelineBlock = createDynamicBlock("timelineBlock", "載入時間軸中...");
+const ScheduleBlock = createDynamicBlock("scheduleBlock");
+const CurriculumBlock = createDynamicBlock("curriculumBlock");
+const ColorPaletteBlock = createDynamicBlock("colorPaletteBlock");
+const VisitProcess = createDynamicBlock("visitProcess", "載入參訪流程中...");
+const VisitSchedule = createDynamicBlock("visitSchedule", "載入參訪時程中...");
+
+
+/**
+ * Loading Fallback Component
+ * 動態載入組件時顯示的載入狀態
+ */
+function BlockLoadingFallback({ message = "載入中..." }) {
+    return (
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-accent mb-3"></div>
+            <p className="text-brand-taupe dark:text-brand-taupe text-sm">{message}</p>
+        </div>
+    );
+}
 
 
 /**

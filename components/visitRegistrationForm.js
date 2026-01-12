@@ -1,8 +1,7 @@
-import React from "react";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import "survey-core/survey-core.min.css";
 import { themeJson } from "./surveyTheme";
+
 
 import surveyJson from "./visitRegistrationSchema.json";
 
