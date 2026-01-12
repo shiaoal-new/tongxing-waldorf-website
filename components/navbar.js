@@ -158,7 +158,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                       animate={{
                         x: 0,
                         opacity: 1,
-                        transition: { delay: 0.5, duration: 0.5, ease: "easeInOut" },
+                        transition: { delay: 0, duration: 0.3, ease: "easeInOut" },
                       }}
                       exit={{
                         x: "100%",
