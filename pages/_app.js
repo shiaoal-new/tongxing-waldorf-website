@@ -24,11 +24,9 @@ import { SessionProvider } from "next-auth/react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
-      <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </SessionProvider>
+    <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+      <Component {...pageProps} />
+    </ThemeProvider>
   );
 }
 
