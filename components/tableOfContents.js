@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DevComment from './DevComment';
 
@@ -10,8 +10,10 @@ const TableOfContents = ({ sections }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showTOC, setShowTOC] = useState(false);
 
-    // Filter out sections without IDs or Titles
-    const validSections = sections.filter(s => s.id && s.title);
+    // Filter out sections without IDs or Titles (use useMemo to prevent unnecessary recalculations)
+    const validSections = useMemo(() => {
+        return sections.filter(s => s.id && s.title);
+    }, [sections]);
 
     // Show TOC button after scrolling past hero section (viewport height)
     useEffect(() => {
@@ -32,6 +34,12 @@ const TableOfContents = ({ sections }) => {
         };
     }, []);
 
+    // Reset active ID and close mobile menu when sections change (page navigation)
+    useEffect(() => {
+        setActiveId('');
+        setIsMobileMenuOpen(false);
+    }, [sections]);
+
     useEffect(() => {
         if (validSections.length === 0) return;
 
@@ -49,20 +57,19 @@ const TableOfContents = ({ sections }) => {
             }
         );
 
-        validSections.forEach((section) => {
-            const element = document.getElementById(section.id);
-            if (element) {
-                observer.observe(element);
-            }
-        });
-
-        return () => {
+        // Use a small delay to ensure DOM is ready after page transition
+        const timeoutId = setTimeout(() => {
             validSections.forEach((section) => {
                 const element = document.getElementById(section.id);
                 if (element) {
-                    observer.unobserve(element);
+                    observer.observe(element);
                 }
             });
+        }, 100);
+
+        return () => {
+            clearTimeout(timeoutId);
+            observer.disconnect(); // Disconnect observer completely for better cleanup
         };
     }, [validSections]);
 

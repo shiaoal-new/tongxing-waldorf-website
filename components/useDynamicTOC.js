@@ -14,34 +14,14 @@ import { useState, useEffect } from 'react';
  */
 export function useDynamicTOC(page, extraData = {}) {
     // 1. 初始 TOC 只包含 Section 標題 (同步且快速)
-    const [tocSections, setTocSections] = useState(() => {
-        const sections = page.sections || [];
-        const initialToc = [];
+    const [tocSections, setTocSections] = useState(() => generateInitialTOC(page));
 
-        sections.forEach(section => {
-            const blocks = section.blocks || [];
-            let title = "";
-            const firstBlock = blocks[0];
+    // 2. 當頁面改變時，重置 TOC 為新頁面的初始狀態
+    useEffect(() => {
+        setTocSections(generateInitialTOC(page));
+    }, [page]);
 
-            // 從第一個 text_block 提取標題
-            if (firstBlock && firstBlock.type === 'text_block') {
-                if (firstBlock.title) title = firstBlock.title;
-                else if (firstBlock.subtitle) title = firstBlock.subtitle;
-            }
-
-            if (section.section_id) {
-                initialToc.push({
-                    id: section.section_id,
-                    title: title || section.section_id || "Section",
-                    isSection: true // 標記為主要 Section
-                });
-            }
-        });
-
-        return initialToc;
-    });
-
-    // 2. 頁面載入後，非同步擴充 dynamic blocks 的 TOC
+    // 3. 頁面載入後，非同步擴充 dynamic blocks 的 TOC
     // 自動偵測每個 Block 是否提供了 getTOC 函式
     useEffect(() => {
         let isMounted = true;
@@ -117,6 +97,37 @@ export function useDynamicTOC(page, extraData = {}) {
     }, [page, extraData]); // 當頁面資料改變時重新執行
 
     return tocSections;
+}
+
+/**
+ * 生成初始 TOC（只包含 Section 標題）
+ * 這個函式會在頁面首次載入和頁面切換時被呼叫
+ */
+function generateInitialTOC(page) {
+    const sections = page.sections || [];
+    const initialToc = [];
+
+    sections.forEach(section => {
+        const blocks = section.blocks || [];
+        let title = "";
+        const firstBlock = blocks[0];
+
+        // 從第一個 text_block 提取標題
+        if (firstBlock && firstBlock.type === 'text_block') {
+            if (firstBlock.title) title = firstBlock.title;
+            else if (firstBlock.subtitle) title = firstBlock.subtitle;
+        }
+
+        if (section.section_id) {
+            initialToc.push({
+                id: section.section_id,
+                title: title || section.section_id || "Section",
+                isSection: true // 標記為主要 Section
+            });
+        }
+    });
+
+    return initialToc;
 }
 
 /**

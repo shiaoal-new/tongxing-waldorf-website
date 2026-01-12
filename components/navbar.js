@@ -383,7 +383,10 @@ function NavbarActionItem({ item, active, actionHandlers, showBackgroundGrid, cl
   const handleClick = (e) => {
     if (isMobile && router) {
       e.preventDefault();
-      setTimeout(() => router.push(item.path || "#"), 400);
+      // Close the mobile menu immediately, then navigate
+      const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]');
+      if (disclosureButton) disclosureButton.click();
+      setTimeout(() => router.push(item.path || "#"), 300);
     }
   };
 
