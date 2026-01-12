@@ -177,11 +177,11 @@
                 &>div {
                     /* mask-image: url('/img/themes/tongxing/mask/VideoFrameMask-1.webp'); */
                     /* 使用 contain 确保遮罩完整显示，不会裁剪视频 */
-                    mask-size: contain;
-                    mask-repeat: no-repeat;
-                    mask-position: center;
+                    /* mask-size: contain; */
+                    /* mask-repeat: no-repeat; */
+                    /* mask-position: center; */
                     /* 确保遮罩使用 alpha 通道 */
-                    mask-mode: alpha;
+                    /* mask-mode: alpha; */
 
                     /* 强制 GPU 加速以优化遮罩渲染 */
                     transform: translateZ(0);

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import DevComment from "./DevComment";
 
 export default function VideoItem({ video, className }) {
@@ -15,9 +16,33 @@ export default function VideoItem({ video, className }) {
   };
 
   const videoId = getYoutubeId(videoUrl);
+
+  // Initial thumbnail logic: try maxresdefault for YouTube, or use provided image/poster
+  const getInitialThumbnail = () => {
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    }
+    if (mediaData.type === 'image') return mediaData.image;
+    if (mediaData.poster) return mediaData.poster;
+    return null;
+  };
+
+  const [thumbnailUrl, setThumbnailUrl] = useState(getInitialThumbnail());
+
+  // Fallback if maxresdefault fails (often happens for older or low-res videos)
+  const handleThumbError = () => {
+    if (videoId && thumbnailUrl.includes('maxresdefault')) {
+      setThumbnailUrl(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`);
+    }
+  };
+
+  // Update thumbnail if video prop changes
+  useEffect(() => {
+    setThumbnailUrl(getInitialThumbnail());
+  }, [videoId, mediaData.image, mediaData.poster]);
+
   // Use the canonical YouTube URL for social sharing/viewing if it's a YouTube video
   const externalUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : videoUrl;
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : (mediaData.type === 'image' ? mediaData.image : null);
 
   const handleOpenVideo = () => {
     if (externalUrl) {
@@ -38,13 +63,18 @@ export default function VideoItem({ video, className }) {
 
         <div
           onClick={handleOpenVideo}
-          className="absolute inset-0 cursor-pointer group"
-          style={{
-            backgroundImage: thumbnailUrl ? `url(${thumbnailUrl})` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
+          className="absolute inset-0 cursor-pointer group overflow-hidden"
         >
+          <DevComment text="Thumbnail Image with Fallback" />
+          {thumbnailUrl && (
+            <img
+              src={thumbnailUrl}
+              alt={video.title}
+              onError={handleThumbError}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          )}
+
           <DevComment text="Dark overlay for text/icon visibility" />
           {/* Overlay for better text/icon visibility */}
 
@@ -76,4 +106,5 @@ export default function VideoItem({ video, className }) {
     </div>
   );
 }
+
 
