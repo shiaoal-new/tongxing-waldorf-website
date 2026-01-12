@@ -19,36 +19,45 @@
 }
 
 /* 時間軸線條顏色 */
-.vertical-timeline::before {
+:global(.vertical-timeline)::before {
     background: #f2a154 !important;
 }
 
 /* 時間軸元素樣式 */
-.vertical-timeline-element-content {
+:global(.vertical-timeline-element-content) {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     padding: 1.5rem !important;
     background: var(--timeline-bg) !important;
     color: var(--timeline-text) !important;
 }
 
-.vertical-timeline-element-content-arrow {
+:global(.vertical-timeline-element-content-arrow) {
     border-right-color: var(--timeline-arrow) !important;
 }
 
 /* 時間軸圖標樣式 */
-.vertical-timeline-element-icon {
+:global(.vertical-timeline-element-icon) {
     background: white !important;
     border: 3px solid #f2a154 !important;
-    box-shadow: 0 2px 8px rgba(242, 161, 84, 0.3) !important;
+    box-shadow: 0 4px 10px rgba(242, 161, 84, 0.4) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 1.5rem !important;
+    font-size: 1.75rem !important;
+    /* 加大图标尺寸 */
+    line-height: 1 !important;
+}
+
+@media only screen and (min-width: 1170px) {
+    :global(.vertical-timeline-element-icon) {
+        font-size: 2.25rem !important;
+        /* 桌面端图标更大 */
+    }
 }
 
 /* 隱藏外部日期顯示 */
-.vertical-timeline-element-date {
+:global(.vertical-timeline-element-date) {
     display: none !important;
 }
 
