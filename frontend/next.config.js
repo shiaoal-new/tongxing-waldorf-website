@@ -29,7 +29,7 @@ module.exports = {
   },
   reactCompiler: true,
   async rewrites() {
-    return [
+    const rewrites = [
       {
         source: '/admin',
         destination: '/admin/index.html',
@@ -38,6 +38,16 @@ module.exports = {
         source: '/admin/',
         destination: '/admin/index.html',
       },
-    ]
+    ];
+
+    // 只有在非導出模式（開發模式）才加入 API 代理，讓 npm run dev 能接到 Emulator
+    if (process.env.NEXT_OUTPUT !== 'export') {
+      rewrites.push({
+        source: '/api/:path*',
+        destination: 'http://127.0.0.1:5001/tongxing-waldorf-website/us-central1/:path*',
+      });
+    }
+
+    return rewrites;
   },
 };

@@ -15,8 +15,8 @@ export default function VisitSchedule() {
     const [selectedSession, setSelectedSession] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // API Base URL (depends on environment)
-    const API_BASE = "http://localhost:5001/tongxing-waldorf-website/us-central1";
+    // API Base URL (使用相對路徑以配合 Firebase Hosting Rewrites)
+    const API_BASE = "/api";
 
     const fetchSessions = async () => {
         setIsLoading(true);

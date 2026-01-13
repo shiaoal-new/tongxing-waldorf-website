@@ -9,7 +9,29 @@
         "**/node_modules/**"
       ],
       "cleanUrls": true,
-      "trailingSlash": false
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "/api/auth/**",
+          "function": "auth"
+        },
+        {
+          "source": "/api/getVisitSessions",
+          "function": "getVisitSessions"
+        },
+        {
+          "source": "/api/registerVisit",
+          "function": "registerVisit"
+        },
+        {
+          "source": "/api/seedVisitSessions",
+          "function": "seedVisitSessions"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     },
     {
       "target": "dev",
@@ -20,7 +42,29 @@
         "**/node_modules/**"
       ],
       "cleanUrls": true,
-      "trailingSlash": false
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "/api/auth/**",
+          "function": "auth"
+        },
+        {
+          "source": "/api/getVisitSessions",
+          "function": "getVisitSessions"
+        },
+        {
+          "source": "/api/registerVisit",
+          "function": "registerVisit"
+        },
+        {
+          "source": "/api/seedVisitSessions",
+          "function": "seedVisitSessions"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ],
   "functions": {
