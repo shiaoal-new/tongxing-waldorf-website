@@ -5,6 +5,7 @@ import VisitRegistrationForm from "./visitRegistrationForm";
 import Modal from "./modal";
 import DevComment from "./DevComment";
 import { useSession, signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function VisitSchedule() {
     const { data: session } = useSession();
@@ -141,8 +142,8 @@ export default function VisitSchedule() {
                         <div className="w-16 h-16 bg-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                             <ClockIcon className="w-8 h-8 text-brand-accent animate-pulse" />
                         </div>
-                        <h3 className="text-xl font-bold text-brand-text mb-2">預約系統稍候片刻</h3>
-                        <p className="text-brand-taupe mb-6">
+                        <h3 className="text-xl font-bold text-brand-text mb-2 tracking-brand">預約系統稍候片刻</h3>
+                        <p className="text-brand-taupe mb-6 leading-relaxed">
                             抱歉，目前系統正在稍微休息中。請您過幾分鐘後，再點擊下方按鈕重新整理試試看。
                         </p>
                         <button
@@ -151,6 +152,36 @@ export default function VisitSchedule() {
                         >
                             重新整理
                         </button>
+                    </div>
+                </div>
+            </Container>
+        );
+    }
+
+    if (!dates || dates.length === 0) {
+        return (
+            <Container limit>
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <div className="bg-brand-bg dark:bg-brand-structural/20 p-10 rounded-2xl border border-brand-taupe/10 max-w-lg shadow-sm">
+                        <div className="w-20 h-20 bg-brand-accent/5 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <CalendarIcon className="w-10 h-10 text-brand-accent/30" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-brand-text dark:text-brand-bg mb-4 tracking-brand">目前暫無開放預約場次</h3>
+                        <p className="text-brand-taupe dark:text-brand-taupe/80 mb-8 leading-relaxed">
+                            謝謝您對同心華德福的關注。目前所有的參觀場次皆已額滿或辦理完畢。<br />
+                            新場次資訊將會不定期更新，歡迎您隨時留意官網公告，或透過官方 LINE 與我們聯繫。
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Link href="/">
+                                <a className="btn btn-primary px-8">回到首頁</a>
+                            </Link>
+                            <button
+                                onClick={fetchSessions}
+                                className="btn bg-brand-bg dark:bg-brand-structural/40 border border-brand-taupe/20 px-8 hover:bg-brand-accent/5 transition-colors dark:text-brand-bg"
+                            >
+                                重新整理
+                            </button>
+                        </div>
                     </div>
                 </div>
             </Container>
