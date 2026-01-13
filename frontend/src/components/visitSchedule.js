@@ -172,8 +172,8 @@ export default function VisitSchedule() {
                             新場次資訊將會不定期更新，歡迎您隨時留意官網公告，或透過官方 LINE 與我們聯繫。
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/">
-                                <a className="btn btn-primary px-8">回到首頁</a>
+                            <Link href="/" className="btn btn-primary px-8">
+                                回到首頁
                             </Link>
                             <button
                                 onClick={fetchSessions}
