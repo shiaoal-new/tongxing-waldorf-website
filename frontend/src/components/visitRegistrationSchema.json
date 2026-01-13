@@ -13,15 +13,6 @@
                 },
                 {
                     "type": "text",
-                    "name": "email",
-                    "title": "Email",
-                    "titleLocation": "hidden",
-                    "isRequired": true,
-                    "inputType": "email",
-                    "placeholder": "Email"
-                },
-                {
-                    "type": "text",
                     "name": "cellphone",
                     "title": "手機號碼",
                     "titleLocation": "hidden",

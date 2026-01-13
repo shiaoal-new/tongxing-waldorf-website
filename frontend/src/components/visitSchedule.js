@@ -1,82 +1,115 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./visitRegistrationForm";
 import Modal from "./modal";
 import DevComment from "./DevComment";
-
-
-import initialDates from "./initialVisitDates.json";
+import { useSession, signIn } from "next-auth/react";
 
 export default function VisitSchedule() {
-    const [dates, setDates] = useState(initialDates);
+    const { data: session } = useSession();
+    const [dates, setDates] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedSession, setSelectedSession] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const openModal = (session) => {
-        setSelectedSession(session);
+    // API Base URL (depends on environment)
+    const API_BASE = "http://localhost:5001/tongxing-waldorf-website/us-central1";
+
+    const fetchSessions = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const res = await fetch(`${API_BASE}/getVisitSessions`);
+            const data = await res.json().catch(() => null);
+
+            if (!res.ok) {
+                throw new Error(data?.error || "無法獲取場次資訊");
+            }
+
+            if (data) setDates(data);
+        } catch (err) {
+            console.error("Failed to fetch sessions:", err);
+            setError("暫時無法連線至預約系統，請確認後端服務是否已啟動。");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchSessions();
+    }, []);
+
+    const openModal = (sessionObj) => {
+        if (!session) {
+            // Trigger LINE login if not logged in
+            signIn('line');
+            return;
+        }
+        setSelectedSession(sessionObj);
         setIsOpen(true);
     };
 
     const closeModal = () => {
         setIsOpen(false);
-        // We don't need a timeout here as Modal handles animation and lifecycle
         setTimeout(() => setSelectedSession(null), 300);
     };
 
-    // Placeholder for your deployed Apps Script Web App URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP28DYxKx8A3ZcjJV2lqYYRUue6WHiMXFCpwWWt9HVpzOGvGw7ZVJjEOF4MaSafnlF/exec";
-
-    const handleFormComplete = (data) => {
-        // Guard against null selectedSession
-        if (!selectedSession) {
-            console.error("No session selected");
+    const handleFormComplete = async (data) => {
+        if (!selectedSession || !session?.user?.id) {
+            console.error("Missing session or user id");
             return;
         }
 
-        const visitors = parseInt(data.visitors || 1);
+        setIsSubmitting(true);
 
-        // Prepare data for submission
         const payload = {
-            ...data,
-            sessionDate: selectedSession.date,
-            sessionTime: selectedSession.time
+            sessionId: selectedSession.id,
+            userId: session.user.id,
+            name: data.name,
+            cellphone: data.cellphone,
+            visitors: parseInt(data.visitors || 1)
         };
 
-        // Submit to Apps Script
-        if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_WEB_APP_URL") {
-            fetch(APPS_SCRIPT_URL, {
+        try {
+            const response = await fetch(`${API_BASE}/registerVisit`, {
                 method: "POST",
-                mode: "no-cors",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(payload)
-            }).catch(err => console.error("Error submitting form:", err));
-        } else {
-            console.warn("Apps Script URL not set. Data not sent to backend.");
-        }
+            });
 
-        setDates(dates.map(d => {
-            if (d.id === selectedSession.id) {
-                return { ...d, quota: Math.max(0, d.quota - visitors) };
+            const result = await response.json();
+
+            if (result.success) {
+                // Refresh sessions to update quota
+                await fetchSessions();
+                closeModal();
+                setTimeout(() => {
+                    alert("報名成功！感謝您的預約。");
+                }, 500);
+            } else {
+                alert("報名失敗: " + (result.error || "未知錯誤"));
             }
-            return d;
-        }));
-
-        closeModal();
-        setTimeout(() => {
-            alert("報名成功！確認信將發送至 " + data.email);
-        }, 500);
+        } catch (err) {
+            console.error("Error submitting form:", err);
+            alert("提交過程發生錯誤，請稍後再試。");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const renderButton = (item) => {
-        if (item.quota > 0) {
+        if (item.remaining_seats > 0) {
             return (
                 <button
                     onClick={() => openModal(item)}
+                    disabled={isSubmitting}
                     className="btn btn-primary w-full sm:w-auto px-6 uppercase tracking-brand">
-                    立即報名
+                    {isSubmitting ? "處理中..." : "立即報名"}
                 </button>
             );
         } else {
@@ -89,6 +122,40 @@ export default function VisitSchedule() {
             );
         }
     };
+
+    if (isLoading) {
+        return (
+            <Container limit>
+                <div className="flex justify-center items-center py-20">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-accent"></div>
+                </div>
+            </Container>
+        );
+    }
+
+    if (error) {
+        return (
+            <Container limit>
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <div className="bg-brand-accent/5 p-8 rounded-2xl border border-brand-accent/10 max-w-md">
+                        <div className="w-16 h-16 bg-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <ClockIcon className="w-8 h-8 text-brand-accent animate-pulse" />
+                        </div>
+                        <h3 className="text-xl font-bold text-brand-text mb-2">預約系統稍候片刻</h3>
+                        <p className="text-brand-taupe mb-6">
+                            抱歉，目前系統正在稍微休息中。請您過幾分鐘後，再點擊下方按鈕重新整理試試看。
+                        </p>
+                        <button
+                            onClick={fetchSessions}
+                            className="btn btn-primary px-8"
+                        >
+                            重新整理
+                        </button>
+                    </div>
+                </div>
+            </Container>
+        );
+    }
 
     return (
         <Container limit>
@@ -105,8 +172,8 @@ export default function VisitSchedule() {
                                     <CalendarIcon className="w-5 h-5 mr-2 text-brand-accent" />
                                     {item.date}
                                 </div>
-                                <span className={`px-2 py-1 text-[10px] font-bold rounded-full ${item.quota > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                                    {item.quota > 0 ? "報名中" : "已額滿"}
+                                <span className={`px-2 py-1 text-[10px] font-bold rounded-full ${item.remaining_seats > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                                    {item.remaining_seats > 0 ? "報名中" : "已額滿"}
                                 </span>
                             </div>
 
@@ -117,7 +184,7 @@ export default function VisitSchedule() {
                                 </div>
                                 <div className="flex items-center text-brand-taupe">
                                     <UserGroupIcon className="w-5 h-5 mr-2" />
-                                    剩餘名額：<span className={item.quota > 0 ? "text-green-600 font-bold ml-1" : "text-red-500 font-bold ml-1"}>{item.quota}</span> / {item.total}
+                                    剩餘名額：<span className={item.remaining_seats > 0 ? "text-green-600 font-bold ml-1" : "text-red-500 font-bold ml-1"}>{item.remaining_seats}</span> / {item.total_seats}
                                 </div>
                             </div>
 
@@ -149,10 +216,10 @@ export default function VisitSchedule() {
                                             <td className="whitespace-nowrap px-6 py-4 font-bold">{item.date}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{item.time}</td>
                                             <td className="whitespace-nowrap px-6 py-4">
-                                                <span className={`${item.quota > 0 ? "text-green-600 font-bold" : "text-red-500"}`}>
-                                                    {item.quota}
+                                                <span className={`${item.remaining_seats > 0 ? "text-green-600 font-bold" : "text-red-500"}`}>
+                                                    {item.remaining_seats}
                                                 </span>
-                                                / {item.total}
+                                                / {item.total_seats}
                                             </td>
                                             <td className="whitespace-nowrap px-6 py-4">
                                                 {renderButton(item)}

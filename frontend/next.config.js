@@ -19,7 +19,7 @@ module.exports = {
     NEXT_PUBLIC_GIT_COMMIT_MSG: gitCommitMsg,
     NEXT_PUBLIC_GIT_COMMIT_TIME: gitCommitTime,
     NEXT_PUBLIC_BUILD_TIME: new Date().toString(),
-    NEXT_PUBLIC_ACTION_RUN_TIME: process.env.NEXT_PUBLIC_ACTION_RUN_TIME || null,
+    NEXT_PUBLIC_ACTION_RUN_TIME: process.env.NEXT_PUBLIC_ACTION_RUN_TIME || '',
   },
 
   output: process.env.NEXT_OUTPUT === 'export' ? 'export' : undefined,
@@ -27,9 +27,7 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    reactCompiler: true,
-  },
+  reactCompiler: true,
   async rewrites() {
     return [
       {
