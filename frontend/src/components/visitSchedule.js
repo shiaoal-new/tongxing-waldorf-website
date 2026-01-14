@@ -59,58 +59,24 @@ export default function VisitSchedule() {
     };
 
     const handleFormComplete = async (data) => {
-        if (!selectedSession || !session?.user?.id) {
-            console.error("Missing session or user id");
-            return;
-        }
+        // Deprecated: Registration now moved to LINE OA
+        console.warn("handleFormComplete is deprecated. Use LINE OA for registration.");
+    };
 
-        setIsSubmitting(true);
+    // LINE Official Account URL
+    const LINE_OA_URL = "https://line.me/R/ti/p/@taipeiwaldorf"; // 請替換為實際的 LINE ID (@...)
 
-        const payload = {
-            sessionId: selectedSession.id,
-            userId: session.user.id,
-            name: data.name,
-            cellphone: data.cellphone,
-            visitors: parseInt(data.visitors || 1)
-        };
-
-        try {
-            const response = await fetch(`${API_BASE}/registerVisit`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                // Refresh sessions to update quota
-                await fetchSessions();
-                closeModal();
-                setTimeout(() => {
-                    alert("報名成功！感謝您的預約。");
-                }, 500);
-            } else {
-                alert("報名失敗: " + (result.error || "未知錯誤"));
-            }
-        } catch (err) {
-            console.error("Error submitting form:", err);
-            alert("提交過程發生錯誤，請稍後再試。");
-        } finally {
-            setIsSubmitting(false);
-        }
+    const redirectToLine = () => {
+        window.open(LINE_OA_URL, "_blank");
     };
 
     const renderButton = (item) => {
         if (item.remaining_seats > 0) {
             return (
                 <button
-                    onClick={() => openModal(item)}
-                    disabled={isSubmitting}
+                    onClick={redirectToLine}
                     className="btn btn-primary w-full sm:w-auto px-6 uppercase tracking-brand">
-                    {isSubmitting ? "處理中..." : "立即報名"}
+                    前往 LINE 報名
                 </button>
             );
         } else {
@@ -169,17 +135,17 @@ export default function VisitSchedule() {
                         <h3 className="text-2xl font-bold text-brand-text dark:text-brand-bg mb-4 tracking-brand">目前暫無開放預約場次</h3>
                         <p className="text-brand-taupe dark:text-brand-taupe/80 mb-8 leading-relaxed">
                             謝謝您對同心華德福的關注。目前所有的參觀場次皆已額滿或辦理完畢。<br />
-                            新場次資訊將會不定期更新，歡迎您隨時留意官網公告，或透過官方 LINE 與我們聯繫。
+                            新場次資訊將會不定期更新，歡迎您隨時留意官網公告，或 <span className="font-bold">透過官方 LINE 登記候補</span>。
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/" className="btn btn-primary px-8">
+                            <Link href="/" className="btn bg-brand-bg dark:bg-brand-structural/40 border border-brand-taupe/20 px-8 hover:bg-brand-accent/5 transition-colors dark:text-brand-bg">
                                 回到首頁
                             </Link>
                             <button
-                                onClick={fetchSessions}
-                                className="btn bg-brand-bg dark:bg-brand-structural/40 border border-brand-taupe/20 px-8 hover:bg-brand-accent/5 transition-colors dark:text-brand-bg"
+                                onClick={redirectToLine}
+                                className="btn btn-primary px-8"
                             >
-                                重新整理
+                                前往 LINE 官方帳號
                             </button>
                         </div>
                     </div>
@@ -264,18 +230,7 @@ export default function VisitSchedule() {
                 </div>
             </div>
 
-            <Modal
-                isOpen={isOpen}
-                onClose={closeModal}
-                title={`預約參觀 - ${selectedSession?.date}`}
-                maxWidth="max-w-md"
-            >
-                {selectedSession && (
-                    <div className="mt-2">
-                        <VisitRegistrationForm onComplete={handleFormComplete} />
-                    </div>
-                )}
-            </Modal>
+            {/* 註解：報名功能已遷移至 LINE 官方帳號 */}
         </Container>
     );
 }

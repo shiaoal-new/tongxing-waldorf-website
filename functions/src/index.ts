@@ -108,3 +108,6 @@ export const registerVisit = onRequest({ cors: true }, async (req, res) => {
 
 // Auth.js handler
 export { default as auth } from "./auth.js";
+
+// LINE Webhook handler
+export * from "./lineWebhook.js";

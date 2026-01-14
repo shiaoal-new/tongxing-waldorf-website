@@ -16,12 +16,10 @@
 
 ## 2. 分支管理 (Branch Strategy)
 
-專案採用雙分支管理，對應不同的環境：
-
-| 分支 (Branch) | 環境 (Environment) | 網址 (URL) | 說明 |
-| :--- | :--- | :--- | :--- |
-| `dev` | 开发/測試 | [tongxing-waldorf-dev.web.app](https://tongxing-waldorf-site-dev.web.app) | 用於日常開發、CMS 內容初稿。 |
-| `main` | 正式發佈 | [tongxing-waldorf-prod.web.app](https://tongxing-waldorf-site.web.app) | 穩定版本。 |
+| 分支 (Branch) | 環境 (Environment) | 網址 (URL) | Firebase 專案 ID | 說明 |
+| :--- | :--- | :--- | :--- | :--- |
+| `dev` | 开发/測試 | [tongxing-waldorf-dev.web.app](https://tongxing-waldorf-site-dev.web.app) | `tongxing-waldorf-website-dev` | 用於日常開發、CMS 內容初稿。 |
+| `main` | 正式發佈 | [tongxing-waldorf-prod.web.app](https://tongxing-waldorf-site.web.app) | `tongxing-waldorf-website` | 穩定版本。 |
 
 ### 如何切換 CMS 管理的分支？
 在 `public/admin/config.yml` 中修改 `backend.branch`：
@@ -64,10 +62,10 @@
 當代碼被 Push 到 `main` 或 `dev` 分支時，會觸發 `.github/workflows/firebase-deploy.yml`：
 
 1.  **Checkout**: 取得最新代碼。
-2.  **Build**: 執行 `npm run build` 產生靜態文件。
-3.  **Deploy**: 根據分支判斷部署目標：
-    *   `main` 分支 $\rightarrow$ `firebase deploy --only hosting:prod`
-    *   `dev` 分支 $\rightarrow$ `firebase deploy --only hosting:dev`
+2.  **Build**: 執行 `npm run build` (同時編譯 Next.js 靜態頁面與 TypeScript Functions)。
+3.  **Deploy**: 切換至對應專案並同時部署 Hosting 與 Functions：
+    *   `main` 分支 $\rightarrow$ `firebase use tongxing-waldorf-website` 然後 `firebase deploy --only hosting:prod,functions`
+    *   `dev` 分支 $\rightarrow$ `firebase use tongxing-waldorf-website-dev` 然後 `firebase deploy --only hosting:dev,functions`
 
 ---
 
@@ -85,3 +83,30 @@
 
 ### 為什麼 CMS 報 404 錯誤？
 通常是因為 `config.yml` 設定的分支在 GitHub 上不存在該路徑，或者您在本地新增了資料夾但尚未 Push 到 GitHub 分支上。
+
+---
+
+## 7. LINE 平台配置 (LINE Platform Configuration)
+
+本專案使用兩種類型的 LINE Channel：**LINE Login** (用於網站登入) 與 **Messaging API** (用於機器人自動註冊)。
+
+### 7.1 LINE Login (網站登入)
+| 環境 | Channel ID | 說明 |
+| :--- | :--- | :--- |
+| **開發/正式** | `2004780027` | 目前兩環境共用此 Login Channel。 |
+
+*   **Callback URL**: `http://localhost:3000/api/auth/callback/line` (開發)
+
+### 7.2 Messaging API (Webhook 自動註冊)
+為了開發安全，必須區分正式版與測試版機器人。
+
+| 環境 | LINE Channel 類型 | 功能 |
+| :--- | :--- | :--- |
+| **Dev** | 同心華德福 (測試版) | 用於開發測試，對接 `localhost` 或 `dev` 雲端。 |
+| **Prod** | 同心華德福 (正式版) | 用於真實用戶，對接正式網址。 |
+
+### 7.3 環境變數管理
+*   **本地開發**: 變數存於 `functions/.env` (已被 Git 忽略)。
+*   **生產環境**: 使用 Firebase Secrets Manager 儲存，不存於檔案。
+    *   `LINE_MESSAGING_CHANNEL_SECRET`
+    *   `LINE_MESSAGING_CHANNEL_ACCESS_TOKEN`
