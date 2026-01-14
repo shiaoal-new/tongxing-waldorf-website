@@ -1,72 +1,36 @@
 {
-  "hosting": [
-    {
-      "target": "prod",
-      "public": "frontend/out",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "cleanUrls": true,
-      "trailingSlash": false,
-      "rewrites": [
-        {
-          "source": "/api/auth/**",
-          "function": "auth"
-        },
-        {
-          "source": "/api/getVisitSessions",
-          "function": "getVisitSessions"
-        },
-        {
-          "source": "/api/registerVisit",
-          "function": "registerVisit"
-        },
-        {
-          "source": "/api/seedVisitSessions",
-          "function": "seedVisitSessions"
-        },
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "target": "dev",
-      "public": "frontend/out",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "cleanUrls": true,
-      "trailingSlash": false,
-      "rewrites": [
-        {
-          "source": "/api/auth/**",
-          "function": "auth"
-        },
-        {
-          "source": "/api/getVisitSessions",
-          "function": "getVisitSessions"
-        },
-        {
-          "source": "/api/registerVisit",
-          "function": "registerVisit"
-        },
-        {
-          "source": "/api/seedVisitSessions",
-          "function": "seedVisitSessions"
-        },
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ],
+  "hosting": {
+    "public": "frontend/out",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+      {
+        "source": "/api/auth/**",
+        "function": "auth"
+      },
+      {
+        "source": "/api/getVisitSessions",
+        "function": "getVisitSessions"
+      },
+      {
+        "source": "/api/registerVisit",
+        "function": "registerVisit"
+      },
+      {
+        "source": "/api/seedVisitSessions",
+        "function": "seedVisitSessions"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
   "functions": {
     "source": "functions",
     "predeploy": [

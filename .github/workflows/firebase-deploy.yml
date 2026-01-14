@@ -36,9 +36,9 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           if [ "${GITHUB_REF##*/}" == "main" ]; then
-            firebase use tongxing-waldorf-website --token $FIREBASE_TOKEN
-            firebase deploy --only hosting:prod,functions --token $FIREBASE_TOKEN
+            firebase use prod --token $FIREBASE_TOKEN
+            firebase deploy --only hosting,functions --token $FIREBASE_TOKEN
           elif [ "${GITHUB_REF##*/}" == "dev" ]; then
-            firebase use tongxing-waldorf-website-dev --token $FIREBASE_TOKEN
-            firebase deploy --only hosting:dev,functions --token $FIREBASE_TOKEN
+            firebase use dev --token $FIREBASE_TOKEN
+            firebase deploy --only hosting,functions --token $FIREBASE_TOKEN
           fi
