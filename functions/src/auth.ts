@@ -56,6 +56,7 @@ if (!process.env.NEXTAUTH_URL) {
 
 export default onRequest({
     cors: true,
+    region: "asia-east1",
 }, async (req: any, res: any) => {
     // 1. 強力解析路徑片段 (由 URL 提取以精確控制)
     const urlStr = req.url || "";

@@ -11,19 +11,31 @@
     "rewrites": [
       {
         "source": "/api/auth/**",
-        "function": "auth"
+        "function": {
+          "serviceId": "auth",
+          "region": "asia-east1"
+        }
       },
       {
         "source": "/api/getVisitSessions",
-        "function": "getVisitSessions"
+        "function": {
+          "serviceId": "getVisitSessions",
+          "region": "asia-east1"
+        }
       },
       {
         "source": "/api/registerVisit",
-        "function": "registerVisit"
+        "function": {
+          "serviceId": "registerVisit",
+          "region": "asia-east1"
+        }
       },
       {
         "source": "/api/seedVisitSessions",
-        "function": "seedVisitSessions"
+        "function": {
+          "serviceId": "seedVisitSessions",
+          "region": "asia-east1"
+        }
       },
       {
         "source": "**",
