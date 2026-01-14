@@ -49,9 +49,11 @@ export const authOptions: any = {
     secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
 };
 
-// 確保環境變數在最外層生效 (NextAuth v4 必須)
-if (!process.env.NEXTAUTH_URL) {
-    process.env.NEXTAUTH_URL = "http://localhost:3000/api/auth";
+// 確保環境變數在最外層生效
+if (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost")) {
+    // 優先檢查 Firebase 環境，如果是部署環境則自動設定
+    const projectId = process.env.GCLOUD_PROJECT || process.env.FIREBASE_CONFIG ? JSON.parse(process.env.FIREBASE_CONFIG!).projectId : "tongxing-waldorf-website-dev";
+    process.env.NEXTAUTH_URL = `https://${projectId}.web.app/api/auth`;
 }
 
 export default onRequest({

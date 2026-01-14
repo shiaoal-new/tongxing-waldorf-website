@@ -19,21 +19,21 @@
       {
         "source": "/api/getVisitSessions",
         "function": {
-          "serviceId": "getVisitSessions",
+          "serviceId": "getvisitsessions",
           "region": "asia-east1"
         }
       },
       {
         "source": "/api/registerVisit",
         "function": {
-          "serviceId": "registerVisit",
+          "serviceId": "registervisit",
           "region": "asia-east1"
         }
       },
       {
         "source": "/api/seedVisitSessions",
         "function": {
-          "serviceId": "seedVisitSessions",
+          "serviceId": "seedvisitsessions",
           "region": "asia-east1"
         }
       },

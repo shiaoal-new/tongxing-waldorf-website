@@ -9,7 +9,7 @@ if (!getApps().length) {
 const db = getFirestore();
 
 // 獲取參訪場次
-export const getVisitSessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
+export const getvisitsessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
     try {
         const snapshot = await db.collection("visit_sessions")
             .where("status", "==", "open")
@@ -28,7 +28,7 @@ export const getVisitSessions = onRequest({ cors: true, region: "asia-east1" }, 
 });
 
 // 初始化場次數據 (測試用)
-export const seedVisitSessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
+export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
     const initialDates = [
         { date: "2024-03-15 (五)", time: "09:30 - 11:30", remaining_seats: 5, total_seats: 20, order: 1, status: "open" },
         { date: "2024-03-29 (五)", time: "09:30 - 11:30", remaining_seats: 12, total_seats: 20, order: 2, status: "open" },
@@ -50,7 +50,7 @@ export const seedVisitSessions = onRequest({ cors: true, region: "asia-east1" },
 });
 
 // 提交預約報名
-export const registerVisit = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
+export const registervisit = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
     if (req.method !== 'POST') {
         res.status(405).send('Method Not Allowed');
         return;
