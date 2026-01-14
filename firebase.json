@@ -12,28 +12,28 @@
       {
         "source": "/api/auth/**",
         "function": {
-          "serviceId": "auth",
+          "functionId": "auth",
           "region": "asia-east1"
         }
       },
       {
         "source": "/api/getVisitSessions",
         "function": {
-          "serviceId": "getvisitsessions",
+          "functionId": "getvisitsessions",
           "region": "asia-east1"
         }
       },
       {
         "source": "/api/registerVisit",
         "function": {
-          "serviceId": "registervisit",
+          "functionId": "registervisit",
           "region": "asia-east1"
         }
       },
       {
         "source": "/api/seedVisitSessions",
         "function": {
-          "serviceId": "seedvisitsessions",
+          "functionId": "seedvisitsessions",
           "region": "asia-east1"
         }
       },
