@@ -1,5 +1,6 @@
 import { onRequest } from "firebase-functions/v2/https";
-import * as admin from "firebase-admin";
+import { initializeApp, getApps } from "firebase-admin/app";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import {
     messagingApi,
     validateSignature,
@@ -10,7 +11,10 @@ import {
 } from "@line/bot-sdk";
 
 // 初始化 Firebase Admin
-const db = admin.firestore();
+if (!getApps().length) {
+    initializeApp();
+}
+const db = getFirestore();
 
 // 移除全域 config，改在函數執行時獲取，以支援正式環境的 Secrets
 
@@ -93,7 +97,7 @@ async function handleFollowEvent(event: FollowEvent, client: messagingApi.Messag
                 image: profile.pictureUrl,
                 lineUserId: userId,
                 provider: "line-webhook", // 標註來源
-                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                createdAt: FieldValue.serverTimestamp(),
             };
 
             await newUserRef.set(userData);
@@ -104,7 +108,7 @@ async function handleFollowEvent(event: FollowEvent, client: messagingApi.Messag
                 type: "oauth",
                 provider: "line",
                 providerAccountId: userId,
-                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                createdAt: FieldValue.serverTimestamp(),
             });
 
             // 4. 回覆歡迎訊息與選單
