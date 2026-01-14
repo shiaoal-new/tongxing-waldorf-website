@@ -63,8 +63,9 @@ export default function VisitSchedule() {
         console.warn("handleFormComplete is deprecated. Use LINE OA for registration.");
     };
 
-    // LINE Official Account URL
-    const LINE_OA_URL = "https://line.me/R/ti/p/@taipeiwaldorf"; // 請替換為實際的 LINE ID (@...)
+    // LINE Official Account URL - 根據環境自動切換
+    const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID || "@443brhul"; // fallback to dev
+    const LINE_OA_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
 
     const redirectToLine = () => {
         window.open(LINE_OA_URL, "_blank");

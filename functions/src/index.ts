@@ -29,6 +29,7 @@ export const getvisitsessions = onRequest({ cors: true, region: "asia-east1" }, 
 
 // 初始化場次數據 (測試用)
 export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
+    console.log("seedvisitsessions called");
     const initialDates = [
         { date: "2024-03-15 (五)", time: "09:30 - 11:30", remaining_seats: 5, total_seats: 20, order: 1, status: "open" },
         { date: "2024-03-29 (五)", time: "09:30 - 11:30", remaining_seats: 12, total_seats: 20, order: 2, status: "open" },
@@ -37,15 +38,27 @@ export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" },
     ];
 
     try {
+        console.log("Creating batch write...");
         const batch = db.batch();
         initialDates.forEach((data) => {
             const ref = db.collection("visit_sessions").doc();
+            console.log("Adding document to batch:", ref.id);
             batch.set(ref, data);
         });
+        console.log("Committing batch...");
         await batch.commit();
-        res.status(200).json({ success: true, message: "Seeding successful" });
+        console.log("Batch committed successfully");
+        res.status(200).json({ success: true, message: "Seeding successful", count: initialDates.length });
     } catch (error: any) {
-        res.status(500).json({ error: error.message || error.toString() });
+        console.error("Error in seedvisitsessions:", error);
+        console.error("Error code:", error.code);
+        console.error("Error message:", error.message);
+        console.error("Error stack:", error.stack);
+        res.status(500).json({
+            error: error.message || error.toString(),
+            code: error.code,
+            details: error.details || "No details available"
+        });
     }
 });
 
