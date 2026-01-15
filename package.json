@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev --prefix frontend",
+    "dev:all": "node scripts/dev_runner.js",
     "build": "npm run build --prefix frontend && npm run build --prefix functions",
     "deploy": "firebase deploy",
     "install:all": "npm install --prefix frontend && npm install --prefix functions"
