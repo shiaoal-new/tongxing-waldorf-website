@@ -124,3 +124,6 @@ export { default as auth } from "./auth.js";
 
 // LINE Webhook handler
 export * from "./lineWebhook.js";
+
+// User Registrations handler
+export * from "./userRegistrations.js";

@@ -163,9 +163,7 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
     const userId = event.source.userId;
     if (!userId) return;
 
-    if (data === "action=view_registrations") {
-        return await sendUserRegistrations(event.replyToken!, userId, client);
-    } else if (data === "action=register_new") {
+    if (data === "action=register_new") {
         return await sendAvailableSessions(event.replyToken!, client);
     } else if (data.startsWith("action=reserve&sessionId=")) {
         const sessionId = data.split("sessionId=")[1];
@@ -192,7 +190,7 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
 }
 
 async function sendRegistrationMenu(replyToken: string, client: messagingApi.MessagingApiClient) {
-    return await client.replyMessage({
+    await client.replyMessage({
         replyToken,
         messages: [{
             type: "template",
@@ -202,7 +200,11 @@ async function sendRegistrationMenu(replyToken: string, client: messagingApi.Mes
                 title: "預約參訪服務",
                 text: "請選擇您要執行的動作：",
                 actions: [
-                    { type: "postback", label: "查看已登記參訪", data: "action=view_registrations" },
+                    {
+                        type: "uri",
+                        label: "查看/管理我的預約",
+                        uri: "https://tongxing-waldorf.web.app/visit?mode=manage"
+                    },
                     { type: "postback", label: "新登記參訪", data: "action=register_new" }
                 ]
             }
@@ -210,48 +212,10 @@ async function sendRegistrationMenu(replyToken: string, client: messagingApi.Mes
     });
 }
 
-async function sendUserRegistrations(replyToken: string, userId: string, client: messagingApi.MessagingApiClient) {
-    // 1. 查找使用者對應的網站 userId
-    const userQuery = await db.collection("users").where("lineUserId", "==", userId).limit(1).get();
-    if (userQuery.empty) {
-        return await client.replyMessage({
-            replyToken,
-            messages: [{ type: "text", text: "找不到您的帳號資訊，請重新加入好友試試。" }]
-        });
-    }
 
-    const websiteUserId = userQuery.docs[0].id;
 
-    // 2. 獲取報名紀錄
-    const regQuery = await db.collection("visit_registrations")
-        .where("user_id", "==", websiteUserId)
-        .where("status", "==", "confirmed")
-        .get();
+// 移除 sendUserRegistrations 函數，因為現在改為網頁查看
 
-    if (regQuery.empty) {
-        return await client.replyMessage({
-            replyToken,
-            messages: [{ type: "text", text: "您目前沒有已登記的參訪行程。" }]
-        });
-    }
-
-    // 3. 獲取場次詳細資訊
-    const regs = regQuery.docs.map(doc => doc.data());
-    let messageText = "您目前的登記參訪日期如下：\n";
-
-    for (const reg of regs) {
-        const sessionDoc = await db.collection("visit_sessions").doc(reg.session_id).get();
-        const session = sessionDoc.data();
-        if (session) {
-            messageText += `\n📅 日期：${session.date}\n⏰ 時間：${session.time}\n👤 人數：${reg.visitors}位\n`;
-        }
-    }
-
-    return await client.replyMessage({
-        replyToken,
-        messages: [{ type: "text", text: messageText }]
-    });
-}
 
 async function sendAvailableSessions(replyToken: string, client: messagingApi.MessagingApiClient) {
     const snapshot = await db.collection("visit_sessions")

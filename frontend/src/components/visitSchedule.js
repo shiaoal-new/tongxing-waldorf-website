@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Container from "./container";
-import { ClockIcon, CalendarIcon, UserGroupIcon } from "@heroicons/react/outline";
+import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./visitRegistrationForm";
 import Modal from "./modal";
 import DevComment from "./DevComment";
 import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function VisitSchedule() {
     const { data: session } = useSession();
+    const router = useRouter();
     const [dates, setDates] = useState([]);
+    const [userRegistrations, setUserRegistrations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -39,14 +42,41 @@ export default function VisitSchedule() {
         }
     };
 
+    const fetchUserRegistrations = async () => {
+        if (!session) return;
+        try {
+            const res = await fetch(`${API_BASE}/getUserRegistrations`);
+            if (res.ok) {
+                const data = await res.json();
+                setUserRegistrations(data);
+            }
+        } catch (err) {
+            console.error("Failed to fetch user registrations:", err);
+        }
+    };
+
     useEffect(() => {
         fetchSessions();
     }, []);
 
+    useEffect(() => {
+        if (session) {
+            fetchUserRegistrations();
+        }
+    }, [session]);
+
+    // Handle "manage" mode from LINE Bot
+    useEffect(() => {
+        if (router.query.mode === 'manage' && !session && !isLoading) {
+            // If user clicked "Check my visits" but is not logged in, prompt login
+            signIn('line', { callbackUrl: window.location.href });
+        }
+    }, [router.query, session, isLoading]);
+
     const openModal = (sessionObj) => {
         if (!session) {
             // Trigger LINE login if not logged in
-            signIn('line');
+            signIn('line', { callbackUrl: window.location.href });
             return;
         }
         setSelectedSession(sessionObj);
@@ -125,7 +155,7 @@ export default function VisitSchedule() {
         );
     }
 
-    if (!dates || dates.length === 0) {
+    if ((!dates || dates.length === 0) && userRegistrations.length === 0) {
         return (
             <Container limit>
                 <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -158,6 +188,43 @@ export default function VisitSchedule() {
     return (
         <Container limit>
             <div className="flex flex-col w-full mt-component">
+
+                {/* User Registrations Section */}
+                {session && userRegistrations.length > 0 && (
+                    <div className="mb-12">
+                        <div className="flex items-center mb-6">
+                            <TicketIcon className="w-6 h-6 text-brand-accent mr-3" />
+                            <h2 className="text-2xl font-bold text-brand-text tracking-brand">我的參訪登記</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {userRegistrations.map((reg) => (
+                                <div key={reg.id} className="bg-white dark:bg-brand-structural/30 rounded-xl p-6 border-l-4 border-brand-accent shadow-sm">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <p className="font-bold text-lg text-brand-text">{reg.session?.date || "未知日期"}</p>
+                                            <p className="text-brand-taupe">{reg.session?.time || "---"}</p>
+                                        </div>
+                                        <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">
+                                            已確認
+                                        </span>
+                                    </div>
+                                    <div className="text-sm text-brand-taupe border-t border-gray-100 pt-4 mt-2">
+                                        <div className="flex justify-between mb-2">
+                                            <span>登記人數</span>
+                                            <span className="font-bold">{reg.visitors} 位</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span>登記姓名</span>
+                                            <span className="font-bold">{reg.name}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="my-8 border-b border-brand-taupe/10"></div>
+                    </div>
+                )}
+
 
                 <DevComment text="Visit Schedule Mobile Cards View" />
                 {/* Mobile View: Cards */}
