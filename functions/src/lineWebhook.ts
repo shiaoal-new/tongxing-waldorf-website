@@ -26,7 +26,14 @@ export const lineWebhook = onRequest({
     region: "asia-east1",
     secrets: ["LINE_MESSAGING_CHANNEL_SECRET", "LINE_MESSAGING_CHANNEL_ACCESS_TOKEN"]
 }, async (req: any, res: any) => {
-    // 獲取設定
+    // [修正] 當在本地 Emulator 運行時，Firebase 可能會從雲端拉取 Secrets 覆蓋環境變數
+    // 這裡強制重新讀取 .env.local 並覆蓋 (override: true) 以確保使用本地開發的設定
+    if (process.env.FUNCTIONS_EMULATOR === "true") {
+        const path = await import("path");
+        const dotenv = await import("dotenv");
+        dotenv.config({ path: path.resolve(process.cwd(), ".env.local"), override: true });
+    }
+
     const config = {
         channelAccessToken: process.env.LINE_MESSAGING_CHANNEL_ACCESS_TOKEN || "",
         channelSecret: process.env.LINE_MESSAGING_CHANNEL_SECRET || "",
@@ -37,8 +44,9 @@ export const lineWebhook = onRequest({
     });
 
     // LINE Webhook 的原始 body 需要用字串驗簽
+    // 使用 req.rawBody 確保取得最原始的請求內容，避免 JSON.stringify 造成格式差異導致驗簽失敗
     const signature = req.headers["x-line-signature"] as string;
-    const bodyString = JSON.stringify(req.body);
+    const bodyString = req.rawBody ? req.rawBody.toString() : JSON.stringify(req.body);
 
     // 1. 驗證來源是否合法
     if (!validateSignature(bodyString, config.channelSecret!, signature)) {

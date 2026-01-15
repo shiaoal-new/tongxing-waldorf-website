@@ -94,7 +94,10 @@ export default function VisitSchedule() {
     };
 
     // LINE Official Account URL - 根據環境自動切換
-    const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID || "@443brhul"; // fallback to dev
+    // 我們優先使用 NEXT_PUBLIC_LINE_OA_ID (通常是正式版 @tongxing)
+    // 但如果是本地開發 (development)，我們可能希望連到測試帳號 (例如 @443brhul)
+    // 請確保 frontend/.env.local 的 NEXT_PUBLIC_LINE_OA_ID 是您的測試帳號 ID
+    const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID || "@tongxing";
     const LINE_OA_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
 
     const redirectToLine = () => {

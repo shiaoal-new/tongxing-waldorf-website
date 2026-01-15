@@ -11,7 +11,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "update-webhook": "node --loader ts-node/esm scripts/update_webhook.ts"
+    "update-webhook": "node --loader ts-node/esm scripts/update_webhook.ts",
+    "deploy-richmenu": "node --loader ts-node/esm scripts/deploy_rich_menu.ts"
   },
   "engines": {
     "node": "20"
@@ -27,7 +28,9 @@
     "preact": "10.11.3"
   },
   "devDependencies": {
+    "dotenv": "^17.2.3",
     "firebase-functions-test": "^3.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.0.0"
   },
   "private": true
