@@ -169,7 +169,8 @@ async function main() {
     // 2. Ngrok - Expose Frontend (Port 3000)
     // We expose 3000 because we want the user to visit the website.
     // Webhook requests will be proxied by Next.js rewrites.
-    const ngrokProc = startProcess('Ngrok', 'ngrok', ['http', '3000'], '.', colors.cyan);
+    // Using user provided static domain for stable LIFF development
+    const ngrokProc = startProcess('Ngrok', 'ngrok', ['http', '3000', '--domain=nomographically-bridleless-annetta.ngrok-free.dev'], '.', colors.cyan);
 
     // 3. Wait for Ngrok & Update Environment Variables
     const ngrokUrl = await waitForNgrok();

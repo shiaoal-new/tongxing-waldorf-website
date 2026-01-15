@@ -16,26 +16,19 @@ if (!getApps().length) {
 }
 const db = getFirestore();
 
-/**
- * 取得前端網站 Base URL
- * 根據環境 (Local/Dev/Prod) 回傳對應網址
- */
-function getWebBaseUrl() {
-    // 1. 本地開發 (Emulator)
-    if (process.env.FUNCTIONS_EMULATOR === "true") {
-        return process.env.WEB_BASE_URL || "http://localhost:3000";
-    }
+const LIFF_ID = "2008899796-2UCLCrmk";
+const LIFF_URL = `https://liff.line.me/${LIFF_ID}`;
 
-    // 2. 根據 Project ID 判斷環境
-    const projectId = process.env.GCLOUD_PROJECT;
-    switch (projectId) {
-        case "tongxing-waldorf-website-dev":
-            return "https://tongxing-waldorf-website-dev.web.app";
-        case "tongxing-waldorf-website":
-        default:
-            // 正式環境 (或預設)
-            return "https://tongxing-waldorf.web.app";
-    }
+/**
+ * 取得前往網站的 URL
+ * 優先使用 LIFF URL 以提供較佳體驗
+ */
+function getVisitUrl(params: string = "") {
+    // 如果有參數，需附加在 LIFF URL 後面
+    // LIFF 網址格式: https://liff.line.me/{LIFF_ID}/?param=value (注意斜線位置)
+    // 或是直接: https://liff.line.me/{LIFF_ID}?param=value
+    // LINE 建議格式: https://liff.line.me/{LIFF_ID}?key=value
+    return params ? `${LIFF_URL}?${params}` : LIFF_URL;
 }
 
 // 移除全域 config，改在函數執行時獲取，以支援正式環境的 Secrets
@@ -230,7 +223,7 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
                             {
                                 type: "uri",
                                 label: "查看/管理我的預約",
-                                uri: `${getWebBaseUrl()}/visit?mode=manage`
+                                uri: getVisitUrl("mode=manage")
                             },
                             { type: "postback", label: "新登記參訪", data: "action=register_new" }
                         ]
@@ -246,7 +239,7 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
             replyToken: event.replyToken!,
             messages: [{
                 type: "text",
-                text: `感謝您的預約意願！為了完成預約，請點擊下方連結填寫聯絡資料：\n\n${getWebBaseUrl()}/visit\n\n(系統將自動帶入您的帳號資訊)`
+                text: `感謝您的預約意願！為了完成預約，請點擊下方連結填寫聯絡資料：\n\n${getVisitUrl()}\n\n(系統將自動帶入您的帳號資訊)`
             }]
         });
     } else if (data.startsWith("action=waiting_list&sessionId=")) {
@@ -276,7 +269,7 @@ async function sendRegistrationMenu(replyToken: string, client: messagingApi.Mes
                     {
                         type: "uri",
                         label: "查看/管理我的預約",
-                        uri: `${getWebBaseUrl()}/visit?mode=manage`
+                        uri: getVisitUrl("mode=manage")
                     },
                     { type: "postback", label: "新登記參訪", data: "action=register_new" }
                 ]
@@ -336,7 +329,7 @@ async function sendAvailableSessions(replyToken: string, client: messagingApi.Me
                     action: {
                         type: "uri",
                         label: "立即預約",
-                        uri: `${getWebBaseUrl()}/visit`
+                        uri: getVisitUrl()
                     }
                 } : {
                     type: "button",

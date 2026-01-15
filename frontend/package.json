@@ -30,6 +30,7 @@
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
     "@iconify/react": "^6.0.2",
+    "@line/liff": "^2.27.3",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "firebase-admin": "^13.6.0",

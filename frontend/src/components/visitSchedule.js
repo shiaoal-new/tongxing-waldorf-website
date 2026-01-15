@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import liff from "@line/liff"; // Import LIFF SDK
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./visitRegistrationForm";
@@ -65,10 +66,34 @@ export default function VisitSchedule() {
         }
     }, [session]);
 
-    // Handle "manage" mode from LINE Bot
+    // LIFF Initialization & Auto-Login
     useEffect(() => {
+        // Initialize LIFF
+        liff.init({ liffId: "2008899796-2UCLCrmk" })
+            .then(() => {
+                console.log("LIFF initialized");
+
+                // Logic: If user is in LINE App (LIFF browser) and NOT logged in to our website (NextAuth),
+                // we automatically trigger the login process.
+                // This ensures that when they open the LIFF link, they get logged in effortlessly.
+                if (liff.isInClient() && !session && !isLoading) {
+                    console.log("Auto-login triggered by LIFF context");
+                    signIn('line', { callbackUrl: window.location.href });
+                }
+            })
+            .catch((err) => {
+                console.error("LIFF init failed", err);
+            });
+    }, [session, isLoading]);
+
+    // Handle "manage" mode from LINE Bot (Legacy/Web fallback)
+    useEffect(() => {
+        // If not in LIFF (e.g. external browser) but mode=manage is present, also trigger login
         if (router.query.mode === 'manage' && !session && !isLoading) {
-            // If user clicked "Check my visits" but is not logged in, prompt login
+            // Avoid double trigger if LIFF handles it, but safe to keep as fallback
+            // We can check !liff.isInClient() if we want to be strict, but liff init is async.
+            // Let's rely on the fact that if LIFF is initing, this might fire too.
+            // But since specific checks are good:
             signIn('line', { callbackUrl: window.location.href });
         }
     }, [router.query, session, isLoading]);
