@@ -16,6 +16,28 @@ if (!getApps().length) {
 }
 const db = getFirestore();
 
+/**
+ * 取得前端網站 Base URL
+ * 根據環境 (Local/Dev/Prod) 回傳對應網址
+ */
+function getWebBaseUrl() {
+    // 1. 本地開發 (Emulator)
+    if (process.env.FUNCTIONS_EMULATOR === "true") {
+        return "http://localhost:3000";
+    }
+
+    // 2. 根據 Project ID 判斷環境
+    const projectId = process.env.GCLOUD_PROJECT;
+    switch (projectId) {
+        case "tongxing-waldorf-website-dev":
+            return "https://tongxing-waldorf-website-dev.web.app";
+        case "tongxing-waldorf-website":
+        default:
+            // 正式環境 (或預設)
+            return "https://tongxing-waldorf.web.app";
+    }
+}
+
 // 移除全域 config，改在函數執行時獲取，以支援正式環境的 Secrets
 
 /**
@@ -173,6 +195,49 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
 
     if (data === "action=register_new") {
         return await sendAvailableSessions(event.replyToken!, client);
+    } else if (data === "action=view_registrations") {
+        const userQuery = await db.collection("users")
+            .where("lineUserId", "==", userId)
+            .limit(1)
+            .get();
+
+        let hasRegistrations = false;
+        if (!userQuery.empty) {
+            const systemUserId = userQuery.docs[0].id;
+            const regQuery = await db.collection("visit_registrations")
+                .where("user_id", "==", systemUserId)
+                .where("status", "==", "confirmed")
+                .limit(1)
+                .get();
+            if (!regQuery.empty) {
+                hasRegistrations = true;
+            }
+        }
+
+        if (!hasRegistrations) {
+            return await sendAvailableSessions(event.replyToken!, client);
+        } else {
+            return await client.replyMessage({
+                replyToken: event.replyToken!,
+                messages: [{
+                    type: "template",
+                    altText: "查看已登記參訪",
+                    template: {
+                        type: "buttons",
+                        title: "已登記參訪",
+                        text: "您已有登記的參訪紀錄，請點擊下方按鈕查看：",
+                        actions: [
+                            {
+                                type: "uri",
+                                label: "查看/管理我的預約",
+                                uri: `${getWebBaseUrl()}/visit?mode=manage`
+                            },
+                            { type: "postback", label: "新登記參訪", data: "action=register_new" }
+                        ]
+                    }
+                }]
+            });
+        }
     } else if (data.startsWith("action=reserve&sessionId=")) {
         const sessionId = data.split("sessionId=")[1];
         console.log(`User ${userId} requested reservation for session ${sessionId}`);
@@ -181,7 +246,7 @@ async function handlePostbackEvent(event: PostbackEvent, client: messagingApi.Me
             replyToken: event.replyToken!,
             messages: [{
                 type: "text",
-                text: "感謝您的預約意願！為了完成預約，請點擊下方連結填寫聯絡資料：\n\nhttps://tongxing-waldorf.web.app/visit\n\n(系統將自動帶入您的帳號資訊)"
+                text: `感謝您的預約意願！為了完成預約，請點擊下方連結填寫聯絡資料：\n\n${getWebBaseUrl()}/visit\n\n(系統將自動帶入您的帳號資訊)`
             }]
         });
     } else if (data.startsWith("action=waiting_list&sessionId=")) {
@@ -211,7 +276,7 @@ async function sendRegistrationMenu(replyToken: string, client: messagingApi.Mes
                     {
                         type: "uri",
                         label: "查看/管理我的預約",
-                        uri: "https://tongxing-waldorf.web.app/visit?mode=manage"
+                        uri: `${getWebBaseUrl()}/visit?mode=manage`
                     },
                     { type: "postback", label: "新登記參訪", data: "action=register_new" }
                 ]
@@ -271,7 +336,7 @@ async function sendAvailableSessions(replyToken: string, client: messagingApi.Me
                     action: {
                         type: "uri",
                         label: "立即預約",
-                        uri: `https://tongxing-waldorf.web.app/visit`
+                        uri: `${getWebBaseUrl()}/visit`
                     }
                 } : {
                     type: "button",

@@ -53,7 +53,16 @@ function startProcess(name, command, args, cwd = '.', color = colors.reset) {
     proc.stderr.on('data', (data) => {
         const lines = data.toString().trim().split('\n');
         lines.forEach(line => {
-            if (line) console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+            if (!line) return;
+
+            // Basic heuristic to detect warnings
+            const isWarning = line.includes('Warning') || line.includes('warning');
+
+            if (isWarning) {
+                console.log(`${colors.yellow}[${name}:WARN] ${line}${colors.reset}`);
+            } else {
+                console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+            }
         });
     });
 
