@@ -23,7 +23,7 @@ const db = getFirestore();
 function getWebBaseUrl() {
     // 1. 本地開發 (Emulator)
     if (process.env.FUNCTIONS_EMULATOR === "true") {
-        return "http://localhost:3000";
+        return process.env.WEB_BASE_URL || "http://localhost:3000";
     }
 
     // 2. 根據 Project ID 判斷環境

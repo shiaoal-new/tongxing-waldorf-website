@@ -51,7 +51,10 @@ async function main() {
         }
 
         const ngrokUrl = tunnel.public_url;
-        const webhookUrl = `${ngrokUrl}/${projectId}/${FUNCTION_REGION}/${FUNCTION_NAME}`;
+        // Since we are now tunneling Port 3000 (Next.js) and using rewrites,
+        // the webhook URL should point to the Next.js API route that proxies to the function.
+        // See frontend/next.config.js for the rewrite rule.
+        const webhookUrl = `${ngrokUrl}/api/lineWebhook`;
 
         console.log(`📍 Ngrok URL: ${ngrokUrl}`);
         console.log(`🔗 Target Webhook URL: ${webhookUrl}`);
