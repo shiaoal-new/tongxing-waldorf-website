@@ -20,11 +20,15 @@ import 'react-vertical-timeline-component/style.min.css';
 
 
 
+import { SessionProvider } from "../context/SessionContext";
+
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 

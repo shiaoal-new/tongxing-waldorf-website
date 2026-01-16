@@ -9,9 +9,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import AboutModal from "./about-modal";
 import DevComment from "./DevComment";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "../context/SessionContext";
 
 function UserMenu({ session, isMobile = false }) {
+  const { loginWithLine, logout } = useSession();
+
   if (session) {
     const userDisplay = session.user.name || session.user.email;
     return (
@@ -25,7 +27,7 @@ function UserMenu({ session, isMobile = false }) {
               <span className="text-sm font-medium text-brand-taupe truncate">{userDisplay}</span>
             </div>
             <button
-              onClick={() => signOut()}
+              onClick={() => logout()}
               className="btn btn-outline btn-sm btn-error w-full">
               登出
             </button>
@@ -61,7 +63,7 @@ function UserMenu({ session, isMobile = false }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => logout()}
                         className={`${active ? "bg-brand-accent/10 text-brand-accent" : "text-brand-text dark:text-brand-bg"
                           } group flex w-full items-center px-4 py-2 text-sm transition-colors`}
                       >
@@ -81,7 +83,7 @@ function UserMenu({ session, isMobile = false }) {
   return (
     <div className={`${isMobile ? "px-3 py-2" : "ml-3"}`}>
       <button
-        onClick={() => signIn('line')}
+        onClick={() => loginWithLine()}
         className={`btn btn-primary ${isMobile ? "w-full" : "btn-sm px-6"}`}>
         登入
       </button>
@@ -91,7 +93,7 @@ function UserMenu({ session, isMobile = false }) {
 
 
 export default function Navbar({ pages = [], navigation: customNavigation, isHeroPage = true }) {
-  const { data: session } = useSession();
+  const { session } = useSession();
   const [scroll, setScroll] = useState(!isHeroPage);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const router = useRouter();

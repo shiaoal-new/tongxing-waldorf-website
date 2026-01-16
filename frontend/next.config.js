@@ -52,7 +52,8 @@ module.exports = {
         'getUserRegistrations': 'getuserregistrations',
         'lineWebhook': 'lineWebhook',
         'lineCallback': 'lineCallback',
-        'getSession': 'getSession'
+        'getSession': 'getSession',
+        'logout': 'logout'
       };
 
       for (const [apiName, funcName] of Object.entries(functionMap)) {

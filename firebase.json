@@ -10,9 +10,23 @@
     "trailingSlash": false,
     "rewrites": [
       {
-        "source": "/api/auth/**",
+        "source": "/api/getSession",
         "function": {
-          "functionId": "auth",
+          "functionId": "getSession",
+          "region": "asia-east1"
+        }
+      },
+      {
+        "source": "/api/logout",
+        "function": {
+          "functionId": "logout",
+          "region": "asia-east1"
+        }
+      },
+      {
+        "source": "/api/lineCallback",
+        "function": {
+          "functionId": "lineCallback",
           "region": "asia-east1"
         }
       },

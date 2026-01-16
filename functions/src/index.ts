@@ -69,7 +69,7 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
         return;
     }
 
-    const { sessionId, userId, name, cellphone, visitors } = req.body;
+    const { sessionId, userId, name, cellphone, visitors, remark } = req.body;
 
     if (!sessionId || !userId || !name || !cellphone) {
         res.status(400).send('Missing required fields');
@@ -107,6 +107,7 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
                 name,
                 cellphone,
                 visitors: visitorCount,
+                remark: remark || "",
                 timestamp: new Date(),
                 status: "confirmed"
             });
@@ -130,3 +131,4 @@ export * from "./userRegistrations.js";
 export { default as lineCallback } from "./lineCallback.js";
 
 export { default as getSession } from "./getSession.js";
+export { default as logout } from "./logout.js";

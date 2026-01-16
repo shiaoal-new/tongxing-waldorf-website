@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useSession } from "../context/SessionContext";
 import liff from "@line/liff"; // Import LIFF SDK
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
@@ -10,8 +11,7 @@ import { useRouter } from "next/router";
 
 export default function VisitSchedule() {
     const router = useRouter();
-    const [session, setSession] = useState(null);
-    const [sessionLoading, setSessionLoading] = useState(true);
+    const { session, loading: sessionLoading, loginWithLine } = useSession();
     const [dates, setDates] = useState([]);
     const [userRegistrations, setUserRegistrations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -23,29 +23,6 @@ export default function VisitSchedule() {
     // API Base URL (使用相對路徑以配合 Firebase Hosting Rewrites)
     const API_BASE = "/api";
 
-    // Custom session fetching
-    const fetchSession = async () => {
-        try {
-            const res = await fetch(`${API_BASE}/getSession`, {
-                credentials: 'include' // 確保發送 cookies
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setSession(data.user ? data : null);
-            } else {
-                setSession(null);
-            }
-        } catch (err) {
-            console.error("Failed to fetch session:", err);
-            setSession(null);
-        } finally {
-            setSessionLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchSession();
-    }, []);
 
     const fetchSessions = async () => {
         setIsLoading(true);
@@ -91,9 +68,6 @@ export default function VisitSchedule() {
     }, [session]);
 
     // LIFF Initialization & Auto-Login
-    // 追蹤是否已嘗試登入（防止無限循環）
-    const loginAttempted = useRef(false);
-
     useEffect(() => {
         const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
         if (!liffId) {
@@ -106,12 +80,10 @@ export default function VisitSchedule() {
             .then(() => {
                 console.log("LIFF initialized");
 
-                // Logic: If user is in LINE App (LIFF browser) and NOT logged in to our website (NextAuth),
+                // Logic: If user is in LINE App (LIFF browser) and NOT logged in to our website,
                 // we automatically trigger the login process.
-                // This ensures that when they open the LIFF link, they get logged in effortlessly.
-                if (liff.isInClient() && !session && !sessionLoading && !loginAttempted.current) {
+                if (liff.isInClient() && !session && !sessionLoading) {
                     console.log("Auto-login triggered by LIFF context");
-                    loginAttempted.current = true;
                     loginWithLine();
                 }
             })
@@ -119,28 +91,6 @@ export default function VisitSchedule() {
                 console.error("LIFF init failed", err);
             });
     }, [session, sessionLoading]);
-    // 直接構建 LINE OAuth URL（繞過 NextAuth 的 signIn 函數）
-    const loginWithLine = () => {
-        const clientId = '2008899796';
-        const baseUrl = window.location.origin;
-        const redirectUri = encodeURIComponent(`${baseUrl}/api/lineCallback`);
-        const state = Math.random().toString(36).substring(2, 15);
-        const nonce = Math.random().toString(36).substring(2, 15);
-        // 設置 NextAuth 期望的 state cookie
-        document.cookie = `next-auth.state=${state}; path=/; samesite=lax`;
-
-
-
-        const authUrl = `https://access.line.me/oauth2/v2.1/authorize?` +
-            `response_type=code&` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `state=${state}&` +
-            `scope=profile%20openid%20email&` +
-            `nonce=${nonce}`;
-
-        window.location.href = authUrl;
-    };
 
 
 
@@ -172,8 +122,41 @@ export default function VisitSchedule() {
     };
 
     const handleFormComplete = async (data) => {
-        // Deprecated: Registration now moved to LINE OA
-        console.warn("handleFormComplete is deprecated. Use LINE OA for registration.");
+        if (!selectedSession || !session) return;
+
+        setIsSubmitting(true);
+        try {
+            const res = await fetch(`${API_BASE}/registerVisit`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    sessionId: selectedSession.id,
+                    userId: session.user.id,
+                    name: data.name,
+                    cellphone: data.cellphone,
+                    visitors: data.visitors || 1,
+                    remark: data.remark || ""
+                }),
+            });
+
+            if (res.ok) {
+                setIsOpen(false);
+                setSelectedSession(null);
+                fetchSessions();
+                fetchUserRegistrations();
+                alert("預約成功！我們已收到您的申請，將會透過 LINE 通知您後續事宜。");
+            } else {
+                const errorData = await res.json();
+                alert(`預約失敗: ${errorData.error || "未知錯誤"}`);
+            }
+        } catch (err) {
+            console.error("Failed to register visit:", err);
+            alert("系統繁忙中，請稍後再試。");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     // LINE Official Account URL - 根據環境自動切換
@@ -191,9 +174,9 @@ export default function VisitSchedule() {
         if (item.remaining_seats > 0) {
             return (
                 <button
-                    onClick={redirectToLine}
+                    onClick={() => openModal(item)}
                     className="btn btn-primary w-full sm:w-auto px-6 uppercase tracking-brand">
-                    前往 LINE 報名
+                    立即預約
                 </button>
             );
         } else {
@@ -382,9 +365,23 @@ export default function VisitSchedule() {
                         </div>
                     </div>
                 </div>
+                <Modal
+                    title={`預約參訪場次：${selectedSession?.date}`}
+                    isOpen={isOpen}
+                    onClose={closeModal}
+                >
+                    <div className="p-4">
+                        {isSubmitting ? (
+                            <div className="flex flex-col items-center justify-center py-12">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-accent mb-4"></div>
+                                <p className="text-brand-taupe">預約處理中，請稍候...</p>
+                            </div>
+                        ) : (
+                            <VisitRegistrationForm onComplete={handleFormComplete} />
+                        )}
+                    </div>
+                </Modal>
             </div>
-
-            {/* 註解：報名功能已遷移至 LINE 官方帳號 */}
         </Container>
     );
 }
