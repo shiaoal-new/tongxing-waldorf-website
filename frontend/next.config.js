@@ -43,11 +43,6 @@ module.exports = {
     // 只有在非導出模式（開發模式）才加入 API 代理，讓 npm run dev 能接到 Emulator
     if (process.env.NEXT_OUTPUT !== 'export') {
       // Map specific API endpoints to lowercase Cloud Functions
-      // Auth (keep path segments)
-      rewrites.push({
-        source: '/api/auth/:path*',
-        destination: 'http://127.0.0.1:5001/tongxing-waldorf-website-dev/asia-east1/auth/:path*',
-      });
 
       // Other API functions
       const functionMap = {
@@ -56,7 +51,8 @@ module.exports = {
         'seedVisitSessions': 'seedvisitsessions',
         'getUserRegistrations': 'getuserregistrations',
         'lineWebhook': 'lineWebhook',
-        'lineCallback': 'lineCallback'
+        'lineCallback': 'lineCallback',
+        'getSession': 'getSession'
       };
 
       for (const [apiName, funcName] of Object.entries(functionMap)) {

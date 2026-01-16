@@ -5,13 +5,13 @@ import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/r
 import VisitRegistrationForm from "./visitRegistrationForm";
 import Modal from "./modal";
 import DevComment from "./DevComment";
-import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function VisitSchedule() {
-    const { data: session } = useSession();
     const router = useRouter();
+    const [session, setSession] = useState(null);
+    const [sessionLoading, setSessionLoading] = useState(true);
     const [dates, setDates] = useState([]);
     const [userRegistrations, setUserRegistrations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +22,30 @@ export default function VisitSchedule() {
 
     // API Base URL (使用相對路徑以配合 Firebase Hosting Rewrites)
     const API_BASE = "/api";
+
+    // Custom session fetching
+    const fetchSession = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/getSession`, {
+                credentials: 'include' // 確保發送 cookies
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setSession(data.user ? data : null);
+            } else {
+                setSession(null);
+            }
+        } catch (err) {
+            console.error("Failed to fetch session:", err);
+            setSession(null);
+        } finally {
+            setSessionLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchSession();
+    }, []);
 
     const fetchSessions = async () => {
         setIsLoading(true);
@@ -85,7 +109,7 @@ export default function VisitSchedule() {
                 // Logic: If user is in LINE App (LIFF browser) and NOT logged in to our website (NextAuth),
                 // we automatically trigger the login process.
                 // This ensures that when they open the LIFF link, they get logged in effortlessly.
-                if (liff.isInClient() && !session && !isLoading && !loginAttempted.current) {
+                if (liff.isInClient() && !session && !sessionLoading && !loginAttempted.current) {
                     console.log("Auto-login triggered by LIFF context");
                     loginAttempted.current = true;
                     loginWithLine();
@@ -94,7 +118,7 @@ export default function VisitSchedule() {
             .catch((err) => {
                 console.error("LIFF init failed", err);
             });
-    }, [session, isLoading]);
+    }, [session, sessionLoading]);
     // 直接構建 LINE OAuth URL（繞過 NextAuth 的 signIn 函數）
     const loginWithLine = () => {
         const clientId = '2008899796';

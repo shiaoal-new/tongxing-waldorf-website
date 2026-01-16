@@ -119,8 +119,6 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
     }
 });
 
-// Auth.js handler
-export { default as auth } from "./auth.js";
 
 // LINE Webhook handler
 export * from "./lineWebhook.js";
@@ -131,3 +129,4 @@ export * from "./userRegistrations.js";
 // LINE OAuth Callback handler
 export { default as lineCallback } from "./lineCallback.js";
 
+export { default as getSession } from "./getSession.js";
