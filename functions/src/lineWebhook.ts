@@ -16,19 +16,10 @@ if (!getApps().length) {
 }
 const db = getFirestore();
 
-const LIFF_ID = "2008899796-2UCLCrmk";
-const LIFF_URL = `https://liff.line.me/${LIFF_ID}`;
-
-/**
- * 取得前往網站的 URL
- * 優先使用 LIFF URL 以提供較佳體驗
- */
 function getVisitUrl(params: string = "") {
-    // 如果有參數，需附加在 LIFF URL 後面
-    // LIFF 網址格式: https://liff.line.me/{LIFF_ID}/?param=value (注意斜線位置)
-    // 或是直接: https://liff.line.me/{LIFF_ID}?param=value
-    // LINE 建議格式: https://liff.line.me/{LIFF_ID}?key=value
-    return params ? `${LIFF_URL}?${params}` : LIFF_URL;
+    const liffId = process.env.LIFF_ID || "2008899796-2UCLCrmk";
+    const baseUrl = `https://liff.line.me/${liffId}`;
+    return params ? `${baseUrl}?${params}` : baseUrl;
 }
 
 // 移除全域 config，改在函數執行時獲取，以支援正式環境的 Secrets

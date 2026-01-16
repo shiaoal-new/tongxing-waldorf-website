@@ -68,8 +68,14 @@ export default function VisitSchedule() {
 
     // LIFF Initialization & Auto-Login
     useEffect(() => {
+        const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
+        if (!liffId) {
+            console.warn("LIFF ID is missing in environment variables");
+            return;
+        }
+
         // Initialize LIFF
-        liff.init({ liffId: "2008899796-2UCLCrmk" })
+        liff.init({ liffId })
             .then(() => {
                 console.log("LIFF initialized");
 
