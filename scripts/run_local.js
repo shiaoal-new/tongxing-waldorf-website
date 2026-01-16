@@ -212,13 +212,36 @@ async function main() {
 
     // 7. Seed Visit Sessions (New)
     log('System', '🌱 Seeding visit sessions...', colors.cyan);
-    setTimeout(() => {
-        http.get(`http://127.0.0.1:5001/tongxing-waldorf-website-dev/asia-east1/seedvisitsessions`, (res) => {
-            log('System', `✅ Seeding finished (Status: ${res.statusCode})`, colors.green);
-        }).on('error', (err) => {
-            log('System', `❌ Seeding failed: ${err.message}`, colors.red);
+    const seedUrl = 'http://127.0.0.1:5001/tongxing-waldorf-website-dev/asia-east1/seedvisitsessions';
+
+    // Improved retry logic for seeding
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    const seedWithRetry = () => {
+        attempts++;
+        const req = http.get(seedUrl, (res) => {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+                // Collect response body for debugging if needed
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => {
+                    log('System', `✅ Seeding finished (Status: ${res.statusCode})`, colors.green);
+                });
+            } else {
+                log('System', `⚠️ Seeding attempt ${attempts} responded with status ${res.statusCode}. Retrying...`, colors.yellow);
+                if (attempts < maxAttempts) setTimeout(seedWithRetry, 3000);
+            }
         });
-    }, 5000); // Wait a bit more for the function to be fully initialized
+
+        req.on('error', (err) => {
+            log('System', `⚠️ Seeding attempt ${attempts} failed: ${err.message}. Retrying...`, colors.yellow);
+            if (attempts < maxAttempts) setTimeout(seedWithRetry, 3000);
+        });
+    };
+
+    // Start seeding after a delay to allow Functions to initialize
+    setTimeout(seedWithRetry, 5000);
 }
 
 main().catch(err => console.error(err));

@@ -93,10 +93,12 @@ export default onRequest({
 
         console.log("[LINE Callback] Session created, redirecting...");
 
-        // 6. 設置 session cookie 並重定向
+        // 6. 設置 session cookie 並重定向 (同時設置 Secure 和 Non-Secure 以確保兼容)
         res.setHeader("Set-Cookie", [
             `next-auth.session-token=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Expires=${expiresAt.toUTCString()}`,
+            `__Secure-next-auth.session-token=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Secure; Expires=${expiresAt.toUTCString()}`
         ]);
+
 
         const redirectUrl = process.env.WEB_BASE_URL || req.headers.origin;
         res.redirect(`${redirectUrl}/visit`);
