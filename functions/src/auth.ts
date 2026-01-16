@@ -50,9 +50,13 @@ export const authOptions: any = {
 };
 
 // 確保環境變數在最外層生效
-if (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost")) {
+// 確保環境變數在最外層生效
+// 如果是在 Emulator 運行且有設定 WEB_BASE_URL (例如 Ngrok)，則優先使用之
+if (process.env.FUNCTIONS_EMULATOR === "true" && process.env.WEB_BASE_URL) {
+    process.env.NEXTAUTH_URL = `${process.env.WEB_BASE_URL}/api/auth`;
+} else if (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost")) {
     // 優先檢查 Firebase 環境，如果是部署環境則自動設定
-    const projectId = process.env.GCLOUD_PROJECT || process.env.FIREBASE_CONFIG ? JSON.parse(process.env.FIREBASE_CONFIG!).projectId : "tongxing-waldorf-website-dev";
+    const projectId = process.env.GCLOUD_PROJECT || (process.env.FIREBASE_CONFIG ? JSON.parse(process.env.FIREBASE_CONFIG!).projectId : "tongxing-waldorf-website-dev");
     process.env.NEXTAUTH_URL = `https://${projectId}.web.app/api/auth`;
 }
 

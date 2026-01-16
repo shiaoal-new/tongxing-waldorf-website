@@ -124,38 +124,62 @@ function waitForNgrok() {
 // 4. Update .env.local
 // 4. Update .env.local (Functions & Frontend)
 function updateEnvFile(url) {
+    const sharedEnvPath = path.join(__dirname, '../.env.shared');
+    let sharedVars = {};
+
+    if (fs.existsSync(sharedEnvPath)) {
+        const sharedContent = fs.readFileSync(sharedEnvPath, 'utf8');
+        sharedContent.split('\n').forEach(line => {
+            const [key, value] = line.split('=');
+            if (key && value) sharedVars[key.trim()] = value.trim();
+        });
+    }
+
     const filesToUpdate = [
-        path.join(__dirname, '../functions/.env.local'),
-        path.join(__dirname, '../frontend/.env.local')
+        { path: path.join(__dirname, '../functions/.env.local'), isFrontend: false },
+        { path: path.join(__dirname, '../frontend/.env.local'), isFrontend: true }
     ];
 
-    filesToUpdate.forEach(envPath => {
+    filesToUpdate.forEach(({ path: envPath, isFrontend }) => {
         log('System', `📝 Updating ${envPath}...`, colors.cyan);
         let content = '';
         if (fs.existsSync(envPath)) {
             content = fs.readFileSync(envPath, 'utf8');
         }
 
-        // Replace or Append WEB_BASE_URL
-        const regex = /^WEB_BASE_URL=.*$/m;
-        if (regex.test(content)) {
-            content = content.replace(regex, `WEB_BASE_URL=${url}`);
-        } else {
-            content += `\nWEB_BASE_URL=${url}`;
+        // Helper to update or append variable
+        const updateVar = (key, val) => {
+            const regex = new RegExp(`^${key}=.*$`, 'm');
+            if (regex.test(content)) {
+                content = content.replace(regex, `${key}=${val}`);
+            } else {
+                content += `\n${key}=${val}`;
+            }
+        };
+
+        // 1. Sync Shared Vars
+        Object.entries(sharedVars).forEach(([key, val]) => {
+            updateVar(key, val);
+            // Frontend might need NEXT_PUBLIC_ for some vars
+            if (isFrontend && !key.startsWith('NEXT_PUBLIC_') && key !== 'LINE_CLIENT_ID') {
+                // For now, let's keep it simple. If we need more specific prefixes, we'll add them.
+                // LIFF_ID usually needs NEXT_PUBLIC_ in frontend
+                if (key === 'LIFF_ID') updateVar('NEXT_PUBLIC_LIFF_ID', val);
+            }
+        });
+
+        // 2. Sync Web Base URL (from Ngrok)
+        updateVar('WEB_BASE_URL', url);
+        updateVar('NEXTAUTH_URL', `${url}/api/auth`);
+
+        if (isFrontend) {
+            updateVar('NEXT_PUBLIC_WEB_BASE_URL', url);
         }
 
-        // For frontend, also set NEXT_PUBLIC_WEB_BASE_URL just in case
-        const regex2 = /^NEXT_PUBLIC_WEB_BASE_URL=.*$/m;
-        if (regex2.test(content)) {
-            content = content.replace(regex2, `NEXT_PUBLIC_WEB_BASE_URL=${url}`);
-        } else {
-            content += `\nNEXT_PUBLIC_WEB_BASE_URL=${url}`;
-        }
-
-        fs.writeFileSync(envPath, content);
+        fs.writeFileSync(envPath, content.trim() + '\n');
     });
 
-    log('System', '✅ Environment variables updated!', colors.green);
+    log('System', '✅ Environment variables synchronized!', colors.green);
 }
 
 async function main() {
