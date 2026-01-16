@@ -38,3 +38,5 @@ functions/firebase-debug.log
 firestore-debug.log
 firebase-debug.log
 functions/.env
+.agent/
+.shared/
