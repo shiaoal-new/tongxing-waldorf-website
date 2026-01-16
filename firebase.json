@@ -59,6 +59,13 @@
         }
       },
       {
+        "source": "/api/cancelRegistration",
+        "function": {
+          "functionId": "cancelregistration",
+          "region": "asia-east1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

@@ -5,14 +5,6 @@
             "elements": [
                 {
                     "type": "text",
-                    "name": "name",
-                    "title": "姓名",
-                    "titleLocation": "hidden",
-                    "isRequired": true,
-                    "placeholder": "姓名"
-                },
-                {
-                    "type": "text",
                     "name": "cellphone",
                     "title": "手機號碼",
                     "titleLocation": "hidden",
@@ -30,6 +22,12 @@
                     "min": 1,
                     "max": 5,
                     "labelCount": 5
+                },
+                {
+                    "type": "comment",
+                    "name": "remark",
+                    "title": "備註 (選填)",
+                    "placeholder": "若有特殊需求或想詢問的事項，歡迎在此留言..."
                 }
             ]
         }

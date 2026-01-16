@@ -16,9 +16,13 @@ export default function VisitSchedule() {
     const [userRegistrations, setUserRegistrations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
     const [selectedSession, setSelectedSession] = useState(null);
+    const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+    const [selectedRegistration, setSelectedRegistration] = useState(null);
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+    const [cancelReason, setCancelReason] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isCancelling, setIsCancelling] = useState(false);
 
     // API Base URL (使用相對路徑以配合 Firebase Hosting Rewrites)
     const API_BASE = "/api";
@@ -113,11 +117,11 @@ export default function VisitSchedule() {
             return;
         }
         setSelectedSession(sessionObj);
-        setIsOpen(true);
+        setIsRegistrationModalOpen(true);
     };
 
     const closeModal = () => {
-        setIsOpen(false);
+        setIsRegistrationModalOpen(false);
         setTimeout(() => setSelectedSession(null), 300);
     };
 
@@ -142,14 +146,22 @@ export default function VisitSchedule() {
             });
 
             if (res.ok) {
-                setIsOpen(false);
+                setIsRegistrationModalOpen(false);
                 setSelectedSession(null);
                 fetchSessions();
                 fetchUserRegistrations();
                 alert("預約成功！我們已收到您的申請，將會透過 LINE 通知您後續事宜。");
             } else {
                 const errorData = await res.json();
-                alert(`預約失敗: ${errorData.error || "未知錯誤"}`);
+                let errMsg = "未知錯誤";
+                if (errorData.error === "ALREADY_REGISTERED") {
+                    errMsg = "您已經預約過這個場次囉！請查看「我的參訪登記」。";
+                } else if (errorData.error === "QUOTA_EXCEEDED") {
+                    errMsg = "抱歉，該場次名額已滿。";
+                } else {
+                    errMsg = errorData.error || "未知錯誤";
+                }
+                alert(`預約失敗: ${errMsg}`);
             }
         } catch (err) {
             console.error("Failed to register visit:", err);
@@ -158,6 +170,57 @@ export default function VisitSchedule() {
             setIsSubmitting(false);
         }
     };
+
+    const handleCancelRegistration = async () => {
+        if (!selectedRegistration || !cancelReason) {
+            alert("請選擇取消原因");
+            return;
+        }
+
+        setIsCancelling(true);
+        try {
+            const res = await fetch(`${API_BASE}/cancelRegistration`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    registrationId: selectedRegistration.id,
+                    reason: cancelReason
+                }),
+            });
+
+            if (res.ok) {
+                setIsCancelModalOpen(false);
+                setSelectedRegistration(null);
+                setCancelReason("");
+                fetchSessions();
+                fetchUserRegistrations();
+                alert("預約已取消成功。");
+            } else {
+                const errorData = await res.json();
+                alert(`取消失敗: ${errorData.error || "未知錯誤"}`);
+            }
+        } catch (err) {
+            console.error("Failed to cancel registration:", err);
+            alert("系統繁忙中，請稍後再試。");
+        } finally {
+            setIsCancelling(false);
+        }
+    };
+
+    const openCancelModal = (reg) => {
+        setSelectedRegistration(reg);
+        setIsCancelModalOpen(true);
+    };
+
+    const cancelReasons = [
+        "時間突然不方便",
+        "行程衝突",
+        "已有其他安排",
+        "生病或身體不適",
+        "其他原因"
+    ];
 
     // LINE Official Account URL - 根據環境自動切換
     // 我們優先使用 NEXT_PUBLIC_LINE_OA_ID (通常是正式版 @tongxing)
@@ -171,6 +234,18 @@ export default function VisitSchedule() {
     };
 
     const renderButton = (item) => {
+        const isRegistered = userRegistrations.some(reg => reg.session_id === item.id);
+
+        if (isRegistered) {
+            return (
+                <button
+                    disabled
+                    className="btn btn-disabled w-full sm:w-auto px-6">
+                    已預約
+                </button>
+            );
+        }
+
         if (item.remaining_seats > 0) {
             return (
                 <button
@@ -282,10 +357,16 @@ export default function VisitSchedule() {
                                             <span>登記人數</span>
                                             <span className="font-bold">{reg.visitors} 位</span>
                                         </div>
-                                        <div className="flex justify-between">
+                                        <div className="flex justify-between mb-4">
                                             <span>登記姓名</span>
                                             <span className="font-bold">{reg.name}</span>
                                         </div>
+                                        <button
+                                            onClick={() => openCancelModal(reg)}
+                                            className="btn btn-ghost btn-sm w-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 border border-red-200 hover:border-red-300 rounded-full"
+                                        >
+                                            取消預約
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -367,7 +448,7 @@ export default function VisitSchedule() {
                 </div>
                 <Modal
                     title={`預約參訪場次：${selectedSession?.date}`}
-                    isOpen={isOpen}
+                    isOpen={isRegistrationModalOpen}
                     onClose={closeModal}
                 >
                     <div className="p-4">
@@ -379,6 +460,65 @@ export default function VisitSchedule() {
                         ) : (
                             <VisitRegistrationForm onComplete={handleFormComplete} />
                         )}
+                    </div>
+                </Modal>
+
+                <Modal
+                    title="取消預約"
+                    isOpen={isCancelModalOpen}
+                    onClose={() => setIsCancelModalOpen(false)}
+                    maxWidth="max-w-md"
+                >
+                    <div className="p-6">
+                        <div className="mb-6">
+                            <h4 className="text-lg font-bold text-brand-text mb-2">
+                                場次：{selectedRegistration?.session?.date}
+                            </h4>
+                            <p className="text-sm text-brand-taupe leading-relaxed">
+                                您確定要取消這次的參訪嗎？取消後名額將會釋出。
+                            </p>
+                        </div>
+
+                        <div className="space-y-3 mb-8">
+                            <p className="text-sm font-bold text-brand-text">請選擇取消原因：</p>
+                            {cancelReasons.map((reason) => (
+                                <label key={reason} className="flex items-center space-x-3 p-3 rounded-xl border border-brand-taupe/10 hover:bg-brand-accent/5 cursor-pointer transition-colors">
+                                    <input
+                                        type="radio"
+                                        name="cancelReason"
+                                        value={reason}
+                                        checked={cancelReason === reason}
+                                        onChange={(e) => setCancelReason(e.target.value)}
+                                        className="radio radio-primary radio-sm"
+                                    />
+                                    <span className="text-brand-text text-sm">{reason}</span>
+                                </label>
+                            ))}
+                            {cancelReason === "其他原因" && (
+                                <textarea
+                                    className="textarea textarea-bordered w-full mt-2 text-sm"
+                                    placeholder="請輸入原因..."
+                                    rows={2}
+                                    onChange={(e) => setCancelReason(`其他：${e.target.value}`)}
+                                />
+                            )}
+                        </div>
+
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => setIsCancelModalOpen(false)}
+                                className="btn btn-ghost flex-1 rounded-full"
+                            >
+                                我再想想
+                            </button>
+                            <button
+                                onClick={handleCancelRegistration}
+                                disabled={isCancelling || !cancelReason}
+                                className={`btn btn-error flex-1 rounded-full text-white ${isCancelling ? 'loading' : ''}`}
+                            >
+                                {isCancelling ? '處理中...' : '確認取消'}
+                            </button>
+                        </div>
                     </div>
                 </Modal>
             </div>

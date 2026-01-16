@@ -206,9 +206,20 @@ async function main() {
     // 5. Frontend - Start this LAST so it picks up the updated .env.local
     startProcess('Frontend', 'npm', ['run', 'dev', '--prefix', 'frontend'], '.', colors.blue);
 
+    // Wait for Frontend to be ready
+    await waitForPort(3000);
+
     // 6. Update Webhook
     log('System', '🔄 Updating LINE Webhook...', colors.green);
     startProcess('Webhook', 'npm', ['run', 'update-webhook', '--prefix', 'functions'], '.', colors.green);
+
+    // Say ready
+    try {
+        execSync('say ready');
+        log('System', '🔊 System is ready!', colors.green);
+    } catch (e) {
+        // Fallback if say command fails
+    }
 
     // 7. Seed Visit Sessions (New)
     log('System', '🌱 Seeding visit sessions...', colors.cyan);

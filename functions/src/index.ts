@@ -65,14 +65,14 @@ export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" },
 // 提交預約報名
 export const registervisit = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
     if (req.method !== 'POST') {
-        res.status(405).send('Method Not Allowed');
+        res.status(405).json({ error: 'Method Not Allowed' });
         return;
     }
 
     const { sessionId, userId, name, cellphone, visitors, remark } = req.body;
 
     if (!sessionId || !userId || !name || !cellphone) {
-        res.status(400).send('Missing required fields');
+        res.status(400).json({ error: 'Missing required fields' });
         return;
     }
 
@@ -92,6 +92,18 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
 
             if (remainingSeats < visitorCount) {
                 throw new Error("QUOTA_EXCEEDED");
+            }
+
+            // 檢查是否已經預約過且狀態為已確認
+            const existingRegQuery = db.collection("visit_registrations")
+                .where("session_id", "==", sessionId)
+                .where("user_id", "==", userId)
+                .where("status", "==", "confirmed")
+                .limit(1);
+
+            const existingRegs = await transaction.get(existingRegQuery);
+            if (!existingRegs.empty) {
+                throw new Error("ALREADY_REGISTERED");
             }
 
             // 更新名額

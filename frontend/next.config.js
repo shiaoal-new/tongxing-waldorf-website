@@ -50,6 +50,7 @@ module.exports = {
         'registerVisit': 'registervisit',
         'seedVisitSessions': 'seedvisitsessions',
         'getUserRegistrations': 'getuserregistrations',
+        'cancelRegistration': 'cancelregistration',
         'lineWebhook': 'lineWebhook',
         'lineCallback': 'lineCallback',
         'getSession': 'getSession',
