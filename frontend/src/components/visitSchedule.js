@@ -98,6 +98,50 @@ export default function VisitSchedule() {
 
 
 
+    // Format helpers
+    const formatSessionDate = (sessionDate) => {
+        if (!sessionDate) return "未知日期";
+        // If it's a Firestore Timestamp from JSON
+        let d;
+        if (sessionDate && typeof sessionDate === 'object' && sessionDate._seconds) {
+            d = new Date(sessionDate._seconds * 1000);
+        } else {
+            d = new Date(sessionDate);
+        }
+
+        if (isNaN(d.getTime())) return "日期格式錯誤";
+
+        const days = ["日", "一", "二", "三", "四", "五", "六"];
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const dayOfWeek = days[d.getDay()];
+
+        return `${year}-${month}-${day} (${dayOfWeek})`;
+    };
+
+    const formatSessionTime = (startTime, duration) => {
+        if (!startTime) return "---";
+        if (!duration) return startTime;
+
+        // Parse start time (HH:mm)
+        const parts = startTime.split(':');
+        if (parts.length !== 2) return startTime;
+
+        const hours = parseInt(parts[0], 10);
+        const minutes = parseInt(parts[1], 10);
+
+        const startDate = new Date();
+        startDate.setHours(hours, minutes, 0);
+
+        // Add duration (minutes)
+        const endDate = new Date(startDate.getTime() + duration * 60000);
+        const endHours = String(endDate.getHours()).padStart(2, '0');
+        const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+
+        return `${startTime} - ${endHours}:${endMinutes}`;
+    };
+
     // Handle "manage" mode from LINE Bot (Legacy/Web fallback)
     useEffect(() => {
         // If not in LIFF (e.g. external browser) but mode=manage is present, also trigger login
@@ -345,8 +389,8 @@ export default function VisitSchedule() {
                                 <div key={reg.id} className="bg-white dark:bg-brand-structural/30 rounded-xl p-6 border-l-4 border-brand-accent shadow-sm">
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <p className="font-bold text-lg text-brand-text">{reg.session?.date || "未知日期"}</p>
-                                            <p className="text-brand-taupe">{reg.session?.time || "---"}</p>
+                                            <p className="font-bold text-lg text-brand-text">{formatSessionDate(reg.session?.date)}</p>
+                                            <p className="text-brand-taupe">{formatSessionTime(reg.session?.start_time, reg.session?.duration)}</p>
                                         </div>
                                         <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">
                                             已確認
@@ -385,7 +429,7 @@ export default function VisitSchedule() {
                             <div className="flex justify-between items-start mb-component">
                                 <div className="flex items-center text-lg font-bold text-brand-text dark:text-brand-bg leading-brand tracking-brand">
                                     <CalendarIcon className="w-5 h-5 mr-2 text-brand-accent" />
-                                    {item.date}
+                                    {formatSessionDate(item.date)}
                                 </div>
                                 <span className={`px-2 py-1 text-[10px] font-bold rounded-full ${item.remaining_seats > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
                                     {item.remaining_seats > 0 ? "報名中" : "已額滿"}
@@ -395,7 +439,7 @@ export default function VisitSchedule() {
                             <div className="space-y-3 mb-component">
                                 <div className="flex items-center text-brand-taupe">
                                     <ClockIcon className="w-5 h-5 mr-2" />
-                                    {item.time}
+                                    {formatSessionTime(item.start_time, item.duration)}
                                 </div>
                                 <div className="flex items-center text-brand-taupe">
                                     <UserGroupIcon className="w-5 h-5 mr-2" />
@@ -428,8 +472,8 @@ export default function VisitSchedule() {
                                 <tbody>
                                     {dates.map((item) => (
                                         <tr key={item.id} className="border-b border-brand-taupe/10 dark:hover:bg-brand-structural/40 transition-colors">
-                                            <td className="whitespace-nowrap px-6 py-4 font-bold">{item.date}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">{item.time}</td>
+                                            <td className="whitespace-nowrap px-6 py-4 font-bold">{formatSessionDate(item.date)}</td>
+                                            <td className="whitespace-nowrap px-6 py-4">{formatSessionTime(item.start_time, item.duration)}</td>
                                             <td className="whitespace-nowrap px-6 py-4">
                                                 <span className={`${item.remaining_seats > 0 ? "text-green-600 font-bold" : "text-red-500"}`}>
                                                     {item.remaining_seats}
@@ -447,7 +491,7 @@ export default function VisitSchedule() {
                     </div>
                 </div>
                 <Modal
-                    title={`預約參訪場次：${selectedSession?.date}`}
+                    title={`預約參訪場次：${formatSessionDate(selectedSession?.date)}`}
                     isOpen={isRegistrationModalOpen}
                     onClose={closeModal}
                 >
@@ -472,7 +516,7 @@ export default function VisitSchedule() {
                     <div className="p-6">
                         <div className="mb-6">
                             <h4 className="text-lg font-bold text-brand-text mb-2">
-                                場次：{selectedRegistration?.session?.date}
+                                場次：{formatSessionDate(selectedRegistration?.session?.date)}
                             </h4>
                             <p className="text-sm text-brand-taupe leading-relaxed">
                                 您確定要取消這次的參訪嗎？取消後名額將會釋出。

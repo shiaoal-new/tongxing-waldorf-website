@@ -13,6 +13,7 @@ export const getvisitsessions = onRequest({ cors: true, region: "asia-east1" }, 
     try {
         const snapshot = await db.collection("visit_sessions")
             .where("status", "==", "open")
+            .orderBy("date", "asc")
             .orderBy("order", "asc")
             .get();
 
@@ -31,10 +32,10 @@ export const getvisitsessions = onRequest({ cors: true, region: "asia-east1" }, 
 export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
     console.log("seedvisitsessions called");
     const initialDates = [
-        { date: "2024-03-15 (五)", time: "09:30 - 11:30", remaining_seats: 5, total_seats: 20, order: 1, status: "open" },
-        { date: "2024-03-29 (五)", time: "09:30 - 11:30", remaining_seats: 12, total_seats: 20, order: 2, status: "open" },
-        { date: "2024-04-12 (五)", time: "09:30 - 11:30", remaining_seats: 0, total_seats: 20, order: 3, status: "open" },
-        { date: "2024-04-26 (五)", time: "09:30 - 11:30", remaining_seats: 8, total_seats: 20, order: 4, status: "open" }
+        { date: new Date("2024-03-15"), start_time: "09:30", duration: 120, remaining_seats: 5, total_seats: 20, order: 1, status: "open" },
+        { date: new Date("2024-03-29"), start_time: "09:30", duration: 120, remaining_seats: 12, total_seats: 20, order: 2, status: "open" },
+        { date: new Date("2024-04-12"), start_time: "09:30", duration: 120, remaining_seats: 0, total_seats: 20, order: 3, status: "open" },
+        { date: new Date("2024-04-26"), start_time: "09:30", duration: 120, remaining_seats: 8, total_seats: 20, order: 4, status: "open" }
     ];
 
     try {
