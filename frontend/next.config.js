@@ -55,7 +55,8 @@ module.exports = {
         'registerVisit': 'registervisit',
         'seedVisitSessions': 'seedvisitsessions',
         'getUserRegistrations': 'getuserregistrations',
-        'lineWebhook': 'lineWebhook'
+        'lineWebhook': 'lineWebhook',
+        'lineCallback': 'lineCallback'
       };
 
       for (const [apiName, funcName] of Object.entries(functionMap)) {

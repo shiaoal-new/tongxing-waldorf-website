@@ -127,3 +127,7 @@ export * from "./lineWebhook.js";
 
 // User Registrations handler
 export * from "./userRegistrations.js";
+
+// LINE OAuth Callback handler
+export { default as lineCallback } from "./lineCallback.js";
+

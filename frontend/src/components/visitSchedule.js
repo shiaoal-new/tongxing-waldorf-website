@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import liff from "@line/liff"; // Import LIFF SDK
 import Container from "./container";
 import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
@@ -67,6 +67,9 @@ export default function VisitSchedule() {
     }, [session]);
 
     // LIFF Initialization & Auto-Login
+    // 追蹤是否已嘗試登入（防止無限循環）
+    const loginAttempted = useRef(false);
+
     useEffect(() => {
         const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
         if (!liffId) {
@@ -82,15 +85,40 @@ export default function VisitSchedule() {
                 // Logic: If user is in LINE App (LIFF browser) and NOT logged in to our website (NextAuth),
                 // we automatically trigger the login process.
                 // This ensures that when they open the LIFF link, they get logged in effortlessly.
-                if (liff.isInClient() && !session && !isLoading) {
+                if (liff.isInClient() && !session && !isLoading && !loginAttempted.current) {
                     console.log("Auto-login triggered by LIFF context");
-                    signIn('line', { callbackUrl: window.location.href });
+                    loginAttempted.current = true;
+                    loginWithLine();
                 }
             })
             .catch((err) => {
                 console.error("LIFF init failed", err);
             });
     }, [session, isLoading]);
+    // 直接構建 LINE OAuth URL（繞過 NextAuth 的 signIn 函數）
+    const loginWithLine = () => {
+        const clientId = '2008899796';
+        const baseUrl = window.location.origin;
+        const redirectUri = encodeURIComponent(`${baseUrl}/api/lineCallback`);
+        const state = Math.random().toString(36).substring(2, 15);
+        const nonce = Math.random().toString(36).substring(2, 15);
+        // 設置 NextAuth 期望的 state cookie
+        document.cookie = `next-auth.state=${state}; path=/; samesite=lax`;
+
+
+
+        const authUrl = `https://access.line.me/oauth2/v2.1/authorize?` +
+            `response_type=code&` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${redirectUri}&` +
+            `state=${state}&` +
+            `scope=profile%20openid%20email&` +
+            `nonce=${nonce}`;
+
+        window.location.href = authUrl;
+    };
+
+
 
     // Handle "manage" mode from LINE Bot (Legacy/Web fallback)
     useEffect(() => {
@@ -100,14 +128,14 @@ export default function VisitSchedule() {
             // We can check !liff.isInClient() if we want to be strict, but liff init is async.
             // Let's rely on the fact that if LIFF is initing, this might fire too.
             // But since specific checks are good:
-            signIn('line', { callbackUrl: window.location.href });
+            loginWithLine();
         }
     }, [router.query, session, isLoading]);
 
     const openModal = (sessionObj) => {
         if (!session) {
             // Trigger LINE login if not logged in
-            signIn('line', { callbackUrl: window.location.href });
+            loginWithLine();
             return;
         }
         setSelectedSession(sessionObj);

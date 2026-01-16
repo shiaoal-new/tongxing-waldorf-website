@@ -208,11 +208,17 @@ async function main() {
 
     // 6. Update Webhook
     log('System', '🔄 Updating LINE Webhook...', colors.green);
-    // Since we are running from root, updating webhook script path relative to root
-    // functions/scripts/update_webhook.ts requires to be run essentially inside functions context for ts-node loading usually
-    // but using --prefix functions handles the npm context.
     startProcess('Webhook', 'npm', ['run', 'update-webhook', '--prefix', 'functions'], '.', colors.green);
 
+    // 7. Seed Visit Sessions (New)
+    log('System', '🌱 Seeding visit sessions...', colors.cyan);
+    setTimeout(() => {
+        http.get(`http://127.0.0.1:5001/tongxing-waldorf-website-dev/asia-east1/seedvisitsessions`, (res) => {
+            log('System', `✅ Seeding finished (Status: ${res.statusCode})`, colors.green);
+        }).on('error', (err) => {
+            log('System', `❌ Seeding failed: ${err.message}`, colors.red);
+        });
+    }, 5000); // Wait a bit more for the function to be fully initialized
 }
 
 main().catch(err => console.error(err));
