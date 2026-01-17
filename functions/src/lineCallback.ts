@@ -1,7 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { getFirestore, FieldValue, Timestamp } from "firebase-admin/firestore";
-
-const db = getFirestore();
+import { db, FieldValue, Timestamp } from "./utils/firebase";
 
 export default onRequest({
     cors: true,

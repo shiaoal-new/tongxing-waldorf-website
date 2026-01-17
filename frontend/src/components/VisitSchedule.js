@@ -8,6 +8,9 @@ import Modal from "./Modal";
 import DevComment from "./DevComment";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { formatSessionDate, formatSessionTime } from "../lib/formatters";
+
+import { visitApi } from "../api/visit";
 
 // Modularized Components
 import RegistrationCard from "./VisitSchedule/RegistrationCard";
@@ -30,21 +33,11 @@ export default function VisitSchedule() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isCancelling, setIsCancelling] = useState(false);
 
-    // API Base URL (使用相對路徑以配合 Firebase Hosting Rewrites)
-    const API_BASE = "/api";
-
-
     const fetchSessions = async () => {
         setIsLoading(true);
         setError(null);
         try {
-            const res = await fetch(`${API_BASE}/getVisitSessions`);
-            const data = await res.json().catch(() => null);
-
-            if (!res.ok) {
-                throw new Error(data?.error || "無法獲取場次資訊");
-            }
-
+            const data = await visitApi.getSessions();
             if (data) setDates(data);
         } catch (err) {
             console.error("Failed to fetch sessions:", err);
@@ -57,11 +50,8 @@ export default function VisitSchedule() {
     const fetchUserRegistrations = async () => {
         if (!session) return;
         try {
-            const res = await fetch(`${API_BASE}/getUserRegistrations`);
-            if (res.ok) {
-                const data = await res.json();
-                setUserRegistrations(data);
-            }
+            const data = await visitApi.getUserRegistrations();
+            setUserRegistrations(data);
         } catch (err) {
             console.error("Failed to fetch user registrations:", err);
         }
@@ -104,49 +94,7 @@ export default function VisitSchedule() {
 
 
 
-    // Format helpers
-    const formatSessionDate = (sessionDate) => {
-        if (!sessionDate) return "未知日期";
-        // If it's a Firestore Timestamp from JSON
-        let d;
-        if (sessionDate && typeof sessionDate === 'object' && sessionDate._seconds) {
-            d = new Date(sessionDate._seconds * 1000);
-        } else {
-            d = new Date(sessionDate);
-        }
-
-        if (isNaN(d.getTime())) return "日期格式錯誤";
-
-        const days = ["日", "一", "二", "三", "四", "五", "六"];
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        const dayOfWeek = days[d.getDay()];
-
-        return `${year}-${month}-${day} (${dayOfWeek})`;
-    };
-
-    const formatSessionTime = (startTime, duration) => {
-        if (!startTime) return "---";
-        if (!duration) return startTime;
-
-        // Parse start time (HH:mm)
-        const parts = startTime.split(':');
-        if (parts.length !== 2) return startTime;
-
-        const hours = parseInt(parts[0], 10);
-        const minutes = parseInt(parts[1], 10);
-
-        const startDate = new Date();
-        startDate.setHours(hours, minutes, 0);
-
-        // Add duration (minutes)
-        const endDate = new Date(startDate.getTime() + duration * 60000);
-        const endHours = String(endDate.getHours()).padStart(2, '0');
-        const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
-
-        return `${startTime} - ${endHours}:${endMinutes}`;
-    };
+    // Formatters are now imported from ../lib/formatters
 
     // Handle "manage" mode from LINE Bot (Legacy/Web fallback)
     useEffect(() => {
@@ -176,42 +124,27 @@ export default function VisitSchedule() {
 
         setIsSubmitting(true);
         try {
-            const res = await fetch(`${API_BASE}/registerVisit`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    sessionId: selectedSession.id,
-                    userId: session.user.id,
-                    name: data.name,
-                    cellphone: data.cellphone,
-                    visitors: data.visitors || 1,
-                    remark: data.remark || ""
-                }),
+            await visitApi.register(selectedSession.id, session.user.id, {
+                name: data.name,
+                cellphone: data.cellphone,
+                visitors: data.visitors || 1,
+                remark: data.remark || ""
             });
 
-            if (res.ok) {
-                setIsRegistrationModalOpen(false);
-                setSelectedSession(null);
-                fetchSessions();
-                fetchUserRegistrations();
-                alert("預約成功！我們已收到您的申請，將會透過 LINE 通知您後續事宜。");
-            } else {
-                const errorData = await res.json();
-                let errMsg = "未知錯誤";
-                if (errorData.error === "ALREADY_REGISTERED") {
-                    errMsg = "您已經預約過這個場次囉！請查看「我的參訪登記」。";
-                } else if (errorData.error === "QUOTA_EXCEEDED") {
-                    errMsg = "抱歉，該場次名額已滿。";
-                } else {
-                    errMsg = errorData.error || "未知錯誤";
-                }
-                alert(`預約失敗: ${errMsg}`);
-            }
+            setIsRegistrationModalOpen(false);
+            setSelectedSession(null);
+            fetchSessions();
+            fetchUserRegistrations();
+            alert("預約成功！我們已收到您的申請，將會透過 LINE 通知您後續事宜。");
         } catch (err) {
             console.error("Failed to register visit:", err);
-            alert("系統繁忙中，請稍後再試。");
+            let errMsg = err.message;
+            if (errMsg === "ALREADY_REGISTERED") {
+                errMsg = "您已經預約過這個場次囉！請查看「我的參訪登記」。";
+            } else if (errMsg === "QUOTA_EXCEEDED") {
+                errMsg = "抱歉，該場次名額已滿。";
+            }
+            alert(`預約失敗: ${errMsg}`);
         } finally {
             setIsSubmitting(false);
         }
@@ -225,31 +158,17 @@ export default function VisitSchedule() {
 
         setIsCancelling(true);
         try {
-            const res = await fetch(`${API_BASE}/cancelRegistration`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    registrationId: selectedRegistration.id,
-                    reason: cancelReason
-                }),
-            });
+            await visitApi.cancelRegistration(selectedRegistration.id, cancelReason);
 
-            if (res.ok) {
-                setIsCancelModalOpen(false);
-                setSelectedRegistration(null);
-                setCancelReason("");
-                fetchSessions();
-                fetchUserRegistrations();
-                alert("預約已取消成功。");
-            } else {
-                const errorData = await res.json();
-                alert(`取消失敗: ${errorData.error || "未知錯誤"}`);
-            }
+            setIsCancelModalOpen(false);
+            setSelectedRegistration(null);
+            setCancelReason("");
+            fetchSessions();
+            fetchUserRegistrations();
+            alert("預約已取消成功。");
         } catch (err) {
             console.error("Failed to cancel registration:", err);
-            alert("系統繁忙中，請稍後再試。");
+            alert(`取消失敗: ${err.message}`);
         } finally {
             setIsCancelling(false);
         }
@@ -268,7 +187,7 @@ export default function VisitSchedule() {
         "其他原因"
     ];
 
-    const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID || "@tongxing";
+    const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID;
     const LINE_OA_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
 
     const redirectToLine = () => {

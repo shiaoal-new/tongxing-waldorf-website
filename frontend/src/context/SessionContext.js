@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { authApi } from "../api/auth";
 
 const SessionContext = createContext({
     session: null,
@@ -12,15 +13,8 @@ export function SessionProvider({ children }) {
 
     const fetchSession = async () => {
         try {
-            const res = await fetch("/api/getSession", {
-                credentials: 'include'
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setSession(data.user ? data : null);
-            } else {
-                setSession(null);
-            }
+            const data = await authApi.getSession();
+            setSession(data.user ? data : null);
         } catch (err) {
             console.error("Failed to fetch session:", err);
             setSession(null);
@@ -39,6 +33,7 @@ export function SessionProvider({ children }) {
     };
 
     const loginWithLine = () => {
+        // [Note] clientId remains here as it's a public client ID for LINE Login
         const clientId = '2008899796';
         const baseUrl = window.location.origin;
         const redirectUri = encodeURIComponent(`${baseUrl}/api/lineCallback`);
@@ -62,9 +57,8 @@ export function SessionProvider({ children }) {
 
     const logout = async () => {
         try {
-            await fetch("/api/logout", { method: "POST" });
+            await authApi.logout();
             setSession(null);
-            // Optional: redirect to home
             window.location.href = "/";
         } catch (err) {
             console.error("Logout failed:", err);

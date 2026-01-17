@@ -1,7 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { getFirestore } from "firebase-admin/firestore";
-
-const db = getFirestore();
+import { db } from "./utils/firebase";
 
 export default onRequest({
     cors: true,

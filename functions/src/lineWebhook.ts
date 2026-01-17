@@ -1,6 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { initializeApp, getApps } from "firebase-admin/app";
-import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { db } from "./utils/firebase";
+import { formatSessionDate, formatSessionTime } from "./utils/formatters";
+import { UserService } from "./services/userService";
 import {
     messagingApi,
     validateSignature,
@@ -10,14 +11,8 @@ import {
     MessageEvent
 } from "@line/bot-sdk";
 
-// 初始化 Firebase Admin
-if (!getApps().length) {
-    initializeApp();
-}
-const db = getFirestore();
-
 function getVisitUrl(params: string = "") {
-    const liffId = process.env.LIFF_ID || "2008899796-2UCLCrmk";
+    const liffId = process.env.LIFF_ID;
     const baseUrl = `https://liff.line.me/${liffId}`;
     return params ? `${baseUrl}?${params}` : baseUrl;
 }
@@ -92,65 +87,44 @@ async function handleFollowEvent(event: FollowEvent, client: messagingApi.Messag
     if (!userId) return;
 
     try {
-        // 2. 向 LINE 請求使用者公開資料
-        const profile = await client.getProfile(userId);
+        // 1. 檢查是否存在相同 lineUserId 的使用者
+        const existingUser = await UserService.getUserByLineId(userId);
 
-        // 3. 檢查是否存在相同 lineUserId 的使用者
-        const userQuery = await db.collection("users")
-            .where("lineUserId", "==", userId)
-            .limit(1)
-            .get();
+        if (!existingUser) {
+            console.log(`[LINE Webhook] User ${userId} not found, fetching profile...`);
+            // 2. 向 LINE 請求使用者公開資料
+            const profile = await client.getProfile(userId);
 
-        if (userQuery.empty) {
-            console.log(`[LINE Webhook] Creating new user for: ${profile.displayName}`);
-
-            // 為了相容 Auth.js，我們在建立 user 的同時也建立 account 對接
-            const newUserRef = db.collection("users").doc();
-            const userData = {
-                name: profile.displayName,
-                image: profile.pictureUrl,
-                lineUserId: userId,
-                provider: "line-webhook", // 標註來源
-                createdAt: FieldValue.serverTimestamp(),
-            };
-
-            await newUserRef.set(userData);
-
-            // 建立一個 linked account，這樣未來他用 LINE 登入時可以自動對接
-            await db.collection("accounts").add({
-                userId: newUserRef.id,
-                type: "oauth",
-                provider: "line",
-                providerAccountId: userId,
-                createdAt: FieldValue.serverTimestamp(),
-            });
-
-            // 4. 回覆歡迎訊息與選單
-            await client.replyMessage({
-                replyToken: event.replyToken,
-                messages: [
-                    {
-                        type: "text",
-                        text: `您好 ${profile.displayName}！感謝您關注同心華德福。\n\n我們預計為您自動建立網站帳號，您現在可以直接點選選單或輸入「預約參訪」來查看近期活動。`
-                    },
-                    {
-                        type: "template",
-                        altText: "預約參訪選單",
-                        template: {
-                            type: "buttons",
-                            title: "預約參訪服務",
-                            text: "請選擇您要執行的動作：",
-                            actions: [
-                                { type: "postback", label: "查看已登記參訪", data: "action=view_registrations" },
-                                { type: "postback", label: "新登記參訪", data: "action=register_new" }
-                            ]
-                        }
-                    }
-                ]
-            });
+            // 3. 建立使用者資料 (使用 UserService)
+            await UserService.createFollower(userId, profile);
+            console.log(`[LINE Webhook] Successfully created follower account for ${profile.displayName}`);
+        } else {
+            console.log(`[LINE Webhook] User ${userId} already exists, skipping creation.`);
         }
 
-        return { status: "success" };
+        // 4. 回覆歡迎訊息與選單
+        await client.replyMessage({
+            replyToken: event.replyToken,
+            messages: [
+                {
+                    type: "text",
+                    text: `您好！感謝您關注同心華德福。\n\n我們預計為您自動建立網站帳號，您現在可以直接點選選單或輸入「預約參訪」來查看近期活動。`
+                },
+                {
+                    type: "template",
+                    altText: "預約參訪選單",
+                    template: {
+                        type: "buttons",
+                        title: "預約參訪服務",
+                        text: "請選擇您要執行的動作：",
+                        actions: [
+                            { type: "postback", label: "查看已登記參訪", data: "action=view_registrations" },
+                            { type: "postback", label: "新登記參訪", data: "action=register_new" }
+                        ]
+                    }
+                }
+            ]
+        });
     } catch (error) {
         console.error("Error in handleFollowEvent:", error);
         throw error;
@@ -271,48 +245,7 @@ async function sendRegistrationMenu(replyToken: string, client: messagingApi.Mes
 
 
 
-// Helper to format session date and time for LINE messages
-function formatSessionDate(sessionDate: any): string {
-    if (!sessionDate) return "未知日期";
-    let d: Date;
-    if (sessionDate && typeof sessionDate === 'object' && sessionDate._seconds) {
-        d = new Date(sessionDate._seconds * 1000);
-    } else {
-        d = new Date(sessionDate);
-    }
 
-    if (isNaN(d.getTime())) return "日期格式錯誤";
-
-    const days = ["日", "一", "二", "三", "四", "五", "六"];
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const dayOfWeek = days[d.getDay()];
-
-    return `${year}-${month}-${day} (${dayOfWeek})`;
-}
-
-function formatSessionTime(startTime: string, duration: number): string {
-    if (!startTime) return "---";
-    if (!duration) return startTime;
-
-    // Parse start time (HH:mm)
-    const parts = startTime.split(':');
-    if (parts.length !== 2) return startTime;
-
-    const hours = parseInt(parts[0], 10);
-    const minutes = parseInt(parts[1], 10);
-
-    const startDate = new Date();
-    startDate.setHours(hours, minutes, 0);
-
-    // Add duration (minutes)
-    const endDate = new Date(startDate.getTime() + duration * 60000);
-    const endHours = String(endDate.getHours()).padStart(2, '0');
-    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
-
-    return `${startTime} - ${endHours}:${endMinutes}`;
-}
 
 
 async function sendAvailableSessions(replyToken: string, client: messagingApi.MessagingApiClient) {
