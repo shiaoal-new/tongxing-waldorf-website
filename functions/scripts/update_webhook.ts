@@ -10,84 +10,84 @@ const envLocalPath = path.resolve(__dirname, '../.env.local');
 if (fs.existsSync(envLocalPath)) {
     const envConfig = fs.readFileSync(envLocalPath, 'utf8');
     envConfig.split('\n').forEach(line => {
-        const [key, value] = line.split('=');
-        if (key && value) {
-            process.env[key.trim()] = value.trim();
+        const index = line.indexOf('=');
+        if (index > 0) {
+            const key = line.substring(0, index).trim();
+            const value = line.substring(index + 1).trim();
+            process.env[key] = value;
         }
     });
 }
 
-const NGROK_API = 'http://127.0.0.1:4040/api/tunnels';
 const LINE_API = 'https://api.line.me/v2/bot/channel/webhook/endpoint';
 
-// Try to get Project ID from .firebaserc
-let projectId = 'tongxing-waldorf-website-dev'; // default fallback
-try {
-    const firebasercPath = path.resolve(__dirname, '../../.firebaserc');
-    if (fs.existsSync(firebasercPath)) {
-        const rc = JSON.parse(fs.readFileSync(firebasercPath, 'utf8'));
-        if (rc.projects?.dev) {
-            projectId = rc.projects.dev;
-        }
+async function updateWebhook() {
+    console.log('🔄 Updating LINE Webhook URL...');
+
+    const publicUrl = process.env.WEB_BASE_URL;
+
+    if (!publicUrl) {
+        console.error('❌ WEB_BASE_URL not found in .env.local. Please run the local development script.');
+        process.exit(1);
     }
-} catch (e) {
-    console.warn('Failed to read .firebaserc, using default project ID:', projectId);
+
+    const cleanUrl = publicUrl.endsWith('/') ? publicUrl.slice(0, -1) : publicUrl;
+    const webhookUrl = `${cleanUrl}/api/lineWebhook`;
+
+    console.log(`📍 Using Public URL: [${publicUrl}]`);
+    console.log(`🔗 Target Webhook URL: [${webhookUrl}]`);
+
+    const channelToken = process.env.LINE_MESSAGING_CHANNEL_ACCESS_TOKEN;
+    if (!channelToken) {
+        console.error('❌ Missing LINE_MESSAGING_CHANNEL_ACCESS_TOKEN in .env.local');
+        process.exit(1);
+    }
+
+    console.log('🚀 Updating LINE Messaging API...');
+    const lineRes = await fetch(LINE_API, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${channelToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ endpoint: webhookUrl })
+    });
+
+    const responseText = await lineRes.text();
+
+    if (lineRes.ok) {
+        console.log('✅ Webhook URL updated successfully!');
+        console.log('   Now pointing to:', webhookUrl);
+        return true;
+    } else {
+        console.error(`❌ Failed to update LINE Webhook (Status: ${lineRes.status}):`, responseText);
+        return false;
+    }
 }
 
-const FUNCTION_REGION = 'asia-east1';
-const FUNCTION_NAME = 'lineWebhook';
-
 async function main() {
-    console.log('🔄 Fetching ngrok URL...');
+    let success = false;
+    let attempts = 0;
+    const maxAttempts = 5;
+    const delay = 5000;
 
-    try {
-        const ngrokRes = await fetch(NGROK_API);
-        const ngrokData: any = await ngrokRes.json();
-        const tunnel = ngrokData.tunnels.find((t: any) => t.proto === 'https');
-
-        if (!tunnel) {
-            console.error('❌ No HTTPS tunnel found. Is ngrok running?');
-            process.exit(1);
+    while (!success && attempts < maxAttempts) {
+        attempts++;
+        if (attempts > 1) {
+            console.log(`⏳ Retry attempt ${attempts}/${maxAttempts} in ${delay / 1000}s...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
 
-        const ngrokUrl = tunnel.public_url;
-        // Since we are now tunneling Port 3000 (Next.js) and using rewrites,
-        // the webhook URL should point to the Next.js API route that proxies to the function.
-        // See frontend/next.config.js for the rewrite rule.
-        const webhookUrl = `${ngrokUrl}/api/lineWebhook`;
-
-        console.log(`📍 Ngrok URL: ${ngrokUrl}`);
-        console.log(`🔗 Target Webhook URL: ${webhookUrl}`);
-
-        const channelToken = process.env.LINE_MESSAGING_CHANNEL_ACCESS_TOKEN;
-        if (!channelToken) {
-            console.error('❌ Missing LINE_MESSAGING_CHANNEL_ACCESS_TOKEN in .env.local');
-            process.exit(1);
+        try {
+            success = await updateWebhook();
+        } catch (error: any) {
+            console.error(`❌ Error on attempt ${attempts}:`, error.message);
         }
+    }
 
-        console.log('🚀 Updating LINE Messaging API...');
-        const lineRes = await fetch(LINE_API, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${channelToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ endpoint: webhookUrl })
-        });
-
-        if (lineRes.ok) {
-            console.log('✅ Webhook URL updated successfully!');
-            console.log('   Now pointing to:', webhookUrl);
-        } else {
-            console.error('❌ Failed to update LINE Webhook:', await lineRes.text());
-            process.exit(1);
-        }
-
-    } catch (error: any) {
-        console.error('❌ Error:', error.message);
-        if (error.cause?.code === 'ECONNREFUSED') {
-            console.error('   Running ngrok? Make sure you started it with `ngrok http 5001`');
-        }
+    if (!success) {
+        console.error('❌ Failed to update webhook after multiple attempts.');
+        process.exit(1);
     }
 }
 

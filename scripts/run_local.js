@@ -5,7 +5,9 @@ const path = require('path');
 const net = require('net');
 
 // Config
-const PORTS_TO_KILL = [3000, 5001, 5002, 5003, 4000, 4040, 8080, 9099, 9150]; // Common Next.js, Firebase, Ngrok ports
+const PORTS_TO_KILL = [3000, 5001, 5002, 5003, 4000, 4040, 8080, 9099, 9150];
+const FIXED_DOMAIN = 'https://tongxingwaldorf.dpdns.org';
+const TUNNEL_NAME = 'tongxing-dev';
 
 // Colors
 const colors = {
@@ -72,56 +74,88 @@ function startProcess(name, command, args, cwd = '.', color = colors.reset) {
     return proc;
 }
 
-// 5. Wait for Port to be ready
-function waitForPort(port) {
+// 5. Wait for Port (and HTTP response) to be ready
+function waitForPort(port, path = '/') {
     return new Promise((resolve) => {
-        log('System', `⏳ Waiting for port ${port} to be ready...`, colors.cyan);
+        log('System', `⏳ Waiting for http://localhost:${port}${path} to be responsive...`, colors.cyan);
         const interval = setInterval(() => {
-            const client = new net.Socket();
-            client.connect(port, '127.0.0.1', () => {
-                client.destroy();
+            const req = http.get({
+                hostname: '127.0.0.1',
+                port: port,
+                path: path,
+                timeout: 1000
+            }, (res) => {
+                // If we get any response, the server is up
                 clearInterval(interval);
-                log('System', `✅ Port ${port} is ready!`, colors.green);
+                log('System', `✅ http://localhost:${port} is ready! (Status: ${res.statusCode})`, colors.green);
                 resolve();
             });
-            client.on('error', () => {
-                client.destroy();
+
+            req.on('error', () => {
+                // connection refused or other errors, keep waiting
             });
-        }, 1000);
+
+            req.on('timeout', () => {
+                req.destroy();
+            });
+        }, 1500);
     });
 }
 
-// 3. Wait for Ngrok to be ready
-function waitForNgrok() {
+// 3. Wait for Cloudflare to be ready
+function waitForCloudflare(proc) {
+    let resolved = false;
     return new Promise((resolve) => {
-        log('System', '⏳ Waiting for Ngrok to initialize...', colors.cyan);
-        const interval = setInterval(() => {
-            http.get('http://127.0.0.1:4040/api/tunnels', (res) => {
-                let data = '';
-                res.on('data', chunk => data += chunk);
-                res.on('end', () => {
-                    if (res.statusCode === 200) {
-                        try {
-                            const result = JSON.parse(data);
-                            const tunnel = result.tunnels.find(t => t.proto === 'https');
-                            if (tunnel) {
-                                clearInterval(interval);
-                                log('System', `✅ Ngrok is ready at ${tunnel.public_url}`, colors.green);
-                                resolve(tunnel.public_url);
-                            }
-                        } catch (e) {
-                            // ignore parse errors
-                        }
-                    }
-                });
-            }).on('error', () => {
-                // connection refused, retry
-            });
-        }, 1000);
+        log('System', '⏳ Waiting for Cloudflare Tunnel to initialize...', colors.cyan);
+
+        // If we have a fixed domain, we can resolve immediately once the process is alive
+        // but we still wait for the "Connected" log to be sure.
+        const onData = (data) => {
+            if (resolved) return;
+            const output = data.toString();
+
+            // Case 1: Fixed Tunnel success message
+            if (output.includes('Connected') || output.includes('Registered tunnel connection')) {
+                resolved = true;
+                log('System', `✅ Cloudflare Persistent Tunnel is ready at ${FIXED_DOMAIN}`, colors.green);
+                resolve(FIXED_DOMAIN);
+                return;
+            }
+
+            // Case 2: Quick Tunnel URL fallback (if someone removes TUNNEL_NAME)
+            const match = output.match(/https:\/\/[a-z0-9-]+\.trycloudflare\.com/);
+            if (match) {
+                resolved = true;
+                const url = match[0].trim();
+                log('System', `✅ Cloudflare Quick Tunnel is ready at ${url}`, colors.green);
+                resolve(url);
+            }
+        };
+        proc.stdout.on('data', onData);
+        proc.stderr.on('data', onData);
+
+        // Timeout fallback for persistent tunnel
+        setTimeout(() => {
+            if (!resolved && TUNNEL_NAME) {
+                resolved = true;
+                log('System', `⚠️ Tunnel initialization timeout, assuming ${FIXED_DOMAIN} is ready.`, colors.yellow);
+                resolve(FIXED_DOMAIN);
+            }
+        }, 10000);
     });
 }
 
-// 4. Update .env.local
+// 4. Get Public IP (for Localtunnel password)
+function getPublicIP() {
+    return new Promise((resolve) => {
+        http.get('http://ifconfig.me/ip', (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => resolve(data.trim()));
+        }).on('error', () => resolve('Unknown'));
+    });
+}
+
 // 4. Update .env.local (Functions & Frontend)
 function updateEnvFile(url) {
     const sharedEnvPath = path.join(__dirname, '../.env.shared');
@@ -190,24 +224,29 @@ async function main() {
     // 1. Firebase (Emulator) - Start this first to get backend ready
     startProcess('Firebase', 'npm', ['run', 'serve', '--prefix', 'functions'], '.', colors.yellow);
 
-    // 2. Ngrok - Expose Frontend (Port 3000)
-    // We expose 3000 because we want the user to visit the website.
-    // Webhook requests will be proxied by Next.js rewrites.
-    // Using user provided static domain for stable LIFF development
-    const ngrokProc = startProcess('Ngrok', 'ngrok', ['http', '3000', '--domain=nomographically-bridleless-annetta.ngrok-free.dev'], '.', colors.cyan);
+    // 2. Cloudflare Tunnel - Expose Frontend (Port 3000)
+    const tunnelArgs = TUNNEL_NAME
+        ? ['tunnel', '--url', 'http://localhost:3000', 'run', TUNNEL_NAME]
+        : ['tunnel', '--url', 'http://localhost:3000'];
 
-    // 3. Wait for Ngrok & Update Environment Variables
-    const ngrokUrl = await waitForNgrok();
-    updateEnvFile(ngrokUrl);
+    const tunnelProc = startProcess('Tunnel', 'cloudflared', tunnelArgs, '.', colors.cyan);
+
+    // 3. Wait for Tunnel & Update Environment Variables
+    const publicUrl = await waitForCloudflare(tunnelProc);
+    updateEnvFile(publicUrl);
 
     // 4. Wait for Firebase Functions Port (5001) to be ready before starting Frontend
-    await waitForPort(5001);
+    // Note: Emulators don't always respond correctly to GET / so we just check connectivity
+    await waitForPort(5001, '/');
 
     // 5. Frontend - Start this LAST so it picks up the updated .env.local
     startProcess('Frontend', 'npm', ['run', 'dev', '--prefix', 'frontend'], '.', colors.blue);
 
-    // Wait for Frontend to be ready
-    await waitForPort(3000);
+    // Wait for Frontend to be fully ready (Next.js is serving)
+    await waitForPort(3000, '/');
+
+    // Extra delay to let Cloudflare Tunnel settle
+    await new Promise(r => setTimeout(r, 2000));
 
     // 6. Update Webhook
     log('System', '🔄 Updating LINE Webhook...', colors.green);
