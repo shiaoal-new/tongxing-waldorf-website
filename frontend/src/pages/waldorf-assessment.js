@@ -1,4 +1,4 @@
-import { getQuestionnaireBySlug } from '../lib/Questionnaire';
+import { getQuestionnaireBySlug } from '../lib/questionnaire';
 import { getNavigation } from '../lib/settings';
 import { getAllPages } from '../lib/pages';
 import DynamicPageContent from '../components/DynamicPage';

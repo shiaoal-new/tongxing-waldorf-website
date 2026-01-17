@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 export default function Button({ href, children, className, size = "lg", ...props }) {
-    const Component = href ? Link : "Button";
+    const Component = href ? Link : "button";
     const linkProps = href ? { href } : {};
 
     // Base layout styles

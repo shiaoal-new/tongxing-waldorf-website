@@ -11,7 +11,7 @@ import { useState, useRef } from "react";
 import { useTheme } from "next-themes";
 import { SectionRenderer } from "./SectionRenderer";
 import { PageDataProvider } from "../context/PageDataContext";
-import { useDynamicTOC } from "./useDynamicTOC";
+import { useDynamicTOC } from "../hooks/useDynamicTOC";
 
 export default function DynamicPageContent({ page, pages, navigation, data = {} }) {
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
