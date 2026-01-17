@@ -3,7 +3,7 @@ slug: featured-courses
 content: 同心華德福提供了許多與一般體制內學校截然不同的特色課程。強調「身心靈平衡」與「真實生活體驗」。
 hero:
   title: 特色課程介紹
-  subtitle: 給孩子一份受用一生的禮物
+  subtitle: 點燃生命力：從 1 到 9 年級的成長長跑
   media_list:
     - type: image
       image: /img/featured-outdoor.png
@@ -12,8 +12,8 @@ sections:
   - section_id: curriculum-intro
     blocks:
       - type: text_block
-        title: 特色課程介紹
-        content: 同心華德福提供了許多與一般體制內學校截然不同的特色課程。這些課程並非為了考試而設計，而是為了呼應孩子不同階段的發展需求，強調「身心靈平衡」與「真實生活體驗」。
+        title: 點亮孩子內在的火光
+        content: 同心華德福在大學校區的專業支持下，提供與一般體制截然不同的特色課程。這些課程並非為了應付考試，而是為了點燃不同階段孩子的生命力。我們強調「九年一貫」的完整性，讓孩子在節奏、實作與自然中，獲得最穩定的全人發展。
   - section_id: course-list
     blocks:
       - type: list_block
@@ -93,8 +93,8 @@ sections:
   - section_id: conclusion
     blocks:
       - type: text_block
-        title: 結語：為未來「自轉」的能力
-        content: 同心的課程不急著讓孩子在考卷上填寫標準答案，而是邀請他們親自走入自然、操弄土與木、參與戲劇與長途跋涉。這些課程是為了在孩子心中埋下種子，讓他們在成年後具備「自轉」的能力，即便面對未知的世界，也能清楚知道「我是誰」以及「要往哪裡去」。
+        title: 領航未來：具備「自轉」能力的生命力
+        content: 同心的課程不急於填鴨標準答案，而是在 1-9 年級的穩定節奏中，陪伴孩子走入自然、操弄土木、參與戲劇。這些歷程如同點燃一盞心燈，讓孩子在火年變動的時代，依然具備清晰的思考與穩定的內在。我們點亮孩子心中的火種，讓他們具備「自轉」的能力，成為自己生命航道的領航者。
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:

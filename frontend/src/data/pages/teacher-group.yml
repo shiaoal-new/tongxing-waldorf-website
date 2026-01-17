@@ -1,9 +1,9 @@
 title: "教師團隊"
 slug: "teacher-group"
 hero:
-  title: "同心教師團"
-  subtitle: "真心陪伴，守護文化的自由"
-  content: "同心有一群真摯又有活力的老師們，抱持著對教育的理想與自我成長的期許，彼此支持、互相學習。"
+  title: "同心教師領航團"
+  subtitle: "專業與靈性共榮：點亮區域教育的燈塔"
+  content: "同心的老師們不僅是教育者，更是孩子生命航道的引路人。在深坑大學校區的專業學術氛圍中，我們致力於點燃孩子的內在火光。"
   media_list:
     - type: image
       image: /img/teacher.jpg
@@ -148,8 +148,8 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: 親眼見證，孩子生命力的綻放
-        content: 您是否也在尋找一種能尊重孩子個體本質的教育？與其聽說，不如現場參與。同心的大門為每一位關心教育的家長敞開。
+        title: 點亮深坑：開箱教育地標
+        content: 您是否也在尋找一個能與高等教育資源共榮、並提供 1-9 年級穩定成長環境的教育機構？與其聽說，不如親自走入同心的專業校園，看見孩子生命力的綻放。
         buttons:
           - text: 預約參觀
             link: /visit

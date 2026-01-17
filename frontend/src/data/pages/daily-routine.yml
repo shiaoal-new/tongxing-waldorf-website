@@ -2,8 +2,8 @@ title: 日常作息
 slug: daily-routine
 hero:
   title: 日常作息
-  subtitle: 在規律的節奏中，看見孩子的生命成長
-  content: 很多家長問：「你們一天到底在幹嘛？」這頁就是答案。我們把一天比喻成「呼吸」——有專注的時候（吸氣），也有放鬆的時候（呼氣）。孩子不是機器，需要這樣的節奏才能真正學得好、活得好。
+  subtitle: 九年一貫的穩定節奏：在呼吸間看見生命力
+  content: 在深坑大學校區的專業環境中，我們建立 1-9 年級最穩定的成長律動。將學習比喻為「一呼一吸」，在專注與鬆綁間，點燃孩子持續學習的火種。這份跨越九年的穩定感，是我們給孩子最扎實的支持。
   media_list:
     - type: image
       image: /img/daily-routine.jpg
@@ -94,8 +94,8 @@ sections:
   - section_id: senior-transition
     blocks:
       - type: text_block
-        title: 走向成熟：高年級的轉化與銜接
-        content: 孩子長大了，課程也會跟著變。我們會給他們更多挑戰，幫助他們從「用身體感受世界」慢慢轉向「用腦袋思考世界」。
+        title: 領航未來：1-9 年級的深度轉化與專業銜接
+        content: 隨著孩子邁向青少年前期，同心在大學校區的學術氛圍下，提供 7-9 年級更具挑戰性的專業課程。我們陪伴孩子從「用身體感受世界」轉向「用清晰思考領航世界」，確保他們具備面對變動時代的穩定內在。
       - type: list_block
         layout_method: grid_cards
         item_type: card

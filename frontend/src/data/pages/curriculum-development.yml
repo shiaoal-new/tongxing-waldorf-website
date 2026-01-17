@@ -5,9 +5,9 @@ hero:
   media_list:
     - type: image
       image: /img/curriculum-hero.png
-  title: 學生發展圖像與課程脈絡
-  subtitle: 給孩子一份受用一生的禮物
-  content: 世界變得太快，我們不知道十年後孩子需要什麼技能。但我們知道，一個懂得動手做、懂得感受、也懂得思考的孩子，到哪裡都活得下去。
+  title: 1-9 年級九年一貫課程脈絡
+  subtitle: 為變動時代打造的穩定之火
+  content: 面對火年的變動，同心提供長達九年的連續性成長路徑。我們在大人的大學校區裡，為孩子點燃清晰思考與穩定內在的燈塔，培養領航未來的全人力量。
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: core-vision
