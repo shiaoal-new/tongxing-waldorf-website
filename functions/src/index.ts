@@ -60,13 +60,13 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
 
 
 // LINE Webhook handler
-export * from "./lineWebhook.js";
+export * from "./lineWebhook";
 
 // User Registrations handler
-export * from "./userRegistrations.js";
+export * from "./userRegistrations";
 
 // LINE OAuth Callback handler
-export { default as lineCallback } from "./lineCallback.js";
+export { default as lineCallback } from "./lineCallback";
 
-export { default as getSession } from "./getSession.js";
-export { default as logout } from "./logout.js";
+export { default as getSession } from "./getSession";
+export { default as logout } from "./logout";
