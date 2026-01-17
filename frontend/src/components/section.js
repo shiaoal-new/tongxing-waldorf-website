@@ -3,6 +3,7 @@ import Container from "./container";
 import { motion } from "framer-motion";
 import BackgroundCarousel from "./backgroundCarousel";
 import ActionButtons from "./actionButtons";
+import SectionDivider from "./sectionDivider";
 
 export default function Section(props) {
     const {
@@ -19,6 +20,7 @@ export default function Section(props) {
         parallax_ratio,
         className,
         limit,
+        divider, // { type, position, color, flip }
         ...rest
     } = props;
 
@@ -66,6 +68,16 @@ export default function Section(props) {
             className={`w-full relative overflow-hidden section_container py-section ${container_class} ${className || ""}`}
             {...rest}
         >
+            {/* SVG Divider */}
+            {divider && (
+                <SectionDivider
+                    type={divider.type}
+                    position={divider.position}
+                    color={divider.color}
+                    flip={divider.flip}
+                />
+            )}
+
             {media_list && media_list.length > 0 && (
                 <BackgroundCarousel media_list={media_list} parallax_ratio={parallax_ratio} />
             )}

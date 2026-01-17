@@ -87,7 +87,8 @@ export default function PageHero({ data }) {
         bg_video,
         transition_type = 'fade',
         scrolling_effect = 'fadeToWhite', // none, fadeToDark, fadeToWhite
-        entry_effect = {}
+        entry_effect = {},
+        accent_text = "手、心、腦的均衡成長" // Default or from data
     } = data;
 
     const effect = scrolling_effect;
@@ -119,8 +120,44 @@ export default function PageHero({ data }) {
 
     const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-    // 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
-    // useStatusBarScrollLock();
+    // Animation Variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.5
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+        visible: {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: {
+                duration: 1,
+                ease: [0.22, 1, 0.36, 1]
+            }
+        }
+    };
+
+    const accentVariants = {
+        hidden: { opacity: 0, scale: 0.8, rotate: -5 },
+        visible: {
+            opacity: 0.8,
+            scale: 1,
+            rotate: -2,
+            transition: {
+                delay: 1.5,
+                duration: 1.2,
+                ease: "easeOut"
+            }
+        }
+    };
 
     return (
         <div ref={ref} className={`relative flex h-[100lvh] ${container_class}`}>
@@ -158,44 +195,79 @@ export default function PageHero({ data }) {
 
             <DevComment text="Texts" />
             <Container className="relative z-10 py-20 flex w-full">
-                <div className={`w-full flex flex-col ${wrapper_class}`}>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        {effectiveSubTitle && (
+                <motion.div
+                    className={`w-full flex flex-col ${wrapper_class}`}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {effectiveSubTitle && (
+                        <motion.div variants={itemVariants}>
                             <span className={pretitle_class}>
                                 {effectiveSubTitle}
                             </span>
-                        )}
+                        </motion.div>
+                    )}
+
+                    <motion.div variants={itemVariants} className="relative">
                         <h1 className={title_class}>
                             {effectiveTitle}
                         </h1>
-                        {effectiveContent && (
-                            <p className={description_class}>
-                                {effectiveContent}
-                            </p>
+
+                        {/* 裝飾性手寫文字 - 只在桌面端顯示或作為精美點綴 */}
+                        {accent_text && (
+                            <motion.span
+                                variants={accentVariants}
+                                className="absolute -top-10 -right-4 hidden lg:block font-accent text-brand-accent text-3xl opacity-80 select-none pointer-events-none"
+                            >
+                                {accent_text}
+                            </motion.span>
                         )}
                     </motion.div>
-                </div>
+
+                    {effectiveContent && (
+                        <motion.div variants={itemVariants}>
+                            <div className={`${description_class} backdrop-blur-md bg-black/10 shadow-2xl overflow-hidden group`}>
+                                {/* Subtle inner glow for glass effect */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                                <p className="relative z-10">
+                                    {effectiveContent}
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
+                </motion.div>
             </Container>
 
             <DevComment text="Scroll Down Button" />
             <motion.div
-                className="absolute bottom-20 left-1/2 z-20 cursor-pointer p-2 rounded-full bg-brand-bg/10 backdrop-blur-sm border border-brand-bg/20 transition-colors duration-300"
+                className="absolute bottom-10 md:bottom-20 left-1/2 z-20 cursor-pointer p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors duration-300 group"
                 style={{ x: "-50%" }}
-                initial={{ opacity: 0.5, y: -20, x: "-50%" }}
+                initial={{ opacity: 0, y: -20, x: "-50%" }}
                 animate={{ opacity: 1, y: 0, x: "-50%" }}
                 whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)", x: "-50%" }}
                 whileTap={{ scale: 0.9, x: "-50%" }}
                 transition={{
-                    y: { delay: 1, duration: 1, repeat: Infinity, repeatType: "reverse" },
-                    default: { duration: 0.2 }
+                    y: {
+                        delay: 2,
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        ease: "easeInOut"
+                    },
+                    default: { duration: 0.3 }
                 }}
-                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                onClick={() => {
+                    const nextSection = document.querySelector('section');
+                    if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+                    }
+                }}
+                aria-label="Scroll to content"
             >
-                <ArrowDownIcon className="w-8 h-8 text-brand-bg shadow-sm" />
+                <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
             </motion.div>
 
         </div>

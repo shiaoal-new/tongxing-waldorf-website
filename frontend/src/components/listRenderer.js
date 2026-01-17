@@ -65,6 +65,7 @@ export default function ListRenderer({
                         title={item.title}
                         isOpen={activeIndex === index}
                         onToggle={() => toggleItem(index)}
+                        index={index}
                     >
                         {renderItem(item, index)}
                     </Disclosure>
@@ -126,7 +127,47 @@ export default function ListRenderer({
         );
     }
 
-    // Scrollable Grid 布局 (使用 Swiper EffectCards)
+    // Bento Grid 佈局 - 具備不同權重的動態網格
+    if (layout === "bento_grid") {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6 max-w-brand mx-auto px-1">
+                {items.map((item, index) => {
+                    // 根據預設或項目指定的 span 來決定寬度 (12 欄位制)
+                    // span 12 = 全寬, 6 = 半寬, 4 = 1/3寬, 8 = 2/3寬
+                    const spanClass = {
+                        12: "lg:col-span-12",
+                        8: "lg:col-span-8",
+                        6: "lg:col-span-6",
+                        4: "lg:col-span-4",
+                    }[item.span || 4] || "lg:col-span-4";
+
+                    return (
+                        <motion.div
+                            key={item.id || index}
+                            className={`${spanClass} flex`}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                        >
+                            <div className="w-full">
+                                {renderItem(item, index)}
+                            </div>
+                        </motion.div>
+                    );
+                })}
+
+                <DevComment text="Bento Grid Action Buttons" />
+                {buttons && buttons.length > 0 && (
+                    <div className="col-span-full">
+                        <ActionButtons buttons={buttons} align="center" className="mt-12" />
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    // Scrollable Grid 佈局 (使用 Swiper EffectCards)
     if (layout === "scrollable_grid") {
         return (
             <div className={`w-full mx-auto ${styles['list-swiper-container']}`}>
@@ -150,7 +191,7 @@ export default function ListRenderer({
                 </Swiper>
 
                 <DevComment text="Scrollable Grid Action Buttons" />
-                {/* 底部操作按钮 */}
+                {/* 底部操作按鈕 */}
 
                 {buttons && buttons.length > 0 && (
                     <ActionButtons buttons={buttons} align="center" className="mt-8" />
@@ -159,7 +200,7 @@ export default function ListRenderer({
         );
     }
 
-    // 默认回退 (通常不应该到达这里, 因为 scrollable_grid 是默认 layout)
+    // 默認回退
     return (
         <div className={`w-full mx-auto flex flex-wrap lg:gap-10 lg:flex-nowrap spacing-component`}>
             <motion.div className="flex flex-wrap items-start w-full">

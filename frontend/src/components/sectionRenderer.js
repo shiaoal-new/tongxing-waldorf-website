@@ -124,6 +124,7 @@ function resolveSectionData(section) {
             anchor: section.section_id,
             media_list: section.media_list,
             parallax_ratio: section.parallax_ratio,
+            divider: section.divider,
         }
     };
 }
@@ -195,7 +196,13 @@ function BlockDispatcher({ block, align = "center", context = "standalone", anch
         case "benefit_item":
         case "benefit":
             return (
-                <BenefitItem title={block.title} icon={block.icon} buttons={block.buttons}>
+                <BenefitItem
+                    title={block.title}
+                    icon={block.icon}
+                    buttons={block.buttons}
+                    media={block.media}
+                    span={block.span}
+                >
                     {block.content}
                 </BenefitItem>
             );

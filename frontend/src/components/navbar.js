@@ -203,9 +203,16 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-2xl font-medium text-brand-accent dark:text-brand-bg micro-hover-flow">
-                  <Logo />
-                  <span>同心華德福</span>
+                  className="flex items-center space-x-3 group transition-all duration-500 ease-out py-1">
+                  <Logo className="transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                  <div className="flex flex-col -space-y-1">
+                    <span className="text-2xl font-medium tracking-wider text-brand-accent dark:text-brand-bg font-accent">
+                      同心華德福
+                    </span>
+                    <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-accent/70 dark:text-brand-bg/60 transition-all duration-700">
+                      Tongxing Waldorf
+                    </span>
+                  </div>
                 </Link>
 
                 <Disclosure.Button
