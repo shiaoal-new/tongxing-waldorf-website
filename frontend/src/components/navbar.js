@@ -1,13 +1,13 @@
 import Link from "next/link";
 import ThemeChanger, { ThemeList } from "./DarkSwitch";
-import Logo from "./logo";
+import Logo from "./Logo";
 import Image from "next/image"
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useEffect, useState, Fragment } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import AboutModal from "./about-modal";
+import AboutModal from "./AboutModal";
 import DevComment from "./DevComment";
 import { useSession } from "../context/SessionContext";
 

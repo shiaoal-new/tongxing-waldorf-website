@@ -1,13 +1,13 @@
 import Head from "next/head";
-import Layout from "../components/layout";
-import Container from "../components/container";
-import Section from "../components/section";
+import Layout from "../components/Layout";
+import Container from "../components/Container";
+import Section from "../components/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import PageHero from "../components/pageHero";
-import ColorPaletteBlock from "../components/colorPaletteBlock";
-import ActionButtons from "../components/actionButtons";
+import PageHero from "../components/PageHero";
+import ColorPaletteBlock from "../components/ColorPaletteBlock";
+import ActionButtons from "../components/ActionButtons";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
 

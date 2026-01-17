@@ -39,7 +39,7 @@ const ThemeChanger = () => {
 
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle text-brand-taupe">
+      <div tabIndex={0} role="Button" className="btn btn-ghost btn-circle text-brand-taupe">
         <Icon icon="lucide:palette" className="w-5 h-5" />
       </div>
       <ul tabIndex={0} className="dropdown-content z-[100] menu p-1 shadow-2xl bg-brand-bg dark:bg-brand-structural rounded-box w-52 mt-4 border border-brand-taupe/10">

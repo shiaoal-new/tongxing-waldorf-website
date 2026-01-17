@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
-import Layout from "./layout";
-import Section from "./section";
+import Layout from "./Layout";
+import Section from "./Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageHero from "./pageHero";
-import MemberDetailModal from "./memberDetailModal";
-import TableOfContents from "./tableOfContents";
-import ParallaxBackground from "./parallaxBackground";
+import PageHero from "./PageHero";
+import MemberDetailModal from "./MemberDetailModal";
+import TableOfContents from "./TableOfContents";
+import ParallaxBackground from "./ParallaxBackground";
 import { useState, useRef } from "react";
 import { useTheme } from "next-themes";
-import { SectionRenderer } from "./sectionRenderer";
-import { PageDataProvider } from "../contexts/PageDataContext";
+import { SectionRenderer } from "./SectionRenderer";
+import { PageDataProvider } from "../context/PageDataContext";
 import { useDynamicTOC } from "./useDynamicTOC";
 
 export default function DynamicPageContent({ page, pages, navigation, data = {} }) {

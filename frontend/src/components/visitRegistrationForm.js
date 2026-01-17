@@ -1,6 +1,6 @@
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import { themeJson } from "./surveyTheme";
+import { themeJson } from "./SurveyTheme";
 
 
 import surveyJson from "./visitRegistrationSchema.json";

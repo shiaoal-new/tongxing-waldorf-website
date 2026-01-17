@@ -1,7 +1,7 @@
-import { getQuestionnaireBySlug } from '../lib/questionnaire';
+import { getQuestionnaireBySlug } from '../lib/Questionnaire';
 import { getNavigation } from '../lib/settings';
 import { getAllPages } from '../lib/pages';
-import DynamicPageContent from '../components/dynamicPage';
+import DynamicPageContent from '../components/DynamicPage';
 
 export default function WaldorfAssessment(props) {
     return <DynamicPageContent {...props} />;

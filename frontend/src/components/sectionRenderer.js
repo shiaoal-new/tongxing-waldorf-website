@@ -1,14 +1,14 @@
-import Section from "./section";
+import Section from "./Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import BenefitItem from "./benefit";
-import ListRenderer from "./listRenderer";
-import VideoItem from "./video";
-import MediaRenderer from "./mediaRenderer";
-import ActionButtons from "./actionButtons";
-import { usePageData } from "../contexts/PageDataContext";
-import MarkdownContent from "./markdownContent";
-import ExpandableText from "./expandableText";
+import BenefitItem from "./Benefit";
+import ListRenderer from "./ListRenderer";
+import VideoItem from "./Video";
+import MediaRenderer from "./MediaRenderer";
+import ActionButtons from "./ActionButtons";
+import { usePageData } from "../context/PageDataContext";
+import MarkdownContent from "./MarkdownContent";
+import ExpandableText from "./ExpandableText";
 import dynamic from "next/dynamic";
 
 /**
@@ -25,17 +25,17 @@ const createDynamicBlock = (componentPath, loadingMessage = "載入中...") => {
 };
 
 // 動態載入較少使用的組件,減少初始 bundle 大小
-const SpacingDemoBlock = createDynamicBlock("spacingDemoBlock");
-const TypographyDemoBlock = createDynamicBlock("typographyDemoBlock");
-const MicroInteractionsBlock = createDynamicBlock("microInteractionsBlock");
-const TabbedContentBlock = createDynamicBlock("tabbedContentBlock");
-const QuestionnaireBlock = createDynamicBlock("questionnaireBlock", "載入問卷中...");
-const TimelineBlock = createDynamicBlock("timelineBlock", "載入時間軸中...");
-const ScheduleBlock = createDynamicBlock("scheduleBlock");
-const CurriculumBlock = createDynamicBlock("curriculumBlock");
-const ColorPaletteBlock = createDynamicBlock("colorPaletteBlock");
-const VisitProcess = createDynamicBlock("visitProcess", "載入參訪流程中...");
-const VisitSchedule = createDynamicBlock("visitSchedule", "載入參訪時程中...");
+const SpacingDemoBlock = createDynamicBlock("SpacingDemoBlock");
+const TypographyDemoBlock = createDynamicBlock("TypographyDemoBlock");
+const MicroInteractionsBlock = createDynamicBlock("MicroInteractionsBlock");
+const TabbedContentBlock = createDynamicBlock("TabbedContentBlock");
+const QuestionnaireBlock = createDynamicBlock("QuestionnaireBlock", "載入問卷中...");
+const TimelineBlock = createDynamicBlock("TimelineBlock", "載入時間軸中...");
+const ScheduleBlock = createDynamicBlock("ScheduleBlock");
+const CurriculumBlock = createDynamicBlock("CurriculumBlock");
+const ColorPaletteBlock = createDynamicBlock("ColorPaletteBlock");
+const VisitProcess = createDynamicBlock("VisitProcess", "載入參訪流程中...");
+const VisitSchedule = createDynamicBlock("VisitSchedule", "載入參訪時程中...");
 
 
 /**
@@ -140,7 +140,7 @@ function determineAlignment(contentBlocks) {
     const leftAlignedTypes = ['text_block', 'member_block'];
     const isSpecialList = firstContent.type === 'list_block' &&
         firstContent.layout_method === 'scrollable_grid' &&
-        (firstContent.item_type === 'benefit' || firstContent.item_type === 'benefit_item');
+        (firstContent.item_type === 'Benefit' || firstContent.item_type === 'benefit_item');
 
     if (leftAlignedTypes.includes(firstContent.type) || isSpecialList) {
         return "left";

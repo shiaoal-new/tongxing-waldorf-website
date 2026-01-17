@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import Layout from "../components/layout";
-import Section from "../components/section";
+import Layout from "../components/Layout";
+import Section from "../components/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import PageHero from "../components/pageHero";
-import TypographyDemoBlock from "../components/typographyDemoBlock";
+import PageHero from "../components/PageHero";
+import TypographyDemoBlock from "../components/TypographyDemoBlock";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
 

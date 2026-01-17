@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "../context/SessionContext";
 import liff from "@line/liff"; // Import LIFF SDK
-import Container from "./container";
+import Container from "./Container";
 import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
-import VisitRegistrationForm from "./visitRegistrationForm";
-import Modal from "./modal";
+import VisitRegistrationForm from "./VisitRegistrationForm";
+import Modal from "./Modal";
 import DevComment from "./DevComment";
 import Link from "next/link";
 import { useRouter } from "next/router";

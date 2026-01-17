@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 
-const questionnairesDirectory = path.join(process.cwd(), 'src/data/questionnaire');
+const questionnairesDirectory = path.join(process.cwd(), 'src/data/Questionnaire');
 
 export function getQuestionnaireBySlug(slug) {
     try {

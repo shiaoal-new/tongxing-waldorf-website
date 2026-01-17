@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import MediaRenderer from './mediaRenderer';
+import MediaRenderer from './MediaRenderer';
 
 // --- Constants ---
 
@@ -47,7 +47,7 @@ const getImagePath = (path) => {
 const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
     const normalized = (media_list || []).map(m => {
         if (m.type === 'image') return { ...m, image: getImagePath(m.image) };
-        if (m.type === 'video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
+        if (m.type === 'Video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
         if (m.type === 'youtube') return { ...m, url: m.url };
         if (m.type === 'lottie') {
             let src = m.lottie || m.url;
@@ -66,7 +66,7 @@ const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
     const legacyVideo = getImagePath(bg_video);
 
     return [
-        ...(legacyVideo ? [{ type: 'video', video: legacyVideo }] : []),
+        ...(legacyVideo ? [{ type: 'Video', video: legacyVideo }] : []),
         ...legacyImages.map(img => ({ type: 'image', image: img }))
     ];
 };

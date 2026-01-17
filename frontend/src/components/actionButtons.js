@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./button";
+import Button from "./Button";
 
 export default function ActionButtons({ buttons, align = "center", className = "", size = "lg" }) {
     if (!buttons || buttons.length === 0) return null;

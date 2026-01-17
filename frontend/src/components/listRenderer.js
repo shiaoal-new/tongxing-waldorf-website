@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Pagination } from 'swiper/modules';
 
-import ActionButtons from "./actionButtons";
-import Disclosure from "./disclosure";
+import ActionButtons from "./ActionButtons";
+import Disclosure from "./Disclosure";
 import DevComment from "./DevComment";
-import styles from "./listSwiper.module.css";
+import styles from "./ListSwiper.module.css";
 
 
 

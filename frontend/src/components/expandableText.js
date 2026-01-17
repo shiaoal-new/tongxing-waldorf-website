@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import MarkdownContent from './markdownContent';
+import MarkdownContent from './MarkdownContent';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 
 /**

@@ -1,5 +1,5 @@
-import { usePageData } from '../contexts/PageDataContext';
-import QuestionnaireComponent from './questionnaire';
+import { usePageData } from '../context/PageDataContext';
+import QuestionnaireComponent from './Questionnaire';
 
 export default function QuestionnaireBlock({ data }) {
     // 從 props 中獲取問卷資料

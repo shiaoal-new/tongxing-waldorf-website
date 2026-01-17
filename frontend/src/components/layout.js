@@ -1,11 +1,11 @@
 import Head from "next/head";
 import Script from "next/script";
-import Navbar from "./navbar";
-import Footer from "./footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-import ParallaxBackground from "./parallaxBackground";
-import SvgFilters from "./svgFilters";
-import PageContent from "./pageContent";
+import ParallaxBackground from "./ParallaxBackground";
+import SvgFilters from "./SvgFilters";
+import PageContent from "./PageContent";
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";

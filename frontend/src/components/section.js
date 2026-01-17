@@ -1,9 +1,9 @@
 import React from "react";
-import Container from "./container";
+import Container from "./Container";
 import { motion } from "framer-motion";
-import BackgroundCarousel from "./backgroundCarousel";
-import ActionButtons from "./actionButtons";
-import SectionDivider from "./sectionDivider";
+import BackgroundCarousel from "./BackgroundCarousel";
+import ActionButtons from "./ActionButtons";
+import SectionDivider from "./SectionDivider";
 
 export default function Section(props) {
     const {

@@ -1,10 +1,10 @@
-import Container from "./container";
+import Container from "./Container";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
-import BackgroundCarousel from "./backgroundCarousel";
+import BackgroundCarousel from "./BackgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "./DevComment";
-import SectionDivider from "./sectionDivider";
+import SectionDivider from "./SectionDivider";
 
 /**
  * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
@@ -259,7 +259,7 @@ export default function PageHero({ data }) {
                     default: { duration: 0.3 }
                 }}
                 onClick={() => {
-                    const nextSection = document.querySelector('section');
+                    const nextSection = document.querySelector('Section');
                     if (nextSection) {
                         nextSection.scrollIntoView({ behavior: 'smooth' });
                     } else {

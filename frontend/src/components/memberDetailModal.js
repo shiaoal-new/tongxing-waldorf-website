@@ -1,5 +1,5 @@
-import Modal from "./modal";
-import MediaRenderer from "./mediaRenderer";
+import Modal from "./Modal";
+import MediaRenderer from "./MediaRenderer";
 
 export default function MemberDetailModal({ selectedMember, onClose }) {
     if (!selectedMember) return null;

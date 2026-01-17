@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
-import Modal from './modal';
+import Modal from './Modal';
 
 
 export default function QuestionnaireComponent({ data }) {

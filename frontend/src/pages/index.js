@@ -3,7 +3,7 @@ import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
-import DynamicPageContent from "../components/dynamicPage";
+import DynamicPageContent from "../components/DynamicPage";
 
 export default function Home(props) {
   return <DynamicPageContent {...props} />;

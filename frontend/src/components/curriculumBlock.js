@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import Modal from "./modal";
+import Modal from "./Modal";
 import DevComment from "./DevComment";
 
 

@@ -68,7 +68,7 @@ export default function AboutContent({ isOpen, onClose }) {
                             </div>
                             <div className="mt-6 flex justify-end">
                                 <button
-                                    type="button"
+                                    type="Button"
                                     className="btn btn-primary btn-sm px-6"
                                     onClick={onClose}
                                 >

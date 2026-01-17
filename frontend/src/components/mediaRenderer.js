@@ -20,7 +20,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
                 </div>
             );
 
-        case "video":
+        case "Video":
             if (!media.video) return null;
             return (
                 <video

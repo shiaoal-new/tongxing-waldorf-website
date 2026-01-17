@@ -39,7 +39,7 @@ export function useDynamicTOC(page, extraData = {}) {
                     if (!block.type) continue;
 
                     try {
-                        // 將 block.type 轉換為組件檔名 (例如: 'timeline_block' -> 'timelineBlock')
+                        // 將 block.type 轉換為組件檔名 (例如: 'timeline_block' -> 'TimelineBlock')
                         const componentName = convertBlockTypeToComponentName(block.type);
 
                         // 嘗試動態載入該組件模組
@@ -132,8 +132,8 @@ function generateInitialTOC(page) {
 
 /**
  * 將 block.type 轉換為組件檔名
- * 例如: 'timeline_block' -> 'timelineBlock'
- *       'questionnaire_block' -> 'questionnaireBlock'
+ * 例如: 'timeline_block' -> 'TimelineBlock'
+ *       'questionnaire_block' -> 'QuestionnaireBlock'
  */
 function convertBlockTypeToComponentName(blockType) {
     return blockType

@@ -515,11 +515,11 @@ export default function DeviceSimulator() {
                 
                 /* Hover effect is now blocked by the overlay layer in the simulator. */
                 /* We keep simple active feedback here. */
-                a, button, [role="button"], input, select, textarea {
+                a, button, [role="Button"], input, select, textarea {
                     cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
                 }
 
-                a, button, [role="button"], input, select, textarea {
+                a, button, [role="Button"], input, select, textarea {
                     cursor: url('${mobileCursor.url}') ${mobileCursor.center} ${mobileCursor.center}, auto !important;
                 }
 

@@ -4,7 +4,7 @@ import { getAllFaculty } from "../../lib/faculty";
 import { getAllFaq } from "../../lib/faq";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import { getNavigation } from "../../lib/settings";
-import DynamicPageContent from "../../components/dynamicPage";
+import DynamicPageContent from "../../components/DynamicPage";
 
 export default function CoursePage(props) {
     // We can use the same DynamicPageContent component as it's designed to render sections/blocks

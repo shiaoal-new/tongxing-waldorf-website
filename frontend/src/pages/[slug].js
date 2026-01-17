@@ -4,7 +4,7 @@ import { getAllFaq } from "../lib/faq";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
 import { getAllCourses } from "../lib/courses";
-import DynamicPageContent from "../components/dynamicPage";
+import DynamicPageContent from "../components/DynamicPage";
 
 export default function DynamicPage(props) {
     return <DynamicPageContent {...props} />;
