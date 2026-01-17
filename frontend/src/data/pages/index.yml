@@ -10,13 +10,13 @@ hero:
       video: /img/Leigham%20Primary%20Web%20Banner.mp4
       poster: /img/video-poster.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
+  divider:
+    type: wave
+    position: bottom
+    color: fill-brand-bg
 sections:
   - section_id: features
     layout: 精緻特色區塊 (Features Premium)
-    divider:
-      type: wave
-      position: top
-      color: fill-white dark:fill-black
     blocks:
       - type: text_block
         title: 為什麼選擇同心華德福

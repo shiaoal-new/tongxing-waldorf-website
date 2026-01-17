@@ -70,12 +70,12 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
             <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
                 {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
-                <div className="w-full py-10 relative overflow-hidden">
+                <div className={`w-full relative overflow-hidden ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
                     {!effectiveHeroData && (
                         <Section title={page.title} align="left" description={page.description} />
                     )}
 
-                    <div className="mt-10">
+                    <div className={effectiveHeroData ? "" : "mt-10"}>
                         <PageDataProvider value={{
                             getMemberDetails,
                             setSelectedMember,

@@ -13,7 +13,8 @@ export default function SectionDivider({
     position = "bottom",
     color = "fill-brand-bg",
     flip = false,
-    className = ""
+    className = "",
+    zIndex = "z-10"
 }) {
     const isTop = position === "top";
 
@@ -37,7 +38,7 @@ export default function SectionDivider({
 
     return (
         <div
-            className={`absolute left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none ${isTop ? "top-0" : "bottom-0"
+            className={`absolute left-0 w-full overflow-hidden leading-[0] ${zIndex} pointer-events-none ${isTop ? "top-0" : "bottom-0"
                 } ${isTop ? "rotate-180" : ""} ${flip ? "-scale-x-100" : ""} ${className}`}
         >
             <svg

@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import BackgroundCarousel from "./backgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "./DevComment";
+import SectionDivider from "./sectionDivider";
 
 /**
  * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
@@ -269,6 +270,17 @@ export default function PageHero({ data }) {
             >
                 <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
             </motion.div>
+
+            {/* Section Divider */}
+            {data.divider && (
+                <SectionDivider
+                    type={data.divider.type}
+                    position={data.divider.position || "bottom"}
+                    color={data.divider.color}
+                    flip={data.divider.flip}
+                    zIndex="z-[5]"
+                />
+            )}
 
         </div>
     );
