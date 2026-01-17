@@ -37,7 +37,7 @@ export default function BenefitItem(props) {
       )}
 
       <div className={`relative z-20 flex flex-col h-full p-8 md:p-12 ${media ? '-mt-20 md:-mt-24' : ''}`}>
-        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mb-8 w-16 h-16 bg-brand-accent/20 rounded-[1.25rem] text-brand-accent shadow-xl shadow-brand-accent/10 group-hover:scale-110 group-hover:bg-brand-accent group-hover:text-white transition-all duration-700 ease-out backdrop-blur-md ring-1 ring-white/30">
+        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mb-8 w-16 h-16 rounded-full text-brand-accent group-hover:scale-110 group-hover:text-white transition-all duration-700 ease-out">
           <Icon icon={icon} className="w-8 h-8" />
         </div>
 
