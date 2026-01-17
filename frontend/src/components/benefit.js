@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import ActionButtons from "./actionButtons";
 
 import MediaRenderer from "./mediaRenderer";
+import ExpandableText from "./expandableText";
 
 export default function BenefitItem(props) {
   const { span, media, title, children, icon, buttons } = props;
@@ -44,9 +45,9 @@ export default function BenefitItem(props) {
           <h4 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-brand-bg leading-tight mb-5 tracking-tight group-hover:text-brand-accent transition-colors duration-500">
             {title}
           </h4>
-          <p className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-            {children}
-          </p>
+          <div className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+            <ExpandableText content={children} collapsedHeight={100} />
+          </div>
         </div>
 
         {buttons && buttons.length > 0 && (

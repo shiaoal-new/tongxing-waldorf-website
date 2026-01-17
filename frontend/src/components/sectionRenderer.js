@@ -8,6 +8,7 @@ import MediaRenderer from "./mediaRenderer";
 import ActionButtons from "./actionButtons";
 import { usePageData } from "../contexts/PageDataContext";
 import MarkdownContent from "./markdownContent";
+import ExpandableText from "./expandableText";
 import dynamic from "next/dynamic";
 
 /**
@@ -292,7 +293,7 @@ function TextBlock({ data, align, isNested }) {
             )}
             {data.content && (
                 <div className={`py-2 ${isNested ? 'text-base' : 'text-lg'} text-brand-taupe dark:text-brand-taupe`}>
-                    <MarkdownContent content={data.content} />
+                    <ExpandableText content={data.content} collapsedHeight={isNested ? 80 : 120} />
                 </div>
             )}
             {!isNested && <ActionButtons buttons={data.buttons} align={align === "left" ? "left" : "center"} className="mt-6" />}
