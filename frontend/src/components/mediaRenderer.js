@@ -21,6 +21,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
             );
 
         case "Video":
+        case "video":
             if (!media.video) return null;
             return (
                 <video

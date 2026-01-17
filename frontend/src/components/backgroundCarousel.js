@@ -41,15 +41,21 @@ const TRANSITION_VARIANTS = {
 
 const getImagePath = (path) => {
     if (!path || typeof path !== 'string') return path;
-    return path.startsWith('./') ? path.substring(1) : path;
+    const cleanPath = path.startsWith('./') ? path.substring(1) : path;
+    try {
+        return decodeURIComponent(cleanPath);
+    } catch (e) {
+        return cleanPath;
+    }
 };
 
 const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
     const normalized = (media_list || []).map(m => {
-        if (m.type === 'image') return { ...m, image: getImagePath(m.image) };
-        if (m.type === 'Video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
-        if (m.type === 'youtube') return { ...m, url: m.url };
-        if (m.type === 'lottie') {
+        const type = m.type?.toLowerCase();
+        if (type === 'image') return { ...m, image: getImagePath(m.image) };
+        if (type === 'video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
+        if (type === 'youtube') return { ...m, url: m.url };
+        if (type === 'lottie') {
             let src = m.lottie || m.url;
             if (src && typeof src === 'string' && !src.startsWith('/') && !src.startsWith('http') && src.includes('-')) {
                 src = `https://lottie.host/${src}.lottie`;
