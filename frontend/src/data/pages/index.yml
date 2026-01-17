@@ -144,4 +144,4 @@ sections:
         buttons:
           - text: 預約參觀
             link: /visit
-            style: btn-white
+            style: btn-inverse

@@ -147,6 +147,11 @@
     @apply bg-transparent border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
   }
 
+  /* 反白按鈕 (用於深色/主色背景) - Solid White -> Transparent/Hollow White style */
+  .btn-inverse {
+    @apply bg-white text-brand-accent border-2 border-white hover:bg-transparent hover:text-white hover:border-white shadow-md hover:shadow-xl hover:scale-105;
+  }
+
   /* Micro Interactions (微互動) */
 
   /* 懸停流動 (Hover Flow) - 用於按鈕或區塊 */
