@@ -9,6 +9,9 @@ const PORTS_TO_KILL = [3000, 5001, 5002, 5003, 4000, 4040, 8080, 9099, 9150];
 const FIXED_DOMAIN = 'https://tongxingwaldorf.dpdns.org';
 const TUNNEL_NAME = 'tongxing-dev';
 
+// Log Level: quiet (errors only) | normal (errors + warnings) | verbose (all)
+const LOG_LEVEL = process.env.LOG_LEVEL || 'normal';
+
 // Colors
 const colors = {
     reset: "\x1b[0m",
@@ -17,10 +20,66 @@ const colors = {
     yellow: "\x1b[33m",
     blue: "\x1b[34m",
     cyan: "\x1b[36m",
+    magenta: "\x1b[35m",
 };
+
+// Setup logs directory
+const logsDir = path.join(__dirname, '../logs');
+if (!fs.existsSync(logsDir)) {
+    fs.mkdirSync(logsDir, { recursive: true });
+}
+
+// Log file streams
+const logStreams = {};
+
+function getLogStream(name) {
+    if (!logStreams[name]) {
+        const logPath = path.join(logsDir, `${name.toLowerCase()}.log`);
+        logStreams[name] = fs.createWriteStream(logPath, { flags: 'a' });
+        // Write session separator
+        logStreams[name].write(`\n${'='.repeat(80)}\n`);
+        logStreams[name].write(`Session started at ${new Date().toISOString()}\n`);
+        logStreams[name].write(`${'='.repeat(80)}\n\n`);
+    }
+    return logStreams[name];
+}
 
 function log(prefix, msg, color = colors.reset) {
     console.log(`${color}[${prefix}] ${msg}${colors.reset}`);
+    // Also write to system log file
+    const stream = getLogStream('system');
+    stream.write(`[${new Date().toISOString()}] [${prefix}] ${msg}\n`);
+}
+
+// Smart filter for important messages
+function isImportantMessage(line, serviceName) {
+    const lowerLine = line.toLowerCase();
+
+    // Always show errors
+    if (lowerLine.includes('error') || lowerLine.includes('err:') ||
+        lowerLine.includes('failed') || lowerLine.includes('exception')) {
+        return 'error';
+    }
+
+    // Show warnings in normal mode
+    if (lowerLine.includes('warning') || lowerLine.includes('warn:')) {
+        return 'warning';
+    }
+
+    // Show critical status messages
+    const criticalPatterns = [
+        'ready', 'compiled', 'started', 'listening',
+        'connected', 'registered', 'success',
+        'error', 'failed', 'deprecated'
+    ];
+
+    for (const pattern of criticalPatterns) {
+        if (lowerLine.includes(pattern)) {
+            return 'info';
+        }
+    }
+
+    return null;
 }
 
 // 1. Kill existing processes
@@ -43,15 +102,43 @@ function killPorts() {
     }
 }
 
-// 2. Start a process
+// 2. Start a process with smart logging
 function startProcess(name, command, args, cwd = '.', color = colors.reset) {
     log('System', `🚀 Starting ${name}...`, color);
     const proc = spawn(command, args, { cwd, shell: true, stdio: 'pipe' });
 
+    // Get log stream for this service
+    const logStream = getLogStream(name);
+
     proc.stdout.on('data', (data) => {
         const lines = data.toString().trim().split('\n');
         lines.forEach(line => {
-            if (line) console.log(`${color}[${name}] ${line}${colors.reset}`);
+            if (!line) return;
+
+            // Always write to log file
+            logStream.write(`[${new Date().toISOString()}] [STDOUT] ${line}\n`);
+
+            // Decide if we should show in terminal
+            const importance = isImportantMessage(line, name);
+
+            if (LOG_LEVEL === 'verbose') {
+                // Show everything
+                console.log(`${color}[${name}] ${line}${colors.reset}`);
+            } else if (LOG_LEVEL === 'normal') {
+                // Show errors, warnings, and important info
+                if (importance === 'error') {
+                    console.error(`${colors.red}[${name}:ERROR] ${line}${colors.reset}`);
+                } else if (importance === 'warning') {
+                    console.log(`${colors.yellow}[${name}:WARN] ${line}${colors.reset}`);
+                } else if (importance === 'info') {
+                    console.log(`${color}[${name}] ${line}${colors.reset}`);
+                }
+            } else if (LOG_LEVEL === 'quiet') {
+                // Only show errors
+                if (importance === 'error') {
+                    console.error(`${colors.red}[${name}:ERROR] ${line}${colors.reset}`);
+                }
+            }
         });
     });
 
@@ -60,13 +147,31 @@ function startProcess(name, command, args, cwd = '.', color = colors.reset) {
         lines.forEach(line => {
             if (!line) return;
 
-            // Basic heuristic to detect warnings
+            // Always write to log file
+            logStream.write(`[${new Date().toISOString()}] [STDERR] ${line}\n`);
+
+            // Detect if it's a warning or error
             const isWarning = line.includes('Warning') || line.includes('warning');
 
-            if (isWarning) {
-                console.log(`${colors.yellow}[${name}:WARN] ${line}${colors.reset}`);
-            } else {
-                console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+            if (LOG_LEVEL === 'verbose') {
+                // Show everything
+                if (isWarning) {
+                    console.log(`${colors.yellow}[${name}:WARN] ${line}${colors.reset}`);
+                } else {
+                    console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+                }
+            } else if (LOG_LEVEL === 'normal') {
+                // Show warnings and errors
+                if (isWarning) {
+                    console.log(`${colors.yellow}[${name}:WARN] ${line}${colors.reset}`);
+                } else {
+                    console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+                }
+            } else if (LOG_LEVEL === 'quiet') {
+                // Only show errors (not warnings)
+                if (!isWarning) {
+                    console.error(`${colors.red}[${name}:ERR] ${line}${colors.reset}`);
+                }
             }
         });
     });
@@ -217,6 +322,27 @@ function updateEnvFile(url) {
 }
 
 async function main() {
+    // Display log level info
+    const logLevelColors = {
+        quiet: colors.red,
+        normal: colors.yellow,
+        verbose: colors.cyan
+    };
+    const logLevelColor = logLevelColors[LOG_LEVEL] || colors.reset;
+
+    log('System', `📊 Log Level: ${LOG_LEVEL.toUpperCase()}`, logLevelColor);
+    log('System', `📁 Detailed logs will be saved to: ${logsDir}`, colors.cyan);
+
+    if (LOG_LEVEL === 'quiet') {
+        log('System', '🔇 Only errors will be shown in terminal', colors.yellow);
+    } else if (LOG_LEVEL === 'normal') {
+        log('System', '📢 Errors, warnings, and important messages will be shown', colors.yellow);
+    } else {
+        log('System', '📣 All messages will be shown (verbose mode)', colors.yellow);
+    }
+
+    console.log(''); // Empty line for readability
+
     // A. Cleanup
     killPorts();
 
@@ -295,3 +421,21 @@ async function main() {
 }
 
 main().catch(err => console.error(err));
+
+// Graceful shutdown - close all log streams
+process.on('SIGINT', () => {
+    log('System', '🛑 Shutting down...', colors.yellow);
+    Object.values(logStreams).forEach(stream => {
+        stream.write(`\nSession ended at ${new Date().toISOString()}\n`);
+        stream.end();
+    });
+    process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+    Object.values(logStreams).forEach(stream => {
+        stream.write(`\nSession ended at ${new Date().toISOString()}\n`);
+        stream.end();
+    });
+    process.exit(0);
+});

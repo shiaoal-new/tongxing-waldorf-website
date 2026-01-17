@@ -22,7 +22,7 @@ export const seedvisitsessions = onRequest({ cors: true, region: "asia-east1" },
 
     try {
         // [Note] Seeding logic remains in function for now as it's a dev utility
-        const { db } = await import("./utils/firebase");
+        const { db } = await import("./utils/firebase.js");
         const batch = db.batch();
         initialDates.forEach((data) => {
             const ref = db.collection("visit_sessions").doc();
