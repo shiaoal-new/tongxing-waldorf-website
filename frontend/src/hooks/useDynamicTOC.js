@@ -41,9 +41,11 @@ export function useDynamicTOC(page, extraData = {}) {
                     try {
                         // 將 block.type 轉換為組件檔名 (例如: 'timeline_block' -> 'TimelineBlock')
                         const componentName = convertBlockTypeToComponentName(block.type);
+                        console.log('[useDynamicTOC] Trying to load:', componentName, 'for block type:', block.type);
 
                         // 嘗試動態載入該組件模組
-                        const module = await import(`./${componentName}`);
+                        const module = await import(`../components/${componentName}`);
+                        console.log('[useDynamicTOC] Module loaded:', componentName, 'has getTOC:', typeof module.getTOC);
 
                         // 檢查是否有 export getTOC 函式
                         if (typeof module.getTOC === 'function') {
@@ -55,6 +57,7 @@ export function useDynamicTOC(page, extraData = {}) {
                             }
 
                             const items = module.getTOC(block, section.section_id, contextData);
+                            console.log('[useDynamicTOC] getTOC returned:', items, 'for section:', section.section_id);
 
                             if (items && items.length) {
                                 if (!updates.has(section.section_id)) {
@@ -64,8 +67,12 @@ export function useDynamicTOC(page, extraData = {}) {
                             }
                         }
                     } catch (e) {
-                        // 靜默失敗：如果模組不存在或沒有 getTOC，就跳過
-                        // 這是正常的，因為大部分 Block 都不需要提供 TOC
+                        // 靜默失敗:如果模組不存在或沒有 getTOC,就跳過
+                        // 這是正常的,因為大部分 Block 都不需要提供 TOC
+                        // 只在非 "Cannot find module" 錯誤時才記錄
+                        if (!e.message.includes('Cannot find module')) {
+                            console.warn('[useDynamicTOC] Unexpected error for:', block.type, e);
+                        }
                     }
                 }
             });
@@ -136,7 +143,18 @@ function generateInitialTOC(page) {
  *       'questionnaire_block' -> 'QuestionnaireBlock'
  */
 function convertBlockTypeToComponentName(blockType) {
-    return blockType
-        .replace(/_block$/, 'Block')
-        .replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+    // 步驟 1: 將 _block 移除
+    // 'timeline_block' -> 'timeline'
+    const withoutBlock = blockType.replace(/_block$/, '');
+
+    // 步驟 2: 將下劃線後的字母轉大寫
+    // 'timeline' -> 'timeline' (沒有下劃線,不變)
+    // 'questionnaire_form' -> 'questionnaireForm'
+    const camelCase = withoutBlock.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+
+    // 步驟 3: 首字母大寫並加上 Block
+    // 'timeline' -> 'TimelineBlock'
+    const pascalCase = camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+
+    return pascalCase + 'Block';
 }

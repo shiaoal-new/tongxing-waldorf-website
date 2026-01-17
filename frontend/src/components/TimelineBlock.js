@@ -89,16 +89,6 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
                                     <h4 className={styles['timeline-subtitle']}>{item.subtitle}</h4>
                                 )}
                                 <p className={styles['timeline-content']}>{item.content}</p>
-                                {/* {item.detail && (
-                                    <div className={styles['detail-hint']}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <circle cx="5" cy="12" r="2"></circle>
-                                            <circle cx="12" cy="12" r="2"></circle>
-                                            <circle cx="19" cy="12" r="2"></circle>
-                                        </svg>
-                                        <span>點擊查看詳細故事</span>
-                                    </div>
-                                )} */}
                             </div>
                         </VerticalTimelineElement>
                     );
@@ -127,18 +117,28 @@ const TimelineBlock = ({ data, anchor = 'timeline' }) => {
 export default TimelineBlock;
 
 export function getTOC(block, sectionId) {
-    if (!block?.items) return [];
+    console.log('[TimelineBlock getTOC] Called with:', { block, sectionId });
 
-    return block.items
+    if (!block?.items) {
+        console.log('[TimelineBlock getTOC] No items found');
+        return [];
+    }
+
+    const result = block.items
         .map((item, index) => {
             if (item.type === 'header' && item.title) {
                 const id = sectionId || 'timeline';
-                return {
+                const tocItem = {
                     id: `${id}-header-${index}`,
                     title: `${item.title}`
                 };
+                console.log('[TimelineBlock getTOC] Found header:', tocItem);
+                return tocItem;
             }
             return null;
         })
         .filter(Boolean);
+
+    console.log('[TimelineBlock getTOC] Returning:', result);
+    return result;
 }
