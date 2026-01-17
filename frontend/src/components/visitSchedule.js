@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "../context/SessionContext";
 import liff from "@line/liff"; // Import LIFF SDK
 import Container from "./Container";
-import { ClockIcon, CalendarIcon, UserGroupIcon, TicketIcon } from "@heroicons/react/outline";
+import { ClockIcon, CalendarIcon, TicketIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./VisitRegistrationForm";
 import Modal from "./Modal";
 import DevComment from "./DevComment";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+// Modularized Components
+import RegistrationCard from "./VisitSchedule/RegistrationCard";
+import SessionCard from "./VisitSchedule/SessionCard";
+import SessionTable from "./VisitSchedule/SessionTable";
+import CancelModal from "./VisitSchedule/CancelModal";
 
 export default function VisitSchedule() {
     const router = useRouter();
@@ -146,10 +152,6 @@ export default function VisitSchedule() {
     useEffect(() => {
         // If not in LIFF (e.g. external browser) but mode=manage is present, also trigger login
         if (router.query.mode === 'manage' && !session && !isLoading) {
-            // Avoid double trigger if LIFF handles it, but safe to keep as fallback
-            // We can check !liff.isInClient() if we want to be strict, but liff init is async.
-            // Let's rely on the fact that if LIFF is initing, this might fire too.
-            // But since specific checks are good:
             loginWithLine();
         }
     }, [router.query, session, isLoading]);
@@ -266,10 +268,6 @@ export default function VisitSchedule() {
         "其他原因"
     ];
 
-    // LINE Official Account URL - 根據環境自動切換
-    // 我們優先使用 NEXT_PUBLIC_LINE_OA_ID (通常是正式版 @tongxing)
-    // 但如果是本地開發 (development)，我們可能希望連到測試帳號 (例如 @443brhul)
-    // 請確保 frontend/.env.local 的 NEXT_PUBLIC_LINE_OA_ID 是您的測試帳號 ID
     const LINE_OA_ID = process.env.NEXT_PUBLIC_LINE_OA_ID || "@tongxing";
     const LINE_OA_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
 
@@ -386,33 +384,13 @@ export default function VisitSchedule() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {userRegistrations.map((reg) => (
-                                <div key={reg.id} className="bg-white dark:bg-brand-structural/30 rounded-xl p-6 border-l-4 border-brand-accent shadow-sm">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <p className="font-bold text-lg text-brand-text">{formatSessionDate(reg.session?.date)}</p>
-                                            <p className="text-brand-taupe">{formatSessionTime(reg.session?.start_time, reg.session?.duration)}</p>
-                                        </div>
-                                        <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">
-                                            已確認
-                                        </span>
-                                    </div>
-                                    <div className="text-sm text-brand-taupe border-t border-gray-100 pt-4 mt-2">
-                                        <div className="flex justify-between mb-2">
-                                            <span>登記人數</span>
-                                            <span className="font-bold">{reg.visitors} 位</span>
-                                        </div>
-                                        <div className="flex justify-between mb-4">
-                                            <span>登記姓名</span>
-                                            <span className="font-bold">{reg.name}</span>
-                                        </div>
-                                        <button
-                                            onClick={() => openCancelModal(reg)}
-                                            className="btn btn-ghost btn-sm w-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 border border-red-200 hover:border-red-300 rounded-full"
-                                        >
-                                            取消預約
-                                        </button>
-                                    </div>
-                                </div>
+                                <RegistrationCard
+                                    key={reg.id}
+                                    reg={reg}
+                                    formatSessionDate={formatSessionDate}
+                                    formatSessionTime={formatSessionTime}
+                                    onCancel={openCancelModal}
+                                />
                             ))}
                         </div>
                         <div className="my-8 border-b border-brand-taupe/10"></div>
@@ -425,71 +403,26 @@ export default function VisitSchedule() {
 
                 <div className="block md:hidden space-y-component">
                     {dates.map((item) => (
-                        <div key={item.id} className="bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-sm p-component border border-brand-taupe/10">
-                            <div className="flex justify-between items-start mb-component">
-                                <div className="flex items-center text-lg font-bold text-brand-text dark:text-brand-bg leading-brand tracking-brand">
-                                    <CalendarIcon className="w-5 h-5 mr-2 text-brand-accent" />
-                                    {formatSessionDate(item.date)}
-                                </div>
-                                <span className={`px-2 py-1 text-[10px] font-bold rounded-full ${item.remaining_seats > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                                    {item.remaining_seats > 0 ? "報名中" : "已額滿"}
-                                </span>
-                            </div>
-
-                            <div className="space-y-3 mb-component">
-                                <div className="flex items-center text-brand-taupe">
-                                    <ClockIcon className="w-5 h-5 mr-2" />
-                                    {formatSessionTime(item.start_time, item.duration)}
-                                </div>
-                                <div className="flex items-center text-brand-taupe">
-                                    <UserGroupIcon className="w-5 h-5 mr-2" />
-                                    剩餘名額：<span className={item.remaining_seats > 0 ? "text-green-600 font-bold ml-1" : "text-red-500 font-bold ml-1"}>{item.remaining_seats}</span> / {item.total_seats}
-                                </div>
-                            </div>
-
-                            <div className="mt-auto">
-                                {renderButton(item)}
-                            </div>
-                        </div>
+                        <SessionCard
+                            key={item.id}
+                            item={item}
+                            formatSessionDate={formatSessionDate}
+                            formatSessionTime={formatSessionTime}
+                            renderButton={renderButton}
+                        />
                     ))}
                 </div>
 
                 <DevComment text="Visit Schedule Desktop Table View" />
                 {/* Desktop View: Table */}
 
-                <div className="hidden md:block overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div className="overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-sm border border-brand-taupe/10">
-                            <table className="min-w-full text-center text-sm font-light text-brand-text dark:text-brand-bg">
-                                <thead className="border-b border-brand-taupe/10 font-bold dark:bg-brand-structural/30">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-4">日期</th>
-                                        <th scope="col" className="px-6 py-4">時間</th>
-                                        <th scope="col" className="px-6 py-4">剩餘名額</th>
-                                        <th scope="col" className="px-6 py-4">狀態</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dates.map((item) => (
-                                        <tr key={item.id} className="border-b border-brand-taupe/10 dark:hover:bg-brand-structural/40 transition-colors">
-                                            <td className="whitespace-nowrap px-6 py-4 font-bold">{formatSessionDate(item.date)}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">{formatSessionTime(item.start_time, item.duration)}</td>
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                <span className={`${item.remaining_seats > 0 ? "text-green-600 font-bold" : "text-red-500"}`}>
-                                                    {item.remaining_seats}
-                                                </span>
-                                                / {item.total_seats}
-                                            </td>
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                {renderButton(item)}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <SessionTable
+                    dates={dates}
+                    formatSessionDate={formatSessionDate}
+                    formatSessionTime={formatSessionTime}
+                    renderButton={renderButton}
+                />
+
                 <Modal
                     title={`預約參訪場次：${formatSessionDate(selectedSession?.date)}`}
                     isOpen={isRegistrationModalOpen}
@@ -507,64 +440,17 @@ export default function VisitSchedule() {
                     </div>
                 </Modal>
 
-                <Modal
-                    title="取消預約"
+                <CancelModal
                     isOpen={isCancelModalOpen}
                     onClose={() => setIsCancelModalOpen(false)}
-                    maxWidth="max-w-md"
-                >
-                    <div className="p-6">
-                        <div className="mb-6">
-                            <h4 className="text-lg font-bold text-brand-text mb-2">
-                                場次：{formatSessionDate(selectedRegistration?.session?.date)}
-                            </h4>
-                            <p className="text-sm text-brand-taupe leading-relaxed">
-                                您確定要取消這次的參訪嗎？取消後名額將會釋出。
-                            </p>
-                        </div>
-
-                        <div className="space-y-3 mb-8">
-                            <p className="text-sm font-bold text-brand-text">請選擇取消原因：</p>
-                            {cancelReasons.map((reason) => (
-                                <label key={reason} className="flex items-center space-x-3 p-3 rounded-xl border border-brand-taupe/10 hover:bg-brand-accent/5 cursor-pointer transition-colors">
-                                    <input
-                                        type="radio"
-                                        name="cancelReason"
-                                        value={reason}
-                                        checked={cancelReason === reason}
-                                        onChange={(e) => setCancelReason(e.target.value)}
-                                        className="radio radio-primary radio-sm"
-                                    />
-                                    <span className="text-brand-text text-sm">{reason}</span>
-                                </label>
-                            ))}
-                            {cancelReason === "其他原因" && (
-                                <textarea
-                                    className="textarea textarea-bordered w-full mt-2 text-sm"
-                                    placeholder="請輸入原因..."
-                                    rows={2}
-                                    onChange={(e) => setCancelReason(`其他：${e.target.value}`)}
-                                />
-                            )}
-                        </div>
-
-                        <div className="flex gap-4">
-                            <button
-                                onClick={() => setIsCancelModalOpen(false)}
-                                className="btn btn-ghost flex-1 rounded-full"
-                            >
-                                我再想想
-                            </button>
-                            <button
-                                onClick={handleCancelRegistration}
-                                disabled={isCancelling || !cancelReason}
-                                className={`btn btn-error flex-1 rounded-full text-white ${isCancelling ? 'loading' : ''}`}
-                            >
-                                {isCancelling ? '處理中...' : '確認取消'}
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
+                    selectedRegistration={selectedRegistration}
+                    formatSessionDate={formatSessionDate}
+                    cancelReasons={cancelReasons}
+                    cancelReason={cancelReason}
+                    setCancelReason={setCancelReason}
+                    onConfirm={handleCancelRegistration}
+                    isCancelling={isCancelling}
+                />
             </div>
         </Container>
     );
