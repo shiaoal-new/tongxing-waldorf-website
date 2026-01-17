@@ -1,6 +1,6 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { VisitService } from "./services/visitService";
-import { UserService } from "./services/userService";
+import { VisitService } from "./services/visitService.js";
+import { UserService } from "./services/userService.js";
 
 // Helper to parse cookies
 const parseCookies = (cookieHeader: string) => {

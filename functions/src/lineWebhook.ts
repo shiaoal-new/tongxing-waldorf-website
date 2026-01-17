@@ -1,7 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { db } from "./utils/firebase";
-import { formatSessionDate, formatSessionTime } from "./utils/formatters";
-import { UserService } from "./services/userService";
+import { db } from "./utils/firebase.js";
+import { formatSessionDate, formatSessionTime } from "./utils/formatters.js";
+import { UserService } from "./services/userService.js";
 import {
     messagingApi,
     validateSignature,

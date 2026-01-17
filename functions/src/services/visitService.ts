@@ -1,4 +1,4 @@
-import { db, FieldValue } from "../utils/firebase";
+import { db, FieldValue } from "../utils/firebase.js";
 
 export class VisitService {
     static async getOpenSessions() {

@@ -1,5 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { VisitService } from "./services/visitService";
+import { VisitService } from "./services/visitService.js";
 
 // 獲取參訪場次
 export const getvisitsessions = onRequest({ cors: true, region: "asia-east1" }, async (req, res) => {
@@ -60,13 +60,13 @@ export const registervisit = onRequest({ cors: true, region: "asia-east1" }, asy
 
 
 // LINE Webhook handler
-export * from "./lineWebhook";
+export * from "./lineWebhook.js";
 
 // User Registrations handler
-export * from "./userRegistrations";
+export * from "./userRegistrations.js";
 
 // LINE OAuth Callback handler
-export { default as lineCallback } from "./lineCallback";
+export { default as lineCallback } from "./lineCallback.js";
 
-export { default as getSession } from "./getSession";
-export { default as logout } from "./logout";
+export { default as getSession } from "./getSession.js";
+export { default as logout } from "./logout.js";

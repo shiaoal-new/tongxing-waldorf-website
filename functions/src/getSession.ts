@@ -1,5 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { db } from "./utils/firebase";
+import { db } from "./utils/firebase.js";
 
 export default onRequest({
     cors: true,

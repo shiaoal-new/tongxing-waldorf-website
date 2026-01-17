@@ -1,4 +1,4 @@
-import { db, FieldValue, Timestamp } from "../utils/firebase";
+import { db, FieldValue, Timestamp } from "../utils/firebase.js";
 
 export class UserService {
     static async getUserByLineId(lineUserId: string) {
