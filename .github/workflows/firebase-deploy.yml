@@ -12,26 +12,35 @@ jobs:
     steps:
       # 1. 取得程式碼
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 需要完整歷史記錄以使用 git notes
 
-      # 2. 安裝 Node.js
+      # 2. 配置 Git
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # 3. 安裝 Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: "20"
 
-      # 3. 安裝依賴 (包含前端與後端)
+      # 4. 安裝依賴 (包含前端與後端)
       - run: npm run install:all
 
-      # 4. 依 branch 做 build/export
+      # 5. 依 branch 做 build/export
       - name: Build & Export
         run: |
           export NEXT_PUBLIC_ACTION_RUN_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           npm run build
 
-      # 5. 安裝 Firebase CLI
+      # 6. 安裝 Firebase CLI
       - run: npm install -g firebase-tools
 
-      # 6. 部署到對應專案 (Hosting + Functions)
+      # 7. 部署到對應專案 (Hosting + Functions)
       - name: Firebase Deploy
+        id: deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
@@ -42,3 +51,36 @@ jobs:
             firebase use dev --token $FIREBASE_TOKEN
             firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --force
           fi
+
+      # 8. 記錄部署成功結果到 Git Notes
+      - name: Add Success Note
+        if: success()
+        run: |
+          DEPLOY_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          BRANCH="${GITHUB_REF##*/}"
+          NOTE_MSG="🚀 部署成功
+          環境: $BRANCH
+          時間: $DEPLOY_TIME
+          Workflow: ${{ github.workflow }}
+          Run ID: ${{ github.run_id }}
+          Actor: ${{ github.actor }}"
+
+          git notes --ref=deployments add -m "$NOTE_MSG" ${{ github.sha }} || git notes --ref=deployments append -m "$NOTE_MSG" ${{ github.sha }}
+          git push origin refs/notes/deployments
+
+      # 9. 記錄部署失敗結果到 Git Notes
+      - name: Add Failure Note
+        if: failure()
+        run: |
+          DEPLOY_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          BRANCH="${GITHUB_REF##*/}"
+          NOTE_MSG="❌ 部署失敗
+          環境: $BRANCH
+          時間: $DEPLOY_TIME
+          Workflow: ${{ github.workflow }}
+          Run ID: ${{ github.run_id }}
+          Actor: ${{ github.actor }}
+          查看詳情: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          git notes --ref=deployments add -m "$NOTE_MSG" ${{ github.sha }} || git notes --ref=deployments append -m "$NOTE_MSG" ${{ github.sha }}
+          git push origin refs/notes/deployments
