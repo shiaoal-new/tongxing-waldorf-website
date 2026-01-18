@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AboutModal from "./AboutModal";
 import DevComment from "./DevComment";
 import { useSession } from "../context/SessionContext";
+import { useUXTestMode } from "../context/UXTestModeContext";
 
 // Modularized Components
 import UserMenu from "./Navbar/UserMenu";
@@ -15,6 +16,7 @@ import { ScrollLock, NavBarContainer } from "./Navbar/NavbarLayout";
 
 export default function Navbar({ pages = [], navigation: customNavigation, isHeroPage = true }) {
   const { session } = useSession();
+  const { isTestMode, toggleTestMode } = useUXTestMode();
   const [scroll, setScroll] = useState(!isHeroPage);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const router = useRouter();
@@ -76,6 +78,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
   const actionHandlers = {
     showAbout: () => setShowAboutModal(true),
     toggleGrid: (current) => setShowBackgroundGrid(!current),
+    toggleUXTest: () => toggleTestMode(),
     themeList: 'THEME_LIST_COMPONENT' // Special marker
   };
 

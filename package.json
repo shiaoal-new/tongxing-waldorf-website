@@ -9,5 +9,8 @@
     "build": "npm run build --prefix frontend && npm run build --prefix functions",
     "deploy": "firebase deploy",
     "install:all": "npm install --prefix frontend && npm install --prefix functions"
+  },
+  "dependencies": {
+    "typed.js": "^2.1.0"
   }
 }

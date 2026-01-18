@@ -19,6 +19,8 @@ items:
         action: "showAbout"
       - title: "背景網格開關"
         action: "toggleGrid"
+      - title: "UI/UX 測試模式"
+        action: "toggleUXTest"
       - title: "CMS 後台管理"
         path: "/admin/index.html"
         target: "_blank"
