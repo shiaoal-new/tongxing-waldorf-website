@@ -1,0 +1,164 @@
+name: Create Linear Issue on Failure
+
+on:
+    workflow_run:
+        workflows: ["Firebase Hosting Deploy"]
+        types:
+            - completed
+
+jobs:
+    create-linear-issue:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.event.workflow_run.head_sha }}
+                  fetch-depth: 0
+
+            - name: Get commit information
+              id: commit-info
+              run: |
+                  COMMIT_SHA="${{ github.event.workflow_run.head_sha }}"
+                  COMMIT_MSG=$(git log -1 --pretty=format:"%s" $COMMIT_SHA)
+                  COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an" $COMMIT_SHA)
+
+                  echo "sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+                  echo "message=$COMMIT_MSG" >> $GITHUB_OUTPUT
+                  echo "author=$COMMIT_AUTHOR" >> $GITHUB_OUTPUT
+
+            - name: Get workflow errors
+              id: get-errors
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  RUN_ID="${{ github.event.workflow_run.id }}"
+
+                  # 獲取 jobs 資訊
+                  JOBS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                    "https://api.github.com/repos/${{ github.repository }}/actions/runs/$RUN_ID/jobs")
+
+                  # 提取失敗的步驟
+                  ERROR_SUMMARY=$(echo "$JOBS_JSON" | jq -r '
+                    .jobs[] | 
+                    select(.conclusion == "failure") | 
+                    "### ❌ Job: " + .name + "\n\n" +
+                    ([.steps[] | select(.conclusion == "failure") | "- **步驟:** " + .name + "\n  **狀態:** " + .conclusion] | join("\n")) +
+                    "\n\n"
+                  ' | head -c 2000)
+
+                  # 如果沒有錯誤摘要,使用預設訊息
+                  if [ -z "$ERROR_SUMMARY" ]; then
+                    ERROR_SUMMARY="無法自動提取錯誤詳情,請查看 workflow 運行日誌。"
+                  fi
+
+                  # 保存到環境變數
+                  echo "summary<<EOF" >> $GITHUB_OUTPUT
+                  echo "$ERROR_SUMMARY" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Create Linear Issue
+              env:
+                  LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+              run: |
+                  # 構建 issue 描述
+                  cat > /tmp/description.md <<'DESCRIPTION_EOF'
+                  ## 🚨 部署失敗通知
+
+                  **Workflow:** ${{ github.event.workflow_run.name }}
+                  **分支:** `${{ github.event.workflow_run.head_branch }}`
+                  **Commit:** `${{ steps.commit-info.outputs.sha }}`
+                  **作者:** ${{ steps.commit-info.outputs.author }}
+                  **Commit 訊息:** ${{ steps.commit-info.outputs.message }}
+
+                  ---
+
+                  ## 📋 錯誤摘要
+
+                  ${{ steps.get-errors.outputs.summary }}
+
+                  ---
+
+                  ## 🔗 相關連結
+
+                  - [查看 Workflow 運行](${{ github.event.workflow_run.html_url }})
+                  - [查看 Commit](https://github.com/${{ github.repository }}/commit/${{ steps.commit-info.outputs.sha }})
+
+                  ---
+
+                  ## 📝 建議操作
+
+                  1. 查看上方的錯誤摘要
+                  2. 點擊 Workflow 連結查看完整日誌
+                  3. 檢查相關的代碼變更
+                  4. 在本地重現並修復問題
+                  5. 重新部署測試
+
+                  ---
+
+                  *此 issue 由 GitHub Actions 自動創建*
+                  DESCRIPTION_EOF
+
+                  DESCRIPTION=$(cat /tmp/description.md)
+                  TITLE="🚨 部署失敗: ${{ github.event.workflow_run.head_branch }} - ${{ steps.commit-info.outputs.sha }}"
+
+                  # 轉義 JSON
+                  DESCRIPTION_JSON=$(echo "$DESCRIPTION" | jq -Rs .)
+                  TITLE_JSON=$(echo "$TITLE" | cut -c1-100 | jq -Rs .)
+
+                  # 創建 GraphQL mutation
+                  cat > /tmp/mutation.json <<EOF
+                  {
+                    "query": "mutation CreateIssue(\$input: IssueCreateInput!) { issueCreate(input: \$input) { success issue { id identifier title url } } }",
+                    "variables": {
+                      "input": {
+                        "teamId": "36c52d63-f2e6-4c68-a21b-23e8870ff5da",
+                        "title": $TITLE_JSON,
+                        "description": $DESCRIPTION_JSON,
+                        "priority": 1,
+                        "labelIds": ["fca6f13a-3b0d-41cc-9ffe-76ab03f4fab0"],
+                        "stateId": "fdf009d4-2ad2-4765-97ba-0a81b09e7825"
+                      }
+                    }
+                  }
+                  EOF
+
+                  # 發送請求到 Linear
+                  RESPONSE=$(curl -s -X POST \
+                    -H "Content-Type: application/json" \
+                    -H "Authorization: $LINEAR_API_KEY" \
+                    -d @/tmp/mutation.json \
+                    https://api.linear.app/graphql)
+
+                  # 檢查結果
+                  SUCCESS=$(echo "$RESPONSE" | jq -r '.data.issueCreate.success // false')
+
+                  if [ "$SUCCESS" = "true" ]; then
+                    ISSUE_ID=$(echo "$RESPONSE" | jq -r '.data.issueCreate.issue.identifier')
+                    ISSUE_URL=$(echo "$RESPONSE" | jq -r '.data.issueCreate.issue.url')
+                    
+                    echo "✅ Linear issue 創建成功!"
+                    echo "📋 Issue ID: $ISSUE_ID"
+                    echo "🔗 URL: $ISSUE_URL"
+                    
+                    # 添加到 GitHub Actions summary
+                    cat >> $GITHUB_STEP_SUMMARY <<SUMMARY_EOF
+                  ## ✅ Linear Issue 已創建
+
+                  - **Issue:** [$ISSUE_ID]($ISSUE_URL)
+                  - **Workflow:** ${{ github.event.workflow_run.name }}
+                  - **Branch:** ${{ github.event.workflow_run.head_branch }}
+                  - **Commit:** ${{ steps.commit-info.outputs.sha }}
+                  - **Author:** ${{ steps.commit-info.outputs.author }}
+
+                  [查看 Linear Issue →]($ISSUE_URL)
+                  SUMMARY_EOF
+                  else
+                    ERROR_MSG=$(echo "$RESPONSE" | jq -r '.errors[0].message // .errors[0].extensions.userPresentableMessage // "Unknown error"')
+                    echo "❌ 創建 Linear issue 失敗"
+                    echo "錯誤: $ERROR_MSG"
+                    echo "完整響應: $RESPONSE"
+                    exit 1
+                  fi
