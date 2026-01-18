@@ -71,3 +71,29 @@ git log --show-notes=deployments --all | grep -A 7 "❌ 部署失敗"
 ## 詳細文檔
 
 查看 [docs/git-notes-setup.md](./git-notes-setup.md) 獲取完整的設定指南和進階用法。
+
+## 故障排除
+
+### GitHub Actions 權限錯誤
+
+如果看到類似以下錯誤:
+```
+remote: Permission to your-repo.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/...': The requested URL returned error: 403
+```
+
+**解決方案**: 已在 workflow 中配置以下權限:
+```yaml
+permissions:
+  contents: write  # 允許推送 Git Notes
+```
+
+並在 checkout 步驟中添加:
+```yaml
+- uses: actions/checkout@v3
+  with:
+    token: ${{ secrets.GITHUB_TOKEN }}
+    persist-credentials: true
+```
+
+這些配置已經包含在最新的 workflow 文件中,無需額外操作。
