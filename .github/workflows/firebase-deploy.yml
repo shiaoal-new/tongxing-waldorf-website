@@ -72,8 +72,23 @@ jobs:
           Run ID: ${{ github.run_id }}
           Actor: ${{ github.actor }}"
 
+          # 先拉取遠端 notes 以避免衝突
+          git fetch origin refs/notes/deployments:refs/notes/deployments || true
+
+          # 添加或追加 note
           git notes --ref=deployments add -m "$NOTE_MSG" ${{ github.sha }} || git notes --ref=deployments append -m "$NOTE_MSG" ${{ github.sha }}
-          git push origin refs/notes/deployments
+
+          # 推送 notes,如果失敗則重試
+          for i in {1..3}; do
+            if git push origin refs/notes/deployments; then
+              echo "✅ Notes 推送成功"
+              break
+            else
+              echo "⚠️  推送失敗,重試 $i/3..."
+              git fetch origin refs/notes/deployments:refs/notes/deployments || true
+              sleep 2
+            fi
+          done
 
       # 9. 記錄部署失敗結果到 Git Notes
       - name: Add Failure Note
@@ -89,5 +104,20 @@ jobs:
           Actor: ${{ github.actor }}
           查看詳情: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
+          # 先拉取遠端 notes 以避免衝突
+          git fetch origin refs/notes/deployments:refs/notes/deployments || true
+
+          # 添加或追加 note
           git notes --ref=deployments add -m "$NOTE_MSG" ${{ github.sha }} || git notes --ref=deployments append -m "$NOTE_MSG" ${{ github.sha }}
-          git push origin refs/notes/deployments
+
+          # 推送 notes,如果失敗則重試
+          for i in {1..3}; do
+            if git push origin refs/notes/deployments; then
+              echo "✅ Notes 推送成功"
+              break
+            else
+              echo "⚠️  推送失敗,重試 $i/3..."
+              git fetch origin refs/notes/deployments:refs/notes/deployments || true
+              sleep 2
+            fi
+          done

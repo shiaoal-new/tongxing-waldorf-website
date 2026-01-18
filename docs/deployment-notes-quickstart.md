@@ -97,3 +97,38 @@ permissions:
 ```
 
 這些配置已經包含在最新的 workflow 文件中,無需額外操作。
+
+### Git Notes 推送衝突
+
+如果看到類似以下錯誤:
+```
+! [rejected]        refs/notes/deployments -> refs/notes/deployments (fetch first)
+error: failed to push some refs
+hint: Updates were rejected because the remote contains work that you do not have locally
+```
+
+**原因**: 當多個部署同時進行時,可能會產生 notes 推送衝突。
+
+**解決方案**: 已在 workflow 中添加:
+1. 推送前先拉取遠端 notes
+2. 推送失敗時自動重試(最多 3 次)
+3. 每次重試前重新拉取最新 notes
+
+```yaml
+# 先拉取遠端 notes 以避免衝突
+git fetch origin refs/notes/deployments:refs/notes/deployments || true
+
+# 推送 notes,如果失敗則重試
+for i in {1..3}; do
+  if git push origin refs/notes/deployments; then
+    echo "✅ Notes 推送成功"
+    break
+  else
+    echo "⚠️  推送失敗,重試 $i/3..."
+    git fetch origin refs/notes/deployments:refs/notes/deployments || true
+    sleep 2
+  fi
+done
+```
+
+這些改進已經包含在最新的 workflow 文件中。
