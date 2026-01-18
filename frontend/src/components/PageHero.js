@@ -140,7 +140,8 @@ export default function PageHero({ data }) {
             y: 0,
             filter: "blur(0px)",
             transition: {
-                duration: 1,
+                delay: 1,
+                duration: 2,
                 ease: [0.22, 1, 0.36, 1]
             }
         }
@@ -153,8 +154,8 @@ export default function PageHero({ data }) {
             scale: 1,
             rotate: -2,
             transition: {
-                delay: 1.5,
-                duration: 1.2,
+                delay: 3,
+                duration: 2,
                 ease: "easeOut"
             }
         }
@@ -215,11 +216,11 @@ export default function PageHero({ data }) {
                             {effectiveTitle}
                         </h1>
 
-                        {/* 裝飾性手寫文字 - 只在桌面端顯示或作為精美點綴 */}
+                        {/* 裝飾性手寫文字 - 響應式顯示 */}
                         {accent_text && (
                             <motion.span
                                 variants={accentVariants}
-                                className="absolute -top-10 -right-4 hidden lg:block font-accent text-brand-accent text-3xl opacity-80 select-none pointer-events-none"
+                                className="absolute -top-6 -right-2 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
                             >
                                 {accent_text}
                             </motion.span>
