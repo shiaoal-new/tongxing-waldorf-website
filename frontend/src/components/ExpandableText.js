@@ -4,19 +4,29 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 
 /**
  * 可展開的文字組件
- * 當文字超過一定高度或行數時，顯示「...」或「閱讀更多」按鈕
+ * 當文字超過一定高度或行數時,顯示「...」或「閱讀更多」按鈕
+ * @param {string} content - 要顯示的內容
+ * @param {string} className - 額外的 CSS 類名
+ * @param {number} collapsedHeight - 折疊時的高度(像素)
+ * @param {boolean} disableExpand - 禁用展開功能,直接顯示全部內容(用於已有折疊功能的父組件內)
  */
-const ExpandableText = ({ content, className = "", collapsedHeight = 100 }) => {
+const ExpandableText = ({ content, className = "", collapsedHeight = 100, disableExpand = false }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const contentRef = useRef(null);
 
     useEffect(() => {
+        // 如果禁用展開功能,不需要檢測溢出
+        if (disableExpand) {
+            setHasOverflow(false);
+            return;
+        }
+
         if (contentRef.current) {
             const { scrollHeight, clientHeight } = contentRef.current;
             setHasOverflow(scrollHeight > collapsedHeight + 20); // 加上一點緩衝
         }
-    }, [content, collapsedHeight]);
+    }, [content, collapsedHeight, disableExpand]);
 
     const toggleExpand = () => setIsExpanded(!isExpanded);
 
@@ -24,8 +34,8 @@ const ExpandableText = ({ content, className = "", collapsedHeight = 100 }) => {
         <div className={`relative ${className}`}>
             <div
                 ref={contentRef}
-                className={`overflow-hidden transition-[max-height] duration-700 ease-in-out relative`}
-                style={{
+                className={`${disableExpand ? '' : 'overflow-hidden transition-[max-height] duration-700 ease-in-out'} relative`}
+                style={disableExpand ? {} : {
                     maxHeight: isExpanded ? '2000px' : `${collapsedHeight}px`,
                     maskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none',
                     WebkitMaskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none'

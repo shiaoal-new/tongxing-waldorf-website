@@ -276,7 +276,7 @@ function BlockDispatcher({ block, align = "center", context = "standalone", anch
 
 
 /**
- * 提取的 UI 組件：文字區塊
+ * 提取的 UI 組件:文字區塊
  */
 function TextBlock({ data, align, isNested }) {
     return (
@@ -293,7 +293,11 @@ function TextBlock({ data, align, isNested }) {
             )}
             {data.content && (
                 <div className={`py-2 ${isNested ? 'text-base' : 'text-lg'} text-brand-taupe dark:text-brand-taupe`}>
-                    <ExpandableText content={data.content} collapsedHeight={isNested ? 80 : 120} />
+                    <ExpandableText
+                        content={data.content}
+                        collapsedHeight={isNested ? 80 : 120}
+                        disableExpand={isNested}
+                    />
                 </div>
             )}
             {!isNested && <ActionButtons buttons={data.buttons} align={align === "left" ? "left" : "center"} className="mt-6" />}
