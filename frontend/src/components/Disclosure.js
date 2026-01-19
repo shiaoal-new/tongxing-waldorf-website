@@ -68,6 +68,20 @@ export default function Disclosure({ title, subtitle, children, isOpen, onToggle
                         <div className="px-8 pt-6 pb-8 text-brand-text/80 dark:text-brand-bg/80 leading-relaxed text-base md:text-lg">
                             <div className="relative pl-6 md:pl-8 border-l-2 border-brand-accent/20 bg-gradient-to-r from-brand-accent/[0.02] to-transparent py-2">
                                 {children}
+
+                                <div className="mt-6 flex justify-end">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onToggle();
+                                        }}
+                                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-accent transition-all duration-300 rounded-full hover:bg-brand-accent/10 hover:shadow-sm"
+                                        aria-label="收合內容"
+                                    >
+                                        <span>收合內容</span>
+                                        <ChevronUpIcon className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
