@@ -76,9 +76,9 @@ export default function Disclosure({ title, subtitle, children, isOpen, onToggle
                                             onToggle();
                                         }}
                                         className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-accent transition-all duration-300 rounded-full hover:bg-brand-accent/10 hover:shadow-sm"
-                                        aria-label="收合內容"
+                                        aria-label="收合"
                                     >
-                                        <span>收合內容</span>
+                                        <span>收合</span>
                                         <ChevronUpIcon className="w-4 h-4" />
                                     </button>
                                 </div>

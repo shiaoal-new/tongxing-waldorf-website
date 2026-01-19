@@ -52,12 +52,12 @@ const ExpandableText = ({ content, className = "", collapsedHeight = 100, disabl
                     >
                         {isExpanded ? (
                             <>
-                                <span>收合內容</span>
+                                <span>收合</span>
                                 <ChevronUpIcon className="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform" />
                             </>
                         ) : (
                             <>
-                                <span>... 展開更多</span>
+                                <span>展開</span>
                                 <ChevronDownIcon className="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" />
                             </>
                         )}
