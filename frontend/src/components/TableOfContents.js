@@ -179,60 +179,60 @@ const TableOfContents = ({ sections }) => {
                             whileTap={{ scale: 0.95 }}
                             className={`
                                 relative overflow-hidden z-[45] shadow-2xl transition-all duration-300 
-                                flex flex-col items-center justify-center gap-2 px-4 py-4 h-auto rounded-3xl
+                                flex flex-col items-center justify-center gap-2 p-2 h-auto rounded-full
                                 backdrop-blur-xl bg-gradient-to-br from-white/90 to-white/70
                                 dark:from-zinc-800/90 dark:to-zinc-900/70
                                 border border-white/20 dark:border-zinc-700/30
                                 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                                 active:shadow-[0_4px_15px_rgb(0,0,0,0.08)]
                                 ${isMobileMenuOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}
-                                min-w-[64px] min-h-[64px]
+                                w-11
                             `}
                             aria-label="打開目錄"
                             aria-expanded={isMobileMenuOpen}
                             role="button"
                         >
-                            {/* Gradient Overlay for Premium Feel */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                            {/* Premium Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-white/10 dark:from-white/5 dark:to-transparent pointer-events-none" />
 
-                            {/* Icon and Label */}
-                            <div className="relative z-10 flex flex-col items-center gap-1.5">
-                                {/* Menu Icon */}
-                                <svg
-                                    className="w-5 h-5 text-brand-accent dark:text-brand-accent"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2.5}
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
+                            <div className="relative z-10 flex flex-col items-center gap-2">
+                                {/* Menu Icon - Standalone */}
+                                <div className="p-1 rounded-full bg-brand-accent/5 dark:bg-white/5">
+                                    <svg
+                                        className="w-4 h-4 text-brand-accent dark:text-brand-taupe"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2.5}
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </div>
 
-                                <span className="text-[11px] font-semibold text-brand-text dark:text-brand-taupe leading-none tracking-wide">
-                                    目錄
-                                </span>
-
-                                {/* Section Indicator Lines - Enhanced Mini Version */}
-                                <div className="flex items-center gap-1 mt-1">
+                                {/* Clean Vertical Indicators - Compact */}
+                                <div className="flex flex-col items-center gap-1">
                                     {validSections.slice(0, 4).map((section) => {
                                         const isActive = activeId === section.id;
                                         return (
                                             <motion.div
                                                 key={section.id}
-                                                initial={{ scale: 0 }}
-                                                animate={{ scale: 1 }}
+                                                layout
+                                                animate={{
+                                                    height: isActive ? 14 : 4,
+                                                    width: isActive ? 4 : 4,
+                                                }}
                                                 className={`
-                                                    h-1 rounded-full transition-all duration-300
+                                                    rounded-full transition-colors duration-300
                                                     ${isActive
-                                                        ? 'w-3 bg-brand-accent shadow-[0_0_8px_rgba(var(--color-brand-accent),0.8)]'
-                                                        : 'w-1 bg-brand-text/20 dark:bg-brand-taupe/20'
+                                                        ? 'bg-brand-accent shadow-[0_0_8px_rgba(var(--color-brand-accent),0.6)]'
+                                                        : 'bg-brand-text/20 dark:bg-brand-taupe/20'
                                                     }
                                                 `}
                                             />
                                         );
                                     })}
                                     {validSections.length > 4 && (
-                                        <span className="text-[9px] text-brand-text/40 dark:text-brand-taupe/40 font-medium ml-0.5">
+                                        <span className="text-[9px] text-brand-text/40 dark:text-brand-taupe/40 font-bold mt-0.5 leading-none">
                                             +{validSections.length - 4}
                                         </span>
                                     )}
