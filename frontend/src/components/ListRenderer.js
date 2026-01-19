@@ -63,6 +63,7 @@ export default function ListRenderer({
                     <Disclosure
                         key={item.id || index}
                         title={item.title}
+                        subtitle={item.subtitle}
                         isOpen={activeIndex === index}
                         onToggle={() => toggleItem(index)}
                         index={index}

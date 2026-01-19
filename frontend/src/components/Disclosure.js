@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Disclosure({ title, children, isOpen, onToggle, className = "", index }) {
+export default function Disclosure({ title, subtitle, children, isOpen, onToggle, className = "", index }) {
     // Format index to 01, 02, etc.
     const displayIndex = index !== undefined ? (index + 1).toString().padStart(2, '0') : null;
 
@@ -25,18 +25,27 @@ export default function Disclosure({ title, children, isOpen, onToggle, classNam
                     <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent pointer-events-none rounded-2xl md:rounded-3xl" />
                 )}
 
-                <div className="flex items-center gap-4 relative z-10">
+                <div className="flex items-center gap-4 relative z-10 flex-1 min-w-0">
                     {displayIndex && (
                         <span className={`
-                            text-sm font-bold font-mono tracking-tighter transition-colors duration-300
+                            text-sm font-bold font-mono tracking-tighter transition-colors duration-300 flex-shrink-0
                             ${isOpen ? 'text-brand-accent' : 'text-brand-taupe/40'}
                         `}>
                             {displayIndex}
                         </span>
                     )}
-                    <span className={`font-bold transition-all duration-300 ${isOpen ? 'text-brand-text dark:text-brand-bg translate-x-1' : 'text-brand-text dark:text-brand-bg'}`}>
-                        {title}
-                    </span>
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline gap-3 flex-wrap">
+                            <span className={`font-bold transition-all duration-300 ${isOpen ? 'text-brand-text dark:text-brand-bg translate-x-1' : 'text-brand-text dark:text-brand-bg'}`}>
+                                {title}
+                            </span>
+                            {subtitle && (
+                                <span className={`text-sm font-medium transition-all duration-300 ${isOpen ? 'text-brand-accent' : 'text-brand-taupe/60'}`}>
+                                    {subtitle}
+                                </span>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className={`
