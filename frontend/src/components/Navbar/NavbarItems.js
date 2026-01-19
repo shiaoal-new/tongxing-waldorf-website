@@ -22,7 +22,7 @@ export function NavbarActionItem({ item, active, actionHandlers, showBackgroundG
             return (
                 <div className="w-full">
                     {isMobile ? (
-                        <details className="group/theme">
+                        <details className="group/theme" name="mobile-nav-main">
                             <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden flex justify-between items-center w-full">
                                 <span>{item.title}</span>
                                 <ChevronDownIcon className="w-4 h-4 group-open/theme:rotate-180 transition-transform" />
@@ -189,10 +189,10 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
     if (item.children && item.children.length > 0) {
         return (
             <li>
-                <details className="group">
+                <details className="group" name="mobile-nav-main">
                     <summary className="list-none font-medium text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2.5 px-3 rounded-lg hover:bg-brand-accent/5 active:bg-brand-accent/10 [&::-webkit-details-marker]:hidden">
                         <span className="flex items-center gap-2">
-                            <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-4 h-4 opacity-60 group-open:rotate-90 group-open:opacity-100 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                             {item.title}
@@ -204,10 +204,10 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
                             return (
                                 <li key={idx}>
                                     {child.children && child.children.length > 0 ? (
-                                        <details className="group/sub">
+                                        <details className="group/sub" name={`mobile-nav-sub-${item.title}`}>
                                             <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden">
                                                 <span className="flex items-center gap-2">
-                                                    <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg className="w-3 h-3 opacity-60 group-open/sub:rotate-90 group-open/sub:opacity-100 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                                     </svg>
                                                     {child.title}
