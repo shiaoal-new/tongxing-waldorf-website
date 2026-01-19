@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ClockIcon, SunIcon, MoonIcon } from "@heroicons/react/outline";
+import { ClockIcon, SunIcon, MoonIcon, ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/outline";
 
 const TERM_DICTIONARY = {
     '主課程': 'term-main-lesson',
@@ -81,7 +81,7 @@ const ScheduleList = ({ data, title }) => (
                             p-5 rounded-2xl shadow-sm border border-brand-accent/10 dark:border-neutral-700
                             hover:shadow-lg hover:border-brand-accent/30 hover:-translate-y-1
                             transition-all duration-300 ease-out
-                            ${item.type === 'in' ? 'hover:shadow-warning-100/50' : 'hover:shadow-error-100/50'}
+                            ${item.type === 'in' ? 'hover:shadow-brand-accent/20' : 'hover:shadow-brand-structural/20'}
                         `}>
                             <div className="flex items-start gap-4">
                                 {/* 時間與圖標 */}
@@ -89,11 +89,11 @@ const ScheduleList = ({ data, title }) => (
                                     <div className="relative">
                                         <div className={`
                                             absolute inset-0 rounded-full blur-md opacity-50
-                                            ${item.type === 'in' ? 'bg-warning-200' : 'bg-error-200'}
+                                            ${item.type === 'in' ? 'bg-brand-accent/30' : 'bg-brand-structural/30'}
                                         `} />
                                         <div className={`
                                             relative w-10 h-10 rounded-full flex items-center justify-center
-                                            ${item.type === 'in' ? 'bg-warning-100 text-primary-800' : 'bg-error-100 text-error-700'}
+                                            ${item.type === 'in' ? 'bg-brand-accent/10 text-brand-accent' : 'bg-brand-structural/10 text-brand-structural'}
                                             group-hover:scale-110 transition-transform duration-300
                                         `}>
                                             <TimeIconComponent className="w-5 h-5" />
@@ -115,11 +115,15 @@ const ScheduleList = ({ data, title }) => (
                                             text-xs px-3 py-1 rounded-full font-bold flex-shrink-0
                                             backdrop-blur-sm border
                                             ${item.type === 'in'
-                                                ? 'bg-warning-100/80 text-primary-800 border-warning-200'
-                                                : 'bg-error-100/80 text-error-700 border-error-200'
+                                                ? 'bg-brand-accent/10 text-brand-accent border-brand-accent/20'
+                                                : 'bg-brand-structural/10 text-brand-structural border-brand-structural/20'
                                             }
                                         `}>
-                                            {item.type === 'in' ? '吸氣 ⬆' : '吐氣 ⬇'}
+                                            {item.type === 'in' ? (
+                                                <span className="flex items-center gap-1">吸氣 <ArrowUpIcon className="w-3 h-3 opacity-80" /></span>
+                                            ) : (
+                                                <span className="flex items-center gap-1">吐氣 <ArrowDownIcon className="w-3 h-3 opacity-80" /></span>
+                                            )}
                                         </span>
                                     </div>
                                     <InteractiveContent
@@ -132,7 +136,7 @@ const ScheduleList = ({ data, title }) => (
                             {/* 裝飾性漸變邊框 */}
                             <div className={`
                                 absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none
-                                bg-gradient-to-r ${item.type === 'in' ? 'from-warning-200/20 to-transparent' : 'from-error-200/20 to-transparent'}
+                                bg-gradient-to-r ${item.type === 'in' ? 'from-brand-accent/10 to-transparent' : 'from-brand-structural/10 to-transparent'}
                             `} />
                         </div>
                     </motion.div>
@@ -176,9 +180,9 @@ const ScheduleBlock = ({ data }) => {
                         一呼一吸的學習節奏
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex items-start gap-3 bg-white/50 dark:bg-neutral-800/50 rounded-2xl p-4 border border-warning-200/50">
-                            <div className="w-12 h-12 rounded-full bg-warning-100 text-primary-800 flex items-center justify-center font-bold text-xl flex-shrink-0">
-                                ⬆
+                        <div className="flex items-start gap-3 bg-white/50 dark:bg-neutral-800/50 rounded-2xl p-4 border border-brand-accent/20">
+                            <div className="w-12 h-12 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center flex-shrink-0">
+                                <ArrowUpIcon className="w-6 h-6" />
                             </div>
                             <div className="flex-1">
                                 <div className="font-bold text-neutral-800 dark:text-neutral-100 mb-1">
@@ -189,9 +193,9 @@ const ScheduleBlock = ({ data }) => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-3 bg-white/50 dark:bg-neutral-800/50 rounded-2xl p-4 border border-error-200/50">
-                            <div className="w-12 h-12 rounded-full bg-error-100 text-error-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
-                                ⬇
+                        <div className="flex items-start gap-3 bg-white/50 dark:bg-neutral-800/50 rounded-2xl p-4 border border-brand-structural/20">
+                            <div className="w-12 h-12 rounded-full bg-brand-structural/10 text-brand-structural flex items-center justify-center flex-shrink-0">
+                                <ArrowDownIcon className="w-6 h-6" />
                             </div>
                             <div className="flex-1">
                                 <div className="font-bold text-neutral-800 dark:text-neutral-100 mb-1">

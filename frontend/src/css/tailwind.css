@@ -8,8 +8,9 @@
 @layer base {
   :root {
     /* 品牌主色調 (Primary Colors) - 使用 RGB 格式以支援 Tailwind 透明度 */
-    --color-brand-accent: 217, 126, 74;
-    --color-brand-structural: 89, 59, 22;
+    --color-brand-accent: 242, 161, 84;
+    /* #F2A154 - 同心暖陽 */
+    --color-brand-structural: 45, 90, 39;
     /* #2D5A27 - 森林深綠 */
 
     /* 品牌輔助色 (Secondary Colors) */
