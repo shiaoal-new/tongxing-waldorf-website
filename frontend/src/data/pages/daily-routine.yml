@@ -82,18 +82,23 @@ sections:
         item_type: faq_item
         items:
           - title: 主課程
+            id: term-main-lesson
             subtitle: Main Lesson
             content: 不是每天換科目上課，而是連續三到四週，每天早上都專注學同一個主題。這樣學得比較深、記得比較牢，不會今天學數學、明天就忘光光。就像你專心做一件事，總是比三心二意來得有效率。
           - title: 一呼一吸
+            id: term-rhythm
             subtitle: Rhythm of Learning
             content: 孩子不是機器，不能一直坐著上課。所以我們的課表會動靜交替——專注一陣子就去動一動，這樣才不會累壞、也才學得進去。就像呼吸一樣自然，吸氣時專注學習，吐氣時放鬆消化。
           - title: 形線畫
+            id: term-form-drawing
             subtitle: Form Drawing
             content: 低年級會畫很多流動的線條和圖案。這不只是好玩，還能訓練手眼協調、空間感，為以後學數學、幾何打基礎。透過手的運動，培養孩子對形狀和空間的直覺理解。
           - title: 專科課程
+            id: term-specialty
             subtitle: Specialty Classes
             content: 除了主課程，孩子還會學習音樂、美術、手工、體育等專科課程。這些課程不是附加的，而是幫助孩子全面發展的重要環節——用手做、用心感受、用身體體驗。
           - title: 年段任務
+            id: term-grade-projects
             subtitle: Grade Projects
             content: 每個年級都有特定的專題任務，像是 8 年級的大專題、9 年級的社會實習。這些任務讓孩子走出教室，在真實世界中學習、成長，培養解決問題的能力。
   - section_id: senior-transition

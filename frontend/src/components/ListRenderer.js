@@ -57,19 +57,52 @@ export default function ListRenderer({
 
     // 垂直排列 - 使用 Disclosure 折叠面板
     if (direction === "vertical") {
+        // 監聽來自其他組件（如 ScheduleBlock）的觸發事件
+        React.useEffect(() => {
+            const handleDictionaryTrigger = (event) => {
+                const { id } = event.detail;
+                const targetIndex = items.findIndex(item => item.id === id);
+
+                if (targetIndex !== -1) {
+                    // 1. 打開對應的項目
+                    setActiveIndex(targetIndex);
+
+                    // 2. 延遲一點點滾動，確保 UI 已經更新（展開）
+                    setTimeout(() => {
+                        const element = document.getElementById(`dictionary-item-${id}`);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                            // 3. 添加臨時的高亮效果
+                            element.classList.add('ring-4', 'ring-brand-accent/30');
+                            setTimeout(() => {
+                                element.classList.remove('ring-4', 'ring-brand-accent/30');
+                            }, 1500);
+                        }
+                    }, 100);
+                }
+            };
+
+            window.addEventListener('trigger-dictionary-item', handleDictionaryTrigger);
+            return () => {
+                window.removeEventListener('trigger-dictionary-item', handleDictionaryTrigger);
+            };
+        }, [items]);
+
         return (
             <div className="w-full max-w-2xl p-2 mx-auto rounded-2xl">
                 {items.map((item, index) => (
-                    <Disclosure
-                        key={item.id || index}
-                        title={item.title}
-                        subtitle={item.subtitle}
-                        isOpen={activeIndex === index}
-                        onToggle={() => toggleItem(index)}
-                        index={index}
-                    >
-                        {renderItem(item, index)}
-                    </Disclosure>
+                    <div id={`dictionary-item-${item.id}`} key={item.id || index} className="transition-all duration-300 rounded-3xl">
+                        <Disclosure
+                            title={item.title}
+                            subtitle={item.subtitle}
+                            isOpen={activeIndex === index}
+                            onToggle={() => toggleItem(index)}
+                            index={index}
+                        >
+                            {renderItem(item, index)}
+                        </Disclosure>
+                    </div>
                 ))}
 
                 <DevComment text="Vertical List Action Buttons" />

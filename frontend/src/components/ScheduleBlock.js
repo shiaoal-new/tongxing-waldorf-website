@@ -2,6 +2,56 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClockIcon, SunIcon, MoonIcon } from "@heroicons/react/outline";
 
+const TERM_DICTIONARY = {
+    '主課程': 'term-main-lesson',
+    '一呼一吸': 'term-rhythm',
+    '形線畫': 'term-form-drawing',
+    '專科課程': 'term-specialty',
+    '年段任務': 'term-grade-projects',
+    '專題': 'term-grade-projects'
+};
+
+const InteractiveContent = ({ content, className }) => {
+    // 簡單的關鍵字替換邏輯
+    const segments = [];
+    let lastIndex = 0;
+    const sortedTerms = Object.keys(TERM_DICTIONARY).sort((a, b) => b.length - a.length);
+    const regex = new RegExp(`(${sortedTerms.join('|')})`, 'g');
+
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+        if (match.index > lastIndex) {
+            segments.push(content.substring(lastIndex, match.index));
+        }
+
+        const term = match[0];
+        segments.push(
+            <span
+                key={match.index}
+                className="cursor-pointer text-brand-accent border-b border-dashed border-brand-accent/50 hover:bg-brand-accent/10 transition-colors px-0.5 rounded inline-block"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    window.dispatchEvent(new CustomEvent('trigger-dictionary-item', {
+                        detail: { id: TERM_DICTIONARY[term] }
+                    }));
+                }}
+                title="點擊查看詳細解釋"
+            >
+                {term}
+                <sup className="text-[0.6em] ml-0.5 align-top opacity-70">?</sup>
+            </span>
+        );
+
+        lastIndex = regex.lastIndex;
+    }
+
+    if (lastIndex < content.length) {
+        segments.push(content.substring(lastIndex));
+    }
+
+    return <div className={className}>{segments}</div>;
+};
+
 const ScheduleList = ({ data, title }) => (
     <div className="flex-1">
         {title && <h4 className="text-center font-bold text-brand-accent mb-6 text-lg uppercase tracking-widest">{title}</h4>}
@@ -57,9 +107,10 @@ const ScheduleList = ({ data, title }) => (
                                 {/* 內容 */}
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                        <h3 className="font-bold text-lg text-neutral-800 dark:text-neutral-100">
-                                            {item.title}
-                                        </h3>
+                                        <InteractiveContent
+                                            content={item.title}
+                                            className="font-bold text-lg text-neutral-800 dark:text-neutral-100"
+                                        /> {/* 如果標題裡也有關鍵字 */}
                                         <span className={`
                                             text-xs px-3 py-1 rounded-full font-bold flex-shrink-0
                                             backdrop-blur-sm border
@@ -71,9 +122,10 @@ const ScheduleList = ({ data, title }) => (
                                             {item.type === 'in' ? '吸氣 ⬆' : '吐氣 ⬇'}
                                         </span>
                                     </div>
-                                    <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
-                                        {item.content}
-                                    </p>
+                                    <InteractiveContent
+                                        content={item.content}
+                                        className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"
+                                    />
                                 </div>
                             </div>
 
