@@ -25,17 +25,17 @@ const ExpandableText = ({ content, className = "", collapsedHeight = 100 }) => {
             <div
                 ref={contentRef}
                 className={`overflow-hidden transition-[max-height] duration-700 ease-in-out relative`}
-                style={{ maxHeight: isExpanded ? '2000px' : `${collapsedHeight}px` }}
+                style={{
+                    maxHeight: isExpanded ? '2000px' : `${collapsedHeight}px`,
+                    maskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none',
+                    WebkitMaskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none'
+                }}
             >
                 <MarkdownContent content={content} />
-
-                {hasOverflow && !isExpanded && (
-                    <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-brand-bg via-brand-bg/80 to-transparent dark:from-black dark:via-black/80 pointer-events-none z-10" />
-                )}
             </div>
 
             {hasOverflow && (
-                <div className={`mt-2 flex ${isExpanded ? 'justify-end' : 'justify-center'} relative z-20`}>
+                <div className="mt-2 flex justify-center relative z-20">
                     <button
                         onClick={toggleExpand}
                         className="group flex items-center gap-1.5 text-sm font-bold text-brand-accent hover:text-white transition-all duration-300 bg-brand-accent/10 hover:bg-brand-accent backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-accent/30 shadow-sm hover:shadow-brand-accent/20"
