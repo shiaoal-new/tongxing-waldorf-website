@@ -70,7 +70,7 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
             <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
                 {effectiveHeroData && <PageHero data={effectiveHeroData} />}
 
-                <div className={`w-full relative overflow-hidden ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
+                <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
                     {!effectiveHeroData && (
                         <Section title={page.title} align="left" description={page.description} />
                     )}

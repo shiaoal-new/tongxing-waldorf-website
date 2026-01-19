@@ -179,21 +179,23 @@ export default function BackgroundCarousel({
                     </div>
                 </div>
             ) : (
-                <motion.div
-                    style={{
-                        y,
-                        height: `calc(100% + ${Math.abs(shift) * 2}vh)`,
-                        top: `-${Math.abs(shift)}vh`
-                    }}
-                    className="w-full absolute inset-x-0"
-                >
-                    <BackgroundMediaItem
-                        item={currentItem}
-                        transition_type={transition_type}
-                        currentIndex={currentIndex}
-                    />
-                    {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
-                </motion.div>
+                <div className="absolute inset-0" style={{ clipPath: 'inset(0)' }}>
+                    <motion.div
+                        style={{
+                            y,
+                            height: `calc(100% + ${Math.abs(shift) * 2}vh)`,
+                            top: `-${Math.abs(shift)}vh`
+                        }}
+                        className="w-full absolute inset-x-0"
+                    >
+                        <BackgroundMediaItem
+                            item={currentItem}
+                            transition_type={transition_type}
+                            currentIndex={currentIndex}
+                        />
+                        {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
+                    </motion.div>
+                </div>
             )}
 
             <CarouselPagination

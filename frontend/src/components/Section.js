@@ -65,7 +65,7 @@ export default function Section(props) {
     return (
         <section
             id={anchor}
-            className={`w-full relative overflow-hidden section_container py-section ${container_class} ${className || ""}`}
+            className={`w-full relative section_container py-section ${container_class} ${className || ""}`}
             {...rest}
         >
             {/* SVG Divider */}

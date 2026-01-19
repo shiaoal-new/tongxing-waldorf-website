@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ClockIcon, SunIcon, MoonIcon } from "@heroicons/react/outline";
 
 const TERM_DICTIONARY = {
@@ -144,12 +144,26 @@ const ScheduleList = ({ data, title }) => (
 
 const ScheduleBlock = ({ data }) => {
     const [activeGrade, setActiveGrade] = useState("low");
+    const containerRef = useRef(null);
+
+    // 使用 useScroll 監測滾動進度
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start 100px", "start 50px"] // 當元件頂部接近導覽列時觸發動畫
+    });
+
+    // 將滾動進度映射到各項樣式數值
+    const paddingY = useTransform(scrollYProgress, [0, 1], ["16px", "4px"]);
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+    const marginBottom = useTransform(scrollYProgress, [0, 1], ["16px", "8px"]);
+    const bgOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.95]);
+    const shadowOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.1]);
 
     const scheduleData = data || { low: [], high: [] };
     const activeData = scheduleData[activeGrade];
 
     return (
-        <div className="w-full">
+        <div ref={containerRef} className="w-full">
             {/* 呼吸節奏說明卡片 */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -194,22 +208,34 @@ const ScheduleBlock = ({ data }) => {
 
             {/* 年級切換與時間表 */}
             <div className="max-w-3xl mx-auto px-4">
-                {/* 年級切換按鈕 - 改進版 */}
-                <div className="relative mb-8">
-                    <div className="flex bg-neutral-100 dark:bg-neutral-800 rounded-2xl p-1.5 shadow-inner">
+                {/* 年級切換按鈕 - 滾動連動版 */}
+                <motion.div
+                    style={{
+                        paddingTop: paddingY,
+                        paddingBottom: paddingY,
+                        marginBottom: marginBottom,
+                        backgroundColor: useTransform(bgOpacity, o => `rgba(var(--brand-bg-rgb, 242, 242, 240), ${o})`),
+                        boxShadow: useTransform(shadowOpacity, o => `0 4px 6px -1px rgba(0, 0, 0, ${o}), 0 2px 4px -1px rgba(0, 0, 0, ${o * 0.5})`)
+                    }}
+                    className="sticky top-[80px] z-30 -mx-4 px-4 backdrop-blur-md"
+                >
+                    <motion.div
+                        style={{ scale }}
+                        className="flex bg-neutral-100 dark:bg-neutral-800 rounded-2xl p-1 shadow-inner origin-center"
+                    >
                         <motion.div
-                            className="absolute top-1.5 bottom-1.5 bg-white dark:bg-neutral-700 rounded-xl shadow-md"
+                            className="absolute top-1 bottom-1 bg-white dark:bg-neutral-700 rounded-xl shadow-md"
                             initial={false}
                             animate={{
-                                left: activeGrade === "low" ? "0.375rem" : "50%",
-                                right: activeGrade === "low" ? "50%" : "0.375rem",
+                                left: activeGrade === "low" ? "0.25rem" : "50%",
+                                right: activeGrade === "low" ? "50%" : "0.25rem",
                             }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         />
                         <button
                             onClick={() => setActiveGrade("low")}
                             className={`
-                                relative flex-1 py-3 px-6 text-center transition-all duration-300 rounded-xl font-bold
+                                relative flex-1 py-1.5 md:py-3 px-3 md:px-6 text-center transition-colors duration-300 rounded-xl font-bold text-sm md:text-base
                                 ${activeGrade === "low"
                                     ? "text-brand-accent"
                                     : "text-neutral-500 hover:text-brand-accent/70"
@@ -221,7 +247,7 @@ const ScheduleBlock = ({ data }) => {
                         <button
                             onClick={() => setActiveGrade("high")}
                             className={`
-                                relative flex-1 py-3 px-6 text-center transition-all duration-300 rounded-xl font-bold
+                                relative flex-1 py-1.5 md:py-3 px-3 md:px-6 text-center transition-colors duration-300 rounded-xl font-bold text-sm md:text-base
                                 ${activeGrade === "high"
                                     ? "text-brand-accent"
                                     : "text-neutral-500 hover:text-brand-accent/70"
@@ -230,16 +256,16 @@ const ScheduleBlock = ({ data }) => {
                         >
                             <span className="relative z-10">高年級 (5-9)</span>
                         </button>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
-                {/* 時間表內容 - 使用 AnimatePresence 實現流暢切換 */}
+                {/* 時間表內容 */}
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={activeGrade}
-                        initial={{ opacity: 0, x: activeGrade === "low" ? -20 : 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: activeGrade === "low" ? 20 : -20 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                         className="pb-12"
                     >
