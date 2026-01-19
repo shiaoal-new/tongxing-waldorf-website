@@ -42,7 +42,22 @@ export default function ListRenderer({
 
     // Accordion 模式的切换函数
     const toggleItem = (index) => {
-        setActiveIndex(activeIndex === index ? null : index);
+        const isOpening = activeIndex !== index;
+        setActiveIndex(isOpening ? index : null);
+
+        if (isOpening) {
+            // 處理滾動位置，避免上方長內容關閉時導致當前項目跳動
+            setTimeout(() => {
+                const item = items[index];
+                const itemId = item.id || index;
+                const element = document.getElementById(`dictionary-item-${itemId}`);
+
+                if (element) {
+                    // 使用 scrollIntoView 平滑滾動到視窗頂部（考慮導航欄偏移）
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300); // 延遲讓關閉動畫先進行一部分
+        }
     };
 
     // 根据列数生成对应的 grid-cols 类名
@@ -92,7 +107,11 @@ export default function ListRenderer({
         return (
             <div className="w-full max-w-2xl p-2 mx-auto rounded-2xl">
                 {items.map((item, index) => (
-                    <div id={`dictionary-item-${item.id}`} key={item.id || index} className="transition-all duration-300 rounded-3xl">
+                    <div
+                        id={`dictionary-item-${item.id || index}`}
+                        key={item.id || index}
+                        className="transition-all duration-300 rounded-3xl scroll-mt-32"
+                    >
                         <Disclosure
                             title={item.title}
                             subtitle={item.subtitle}
