@@ -5,7 +5,7 @@ import Section from "../components/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import PageHero from "../components/PageHeroWithUXTest";
+import PageHero from "../components/PageHero";
 import TypographyDemoBlock from "../components/TypographyDemoBlock";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";

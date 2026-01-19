@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import Section from "./Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageHero from "./PageHeroWithUXTest";
+import PageHero from "./PageHero";
 import MemberDetailModal from "./MemberDetailModal";
 import TableOfContents from "./TableOfContents";
 import ParallaxBackground from "./ParallaxBackground";

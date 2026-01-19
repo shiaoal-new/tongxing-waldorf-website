@@ -1,84 +1,77 @@
 import Container from "./Container";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect } from "react";
 import BackgroundCarousel from "./BackgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "./DevComment";
 import SectionDivider from "./SectionDivider";
-import Typed from 'typed.js';
-import { useUXTestMode } from '../context/UXTestModeContext';
 
 /**
- * Typed.js Hook: 打字機效果
+ * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
+ * 用於讓背景延伸到狀態欄區域,並防止用戶向上滾動超過此高度
  */
-function useTyped(elementRef, options) {
+function useStatusBarScrollLock() {
     useEffect(() => {
-        if (!elementRef.current) return;
+        // 只在客戶端且是首次載入時執行
+        if (typeof window !== 'undefined') {
+            // 檢測是否為 iOS 設備(iPhone/iPad)
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-        const typed = new Typed(elementRef.current, options);
+            // 檢測是否為 Safari 瀏覽器
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-        return () => {
-            typed.destroy();
-        };
-    }, [elementRef, options]);
-}
+            // 檢測是否為獨立模式(PWA)或瀏覽器模式
+            const isStandalone = window.navigator.standalone === true ||
+                window.matchMedia('(display-mode: standalone)').matches;
 
-/**
- * 逐字显现组件
- * 每个字符依次淡入显现
- */
-function CharByCharReveal({ text, delay = 3 }) {
-    const characters = text.split('');
+            // 只在 iOS Safari 瀏覽器模式下執行(有狀態欄的情況)
+            // 獨立模式(PWA)通常沒有狀態欄,所以排除
+            if (isIOS && isSafari && !isStandalone) {
+                // 從 CSS 變數讀取狀態欄高度
+                const statusBarHeight = parseInt(
+                    getComputedStyle(document.documentElement)
+                        .getPropertyValue('--status-bar-height')
+                ) || 44; // 如果讀取失敗,使用預設值 44px
 
-    const containerVariants = {
-        hidden: { opacity: 1 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: delay
+                // 立即滾動到狀態欄高度,不使用 smooth
+                window.scrollTo(0, statusBarHeight);
+                //todo 把hero section 加高
+
+                // 添加滾動事件監聽器,限制不能向上滾動超過 statusBarHeight
+                // 使用 scrollend 事件(滾動完成後觸發)
+                const handleScrollEnd = () => {
+                    if (window.scrollY < statusBarHeight) {
+                        // 如果滾動位置小於狀態欄高度,平滑滾動回到狀態欄高度
+                        window.scrollTo({ top: statusBarHeight, behavior: 'smooth' });
+                    }
+                };
+
+                // 監聽 scrollend 事件(現代瀏覽器支持)
+                window.addEventListener('scrollend', handleScrollEnd);
+
+                // 後備方案:使用 scroll 事件 + debounce(針對不支持 scrollend 的舊版瀏覽器)
+                let scrollTimeout;
+                const handleScrollDebounced = () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (window.scrollY < statusBarHeight) {
+                            window.scrollTo({ top: statusBarHeight, behavior: 'smooth' });
+                        }
+                    }, 150); // 滾動停止 150ms 後執行
+                };
+
+                window.addEventListener('scroll', handleScrollDebounced, { passive: true });
+
+                // 清理函數:組件卸載時移除事件監聽器
+                return () => {
+                    window.removeEventListener('scrollend', handleScrollEnd);
+                    window.removeEventListener('scroll', handleScrollDebounced);
+                    clearTimeout(scrollTimeout);
+                };
             }
         }
-    };
-
-    const charVariants = {
-        hidden: {
-            opacity: 0,
-            y: 20,
-            scale: 0.8
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    return (
-        <motion.span
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            style={{ display: 'inline-block' }}
-        >
-            {characters.map((char, index) => (
-                <motion.span
-                    key={index}
-                    variants={charVariants}
-                    style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-                >
-                    {char}
-                </motion.span>
-            ))}
-        </motion.span>
-    );
+    }, []); // 空依賴陣列,只在組件掛載時執行一次
 }
-
-
 
 export default function PageHero({ data }) {
     const {
@@ -115,30 +108,11 @@ export default function PageHero({ data }) {
     // Resolve Layout CSS
     const layoutClasses = layout || {};
     const title_class = layoutClasses.title_class || "mb-component text-brand-bg";
-    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-4 py-2 mb-component text-sm font-bold tracking-brand text-brand-accent uppercase bg-brand-structural/60 backdrop-blur-md rounded-full border-2 border-brand-accent/40 shadow-[0_0_20px_rgba(251,146,60,0.3)]";
+    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/40 uppercase bg-brand-structural/40 rounded-full border border-brand-accent/20";
     const description_class = layoutClasses.description_class || "text-lg leading-brand tracking-brand text-brand-bg lg:text-xl xl:text-2xl opacity-90";
     const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
     const container_class = layoutClasses.container_class || "items-center justify-center";
     const ref = useRef(null);
-    const typedRef = useRef(null);
-
-    // UX 测试模式设置
-    const { getComponentSetting } = useUXTestMode();
-    const accentAnimationType = getComponentSetting('pageHero', 'accentAnimationType', 'charByChar');
-    const uxShowScrollButton = getComponentSetting('pageHero', 'showScrollButton', true);
-    const uxEntryDelay = getComponentSetting('pageHero', 'entryDelay', entryDelay);
-
-    // 初始化 Typed.js 打字機效果 (仅在 typed 模式下)
-    const typedOptions = useMemo(() => ({
-        strings: [accent_text],
-        typeSpeed: 100,
-        startDelay: (uxEntryDelay + 2) * 1000,
-        showCursor: true,
-        cursorChar: '|',
-        autoInsertCss: true,
-    }), [accent_text, uxEntryDelay]);
-
-    useTyped(accentAnimationType === 'typed' ? typedRef : { current: null }, typedOptions);
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -212,7 +186,7 @@ export default function PageHero({ data }) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 - entryBrightness }}
                         transition={{
-                            delay: uxEntryDelay,
+                            delay: entryDelay,
                             duration: entryDuration,
                             ease: "easeInOut"
                         }}
@@ -242,32 +216,14 @@ export default function PageHero({ data }) {
                             {effectiveTitle}
                         </h1>
 
-                        {/* 裝飾性手寫文字 - 可切換動畫效果 */}
-                        {accent_text && accentAnimationType !== 'none' && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: uxEntryDelay + 2, duration: 0.5 }}
-                                className="absolute -top-6 -right-2 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl select-none pointer-events-none"
-                                style={{
-                                    textShadow: '0 0 20px rgba(251,146,60,0.8), 0 0 40px rgba(251,146,60,0.5), 2px 2px 4px rgba(0, 0, 0, 0.8)',
-                                    filter: 'drop-shadow(0 0 10px rgba(251, 146, 60, 0.6))'
-                                }}
+                        {/* 裝飾性手寫文字 - 響應式顯示 */}
+                        {accent_text && (
+                            <motion.span
+                                variants={accentVariants}
+                                className="absolute -top-6 -right-2 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
                             >
-                                {accentAnimationType === 'typed' ? (
-                                    <span ref={typedRef}></span>
-                                ) : accentAnimationType === 'charByChar' ? (
-                                    <CharByCharReveal text={accent_text} delay={uxEntryDelay + 2} />
-                                ) : (
-                                    <motion.span
-                                        initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                                        animate={{ opacity: 1, scale: 1, rotate: -2 }}
-                                        transition={{ delay: uxEntryDelay + 2, duration: 2, ease: "easeOut" }}
-                                    >
-                                        {accent_text}
-                                    </motion.span>
-                                )}
-                            </motion.div>
+                                {accent_text}
+                            </motion.span>
                         )}
                     </motion.div>
 
@@ -286,38 +242,35 @@ export default function PageHero({ data }) {
             </Container>
 
             <DevComment text="Scroll Down Button" />
-            {uxShowScrollButton && (
-                <motion.div
-                    className="absolute bottom-10 md:bottom-20 left-1/2 z-20 cursor-pointer p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors duration-300 group"
-                    style={{ x: "-50%" }}
-                    initial={{ opacity: 0, y: -20, x: "-50%" }}
-                    animate={{ opacity: 1, y: 0, x: "-50%" }}
-                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)", x: "-50%" }}
-                    whileTap={{ scale: 0.9, x: "-50%" }}
-                    transition={{
-                        y: {
-                            delay: uxEntryDelay + 1,
-                            duration: 1.5,
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                            ease: "easeInOut"
-                        },
-                        opacity: { delay: uxEntryDelay + 0.5 },
-                        default: { duration: 0.3 }
-                    }}
-                    onClick={() => {
-                        const nextSection = document.querySelector('Section');
-                        if (nextSection) {
-                            nextSection.scrollIntoView({ behavior: 'smooth' });
-                        } else {
-                            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-                        }
-                    }}
-                    aria-label="Scroll to content"
-                >
-                    <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
-                </motion.div>
-            )}
+            <motion.div
+                className="absolute bottom-10 md:bottom-20 left-1/2 z-20 cursor-pointer p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors duration-300 group"
+                style={{ x: "-50%" }}
+                initial={{ opacity: 0, y: -20, x: "-50%" }}
+                animate={{ opacity: 1, y: 0, x: "-50%" }}
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)", x: "-50%" }}
+                whileTap={{ scale: 0.9, x: "-50%" }}
+                transition={{
+                    y: {
+                        delay: 2,
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        ease: "easeInOut"
+                    },
+                    default: { duration: 0.3 }
+                }}
+                onClick={() => {
+                    const nextSection = document.querySelector('Section');
+                    if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+                    }
+                }}
+                aria-label="Scroll to content"
+            >
+                <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
+            </motion.div>
 
             {/* Section Divider */}
             {data.divider && (
@@ -333,3 +286,4 @@ export default function PageHero({ data }) {
         </div>
     );
 }
+

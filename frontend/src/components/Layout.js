@@ -6,7 +6,6 @@ import Footer from "./Footer";
 import ParallaxBackground from "./ParallaxBackground";
 import SvgFilters from "./SvgFilters";
 import PageContent from "./PageContent";
-import UXTestPanel from "./UXTestPanel";
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
@@ -67,7 +66,7 @@ export default function Layout({ children, title, description, navbarPadding = f
 
             <Footer />
 
-            <UXTestPanel />
+
 
         </>
     );

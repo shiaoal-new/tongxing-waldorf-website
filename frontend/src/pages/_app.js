@@ -21,17 +21,14 @@ import 'react-vertical-timeline-component/style.min.css';
 
 
 import { SessionProvider } from "../context/SessionContext";
-import { UXTestModeProvider } from "../context/UXTestModeContext";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <UXTestModeProvider>
-      <SessionProvider>
-        <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SessionProvider>
-    </UXTestModeProvider>
+    <SessionProvider>
+      <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 
