@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import BackgroundCarousel from "./BackgroundCarousel";
 import ActionButtons from "./ActionButtons";
 import SectionDivider from "./SectionDivider";
+import MarkdownContent from "./MarkdownContent";
 
 export default function Section(props) {
     const {
@@ -106,7 +107,7 @@ export default function Section(props) {
 
                     {effectiveContent && (
                         <div className={`description_class ${content_class_default} ${align === "left" ? "self-start" : ""}`}>
-                            {effectiveContent}
+                            <MarkdownContent content={effectiveContent} />
                         </div>
                     )}
 

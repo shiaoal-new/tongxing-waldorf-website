@@ -19,7 +19,7 @@ const MarkdownContent = ({ content, className = "" }) => {
                         />
                     ),
                     p: ({ node, ...props }) => (
-                        <p {...props} className="mb-3 last:mb-0" />
+                        <p {...props} className="mb-3 last:mb-0 text-justify" style={{ lineHeight: 'var(--typography-line-height)' }} />
                     ),
                     table: ({ node, ...props }) => (
                         <div className="overflow-x-auto my-4">
