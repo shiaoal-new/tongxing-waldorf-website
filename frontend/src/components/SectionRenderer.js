@@ -126,6 +126,7 @@ function resolveSectionData(section) {
             media_list: section.media_list,
             parallax_ratio: section.parallax_ratio,
             divider: section.divider,
+            shader_gradient: section.shader_gradient || section._layout?.title === "紫色大型看板 (CTA)",
         }
     };
 }

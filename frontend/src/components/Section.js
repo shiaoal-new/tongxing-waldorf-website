@@ -5,6 +5,7 @@ import BackgroundCarousel from "./BackgroundCarousel";
 import ActionButtons from "./ActionButtons";
 import SectionDivider from "./SectionDivider";
 import MarkdownContent from "./MarkdownContent";
+import ShaderGradientBackground from "./ShaderGradientBackground";
 
 export default function Section(props) {
     const {
@@ -22,6 +23,7 @@ export default function Section(props) {
         className,
         limit,
         divider, // { type, position, color, flip }
+        shader_gradient,
         ...rest
     } = props;
 
@@ -29,10 +31,11 @@ export default function Section(props) {
     const classes = layout || {};
     const container_class = classes.container_class || "";
     const wrapper_class = classes.wrapper_class || "";
-    // If background media is present, default to white text for better visibility
-    const defaultTitleColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
-    const defaultDescColor = media_list?.length > 0 ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
-    const defaultSubtitleColor = media_list?.length > 0 ? "text-brand-accent/40" : "text-brand-accent";
+    // If background media or shader gradient is present, default to white text for better visibility
+    const hasSpecialBg = (media_list && media_list.length > 0) || shader_gradient;
+    const defaultTitleColor = hasSpecialBg ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
+    const defaultDescColor = hasSpecialBg ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
+    const defaultSubtitleColor = hasSpecialBg ? "text-brand-accent/40" : "text-brand-accent";
 
     const subtitle_class = classes.subtitle_class || `text-sm font-bold tracking-brand ${defaultSubtitleColor} uppercase`;
     const title_class = classes.title_class || `max-w-2xl mt-component ${defaultTitleColor}`;
@@ -91,22 +94,25 @@ export default function Section(props) {
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
                     variants={variants}
-                    className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class}`}
+                    className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class} ${shader_gradient ? '!bg-transparent' : ''}`}
                 >
+                    {shader_gradient && (
+                        <ShaderGradientBackground />
+                    )}
                     {subtitle && (
-                        <div className={`subtitle_class ${subtitle_class} ${align === "left" ? "self-start" : ""}`}>
+                        <div className={`subtitle_class ${subtitle_class} relative z-10 ${align === "left" ? "self-start" : ""}`}>
                             {subtitle}
                         </div>
                     )}
 
                     {title && (
-                        <h2 className={`title_class ${title_class} ${align === "left" ? "self-start" : ""}`}>
+                        <h2 className={`title_class ${title_class} relative z-10 ${align === "left" ? "self-start" : ""}`}>
                             {title}
                         </h2>
                     )}
 
                     {effectiveContent && (
-                        <div className={`description_class ${content_class_default} ${align === "left" ? "self-start" : ""}`}>
+                        <div className={`description_class ${content_class_default} relative z-10 ${align === "left" ? "self-start" : ""}`}>
                             <MarkdownContent content={effectiveContent} />
                         </div>
                     )}
@@ -115,7 +121,7 @@ export default function Section(props) {
                         <ActionButtons
                             buttons={buttons}
                             align={align === "left" ? "left" : "center"}
-                            className="mt-6"
+                            className="mt-6 relative z-10"
                         />
                     )}
                 </motion.div>
