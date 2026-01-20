@@ -29,7 +29,7 @@ sections:
         item_type: benefit_item
         items:
           - title: 在大人的大學裡，長出孩子的中小學
-            span: 8
+            span: 4
             content: 坐落於東南科技大學校區，同心擁有得天獨厚的學術專業與豐富資源。這不只是「深山隱居」，更是「與高等教育共榮」。孩子在專業的硬體支持下，跟著四季律動，鍛鍊意志、情感與思考，建立面對未來混亂世界時，最穩定的導航系統。
             icon: lucide:school
             media:
@@ -43,7 +43,7 @@ sections:
               type: image
               image: /img/artifacts/tw_waldorf_circle_1768617908506.png
           - title: 不熄滅的長跑：1-9 年級的穩定守護
-            span: 12
+            span: 4
             content: 台灣實驗教育最讓家長焦慮的是銜接與穩定性。同心提供 1-9 年級九年一貫的完整學制，這是一場不熄滅的長跑，讓孩子在藝術、科學與意志力上獲得連續性的成長。我們點燃孩子心中對世界的好奇，這份火光將一路延燒到大學、職場，成為他終身學習的熱情。
             icon: lucide:flame
             media:
@@ -65,7 +65,7 @@ sections:
         item_type: benefit_item
         items:
           - title: 老師懂孩子，也懂你的不容易
-            span: 8
+            span: 4
             content: 這裡的老師不只是站在講台上的人，他們花大量時間跟家長「搏感情」。這種溝通不只是為了發成績單，而是為了建立那種「我懂你的孩子，也理解你的難處」的革命情感。當老師跟家長成了隊友，教育才不會變成各彈各的調。
             icon: "lucide:users"
             media:
@@ -79,7 +79,7 @@ sections:
               type: image
               image: /img/artifacts/tw_waldorf_community_support_1768617957981.png
           - title: 家長不焦慮，小孩才敢放心長大
-            span: 12
+            span: 4
             content: 為什麼我們要搞得這麼「親密」？因為我們發現，當大人擁有足夠的安全感和支援網，孩子那雙看世界的眼睛也會跟著安穩下來。在一個被愛與信任包圍的「村子」裡長大，孩子踏出的每一小步，都會比別人更穩固。畢竟養育是一場長跑，一群人跑才像是在度假。
             icon: "lucide:heart"
             media:
@@ -100,19 +100,19 @@ sections:
         item_type: video_item
         items:
           - title: 同心華德福教育8分鐘精華
-            span: 12
+            span: 4
             media:
               type: youtube
               url: https://youtu.be/oermgcwIkC8
             content: 如果你也在想「除了補習、考試，還有別的路嗎？」——這支 8 分鐘的紀錄短片將帶你走進校園，看見孩子最真實的學習樣貌與生命力。文字說再多，都不如親眼看看這份感動。
           - title: 與孩子的黃金線
-            span: 6
+            span: 4
             media:
               type: youtube
               url: https://youtu.be/atLmqSjhnxs
             content: 小學老師跟孩子之間，有種說不出的默契。那條看不見的連結，會陪著孩子走過整個童年，建立最穩固的情感基礎。
           - title: 中學的自我革命
-            span: 6
+            span: 4
             media:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4
