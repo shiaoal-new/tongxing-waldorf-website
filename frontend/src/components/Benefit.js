@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import ActionButtons from "./ActionButtons";
 
@@ -7,6 +7,7 @@ import ExpandableText from "./ExpandableText";
 
 export default function BenefitItem(props) {
   const { span, media, title, children, icon, buttons } = props;
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Bento-style card classes
   const cardClasses = `
@@ -15,12 +16,17 @@ export default function BenefitItem(props) {
     rounded-[2.5rem] border border-white/20 dark:border-white/5 
     shadow-sm hover:shadow-2xl hover:-translate-y-1
     transition-all duration-700 ease-out
+    cursor-pointer
   `;
+
+  const handleCardClick = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const hasImage = media && media.type === 'image';
 
   return (
-    <div className={cardClasses}>
+    <div className={cardClasses} onClick={handleCardClick}>
       {/* Decorative inner glow & glass reflection */}
       <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none z-20" />
 
@@ -46,12 +52,20 @@ export default function BenefitItem(props) {
             {title}
           </h4>
           <div className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-            <ExpandableText content={children} collapsedHeight={100} />
+            <ExpandableText
+              content={children}
+              collapsedHeight={100}
+              expanded={isExpanded}
+              onToggle={setIsExpanded}
+            />
           </div>
         </div>
 
         {buttons && buttons.length > 0 && (
-          <div className="mt-10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100">
+          <div
+            className="mt-10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100"
+            onClick={(e) => e.stopPropagation()}
+          >
             <ActionButtons buttons={buttons} align="left" size="sm" />
           </div>
         )}

@@ -9,11 +9,23 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
  * @param {string} className - 額外的 CSS 類名
  * @param {number} collapsedHeight - 折疊時的高度(像素)
  * @param {boolean} disableExpand - 禁用展開功能,直接顯示全部內容(用於已有折疊功能的父組件內)
+ * @param {boolean} expanded - (可選) 外部控制的展開狀態
+ * @param {function} onToggle - (可選) 展開狀態改變時的回調
  */
-const ExpandableText = ({ content, className = "", collapsedHeight = 100, disableExpand = false }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const ExpandableText = ({
+    content,
+    className = "",
+    collapsedHeight = 100,
+    disableExpand = false,
+    expanded: externalExpanded,
+    onToggle: externalOnToggle
+}) => {
+    const [internalExpanded, setInternalExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
     const contentRef = useRef(null);
+
+    const isControlled = externalExpanded !== undefined;
+    const isExpanded = isControlled ? externalExpanded : internalExpanded;
 
     useEffect(() => {
         // 如果禁用展開功能,不需要檢測溢出
@@ -28,7 +40,21 @@ const ExpandableText = ({ content, className = "", collapsedHeight = 100, disabl
         }
     }, [content, collapsedHeight, disableExpand]);
 
-    const toggleExpand = () => setIsExpanded(!isExpanded);
+    const toggleExpand = (e) => {
+        if (e && e.stopPropagation) {
+            e.stopPropagation();
+        }
+
+        const newState = !isExpanded;
+
+        if (externalOnToggle) {
+            externalOnToggle(newState);
+        }
+
+        if (!isControlled) {
+            setInternalExpanded(newState);
+        }
+    };
 
     return (
         <div className={`relative ${className}`}>
