@@ -1,5 +1,5 @@
-import Section from "./Section";
-import BlockDispatcher from "./BlockDispatcher";
+import Section from "./layout/Section";
+import BlockDispatcher from "./blocks/BlockDispatcher";
 
 /**
  * SectionRenderer

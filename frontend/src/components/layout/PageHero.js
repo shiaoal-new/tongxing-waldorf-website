@@ -1,10 +1,10 @@
-import Container from "./Container";
+import Container from "../ui/Container";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
-import BackgroundCarousel from "./BackgroundCarousel";
+import BackgroundCarousel from "../BackgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
-import DevComment from "./DevComment";
-import SectionDivider from "./SectionDivider";
+import DevComment from "../ui/DevComment";
+import SectionDivider from "../SectionDivider";
 
 /**
  * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度

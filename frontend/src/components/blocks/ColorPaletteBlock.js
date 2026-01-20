@@ -1,5 +1,5 @@
 import React from "react";
-import { brandMeta, tunghinAmberScale } from "../lib/brand-config";
+import { brandMeta, tunghinAmberScale } from "../../lib/brand-config";
 
 const ColorBrick = ({ shade, hex: inputHex }) => {
     const [copied, setCopied] = React.useState(false);

@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Pagination } from 'swiper/modules';
 
-import ActionButtons from "./ActionButtons";
-import Disclosure from "./Disclosure";
-import DevComment from "./DevComment";
+import ActionButtons from "./ui/ActionButtons";
+import Disclosure from "./ui/Disclosure";
+import DevComment from "./ui/DevComment";
 import styles from "./ListSwiper.module.css";
 
 

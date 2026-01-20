@@ -1,12 +1,12 @@
 import Link from "next/link";
-import Logo from "./Logo";
+import Logo from "../ui/Logo";
 import { Disclosure } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import AboutModal from "./AboutModal";
-import DevComment from "./DevComment";
-import { useSession } from "../context/SessionContext";
+import AboutModal from "../AboutModal";
+import DevComment from "../ui/DevComment";
+import { useSession } from "../../context/SessionContext";
 
 // Modularized Components
 import UserMenu from "./Navbar/UserMenu";

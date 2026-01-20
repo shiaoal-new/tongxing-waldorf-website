@@ -1,6 +1,6 @@
 import ListRenderer from "../ListRenderer";
 import { usePageData } from "../../context/PageDataContext";
-import BlockDispatcher from "../BlockDispatcher";
+import BlockDispatcher from "./BlockDispatcher";
 
 /**
  * 準備列表數據，將 FAQ 或普通項目統一轉化為規整的 Block 結構

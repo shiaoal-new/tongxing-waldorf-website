@@ -1,4 +1,4 @@
-import MarkdownContent from "../MarkdownContent";
+import MarkdownContent from "../ui/MarkdownContent";
 
 /**
  * CompactCardItem Component

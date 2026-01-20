@@ -3,8 +3,8 @@ import Script from "next/script";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-import ParallaxBackground from "./ParallaxBackground";
-import SvgFilters from "./SvgFilters";
+import ParallaxBackground from "../ParallaxBackground";
+import SvgFilters from "../ui/SvgFilters";
 import PageContent from "./PageContent";
 
 import { useEffect, useState } from "react";

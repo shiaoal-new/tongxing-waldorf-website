@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useQuestionnaire } from '../hooks/useQuestionnaire';
+import { useQuestionnaire } from '../../hooks/useQuestionnaire';
 import QuestionnaireResult from './questionnaire/QuestionnaireResult';
 import QuestionnaireProgressBar from './questionnaire/QuestionnaireProgressBar';
 import QuestionnaireCategory from './questionnaire/QuestionnaireCategory';

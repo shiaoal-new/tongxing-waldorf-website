@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 import BenefitItem from "./Benefit";
-import VideoItem from "./Video";
-import TextBlock from "./blocks/TextBlock";
-import CardItem from "./blocks/CardItem";
-import CompactCardItem from "./blocks/CompactCardItem";
-import ListBlock from "./blocks/ListBlock";
-import MemberBlock from "./blocks/MemberBlock";
+import VideoItem from "../Video";
+import TextBlock from "./TextBlock";
+import CardItem from "./CardItem";
+import CompactCardItem from "./CompactCardItem";
+import ListBlock from "./ListBlock";
+import MemberBlock from "./MemberBlock";
 
 /**
  * Loading Fallback Component

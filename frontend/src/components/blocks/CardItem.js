@@ -1,5 +1,5 @@
-import MediaRenderer from "../MediaRenderer";
-import MarkdownContent from "../MarkdownContent";
+import MediaRenderer from "../ui/MediaRenderer";
+import MarkdownContent from "../ui/MarkdownContent";
 
 /**
  * CardItem Component

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Icon } from "@iconify/react";
-import { themes } from "../lib/brand-config";
+import { themes } from "../../lib/brand-config";
 
 export const ThemeList = ({ onItemClick }) => {
   const { theme, setTheme } = useTheme();

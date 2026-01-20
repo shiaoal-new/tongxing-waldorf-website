@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import Modal from "./Modal";
-import DevComment from "./DevComment";
+import Modal from "../ui/Modal";
+import DevComment from "../ui/DevComment";
 
 
 const CurriculumBlock = ({ data }) => {

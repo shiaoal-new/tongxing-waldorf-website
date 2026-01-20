@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import styles from './TimelineBlock.module.css';
-import Modal from './Modal';
+import Modal from '../ui/Modal';
 
 
 const TimelineBlock = ({ data, anchor = 'timeline' }) => {

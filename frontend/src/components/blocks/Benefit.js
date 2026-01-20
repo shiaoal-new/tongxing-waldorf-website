@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import ActionButtons from "./ActionButtons";
+import ActionButtons from "../ui/ActionButtons";
 
-import MediaRenderer from "./MediaRenderer";
-import ExpandableText from "./ExpandableText";
+import MediaRenderer from "../ui/MediaRenderer";
+import ExpandableText from "../ui/ExpandableText";
 
 export default function BenefitItem(props) {
   const { span, media, title, children, icon, buttons } = props;

@@ -5,7 +5,7 @@ import { themeJson } from "./SurveyTheme";
 
 import surveyJson from "./visitRegistrationSchema.json";
 
-import { useSession } from "../context/SessionContext";
+import { useSession } from "../../context/SessionContext";
 
 export default function VisitRegistrationForm({ onComplete }) {
     const { session } = useSession();

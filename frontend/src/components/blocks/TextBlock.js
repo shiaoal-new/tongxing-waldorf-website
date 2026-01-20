@@ -1,5 +1,5 @@
-import ActionButtons from "../ActionButtons";
-import ExpandableText from "../ExpandableText";
+import ActionButtons from "../ui/ActionButtons";
+import ExpandableText from "../ui/ExpandableText";
 
 /**
  * TextBlock Component

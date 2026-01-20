@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import Layout from "./Layout";
-import Section from "./Section";
+import Layout from "./layout/Layout";
+import Section from "./layout/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageHero from "./PageHero";
-import MemberDetailModal from "./MemberDetailModal";
-import TableOfContents from "./TableOfContents";
+import PageHero from "./layout/PageHero";
+import MemberDetailModal from "./ui/MemberDetailModal";
+import TableOfContents from "./blocks/TableOfContents";
 import ParallaxBackground from "./ParallaxBackground";
 import { useState, useRef } from "react";
 import { useTheme } from "next-themes";

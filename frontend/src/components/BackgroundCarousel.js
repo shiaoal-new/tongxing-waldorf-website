@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import MediaRenderer from './MediaRenderer';
+import MediaRenderer from './ui/MediaRenderer';
 
 // --- Constants ---
 

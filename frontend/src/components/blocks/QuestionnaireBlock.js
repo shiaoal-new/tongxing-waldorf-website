@@ -1,4 +1,4 @@
-import { usePageData } from '../context/PageDataContext';
+import { usePageData } from '../../context/PageDataContext';
 import QuestionnaireComponent from './Questionnaire';
 
 export default function QuestionnaireBlock({ data }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../Modal";
+import Modal from "../../ui/Modal";
 
 export default function CancelModal({
     isOpen,

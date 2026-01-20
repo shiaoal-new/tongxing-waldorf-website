@@ -1,6 +1,6 @@
 import { motion, animate, useMotionValue, useTransform } from 'framer-motion';
 import { useEffect } from 'react';
-import Modal from '../Modal';
+import Modal from '../../ui/Modal';
 
 export default function QuestionnaireResult({ showResult, result, onClose, onReset }) {
     const scoreCount = useMotionValue(0);

@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { useSession } from "../../context/SessionContext";
+import { useSession } from "../../../context/SessionContext";
 
 export default function UserMenu({ session, isMobile = false }) {
     const { loginWithLine, logout } = useSession();

@@ -1,6 +1,6 @@
 import React from 'react';
-import DevComment from './DevComment';
-import { useTableOfContents } from '../hooks/useTableOfContents';
+import DevComment from '../ui/DevComment';
+import { useTableOfContents } from '../../hooks/useTableOfContents';
 import DesktopTOC from './toc/DesktopTOC';
 import MobileTOC from './toc/MobileTOC';
 

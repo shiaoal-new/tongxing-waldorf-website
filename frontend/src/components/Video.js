@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DevComment from "./DevComment";
+import DevComment from "./ui/DevComment";
 
 export default function VideoItem({ video, className }) {
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSession } from "../context/SessionContext";
+import { useSession } from "../../context/SessionContext";
 import liff from "@line/liff"; // Import LIFF SDK
-import Container from "./Container";
+import Container from "../ui/Container";
 import { ClockIcon, CalendarIcon, TicketIcon } from "@heroicons/react/outline";
 import VisitRegistrationForm from "./VisitRegistrationForm";
-import Modal from "./Modal";
-import DevComment from "./DevComment";
+import Modal from "../ui/Modal";
+import DevComment from "../ui/DevComment";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { formatSessionDate, formatSessionTime } from "../lib/formatters";
+import { formatSessionDate, formatSessionTime } from "../../lib/formatters";
 
-import { visitApi } from "../api/visit";
+import { visitApi } from "../../api/visit";
 
 // Modularized Components
 import RegistrationCard from "./VisitSchedule/RegistrationCard";

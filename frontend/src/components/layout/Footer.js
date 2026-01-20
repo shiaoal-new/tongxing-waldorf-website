@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import Container from "./Container";
-import Logo from "./Logo";
-import DevComment from "./DevComment";
+import Container from "../ui/Container";
+import Logo from "../ui/Logo";
+import DevComment from "../ui/DevComment";
 
 // Helper component for footer content to avoid duplication in code
 

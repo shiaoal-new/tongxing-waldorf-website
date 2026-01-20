@@ -1,4 +1,4 @@
-import MediaRenderer from "../MediaRenderer";
+import MediaRenderer from "../ui/MediaRenderer";
 import { usePageData } from "../../context/PageDataContext";
 
 /**

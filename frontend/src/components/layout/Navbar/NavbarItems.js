@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { ThemeList } from "../DarkSwitch";
+import { ThemeList } from "../../ui/DarkSwitch";
 
 export function NavbarActionItem({ item, active, actionHandlers, showBackgroundGrid, className = "", isMobile = false, router }) {
     const baseStyles = isMobile
