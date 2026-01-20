@@ -7,7 +7,7 @@ hero:
   content: 在變動的時代，我們於深坑大學校區建立首座教育燈塔，陪伴 1-9 年級孩子在專業學術與靈性成長中，長成完整而穩定的人。
   media_list:
     - type: video
-      video: /img/Leigham%20Primary%20Web%20Banner.mp4
+      video: /img/hero-video-vp9.webm
       poster: /img/video-poster.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   divider:
