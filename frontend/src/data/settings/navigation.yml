@@ -1,7 +1,7 @@
 items:
   - title: "校園生活"
     children:
-      - slug: "daily-routine"
+      - slug: "rhythm-of-life"
       - slug: "curriculum-development"
       - slug: "featured-courses"
       - slug: "chronology"

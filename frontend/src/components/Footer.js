@@ -12,7 +12,7 @@ function FooterContent() {
     { title: "課程介紹", path: "/featured-courses" },
     { title: "招生資訊", path: "/visit" },
     { title: "師資團隊", path: "/teacher-group" },
-    { title: "校園生活", path: "/daily-routine" }
+    { title: "校園生活", path: "/rhythm-of-life" }
   ];
   const legal = [
     { title: "隱私權政策", path: "/" },

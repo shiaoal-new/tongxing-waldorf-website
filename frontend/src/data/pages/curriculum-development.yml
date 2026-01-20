@@ -40,6 +40,50 @@ sections:
   - section_id: curriculum-main
     blocks:
       - type: curriculum_block
+  - section_id: senior-transition
+    blocks:
+      - type: text_block
+        title: 領航未來：從感受到思考的深度轉化
+        content: 隨著孩子邁向青少年前期，同心在大學校區的學術氛圍下，提供 7-9 年級更具挑戰性的專業課程。我們陪伴孩子從「用身體感受世界」轉向「用清晰思考領航世界」，在穩定的節奏中培養獨立思考與行動的能力。
+      - type: list_block
+        layout_method: grid_cards
+        item_type: benefit_item
+        items:
+          - title: 年段任務與專題
+            subtitle: Grade Projects
+            icon: lucide:presentation
+            content: |
+              **8 年級大專題**：深入研究一個主題，從資料蒐集到公開發表，培養獨立研究能力。
+
+              **9 年級社會實習**：走出校園，到真實的工作場域體驗，學習與社會接軌。
+
+              這些任務不只是作業，而是讓孩子在真實世界裡試試身手，發現自己的興趣和能力。
+          - title: 學術銜接與資訊素養
+            subtitle: Academic Preparation
+            icon: lucide:laptop
+            content: |
+              **學科輔導**：從 7 年級開始加強數學、語文等學科，確保學術能力的扎實基礎。
+
+              **資訊素養**：教導電腦、程式設計、資訊工具的使用，但我們相信孩子要先長好，再用科技。
+
+              我們不排斥科技，而是希望孩子有足夠的判斷力和自制力，成為科技的主人而非奴隸。
+          - title: 工藝與意志力
+            subtitle: Crafts & Willpower
+            icon: lucide:hammer
+            content: |
+              **木工、泥塑、編織**：這些課程不只是做做手工，而是在與材料的搏鬥中，培養堅韌的意志力。
+
+              **從構思到完成**：每個作品都需要耐心、專注和毅力，這些特質會伴隨孩子一生。
+
+              當孩子完成一件作品時，那種成就感和自信，是任何考試分數都無法給予的。
+  - section_id: parent-sharing
+    layout: 突出標題風格
+    blocks:
+      - type: text_block
+        title: 家長分享
+        content: >
+          「以前我也擔心孩子只會玩、不會讀書。但看到他 8 年級專題發表時那種自信和條理，我才發現——華德福給的不是考試技巧，而是一輩子帶得走的能力。」
+          —— 九年級畢業生家長
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:

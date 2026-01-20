@@ -1,0 +1,184 @@
+title: 生活律動
+slug: rhythm-of-life
+hero:
+  title: 生活律動
+  subtitle: 九年一貫的穩定節奏：在呼吸間看見生命力
+  content: 在深坑大學校區的專業環境中，我們建立 1-9 年級最穩定的成長律動。將學習比喻為「一呼一吸」，在專注與鬆綁間，點燃孩子持續學習的火種。這份跨越九年的穩定感，是我們給孩子最扎實的支持。
+  accent_text: "節奏中的成長"
+  media_list:
+    - type: image
+      image: /img/daily-routine.jpg
+sections:
+  - section_id: interactive-schedule
+    blocks:
+      - type: text_block
+        title: 日律動：在同心的一天
+        subtitle: 穩定呼吸的日常課表
+        content: 規律聽起來很無聊？其實不然。就像你每天要睡覺、要吃飯，孩子也需要穩定的節奏才能安心長大。下面這張表，讓你看看不同年齡的孩子，一天是怎麼過的。
+      - type: schedule_block
+        low:
+          - time: 08:10
+            title: 晨間儀式
+            content: 早上一起唱歌、說祝福，讓心靜下來，準備開始新的一天。
+            type: in
+          - time: 08:45
+            title: 大時段主課程
+            content: 語文、數學、形線畫——不是每天換科目，而是連續三週專注學同一個主題。
+            type: in
+          - time: 10:30
+            title: 早點心與遊戲
+            content: 吃點東西、出去跑跑跳跳，讓大腦休息一下。
+            type: out
+          - time: 11:10
+            title: 專科課程
+            content: 畫畫、做手工、練身體，用手、用心去感受。
+            type: in
+          - time: 12:00
+            title: 午餐與午休
+            content: 好好吃飯、好好休息，下午才有力氣繼續。
+            type: out
+          - time: 13:20
+            title: 自然日 / 整理
+            content: 到戶外走走，或者整理教室、照顧環境。
+            type: out
+          - time: 14:00
+            title: 感恩放學
+            content: 一起做個結束圈，帶著滿足的心情回家。
+            type: out
+        high:
+          - time: 08:10
+            title: 晨間儀式
+            content: 高年級的早晨更需要專注力，用詩歌和律動喚醒身心。
+            type: in
+          - time: 08:45
+            title: 大時段主課程
+            content: 科學、文學、歷史地理——開始動腦思考更深的問題。
+            type: in
+          - time: 10:45
+            title: 點心與社交
+            content: 青春期的孩子需要跟朋友聊天的時間，這很重要。
+            type: out
+          - time: 11:10
+            title: 專業技藝課
+            content: 木工、泥塑、外語——用手做、用心學。
+            type: in
+          - time: 12:10
+            title: 午餐與休息
+            content: 吃飽喝足，為下午的課程充電。
+            type: out
+          - time: 13:20
+            title: 學科練習 / 社團
+            content: 數學練習、武術、音樂，或者自己組社團玩點有趣的。
+            type: in
+          - time: 15:40
+            title: 年段任務 / 結束圈
+            content: 做專題、討論社會議題，或者一起反思今天學到了什麼。
+            type: out
+      - type: text_block
+        title: 專業詞彙：華德福小字典
+        subtitle: 專有名詞的白話解讀
+        content: 這些聽起來很專業的名詞，其實都有它們的道理。讓我們用最簡單的方式，告訴你這些教育理念背後的意義。
+      - type: list_block
+        layout_method: vertical
+        item_type: faq_item
+        items:
+          - title: 季節座
+            id: term-season-table
+            subtitle: Season Table
+            content: 教室或校園內的特定角落，會隨節氣變化佈置自然花材與手工品。這不只是裝飾，而是讓孩子透過感官直接與大地的色彩、陽光、溫度變化連結。
+          - title: 圍圓共聚
+            id: term-circle-gathering
+            subtitle: Circle Gathering
+            content: 教師團與學生的對話方式，象徵平等與凝聚。行政運作如同校園的心臟，透過規律的共聚與流轉，確保這個微型社會的生機與安定。
+  - section_id: weekly-core
+    blocks:
+      - type: text_block
+        title: 週律動：每週四大核心
+        subtitle: 向內凝聚與向外舒展的平衡
+        content: 在同心，每週的律動不僅是時間表，更是孩子身心發展的支撐體系。透過這四個核心維度，我們確保學生的學習在「向內凝聚」與「向外放鬆」間達成完美的呼吸平衡。
+      - type: list_block
+        layout_method: grid_cards
+        item_type: benefit_item
+        items:
+          - title: 主課程：世界之窗與呼吸
+            subtitle: Main Lesson
+            icon: lucide:book-open
+            content: |
+              每天早晨頭兩小時，由班導師帶領「週期性主題統整教學」。一個主題（如語文、物理）持續 3-4 週，讓孩子深度沈浸。
+
+              **特色**：無教科書教學，孩子在空白本中手繪黑板畫並記錄，親手創作出獨一無二的課本，鍛鍊意志與思考。
+          - title: 副課程：靈魂的交響
+            subtitle: Specialty Subjects
+            icon: lucide:palette
+            content: |
+              安排在主課程後，包含外語、音樂、手工藝、園藝等。這些藝術課程是轉化的媒介：手工鍛鍊思考邏輯，音樂陶冶情感。
+
+              透過「向內凝聚（主課）」與「向外舒展（專科）」的規律，發展對世界的好奇與自我掌握力。
+          - title: 自然日：與土地連結
+            subtitle: Nature Day
+            icon: lucide:mountain
+            content: |
+              每週三不論晴雨，走出校園。這是一場發展低階感官（觸覺、平衡覺等）的重要修行。
+
+              - **低年級**：家校周邊探索，建立土地認同。
+              - **中年級**：結合農耕與建築，體驗自給自足。
+              - **高年級**：挑戰深山林野或跨越地標，培養韌性。
+          - title: 節氣與社群：規律見安定
+            subtitle: Season & Community
+            icon: lucide:users-2
+            content: |
+              透過校園的「季節座 (Season Table)」佈置，讓孩子敏銳感知二十四節氣的變化。
+
+              行政與教師團的「圍圓共聚」與家長的深度參與（如自然日陪伴、節慶湯圓製作），共同建構成一個極具安全感的守護場域。
+  - section_id: yearly-cycle
+    blocks:
+      - type: text_block
+        title: 年律動：四季慶典旅程
+        subtitle: 與大自然宇宙節奏接軌
+        content: 「年律動」是透過四季慶典與二十四節氣的交替，引導孩子與宇宙大自然的運行節奏接軌。慶典並非單日的活動，而是一段持續醞釀的心靈過程，幫助孩子意識到世界的節奏，從中獲得安定的力量。
+      - type: list_block
+        layout_method: grid_cards
+        item_type: benefit_item
+        items:
+          - title: 春季：感謝與分享的種子
+            subtitle: Spring Festival
+            icon: lucide:sprout
+            content: |
+              萬物甦醒，生命力迸發。慶典結合清明與寒食傳統，孩子體驗包「潤餅」，感念祖先與土地。
+
+              **核心**：透過「季節座」視覺傳遞重生氣息，並在社群中實踐「我擁有的可以與他人分享」，建立穩固的支持系統。
+          - title: 夏季：奔放意志的巔峰
+            subtitle: Summer Festival
+            icon: lucide:sun
+            content: |
+              陽光充沛，象徵意志力的最高峰。孩子展現全年的鍛鍊果實，如音樂會分享或獨木舟跨越之旅。
+
+              **核心**：親師生齊心修繕環境與環境「換盆」，在移動與扎根中展現強大的社群共識與生存意志。
+          - title: 秋季：勇氣與內省的開端
+            subtitle: Autumn Festival
+            icon: lucide:leaf
+            content: |
+              從盛夏轉向內在收整。米迦勒的精神引領孩子面對黑暗與恐懼，在自然觀察中體會落葉歸根。
+
+              **核心**：透過「生命史工作坊」梳理成長足跡，在收穫的季節裡回溯過去、展望未來，找尋內在的道德勇氣。
+          - title: 冬季：黑暗中的希望之光
+            subtitle: Winter Festival
+            icon: lucide:snowflake
+            content: |
+              點亮心魂之光的聖神階段。包含點燃「將臨圈」四根蠟燭的等待過程，以及最具儀式感的「走螺旋」。
+
+              **核心**：在冬至最長之夜遇見「最內在的自己」，並透過家長製作的溫暖湯圓傳遞關愛，完成一年的生命循環。
+  - section_id: cta
+    layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        title: 親自來感受
+        content: 課表看完了，但真實的感覺是什麼樣？歡迎來學校走走，看看孩子們上課的樣子——那種專注又放鬆的氛圍，真的要親眼看過才懂。
+        buttons:
+          - text: 預約參觀
+            link: /visit
+            style: btn-white
+          - text: 課程介紹
+            link: /curriculum-development
+            style: btn-primary
+        subtitle: 下一步
