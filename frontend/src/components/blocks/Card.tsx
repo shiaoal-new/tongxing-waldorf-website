@@ -1,27 +1,46 @@
 import React from "react";
 import MediaRenderer from "../ui/MediaRenderer";
 import MarkdownContent from "../ui/MarkdownContent";
-import { CardItem as CardItemType } from "../../types/content";
+import { CardItem, CompactCardItem } from "../../types/content";
 
-interface CardItemProps {
-    data: CardItemType;
+export type CardVariant = 'default' | 'compact';
+
+interface CardProps {
+    data: CardItem | CompactCardItem;
+    variant?: CardVariant;
 }
 
 /**
- * CardItem Component
- * 提取的 UI 組件：卡片
+ * Card Component
+ * 遵循 DRY 原則合併後的卡片組件，支援 standard 及 compact 兩種樣式
  */
-export default function CardItem({ data }: CardItemProps) {
+export default function Card({ data, variant = 'default' }: CardProps) {
+    if (variant === 'compact') {
+        const compactData = data as CompactCardItem;
+        return (
+            <div className="bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start transition-all hover:bg-brand-accent/10 dark:hover:bg-primary-900/10 h-full">
+                <div className="text-xs font-bold text-brand-accent dark:text-brand-accent mb-1 uppercase tracking-wider">{compactData.subtitle}</div>
+                <h3 className="font-bold text-brand-text dark:text-brand-bg">{compactData.title}</h3>
+                {compactData.content && (
+                    <div className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">
+                        <MarkdownContent content={compactData.content} />
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    const standardData = data as CardItem;
     return (
         <div className="group bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 p-8 rounded-3xl shadow-sm border border-brand-taupe/10 dark:border-neutral-700 flex flex-col items-center text-center transition-all hover:shadow-xl hover:-translate-y-2 hover:border-brand-accent/30 h-full duration-300 relative overflow-hidden">
             {/* 圖標或媒體 */}
-            {data.icon ? (
+            {standardData.icon ? (
                 <div className="w-20 h-20 mb-6 text-6xl flex items-center justify-center bg-brand-accent/10 dark:bg-brand-accent/20 rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                    {data.icon}
+                    {standardData.icon}
                 </div>
-            ) : data.media ? (
+            ) : standardData.media ? (
                 <MediaRenderer
-                    media={data.media}
+                    media={standardData.media}
                     className="w-20 h-20 mb-6 rounded-2xl overflow-hidden group-hover:scale-110 transition-transform duration-300"
                     imgClassName="object-cover w-full h-full"
                 />
@@ -29,19 +48,19 @@ export default function CardItem({ data }: CardItemProps) {
 
             {/* 標題 */}
             <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2 text-xl group-hover:text-brand-accent transition-colors duration-300">
-                {data.title}
+                {standardData.title}
             </h3>
 
             {/* 副標題 */}
-            {data.subtitle && (
+            {standardData.subtitle && (
                 <p className="text-brand-accent dark:text-brand-accent text-sm font-medium mb-4 uppercase tracking-wider">
-                    {data.subtitle}
+                    {standardData.subtitle}
                 </p>
             )}
 
             {/* 內容 */}
             <div className="text-brand-taupe dark:text-brand-taupe text-sm leading-relaxed">
-                <MarkdownContent content={data.content} />
+                <MarkdownContent content={standardData.content} />
             </div>
 
             {/* 裝飾性底部漸變 */}

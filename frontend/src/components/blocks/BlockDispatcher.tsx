@@ -3,8 +3,7 @@ import React from "react";
 import BenefitItem from "./Benefit";
 import VideoItem from "../Video";
 import TextBlock from "./TextBlock";
-import CardItem from "./CardItem";
-import CompactCardItem from "./CompactCardItem";
+import Card from "./Card";
 import ListBlock from "./ListBlock";
 import MemberBlock from "./MemberBlock";
 import { Block, ListItem, TextBlock as TextBlockType, BenefitItem as BenefitItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType } from "../../types/content";
@@ -104,11 +103,11 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "card_item":
         case "card":
-            return <CardItem data={block as any} />;
+            return <Card data={block as any} variant="default" />;
 
         case "compact_card_item":
         case "compact_card":
-            return <CompactCardItem data={block as any} />;
+            return <Card data={block as any} variant="compact" />;
 
         case "list_block":
             return <ListBlock block={block as ListBlockType} />;
