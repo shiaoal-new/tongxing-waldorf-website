@@ -49,11 +49,11 @@ const getImagePath = (path) => {
     }
 };
 
-const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
+const normalizeMediaData = (media_list = [], bg_images = [], bg_video, bg_video_mobile) => {
     const normalized = (media_list || []).map(m => {
         const type = m.type?.toLowerCase();
         if (type === 'image') return { ...m, image: getImagePath(m.image) };
-        if (type === 'video') return { ...m, video: getImagePath(m.video), poster: getImagePath(m.poster) };
+        if (type === 'video') return { ...m, video: getImagePath(m.video), mobileVideo: getImagePath(m.mobileVideo), poster: getImagePath(m.poster), mobilePoster: getImagePath(m.mobilePoster) };
         if (type === 'youtube') return { ...m, url: m.url };
         if (type === 'lottie') {
             let src = m.lottie || m.url;
@@ -70,9 +70,10 @@ const normalizeMediaData = (media_list = [], bg_images = [], bg_video) => {
     // Legacy fallback
     const legacyImages = (bg_images || []).map(img => getImagePath(img)).filter(Boolean);
     const legacyVideo = getImagePath(bg_video);
+    const legacyVideoMobile = getImagePath(bg_video_mobile);
 
     return [
-        ...(legacyVideo ? [{ type: 'Video', video: legacyVideo }] : []),
+        ...(legacyVideo ? [{ type: 'Video', video: legacyVideo, mobileVideo: legacyVideoMobile }] : []),
         ...legacyImages.map(img => ({ type: 'image', image: img }))
     ];
 };
@@ -129,6 +130,7 @@ export default function BackgroundCarousel({
     media_list = [],
     bg_images,
     bg_video,
+    bg_video_mobile,
     transition_type = 'fade',
     overlay_opacity = 0.4,
     parallax_ratio = 0
@@ -136,7 +138,7 @@ export default function BackgroundCarousel({
     const [currentIndex, setCurrentIndex] = useState(0);
     const containerRef = useRef(null);
 
-    const items = useMemo(() => normalizeMediaData(media_list, bg_images, bg_video), [media_list, bg_images, bg_video]);
+    const items = useMemo(() => normalizeMediaData(media_list, bg_images, bg_video, bg_video_mobile), [media_list, bg_images, bg_video, bg_video_mobile]);
     const currentItem = items[currentIndex] || {};
 
     const { scrollYProgress } = useScroll({

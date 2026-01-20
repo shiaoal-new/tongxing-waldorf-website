@@ -175,6 +175,7 @@ export default function PageHero({ data }) {
                     media_list={media_list}
                     bg_images={bg_images}
                     bg_video={bg_video}
+                    bg_video_mobile={data.bg_video_mobile}
                     transition_type={transition_type}
                     parallax_ratio={data.parallax_ratio}
                 />

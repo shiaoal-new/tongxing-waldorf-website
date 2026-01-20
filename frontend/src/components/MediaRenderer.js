@@ -2,6 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { DotLottiePlayer } from "@dotlottie/react-player";
 
+// Helper to determine MIME type
+const getMimeType = (src) => {
+    if (!src) return undefined;
+    if (src.endsWith('.webm')) return 'video/webm';
+    if (src.endsWith('.mp4')) return 'video/mp4';
+    return undefined;
+};
+
 const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
     if (!media || !media.type) return null;
 
@@ -25,15 +33,32 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }) => {
             if (!media.video) return null;
             return (
                 <video
-                    src={media.video}
-                    poster={media.poster}
-                    className={`object-cover ${className}`}
+                    // Use transparent pixel as poster to allow background-image to show
+                    poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    className={`object-cover bg-cover bg-center md:bg-[image:var(--desktop-poster)] bg-[image:var(--mobile-poster)] ${className}`}
+                    style={{
+                        '--desktop-poster': `url(${media.poster})`,
+                        '--mobile-poster': `url(${media.mobilePoster || media.poster})`
+                    }}
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload="metadata"
-                />
+                >
+                    {media.mobileVideo && (
+                        <source
+                            src={media.mobileVideo}
+                            type={getMimeType(media.mobileVideo)}
+                            media="(max-width: 768px)"
+                        />
+                    )}
+                    <source
+                        src={media.video}
+                        type={getMimeType(media.video)}
+                        media={media.mobileVideo ? "(min-width: 769px)" : undefined}
+                    />
+                </video>
             );
 
         case "youtube":
