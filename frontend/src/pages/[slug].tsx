@@ -1,10 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import { getAllFaculty } from "../lib/faculty";
-import { getAllFaq } from "../lib/faq";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
-import { getAllCourses } from "../lib/courses";
+import { getPageDataOptimized } from "../lib/dataLoader";
 import DynamicPageContent from "../components/DynamicPage";
 import { PageData, NavigationData, FaqItem, Member, Course } from "../types/content";
 
@@ -40,10 +38,8 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     const page = getPageBySlug(slug) || null;
     const pages = getAllPages();
     const navigation = getNavigation();
-    const facultyList = getAllFaculty();
-    const faqList = getAllFaq();
-    const coursesList = getAllCourses();
 
+    // 处理 section layouts
     if (page && page.sections) {
         page.sections = page.sections.map(section => {
             if (section.layout) {
@@ -56,15 +52,18 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
         });
     }
 
+    // 按需加载数据 - 只加载页面实际需要的数据
+    const pageData = getPageDataOptimized(page);
+
     return {
         props: {
             page,
             pages,
             navigation,
             data: {
-                facultyList,
-                faqList,
-                coursesList,
+                facultyList: pageData.facultyList || [],
+                faqList: pageData.faqList || [],
+                coursesList: pageData.coursesList || [],
             },
         },
     };

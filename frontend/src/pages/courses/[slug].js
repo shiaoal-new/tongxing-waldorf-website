@@ -1,9 +1,8 @@
 import { getAllCourses, getCourseBySlug } from "../../lib/courses";
 import { getAllPages } from "../../lib/pages";
-import { getAllFaculty } from "../../lib/faculty";
-import { getAllFaq } from "../../lib/faq";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import { getNavigation } from "../../lib/settings";
+import { getPageDataOptimized } from "../../lib/dataLoader";
 import DynamicPageContent from "../../components/DynamicPage";
 
 export default function CoursePage(props) {
@@ -25,10 +24,9 @@ export async function getStaticProps({ params }) {
     const course = getCourseBySlug(slug);
     const pages = getAllPages();
     const navigation = getNavigation();
-    const facultyList = getAllFaculty();
-    const faqList = getAllFaq();
     const coursesList = getAllCourses();
 
+    // 处理 section layouts
     if (course && course.sections) {
         course.sections = course.sections.map(section => {
             if (section.layout) {
@@ -41,14 +39,17 @@ export async function getStaticProps({ params }) {
         });
     }
 
+    // 按需加载数据 - 只加载课程页面实际需要的数据
+    const pageData = getPageDataOptimized(course);
+
     return {
         props: {
             course: course || null,
             pages,
             navigation,
             data: {
-                facultyList,
-                faqList,
+                facultyList: pageData.facultyList || [],
+                faqList: pageData.faqList || [],
                 coursesList,
             },
         },
