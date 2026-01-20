@@ -37,10 +37,10 @@ export default function ListBlock({ block }: ListBlockProps) {
     const listItems = prepareListItems(block, faqList as FaqItem[], direction);
 
     return (
-        <div className="max-w-brand mx-auto">
+        <div className="brand-container">
             {block.title && (
                 <div className="mb-8">
-                    <h3 className="text-xl font-bold text-brand-text dark:text-brand-bg border-l-4 border-brand-accent pl-4">
+                    <h3 className="title-bordered">
                         {block.title}
                     </h3>
                 </div>

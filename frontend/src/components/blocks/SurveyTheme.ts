@@ -59,5 +59,4 @@ export const themeJson = {
         "--sjs-editorpanel-backcolor": "rgba(255, 255, 255, 0.5)",
         "--sjs-editorpanel-hovercolor": "rgba(255, 255, 255, 0.9)"
     }
-}
-
+};

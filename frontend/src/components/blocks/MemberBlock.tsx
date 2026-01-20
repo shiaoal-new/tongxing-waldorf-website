@@ -14,7 +14,7 @@ interface MemberBlockProps {
 export default function MemberBlock({ block }: MemberBlockProps) {
     const { getMemberDetails, setSelectedMember } = usePageData() as PageContextValue;
     return (
-        <div className="max-w-brand mx-auto">
+        <div className="brand-container">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {block.members && block.members.map((memberName, mIndex) => {
                     const member = getMemberDetails(memberName);
@@ -23,7 +23,7 @@ export default function MemberBlock({ block }: MemberBlockProps) {
                         <div
                             key={mIndex}
                             onClick={() => setSelectedMember(member)}
-                            className="flex flex-col items-center text-center p-6 bg-brand-bg dark:bg-brand-structural rounded-3xl shadow-sm border border-gray-50 dark:border-brand-structural transition-all hover:shadow-lg hover:-translate-y-1 group cursor-pointer"
+                            className="card-interactive flex flex-col items-center text-center"
                         >
                             <div className="relative mb-4">
                                 {member.media ? (

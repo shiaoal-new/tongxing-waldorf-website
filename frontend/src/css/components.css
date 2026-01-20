@@ -1,0 +1,121 @@
+@layer components {
+
+    /* --- 佈局與容器 (Layout & Containers) --- */
+    .section-container {
+        @apply max-w-4xl mx-auto;
+    }
+
+    .brand-container {
+        @apply max-w-brand mx-auto;
+    }
+
+    /* --- 卡片體系 (Card System) --- */
+
+    /* 基礎卡片微互動 */
+    .card-base {
+        @apply transition-all duration-300 ease-out;
+    }
+
+    /* 緊湊型卡片 - 用於列表項目、小組件 */
+    .card-compact {
+        @apply card-base bg-brand-bg dark:bg-brand-structural p-4 rounded-xl shadow-sm border border-gray-50 dark:border-brand-structural flex flex-col items-start hover:bg-brand-accent/10 dark:hover:bg-primary-900/10 h-full;
+    }
+
+    /* 互動型卡片 - 較大的圓角與懸停位移 */
+    .card-interactive {
+        @apply card-base p-6 bg-brand-bg dark:bg-brand-structural rounded-3xl shadow-sm border border-gray-50 dark:border-brand-structural hover:shadow-lg hover:-translate-y-1 cursor-pointer;
+    }
+
+    /* 標準型卡片 - 帶漸變背景與豐富懸停效果 */
+    .card-standard {
+        @apply card-base bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 p-8 rounded-3xl shadow-sm border border-brand-taupe/10 dark:border-neutral-700 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-2 hover:border-brand-accent/30 h-full relative overflow-hidden;
+    }
+
+    .card-standard-icon {
+        @apply w-20 h-20 mb-6 text-6xl flex items-center justify-center bg-brand-accent/10 dark:bg-brand-accent/20 rounded-2xl transition-transform duration-300;
+    }
+
+    /* Bento 優選卡片 - 高階玻璃擬態 */
+    .benefit-card {
+        @apply relative flex flex-col h-full overflow-hidden bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-[2.5rem] border border-white/20 dark:border-white/5 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-700 ease-out cursor-pointer;
+    }
+
+    /* --- UI 元素 (UI Elements) --- */
+
+    /* 標籤與重標題 */
+    .label-accent {
+        @apply text-sm font-bold tracking-wider text-brand-accent uppercase mb-2;
+    }
+
+    /* 帶邊框標題 */
+    .title-bordered {
+        @apply text-xl font-bold text-brand-text dark:text-brand-bg border-l-4 border-brand-accent pl-4;
+    }
+
+    /* --- 反饋與狀態 (Feedback & States) --- */
+
+    .loading-container {
+        @apply flex flex-col items-center justify-center py-12 text-center;
+    }
+
+    .loading-spinner {
+        @apply inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-accent mb-3;
+    }
+
+    /* --- 按鈕樣式 (Button Styles) --- */
+    .btn {
+        @apply rounded-full font-bold transition-all duration-200 active:scale-95;
+    }
+
+    .btn-primary {
+        @apply bg-brand-accent text-white border-brand-accent hover:bg-brand-accent/90 hover:border-brand-accent/90 shadow-md hover:shadow-lg;
+    }
+
+    .btn-secondary {
+        @apply bg-brand-bg text-brand-text border-brand-taupe/20 hover:bg-brand-taupe/10 hover:border-brand-taupe/30;
+    }
+
+    .btn-white {
+        @apply bg-white text-brand-accent border-brand-accent hover:bg-brand-accent hover:text-white shadow-sm;
+    }
+
+    .btn-outline-primary {
+        @apply bg-transparent border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
+    }
+
+    .btn-inverse {
+        @apply bg-white text-brand-accent border-2 border-white hover:bg-transparent hover:text-white hover:border-white shadow-md hover:shadow-xl hover:scale-105;
+    }
+
+    /* --- 微互動 (Micro Interactions) --- */
+    .micro-hover-flow {
+        @apply transition-all duration-300 ease-in-out hover:scale-105;
+    }
+
+    .micro-hover-link {
+        @apply relative inline-block cursor-pointer decoration-0;
+    }
+
+    .micro-hover-link::after {
+        content: '';
+        @apply absolute left-0 bottom-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 ease-in-out;
+    }
+
+    .micro-hover-link:hover::after {
+        @apply w-full;
+    }
+
+    .micro-click-press {
+        @apply transition-transform duration-100 ease-linear active:scale-98;
+    }
+
+    /* 隱藏捲軸 */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}

@@ -19,14 +19,7 @@ export default function BenefitItem({ span, media, title, children, icon, button
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Bento-style card classes
-  const cardClasses = `
-    group relative flex flex-col h-full overflow-hidden
-    bg-white/40 dark:bg-black/20 backdrop-blur-md 
-    rounded-[2.5rem] border border-white/20 dark:border-white/5 
-    shadow-sm hover:shadow-2xl hover:-translate-y-1
-    transition-all duration-700 ease-out
-    cursor-pointer
-  `;
+  const cardClasses = "benefit-card group";
 
   const handleCardClick = () => {
     setIsExpanded(!isExpanded);

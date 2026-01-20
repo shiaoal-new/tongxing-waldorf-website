@@ -14,9 +14,9 @@ interface TextBlockProps {
  */
 export default function TextBlock({ data, align, isNested }: TextBlockProps) {
     return (
-        <div className={`${isNested ? '' : 'max-w-4xl mx-auto'} ${align === 'left' ? 'text-left' : 'text-center'}`}>
+        <div className={`${isNested ? '' : 'section-container'} ${align === 'left' ? 'text-left' : 'text-center'}`}>
             {data.subtitle && (
-                <div className="text-sm font-bold tracking-wider text-brand-accent uppercase mb-2">
+                <div className="label-accent">
                     {data.subtitle}
                 </div>
             )}

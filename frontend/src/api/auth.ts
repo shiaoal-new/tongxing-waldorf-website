@@ -6,11 +6,29 @@
 const API_BASE = '/api';
 
 async function handleResponse(response: Response) {
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.error || `API Error: ${response.status}`);
+    const contentType = response.headers.get('content-type');
+
+    // Check if response is JSON
+    if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error || `API Error: ${response.status}`);
+        }
+        return data;
     }
-    return data;
+
+    // Handle non-JSON responses
+    const text = await response.text();
+    if (!response.ok) {
+        throw new Error(`API Error: ${response.status} - ${text.substring(0, 100)}`);
+    }
+
+    // Try to parse as JSON anyway (for cases where content-type is missing)
+    try {
+        return JSON.parse(text);
+    } catch (e) {
+        throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
+    }
 }
 
 export const authApi = {

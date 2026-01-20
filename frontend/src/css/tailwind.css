@@ -1,5 +1,5 @@
 @import "./themes/tongxing.css";
-
+@import "./components.css";
 
 @tailwind base;
 @tailwind components;
@@ -119,74 +119,4 @@
   h6 {
     @apply text-sm lg:text-base;
   }
-}
-
-@layer components {
-
-  /* 基礎按鈕樣式 - 擴展 DaisyUI btn */
-  .btn {
-    @apply rounded-full font-bold transition-all duration-200 active:scale-95;
-  }
-
-  /* 橘色主按鈕 (填滿) */
-  .btn-primary {
-    @apply bg-brand-accent text-white border-brand-accent hover:bg-brand-accent/90 hover:border-brand-accent/90 shadow-md hover:shadow-lg;
-  }
-
-  /* 淺色/地灰色按鈕 */
-  .btn-secondary {
-    @apply bg-brand-bg text-brand-text border-brand-taupe/20 hover:bg-brand-taupe/10 hover:border-brand-taupe/30;
-  }
-
-  /* 白色按鈕 */
-  .btn-white {
-    @apply bg-white text-brand-accent border-brand-accent hover:bg-brand-accent hover:text-white shadow-sm;
-  }
-
-  /* 橘色邊框按鈕 (鏤空) */
-  .btn-outline-primary {
-    @apply bg-transparent border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
-  }
-
-  /* 反白按鈕 (用於深色/主色背景) - Solid White -> Transparent/Hollow White style */
-  .btn-inverse {
-    @apply bg-white text-brand-accent border-2 border-white hover:bg-transparent hover:text-white hover:border-white shadow-md hover:shadow-xl hover:scale-105;
-  }
-
-  /* Micro Interactions (微互動) */
-
-  /* 懸停流動 (Hover Flow) - 用於按鈕或區塊 */
-  .micro-hover-flow {
-    @apply transition-all duration-300 ease-in-out hover:scale-105;
-  }
-
-  /* 懸停流動 (Hover Flow) - 用於連結底線 */
-  .micro-hover-link {
-    @apply relative inline-block cursor-pointer decoration-0;
-  }
-
-  .micro-hover-link::after {
-    content: '';
-    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 ease-in-out;
-  }
-
-  .micro-hover-link:hover::after {
-    @apply w-full;
-  }
-
-  /* 點擊回饋 (Click Feedback) */
-  .micro-click-press {
-    @apply transition-transform duration-100 ease-linear active:scale-98;
-  }
-
-  /* 隱藏捲軸 (Hide Scrollbar) */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import { themeJson } from "./SurveyTheme";
@@ -14,17 +14,25 @@ interface VisitRegistrationFormProps {
 
 export default function VisitRegistrationForm({ onComplete }: VisitRegistrationFormProps) {
     const { session } = useSession() as any;
-    const survey = new Model(surveyJson);
 
-    survey.applyTheme(themeJson as any);
+    const survey = useMemo(() => {
+        const model = new Model(surveyJson);
+        model.applyTheme(themeJson as any);
+        return model;
+    }, []);
 
-    survey.onComplete.add((sender) => {
+    const handleComplete = useCallback((sender: any) => {
         const data = {
             ...sender.data,
             name: session?.user?.name || "未知用戶"
         };
         onComplete(data);
-    });
+    }, [session?.user?.name, onComplete]);
+
+    useMemo(() => {
+        survey.onComplete.clear();
+        survey.onComplete.add(handleComplete);
+    }, [survey, handleComplete]);
 
     return (
         <div className="registration-form-container">

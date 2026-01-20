@@ -14,8 +14,8 @@ import { Block, ListItem, TextBlock as TextBlockType, BenefitItem as BenefitItem
  */
 function BlockLoadingFallback({ message = "載入中..." }: { message?: string }) {
     return (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-accent mb-3"></div>
+        <div className="loading-container">
+            <div className="loading-spinner"></div>
             <p className="text-brand-taupe dark:text-brand-taupe text-sm">{message}</p>
         </div>
     );
