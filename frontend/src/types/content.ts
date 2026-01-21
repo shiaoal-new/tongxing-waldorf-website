@@ -159,6 +159,7 @@ export interface TimelineItem {
     content?: string;
     detail?: string;
     icon?: string;
+    image?: string;
 }
 
 export interface TimelineBlock extends BaseBlock {

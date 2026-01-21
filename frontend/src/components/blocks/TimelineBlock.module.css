@@ -4,209 +4,54 @@
    設計原則: Swiss Modernism + Minimalism
    ======================================== */
 
-/* 時間軸容器 - 純淨背景 */
 .timeline-container {
     font-family: var(--font-body), sans-serif;
     position: relative;
-
-    /* 純白背景,營造美術館氛圍 */
     background: #ffffff;
 
     /* 極簡色彩系統 */
     --timeline-bg: #ffffff;
     --timeline-text: #1a1a1a;
-    --timeline-arrow: #ffffff;
-    --timeline-content-text: #4a4a4a;
-
-    /* 火焰橙色作為唯一強調色 */
     --accent-primary: #f2a154;
     --accent-light: #fef3e7;
     --accent-border: #e8ddd0;
 }
 
-/* 深色主題 - 保持極簡 */
 .timeline-container[data-theme="dark"] {
     background: #0a0a0a;
-
     --timeline-bg: #1a1a1a;
     --timeline-text: #f5f5f5;
-    --timeline-arrow: #1a1a1a;
-    --timeline-content-text: #d0d0d0;
+    --accent-primary: #f2a154;
     --accent-light: #2a2520;
     --accent-border: #3a3530;
 }
 
-/* 時間軸線條 - 細線設計 */
-:global(.vertical-timeline)::before {
-    background: var(--accent-primary) !important;
-    width: 2px !important;
-    box-shadow: none;
+/* Axis Line */
+.timeline-axis {
+    z-index: 0;
 }
 
-/* 時間軸卡片 - 極簡白卡設計 */
-:global(.vertical-timeline-element-content) {
-    /* 純白卡片 */
-    background: var(--timeline-bg) !important;
-
-    /* 極簡邊框 */
-    border: 1px solid var(--accent-border) !important;
-    border-left: 4px solid var(--accent-primary) !important;
-
-    /* 微妙陰影 */
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.04),
-        0 1px 2px rgba(0, 0, 0, 0.06) !important;
-
-    border-radius: 0 !important;
-    padding: 2.5rem !important;
-    color: var(--timeline-text) !important;
-
-    /* 平滑過渡 */
-    transition: all 0.25s ease !important;
+/* Phase Header */
+.phase-header {
+    /* Uses inline Tailwind for layout, this adds specific visuals if needed */
+    transition: all 0.3s ease;
 }
 
-/* Hover 效果 - 微妙提升 */
-:global(.vertical-timeline-element-content):hover {
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        0 2px 4px rgba(0, 0, 0, 0.08) !important;
-
-    transform: translateX(4px) !important;
-    border-left-color: var(--accent-primary) !important;
+.phase-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-:global(.vertical-timeline-element-content-arrow) {
-    border-right-color: var(--timeline-bg) !important;
-    filter: none;
+/* Entries */
+/* .timeline-entry is handled by Tailwind for layout */
+
+/* Big Year Typography */
+.big-year {
+    line-height: 1;
+    letter-spacing: -0.02em;
 }
 
-/* 時間軸圖標 - 極簡圓點 */
-:global(.vertical-timeline-element-icon) {
-    /* 純白背景 */
-    background: var(--timeline-bg) !important;
-
-    /* 橙色邊框 */
-    border: 3px solid var(--accent-primary) !important;
-
-    /* 微妙陰影 */
-    box-shadow:
-        0 0 0 4px var(--accent-light),
-        0 2px 8px rgba(0, 0, 0, 0.1) !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.5rem !important;
-    line-height: 1 !important;
-
-    /* 移除動畫 */
-    animation: none;
-}
-
-@media only screen and (min-width: 1170px) {
-    :global(.vertical-timeline-element-icon) {
-        font-size: 1.8rem !important;
-    }
-}
-
-/* 隱藏外部日期顯示 */
-:global(.vertical-timeline-element-date) {
-    display: none !important;
-}
-
-/* 標題樣式 - 清晰排版 */
-.timeline-title {
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    color: var(--timeline-text);
-}
-
-/* 年份樣式 - 極簡標籤 */
-.timeline-year {
-    /* 橙色背景 */
-    background: var(--accent-primary);
-    color: white;
-
-    font-weight: 600;
-    font-size: 0.875rem;
-    padding: 0.375rem 1rem;
-    border-radius: 0;
-    white-space: nowrap;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-
-    /* 無陰影 */
-    box-shadow: none;
-}
-
-/* 副標題樣式 - 優雅分隔 */
-.timeline-subtitle {
-    color: var(--timeline-content-text);
-    font-weight: 500;
-    margin-bottom: 1.25rem;
-    font-size: 1.125rem;
-    padding-left: 0;
-    border-left: none;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-}
-
-/* 內容樣式 - 優化可讀性 */
-.timeline-content {
-    line-height: 1.8;
-    font-size: 1rem;
-    color: var(--timeline-content-text);
-    margin-top: 0;
-    letter-spacing: 0.01em;
-}
-
-/* 可點擊卡片 */
-.timeline-clickable {
-    cursor: pointer;
-    position: relative;
-}
-
-/* 點擊提示 - 極簡設計 */
-.timeline-clickable::after {
-    content: '閱讀更多 →';
-    position: absolute;
-    bottom: 1.5rem;
-    right: 2rem;
-    font-size: 0.875rem;
-    color: var(--accent-primary);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-}
-
-.timeline-clickable:hover::after {
-    opacity: 1;
-}
-
-/* 詳情提示 */
-.detail-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    color: var(--accent-primary);
-    font-size: 0.875rem;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-}
-
-.detail-hint:hover {
-    opacity: 1;
-}
-
-/* Modal 內容樣式 */
+/* Modal Styles */
 .modal-subtitle {
     color: var(--timeline-text);
     font-size: 1.25rem;
@@ -214,7 +59,6 @@
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid var(--accent-primary);
-    letter-spacing: -0.01em;
 }
 
 .modal-detail {
@@ -222,172 +66,68 @@
     font-size: 1.0625rem;
     white-space: pre-wrap;
     color: var(--timeline-content-text);
-    letter-spacing: 0.01em;
 }
 
-/* ========================================
-   Phase Header Styles - 美術館展覽標題
-   設計原則: 極簡、留白、強調排版
-   ======================================== */
+/* Museum Frame Effect */
+.museum-frame-container {
+    perspective: 1000px;
+    display: inline-block;
+    transition: transform 0.5s ease;
+}
 
-.phase-header-element {
-    margin-bottom: 8rem !important;
-    margin-top: 6rem !important;
+.museum-frame {
+    background: #ffffff;
+    padding: 12px;
+    /* 卡紙 (Matting) */
     position: relative;
+    border: 8px solid #2c2c2c;
+    /* 外框 */
+    box-shadow:
+        /* 深度陰影 */
+        0 10px 30px -10px rgba(0, 0, 0, 0.5),
+        /* 本身厚度感 */
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        /* 內部凹陷感 */
+        inset 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center;
 }
 
-/* Remove default card styles */
-.phase-header-element :global(.vertical-timeline-element-content) {
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-.phase-header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    scroll-margin-top: 120px;
-    position: relative;
-    z-index: 5;
-    padding: 3rem 0;
-}
-
-/* 背景裝飾 - 極簡分隔線 */
-.phase-header-content::before {
+.museum-frame::after {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(to right,
-            transparent 0%,
-            var(--accent-border) 20%,
-            var(--accent-border) 80%,
-            transparent 100%);
-    z-index: -1;
-}
-
-/* 階段標題 - 極簡展覽標題設計 */
-.phase-header-title {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--timeline-text);
-    position: relative;
-
-    /* 純白背景 */
-    background: var(--timeline-bg);
-
-    padding: 1.5rem 4rem;
-    border-radius: 0;
-    display: inline-block;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.05) 100%);
     z-index: 2;
-
-    /* 橙色上下邊框 */
-    border-top: 3px solid var(--accent-primary);
-    border-bottom: 3px solid var(--accent-primary);
-
-    /* 無陰影 */
-    box-shadow: none;
-    text-shadow: none;
-    margin: 0 !important;
-
-    /* 移除動畫 */
-    animation: none;
-    transition: none;
 }
 
-/* 移除 Hover 效果 */
-.phase-header-title:hover {
-    transform: none;
-    box-shadow: none;
+.museum-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: sepia(0.1) contrast(1.05);
+    transition: filter 0.4s ease;
 }
 
-/* 移除裝飾元素 */
-.phase-header-title::before,
-.phase-header-title::after {
-    display: none;
-}
-
-.header-icon-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    font-size: 1.5rem;
-    filter: none;
-    animation: none;
-}
-
-/* 響應式設計 */
-@media only screen and (min-width: 768px) {
-    .timeline-title {
-        font-size: 1.625rem;
-    }
-
-    .timeline-content {
-        font-size: 1.0625rem;
-    }
-
-    .phase-header-title {
-        font-size: 2.25rem;
-    }
-}
-
-@media only screen and (min-width: 1170px) {
-    .phase-header-title {
-        font-size: 2.75rem;
-        padding: 2rem 5rem;
-    }
-
-    .header-icon-inner {
-        font-size: 1.75rem;
-    }
-
-    /* Target the specific container */
-    :global(.vertical-timeline--two-columns .vertical-timeline-element.phase-header-element .vertical-timeline-element-content) {
-        float: none !important;
-        margin: 0 auto !important;
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-    }
-}
-
-/* 階段圖標 - 極簡圓點 */
-.phase-header-element :global(.vertical-timeline-element-icon) {
-    z-index: 10;
-
-    /* 橙色實心圓 */
-    background: var(--accent-primary) !important;
-
-    /* 白色邊框 */
-    border: 4px solid var(--timeline-bg) !important;
-
-    /* 外圈橙色邊框 */
+/* Hover effects */
+.museum-frame-container:hover .museum-frame {
+    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
     box-shadow:
-        0 0 0 2px var(--accent-primary),
-        0 2px 8px rgba(0, 0, 0, 0.1) !important;
-
-    /* 移除動畫 */
-    animation: none;
+        0 20px 40px -15px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.museum-frame-container:hover img {
+    filter: sepia(0) contrast(1.1);
+}
 
-/* 移除所有動畫關鍵幀 */
-@keyframes iconPulse {}
-
-@keyframes pulseGlow {}
-
-@keyframes flameFlicker {}
-
-@keyframes headerFloat {}
-
-@keyframes iconSpin {}
-
-@keyframes iconPulseStrong {}
+/* Dark mode adjustments */
+[data-theme="dark"] .museum-frame {
+    background: #e5e5e5;
+    /* 保持卡紙為淺色才有畫框感 */
+    border-color: #000000;
+}

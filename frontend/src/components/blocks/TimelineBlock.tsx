@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
-import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import styles from './TimelineBlock.module.css';
 import Modal from '../ui/Modal';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
+import { motion, useInView } from 'framer-motion';
 
 interface TimelineBlockProps {
     data: TimelineBlockType;
@@ -31,74 +31,45 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
     if (!mounted) return null;
 
+    // Filter items to handle indexing correctly for alternating layout
+    // Headers reset the alternation or just sit in the middle
+    let itemCounter = 0;
+
     return (
-        <div className={`w-full py-8 ${styles['timeline-container']}`} data-theme={theme}>
-            <VerticalTimeline lineColor="#f2a154">
-                {rawItems.map((item, index) => {
-                    const isHeader = item.type === 'header';
+        <div className={`w-full py-20 ${styles['timeline-container']}`} data-theme={theme}>
+            <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
+                {/* Central Line */}
+                <div className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 ${styles['timeline-axis']}`} />
 
-                    if (isHeader) {
-                        return (
-                            <VerticalTimelineElement
-                                key={index}
-                                icon={<span className={styles['header-icon-inner']}>🚩</span>}
-                                iconStyle={{
-                                    background: '#f2a154',
-                                    border: '3px solid white',
-                                    boxShadow: '0 2px 8px rgba(242, 161, 84, 0.4)',
-                                }}
-                                contentStyle={{
-                                    background: 'transparent',
-                                    boxShadow: 'none',
-                                    padding: '0',
-                                    textAlign: 'center'
-                                }}
-                                contentArrowStyle={{ display: 'none' }}
-                                className={styles['phase-header-element']}
-                            >
-                                <div id={`${anchor}-header-${index}`} className={styles['phase-header-content']}>
-                                    <h2 className={styles['phase-header-title']}>{item.title}</h2>
+                <div className="relative flex flex-col gap-24">
+                    {rawItems.map((item, index) => {
+                        const isHeader = item.type === 'header';
+
+                        if (isHeader) {
+                            itemCounter = 0; // Optional: Reset counter if you want pattern to restart
+                            return (
+                                <div key={index} id={`${anchor}-header-${index}`} className="relative z-10 flex justify-center w-full my-8">
+                                    <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 rounded-full border border-[var(--accent-primary)] shadow-sm`}>
+                                        <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{item.title}</h2>
+                                    </div>
                                 </div>
-                            </VerticalTimelineElement>
-                        );
-                    }
+                            );
+                        }
 
-                    return (
-                        <VerticalTimelineElement
-                            key={index}
-                            date={item.year}
-                            icon={<span>{item.icon || '⭐'}</span>}
-                            iconStyle={{
-                                background: 'white',
-                                border: '3px solid #f2a154',
-                                boxShadow: '0 2px 8px rgba(242, 161, 84, 0.3)',
-                            }}
-                            contentStyle={{
-                                background: theme === 'dark' ? '#1a1a1a' : '#fff',
-                                color: theme === 'dark' ? '#fdfcf8' : '#333',
-                            }}
-                            contentArrowStyle={{
-                                borderRight: `7px solid ${theme === 'dark' ? '#1a1a1a' : '#fff'}`,
-                            }}
-                        >
-                            <div
-                                className={item.detail ? styles['timeline-clickable'] : ''}
-                                onClick={() => item.detail && setSelectedDetail(item)}
-                            >
-                                <h3 className={styles['timeline-title']}>
-                                    <span className={styles['timeline-year']}>{item.year}</span>
-                                    {' '}
-                                    {item.title}
-                                </h3>
-                                {item.subtitle && (
-                                    <h4 className={styles['timeline-subtitle']}>{item.subtitle}</h4>
-                                )}
-                                <p className={styles['timeline-content']}>{item.content}</p>
-                            </div>
-                        </VerticalTimelineElement>
-                    );
-                })}
-            </VerticalTimeline>
+                        const isEven = itemCounter % 2 === 0;
+                        itemCounter++;
+
+                        return (
+                            <TimelineEntry
+                                key={index}
+                                item={item}
+                                isEven={isEven}
+                                onSelect={() => item.detail && setSelectedDetail(item)}
+                            />
+                        );
+                    })}
+                </div>
+            </div>
 
             <Modal
                 isOpen={!!selectedDetail}
@@ -118,6 +89,95 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         </div>
     );
 };
+
+interface TimelineEntryProps {
+    item: TimelineItem;
+    isEven: boolean;
+    onSelect: () => void;
+}
+
+const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+    return (
+        <div ref={ref} className={`relative w-full ${styles['timeline-entry']}`}>
+            {/* Axis Dot */}
+            <div className="absolute top-0 z-20 flex flex-col items-center
+                left-4 transform -translate-x-1/2
+                md:left-1/2
+             ">
+                <div className="w-3 h-3 rounded-full bg-[var(--accent-primary)] border-4 border-white dark:border-gray-900 shadow-sm" />
+            </div>
+
+            {/* Content Container */}
+            <div className="w-full pl-12 pr-4 md:pl-0 md:pr-0 flex flex-col md:block">
+
+                {/* Content Box Positioned via Margins on Desktop */}
+                <div
+                    className={`
+                        relative group
+                        w-full md:w-[45%] lg:w-[42%]
+                        ${isEven ? 'md:mr-auto md:text-right' : 'md:ml-auto md:text-left'}
+                        ${item.detail ? 'cursor-pointer' : ''}
+                    `}
+                    onClick={onSelect}
+                >
+                    {/* Desktop Connection Line */}
+                    <div
+                        className={`hidden md:block absolute top-[1.2rem] w-full max-w-[4rem] h-px bg-gray-300 dark:bg-gray-700
+                            ${isEven ? '-right-[4rem]' : '-left-[4rem]'}
+                        `}
+                    />
+
+                    {/* Year Label */}
+                    <div className={`
+                        text-3xl md:text-5xl font-light text-[var(--accent-primary)] opacity-90 mb-2 font-display ${styles['big-year']}
+                        ${isEven ? 'md:origin-right' : 'md:origin-left'}
+                    `}>
+                        {item.year?.replace(/[^0-9]/g, '') || item.year}
+                    </div>
+
+                    <div className="p-0 bg-transparent flex flex-col md:block">
+                        {/* Image - Museum Frame style */}
+                        {item.image && (
+                            <div className={`mb-6 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
+                                <div className={styles['museum-frame']}>
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="max-w-full h-auto object-cover max-h-[200px] md:max-h-[240px]"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        <h3 className="text-xl font-bold text-[var(--timeline-text)] mb-2 group-hover:text-[var(--accent-primary)] transition-colors">
+                            {item.title}
+                        </h3>
+                        {item.subtitle && (
+                            <h4 className="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 border-none p-0">
+                                {item.subtitle}
+                            </h4>
+                        )}
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
+                            {item.content}
+                        </p>
+
+                        {item.detail && (
+                            <div className={`mt-4 text-sm font-medium text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1
+                                ${isEven ? 'md:justify-end' : 'md:justify-start'}
+                            `}>
+                                閱讀更多 <span className="text-lg">→</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 
 export default TimelineBlock;
 
@@ -142,3 +202,4 @@ export function getTOC(block: TimelineBlockType, sectionId?: string) {
 
     return result;
 }
+
