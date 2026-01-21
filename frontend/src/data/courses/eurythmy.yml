@@ -6,7 +6,7 @@ hero:
   subtitle: 看得見的語言與音樂
   media_list:
     - type: image
-      image: /img/featured-artistic.png # Using an existing image placeholder
+      image: /img/featured-artistic.webp # Using an existing image placeholder
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: opening
@@ -61,17 +61,17 @@ sections:
             content: 在現代 3C 與資訊氾濫的干擾下，優律思美幫助孩子重新感知自己的身體與內心訊息。
             media:
               type: image
-              image: /img/featured-protection.png
+              image: /img/featured-protection.webp
           - title: 意志力與和諧
             content: 透過意志力的鍛鍊（如精準的步法與手勢），達成內在心靈與外在動作的和諧。
             media:
               type: image
-              image: /img/featured-willpower.png
+              image: /img/featured-willpower.webp
           - title: 社交練習
             content: 在團體隊形的變換中，孩子必須感知彼此的距離與節奏，這是一種深刻的社交學習。
             media:
               type: image
-              image: /img/featured-social.png
+              image: /img/featured-social.webp
   - section_id: community
     blocks:
       - type: text_block

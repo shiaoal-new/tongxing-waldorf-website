@@ -7,7 +7,7 @@ hero:
   layout: Hero Default
   media_list:
     - type: image
-      image: /img/wireframe.png
+      image: /img/wireframe.webp
 
 sections:
   - section_id: layout-overview

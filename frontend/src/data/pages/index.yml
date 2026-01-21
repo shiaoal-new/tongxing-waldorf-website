@@ -34,21 +34,21 @@ sections:
             icon: lucide:school
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_gardening_1768617891526.png
+              image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
           - title: 108課綱？那是日常
             span: 4
             content: 很多家長擔心非主流教育會讓孩子與社會脫節。其實，我們跟體制教育的關係，比較像是一對「性格互補」的好友。政府現在推的 108 課綱——「自發、互動、共好」，雖然名詞很新，但這本來就是華德福孩子呼吸般的日常。我們不只是在回應體制，更多時候是在「補位」——補上那些被考卷填滿、卻被遺忘的感知與生活實踐。我們不打算把孩子關在溫室，而是要讓他們在保有自我的同時，也能與社會自在地「連線」。
             icon: lucide:hand
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_circle_1768617908506.png
+              image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
           - title: 不熄滅的長跑：1-9 年級的穩定守護
             span: 4
             content: 台灣實驗教育最讓家長焦慮的是銜接與穩定性。同心提供 1-9 年級九年一貫的完整學制，這是一場不熄滅的長跑，讓孩子在藝術、科學與意志力上獲得連續性的成長。我們點燃孩子心中對世界的好奇，這份火光將一路延燒到大學、職場，成為他終身學習的熱情。
             icon: lucide:flame
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_painting_1768617922808.png
+              image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
         buttons:
           - text: 了解同心的課程設計
             link: /curriculum-development
@@ -70,21 +70,21 @@ sections:
             icon: "lucide:users"
             media:
               type: image
-              image: /img/artifacts/tw_teacher_parent_connection_1768617938384.png
+              image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
           - title: 最浪漫的告白：「你小孩跟我走」
             span: 4
             content: 我們的家長群組，大概是全台灣最有行動力的地方。大家不只一起決定午餐菜色、把校園弄得美美的，最感人的往往發生在課後： 「今天加班趕不回來？沒關係，小孩跟我走，我餵飽他再幫他洗個澡，你下班來我家接就好。」
             icon: "lucide:message-square"
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_community_support_1768617957981.png
+              image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
           - title: 家長不焦慮，小孩才敢放心長大
             span: 4
             content: 為什麼我們要搞得這麼「親密」？因為我們發現，當大人擁有足夠的安全感和支援網，孩子那雙看世界的眼睛也會跟著安穩下來。在一個被愛與信任包圍的「村子」裡長大，孩子踏出的每一小步，都會比別人更穩固。畢竟養育是一場長跑，一群人跑才像是在度假。
             icon: "lucide:heart"
             media:
               type: image
-              image: /img/artifacts/tw_calm_family_secure_1768617979428.png
+              image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
   - section_id: videos
     divider:
       type: wave

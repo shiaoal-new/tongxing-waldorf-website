@@ -7,7 +7,7 @@ hero:
   accent_text: "節奏中的成長"
   media_list:
     - type: image
-      image: /img/daily-routine.jpg
+      image: /img/daily-routine.webp
 sections:
   - section_id: interactive-schedule
     blocks:
@@ -145,7 +145,7 @@ sections:
             icon: lucide:sprout
             media:
               type: image
-              image: /img/season-spring-bg.jpeg
+              image: /img/season-spring-bg.webp
             content: |
               萬物甦醒，生命力迸發。慶典結合清明與寒食傳統，孩子體驗包「潤餅」，感念祖先與土地。
 
@@ -155,7 +155,7 @@ sections:
             icon: lucide:sun
             media:
               type: image
-              image: /img/season-summer-bg.png
+              image: /img/season-summer-bg.webp
             content: |
               陽光充沛，象徵意志力的最高峰。孩子展現全年的鍛鍊果實，如音樂會分享或獨木舟跨越之旅。
 
@@ -165,7 +165,7 @@ sections:
             icon: lucide:leaf
             media:
               type: image
-              image: /img/season-autumn-bg.png
+              image: /img/season-autumn-bg.webp
             content: |
               從盛夏轉向內在收整。米迦勒的精神引領孩子面對黑暗與恐懼，在自然觀察中體會落葉歸根。
 
@@ -175,7 +175,7 @@ sections:
             icon: lucide:snowflake
             media:
               type: image
-              image: /img/season-winter-bg.jpeg
+              image: /img/season-winter-bg.webp
             content: |
               點亮心魂之光的聖神階段。包含點燃「將臨圈」四根蠟燭的等待過程，以及最具儀式感的「走螺旋」。
 

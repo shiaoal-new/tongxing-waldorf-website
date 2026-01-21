@@ -8,7 +8,7 @@ hero:
   layout: "Hero Default"
   media_list:
     - type: "image"
-      image: "/img/themes/tongxing/background/chronology_hero.png"
+      image: "/img/themes/tongxing/background/chronology_hero.webp"
 sections:
   - section_id: "timeline"
     blocks:

@@ -1,0 +1,31 @@
+{
+    "alphaMode": "auto",
+    "quality": 80,
+    "presets": {
+        "high-quality": {
+            "alphaMode": "auto",
+            "quality": 90,
+            "description": "高质量模式 - 适合重要的展示图片"
+        },
+        "balanced": {
+            "alphaMode": "auto",
+            "quality": 80,
+            "description": "平衡模式 - 默认推荐，质量和大小平衡"
+        },
+        "aggressive": {
+            "alphaMode": "never",
+            "quality": 60,
+            "description": "激进压缩 - 最大化减小文件大小"
+        },
+        "preserve-alpha": {
+            "alphaMode": "always",
+            "quality": 85,
+            "description": "保留透明度 - 强制保留所有图片的 alpha 通道"
+        }
+    },
+    "notes": {
+        "alphaMode": "可选值: 'auto' (自动检测), 'always' (总是保留), 'never' (从不保留)",
+        "quality": "压缩质量: 0-100，数值越高质量越好但文件越大",
+        "usage": "使用预设: node scripts/optimize-images.js --preset=high-quality"
+    }
+}

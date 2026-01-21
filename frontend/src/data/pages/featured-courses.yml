@@ -6,7 +6,7 @@ hero:
   subtitle: 點燃生命力：從 1 到 9 年級的成長長跑
   media_list:
     - type: image
-      image: /img/featured-outdoor.png
+      image: /img/featured-outdoor.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: curriculum-intro
@@ -24,7 +24,7 @@ sections:
             content: 同心沒有統一的教科書，而是由老師自行設計教案。每天早上的前兩小時是主課程時間，會在數週內持續探索同一個主題，讓學習像「走螺旋」一樣深度內化，而非破碎的知識切片。
             media:
               type: image
-              image: /img/featured-academic.png
+              image: /img/featured-academic.webp
             sub_items:
               - title: 週期主課程 (Main Lesson)
                 content: 深度的專題探索，非破碎的知識。
@@ -36,7 +36,7 @@ sections:
             content: 透過藝術與動作，幫助孩子建立內在與外在世界的連結與平衡。
             media:
               type: image
-              image: /img/featured-artistic.png
+              image: /img/featured-artistic.webp
             sub_items:
               - title: 優律思美 (Eurythmy)
                 content: 「看得見的語言與音樂」，建立內在平衡。
@@ -55,7 +55,7 @@ sections:
             content: 從校園農耕到建築實作，讓孩子具備在生活中「自給自足」的能力與自信。
             media:
               type: image
-              image: /img/featured-nature.png
+              image: /img/featured-nature.webp
             sub_items:
               - title: 農耕與園藝課
                 content: 學習 BD 農法，了解食物與生命來源。
@@ -70,7 +70,7 @@ sections:
             content: 同心堅持每週三為「自然日」，並隨年段增加難度，讓孩子在移動中看見世界與尋找自我。
             media:
               type: image
-              image: /img/featured-outdoor.png
+              image: /img/featured-outdoor.webp
             sub_items:
               - title: 台北大縱走（五年級）
                 content: 7 天 6 夜長途徒步，透過汗水與意志力重新認知地景。
@@ -82,7 +82,7 @@ sections:
             content: 不同於大人的指派，孩子需自行找尋感興趣的主題，是向自由與負責邁進的重要歷程。
             media:
               type: image
-              image: /img/featured-exploration.png
+              image: /img/featured-exploration.webp
             sub_items:
               - title: 專題研究 (Projects)
                 content: 八、九、十一年級自主收集、整理並發表知識。

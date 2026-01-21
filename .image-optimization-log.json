@@ -1,0 +1,362 @@
+{
+  "artifacts/tw_calm_family_secure_1768617979428.png": {
+    "hash": "f00bd9d23a3122d62f309e0dad01a8af",
+    "processedAt": "2026-01-21T04:29:21.505Z",
+    "originalSize": 790095,
+    "optimizedSize": 120140,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "artifacts/tw_teacher_parent_connection_1768617938384.png": {
+    "hash": "476c1105710509289f78462fcd2c950d",
+    "processedAt": "2026-01-21T04:29:21.610Z",
+    "originalSize": 714829,
+    "optimizedSize": 91748,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "artifacts/tw_waldorf_circle_1768617908506.png": {
+    "hash": "4081d3fa58783f7a3f0d729d38082987",
+    "processedAt": "2026-01-21T04:29:21.717Z",
+    "originalSize": 798950,
+    "optimizedSize": 118576,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "artifacts/tw_waldorf_community_support_1768617957981.png": {
+    "hash": "23f13ffe3348b09fbea851320dc30414",
+    "processedAt": "2026-01-21T04:29:21.830Z",
+    "originalSize": 881693,
+    "optimizedSize": 134090,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "artifacts/tw_waldorf_gardening_1768617891526.png": {
+    "hash": "2fdf9a1f573eb8eddb5df50ac49d2074",
+    "processedAt": "2026-01-21T04:29:21.937Z",
+    "originalSize": 784511,
+    "optimizedSize": 112506,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "artifacts/tw_waldorf_painting_1768617922808.png": {
+    "hash": "1b9822e6677d3ff425c527aa6f8b3c67",
+    "processedAt": "2026-01-21T04:29:22.047Z",
+    "originalSize": 800994,
+    "optimizedSize": 121054,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "colors.jpg": {
+    "hash": "47caf8651e6b510cba7c9247b3013157",
+    "processedAt": "2026-01-21T04:29:22.209Z",
+    "originalSize": 107584,
+    "optimizedSize": 64918,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "curriculum-hero.png": {
+    "hash": "5fc372001ed6fe5bab36452884945a6b",
+    "processedAt": "2026-01-21T04:29:22.322Z",
+    "originalSize": 863374,
+    "optimizedSize": 121772,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "daily-routine.jpg": {
+    "hash": "aa99c41eae7c5b63add56f03676a90a5",
+    "processedAt": "2026-01-21T04:29:22.423Z",
+    "originalSize": 154358,
+    "optimizedSize": 108796,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-academic.png": {
+    "hash": "82ba2235c595ac554dc17d9f68596fee",
+    "processedAt": "2026-01-21T04:29:22.534Z",
+    "originalSize": 843850,
+    "optimizedSize": 122286,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-artistic.png": {
+    "hash": "287502b376fcebeef86dd44fe77813d7",
+    "processedAt": "2026-01-21T04:29:22.638Z",
+    "originalSize": 732810,
+    "optimizedSize": 64900,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-exploration.png": {
+    "hash": "db4a6cf82b13c9fe9306a9743fa34e87",
+    "processedAt": "2026-01-21T04:29:22.760Z",
+    "originalSize": 974338,
+    "optimizedSize": 184116,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-nature.png": {
+    "hash": "97bcd7c49be77424c39ef15adcbc9977",
+    "processedAt": "2026-01-21T04:29:22.892Z",
+    "originalSize": 1116799,
+    "optimizedSize": 251602,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-outdoor.png": {
+    "hash": "322535f6b7a1ee4483cf1065de154025",
+    "processedAt": "2026-01-21T04:29:23.000Z",
+    "originalSize": 832328,
+    "optimizedSize": 111498,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-protection.png": {
+    "hash": "9d62a821f5a4efc325c35fbf1e4b9e85",
+    "processedAt": "2026-01-21T04:29:23.114Z",
+    "originalSize": 899880,
+    "optimizedSize": 141278,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-social.png": {
+    "hash": "737395b3cf39064c6702d99616361f6b",
+    "processedAt": "2026-01-21T04:29:23.227Z",
+    "originalSize": 789325,
+    "optimizedSize": 87540,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "featured-willpower.png": {
+    "hash": "88fbdb84c60995708b2c116c841ca116",
+    "processedAt": "2026-01-21T04:29:23.358Z",
+    "originalSize": 932136,
+    "optimizedSize": 167500,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "season-autumn-bg.png": {
+    "hash": "68a6ef7d94364ce2dd3e47ce30e6e3fa",
+    "processedAt": "2026-01-21T04:29:23.482Z",
+    "originalSize": 949911,
+    "optimizedSize": 165264,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "season-spring-bg.jpeg": {
+    "hash": "2635f7bba6432b09882e65af20f2db8d",
+    "processedAt": "2026-01-21T04:29:23.534Z",
+    "originalSize": 143225,
+    "optimizedSize": 32500,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "season-summer-bg.png": {
+    "hash": "3f48eed06cbeb36cffd0f39264b34cdd",
+    "processedAt": "2026-01-21T04:29:23.665Z",
+    "originalSize": 1150476,
+    "optimizedSize": 249846,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "season-winter-bg.jpeg": {
+    "hash": "846e4128ce93f79ae6a1252c8b52b9a9",
+    "processedAt": "2026-01-21T04:29:23.720Z",
+    "originalSize": 177063,
+    "optimizedSize": 67102,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/吳俊輝.jpg": {
+    "hash": "a2c7af9283e91c3cb84b01fe23a98967",
+    "processedAt": "2026-01-21T04:29:23.821Z",
+    "originalSize": 156435,
+    "optimizedSize": 73982,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/呂孟庭.jpg": {
+    "hash": "53ef0c5c11df50ad2f4d74b086c352aa",
+    "processedAt": "2026-01-21T04:29:23.845Z",
+    "originalSize": 23921,
+    "optimizedSize": 9636,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/周天禧.jpg": {
+    "hash": "f53db5743b5e8fe8e58409cc2c94ac42",
+    "processedAt": "2026-01-21T04:29:23.948Z",
+    "originalSize": 158323,
+    "optimizedSize": 43222,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/姚昱廷.jpg": {
+    "hash": "763cf7f3ab8bd16cc5d967cc8142de2e",
+    "processedAt": "2026-01-21T04:29:23.984Z",
+    "originalSize": 37318,
+    "optimizedSize": 13204,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/姜怡伶.jpg": {
+    "hash": "82b0cde0840cce5504be0a21bd8ed966",
+    "processedAt": "2026-01-21T04:29:24.062Z",
+    "originalSize": 109879,
+    "optimizedSize": 64868,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/廖容.jpg": {
+    "hash": "a513e0e3fc77859e0d1908af6d049768",
+    "processedAt": "2026-01-21T04:29:24.165Z",
+    "originalSize": 302165,
+    "optimizedSize": 195846,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/林品嫻.jpg": {
+    "hash": "6ca6739650139a034ddf6699044d357b",
+    "processedAt": "2026-01-21T04:29:24.192Z",
+    "originalSize": 37380,
+    "optimizedSize": 19092,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/游鈞桓.jpg": {
+    "hash": "f1fd697cb5f52b7be7daead93ce3f6a0",
+    "processedAt": "2026-01-21T04:29:24.364Z",
+    "originalSize": 421127,
+    "optimizedSize": 259118,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/董品喬.jpg": {
+    "hash": "e454a82366aa3e26bd93ae802c9671bf",
+    "processedAt": "2026-01-21T04:29:24.469Z",
+    "originalSize": 166886,
+    "optimizedSize": 75952,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/詹雅智.jpg": {
+    "hash": "c87fac712d69e2d08e88083f12410d98",
+    "processedAt": "2026-01-21T04:29:24.556Z",
+    "originalSize": 192922,
+    "optimizedSize": 128430,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/連涓妏.jpg": {
+    "hash": "9a4fe2984153e899f0222953dcaee0d9",
+    "processedAt": "2026-01-21T04:29:24.736Z",
+    "originalSize": 272956,
+    "optimizedSize": 141746,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/陸文婧.jpg": {
+    "hash": "3f66eb1ba61ed1f09946de03a8433671",
+    "processedAt": "2026-01-21T04:29:24.965Z",
+    "originalSize": 507451,
+    "optimizedSize": 285164,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/高嘉淇.jpg": {
+    "hash": "77f3d83377ee53fc1b9b091a07c425eb",
+    "processedAt": "2026-01-21T04:29:25.037Z",
+    "originalSize": 94065,
+    "optimizedSize": 35612,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/黃千瑜.jpg": {
+    "hash": "14a70fd556265d19cf39e87ef9dfb554",
+    "processedAt": "2026-01-21T04:29:25.172Z",
+    "originalSize": 273852,
+    "optimizedSize": 151498,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher-photos/黃郁容.jpg": {
+    "hash": "02348acb848f7984d73a7dd1b69dc8d3",
+    "processedAt": "2026-01-21T04:29:25.308Z",
+    "originalSize": 226819,
+    "optimizedSize": 134484,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "teacher.jpg": {
+    "hash": "f760eb9fe9a4fbd93a1716cc1c1850a8",
+    "processedAt": "2026-01-21T04:29:25.418Z",
+    "originalSize": 210638,
+    "optimizedSize": 159906,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "themes/tongxing/background/chronology_hero.png": {
+    "hash": "3477a224ce4ad0b34e25dfc03bd82c7f",
+    "processedAt": "2026-01-21T04:29:25.542Z",
+    "originalSize": 1026046,
+    "optimizedSize": 198364,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "visit.jpg": {
+    "hash": "9e46a0b09fd7d7424cac410898e75f5c",
+    "processedAt": "2026-01-21T04:29:25.661Z",
+    "originalSize": 111023,
+    "optimizedSize": 86904,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "wireframe.png": {
+    "hash": "894e55f8eed1b410813f2415494298c5",
+    "processedAt": "2026-01-21T04:29:25.735Z",
+    "originalSize": 35316,
+    "optimizedSize": 22484,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  }
+}

@@ -6,7 +6,7 @@ hero:
   content: "同心的老師們不僅是教育者，更是孩子生命航道的引路人。在深坑大學校區的專業學術氛圍中，我們致力於點燃孩子的內在火光。"
   media_list:
     - type: image
-      image: /img/teacher.jpg
+      image: /img/teacher.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: intro

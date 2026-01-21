@@ -8,6 +8,16 @@
     "dev:local": "node scripts/run_local.js",
     "build": "npm run build --prefix frontend && npm run build --prefix functions",
     "deploy": "firebase deploy",
-    "install:all": "npm install --prefix frontend && npm install --prefix functions"
+    "install:all": "npm install --prefix frontend && npm install --prefix functions",
+    "optimize-images": "node scripts/image-optimizer/optimize-images.js",
+    "optimize-images:preview": "node scripts/image-optimizer/optimize-images.js --dry-run --check-unused",
+    "optimize-images:check-unused": "node scripts/image-optimizer/optimize-images.js --dry-run --check-unused",
+    "optimize-images:cleanup-unused": "node scripts/image-optimizer/optimize-images.js --check-unused --trash-unused",
+    "optimize-images:high-quality": "node scripts/image-optimizer/optimize-images.js --preset=high-quality",
+    "optimize-images:aggressive": "node scripts/image-optimizer/optimize-images.js --preset=aggressive"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.1",
+    "glob": "^10.3.10"
   }
 }

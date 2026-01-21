@@ -6,7 +6,7 @@ hero:
   content: 走進深坑大學校區，看見在大人的大學裡，如何長出孩子的小學與中學。我們誠摯邀請您前來，感受山林間這把溫暖火種的生命力。
   media_list:
     - type: image
-      image: /img/visit.jpg
+      image: /img/visit.webp
   layout:
     wrapper_class: "max-w-3xl text-center"
     container_class: "items-center justify-center"
