@@ -18,6 +18,87 @@ interface MediaRendererProps {
 }
 
 const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRendererProps) => {
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+    const [videoSrc, setVideoSrc] = React.useState<string | undefined>(undefined);
+
+    // Determines the appropriate video source based on screen width
+    React.useEffect(() => {
+        if (media.type?.toLowerCase() !== 'video') return;
+
+        const mediaQuery = window.matchMedia("(max-width: 768px)");
+        const updateSrc = () => {
+            const newSrc = (mediaQuery.matches && media.mobileVideo) ? media.mobileVideo : media.video;
+            if (newSrc !== videoSrc) {
+                setVideoSrc(newSrc);
+            }
+        };
+
+        updateSrc();
+
+        // Use modern listener if available, fallback to deprecated one for older Safari
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', updateSrc);
+            return () => mediaQuery.removeEventListener('change', updateSrc);
+        } else {
+            mediaQuery.addListener(updateSrc);
+            return () => mediaQuery.removeListener(updateSrc);
+        }
+    }, [media.video, media.mobileVideo, media.type, videoSrc]);
+
+    // Handles video playback logic
+    React.useEffect(() => {
+        if (media.type?.toLowerCase() === 'video' && videoRef.current && videoSrc) {
+            const video = videoRef.current;
+
+            // Ensure video is muted for autoplay
+            video.muted = true;
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+
+            // Re-load if src changed
+            if (video.src !== videoSrc) {
+                video.load();
+            }
+
+            const attemptPlay = async () => {
+                if (!video.paused) return;
+                try {
+                    await video.play();
+                } catch (error) {
+                    console.warn("Autoplay was prevented, waiting for interaction:", error);
+                }
+            };
+
+            // Try playing as soon as we have enough data
+            const onCanPlay = () => {
+                attemptPlay();
+            };
+
+            // Fallback: Try playing on any user interaction with the document
+            const onInteraction = () => {
+                attemptPlay();
+                document.removeEventListener('touchstart', onInteraction);
+                document.removeEventListener('click', onInteraction);
+            };
+
+            if (video.readyState >= 2) {
+                attemptPlay();
+            } else {
+                video.addEventListener('canplay', onCanPlay);
+            }
+
+            document.addEventListener('touchstart', onInteraction, { passive: true });
+            document.addEventListener('click', onInteraction, { passive: true });
+
+            return () => {
+                video.removeEventListener('canplay', onCanPlay);
+                document.removeEventListener('touchstart', onInteraction);
+                document.removeEventListener('click', onInteraction);
+            };
+        }
+    }, [videoSrc, media.type]);
+
     if (!media || !media.type) return null;
 
     switch (media.type.toLowerCase()) {
@@ -39,6 +120,8 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
             if (!media.video) return null;
             return (
                 <video
+                    ref={videoRef}
+                    src={videoSrc}
                     // Use transparent pixel as poster to allow background-image to show
                     poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                     className={`object-cover bg-cover bg-center md:bg-[image:var(--desktop-poster)] bg-[image:var(--mobile-poster)] ${className}`}
@@ -50,21 +133,8 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
                     loop
                     muted
                     playsInline
-                    preload="metadata"
-                >
-                    {media.mobileVideo && (
-                        <source
-                            src={media.mobileVideo}
-                            type={getMimeType(media.mobileVideo)}
-                            media="(max-width: 768px)"
-                        />
-                    )}
-                    <source
-                        src={media.video}
-                        type={getMimeType(media.video)}
-                        media={media.mobileVideo ? "(min-width: 769px)" : undefined}
-                    />
-                </video>
+                    preload="auto"
+                />
             );
 
         case "youtube":
