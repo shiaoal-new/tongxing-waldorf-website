@@ -1,13 +1,19 @@
 items:
+  - title: "認識同心"
+    children:
+      - slug: "teacher-group"
+      - slug: "chronology"
+  - title: "課程與教學"
+    children:
+      - slug: "curriculum-development"
+      - slug: "featured-courses"
+      - slug: "waldorf-assessment"
   - title: "校園生活"
     children:
       - slug: "rhythm-of-life"
-      - slug: "curriculum-development"
-      - slug: "featured-courses"
-      - slug: "chronology"
-  - slug: "teacher-group"
-  - slug: "waldorf-assessment"
-  - slug: "visit"
+  - title: "招生入學"
+    children:
+      - slug: "visit"
 
   - title: "開發者"
     debugOnly: true

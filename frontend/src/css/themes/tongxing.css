@@ -16,10 +16,10 @@
 @layer components {
 
     [data-theme="tongxing"] {
-        --font-body: "kurewa-gothic", sans-serif;
+        /* --font-body: "kurewa-gothic", sans-serif; */
         --font-accent: "ChenYuluoyan", cursive;
 
-        --font-heading: "ChenYuluoyan", cursive;
+        /* --font-heading: "ChenYuluoyan", cursive; */
 
         /* Navbar Blend Mode */
         & .navbar-container {
@@ -119,7 +119,7 @@
 
         & .benefit-icon-container::before {
             content: "";
-            background-color: rgb(var(--color-brand-blue));
+            background-color: rgb(var(--color-brand-accent));
             background-size: 100% 100%;
             border-radius: 50%;
             position: absolute;
