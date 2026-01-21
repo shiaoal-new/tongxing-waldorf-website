@@ -143,6 +143,9 @@ sections:
           - title: 春季：感謝與分享的種子
             subtitle: Spring Festival
             icon: lucide:sprout
+            media:
+              type: image
+              image: /img/season-spring-bg.jpeg
             content: |
               萬物甦醒，生命力迸發。慶典結合清明與寒食傳統，孩子體驗包「潤餅」，感念祖先與土地。
 
@@ -150,6 +153,9 @@ sections:
           - title: 夏季：奔放意志的巔峰
             subtitle: Summer Festival
             icon: lucide:sun
+            media:
+              type: image
+              image: /img/season-summer-bg.png
             content: |
               陽光充沛，象徵意志力的最高峰。孩子展現全年的鍛鍊果實，如音樂會分享或獨木舟跨越之旅。
 
@@ -157,6 +163,9 @@ sections:
           - title: 秋季：勇氣與內省的開端
             subtitle: Autumn Festival
             icon: lucide:leaf
+            media:
+              type: image
+              image: /img/season-autumn-bg.png
             content: |
               從盛夏轉向內在收整。米迦勒的精神引領孩子面對黑暗與恐懼，在自然觀察中體會落葉歸根。
 
@@ -164,6 +173,9 @@ sections:
           - title: 冬季：黑暗中的希望之光
             subtitle: Winter Festival
             icon: lucide:snowflake
+            media:
+              type: image
+              image: /img/season-winter-bg.jpeg
             content: |
               點亮心魂之光的聖神階段。包含點燃「將臨圈」四根蠟燭的等待過程，以及最具儀式感的「走螺旋」。
 
