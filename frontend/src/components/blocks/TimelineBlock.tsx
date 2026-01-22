@@ -49,7 +49,7 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                             itemCounter = 0; // Optional: Reset counter if you want pattern to restart
                             return (
                                 <div key={index} id={`${anchor}-header-${index}`} className="relative z-10 flex justify-center w-full my-8">
-                                    <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 rounded-full border border-[var(--accent-primary)] shadow-sm`}>
+                                    <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 `}>
                                         <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{item.title}</h2>
                                     </div>
                                 </div>
