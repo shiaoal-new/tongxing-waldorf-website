@@ -20,16 +20,22 @@ interface MediaRendererProps {
 const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRendererProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [videoSrc, setVideoSrc] = React.useState<string | undefined>(undefined);
+    const [posterSrc, setPosterSrc] = React.useState<string | undefined>(undefined);
 
-    // Determines the appropriate video source based on screen width
+    // Determines the appropriate video and poster source based on screen width
     React.useEffect(() => {
         if (media.type?.toLowerCase() !== 'video') return;
 
         const mediaQuery = window.matchMedia("(max-width: 768px)");
         const updateSrc = () => {
-            const newSrc = (mediaQuery.matches && media.mobileVideo) ? media.mobileVideo : media.video;
-            if (newSrc !== videoSrc) {
-                setVideoSrc(newSrc);
+            const newVideoSrc = (mediaQuery.matches && media.mobileVideo) ? media.mobileVideo : media.video;
+            const newPosterSrc = (mediaQuery.matches && media.mobilePoster) ? media.mobilePoster : media.poster;
+
+            if (newVideoSrc !== videoSrc) {
+                setVideoSrc(newVideoSrc);
+            }
+            if (newPosterSrc !== posterSrc) {
+                setPosterSrc(newPosterSrc);
             }
         };
 
@@ -43,7 +49,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
             mediaQuery.addListener(updateSrc);
             return () => mediaQuery.removeListener(updateSrc);
         }
-    }, [media.video, media.mobileVideo, media.type, videoSrc]);
+    }, [media.video, media.mobileVideo, media.poster, media.mobilePoster, media.type, videoSrc, posterSrc]);
 
     // Handles video playback logic
     React.useEffect(() => {
@@ -122,13 +128,8 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
                 <video
                     ref={videoRef}
                     src={videoSrc}
-                    // Use transparent pixel as poster to allow background-image to show
-                    poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                    className={`object-cover bg-cover bg-center md:bg-[image:var(--desktop-poster)] bg-[image:var(--mobile-poster)] ${className}`}
-                    style={{
-                        '--desktop-poster': `url(${media.poster})`,
-                        '--mobile-poster': `url(${media.mobilePoster || media.poster})`
-                    } as React.CSSProperties}
+                    poster={posterSrc}
+                    className={`object-cover ${className}`}
                     autoPlay
                     loop
                     muted
