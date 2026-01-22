@@ -157,6 +157,9 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
             <div
                 className={styles['phase-background']}
                 data-phase={phase.phaseNumber}
+                style={phase.header?.background_image ? {
+                    backgroundImage: `url(${phase.header.background_image})`
+                } : undefined}
             />
 
             {/* Content Wrapper for Grid Overlay - ID moved here for TOC scroll tracking */}

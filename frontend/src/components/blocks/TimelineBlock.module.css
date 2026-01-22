@@ -90,22 +90,9 @@
     opacity: 0.35;
 }
 
-/* Individual phase backgrounds */
-.phase-background[data-phase="1"] {
-    background-image: url('/img/timeline/backgrounds/phase1.png');
-}
 
-.phase-background[data-phase="2"] {
-    background-image: url('/img/timeline/backgrounds/phase2.png');
-}
+/* Individual phase backgrounds are now handled via inline styles from YAML data */
 
-.phase-background[data-phase="3"] {
-    background-image: url('/img/timeline/backgrounds/phase3.png');
-}
-
-.phase-background[data-phase="4"] {
-    background-image: url('/img/timeline/backgrounds/phase4.png');
-}
 
 /* Dark mode adjustments for phase backgrounds */
 [data-theme="dark"] .phase-background {

@@ -160,6 +160,7 @@ export interface TimelineItem {
     detail?: string;
     icon?: string;
     image?: string;
+    background_image?: string;
 }
 
 export interface TimelineBlock extends BaseBlock {

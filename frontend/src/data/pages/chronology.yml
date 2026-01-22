@@ -17,6 +17,7 @@ sections:
           # 一、 創校與萌芽期
           - type: "header"
             title: "一、 創校與萌芽期 (2012-2013)"
+            background_image: "/img/timeline/backgrounds/phase1.png"
           - year: "2012.10"
             title: "發起籌備"
             icon: "💡"
@@ -56,6 +57,7 @@ sections:
           # 二、 華江校區發展期
           - type: "header"
             title: "二、 華江校區發展期 (2014-2018)"
+            background_image: "/img/timeline/backgrounds/phase2.png"
           - year: "2014"
             title: "穩健成長"
             icon: "📈"
@@ -104,6 +106,7 @@ sections:
           # 三、 永建校區深耕期
           - type: "header"
             title: "三、 永建校區深耕期 (2019-2024)"
+            background_image: "/img/timeline/backgrounds/phase3.png"
           - year: "2019.01.11"
             title: "完成議約"
             icon: "✍️"
@@ -171,6 +174,7 @@ sections:
           # 四、 邁向新里程
           - type: "header"
             title: "四、 邁向新里程 (2025+)"
+            background_image: "/img/timeline/backgrounds/phase4.png"
           - year: "2025"
             title: "遷校開箱：東南大學校區"
             icon: "🚀"
