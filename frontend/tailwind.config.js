@@ -88,7 +88,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['var(--font-body)', "Inter", ...defaultTheme.fontFamily.sans],
+      sans: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
       serif: ['var(--font-heading)', ...defaultTheme.fontFamily.serif],
       heading: ['var(--font-heading)', ...defaultTheme.fontFamily.serif],
       body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
