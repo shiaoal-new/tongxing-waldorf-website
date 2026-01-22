@@ -358,5 +358,95 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 80
+  },
+  "teacher-photos/詹雅智.png": {
+    "hash": "b3c1f9583a270fe27566a8b768cdfcac",
+    "processedAt": "2026-01-22T06:48:18.656Z",
+    "originalSize": 1100119,
+    "optimizedSize": 51046,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/association_foundation.png": {
+    "hash": "f44182bab8125dd826eb54f8a8029918",
+    "processedAt": "2026-01-22T06:48:18.775Z",
+    "originalSize": 915484,
+    "optimizedSize": 147664,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/first_graduation.png": {
+    "hash": "c6c212878e8fd48d2a1d45e17316e476",
+    "processedAt": "2026-01-22T06:48:18.905Z",
+    "originalSize": 1054390,
+    "optimizedSize": 222342,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/first_opening.png": {
+    "hash": "bc93796fd2443300ff7fc0ae4a81ea1d",
+    "processedAt": "2026-01-22T06:48:19.020Z",
+    "originalSize": 939602,
+    "optimizedSize": 150684,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/founding_meeting.png": {
+    "hash": "d1a66b57cf81bc90861638c7e5337aea",
+    "processedAt": "2026-01-22T06:48:19.145Z",
+    "originalSize": 1034166,
+    "optimizedSize": 213212,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/mayor_visit.png": {
+    "hash": "29484065a2cb0b02400e4926b8b717e3",
+    "processedAt": "2026-01-22T06:48:19.274Z",
+    "originalSize": 1051556,
+    "optimizedSize": 224594,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/official_registration.png": {
+    "hash": "c0235a0b27ae2ed9d0a23f52bdca1590",
+    "processedAt": "2026-01-22T06:48:19.408Z",
+    "originalSize": 1160672,
+    "optimizedSize": 274116,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/seeking_guidance.png": {
+    "hash": "9f91e56bc15867fac10f599596b0a3ef",
+    "processedAt": "2026-01-22T06:48:19.530Z",
+    "originalSize": 978134,
+    "optimizedSize": 186444,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/seeking_new_campus.png": {
+    "hash": "787b4202443b74b6fcf6a06dec7e633a",
+    "processedAt": "2026-01-22T06:48:19.652Z",
+    "originalSize": 983741,
+    "optimizedSize": 187632,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
+  },
+  "timeline/steady_growth.png": {
+    "hash": "799ee92f1c3e35fa82ea832df4679b04",
+    "processedAt": "2026-01-22T06:48:19.769Z",
+    "originalSize": 938538,
+    "optimizedSize": 165612,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 80
   }
 }

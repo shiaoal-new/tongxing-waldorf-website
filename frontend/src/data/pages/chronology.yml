@@ -20,7 +20,7 @@ sections:
           - year: "2012.10"
             title: "發起籌備"
             icon: "💡"
-            image: "/img/timeline/founding_meeting.png"
+            image: "/img/timeline/founding_meeting.webp"
             subtitle: "成立「台北市公立華德福學校籌備會」"
             content: "九位家長因希望在大台北地區推廣華德福教育，共同發起籌備工作。"
             detail: >
@@ -29,7 +29,7 @@ sections:
           - year: "2012.11"
             title: "尋求指導"
             icon: "🤝"
-            image: "/img/timeline/seeking_guidance.png"
+            image: "/img/timeline/seeking_guidance.webp"
             subtitle: "拜會丁亞雯局長與鄭同僚教授"
             content: "拜會台北市教育局長及政大鄭同僚教授（僚哥），在教授帶領下開始步向理想。"
             detail: >
@@ -38,7 +38,7 @@ sections:
           - year: "2013.05.26"
             title: "協會成立"
             icon: "🏛️"
-            image: "/img/timeline/association_foundation.png"
+            image: "/img/timeline/association_foundation.webp"
             subtitle: "正式成立「台北市華德福教育推廣協會」"
             content: "由鄭同僚教授擔任首屆理事長，為辦學奠定組織基礎。"
             detail: >
@@ -47,7 +47,7 @@ sections:
           - year: "2013.09.07"
             title: "首屆開學"
             icon: "🎓"
-            image: "/img/timeline/first_opening.png"
+            image: "/img/timeline/first_opening.webp"
             subtitle: "進駐華江國小，台北首個公校共學團體"
             content: "租借萬華區華江國小教室，招收一至四年級約 20 名學生，舉辦第一屆開學典禮。"
             detail: >
@@ -59,7 +59,7 @@ sections:
           - year: "2014"
             title: "穩健成長"
             icon: "📈"
-            image: "/img/timeline/steady_growth.png"
+            image: "/img/timeline/steady_growth.webp"
             subtitle: "擴大招生與發行《同心週報》"
             content: "擴大招生至五年級，並開始發行週報分享教學與成長觀察。"
             detail: >
@@ -68,7 +68,7 @@ sections:
           - year: "2015.07"
             title: "市長到訪"
             icon: "👔"
-            image: "/img/timeline/mayor_visit.png"
+            image: "/img/timeline/mayor_visit.webp"
             subtitle: "柯文哲市長到訪座談"
             content: "同年擴大招生至六年級，全校師生規模接近 90 名。"
             detail: >
@@ -77,7 +77,7 @@ sections:
           - year: "2016"
             title: "首屆畢業"
             icon: "🎭"
-            image: "/img/timeline/first_graduation.png"
+            image: "/img/timeline/first_graduation.webp"
             subtitle: "第一屆華德福小學畢業典禮"
             content: "演出《少年秦始皇》，辦學規模達一至七年級。"
             detail: >
@@ -86,7 +86,7 @@ sections:
           - year: "2017"
             title: "正式立案"
             icon: "📜"
-            image: "/img/timeline/official_registration.png"
+            image: "/img/timeline/official_registration.webp"
             subtitle: "立案為「台北市同心華德福實驗教育機構」"
             content: "因應實驗三法通過正式立案，並招收學生至八年級。"
             detail: >
@@ -95,7 +95,7 @@ sections:
           - year: "2018"
             title: "爭取新址"
             icon: "🏠"
-            image: "/img/timeline/seeking_new_campus.png"
+            image: "/img/timeline/seeking_new_campus.webp"
             subtitle: "成功爭取永建國小舊址"
             content: "師生人數持續增加，協會與家長共同努力爭取到獨立校地。"
             detail: >
