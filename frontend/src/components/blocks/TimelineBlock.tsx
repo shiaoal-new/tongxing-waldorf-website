@@ -31,9 +31,33 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
     if (!mounted) return null;
 
-    // Filter items to handle indexing correctly for alternating layout
-    // Headers reset the alternation or just sit in the middle
-    let itemCounter = 0;
+    // Group items by phase (headers define phase boundaries)
+    const phases: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] }[] = [];
+    let currentPhase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] } | null = null;
+    let phaseCounter = 0;
+
+    rawItems.forEach((item) => {
+        if (item.type === 'header') {
+            // Start a new phase
+            if (currentPhase) {
+                phases.push(currentPhase);
+            }
+            phaseCounter++;
+            currentPhase = {
+                phaseNumber: phaseCounter,
+                header: item,
+                items: []
+            };
+        } else if (currentPhase) {
+            // Add item to current phase
+            currentPhase.items.push(item);
+        }
+    });
+
+    // Push the last phase
+    if (currentPhase) {
+        phases.push(currentPhase);
+    }
 
     return (
         <div className={`w-full py-20 ${styles['timeline-container']}`} data-theme={theme}>
@@ -41,33 +65,17 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                 {/* Central Line */}
                 <div className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 ${styles['timeline-axis']}`} />
 
-                <div className="relative flex flex-col gap-24">
-                    {rawItems.map((item, index) => {
-                        const isHeader = item.type === 'header';
 
-                        if (isHeader) {
-                            itemCounter = 0; // Optional: Reset counter if you want pattern to restart
-                            return (
-                                <div key={index} id={`${anchor}-header-${index}`} className="relative z-10 flex justify-center w-full my-8">
-                                    <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 `}>
-                                        <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{item.title}</h2>
-                                    </div>
-                                </div>
-                            );
-                        }
-
-                        const isEven = itemCounter % 2 === 0;
-                        itemCounter++;
-
-                        return (
-                            <TimelineEntry
-                                key={index}
-                                item={item}
-                                isEven={isEven}
-                                onSelect={() => item.detail && setSelectedDetail(item)}
-                            />
-                        );
-                    })}
+                <div className="relative flex flex-col">
+                    {phases.map((phase, phaseIndex) => (
+                        <PhaseSection
+                            key={phaseIndex}
+                            phase={phase}
+                            phaseIndex={phaseIndex}
+                            anchor={anchor}
+                            onSelectDetail={setSelectedDetail}
+                        />
+                    ))}
                 </div>
             </div>
 
@@ -128,6 +136,56 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     </div>
                 )}
             </Modal>
+        </div>
+    );
+};
+
+interface PhaseSectionProps {
+    phase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] };
+    phaseIndex: number;
+    anchor: string;
+    onSelectDetail: (item: TimelineItem) => void;
+}
+
+const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectionProps) => {
+    return (
+        <div
+            className={styles['phase-section']}
+            data-phase={phase.phaseNumber}
+        >
+            {/* Sticky Background Layer - automatically sticky via CSS */}
+            <div
+                className={styles['phase-background']}
+                data-phase={phase.phaseNumber}
+            />
+
+            {/* Content Wrapper for Grid Overlay */}
+            <div className={styles['phase-content']}>
+                {/* Phase Header */}
+                {phase.header && (
+                    <div id={`${anchor}-header-${phaseIndex}`} className="relative z-10 flex justify-center w-full my-8">
+                        <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 `}>
+                            <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{phase.header.title}</h2>
+                        </div>
+                    </div>
+                )}
+
+                {/* Phase Items */}
+                <div className="relative z-10 flex flex-col gap-24">
+                    {phase.items.map((item, itemIndex) => {
+                        const isEven = itemIndex % 2 === 0;
+
+                        return (
+                            <TimelineEntry
+                                key={itemIndex}
+                                item={item}
+                                isEven={isEven}
+                                onSelect={() => item.detail && onSelectDetail(item)}
+                            />
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 };
