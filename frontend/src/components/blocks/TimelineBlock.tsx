@@ -159,11 +159,14 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                 data-phase={phase.phaseNumber}
             />
 
-            {/* Content Wrapper for Grid Overlay */}
-            <div className={styles['phase-content']}>
+            {/* Content Wrapper for Grid Overlay - ID moved here for TOC scroll tracking */}
+            <div
+                id={`${anchor}-header-${phaseIndex}`}
+                className={styles['phase-content']}
+            >
                 {/* Phase Header */}
                 {phase.header && (
-                    <div id={`${anchor}-header-${phaseIndex}`} className="relative z-10 flex justify-center w-full my-8">
+                    <div className="relative z-10 flex justify-center w-full my-8">
                         <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 `}>
                             <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{phase.header.title}</h2>
                         </div>
@@ -286,19 +289,21 @@ export function getTOC(block: TimelineBlockType, sectionId?: string) {
         return [];
     }
 
-    const result = block.items
-        .map((item, index) => {
-            if (item.type === 'header' && item.title) {
-                const id = sectionId || 'timeline';
-                const tocItem = {
-                    id: `${id}-header-${index}`,
-                    title: `${item.title}`
-                };
-                return tocItem;
-            }
-            return null;
-        })
-        .filter((item): item is { id: string; title: string } => item !== null);
+    let headerCount = 0;
+    const result: { id: string; title: string }[] = [];
+
+    block.items.forEach((item) => {
+        if (item.type === 'header' && item.title) {
+            const id = sectionId || 'timeline';
+            // Match the ID generation logic in the render function (phaseIndex)
+            const tocItem = {
+                id: `${id}-header-${headerCount}`,
+                title: `${item.title}`
+            };
+            result.push(tocItem);
+            headerCount++;
+        }
+    });
 
     return result;
 }
