@@ -125,6 +125,109 @@
     filter: sepia(0) contrast(1.1);
 }
 
+/* Museum Label (Modal) Styles */
+.museum-label {
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+.label-content {
+    padding: 3rem 2.5rem;
+}
+
+.label-title {
+    font-family: var(--font-display), serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 2.5rem;
+    color: #000000;
+}
+
+.label-metadata {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    color: #000000;
+    border-top: 2px solid #000000;
+    padding-top: 1.5rem;
+}
+
+.label-description {
+    font-family: var(--font-body), sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    color: #333333;
+    white-space: pre-wrap;
+}
+
+.label-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #000000;
+}
+
+.footer-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-item-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.footer-item-value {
+    font-size: 0.875rem;
+    color: #4a4a4a;
+}
+
+.label-brand {
+    margin: 4rem -2.5rem -3rem -2.5rem;
+    /* Offset parent padding */
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #000000;
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.label-brand span:last-child {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+}
+
+/* Dark mode overrides to maintain "Label" identity */
+[data-theme="dark"] .museum-label {
+    background: #ffffff;
+    /* 即使在暗色模式，解說牌通常也保持其紙張白色質感以示區別 */
+    color: #1a1a1a;
+}
+
+[data-theme="dark"] .label-title {
+    color: #000000;
+}
+
+[data-theme="dark"] .label-description {
+    color: #333333;
+}
+
 /* Dark mode adjustments */
 [data-theme="dark"] .museum-frame {
     background: #e5e5e5;

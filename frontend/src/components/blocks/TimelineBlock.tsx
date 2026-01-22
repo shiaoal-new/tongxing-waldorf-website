@@ -74,15 +74,57 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             <Modal
                 isOpen={!!selectedDetail}
                 onClose={() => setSelectedDetail(null)}
-                title={selectedDetail ? `${selectedDetail.year} - ${selectedDetail.title}` : ''}
-                maxWidth="max-w-3xl"
+                title=""
+                padding="p-0"
+                maxWidth="max-w-md"
             >
                 {selectedDetail && (
-                    <div className="timeline-modal-body">
-                        {selectedDetail.subtitle && (
-                            <div className={styles['modal-subtitle']}>{selectedDetail.subtitle}</div>
+                    <div className={styles['museum-label']}>
+                        {/* Image at top */}
+                        {selectedDetail.image && (
+                            <div className="w-full h-auto overflow-hidden">
+                                <img
+                                    src={selectedDetail.image}
+                                    alt={selectedDetail.title}
+                                    className="w-full h-auto object-cover max-h-[400px]"
+                                />
+                            </div>
                         )}
-                        <div className={styles['modal-detail']}>{selectedDetail.detail}</div>
+
+                        <div className={styles['label-content']}>
+                            <h2 className={styles['label-title']}>
+                                {selectedDetail.title}
+                            </h2>
+
+                            <div className={styles['label-metadata']}>
+                                <span>{selectedDetail.year}</span>
+                                <span>Timeline Collection</span>
+                            </div>
+
+                            <div className={styles['label-description']}>
+                                {selectedDetail.detail}
+                            </div>
+
+                            {/* Museum label footer style */}
+                            <div className={styles['label-footer']}>
+                                <div className={styles['footer-item']}>
+                                    <span className={styles['footer-item-label']}>Exhibition</span>
+                                    <span className={styles['footer-item-value']}>The Heart of Waldorf</span>
+                                </div>
+                                <div className={styles['footer-item']}>
+                                    <span className={styles['footer-item-label']}>Accession</span>
+                                    <span className={styles['footer-item-value']}>Tongxing Official Archives</span>
+                                </div>
+                            </div>
+
+                            <div className={styles['label-brand']}>
+                                <span>tongxing.edu.tw</span>
+                                <span>
+                                    <span className="opacity-50 text-xs mr-2 font-normal">INSTITUTION</span>
+                                    TONG XING
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 )}
             </Modal>
@@ -135,7 +177,7 @@ const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
                         text-3xl md:text-5xl font-light text-[var(--accent-primary)] opacity-90 mb-2 font-display ${styles['big-year']}
                         ${isEven ? 'md:origin-right' : 'md:origin-left'}
                     `}>
-                        {item.year?.replace(/[^0-9]/g, '') || item.year}
+                        {item.year}
                     </div>
 
                     <div className="p-0 bg-transparent flex flex-col md:block">
