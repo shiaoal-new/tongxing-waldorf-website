@@ -5,8 +5,15 @@ import BackgroundCarousel from "../BackgroundCarousel";
 import ActionButtons from "../ui/ActionButtons";
 import SectionDivider from "../SectionDivider";
 import MarkdownContent from "../ui/MarkdownContent";
-import ShaderGradientBackground from "../ShaderGradientBackground";
+
 import { CTAButton, MediaItem, Divider } from "../../types/content";
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+
+const ShaderGradientBackgroundDynamic = dynamic(
+    () => import('../ShaderGradientBackground'),
+    { ssr: false }
+);
 
 interface SectionProps {
     layout?: any;
@@ -46,6 +53,8 @@ export default function Section(props: SectionProps) {
         shader_gradient,
         ...rest
     } = props;
+
+    const [isInView, setIsInView] = useState(false);
 
     // Use classes from layout if provided, otherwise use defaults
     const classes = layout || {};
@@ -113,11 +122,12 @@ export default function Section(props: SectionProps) {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
+                    onViewportEnter={() => setIsInView(true)}
                     variants={variants}
                     className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class} ${shader_gradient ? '!bg-transparent' : ''}`}
                 >
-                    {shader_gradient && (
-                        <ShaderGradientBackground />
+                    {shader_gradient && isInView && (
+                        <ShaderGradientBackgroundDynamic />
                     )}
                     {subtitle && (
                         <div className={`subtitle_class ${subtitle_class} relative z-10 ${align === "left" ? "self-start" : ""}`}>
@@ -147,11 +157,13 @@ export default function Section(props: SectionProps) {
                 </motion.div>
             </Container>
 
-            {bodyContent && (
-                <Container limit={!!limit} className={`relative content_class ${classes.content_body_class || ""}`}>
-                    {bodyContent}
-                </Container>
-            )}
-        </section>
+            {
+                bodyContent && (
+                    <Container limit={!!limit} className={`relative content_class ${classes.content_body_class || ""}`}>
+                        {bodyContent}
+                    </Container>
+                )
+            }
+        </section >
     );
 }
