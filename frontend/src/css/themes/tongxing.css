@@ -4,20 +4,11 @@
     size-adjust: 110%;
 } */
 
-@font-face {
-    font-family: 'ChenYuluoyan';
-    src: url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
-    size-adjust: 150%;
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 @layer components {
 
     [data-theme="tongxing"] {
         /* --font-body: "kurewa-gothic", sans-serif; */
-        --font-accent: "ChenYuluoyan", cursive;
+        --font-accent: var(--font-chen), cursive;
 
         /* --font-heading: "ChenYuluoyan", cursive; */
 
