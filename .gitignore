@@ -44,3 +44,8 @@ functions/.env
 
 # 部署報告
 deployment-report.html
+
+# Lighthouse 評估報告
+frontend/measurement_result/*.json
+frontend/measurement_result/*.html
+frontend/measurement_result/*.md
