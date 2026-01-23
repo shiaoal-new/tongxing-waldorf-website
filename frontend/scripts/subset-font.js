@@ -105,15 +105,8 @@ async function subsetFont() {
             files.forEach(file => {
                 const fileName = path.basename(file.path);
                 if (fileName.endsWith('.woff2')) {
-                    // Rename output file to signify it is a subset
-                    const subsetName = fileName.replace('.woff2', '.subset.woff2');
-                    const oldPath = file.path;
-                    const newPath = path.join(path.dirname(oldPath), subsetName);
-
-                    fs.renameSync(oldPath, newPath);
-
                     const sizeKB = (file.contents.length / 1024).toFixed(2);
-                    console.log(`📦 Result: ${subsetName} (${sizeKB} KB)`);
+                    console.log(`📦 Result: ${fileName} (${sizeKB} KB)`);
                 }
             });
         });

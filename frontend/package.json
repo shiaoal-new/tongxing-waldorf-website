@@ -4,8 +4,9 @@
   "description": "Nextly Landing Page Template",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "NEXT_OUTPUT=export next build",
+    "dev": "npm run restore-full-font && next dev",
+    "restore-full-font": "cp public/fonts/ChenYuluoyan-2.0-Thin.full.woff2 public/fonts/ChenYuluoyan-2.0-Thin.woff2",
+    "build": "NEXT_OUTPUT=export next build && node scripts/subset-font.js",
     "deploy": "npm run build && firebase deploy",
     "start": "next start",
     "lighthouse": "node scripts/lighthouse-audit.js",

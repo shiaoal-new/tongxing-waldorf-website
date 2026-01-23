@@ -11,13 +11,8 @@ import "../css/tailwind.css";
 
 import { SessionProvider } from "../context/SessionContext";
 
-const isDev = process.env.NODE_ENV === 'development';
-
 const chenYuluoyan = localFont({
-  // Dev: Full version (4.7MB) for flexibility | Prod: SubsetFont (16KB) for speed
-  src: isDev
-    ? '../../public/fonts/ChenYuluoyan-2.0-Thin.full.woff2'
-    : '../../public/fonts/ChenYuluoyan-2.0-Thin.subset.woff2',
+  src: '../../public/fonts/ChenYuluoyan-2.0-Thin.woff2',
   variable: '--font-chen',
   display: 'swap',
   declarations: [

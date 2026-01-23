@@ -51,9 +51,10 @@ frontend/measurement_result/*.html
 frontend/measurement_result/*.md
 
 # Fonts Optimization
-# 忽略自動生成的子集化字體 (由 scripts/subset-font.js 產生)
+# 忽略自動生成的字體 (會由 build 腳本或 dev 復原指令動態覆寫)
+frontend/public/fonts/ChenYuluoyan-2.0-Thin.woff2
 frontend/public/fonts/*.subset.woff2
 
-# 注意：請確保以下原始檔案「不要」被忽略，以便 CI 環境進行子集化與開發模式使用
+# 注意：請務必確保以下「原始母片」檔案被 Git 追蹤
 # /frontend/public/fonts/ChenYuluoyan-2.0-Thin.ttf
 # /frontend/public/fonts/ChenYuluoyan-2.0-Thin.full.woff2
