@@ -15,6 +15,11 @@ const ShaderGradientBackgroundDynamic = dynamic(
     { ssr: false }
 );
 
+const SilkBackgroundDynamic = dynamic(
+    () => import('../SilkBackground'),
+    { ssr: false }
+);
+
 interface SectionProps {
     layout?: any;
     subtitle?: string;
@@ -31,6 +36,7 @@ interface SectionProps {
     limit?: boolean | number;
     divider?: Divider;
     shader_gradient?: boolean;
+    silk_background?: boolean;
     [key: string]: any;
 }
 
@@ -51,6 +57,7 @@ export default function Section(props: SectionProps) {
         limit,
         divider, // { type, position, color, flip }
         shader_gradient,
+        silk_background,
         ...rest
     } = props;
 
@@ -61,7 +68,7 @@ export default function Section(props: SectionProps) {
     const container_class = classes.container_class || "";
     const wrapper_class = classes.wrapper_class || "";
     // If background media or shader gradient is present, default to white text for better visibility
-    const hasSpecialBg = (media_list && media_list.length > 0) || shader_gradient;
+    const hasSpecialBg = (media_list && media_list.length > 0) || shader_gradient || silk_background;
     const defaultTitleColor = hasSpecialBg ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
     const defaultDescColor = hasSpecialBg ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
     const defaultSubtitleColor = hasSpecialBg ? "text-brand-accent/40" : "text-brand-accent";
@@ -115,6 +122,10 @@ export default function Section(props: SectionProps) {
                 <BackgroundCarousel media_list={media_list} parallax_ratio={parallax_ratio} />
             )}
 
+            {silk_background && isInView && (
+                <SilkBackgroundDynamic color="rgb(var(--color-brand-taupe))" />
+            )}
+
             <Container
                 limit={true}
                 className={`flex w-full flex-col relative ${align === "left" ? "" : "items-center justify-center text-center"}`}>
@@ -159,7 +170,7 @@ export default function Section(props: SectionProps) {
 
             {
                 bodyContent && (
-                    <Container limit={!!limit} className={`relative content_class ${classes.content_body_class || ""}`}>
+                    <Container limit={!!limit} className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
                         {bodyContent}
                     </Container>
                 )
