@@ -1,8 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { DotLottiePlayer } from "@dotlottie/react-player";
+import dynamic from "next/dynamic";
 import { MediaItem } from "../../types/content";
 
+const DotLottiePlayer = dynamic(
+    () => import("@dotlottie/react-player").then((mod) => mod.DotLottiePlayer),
+    { ssr: false }
+);
 // Helper to determine MIME type
 const getMimeType = (src: string | undefined): string | undefined => {
     if (!src) return undefined;

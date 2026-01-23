@@ -3,12 +3,17 @@ import { useSession } from "../../context/SessionContext";
 import liff from "@line/liff"; // Import LIFF SDK
 import Container from "../ui/Container";
 import { ClockIcon, CalendarIcon, TicketIcon } from "@heroicons/react/outline";
-import VisitRegistrationForm from "./VisitRegistrationForm";
+import dynamic from "next/dynamic";
 import Modal from "../ui/Modal";
 import DevComment from "../ui/DevComment";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { formatSessionDate, formatSessionTime } from "../../lib/formatters";
+
+const VisitRegistrationForm = dynamic(() => import("./VisitRegistrationForm"), {
+    loading: () => <div className="p-12 text-center text-gray-500">Loading form...</div>,
+    ssr: false,
+});
 
 import { visitApi } from "../../api/visit";
 

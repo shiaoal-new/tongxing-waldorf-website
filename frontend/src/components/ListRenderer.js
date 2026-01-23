@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import 'swiper/css/pagination';
+import dynamic from 'next/dynamic';
 
 import ActionButtons from "./ui/ActionButtons";
 import Disclosure from "./ui/Disclosure";
 import DevComment from "./ui/DevComment";
-import styles from "./ListSwiper.module.css";
 
-
+const ListSwiper = dynamic(() => import('./ListSwiper'), {
+    loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
+    ssr: false,
+});
 
 /**
  * ListRenderer - 一个通用的列表渲染组件
@@ -224,35 +222,14 @@ export default function ListRenderer({
     }
 
     // Scrollable Grid 佈局 (使用 Swiper EffectCards)
+    // Dynamic component usage
     if (layout === "scrollable_grid") {
         return (
-            <div className={`w-full mx-auto ${styles['list-swiper-container']}`}>
-                <DevComment text="Swiper Effect Cards Container" />
-                <Swiper
-                    effect={'cards'}
-                    grabCursor={true}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[EffectCards, Pagination]}
-                    className={styles['swiper-cards-container']}
-                >
-                    {items.map((item, index) => (
-                        <SwiperSlide key={item.id || index} className={styles['list-swiper-slide']}>
-                            <div className="w-full h-full flex flex-col">
-                                {renderItem(item, index)}
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-
-                <DevComment text="Scrollable Grid Action Buttons" />
-                {/* 底部操作按鈕 */}
-
-                {buttons && buttons.length > 0 && (
-                    <ActionButtons buttons={buttons} align="center" className="mt-8" />
-                )}
-            </div>
+            <ListSwiper
+                items={items}
+                renderItem={renderItem}
+                buttons={buttons}
+            />
         );
     }
 
