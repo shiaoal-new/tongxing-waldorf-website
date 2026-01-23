@@ -49,3 +49,11 @@ deployment-report.html
 frontend/measurement_result/*.json
 frontend/measurement_result/*.html
 frontend/measurement_result/*.md
+
+# Fonts Optimization
+# 忽略自動生成的子集化字體 (由 scripts/subset-font.js 產生)
+frontend/public/fonts/*.subset.woff2
+
+# 注意：請確保以下原始檔案「不要」被忽略，以便 CI 環境進行子集化與開發模式使用
+# /frontend/public/fonts/ChenYuluoyan-2.0-Thin.ttf
+# /frontend/public/fonts/ChenYuluoyan-2.0-Thin.full.woff2
