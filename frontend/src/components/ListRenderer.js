@@ -11,6 +11,11 @@ const ListSwiper = dynamic(() => import('./ListSwiper'), {
     ssr: false,
 });
 
+const TestimonialSwiper = dynamic(() => import('./TestimonialSwiper'), {
+    loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
+    ssr: false,
+});
+
 /**
  * ListRenderer - 一个通用的列表渲染组件
  * 
@@ -222,13 +227,22 @@ export default function ListRenderer({
     }
 
     // Scrollable Grid 佈局 (使用 Swiper EffectCards)
-    // Dynamic component usage
     if (layout === "scrollable_grid") {
         return (
             <ListSwiper
                 items={items}
                 renderItem={renderItem}
                 buttons={buttons}
+            />
+        );
+    }
+
+    // Testimonial Carousel 佈局 (置中放大效果)
+    if (layout === "testimonial_carousel") {
+        return (
+            <TestimonialSwiper
+                items={items}
+                renderItem={renderItem}
             />
         );
     }

@@ -117,6 +117,86 @@ sections:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4
             content: 青春期的孩子開始問「我是誰」。我們不給標準答案，而是創造空間，陪他們在藝術與思辨中找到屬於自己的答案。
+  - section_id: testimonials
+    _layout:
+      background: bg-neutral-50 dark:bg-neutral-950
+    blocks:
+      - type: text_block
+        title: 真實見證：在同心長大的故事
+        subtitle: 聽聽他們怎麼說
+      - type: list_block
+        layout_method: testimonial_carousel
+        item_type: testimonial_item
+        items:
+          # --- 家長的看見 ---
+          - quote: 「我的孩子曾在體制內變得排斥學習，甚至說自己是笨蛋。轉來同心後，我看見他在寫工作本時，臉上竟然是發著光的。這裡沒有標準答案的束縛，讓孩子找回了學習的胃口與熱情。」
+            author: 秀萍
+            title: 資深家長 (三個孩子皆就讀同心)
+            media:
+              type: image
+              image: /img/featured-academic.webp
+            span: 4
+          - quote: 「參與學校事務看似勞累，但其實也是一種『得到』。在陪伴孩子長大的過程中，我也重新經歷了一次童年，並學會與自己的內在和解。這裡不只是一所學校，更是一個讓全家人共同成長的村落。」
+            author: 林妙禪
+            title: 家長 (陪伴學校一路成長的資深夥伴)
+            media:
+              type: image
+              image: /img/featured-social.webp
+            span: 4
+          - quote: 「在陪伴孩子完成『台北大縱走』的過程中，我看見孩子即便身體不適仍堅持走完，同學之間也互相攙扶。這裡的教育不只在課本裡，而是透過雙腳與土地的連結，長出真實的意志力與互助精神。」
+            author: 佩佩
+            title: 家長 (參與五年級大縱走隨行家長)
+            media:
+              type: image
+              image: /img/featured-willpower.webp
+            span: 4
+
+          # --- 教師的承諾 ---
+          - quote: 「華德福教育不是一套死的教材教法，而是『理解孩子』的過程。我們不以成績定義人，而是看見每個生命獨特的樣子，協助他們長成自己想成為的模樣。」
+            author: 建龍 老師
+            title: 資深導師
+            media:
+              type: image
+              image: /img/featured-protection.webp
+            span: 4
+          - quote: 「當我拿起木工刀或毛線針時，我不只是在教技能，是在傳遞一種生命的節奏與定力。孩子看著老師認真工作的背影，他們也會學會如何安定自己的心，去創造美的事物。」
+            author: 佩宜 老師
+            title: 手工與藝術教師
+            media:
+              type: image
+              image: /img/featured-artistic.webp
+            span: 4
+          - quote: 「在戲劇排演中，我看到害羞的孩子站上舞台發光，看到衝動的孩子學會等待與對位。藝術治療了靈魂，讓教育不只是灌輸，而是內在力量的噴發。」
+            author: 古峰 老師
+            title: 戲劇課教師
+            media:
+              type: image
+              image: /img/featured-exploration.webp
+            span: 4
+
+          # --- 專家與創辦人的背書 ---
+          - quote: 「同心最核心的價值在於『民主參與』。我們建立了一個親、師、生三元合作的社群，讓老師覺得自己是主人，讓家長成為夥伴。因為有這份信任，同心的師資與社群力量一直相當穩定且溫暖。」
+            author: 鄭同僚 教授
+            title: 國立政治大學教育學系副教授、同心創辦人
+            media:
+              type: image
+              image: /img/featured-nature.webp
+            span: 4
+          - quote: 「我們不需用過去的經驗限制孩子的未來。華德福教育培養的是孩子『自轉』的能力與『解決問題』的創意。當孩子知道自己是誰、對世界保有熱情，他們在任何時代都能找到自己的立足之地。」
+            author: 王智弘 老師
+            title: 資深華德福導師
+            media:
+              type: image
+              image: /img/featured-outdoor.webp
+            span: 4
+          - quote: 「同心致力於提升教學品質，我們引進國外資深顧問與全球華德福社群連結（如 ICW 計畫），同時深耕台北在地文化。我們的願景是支持孩子從幼兒園一路長成具備國際視野與在地根基的自由人。」
+            author: 詹雅智 老師
+            title: 同心執行長
+            avatar: /img/teacher-photos/詹雅智.webp
+            media:
+              type: image
+              image: /img/visit.webp
+            span: 4
   - section_id: faq
     blocks:
       - type: text_block

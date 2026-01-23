@@ -6,6 +6,7 @@ import TextBlock from "./TextBlock";
 import Card from "./Card";
 import ListBlock from "./ListBlock";
 import MemberBlock from "./MemberBlock";
+import TestimonialItem from "./TestimonialItem";
 import { Block, ListItem, TextBlock as TextBlockType, BenefitItem as BenefitItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType } from "../../types/content";
 
 /**
@@ -147,6 +148,19 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "timeline_block":
             return <TimelineBlock data={block as any} anchor={anchor} />;
+
+        case "testimonial_item":
+        case "testimonial":
+            const testimonial = block as any;
+            return (
+                <TestimonialItem
+                    quote={testimonial.quote || testimonial.content}
+                    author={testimonial.author}
+                    title={testimonial.title}
+                    media={testimonial.media}
+                    avatar={testimonial.avatar}
+                />
+            );
 
         default:
             return null;
