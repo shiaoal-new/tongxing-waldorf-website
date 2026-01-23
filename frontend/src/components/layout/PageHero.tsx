@@ -251,7 +251,7 @@ export default function PageHero({ data }: PageHeroProps) {
             </Container>
 
             <DevComment text="Scroll Down Button" />
-            <motion.div
+            <motion.button
                 className="absolute bottom-10 md:bottom-20 left-1/2 z-20 cursor-pointer p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors duration-300 group"
                 style={{ x: "-50%" }}
                 initial={{ opacity: 0, y: -20, x: "-50%" }}
@@ -279,7 +279,7 @@ export default function PageHero({ data }: PageHeroProps) {
                 aria-label="Scroll to content"
             >
                 <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
-            </motion.div>
+            </motion.button>
 
             {/* Section Divider */}
             {data.divider && (

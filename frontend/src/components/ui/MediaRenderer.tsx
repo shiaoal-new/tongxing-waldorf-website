@@ -40,8 +40,10 @@ const MediaRenderer = ({
 
         const mediaQuery = window.matchMedia("(max-width: 768px)");
         const updateSrc = () => {
-            const newVideoSrc = (mediaQuery.matches && media.mobileVideo) ? media.mobileVideo : media.video;
-            const newPosterSrc = (mediaQuery.matches && media.mobilePoster) ? media.mobilePoster : media.poster;
+            // On mobile, only use mobileVideo. If not available, we'll fall back to showing just the poster.
+            // This prevents downloading a large desktop video on mobile connections.
+            const newVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || undefined) : media.video;
+            const newPosterSrc = (mediaQuery.matches) ? (media.mobilePoster || media.poster) : media.poster;
 
             if (newVideoSrc !== videoSrc) {
                 setVideoSrc(newVideoSrc);
@@ -138,6 +140,25 @@ const MediaRenderer = ({
 
         case "video":
             if (!media.video) return null;
+
+            // If we have no video source (likely on mobile without mobileVideo),
+            // render the poster as an optimized Image.
+            if (!videoSrc) {
+                return (
+                    <div className={`relative overflow-hidden ${className}`}>
+                        <Image
+                            src={posterSrc || media.poster || ""}
+                            alt={media.alt || "video poster"}
+                            fill
+                            sizes={sizes}
+                            priority={priority}
+                            style={{ objectFit: imgClassName.includes('object-contain') ? 'contain' : 'cover' }}
+                            className={imgClassName}
+                        />
+                    </div>
+                );
+            }
+
             return (
                 <video
                     ref={videoRef}

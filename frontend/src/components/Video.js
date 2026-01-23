@@ -18,10 +18,13 @@ export default function VideoItem({ video, className }) {
 
   const videoId = getYoutubeId(videoUrl);
 
-  // Initial thumbnail logic: try maxresdefault for YouTube, or use provided image/poster
+  // Initial thumbnail logic
   const getInitialThumbnail = () => {
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      // On mobile, use hqdefault (480x360) to save bandwidth.
+      // On desktop, use maxresdefault (1280x720).
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      return `https://img.youtube.com/vi/${videoId}/${isMobile ? 'hqdefault' : 'maxresdefault'}.jpg`;
     }
     if (mediaData.type === 'image') return mediaData.image;
     if (mediaData.poster) return mediaData.poster;
@@ -37,9 +40,18 @@ export default function VideoItem({ video, className }) {
     }
   };
 
-  // Update thumbnail if video prop changes
+  // Update thumbnail if video prop changes or window resizes
   useEffect(() => {
     setThumbnailUrl(getInitialThumbnail());
+
+    // Add resize listener to update thumbnail if screen orientation/size changes
+    const handleResize = () => {
+      const newThumb = getInitialThumbnail();
+      setThumbnailUrl(prev => prev !== newThumb ? newThumb : prev);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [videoId, mediaData.image, mediaData.poster]);
 
   // Use the canonical YouTube URL for social sharing/viewing if it's a YouTube video

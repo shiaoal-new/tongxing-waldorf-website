@@ -5,6 +5,8 @@ import Modal from '../ui/Modal';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
 import { motion, useInView } from 'framer-motion';
 
+import Image from 'next/image';
+
 interface TimelineBlockProps {
     data: TimelineBlockType;
     anchor?: string;
@@ -91,12 +93,12 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         {/* Image at top */}
                         {selectedDetail.image && (
                             <div className="w-full h-auto overflow-hidden">
-                                <img
+                                <Image
                                     src={selectedDetail.image}
                                     alt={selectedDetail.title}
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="w-full h-full object-cover max-h-[400px]"
+                                    width={400}
+                                    height={300}
+                                    className="w-full h-auto object-cover max-h-[400px]"
                                 />
                             </div>
                         )}
@@ -251,11 +253,12 @@ const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
                         {item.image && (
                             <div className={`mb-6 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
                                 <div className={styles['museum-frame']}>
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={item.title}
-                                        loading="lazy"
-                                        decoding="async"
+                                        width={400}
+                                        height={300}
+                                        sizes="(max-width: 768px) 100vw, 400px"
                                         className="max-w-full h-auto object-cover max-h-[200px] md:max-h-[240px]"
                                     />
                                 </div>

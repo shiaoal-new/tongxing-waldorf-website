@@ -8,7 +8,7 @@ hero:
   media_list:
     - type: video
       video: /img/hero-video-vp9.webm
-      mobileVideo: /img/hero-video-mobile-2.mp4
+      # mobileVideo: /img/hero-video-mobile-2.mp4
       poster: /img/video-poster.webp
       mobilePoster: /img/video-poster-mobile.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
