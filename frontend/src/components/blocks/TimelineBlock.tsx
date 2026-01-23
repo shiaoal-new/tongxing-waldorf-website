@@ -94,7 +94,9 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                                 <img
                                     src={selectedDetail.image}
                                     alt={selectedDetail.title}
-                                    className="w-full h-auto object-cover max-h-[400px]"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-full object-cover max-h-[400px]"
                                 />
                             </div>
                         )}
@@ -252,6 +254,8 @@ const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
                                     <img
                                         src={item.image}
                                         alt={item.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="max-w-full h-auto object-cover max-h-[200px] md:max-h-[240px]"
                                     />
                                 </div>

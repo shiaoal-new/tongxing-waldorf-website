@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { getAllPages, getPageBySlug } from "../lib/pages";
 import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
@@ -6,7 +7,38 @@ import { getNavigation } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
 
 export default function Home(props) {
-  return <DynamicPageContent {...props} />;
+  // Extract hero poster images for preloading
+  const heroPoster = props.page?.hero?.media_list?.[0]?.poster;
+  const heroMobilePoster = props.page?.hero?.media_list?.[0]?.mobilePoster;
+
+  return (
+    <>
+      <Head>
+        {/* Dynamically preload hero poster images for faster LCP */}
+        {heroPoster && (
+          <link
+            rel="preload"
+            as="image"
+            href={heroPoster}
+            media="(min-width: 769px)"
+            // @ts-ignore - fetchpriority is a valid attribute
+            fetchpriority="high"
+          />
+        )}
+        {heroMobilePoster && (
+          <link
+            rel="preload"
+            as="image"
+            href={heroMobilePoster}
+            media="(max-width: 768px)"
+            // @ts-ignore - fetchpriority is a valid attribute
+            fetchpriority="high"
+          />
+        )}
+      </Head>
+      <DynamicPageContent {...props} />
+    </>
+  );
 }
 
 export async function getStaticProps() {

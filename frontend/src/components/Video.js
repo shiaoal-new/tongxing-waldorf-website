@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import DevComment from "./ui/DevComment";
 
 export default function VideoItem({ video, className }) {
@@ -66,17 +67,21 @@ export default function VideoItem({ video, className }) {
           onClick={handleOpenVideo}
           className="absolute inset-0 cursor-pointer overflow-hidden"
         >
-          {thumbnailUrl && (
-            <img
-              src={thumbnailUrl}
-              alt={video.title}
-              onError={handleThumbError}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          )}
-
-          {/* Elegant Dark Overlay */}
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-500" />
+
+          {thumbnailUrl && (
+            <div className="absolute inset-0 w-full h-full">
+              <Image
+                src={thumbnailUrl}
+                alt={video.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                onError={handleThumbError}
+                unoptimized={thumbnailUrl.startsWith('http')}
+              />
+            </div>
+          )}
 
           {/* Premium Play Button */}
           <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">

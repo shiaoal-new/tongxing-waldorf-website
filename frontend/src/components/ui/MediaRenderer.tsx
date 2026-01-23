@@ -15,9 +15,17 @@ interface MediaRendererProps {
     media: MediaItem;
     className?: string;
     imgClassName?: string;
+    priority?: boolean;
+    sizes?: string;
 }
 
-const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRendererProps) => {
+const MediaRenderer = ({
+    media,
+    className = "",
+    imgClassName = "",
+    priority = false,
+    sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+}: MediaRendererProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [videoSrc, setVideoSrc] = React.useState<string | undefined>(undefined);
     const [posterSrc, setPosterSrc] = React.useState<string | undefined>(undefined);
@@ -116,6 +124,8 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
                         src={media.image}
                         alt={media.alt || "media image"}
                         fill
+                        sizes={sizes}
+                        priority={priority}
                         style={{ objectFit: imgClassName.includes('object-contain') ? 'contain' : 'cover' }}
                         className={imgClassName}
                     />
@@ -134,7 +144,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
                     loop
                     muted
                     playsInline
-                    preload="auto"
+                    preload={priority ? "auto" : "metadata"}
                 />
             );
 
@@ -153,6 +163,7 @@ const MediaRenderer = ({ media, className = "", imgClassName = "" }: MediaRender
                         src={`https://www.youtube.com/embed/${videoId}?autoplay=0&mute=1`}
                         className="w-full h-full"
                         frameBorder="0"
+                        loading={priority ? "eager" : "lazy"}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                     ></iframe>

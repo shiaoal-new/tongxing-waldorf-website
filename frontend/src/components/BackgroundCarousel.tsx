@@ -106,6 +106,8 @@ const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewpo
                     media={item}
                     className={`${isFullViewport ? 'w-full h-[100lvh]' : 'w-full h-full'} ${item.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
                     imgClassName="object-cover"
+                    priority={true}
+                    sizes="100vw"
                 />
             </motion.div>
         </AnimatePresence>

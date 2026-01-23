@@ -1,4 +1,5 @@
 import { useScroll, useTransform, motion } from "framer-motion";
+import NextImage from "next/image";
 import React, { useRef, useState, useEffect } from "react";
 
 interface ParallaxBackgroundProps {
@@ -96,19 +97,18 @@ export default function ParallaxBackground({ src }: ParallaxBackgroundProps) {
                 }}
                 className="absolute top-0 left-0 opacity-100 dark:opacity-30 will-change-transform"
             >
-                <img
+                <NextImage
                     src={src}
                     alt=""
-                    className="w-full h-full"
-                    style={{
-                        objectFit: 'cover', // ensure it fills the calculated box
-                        objectPosition: 'top center',
-                    }}
+                    fill
+                    sizes="100vw"
+                    priority
+                    className="object-cover object-top"
                 />
             </motion.div>
 
             {/* Dark mode overlay */}
             <div className="absolute inset-0 bg-black/0 dark:bg-black/20 -z-10" />
-        </div>
+        </div >
     );
 }
