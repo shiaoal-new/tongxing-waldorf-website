@@ -97,18 +97,37 @@ async function subsetFont() {
             }))
             .use(Fontmin.ttf2woff2());
 
-        fontmin.run((err, files) => {
+        fontmin.run(async (err, files) => {
             if (err) {
                 throw err;
             }
             console.log('✅ Font subsetting complete!');
+
+            let subsetBuffer = null;
             files.forEach(file => {
                 const fileName = path.basename(file.path);
                 if (fileName.endsWith('.woff2')) {
+                    subsetBuffer = file.contents;
                     const sizeKB = (file.contents.length / 1024).toFixed(2);
                     console.log(`📦 Result: ${fileName} (${sizeKB} KB)`);
                 }
             });
+
+            // 3. CRITICAL: Overwrite the hashed version in 'out/' so Firebase deploys the small one
+            if (subsetBuffer) {
+                const buildMediaDir = path.join(FRONTEND_ROOT, 'out/_next/static/media');
+                if (fs.existsSync(buildMediaDir)) {
+                    const hashedFonts = await glob('ChenYuluoyan*.woff2', { cwd: buildMediaDir });
+                    if (hashedFonts.length > 0) {
+                        console.log(`Found ${hashedFonts.length} hashed fonts in build output. Overwriting...`);
+                        hashedFonts.forEach(hashedFile => {
+                            const fullPath = path.join(buildMediaDir, hashedFile);
+                            fs.writeFileSync(fullPath, subsetBuffer);
+                            console.log(`✨ Patched: ${hashedFile}`);
+                        });
+                    }
+                }
+            }
         });
 
     } catch (error) {
