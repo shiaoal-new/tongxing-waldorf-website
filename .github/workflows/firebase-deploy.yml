@@ -54,8 +54,8 @@ jobs:
           # 根據 branch 決定使用哪個別名 (alias)
           ALIAS=${{ (github.ref_name == 'main' && 'prod') || 'dev' }}
 
-          # 從 .firebaserc 解析出 Project ID
-          PROJECT_ID=$(node -p "require('./.firebaserc').projects['$ALIAS']")
+          # 從 .firebaserc 解析出 Project ID (使用 jq)
+          PROJECT_ID=$(jq -r ".projects[\"$ALIAS\"]" .firebaserc)
           echo "目標項目: $PROJECT_ID"
 
           # 執行部署
