@@ -1,3 +1,4 @@
+import styles from '../Questionnaire.module.css';
 
 export default function QuestionnaireCategory({
     category,
@@ -22,22 +23,22 @@ export default function QuestionnaireCategory({
     };
 
     return (
-        <div id={`cat-${category.id}`} className="questions-section scroll-mt-24">
-            <h2 className="category-heading">
+        <div id={`cat-${category.id}`} className={`${styles['questions-section']} scroll-mt-24`}>
+            <h2 className={styles['category-heading']}>
                 {category.title}
             </h2>
 
-            <div className="questions-list">
+            <div className={styles['questions-list']}>
                 {category.questions.map((question, qIndex) => (
-                    <div key={question.id} className="question-item" data-question-id={question.id}>
-                        <div className="question-header">
-                            <span className="question-number">
+                    <div key={question.id} className={styles['question-item']} data-question-id={question.id}>
+                        <div className={styles['question-header']}>
+                            <span className={styles['question-number']}>
                                 {qIndex + 1}
                             </span>
-                            <p className="question-text">{question.text}</p>
+                            <p className={styles['question-text']}>{question.text}</p>
                         </div>
 
-                        <div className="rating-scale">
+                        <div className={styles['rating-scale']}>
                             {Array.from({ length: (scale.max - scale.min + 1) }, (_, i) => scale.min + i).map(value => {
                                 const tooltipId = `${question.id}-${value}`;
                                 const isTooltipActive = activeTooltip === tooltipId;
@@ -45,7 +46,7 @@ export default function QuestionnaireCategory({
                                 return (
                                     <label
                                         key={value}
-                                        className={`rating-option ${answers[question.id] === value ? 'selected' : ''}`}
+                                        className={`${styles['rating-option']} ${answers[question.id] === value ? styles['selected'] : ''}`}
                                         onTouchStart={() => handleTouchStart(question.id, value)}
                                         onTouchEnd={() => handleTouchEnd(question.id, value)}
                                     >
@@ -59,10 +60,10 @@ export default function QuestionnaireCategory({
                                                 e.target.value
                                             )}
                                         />
-                                        <span className="rating-number">{value}</span>
+                                        <span className={styles['rating-number']}>{value}</span>
 
                                         <span
-                                            className={`rating-tooltip ${isTooltipActive ? 'active' : ''}`}
+                                            className={`${styles['rating-tooltip']} ${isTooltipActive ? styles['active'] : ''}`}
                                             data-tooltip={getRatingLabel(value)}
                                         >
                                             {getRatingLabel(value)}
