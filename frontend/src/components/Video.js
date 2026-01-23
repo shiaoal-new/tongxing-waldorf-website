@@ -83,14 +83,19 @@ export default function VideoItem({ video, className }) {
 
           {thumbnailUrl && (
             <div className="absolute inset-0 w-full h-full">
-              <Image
+              <img
                 src={thumbnailUrl}
-                alt={video.title}
-                fill
+                srcSet={videoId ? `
+                  https://img.youtube.com/vi/${videoId}/mqdefault.jpg 320w,
+                  https://img.youtube.com/vi/${videoId}/hqdefault.jpg 480w,
+                  https://img.youtube.com/vi/${videoId}/sddefault.jpg 640w,
+                  https://img.youtube.com/vi/${videoId}/maxresdefault.jpg 1280w
+                ` : undefined}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                alt={video.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 onError={handleThumbError}
-                unoptimized={thumbnailUrl.startsWith('http')}
+                loading="lazy"
               />
             </div>
           )}

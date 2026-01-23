@@ -37,6 +37,15 @@ export default function BenefitItem({ span, media, title, children, icon, button
           <MediaRenderer
             media={media as any}
             className="w-full h-full"
+            sizes={
+              span === 12
+                ? "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 100vw"
+                : span === 8
+                  ? "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 66vw"
+                  : span === 6
+                    ? "(max-width: 768px) 100vw, 50vw"
+                    : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            }
             imgClassName="object-cover transition-transform duration-[2000ms] group-hover:scale-110 ease-out"
           />
         </div>

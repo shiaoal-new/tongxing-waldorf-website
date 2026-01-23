@@ -29,6 +29,7 @@ export default function MemberBlock({ block }: MemberBlockProps) {
                                 {member.media ? (
                                     <MediaRenderer
                                         media={member.media as any}
+                                        sizes="(max-width: 768px) 96px, 128px"
                                         className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden border-4 border-brand-accent/20 group-hover:border-primary-100 transition-colors shadow-sm"
                                     />
                                 ) : (
