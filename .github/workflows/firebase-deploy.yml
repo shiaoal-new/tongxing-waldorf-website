@@ -51,13 +51,19 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          if [ "${GITHUB_REF##*/}" == "main" ]; then
-            firebase use prod --token $FIREBASE_TOKEN
-            firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --force
-          elif [ "${GITHUB_REF##*/}" == "dev" ]; then
-            firebase use dev --token $FIREBASE_TOKEN
-            firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --force
-          fi
+          # 根據 branch 決定使用哪個別名 (alias)
+          ALIAS=${{ (github.ref_name == 'main' && 'prod') || 'dev' }}
+
+          # 從 .firebaserc 解析出 Project ID
+          PROJECT_ID=$(node -p "require('./.firebaserc').projects['$ALIAS']")
+          echo "目標項目: $PROJECT_ID"
+
+          # 執行部署
+          firebase use $ALIAS --token $FIREBASE_TOKEN
+          firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --force
+
+          # 將網址設置為 output
+          echo "hosting_url=https://$PROJECT_ID.web.app" >> $GITHUB_OUTPUT
 
       # 8. 記錄部署成功結果到 Git Notes
       - name: Add Success Note
@@ -90,7 +96,38 @@ jobs:
             fi
           done
 
-      # 9. 記錄部署失敗結果到 Git Notes
+      # 9. 運行 Lighthouse 評估
+      - name: Run Lighthouse Audit
+        if: success()
+        id: lighthouse
+        continue-on-error: true
+        env:
+          LIGHTHOUSE_URL: ${{ steps.deploy.outputs.hosting_url }}
+        run: |
+          cd frontend
+          npm run lighthouse:all
+
+      # 10. 將報告上傳為 GitHub Artifacts
+      - name: Upload Lighthouse Reports
+        if: always() && (steps.lighthouse.outcome == 'success' || steps.lighthouse.outcome == 'failure')
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports-${{ github.ref_name }}-${{ github.run_id }}
+          path: frontend/measurement_result/
+          retention-days: 30
+
+      # 11. 將摘要添加到 GitHub Action Job Summary
+      - name: Add Summary to Action
+        if: always() && (steps.lighthouse.outcome == 'success' || steps.lighthouse.outcome == 'failure')
+        run: |
+          SUMMARY_FILE=$(ls frontend/measurement_result/lighthouse_summary_*.md 2>/dev/null | head -n 1)
+          if [ -f "$SUMMARY_FILE" ]; then
+            cat "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No Lighthouse summary found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # 12. 記錄部署失敗結果到 Git Notes
       - name: Add Failure Note
         if: failure()
         run: |
