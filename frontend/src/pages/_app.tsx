@@ -24,7 +24,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
       <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-        <main className={chenYuluoyan.variable}>
+        <main
+          className={chenYuluoyan.variable}
+          style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
+        >
           <Component {...pageProps} />
         </main>
       </ThemeProvider>
