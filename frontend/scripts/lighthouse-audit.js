@@ -259,6 +259,9 @@ async function main() {
                     // 獲取精簡版檔名
                     const compactFileName = path.basename(res.outputPath).replace('.report.json', '.compact.json');
 
+                    // 讀取報告內容以獲取分數
+                    const data = JSON.parse(fs.readFileSync(res.outputPath, 'utf8'));
+
                     const payload = {
                         page: res.page,
                         scores: {
