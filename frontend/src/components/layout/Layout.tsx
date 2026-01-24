@@ -7,6 +7,7 @@ import PageContent from "./PageContent";
 import { useEffect, useState, ReactNode } from "react";
 import { useTheme } from "next-themes";
 import { PageData, NavigationData } from "../../types/content";
+import { useScrollRestoration } from "../../hooks/useScrollRestoration";
 
 interface LayoutProps {
     children: ReactNode;
@@ -31,6 +32,8 @@ export default function Layout({
 }: LayoutProps) {
     const { resolvedTheme } = useTheme();
     const [themeColor, setThemeColor] = useState("#F2F2F0");
+
+    useScrollRestoration();
 
     useEffect(() => {
         setThemeColor(resolvedTheme === 'dark' ? '#1C1917' : '#F2F2F0');
