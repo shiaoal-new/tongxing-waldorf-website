@@ -14,8 +14,8 @@ export default function TestimonialSwiper({ items, renderItem }) {
         <div className="testimonial-swiper-wrapper py-12 md:py-24 relative px-4 md:px-12 lg:px-20 overflow-x-hidden w-full">
             <Swiper
                 modules={[Navigation, Pagination]}
-                spaceBetween={30}
-                slidesPerView={1.2}
+                spaceBetween={20}
+                slidesPerView={1.4}
                 centeredSlides={true}
                 loop={true}
 
