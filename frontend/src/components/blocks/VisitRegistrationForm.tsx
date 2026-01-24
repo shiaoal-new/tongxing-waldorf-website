@@ -38,9 +38,9 @@ export default function VisitRegistrationForm({ onComplete }: VisitRegistrationF
     return (
         <div className="registration-form-container">
             <div className="mb-6 animate-slideInLeft">
-                <h4 className="text-lg font-bold text-brand-text mb-1">
+                <h3 className="text-lg font-bold text-brand-text mb-1">
                     親愛的 {session?.user?.name || "朋友"}，您好
-                </h4>
+                </h3>
                 <p className="text-sm text-brand-taupe">
                     歡迎來到同心華德福，請填寫聯繫電話及參訪人數，我們期待與您相見。
                 </p>

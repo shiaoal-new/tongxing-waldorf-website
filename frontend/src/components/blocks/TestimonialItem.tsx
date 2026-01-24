@@ -37,9 +37,9 @@ export default function TestimonialItem({ quote, author, title, media, avatar }:
 
             {/* Content Area */}
             <div className="flex flex-col items-center flex-grow">
-                <h4 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-neutral-100 mb-2 group-hover:text-brand-accent transition-colors duration-300">
+                <h3 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-neutral-100 mb-2 group-hover:text-brand-accent transition-colors duration-300">
                     {author}
-                </h4>
+                </h3>
                 {title && (
                     <p className="text-sm md:text-base text-brand-taupe dark:text-neutral-400 font-medium mb-6 tracking-wide uppercase">
                         {title}

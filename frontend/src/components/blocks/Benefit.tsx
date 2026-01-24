@@ -57,9 +57,9 @@ export default function BenefitItem({ span, media, title, children, icon, button
         </div>
 
         <div className="flex flex-col">
-          <h4 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-brand-bg leading-tight mb-4 tracking-tight group-hover:text-brand-accent transition-colors duration-500">
+          <h3 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-brand-bg leading-tight mb-4 tracking-tight group-hover:text-brand-accent transition-colors duration-500">
             {title}
-          </h4>
+          </h3>
           <div className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
             <ExpandableText
               content={children}
