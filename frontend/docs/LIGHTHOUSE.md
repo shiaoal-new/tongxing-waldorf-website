@@ -21,14 +21,7 @@ npm run lighthouse
 npm run lighthouse:all
 ```
 
-这将评估以下所有页面:
-- `/` (首页)
-- `/about` (关于我们)
-- `/chronology` (发展历程)
-- `/rhythm-of-life` (生活节奏)
-- `/teachers` (师资团队)
-- `/questionnaire` (问卷调查)
-- `/contact` (联系我们)
+這將評估所有自動偵測到的頁面（包括根目錄頁面、`src/data/pages` 中的內容以及 `src/pages` 中的固定頁面）。
 
 ### 2. 评估特定页面
 
@@ -125,17 +118,14 @@ LIGHTHOUSE_URL=https://tongxing-waldorf-website.web.app npm run lighthouse
 ✨ 所有评估完成！
 ```
 
-## 添加新页面
+## 自動偵測頁面
 
-要添加新页面到评估列表,编辑 `scripts/lighthouse-audit.js` 中的 `ALL_PAGES` 数组:
+腳本現在會自動偵測以下位置的頁面，無需手動編輯：
 
-```javascript
-const ALL_PAGES = [
-  '/',
-  '/about',
-  '/your-new-page',  // 添加新页面
-];
-```
+1. **`src/data/pages/`**: 所有 `.yml`, `.yaml`, `.md` 檔案對應的路由。
+2. **`src/pages/`**: 所有實體頁面（排除系統檔案如 `_app.js`, `[slug].tsx` 等）。
+
+這確保了當你增加新的內容或頁面時，Lighthouse 評估會自動包含它們。
 
 ## 故障排除
 

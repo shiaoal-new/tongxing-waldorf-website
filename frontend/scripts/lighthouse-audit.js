@@ -19,16 +19,53 @@ const BASE_URL = process.env.LIGHTHOUSE_URL || 'http://localhost:3000';
 const OUTPUT_DIR = path.join(__dirname, '..', 'measurement_result');
 const TIMESTAMP = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
 
-// 定义要评估的页面
-const ALL_PAGES = [
-    '/',
-    '/about',
-    '/chronology',
-    '/rhythm-of-life',
-    '/teachers',
-    '/questionnaire',
-    '/contact',
-];
+// 動態獲取要評估的頁面
+function getAvailablePages() {
+    const PAGES_DATA_DIR = path.join(__dirname, '..', 'src', 'data', 'pages');
+    const PAGES_SRC_DIR = path.join(__dirname, '..', 'src', 'pages');
+    const pages = ['/'];
+
+    const excludedSlugs = [
+        'index',
+        'colors',
+        'layout-spacing',
+        'typography',
+        'micro-interactions',
+        '_app',
+        '_document',
+        '[slug]'
+    ];
+
+    // 1. 從資料目錄獲取 (動態路由)
+    if (fs.existsSync(PAGES_DATA_DIR)) {
+        fs.readdirSync(PAGES_DATA_DIR).forEach(file => {
+            if (file.endsWith('.yml') || file.endsWith('.yaml') || file.endsWith('.md')) {
+                const slug = file.replace(/\.(yml|yaml|md)$/, '');
+                if (!excludedSlugs.includes(slug) && !pages.includes(`/${slug}`)) {
+                    pages.push(`/${slug}`);
+                }
+            }
+        });
+    }
+
+    // 2. 從 src/pages 獲取 (固定路由)
+    if (fs.existsSync(PAGES_SRC_DIR)) {
+        fs.readdirSync(PAGES_SRC_DIR).forEach(file => {
+            // 只處理檔案，不處理目錄 (暫不考慮嵌套目錄)
+            const fullPath = path.join(PAGES_SRC_DIR, file);
+            if (fs.statSync(fullPath).isFile() && (file.endsWith('.js') || file.endsWith('.tsx'))) {
+                const name = file.replace(/\.(js|tsx)$/, '');
+                if (!excludedSlugs.includes(name) && !pages.includes(`/${name}`)) {
+                    pages.push(`/${name}`);
+                }
+            }
+        });
+    }
+
+    return pages;
+}
+
+const ALL_PAGES = getAvailablePages();
 
 // 确保输出目录存在
 if (!fs.existsSync(OUTPUT_DIR)) {
