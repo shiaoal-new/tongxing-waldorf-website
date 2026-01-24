@@ -58,6 +58,7 @@ export default function Section(props: SectionProps) {
         divider, // { type, position, color, flip }
         shader_gradient,
         silk_background,
+        ignore_padding,
         ...rest
     } = props;
 
@@ -174,7 +175,7 @@ export default function Section(props: SectionProps) {
 
             {
                 bodyContent && (
-                    <Container limit={!!limit} className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
+                    <Container limit={!!limit} ignorePadding={ignore_padding} className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
                         {bodyContent}
                     </Container>
                 )

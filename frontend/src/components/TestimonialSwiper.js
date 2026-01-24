@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
  */
 export default function TestimonialSwiper({ items, renderItem }) {
     return (
-        <div className="testimonial-swiper-wrapper py-12 md:py-24 relative px-4 md:px-12 lg:px-20 overflow-x-hidden w-full">
+        <div className="testimonial-swiper-wrapper py-12 md:py-24 relative px-0 md:px-12 lg:px-20 overflow-x-hidden w-full">
             <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}

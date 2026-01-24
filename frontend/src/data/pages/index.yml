@@ -119,6 +119,7 @@ sections:
             content: 青春期的孩子開始問「我是誰」。我們不給標準答案，而是創造空間，陪他們在藝術與思辨中找到屬於自己的答案。
   - section_id: testimonials
     silk_background: true
+    ignore_padding: true
     _layout:
       background: bg-neutral-50 dark:bg-neutral-950
     blocks:
