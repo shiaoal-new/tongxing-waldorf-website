@@ -37,7 +37,7 @@ export default function TestimonialSwiper({ items, renderItem }) {
                 className="testimonial-swiper !overflow-visible"
             >
                 {items.map((item, index) => (
-                    <SwiperSlide key={item.id || index} className="transition-all duration-500 py-20 px-2 md:px-0">
+                    <SwiperSlide key={item.id || index} className="transition-all duration-500 py-20 px-0">
                         {({ isActive }) => (
                             <div className={`transition-all duration-500 h-full ${isActive ? 'scale-110 z-10' : 'scale-90 opacity-60 grayscale-[0.5]'}`}>
                                 {renderItem(item, index)}

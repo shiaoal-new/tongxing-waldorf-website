@@ -37,6 +37,7 @@ interface SectionProps {
     divider?: Divider;
     shader_gradient?: boolean;
     silk_background?: boolean;
+    ignore_padding?: boolean;
     [key: string]: any;
 }
 
@@ -133,6 +134,7 @@ export default function Section(props: SectionProps) {
 
             <Container
                 limit={true}
+                ignorePadding={ignore_padding}
                 className={`flex w-full flex-col relative ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
                     initial="hidden"

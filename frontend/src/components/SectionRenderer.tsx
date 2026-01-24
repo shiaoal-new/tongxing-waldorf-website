@@ -4,7 +4,7 @@ import BlockDispatcher from "./blocks/BlockDispatcher";
 import { Section as SectionType, Block, TextBlock } from "../types/content";
 
 interface SectionRendererProps {
-    section: SectionType & { limit?: boolean; _layout?: any; media_list?: any; parallax_ratio?: number };
+    section: SectionType & { limit?: boolean; _layout?: any; media_list?: any; parallax_ratio?: number; ignore_padding?: boolean };
     index: number;
 }
 
@@ -85,6 +85,7 @@ function resolveSectionData(section: any) {
             divider: section.divider,
             shader_gradient: section.shader_gradient || section._layout?.title === "紫色大型看板 (CTA)",
             silk_background: section.silk_background,
+            ignore_padding: section.ignore_padding || determineIgnorePadding(blocks),
         }
     };
 }
@@ -128,10 +129,28 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
     const hasWideBlock = blocks.some(b => {
         if (wideBlockTypes.includes(b.type)) return true;
         if (b.type === "list_block") {
-            return ["grid_cards", "compact_grid", "scrollable_grid"].includes((b as any).layout_method);
+            const layoutMethod = (b as any).layout_method;
+            return ["grid_cards", "compact_grid", "scrollable_grid", "testimonial_carousel"].includes(layoutMethod);
         }
         return false;
     });
 
     return !hasWideBlock;
 }
+
+/**
+ * 判斷是否需要忽略內邊距 (Ignore Padding) Helper
+ * 遍歷所有 Block，若有任何 Block 需要全寬顯示（如輪播類型），則整個 Section 忽略內邊距
+ */
+function determineIgnorePadding(blocks: Block[]): boolean {
+    const fullWidthLayouts = ["testimonial_carousel", "scrollable_grid"];
+
+    return blocks.some(b => {
+        if (b.type === "list_block") {
+            const layoutMethod = (b as any).layout_method;
+            return fullWidthLayouts.includes(layoutMethod);
+        }
+        return false;
+    });
+}
+
