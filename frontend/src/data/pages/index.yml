@@ -104,18 +104,21 @@ sections:
             media:
               type: youtube
               url: https://youtu.be/oermgcwIkC8
+            duration: "08:05"
             content: 如果你也在想「除了補習、考試，還有別的路嗎？」——這支 8 分鐘的紀錄短片將帶你走進校園，看見孩子最真實的學習樣貌與生命力。文字說再多，都不如親眼看看這份感動。
           - title: 與孩子的黃金線
             span: 4
             media:
               type: youtube
               url: https://youtu.be/atLmqSjhnxs
+            duration: "02:47"
             content: 小學老師跟孩子之間，有種說不出的默契。那條看不見的連結，會陪著孩子走過整個童年，建立最穩固的情感基礎。
           - title: 中學的自我革命
             span: 4
             media:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4
+            duration: "04:40"
             content: 青春期的孩子開始問「我是誰」。我們不給標準答案，而是創造空間，陪他們在藝術與思辨中找到屬於自己的答案。
   - section_id: testimonials
     silk_background: true

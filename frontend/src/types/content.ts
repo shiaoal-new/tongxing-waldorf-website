@@ -67,6 +67,7 @@ export interface VideoItem {
     content: string;
     media: MediaItem;
     span?: number;
+    duration?: string;
 }
 
 export type ListItem = FaqItem | BenefitItem | VideoItem;

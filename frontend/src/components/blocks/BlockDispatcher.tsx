@@ -96,6 +96,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
                         title: video.title,
                         media: video.media,
                         content: video.content,
+                        duration: video.duration,
                         className: video.className
                     }}
                     className={!isNested ? "" : "md:even:translate-y-12 lg:even:translate-y-0 lg:[&:nth-child(3n+2)]:translate-y-12"}
