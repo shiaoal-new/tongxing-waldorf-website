@@ -91,15 +91,24 @@ interface SilkAnimationProps {
     color?: string;
     noiseIntensity?: number;
     rotation?: number;
+    onLoad?: () => void;
 }
 
-const SilkAnimation = ({ speed = 5, scale = 1, color = '#8D7B68', noiseIntensity = 0.5, rotation = 0 }: SilkAnimationProps) => {
+const SilkAnimation = ({ speed = 5, scale = 1, color = '#8D7B68', noiseIntensity = 0.5, rotation = 0, onLoad }: SilkAnimationProps) => {
     const meshRef = useRef<Mesh>(null);
     const [resolvedColor, setResolvedColor] = useState('#8D7B68');
 
     useLayoutEffect(() => {
         setResolvedColor(resolveColor(color));
     }, [color]);
+
+    // Notify parent component that the animation is ready to be displayed
+    useLayoutEffect(() => {
+        if (onLoad) {
+            // Slight delay to ensure first frame is ready
+            requestAnimationFrame(() => onLoad());
+        }
+    }, [onLoad]);
 
     const uniforms = useMemo(() => ({
         uSpeed: { value: speed },
