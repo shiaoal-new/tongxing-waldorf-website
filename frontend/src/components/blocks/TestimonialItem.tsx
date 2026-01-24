@@ -17,7 +17,7 @@ interface TestimonialItemProps {
  */
 export default function TestimonialItem({ quote, author, title, media, avatar }: TestimonialItemProps) {
     return (
-        <div className="group relative flex flex-col items-center text-center bg-white dark:bg-neutral-800 rounded-3xl p-6 pt-16 md:p-10 md:pt-20 shadow-xl hover:shadow-2xl transition-all duration-500 border border-neutral-100 dark:border-neutral-700 my-12 h-full">
+        <div className="group relative flex flex-col items-center text-center bg-white dark:bg-neutral-800 rounded-3xl p-6 pt-16 md:p-10 md:pt-20 shadow-xl hover:shadow-2xl transition-all duration-500 border border-neutral-100 dark:border-neutral-700 my-6 md:my-12 h-full">
 
             {/* Overlapping Avatar */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white dark:border-neutral-700 shadow-lg ring-4 ring-brand-accent/10 group-hover:ring-brand-accent/30 transition-all duration-500 z-20">
