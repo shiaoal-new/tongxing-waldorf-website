@@ -42,7 +42,7 @@ const MediaRenderer = ({
         const updateSrc = () => {
             // On mobile, only use mobileVideo. If not available, we'll fall back to showing just the poster.
             // This prevents downloading a large desktop video on mobile connections.
-            const newVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || undefined) : media.video;
+            const newVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || media.video) : media.video;
             const newPosterSrc = (mediaQuery.matches) ? (media.mobilePoster || media.poster) : media.poster;
 
             if (newVideoSrc !== videoSrc) {
