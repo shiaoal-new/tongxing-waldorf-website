@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -10,20 +11,45 @@ import 'swiper/css/pagination';
  * 專為見證設計的輪播組件，具有置中放大的視覺效果
  */
 export default function TestimonialSwiper({ items, renderItem }) {
+    const [prevEl, setPrevEl] = useState(null);
+    const [nextEl, setNextEl] = useState(null);
+
     return (
-        <div className="testimonial-swiper-wrapper py-12 md:py-24 relative px-0 md:px-12 lg:px-20 overflow-x-hidden w-full">
+        <div className="testimonial-swiper-wrapper py-12 md:py-24 relative px-0 md:px-12 lg:px-20 overflow-x-hidden w-full group">
+            {/* Custom Navigation Buttons */}
+            <div className="absolute top-1/2 left-4 md:left-8 z-30 -translate-y-1/2 hidden lg:block">
+                <button
+                    ref={(node) => setPrevEl(node)}
+                    className="btn btn-circle bg-white border-none shadow-xl text-brand-accent hover:bg-gray-50 hover:scale-110 transition-all duration-200"
+                    aria-label="Previous slide"
+                >
+                    <ChevronLeftIcon className="w-8 h-8" />
+                </button>
+            </div>
+            <div className="absolute top-1/2 right-4 md:right-8 z-30 -translate-y-1/2 hidden lg:block">
+                <button
+                    ref={(node) => setNextEl(node)}
+                    className="btn btn-circle bg-white border-none shadow-xl text-brand-accent hover:bg-gray-50 hover:scale-110 transition-all duration-200"
+                    aria-label="Next slide"
+                >
+                    <ChevronRightIcon className="w-8 h-8" />
+                </button>
+            </div>
+
             <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
                 slidesPerView={1.4}
                 centeredSlides={true}
                 loop={true}
-
                 pagination={{
                     clickable: true,
                     dynamicBullets: true,
                 }}
-                navigation={true}
+                navigation={{
+                    prevEl,
+                    nextEl,
+                }}
                 breakpoints={{
                     640: {
                         slidesPerView: 1.8,
@@ -48,31 +74,6 @@ export default function TestimonialSwiper({ items, renderItem }) {
             </Swiper>
 
             <style jsx global>{`
-                .testimonial-swiper .swiper-button-next,
-                .testimonial-swiper .swiper-button-prev {
-                    color: var(--brand-accent, #6366f1);
-                    background: white;
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 50%;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                    display: none; /* 預設隱藏，手機端使用滑動操作 */
-                }
-                
-                @media (min-width: 1024px) {
-                    .testimonial-swiper .swiper-button-next,
-                    .testimonial-swiper .swiper-button-prev {
-                        display: flex; /* 僅在桌機端顯示按鈕 */
-                    }
-                    .testimonial-swiper .swiper-button-next { right: 10px; }
-                    .testimonial-swiper .swiper-button-prev { left: 10px; }
-                }
-
-                .testimonial-swiper .swiper-button-next:after,
-                .testimonial-swiper .swiper-button-prev:after {
-                    font-size: 18px;
-                    font-weight: bold;
-                }
                 .testimonial-swiper .swiper-pagination-bullet-active {
                     background: var(--brand-accent, #6366f1);
                 }
