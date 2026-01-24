@@ -256,7 +256,9 @@ async function main() {
             console.log('\n📊 正在將數據推送到 Google Spreadsheet...');
             const resultsToPush = results.map(async (res) => {
                 try {
-                    const data = JSON.parse(fs.readFileSync(res.outputPath, 'utf8'));
+                    // 獲取精簡版檔名
+                    const compactFileName = path.basename(res.outputPath).replace('.report.json', '.compact.json');
+
                     const payload = {
                         page: res.page,
                         scores: {
@@ -267,7 +269,9 @@ async function main() {
                         },
                         commit: process.env.GITHUB_SHA || 'local',
                         branch: process.env.GITHUB_REF_NAME || 'local',
-                        runId: process.env.GITHUB_RUN_ID || 'local'
+                        runId: process.env.GITHUB_RUN_ID || 'local',
+                        repo: process.env.GITHUB_REPOSITORY || '',
+                        compactReport: compactFileName
                     };
 
                     const response = await fetch(gasUrl, {

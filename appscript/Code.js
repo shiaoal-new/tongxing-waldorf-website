@@ -11,7 +11,7 @@ function doPost(e) {
         // 如果表格不存在則建立
         if (!sheet) {
             sheet = doc.insertSheet(sheetName);
-            var headers = ["Timestamp", "Page", "Performance", "Accessibility", "Best Practices", "SEO", "Commit", "Branch", "Run ID"];
+            var headers = ["Timestamp", "Page", "Performance", "Accessibility", "Best Practices", "SEO", "Commit", "Branch", "Run ID", "Report"];
             sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
             sheet.setFrozenRows(1);
         }
@@ -19,14 +19,15 @@ function doPost(e) {
         var nextRow = sheet.getLastRow() + 1;
         var timestamp = new Date();
 
-        // 預期資料格式:
-        // {
-        //   "page": "/",
-        //   "scores": { "performance": 90, "accessibility": 95, "bestPractices": 100, "seo": 98 },
-        //   "commit": "sha",
-        //   "branch": "main",
-        //   "runId": "12345"
-        // }
+        // 構造 Report 連結 (如果是在 GitHub Actions 環境)
+        var reportLink = "";
+        if (data.repo && data.runId) {
+            var runUrl = "https://github.com/" + data.repo + "/actions/runs/" + data.runId;
+            // 由於直接檔案網址難以獲得，我們連結到 Action Run 並顯示檔名
+            reportLink = '=HYPERLINK("' + runUrl + '", "' + (data.compactReport || "View Run") + '")';
+        } else {
+            reportLink = data.compactReport || "";
+        }
 
         var newRow = [
             timestamp,
@@ -37,7 +38,8 @@ function doPost(e) {
             data.scores.seo || 0,
             data.commit || "",
             data.branch || "",
-            data.runId || ""
+            data.runId || "",
+            reportLink
         ];
 
         sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow]);
@@ -81,7 +83,9 @@ function testLighthouseAudit() {
                     },
                     "commit": "abc1234567890",
                     "branch": "main",
-                    "runId": "987654321"
+                    "runId": "987654321",
+                    "repo": "owner/repo",
+                    "compactReport": "lighthouse_index_compact.json"
                 })
             }
         };
