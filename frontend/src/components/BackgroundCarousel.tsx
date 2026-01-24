@@ -94,7 +94,7 @@ const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewpo
     return (
         <AnimatePresence mode="popLayout">
             <motion.div
-                key={currentIndex}
+                key={`${currentIndex}-${item.image || item.video || item.url || item.lottie}`}
                 variants={currentVariant}
                 initial="initial"
                 animate="animate"
@@ -180,6 +180,11 @@ export default function BackgroundCarousel({
     const y = useTransform(scrollYProgress, [0, 1], [`${shift}vh`, `${-shift}vh`]);
 
 
+
+    // Reset index when items change
+    useEffect(() => {
+        setCurrentIndex(0);
+    }, [items]);
 
     // Auto-play timer
     useEffect(() => {
