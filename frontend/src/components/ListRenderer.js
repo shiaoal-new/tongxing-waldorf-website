@@ -17,6 +17,19 @@ const TestimonialSwiper = dynamic(() => import('./TestimonialSwiper'), {
 });
 
 /**
+ * List Layout Configuration
+ * 定義各個佈局的特性，例如是否為全寬顯示
+ */
+export const LIST_LAYOUT_CONFIG = {
+    grid_cards: { fullWidth: false },
+    compact_grid: { fullWidth: false },
+    bento_grid: { fullWidth: false },
+    scrollable_grid: { fullWidth: true },
+    testimonial_carousel: { fullWidth: true },
+    accordion: { fullWidth: false, direction: 'vertical' },
+};
+
+/**
  * ListRenderer - 一个通用的列表渲染组件
  * 
  * 使用 direction 参数决定排列方向:

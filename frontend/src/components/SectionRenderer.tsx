@@ -1,6 +1,7 @@
 import React from "react";
 import Section from "./layout/Section";
 import BlockDispatcher from "./blocks/BlockDispatcher";
+import { LIST_LAYOUT_CONFIG } from "./ListRenderer";
 import { Section as SectionType, Block, TextBlock } from "../types/content";
 
 interface SectionRendererProps {
@@ -130,7 +131,9 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
         if (wideBlockTypes.includes(b.type)) return true;
         if (b.type === "list_block") {
             const layoutMethod = (b as any).layout_method;
-            return ["grid_cards", "compact_grid", "scrollable_grid", "testimonial_carousel"].includes(layoutMethod);
+            const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
+            // 寬版區塊通常是那些 fullWidth 的佈局
+            return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid"].includes(layoutMethod);
         }
         return false;
     });
@@ -143,12 +146,11 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
  * 遍歷所有 Block，若有任何 Block 需要全寬顯示（如輪播類型），則整個 Section 忽略內邊距
  */
 function determineIgnorePadding(blocks: Block[]): boolean {
-    const fullWidthLayouts = ["testimonial_carousel", "scrollable_grid"];
-
     return blocks.some(b => {
         if (b.type === "list_block") {
             const layoutMethod = (b as any).layout_method;
-            return fullWidthLayouts.includes(layoutMethod);
+            const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
+            return config?.fullWidth === true;
         }
         return false;
     });
