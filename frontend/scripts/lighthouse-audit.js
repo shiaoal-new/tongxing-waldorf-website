@@ -212,6 +212,44 @@ async function main() {
     if (results.length > 0) {
         generateSummary(results);
         generateCompactReports(results);
+
+        // 推送數據到 Google Spreadsheet (如果有提供 URL)
+        const gasUrl = process.env.GOOGLE_SHEETS_API_URL;
+        if (gasUrl) {
+            console.log('\n📊 正在將數據推送到 Google Spreadsheet...');
+            const resultsToPush = results.map(async (res) => {
+                try {
+                    const data = JSON.parse(fs.readFileSync(res.outputPath, 'utf8'));
+                    const payload = {
+                        page: res.page,
+                        scores: {
+                            performance: Math.round(data.categories.performance.score * 100),
+                            accessibility: Math.round(data.categories.accessibility.score * 100),
+                            bestPractices: Math.round(data.categories['best-practices'].score * 100),
+                            seo: Math.round(data.categories.seo.score * 100)
+                        },
+                        commit: process.env.GITHUB_SHA || 'local',
+                        branch: process.env.GITHUB_REF_NAME || 'local',
+                        runId: process.env.GITHUB_RUN_ID || 'local'
+                    };
+
+                    const response = await fetch(gasUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        console.log(`   ✅ 已推送: ${res.page}`);
+                    } else {
+                        console.error(`   ❌ 推送失敗: ${res.page} (${response.statusText})`);
+                    }
+                } catch (err) {
+                    console.error(`   ❌ 推送錯誤: ${res.page}`, err.message);
+                }
+            });
+            await Promise.all(resultsToPush);
+        }
+
         console.log('\n✨ 所有评估完成！');
     } else {
         console.log('\n⚠️  没有成功完成的评估');

@@ -103,6 +103,7 @@ jobs:
         continue-on-error: true
         env:
           LIGHTHOUSE_URL: ${{ steps.deploy.outputs.hosting_url }}
+          GOOGLE_SHEETS_API_URL: ${{ secrets.GOOGLE_SHEETS_API_URL }}
         run: |
           cd frontend
           npm run lighthouse:all
