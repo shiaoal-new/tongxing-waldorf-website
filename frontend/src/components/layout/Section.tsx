@@ -106,6 +106,10 @@ export default function Section(props: SectionProps) {
         <section
             id={anchor}
             className={`w-full relative section_container py-section ${container_class} ${className || ""}`}
+            style={{
+                backgroundColor: silk_background ? "rgb(var(--color-brand-taupe))" : undefined,
+                ...rest.style
+            }}
             {...rest}
         >
             {/* SVG Divider */}

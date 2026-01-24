@@ -126,6 +126,7 @@ const ComponentName = dynamic(() => import("./componentName"), {
 ### 載入體驗
 - 首次訪問會有輕微延遲(通常 < 100ms)
 - Loading fallback 提供視覺回饋
+- **背景優化**: 針對 `silk_background` 等動態背景，在 `Section.tsx` 中預設填入與動畫接近的純色背景 (`rgb(var(--color-brand-taupe))`)，以防止動畫組件載入完成前的視覺閃爍或突跳。
 - 後續訪問會使用瀏覽器快取
 
 ### 未改動的組件
