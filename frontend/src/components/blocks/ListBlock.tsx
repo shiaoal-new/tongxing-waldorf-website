@@ -51,8 +51,8 @@ export default function ListBlock({ block }: ListBlockProps) {
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}
                 buttons={block.buttons}
-                renderItem={(item: ListItem, index: number) => (
-                    <BlockDispatcher block={item} context="list" />
+                renderItem={(item: ListItem, index: number, extra: any) => (
+                    <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" />
                 )}
             />
         </div>

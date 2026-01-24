@@ -255,7 +255,7 @@ export default function ListRenderer({
         return (
             <TestimonialSwiper
                 items={items}
-                renderItem={renderItem}
+                renderItem={(item, index, pagination) => renderItem(item, index, { pagination })}
             />
         );
     }
