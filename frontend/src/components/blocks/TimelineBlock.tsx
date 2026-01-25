@@ -356,6 +356,15 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                     </motion.div>
 
                     <div className="p-0 bg-transparent flex flex-col md:block">
+                        <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
+                            {item.title}
+                        </h3>
+                        {item.subtitle && (
+                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 inline-block border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
+                                {item.subtitle}
+                            </h4>
+                        )}
+
                         {/* Image - Museum Frame style */}
                         {item.image && (
                             <div className={`mb-8 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
@@ -370,15 +379,6 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                                     />
                                 </div>
                             </div>
-                        )}
-
-                        <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
-                            {item.title}
-                        </h3>
-                        {item.subtitle && (
-                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 inline-block border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
-                                {item.subtitle}
-                            </h4>
                         )}
                         <p className="text-gray-600 dark:text-gray-400 leading-loose text-base md:text-lg max-w-prose">
                             {item.content}
