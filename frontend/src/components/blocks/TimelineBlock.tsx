@@ -230,14 +230,14 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                             scale: 1,
                             transition: { duration: 0.8, ease: "circOut" }
                         }}
-                        viewport={{ margin: "-45% 0px -45% 0px" }} // Triggers when the element hits the visual center
+                        viewport={{ margin: "0px 0px -50% 0px", once: true }} // Triggers when the element top crosses the center line
                         className="relative z-20 max-w-3xl mx-auto mb-24 px-6"
                     >
                         <div className="relative bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[var(--accent-border)] text-center shadow-lg group hover:shadow-xl transition-shadow duration-500">
                             {/* Decorative Accent Line */}
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-1 bg-[var(--accent-primary)] rounded-full shadow-sm"></div>
 
-                            <p className="text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif">
+                            <p className="text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif text-justify">
                                 {phase.header.content}
                             </p>
                         </div>
