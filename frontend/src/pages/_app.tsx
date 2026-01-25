@@ -31,9 +31,6 @@ const chenYuluoyan = localFont({
   src: '../../public/fonts/ChenYuluoyan-2.0-Thin.woff2',
   variable: '--font-chen',
   display: 'swap',
-  declarations: [
-    { prop: 'size-adjust', value: '150%' }
-  ],
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
