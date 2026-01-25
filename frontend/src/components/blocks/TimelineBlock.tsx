@@ -186,7 +186,7 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                 )}
 
                 {/* Phase Items */}
-                <div className="relative z-10 flex flex-col gap-24">
+                <div className="relative z-10 block">
                     {phase.items.map((item, itemIndex) => {
                         const isEven = itemIndex % 2 === 0;
 
@@ -195,10 +195,12 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                                 key={itemIndex}
                                 item={item}
                                 isEven={isEven}
+                                shiftRightColumn={itemIndex === 1}
                                 onSelect={() => item.detail && onSelectDetail(item)}
                             />
                         );
                     })}
+                    <div className="clear-both" />
                 </div>
             </div>
         </div>
@@ -208,20 +210,25 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
 interface TimelineEntryProps {
     item: TimelineItem;
     isEven: boolean;
+    shiftRightColumn?: boolean;
     onSelect: () => void;
 }
 
-const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
+const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEntryProps) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <div ref={ref} className={`relative w-full ${styles['timeline-entry']}`}>
+
+        <div ref={ref} className={`relative w-full md:w-1/2 mb-12 md:mb-16 ${styles['timeline-entry']}
+             ${isEven ? 'md:float-left md:clear-left md:pr-12 md:text-right' : 'md:float-right md:clear-right md:pl-12 md:text-left'}
+             ${shiftRightColumn ? 'md:mt-24' : ''}
+        `}>
             {/* Axis Dot */}
-            <div className="absolute top-0 z-20 flex flex-col items-center
+            <div className={`absolute top-0 z-20 flex flex-col items-center
                 left-4 transform -translate-x-1/2
-                md:left-1/2
-             ">
+                ${isEven ? 'md:left-full md:-translate-x-1/2' : 'md:left-0 md:-translate-x-1/2'}
+             `}>
                 <div className="w-3 h-3 rounded-full bg-[var(--accent-primary)] border-4 border-white dark:border-gray-900 shadow-sm" />
             </div>
 
@@ -232,16 +239,16 @@ const TimelineEntry = ({ item, isEven, onSelect }: TimelineEntryProps) => {
                 <div
                     className={`
                         relative group
-                        w-full md:w-[45%] lg:w-[42%]
-                        ${isEven ? 'md:mr-auto md:text-right' : 'md:ml-auto md:text-left'}
+                        w-full
                         ${item.detail ? 'cursor-pointer' : ''}
                     `}
                     onClick={onSelect}
                 >
                     {/* Desktop Connection Line */}
                     <div
-                        className={`hidden md:block absolute top-[1.2rem] w-full max-w-[4rem] h-px bg-gray-300 dark:bg-gray-700
-                            ${isEven ? '-right-[4rem]' : '-left-[4rem]'}
+                        className={`hidden md:block absolute top-[1.2rem] h-px bg-gray-300 dark:bg-gray-700
+                            w-12
+                            ${isEven ? '-right-12' : '-left-12'}
                         `}
                     />
 
