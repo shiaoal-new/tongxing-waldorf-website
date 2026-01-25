@@ -8,12 +8,10 @@ import DevComment from "./ui/DevComment";
 
 const ListSwiper = dynamic(() => import('./ListSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
-    ssr: false,
 });
 
 const TestimonialSwiper = dynamic(() => import('./TestimonialSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
-    ssr: false,
 });
 
 /**
