@@ -135,8 +135,8 @@ export default function PageHero({ data }: PageHeroProps) {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.5
+                staggerChildren: 0.1,
+                delayChildren: 0.1
             }
         }
     };
@@ -148,8 +148,7 @@ export default function PageHero({ data }: PageHeroProps) {
             y: 0,
             filter: "blur(0px)",
             transition: {
-                delay: 1,
-                duration: 2,
+                duration: 0.8,
                 ease: [0.22, 1, 0.36, 1]
             }
         }
@@ -162,8 +161,8 @@ export default function PageHero({ data }: PageHeroProps) {
             scale: 1,
             rotate: -2,
             transition: {
-                delay: 3,
-                duration: 2,
+                delay: 0.6,
+                duration: 1.2,
                 ease: "easeOut"
             }
         }
