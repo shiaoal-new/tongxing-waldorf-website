@@ -11,6 +11,22 @@ import "../css/tailwind.css";
 
 import { SessionProvider } from "../context/SessionContext";
 
+import { Noto_Sans_TC, Noto_Serif_TC } from 'next/font/google';
+
+const notoSans = Noto_Sans_TC({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-noto-sans',
+  display: 'swap',
+});
+
+const notoSerif = Noto_Serif_TC({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-noto-serif',
+  display: 'swap',
+});
+
 const chenYuluoyan = localFont({
   src: '../../public/fonts/ChenYuluoyan-2.0-Thin.woff2',
   variable: '--font-chen',
@@ -25,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider>
       <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
         <main
-          className={chenYuluoyan.variable}
+          className={`${chenYuluoyan.variable} ${notoSans.variable} ${notoSerif.variable}`}
           style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
         >
           <Component {...pageProps} />
