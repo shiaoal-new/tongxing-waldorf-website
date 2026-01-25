@@ -3,7 +3,8 @@ import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
 import Modal from '../ui/Modal';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
-import { motion, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+
 
 import Image from 'next/image';
 
@@ -12,16 +13,25 @@ interface TimelineBlockProps {
     anchor?: string;
 }
 
-const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
+const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
-    const [mounted, setMounted] = useState(false);
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
 
-    const rawItems = data.items || [];
+    // Scroll progress for the timeline line
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start center", "end center"] // Sync line tip with viewport center
+    });
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    // Smooth out the progress - made snappier to catch up with scroll
+    const scaleY = useSpring(scrollYProgress, {
+        stiffness: 200,
+        damping: 25,
+        restDelta: 0.001
+    });
+
+    const rawItems = data.items || [];
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -30,8 +40,6 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         window.addEventListener('keydown', handleEsc);
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
-
-    if (!mounted) return null;
 
     // Group items by phase (headers define phase boundaries)
     const phases: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] }[] = [];
@@ -62,10 +70,14 @@ const TimelineBlock = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     }
 
     return (
-        <div className={`w-full py-20 ${styles['timeline-container']}`} data-theme={theme}>
+        <div ref={containerRef} className={`w-full py-20 ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
             <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
-                {/* Central Line */}
+                {/* Central Line with Animated Progress */}
                 <div className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 ${styles['timeline-axis']}`} />
+                <motion.div
+                    className="absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[3px] bg-[var(--accent-primary)] origin-top z-[2]"
+                    style={{ scaleY }}
+                />
 
 
                 <div className="relative flex flex-col">
@@ -157,32 +169,79 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
             className={styles['phase-section']}
             data-phase={phase.phaseNumber}
         >
-            {/* Sticky Background Layer - automatically sticky via CSS */}
-            <div
-                className={styles['phase-background']}
-                data-phase={phase.phaseNumber}
-                style={phase.header?.background_image ? {
-                    backgroundImage: `url(${phase.header.background_image})`
-                } : undefined}
-            />
+            {/* Background Layer with Clipping - z-index 0 to sit behind central line (z-2) */}
+            <div className="absolute inset-0 z-0" style={{ clipPath: 'inset(0)' }}>
+                {/* Sticky Background Layer */}
+                <div
+                    className={styles['phase-background']}
+                    data-phase={phase.phaseNumber}
+                    style={phase.header?.background_image ? {
+                        backgroundImage: `url(${phase.header.background_image})`
+                    } : undefined}
+                />
+            </div>
 
-            {/* Content Wrapper for Grid Overlay - ID moved here for TOC scroll tracking */}
+            {/* Content Wrapper - z-index 10 to sit above central line (z-2) */}
             <div
                 id={`${anchor}-header-${phaseIndex}`}
-                className={styles['phase-content']}
+                className={`${styles['phase-content']} relative z-10`}
             >
-                {/* Phase Header */}
+                {/* Phase Header - Sticky & Glassmorphism */}
                 {phase.header && (
-                    <div className="relative z-10 flex justify-center w-full my-8">
-                        <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-4 flex flex-col items-center shadow-sm`}>
-                            <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0 text-center">{phase.header.title}</h2>
-                            {phase.header.content && (
-                                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mt-2 font-normal text-center max-w-2xl">
-                                    {phase.header.content}
-                                </p>
-                            )}
-                        </div>
+                    <div className="sticky top-24 z-30 flex justify-center w-full my-12 pointer-events-none">
+                        <motion.div
+                            initial={{ y: -20, opacity: 0, scale: 0.95 }}
+                            whileInView={{
+                                y: 0,
+                                opacity: 1,
+                                scale: 1,
+                                transition: { duration: 0.5 }
+                            }}
+                            viewport={{ margin: "-10% 0px -40% 0px" }} // Trigger "active" state when near top-center
+                            className="pointer-events-auto backdrop-blur-xl bg-white/90 dark:bg-black/80 px-8 py-3 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-2xl flex items-center gap-4 group hover:scale-105 transition-transform duration-300"
+                        >
+                            <motion.span
+                                initial={{ color: "var(--timeline-text)", opacity: 0.5 }}
+                                whileInView={{
+                                    color: "var(--accent-primary)",
+                                    opacity: 1,
+                                    textShadow: "0 0 10px rgba(242, 161, 84, 0.5)"
+                                }}
+                                viewport={{ margin: "-10% 0px -40% 0px" }}
+                                className="text-sm font-black tracking-widest uppercase font-display"
+                            >
+                                0{phase.phaseNumber}
+                            </motion.span>
+                            <div className="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
+                            <h2 className="text-lg md:text-xl font-bold text-[var(--timeline-text)] m-0 leading-none">
+                                {phase.header.title}
+                            </h2>
+                        </motion.div>
                     </div>
+                )}
+
+                {/* Phase Intro Content - Narrative Card */}
+                {phase.header?.content && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            transition: { duration: 0.8, ease: "circOut" }
+                        }}
+                        viewport={{ margin: "-45% 0px -45% 0px" }} // Triggers when the element hits the visual center
+                        className="relative z-20 max-w-3xl mx-auto mb-24 px-6"
+                    >
+                        <div className="relative bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[var(--accent-border)] text-center shadow-lg group hover:shadow-xl transition-shadow duration-500">
+                            {/* Decorative Accent Line */}
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-1 bg-[var(--accent-primary)] rounded-full shadow-sm"></div>
+
+                            <p className="text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif">
+                                {phase.header.content}
+                            </p>
+                        </div>
+                    </motion.div>
                 )}
 
                 {/* Phase Items */}
@@ -219,17 +278,45 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-
-        <div ref={ref} className={`relative w-full md:w-1/2 mb-12 md:mb-16 ${styles['timeline-entry']}
-             ${isEven ? 'md:float-left md:clear-left md:pr-12 md:text-right' : 'md:float-right md:clear-right md:pl-12 md:text-left'}
-             ${shiftRightColumn ? 'md:mt-24' : ''}
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className={`relative w-full md:w-1/2 mb-12 md:mb-24 ${styles['timeline-entry']}
+             ${isEven ? 'md:float-left md:clear-left md:pr-16 md:text-right' : 'md:float-right md:clear-right md:pl-16 md:text-left'}
+             ${shiftRightColumn ? 'md:mt-32' : ''}
         `}>
-            {/* Axis Dot */}
-            <div className={`absolute top-0 z-20 flex flex-col items-center
+            {/* Axis Dot with "Passed" Effect */}
+            <div className={`absolute top-5 z-20 flex flex-col items-center
                 left-4 transform -translate-x-1/2
                 ${isEven ? 'md:left-full md:-translate-x-1/2' : 'md:left-0 md:-translate-x-1/2'}
              `}>
-                <div className="w-3 h-3 rounded-full bg-[var(--accent-primary)] border-4 border-white dark:border-gray-900 shadow-sm" />
+                <motion.div
+                    initial={{ scale: 0.8, backgroundColor: "var(--timeline-bg)", borderColor: "var(--timeline-text)", borderWidth: "2px" }}
+                    whileInView={{
+                        scale: 1.2,
+                        backgroundColor: "var(--accent-primary)",
+                        borderColor: "var(--accent-primary)",
+                        boxShadow: "0 0 0 4px var(--accent-light)"
+                    }}
+                    viewport={{ margin: "-50% 0px -50% 0px" }}
+                    transition={{ duration: 0.4 }}
+                    className="w-4 h-4 rounded-full border border-[var(--timeline-text)] shadow-sm relative z-10"
+                >
+                    {/* Ripple/Pulse Effect when Active */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 1 }}
+                        whileInView={{
+                            opacity: [0, 0.5, 0],
+                            scale: [1, 2, 2.5],
+                        }}
+                        viewport={{ margin: "-50% 0px -50% 0px" }}
+                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
+                        className="absolute inset-0 rounded-full bg-[var(--accent-primary)] z-[-1]"
+                    />
+                </motion.div>
             </div>
 
             {/* Content Container */}
@@ -244,65 +331,85 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                     `}
                     onClick={onSelect}
                 >
-                    {/* Desktop Connection Line */}
-                    <div
-                        className={`hidden md:block absolute top-[1.2rem] h-px bg-gray-300 dark:bg-gray-700
-                            w-12
-                            ${isEven ? '-right-12' : '-left-12'}
+                    {/* Desktop Connection Line - Enhanced Visibility */}
+                    <motion.div
+                        initial={{ scaleX: 0, opacity: 0.5 }}
+                        whileInView={{ scaleX: 1, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className={`hidden md:block absolute top-[1.5rem] h-[2px] bg-[var(--accent-primary)]
+                            w-24
+                            ${isEven ? '-right-24 origin-left' : '-left-24 origin-right'}
                         `}
                     />
 
                     {/* Year Label */}
-                    <div className={`
-                        text-3xl md:text-5xl font-light text-[var(--accent-primary)] opacity-90 mb-2 font-display ${styles['big-year']}
+                    <motion.div
+                        initial={{ opacity: 0.5, x: isEven ? -20 : 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ margin: "-40% 0px -40% 0px" }}
+                        transition={{ duration: 0.5 }}
+                        className={`
+                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight
                         ${isEven ? 'md:origin-right' : 'md:origin-left'}
                     `}>
                         {item.year}
-                    </div>
+                    </motion.div>
 
                     <div className="p-0 bg-transparent flex flex-col md:block">
                         {/* Image - Museum Frame style */}
                         {item.image && (
-                            <div className={`mb-6 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
+                            <div className={`mb-8 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
                                 <div className={styles['museum-frame']}>
                                     <Image
                                         src={item.image}
                                         alt={item.title}
-                                        width={400}
-                                        height={300}
+                                        width={500}
+                                        height={375}
                                         sizes="(max-width: 768px) 100vw, 400px"
-                                        className="max-w-full h-auto object-cover max-h-[200px] md:max-h-[240px]"
+                                        className="max-w-full h-auto object-cover max-h-[250px] md:max-h-[300px]"
                                     />
                                 </div>
                             </div>
                         )}
 
-                        <h3 className="text-xl font-bold text-[var(--timeline-text)] mb-2 group-hover:text-[var(--accent-primary)] transition-colors">
+                        <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
                             {item.title}
                         </h3>
                         {item.subtitle && (
-                            <h4 className="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 border-none p-0">
+                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 inline-block border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
                                 {item.subtitle}
                             </h4>
                         )}
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
+                        <p className="text-gray-600 dark:text-gray-400 leading-loose text-base md:text-lg max-w-prose">
                             {item.content}
                         </p>
 
                         {item.detail && (
-                            <div className={`mt-4 text-sm font-medium text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1
+                            <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 group-hover:opacity-100 transition-opacity flex items-center gap-2
                                 ${isEven ? 'md:justify-end' : 'md:justify-start'}
                             `}>
-                                閱讀更多 <span className="text-lg">→</span>
+                                VIEW DETAILS <span className="text-xl transform group-hover:translate-x-1 transition-transform">→</span>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
+
+const TimelineBlock = (props: TimelineBlockProps) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
+
+    return <TimelineContent {...props} />;
+};
 
 export default TimelineBlock;
 

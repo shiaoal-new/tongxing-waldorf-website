@@ -31,28 +31,14 @@
     z-index: 0;
 }
 
-/* Phase Header */
-.phase-header {
-    /* Uses inline Tailwind for layout, this adds specific visuals if needed */
-    transition: all 0.3s ease;
-}
 
-.phase-header:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
 
-/* Phase Section - Context for sticky background */
-/* Phase Section - Context for sticky background */
 /* Phase Section - Clipping container */
 .phase-section {
     position: relative;
     padding: 0;
     margin: 0;
-    /* This is the magic: clips the fixed child to this container's bounds */
-    clip-path: inset(0);
-    /* Create stacking context */
-    z-index: 1;
+    /* Removed clip-path and z-index to allow separate stacking contexts for bg and content */
 }
 
 /* Fixed background layer */
