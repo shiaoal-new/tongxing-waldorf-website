@@ -174,8 +174,13 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                 {/* Phase Header */}
                 {phase.header && (
                     <div className="relative z-10 flex justify-center w-full my-8">
-                        <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-3 `}>
-                            <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0">{phase.header.title}</h2>
+                        <div className={`${styles['phase-header']} bg-white dark:bg-gray-900 px-8 py-4 flex flex-col items-center shadow-sm`}>
+                            <h2 className="text-xl md:text-2xl font-bold text-[var(--timeline-text)] m-0 text-center">{phase.header.title}</h2>
+                            {phase.header.content && (
+                                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mt-2 font-normal text-center max-w-2xl">
+                                    {phase.header.content}
+                                </p>
+                            )}
                         </div>
                     </div>
                 )}
