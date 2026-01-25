@@ -14,6 +14,9 @@ try {
 }
 
 module.exports = {
+  turbopack: {
+    root: __dirname,
+  },
   env: {
     NEXT_PUBLIC_GIT_BRANCH: gitBranch,
     NEXT_PUBLIC_GIT_COMMIT_MSG: gitCommitMsg,

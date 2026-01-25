@@ -17,7 +17,7 @@
   "description": "Nextly Landing Page Template",
   "private": true,
   "scripts": {
-    "dev": "npm run restore-full-font && next dev",
+    "dev": "npm run restore-full-font && next dev --webpack",
     "restore-full-font": "cp public/fonts/ChenYuluoyan-2.0-Thin.full.woff2 public/fonts/ChenYuluoyan-2.0-Thin.woff2",
     "build": "npm run restore-full-font && NEXT_OUTPUT=export next build && node scripts/subset-font.js",
     "deploy": "npm run build && firebase deploy",
