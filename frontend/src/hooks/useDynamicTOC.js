@@ -27,6 +27,7 @@ export function useDynamicTOC(page, extraData = {}) {
         let isMounted = true;
 
         const fetchDynamicTOCs = async () => {
+            if (!page) return;
             const sections = page.sections || [];
             let updates = new Map(); // 使用 Map 暫存要插入的項目: sectionId -> items[]
 
@@ -111,6 +112,7 @@ export function useDynamicTOC(page, extraData = {}) {
  * 這個函式會在頁面首次載入和頁面切換時被呼叫
  */
 function generateInitialTOC(page) {
+    if (!page) return [];
     const sections = page.sections || [];
     const initialToc = [];
 
