@@ -259,7 +259,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             <div className="max-w-7xl mx-auto relative">
                 {/* Central Line with Time Ruler Effect (Static) */}
                 <div
-                    className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[1px] ${styles['timeline-axis']}`}
+                    className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[5px] ${styles['timeline-axis']}`}
                     style={{
                         background: `repeating-linear-gradient(to bottom, 
                             var(--timeline-text) 0px, 
@@ -267,7 +267,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                             transparent 4px, 
                             transparent 8px
                         )`,
-                        opacity: 0.2
+                        opacity: .3
                     }}
                 />
 
@@ -286,7 +286,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Time Arrow Tip */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 z-[50] md:z-[2] pointer-events-none w-[6px]"
+                    className="absolute left-4 md:left-1/2 z-[2] pointer-events-none w-[6px]"
                     style={{
                         x: "-50%",
                         top: useTransform(scaleY, (v) => `${v * 100}%`),
@@ -300,10 +300,10 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                             style={{
                                 width: 0,
                                 height: 0,
-                                borderLeft: '7px solid transparent',
-                                borderRight: '7px solid transparent',
+                                borderLeft: '50px solid transparent',
+                                borderRight: '50px solid transparent',
                                 borderTopColor: activeColor, // Dynamic color
-                                borderTopWidth: '14px',
+                                borderTopWidth: '100px',
                                 borderTopStyle: 'solid',
                                 transform: 'translateY(-1px)'
                             }}
@@ -312,11 +312,11 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         {/* Progress Percentage */}
                         <motion.span
                             ref={progressRef}
-                            className="absolute top-4 left-1/2 md:-translate-x-1/2 text-[10px] font-bold bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border whitespace-nowrap tabular-nums z-20 pointer-events-auto"
+                            className="absolute left-0 -rotate-90 -translate-x-1/2 text-[16px] font-bold whitespace-nowrap tabular-nums pointer-events-auto text-white z-10"
                             style={{
-                                color: activeColor,
-                                borderColor: activeColor, // Solid border for Hex compatibility
-                                boxShadow: useTransform(activeColor, c => `0 0 5px ${c}`) // Add glow instead of transparency
+                                // color: activeColor,
+                                // borderColor: activeColor, // Solid border for Hex compatibility
+                                // boxShadow: useTransform(activeColor, c => `0 0 5px ${c}`) // Add glow instead of transparency
                             }}
                         >
                             {data.items.find(i => i.year)?.year || "Start"}
