@@ -1,0 +1,90 @@
+title: 支持與捐贈 | 同心華德福
+slug: donation
+hero:
+  title: 支持同心教育的火種
+  subtitle: 讓這份溫暖，點亮更多孩子的生命
+  accent_text: "支持與捐贈"
+  content: 同心華德福致力於提供高品質的華德福教育。您的每一份支持，都將轉化為孩子手上的木工、筆下的色彩，以及面對未來時更穩定的步伐。我們邀請您成為教育的園丁，一同守護這片成長的田野。
+  media_list:
+    - type: image
+      image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+  divider:
+    type: wave
+    position: bottom
+    color: fill-brand-bg
+sections:
+  - section_id: mission
+    layout: "突出標題風格"
+    blocks:
+      - type: text_block
+        title: 為什麼我們需要您的支持？
+        content: 同心華德福是一所由家長、老師共同支撐的教育社群。我們追求的不只是學術的成長，更是孩子內在靈魂的健全。您的捐助，將支撐以下核心發展：
+      - type: list_block
+        layout_method: grid_cards
+        item_type: benefit_item
+        items:
+          - title: 助學金計畫
+            icon: lucide:users
+            content: 確保具備相同教育理念、但經濟面臨挑戰的家庭，其孩子也能在此安心學習，維持社群的多樣性。
+            media:
+              type: image
+              image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
+          - title: 校園設施優化
+            icon: lucide:home
+            content: 持續優化深坑大學校區的實驗室、木工教室與濕水彩教室，提供孩子更專業且符合感官發展的環境。
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
+          - title: 師資培訓與學術交流
+            icon: lucide:book-open
+            content: 引進國內外資深專家顧問，支持老師持續進修培訓，維持教育品質與國際華德福動態接軌。
+            media:
+              type: image
+              image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
+
+  - section_id: how-to
+    layout: "精緻特色區塊 (Features Premium)"
+    blocks:
+      - type: text_block
+        title: 捐款方式
+        subtitle: Ways to Donate
+        content: 您可以透過以下方式支持同心的教育計畫。每一筆捐款，我們都將開立正式收據。
+      - type: list_block
+        layout_method: bento_grid
+        item_type: benefit_item
+        items:
+          - title: 銀行轉帳
+            span: 6
+            content: |
+              您可以直接匯款至以下帳戶：
+
+              **銀行代碼**：[008] 華南銀行
+              **帳號**：[請填寫正確帳號]
+              **戶名**：[台北市同心華德福教育協會]
+
+              匯款後請填寫「捐款回報表單」或來信聯絡行政辦公室。
+            icon: lucide:credit-card
+          - title: 專案贊助
+            span: 6
+            content: 如果您對校園建設、藝術教育或特定專案有興趣進行較大額度的單筆贊助，歡迎直接與執行長室聯絡，我們將由專人為您說明。
+            icon: lucide:hand-metal
+
+  - section_id: contact
+    layout: 紫色大型看板 (CTA)
+    divider:
+      type: curve
+      position: top
+      color: fill-brand-bg
+      flip: true
+    blocks:
+      - type: text_block
+        title: 與我們聯繫
+        content: 對於捐款細節、抵稅方式或資源媒合有任何想法，歡迎隨時與行政辦公室聯繫。
+        buttons:
+          - text: 寄信給我們
+            link: "mailto:office@tongxing.org.tw"
+            style: btn-inverse
+          - text: 填寫捐款意願表單
+            link: "#"
+            style: btn-white

@@ -14,6 +14,9 @@ items:
   - title: "招生入學"
     children:
       - slug: "visit"
+  - title: "支持我們"
+    children:
+      - slug: "donation"
 
   - title: "開發者"
     debugOnly: true
