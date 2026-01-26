@@ -26,7 +26,7 @@ sections:
         content: 面對教育的百家爭鳴，同心不只是搬家，更是區域教育的升級帶動者。在優質的大學校區校舍中，我們點燃這把人文教育的火種，提供從 1 到 9 年級最穩定的成長支持。
       - type: list_block
         layout_method: bento_grid
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 在大人的大學裡，長出孩子的中小學
             span: 4
@@ -62,7 +62,7 @@ sections:
         content: 說真的，在現代城市裡養小孩，有時候覺得自己像在玩一場「荒野求生」。一旦工作加班、保母請假或小孩感冒，生活秩序瞬間就像骨牌一樣全倒。我們深知那種孤立無援的焦慮，所以「同心」不只是一間學校，它更像是一個找回失傳已久的「村落感」的地方。
       - type: list_block
         layout_method: bento_grid
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 老師懂孩子，也懂你的不容易
             span: 4

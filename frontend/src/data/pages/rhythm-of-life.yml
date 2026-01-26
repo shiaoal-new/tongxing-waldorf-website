@@ -98,7 +98,7 @@ sections:
         content: 在同心，每週的律動不僅是時間表，更是孩子身心發展的支撐體系。透過這四個核心維度，我們確保學生的學習在「向內凝聚」與「向外放鬆」間達成完美的呼吸平衡。
       - type: list_block
         layout_method: grid_cards
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 主課程：世界之窗與呼吸
             subtitle: Main Lesson
@@ -138,7 +138,7 @@ sections:
         content: 「年律動」是透過四季慶典與二十四節氣的交替，引導孩子與宇宙大自然的運行節奏接軌。慶典並非單日的活動，而是一段持續醞釀的心靈過程，幫助孩子意識到世界的節奏，從中獲得安定的力量。
       - type: list_block
         layout_method: grid_cards
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 春季：感謝與分享的種子
             subtitle: Spring Festival

@@ -36,7 +36,7 @@
     }
 
     /* Bento 優選卡片 - 高階玻璃擬態 */
-    .benefit-card {
+    .feature-card {
         @apply relative flex flex-col h-full overflow-hidden bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-[2.5rem] border border-white/20 dark:border-white/5 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-700 ease-out cursor-pointer;
     }
 

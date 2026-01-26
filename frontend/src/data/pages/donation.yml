@@ -22,7 +22,7 @@ sections:
         content: 同心華德福是一所由家長、老師共同支撐的教育社群。我們追求的不只是學術的成長，更是孩子內在靈魂的健全。您的捐助，將支撐以下核心發展：
       - type: list_block
         layout_method: grid_cards
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 助學金計畫
             icon: lucide:users
@@ -52,7 +52,7 @@ sections:
         content: 您可以透過以下方式支持同心的教育計畫。每一筆捐款，我們都將開立正式收據。
       - type: list_block
         layout_method: bento_grid
-        item_type: benefit_item
+        item_type: feature_item
         items:
           - title: 銀行轉帳
             span: 6

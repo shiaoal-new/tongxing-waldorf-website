@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import React from "react";
-import BenefitItem from "./Benefit";
+import FeatureItem from "./FeatureItem";
 import VideoItem from "../Video";
 import TextBlock from "./TextBlock";
 import Card from "./Card";
 import ListBlock from "./ListBlock";
 import MemberBlock from "./MemberBlock";
 import TestimonialItem from "./TestimonialItem";
-import { Block, ListItem, TextBlock as TextBlockType, BenefitItem as BenefitItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType } from "../../types/content";
+import { Block, ListItem, TextBlock as TextBlockType, FeatureItem as FeatureItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType } from "../../types/content";
 
 /**
  * Loading Fallback Component
@@ -72,19 +72,21 @@ export default function BlockDispatcher({ block, align = "center", context = "st
         case "faq":
             return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} />;
 
+        case "feature_item":
+        case "feature":
         case "benefit_item":
         case "benefit":
-            const benefit = block as BenefitItemType;
+            const feature = block as FeatureItemType;
             return (
-                <BenefitItem
-                    title={benefit.title}
-                    icon={benefit.icon || "lucide:star"}
-                    buttons={benefit.buttons as any}
-                    media={benefit.media}
-                    span={benefit.span}
+                <FeatureItem
+                    title={feature.title}
+                    icon={feature.icon || "lucide:star"}
+                    buttons={feature.buttons as any}
+                    media={feature.media}
+                    span={feature.span}
                 >
-                    {benefit.content}
-                </BenefitItem>
+                    {feature.content}
+                </FeatureItem>
             );
 
         case "video_item":

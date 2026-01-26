@@ -6,7 +6,7 @@ import MediaRenderer from "../ui/MediaRenderer";
 import ExpandableText from "../ui/ExpandableText";
 import { MediaItem, CTAButton } from "../../types/content";
 
-interface BenefitItemProps {
+interface FeatureItemProps {
   span?: number;
   media?: MediaItem;
   title: string;
@@ -15,11 +15,11 @@ interface BenefitItemProps {
   buttons?: CTAButton[];
 }
 
-export default function BenefitItem({ span, media, title, children, icon, buttons }: BenefitItemProps) {
+export default function FeatureItem({ span, media, title, children, icon, buttons }: FeatureItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Bento-style card classes
-  const cardClasses = "benefit-card group";
+  const cardClasses = "feature-card group";
 
   const handleCardClick = () => {
     setIsExpanded(!isExpanded);
@@ -52,7 +52,7 @@ export default function BenefitItem({ span, media, title, children, icon, button
       )}
 
       <div className={`relative z-20 flex flex-col px-8 pt-8 pb-2 md:px-12 md:pt-12 md:pb-4 ${media ? '-mt-20 md:-mt-24' : ''}`}>
-        <div className="benefit-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-16 h-16 rounded-full text-brand-accent group-hover:scale-110 group-hover:text-white transition-all duration-700 ease-out">
+        <div className="feature-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-16 h-16 rounded-full text-brand-accent group-hover:scale-110 group-hover:text-white transition-all duration-700 ease-out">
           <Icon icon={icon} className="w-8 h-8" />
         </div>
 

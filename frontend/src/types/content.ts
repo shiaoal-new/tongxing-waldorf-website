@@ -52,7 +52,7 @@ export interface MediaItem {
     alt?: string;
 }
 
-export interface BenefitItem {
+export interface FeatureItem {
     title: string;
     subtitle?: string;
     icon?: string;
@@ -70,12 +70,12 @@ export interface VideoItem {
     duration?: string;
 }
 
-export type ListItem = FaqItem | BenefitItem | VideoItem;
+export type ListItem = FaqItem | FeatureItem | VideoItem;
 
 export interface ListBlock extends BaseBlock {
     type: 'list_block';
     layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'scrollable_grid';
-    item_type: 'faq_item' | 'benefit_item' | 'video_item';
+    item_type: 'faq_item' | 'feature_item' | 'video_item';
     items?: ListItem[];
     faq_ids?: string[];
     title?: string;

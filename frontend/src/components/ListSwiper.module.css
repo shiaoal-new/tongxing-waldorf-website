@@ -36,8 +36,8 @@
     flex-direction: column;
 }
 
-/* Ensure benefit items have padding inside the card */
-.list-swiper-slide :global(.benefit-container) {
+/* Ensure feature items have padding inside the card */
+.list-swiper-slide :global(.feature-container) {
     padding: 24px;
     margin-top: 0 !important;
     height: 100%;

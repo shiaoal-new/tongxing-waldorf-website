@@ -67,11 +67,11 @@
             opacity: 0.4;
         }
 
-        & .benefits-media-img {
+        & .features-media-img {
             mix-blend-mode: multiply;
         }
 
-        & .benefit-container {
+        & .feature-container {
             position: relative;
             /* z-index: 2; */
             padding: 1rem;
@@ -104,11 +104,11 @@
             }
         }
 
-        & .benefit-icon-container {
+        & .feature-icon-container {
             position: relative;
         }
 
-        & .benefit-icon-container::before {
+        & .feature-icon-container::before {
             content: "";
             background-color: rgb(var(--color-brand-accent));
             background-size: 100% 100%;
