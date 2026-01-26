@@ -16,10 +16,11 @@ sections:
       - type: text_block
         title: 核心教育目標：三元力量的平衡
       - type: list_block
-        layout_method: grid_cards
+        layout_method: bento_grid
         item_type: feature_item
         items:
           - title: 意志 (Will) - 手的做為
+            span: 4
             color: "#7e22ce"
             icon: lucide:hand
             content: 第一階段 (0-7歲) 動手做、親身試，培養「說到做到」的堅毅。
@@ -27,6 +28,7 @@ sections:
               type: lottie
               lottie: /lottie/SculptingArt.lottie
           - title: 情感 (Feeling) - 心的感受
+            span: 4
             color: "#fb7185"
             icon: lucide:heart
             content: 第二階段 (7-14歲) 透過藝術、音樂、節慶，滋養對世界的感受力。
@@ -34,12 +36,22 @@ sections:
               type: lottie
               lottie: /lottie/Painting.lottie
           - title: 思考 (Thinking) - 頭的清晰
+            span: 4
             color: "#38bdf8"
             icon: lucide:brain
             content: 第三階段 (14-21歲) 從經驗中長出智慧，培養獨立判斷的能力。
             media:
               type: lottie
               lottie: /lottie/Thinking.lottie
+          - title: 情感的滋養：追求平衡的藝術
+            span: 12
+            color: "#f59e0b"
+            icon: lucide:scale
+            media:
+              type: image
+              image: /img/curriculum-development/balance.jpg
+            content: 如果只有思考會變得冷酷乾枯，只有意志會變得盲目衝動，唯有透過「情感」的滋養，才能讓兩者平衡。
+
   - section_id: curriculum-main
     blocks:
       - type: curriculum_block
