@@ -162,6 +162,7 @@ export interface TimelineItem {
     icon?: string;
     image?: string;
     background_image?: string;
+    color?: string;
 }
 
 export interface TimelineBlock extends BaseBlock {

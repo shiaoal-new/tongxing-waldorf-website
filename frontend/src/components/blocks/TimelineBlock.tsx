@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
 import Modal from '../ui/Modal';
@@ -36,10 +36,43 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
     const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
+    const [colorMap, setColorMap] = useState<{ inputs: number[], outputs: string[] }>({
+        inputs: [0, 1],
+        outputs: ["var(--accent-primary)", "var(--accent-primary)"]
+    });
 
     // Scroll progress for the timeline line
     const containerRef = useRef<HTMLDivElement>(null);
     const progressRef = useRef<HTMLSpanElement>(null);
+
+    // Group items by phase (headers define phase boundaries)
+    const phases = useMemo(() => {
+        const rawItems = data.items || [];
+        const result: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] }[] = [];
+        let currentPhase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] } | null = null;
+        let phaseCounter = 0;
+
+        rawItems.forEach((item) => {
+            if (item.type === 'header') {
+                if (currentPhase) {
+                    result.push(currentPhase);
+                }
+                phaseCounter++;
+                currentPhase = {
+                    phaseNumber: phaseCounter,
+                    header: item,
+                    items: []
+                };
+            } else if (currentPhase) {
+                currentPhase.items.push(item);
+            }
+        });
+
+        if (currentPhase) {
+            result.push(currentPhase);
+        }
+        return result;
+    }, [data.items]);
 
     // Smooth out the progress - made snappier to catch up with scroll
     const { scrollYProgress } = useScroll({
@@ -53,44 +86,106 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         restDelta: 0.001
     });
 
+    const activeColor = useTransform(scaleY, colorMap.inputs, colorMap.outputs);
+
     // Update positions on mount and resize
     useEffect(() => {
         const updatePositions = () => {
             if (!containerRef.current) return;
             const container = containerRef.current;
             const containerRect = container.getBoundingClientRect();
-            const elements = container.querySelectorAll('[data-timeline-year]');
 
+            // 1. Calculate Year Text Update Positions
+            const yearElements = container.querySelectorAll('[data-timeline-year]');
             const positions: { time: number, position: number }[] = [];
 
-            elements.forEach((el) => {
+            yearElements.forEach((el) => {
                 const yearStr = el.getAttribute('data-timeline-year');
                 if (yearStr) {
                     const time = parseYearStr(yearStr);
                     if (time > 0) {
                         const rect = el.getBoundingClientRect();
-                        // Calculate relative center position in container 0-1
-                        // We assume the "dot" is roughly at the top + 20px (from CSS).
-                        // Let's use the element top relative to container
                         const relativeTop = rect.top - containerRect.top;
-                        const dotOffset = 20; // approximate dot offset
+                        const dotOffset = 20;
                         const position = (relativeTop + dotOffset) / containerRect.height;
-
                         positions.push({ time, position });
                     }
                 }
             });
-
-            // Sort by position just in case
             positions.sort((a, b) => a.position - b.position);
             setItemPositions(positions);
+
+            // 2. Calculate Color Phase Positions
+            // We want to change color as soon as we enter a new phase area
+            // Find inputs/outputs for color transform
+            const inputs: number[] = [];
+            const outputs: string[] = [];
+
+            // Default color if no phases
+            const defaultColor = "var(--accent-primary)";
+
+            // Loop through phases to find their DOM elements
+            // We added id or data attribute to phase sections?
+            // The PhaseSection component renders a div with data-phase
+            const phaseElements = container.querySelectorAll('[data-phase-index]');
+
+            if (phaseElements.length > 0) {
+                phaseElements.forEach((el) => {
+                    const idxStr = el.getAttribute('data-phase-index');
+                    if (idxStr === null) return;
+                    const idx = parseInt(idxStr, 10);
+                    const phase = phases[idx];
+                    const color = phase.header?.color || defaultColor;
+
+                    const rect = el.getBoundingClientRect();
+                    const relativeTop = rect.top - containerRect.top;
+                    const relativeBottom = rect.bottom - containerRect.top;
+
+                    const startPos = Math.max(0, relativeTop / containerRect.height);
+                    const endPos = Math.min(1, relativeBottom / containerRect.height);
+
+                    // Add color stop at start of phase
+                    inputs.push(startPos);
+                    outputs.push(color);
+
+                    // Add color stop at end of phase (to sustain color until next one starts?)
+                    // Simplified: just point-to-point interpolation. 
+                    // If we want hard cuts or smooth gradients, linear interpolation is fine.
+                });
+
+                // Ensure we cover 0 and 1
+                if (inputs.length > 0) {
+                    if (inputs[0] > 0) {
+                        inputs.unshift(0);
+                        outputs.unshift(outputs[0]);
+                    }
+                    const lastIdx = inputs.length - 1;
+                    if (inputs[lastIdx] < 1) {
+                        inputs.push(1);
+                        outputs.push(outputs[lastIdx]);
+                    }
+                }
+
+                // Remove duplicates (rare but possible with exact pixel match)
+                // and ensure strictly increasing inputs for framer-motion
+                const uniqueInputs: number[] = [];
+                const uniqueOutputs: string[] = [];
+
+                inputs.forEach((inp, i) => {
+                    if (uniqueInputs.length === 0 || inp > uniqueInputs[uniqueInputs.length - 1] + 0.001) {
+                        uniqueInputs.push(inp);
+                        uniqueOutputs.push(outputs[i]);
+                    }
+                });
+
+                if (uniqueInputs.length >= 2) {
+                    setColorMap({ inputs: uniqueInputs, outputs: uniqueOutputs });
+                }
+            }
         };
 
         // Initial update
-        // We need a slight delay or useLayoutEffect, but useEffect is fine for now
-        // A timeout ensures layout is stable
-        const timer = setTimeout(updatePositions, 100);
-
+        const timer = setTimeout(updatePositions, 500);
         const resizeObserver = new ResizeObserver(updatePositions);
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
@@ -103,7 +198,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             resizeObserver.disconnect();
             window.removeEventListener('resize', updatePositions);
         };
-    }, [data]);
+    }, [phases]); // Depend on phases structure
 
     useMotionValueEvent(scaleY, "change", (latest) => {
         if (progressRef.current && itemPositions.length > 0) {
@@ -114,13 +209,11 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             } else if (latest >= itemPositions[itemPositions.length - 1].position) {
                 text = formatDate(itemPositions[itemPositions.length - 1].time);
             } else {
-                // Interpolate
                 for (let i = 0; i < itemPositions.length - 1; i++) {
                     const curr = itemPositions[i];
                     const next = itemPositions[i + 1];
                     if (latest >= curr.position && latest <= next.position) {
                         const range = next.position - curr.position;
-                        // Avoid division by zero
                         if (range < 0.001) {
                             text = formatDate(curr.time);
                         } else {
@@ -136,13 +229,10 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
             if (text) progressRef.current.innerText = text;
         } else if (progressRef.current) {
-            // Fallback if no positions calculated yet
             const firstYear = data.items.find(i => i.year)?.year;
             if (firstYear) progressRef.current.innerText = formatDate(parseYearStr(firstYear));
         }
     });
-
-    const rawItems = data.items || [];
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -151,34 +241,6 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         window.addEventListener('keydown', handleEsc);
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
-
-    // Group items by phase (headers define phase boundaries)
-    const phases: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] }[] = [];
-    let currentPhase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] } | null = null;
-    let phaseCounter = 0;
-
-    rawItems.forEach((item) => {
-        if (item.type === 'header') {
-            // Start a new phase
-            if (currentPhase) {
-                phases.push(currentPhase);
-            }
-            phaseCounter++;
-            currentPhase = {
-                phaseNumber: phaseCounter,
-                header: item,
-                items: []
-            };
-        } else if (currentPhase) {
-            // Add item to current phase
-            currentPhase.items.push(item);
-        }
-    });
-
-    // Push the last phase
-    if (currentPhase) {
-        phases.push(currentPhase);
-    }
 
     return (
         <div ref={containerRef} className={`w-full ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
@@ -197,16 +259,16 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     }}
                 />
 
-
-
                 {/* Active Gradient Line */}
                 <motion.div
                     className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[60px] origin-top z-[2]"
                     style={{
                         x: "-50%",
                         scaleY,
-                        background: "linear-gradient(to bottom, transparent 0%, var(--accent-primary) 30%, var(--accent-primary) 100%)",
-                        boxShadow: "5px 5px 20px rgba(242, 161, 84, 1)"
+                        // Animate background color via activeColor
+                        // We use a linear gradient where the color comes from activeColor
+                        backgroundImage: useTransform(activeColor, (c) => `linear-gradient(to bottom, transparent 0%, ${c} 30%, ${c} 100%)`),
+                        boxShadow: useTransform(activeColor, (c) => `5px 5px 20px ${c}`), // Optional glow effect matching color
                     }}
                 />
 
@@ -216,30 +278,37 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     style={{
                         x: "-50%",
                         top: useTransform(scaleY, (v) => `${v * 100}%`),
-                        marginTop: "-2px" // Fine tune to overlap end of line
+                        marginTop: "-2px"
                     }}
                 >
                     <div className="relative flex flex-col items-center">
                         {/* CSS Border Arrow Head */}
-                        <div
-                            className="z-10 filter drop-shadow-[0_4px_8px_rgba(242,161,84,0.4)]"
+                        <motion.div
+                            className="z-10 filter drop-shadow-sm"
                             style={{
                                 width: 0,
                                 height: 0,
                                 borderLeft: '7px solid transparent',
                                 borderRight: '7px solid transparent',
-                                borderTop: '14px solid var(--accent-primary)',
-                                transform: 'translateY(-1px)' // Tiny overlap to ensure seamless connection
+                                borderTopColor: activeColor, // Dynamic color
+                                borderTopWidth: '14px',
+                                borderTopStyle: 'solid',
+                                transform: 'translateY(-1px)'
                             }}
                         />
 
                         {/* Progress Percentage */}
-                        <span
+                        <motion.span
                             ref={progressRef}
-                            className="absolute top-4 left-1/2 md:-translate-x-1/2 text-[10px] font-bold text-[var(--accent-primary)] bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border border-[var(--accent-primary)]/20 whitespace-nowrap tabular-nums z-20 pointer-events-auto"
+                            className="absolute top-4 left-1/2 md:-translate-x-1/2 text-[10px] font-bold bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border whitespace-nowrap tabular-nums z-20 pointer-events-auto"
+                            style={{
+                                color: activeColor,
+                                borderColor: activeColor, // Solid border for Hex compatibility
+                                boxShadow: useTransform(activeColor, c => `0 0 5px ${c}`) // Add glow instead of transparency
+                            }}
                         >
                             {data.items.find(i => i.year)?.year || "Start"}
-                        </span>
+                        </motion.span>
                     </div>
                 </motion.div>
 
@@ -328,10 +397,17 @@ interface PhaseSectionProps {
 }
 
 const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectionProps) => {
+    // If header provides a color, use it as accent-primary for this section
+    const sectionStyle = phase.header?.color
+        ? ({ '--accent-primary': phase.header.color } as React.CSSProperties)
+        : undefined;
+
     return (
         <div
             className={styles['phase-section']}
             data-phase={phase.phaseNumber}
+            data-phase-index={phaseIndex} // For position calculation
+            style={sectionStyle}
         >
             {/* Background Layer with Clipping - z-index 0 to sit behind central line (z-2) */}
             <div className="absolute inset-0 z-0" style={{ clipPath: 'inset(0)' }}>
@@ -384,7 +460,6 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
                     </div>
                 )}
 
-                {/* Phase Intro Content - Narrative Card */}
                 {/* Phase Intro Content - Narrative Card */}
                 {phase.header?.content && (
                     <motion.div
@@ -451,6 +526,10 @@ interface TimelineEntryProps {
 const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEntryProps) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+    // We can also optionally apply specific event color if item has color override
+    // But requirement says "event text in the phase should follow the change" which implies Phase color.
+    // Which is already handled by CSS variable inheritance from PhaseSection.
 
     return (
         <motion.div
