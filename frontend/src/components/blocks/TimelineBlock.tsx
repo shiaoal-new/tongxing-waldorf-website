@@ -139,18 +139,30 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                     const rect = el.getBoundingClientRect();
                     const relativeTop = rect.top - containerRect.top;
-                    const relativeBottom = rect.bottom - containerRect.top;
 
                     const startPos = Math.max(0, relativeTop / containerRect.height);
-                    const endPos = Math.min(1, relativeBottom / containerRect.height);
+
+                    // Hold previous color until shortly before this new phase starts
+                    // This creates a transition zone rather than a continuous blend from previous start
+                    if (inputs.length > 0) {
+                        const prevStart = inputs[inputs.length - 1];
+                        const prevColor = outputs[outputs.length - 1];
+
+                        // Transition starts X pixels before the new section
+                        const transitionPixels = 300;
+                        const transitionRatio = transitionPixels / containerRect.height;
+                        const holdPoint = startPos - transitionRatio;
+
+                        // Only add hold point if it's after the previous start point
+                        if (holdPoint > prevStart + 0.001) {
+                            inputs.push(holdPoint);
+                            outputs.push(prevColor);
+                        }
+                    }
 
                     // Add color stop at start of phase
                     inputs.push(startPos);
                     outputs.push(color);
-
-                    // Add color stop at end of phase (to sustain color until next one starts?)
-                    // Simplified: just point-to-point interpolation. 
-                    // If we want hard cuts or smooth gradients, linear interpolation is fine.
                 });
 
                 // Ensure we cover 0 and 1
