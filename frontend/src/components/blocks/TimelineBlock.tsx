@@ -13,9 +13,29 @@ interface TimelineBlockProps {
     anchor?: string;
 }
 
+// Helper to parse date strings (e.g., "2012", "2012.10", "2013.05.26")
+const parseYearStr = (str: string) => {
+    if (!str) return 0;
+    const parts = str.split('.').map(p => parseInt(p, 10));
+    if (parts.length === 1 && !isNaN(parts[0])) return new Date(parts[0], 0, 1).getTime();
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) return new Date(parts[0], parts[1] - 1, 1).getTime();
+    if (parts.length >= 3 && !isNaN(parts[0])) return new Date(parts[0], parts[1] - 1, parts[2]).getTime();
+    return 0;
+};
+
+// Helper to format timestamp back to "YYYY.MM"
+const formatDate = (timestamp: number) => {
+    const d = new Date(timestamp);
+    if (isNaN(d.getTime())) return "";
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    return `${year}.${month < 10 ? '0' + month : month}`;
+};
+
 const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
+    const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
 
     // Scroll progress for the timeline line
     const containerRef = useRef<HTMLDivElement>(null);
@@ -33,9 +53,92 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         restDelta: 0.001
     });
 
+    // Update positions on mount and resize
+    useEffect(() => {
+        const updatePositions = () => {
+            if (!containerRef.current) return;
+            const container = containerRef.current;
+            const containerRect = container.getBoundingClientRect();
+            const elements = container.querySelectorAll('[data-timeline-year]');
+
+            const positions: { time: number, position: number }[] = [];
+
+            elements.forEach((el) => {
+                const yearStr = el.getAttribute('data-timeline-year');
+                if (yearStr) {
+                    const time = parseYearStr(yearStr);
+                    if (time > 0) {
+                        const rect = el.getBoundingClientRect();
+                        // Calculate relative center position in container 0-1
+                        // We assume the "dot" is roughly at the top + 20px (from CSS).
+                        // Let's use the element top relative to container
+                        const relativeTop = rect.top - containerRect.top;
+                        const dotOffset = 20; // approximate dot offset
+                        const position = (relativeTop + dotOffset) / containerRect.height;
+
+                        positions.push({ time, position });
+                    }
+                }
+            });
+
+            // Sort by position just in case
+            positions.sort((a, b) => a.position - b.position);
+            setItemPositions(positions);
+        };
+
+        // Initial update
+        // We need a slight delay or useLayoutEffect, but useEffect is fine for now
+        // A timeout ensures layout is stable
+        const timer = setTimeout(updatePositions, 100);
+
+        const resizeObserver = new ResizeObserver(updatePositions);
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+        window.addEventListener('resize', updatePositions);
+
+        return () => {
+            clearTimeout(timer);
+            resizeObserver.disconnect();
+            window.removeEventListener('resize', updatePositions);
+        };
+    }, [data]);
+
     useMotionValueEvent(scaleY, "change", (latest) => {
-        if (progressRef.current) {
-            progressRef.current.innerText = `${Math.round(latest * 100)}%`;
+        if (progressRef.current && itemPositions.length > 0) {
+            let text = "";
+
+            if (latest <= itemPositions[0].position) {
+                text = formatDate(itemPositions[0].time);
+            } else if (latest >= itemPositions[itemPositions.length - 1].position) {
+                text = formatDate(itemPositions[itemPositions.length - 1].time);
+            } else {
+                // Interpolate
+                for (let i = 0; i < itemPositions.length - 1; i++) {
+                    const curr = itemPositions[i];
+                    const next = itemPositions[i + 1];
+                    if (latest >= curr.position && latest <= next.position) {
+                        const range = next.position - curr.position;
+                        // Avoid division by zero
+                        if (range < 0.001) {
+                            text = formatDate(curr.time);
+                        } else {
+                            const timeRange = next.time - curr.time;
+                            const progress = (latest - curr.position) / range;
+                            const interpolatedTime = curr.time + (timeRange * progress);
+                            text = formatDate(interpolatedTime);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (text) progressRef.current.innerText = text;
+        } else if (progressRef.current) {
+            // Fallback if no positions calculated yet
+            const firstYear = data.items.find(i => i.year)?.year;
+            if (firstYear) progressRef.current.innerText = formatDate(parseYearStr(firstYear));
         }
     });
 
@@ -135,7 +238,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                             ref={progressRef}
                             className="absolute top-4 text-[10px] font-bold text-[var(--accent-primary)] bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border border-[var(--accent-primary)]/20 whitespace-nowrap tabular-nums z-20 pointer-events-auto"
                         >
-                            0%
+                            {data.items.find(i => i.year)?.year || "Start"}
                         </span>
                     </div>
                 </motion.div>
@@ -352,6 +455,7 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
     return (
         <motion.div
             ref={ref}
+            data-timeline-year={item.year}
             initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, margin: "-50px" }}
