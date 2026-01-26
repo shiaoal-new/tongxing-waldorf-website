@@ -236,7 +236,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         {/* Progress Percentage */}
                         <span
                             ref={progressRef}
-                            className="absolute top-4 text-[10px] font-bold text-[var(--accent-primary)] bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border border-[var(--accent-primary)]/20 whitespace-nowrap tabular-nums z-20 pointer-events-auto"
+                            className="absolute top-4 left-1/2 md:-translate-x-1/2 text-[10px] font-bold text-[var(--accent-primary)] bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border border-[var(--accent-primary)]/20 whitespace-nowrap tabular-nums z-20 pointer-events-auto"
                         >
                             {data.items.find(i => i.year)?.year || "Start"}
                         </span>
@@ -536,7 +536,7 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                             {item.title}
                         </h3>
                         {item.subtitle && (
-                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 inline-block border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
+                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
                                 {item.subtitle}
                             </h4>
                         )}
