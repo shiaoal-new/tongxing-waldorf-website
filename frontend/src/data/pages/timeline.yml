@@ -185,6 +185,7 @@ sections:
           - type: "header"
             title: "邁向新里程 (2025+)"
             background_image: "/img/timeline/backgrounds/phase4.png"
+            content: "走過第一個十二年的循環，同心華德福即將邁入嶄新的發展階段。這不僅是時間軸上的延續，更是教育理想在都市土壤中深紮後的全面蛻變。在「邁向新里程」的篇章中，我們將核心聚焦於教育品質的深度生化與社群永續的願景。"
             color: "#CE449D" # Purple
           - year: "2025"
             title: "遷校開箱：東南大學校區"

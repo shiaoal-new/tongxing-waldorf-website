@@ -286,7 +286,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Time Arrow Tip */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 z-[50] pointer-events-none w-[6px]"
+                    className="absolute left-4 md:left-1/2 z-[50] md:z-[2] pointer-events-none w-[6px]"
                     style={{
                         x: "-50%",
                         top: useTransform(scaleY, (v) => `${v * 100}%`),
