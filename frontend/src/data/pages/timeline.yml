@@ -17,7 +17,7 @@ sections:
           # 一、 創校與萌芽期
           - type: "header"
             title: "創校與萌芽期 (2012-2013)"
-            background_image: "/img/timeline/backgrounds/phase1.png"
+            background_image: "/img/timeline/backgrounds/phase1.webp"
             color: "#E67E22" # Orange
             content: "這段時期是同心華德福從無到有、在水泥叢林中播下希望種子的關鍵時刻。2012 年夏天，源於對孩子教育的愛與對人智學的認同，九位家長不願再為了理想教育遷居外地，決心在大臺北地區籌辦華德福學校。在政大鄭同僚教授的帶領下，這股願力迅速化為行動，這不僅是辦學，更是一場「召喚內心渴望的社會運動」。2013 年 5 月，「臺北市華德福教育推廣協會」正式成立；同年 9 月，同心租借萬華區華江國小教室舉辦第一屆開學典禮，招收約 20 名學生，成為臺北市首個借用公立小學空間的非營利共學團體。這顆在體制夾縫中萌發的種子，憑藉著親師生的雙手，正式開啟了這場溫柔的教育革命。"
           - year: "2012.10"
@@ -59,7 +59,7 @@ sections:
           # 二、 華江校區發展期
           - type: "header"
             title: "華江校區發展期 (2014-2018)"
-            background_image: "/img/timeline/backgrounds/phase2.png"
+            background_image: "/img/timeline/backgrounds/phase2.webp"
             color: "#27AE60" # Green
             content: "這段時期是同心從借用公校教室的共學團體，逐步茁壯為正式實驗教育機構的關鍵階段。自 2014 年起，學校逐年擴增年級，至 2017 年已招收至八年級，師生突破百人，並發行《同心週報》凝聚社群"
           - year: "2014"
@@ -83,7 +83,7 @@ sections:
           - year: "2016"
             title: "首屆畢業"
             icon: "🎭"
-            image: "/img/timeline/first_graduation.webp"
+            image: "/img/timeline/2016.webp"
             subtitle: "第一屆華德福小學畢業典禮"
             content: "演出《少年秦始皇》，辦學規模達一至七年級。"
             detail: >
@@ -101,16 +101,16 @@ sections:
           - year: "2018"
             title: "爭取新址"
             icon: "🏠"
-            image: "/img/timeline/seeking_new_campus.webp"
             subtitle: "成功爭取永建國小舊址"
             content: "師生人數持續增加，協會與家長共同努力爭取到獨立校地。"
+            image: "/img/timeline/2018.webp"
             detail: >
               華江的小教室快要擠不下了，我們開始夢想一個擁有大田園、孩子可以鑽進鑽出的家。當永建國小舊址釋出時，全校大人再次啟動了超級動能。家長、老師和協會成員沒日沒夜地彙整辦學點滴，我們不是在爭取地盤，是在爭取一個能讓孩子深呼吸的空間。最終，我們成為台北首個擁有獨立公有校區的機構，這份喜悅不只是因為有了大操場，而是因為我們再次證明了：只要大人的心在一起，沒有什麼不可能。
 
           # 三、 永建校區深耕期
           - type: "header"
             title: "永建校區深耕期 (2019-2024)"
-            background_image: "/img/timeline/backgrounds/phase3.png"
+            background_image: "/img/timeline/backgrounds/phase3.webp"
             color: "#2980B9" # Blue
             content: >
               在同心華德福邁向十二年一貫發展的高峰之際，「永建校區深耕期」象徵著教育理想在城市土壤中的堅實落地。搬遷至文山區永建校區後，我們不再只是尋找遮風避雨的居所，而是致力於建構一個能回應孩子生命發展的理想村莊。
@@ -130,6 +130,7 @@ sections:
             icon: "🎊"
             subtitle: "遷入木柵試院路，成立高中籌備小組"
             content: "親師生在暑假期間合力修繕與募集設備，正式揭牌校牌。"
+            image: "/img/timeline/2019.10.26.webp"
             detail: >
               那個暑假，大家在風雨中修繕舊校舍、洗刷地板，甚至天黑了還在校門口接應二手物資。校牌揭牌時，看著家長們親手製作、充滿藝術感的作品，心中滿是感動。我們在校園裡建置螺旋花圃，用牛糞養土，看著植物慢慢扎根，就像我們也在這裡扎根一樣。同時，我們也開始討論高中部，因為我們希望給孩子一個完整的十二年陪伴，讓他們在青春期劇烈變動的知性與慾望間，依然有一群溫暖的大人接應。
 
@@ -138,6 +139,7 @@ sections:
             icon: "🛶"
             subtitle: "「山河海 1.0」分享會"
             content: "展示中學部親師生手工打造獨木舟並實踐跨越之旅的成果。"
+            image: "/img/timeline/2021.webp"
             detail: >
               我們在春天造船，夏天划船出海。這不是觀光旅遊，是中學部親師生手工打造獨木舟，親自完成「山河海」的跨越之旅。讓孩子在槳聲中體會河流入海，這種對大地的敬意，是在教室裡看一百遍Youtube也學不到的。即使疫情打亂了生活，家長與老師依然緊密合作，守護孩子的穩定。我們教給孩子的不是應付考試的技巧，而是面對未知的勇氣與解決困難的行動力。
 
@@ -162,6 +164,7 @@ sections:
             icon: "🍲"
             subtitle: "永建校區廚房誕生"
             content: "由家長與教育局支持，提供有機舒食午餐。"
+            image: "/img/timeline/2022.webp"
             detail: >
               為了讓孩子吃到有溫度的食物，我們努力了兩年，終於有了自辦廚房。在各方支持下，我們把午餐變成了孩子每天的期待。我們會一起包粽子、搓湯圓，讓孩子在食物的味道裡感受到季節流轉。對我們來說，這不只是經營餐廳，而是在校園裡注入一股溫暖的母性力量。當孩子每天都能在校園裡聞到飯菜香，看著大人們認真地為他們備餐，這就是最簡單也最深遠的感恩教育。
 
@@ -184,7 +187,7 @@ sections:
           # 四、 邁向新里程
           - type: "header"
             title: "邁向新里程 (2025+)"
-            background_image: "/img/timeline/backgrounds/phase4.png"
+            background_image: "/img/timeline/backgrounds/phase4.webp"
             content: "走過第一個十二年的循環，同心華德福即將邁入嶄新的發展階段。這不僅是時間軸上的延續，更是教育理想在都市土壤中深紮後的全面蛻變。在「邁向新里程」的篇章中，我們將核心聚焦於教育品質的深度生化與社群永續的願景。"
             color: "#CE449D" # Purple
           - year: "2025"

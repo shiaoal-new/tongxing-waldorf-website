@@ -448,5 +448,86 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 80
+  },
+  "timeline/2016.jpg": {
+    "hash": "8846cf898c2bba5a1766212b9c99ed78",
+    "processedAt": "2026-01-26T07:57:10.893Z",
+    "originalSize": 417291,
+    "optimizedSize": 103312,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/2018.jpg": {
+    "hash": "734e3eed5a2ffa1a95c0d8b07137bfb6",
+    "processedAt": "2026-01-26T07:57:11.166Z",
+    "originalSize": 827871,
+    "optimizedSize": 278672,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/2019.10.26.jpg": {
+    "hash": "de7d2acb5ada1a0056c15be2a7c4a293",
+    "processedAt": "2026-01-26T07:57:11.379Z",
+    "originalSize": 278643,
+    "optimizedSize": 94924,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/2021.jpg": {
+    "hash": "f287cbb4ec542f1a712afff2423cad5f",
+    "processedAt": "2026-01-26T07:57:11.452Z",
+    "originalSize": 64162,
+    "optimizedSize": 47430,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/2022.jpg": {
+    "hash": "fe59db60dffdf53b3df2ca90b6785c65",
+    "processedAt": "2026-01-26T07:57:11.601Z",
+    "originalSize": 168518,
+    "optimizedSize": 89490,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/backgrounds/phase1.png": {
+    "hash": "45fa07be16d7f177f71114341487c856",
+    "processedAt": "2026-01-26T07:57:11.699Z",
+    "originalSize": 692339,
+    "optimizedSize": 31928,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/backgrounds/phase2.png": {
+    "hash": "8be0f3935d01abc9a4949d1c234a94d2",
+    "processedAt": "2026-01-26T07:57:11.806Z",
+    "originalSize": 831741,
+    "optimizedSize": 55854,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/backgrounds/phase3.png": {
+    "hash": "39969e92a302670868d914c9ef7e05f8",
+    "processedAt": "2026-01-26T07:57:11.989Z",
+    "originalSize": 1026510,
+    "optimizedSize": 138682,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "timeline/backgrounds/phase4.png": {
+    "hash": "bf48db503d3dd09e22bea024cfc0bfd5",
+    "processedAt": "2026-01-26T07:57:12.096Z",
+    "originalSize": 843844,
+    "optimizedSize": 59330,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }
