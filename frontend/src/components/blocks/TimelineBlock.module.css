@@ -100,7 +100,82 @@
 }
 
 /* Entries */
-/* .timeline-entry is handled by Tailwind for layout */
+.timeline-entry {
+    /* Mobile-first defaults (similar to is-odd) */
+    text-align: left;
+}
+
+.axis-dot-container {
+    left: 1rem;
+    /* left-4 */
+    transform: translateX(-50%);
+}
+
+.view-details {
+    justify-content: flex-start;
+}
+
+.year-label {
+    transform-origin: left;
+}
+
+/* Desktop overrides using media query */
+@media (min-width: 768px) {
+    .is-even {
+        float: left;
+        clear: left;
+        padding-right: 4rem;
+        /* pr-16 */
+        text-align: right;
+    }
+
+    .is-odd {
+        float: right;
+        clear: right;
+        padding-left: 4rem;
+        /* pl-16 */
+        text-align: left;
+    }
+
+    .is-even .axis-dot-container {
+        left: 100%;
+    }
+
+    .is-odd .axis-dot-container {
+        left: 0;
+    }
+
+    .is-even .view-details {
+        justify-content: flex-end;
+    }
+
+    .is-even .year-label {
+        transform-origin: right;
+    }
+
+    .is-even .connection-line {
+        right: -6rem;
+        /* -right-24 */
+        left: auto;
+        transform-origin: left;
+    }
+
+    .is-odd .connection-line {
+        left: -6rem;
+        /* -left-24 */
+        right: auto;
+        transform-origin: right;
+    }
+
+    .is-even .museum-frame-container {
+        margin-left: auto;
+    }
+
+    .is-odd .museum-frame-container {
+        margin-right: auto;
+    }
+}
+
 
 /* Big Year Typography */
 .big-year {

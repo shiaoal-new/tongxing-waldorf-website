@@ -6,6 +6,8 @@ import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/co
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
 
 
+
+
 import Image from 'next/image';
 
 interface TimelineBlockProps {
@@ -34,6 +36,8 @@ const formatDate = (timestamp: number) => {
 
 const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
+
+
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
     const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
     const [colorMap, setColorMap] = useState<{ inputs: number[], outputs: string[] }>({
@@ -552,13 +556,14 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             className={`relative w-full md:w-1/2 mb-12 md:mb-24 ${styles['timeline-entry']}
-             ${isEven ? 'md:float-left md:clear-left md:pr-16 md:text-right' : 'md:float-right md:clear-right md:pl-16 md:text-left'}
+             ${isEven ? styles['is-even'] : styles['is-odd']}
              ${shiftRightColumn ? 'md:mt-32' : ''}
         `}>
+
             {/* Axis Dot with "Passed" Effect */}
             <div className={`absolute top-5 z-20 flex flex-col items-center
                 left-4 transform -translate-x-1/2
-                ${isEven ? 'md:left-full md:-translate-x-1/2' : 'md:left-0 md:-translate-x-1/2'}
+                ${styles['axis-dot-container']}
              `}>
                 <motion.div
                     initial={{ scale: 0.8, backgroundColor: "var(--timeline-bg)", borderColor: "var(--timeline-text)", borderWidth: "2px" }}
@@ -604,23 +609,24 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                         whileInView={{ scaleX: 1, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className={`hidden md:block absolute top-[1.5rem] h-[2px] bg-[var(--accent-primary)]
-                            w-24
-                            ${isEven ? '-right-24 origin-left' : '-left-24 origin-right'}
-                        `}
+                             w-24
+                             ${styles['connection-line']}
+                         `}
                     />
 
                     {/* Year Label */}
                     <motion.div
-                        initial={{ opacity: 0.5, x: isEven ? -20 : 20 }}
+                        initial={{ opacity: 0.5, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ margin: "0% 0px -40% 0px" }}
                         transition={{ duration: 0.5 }}
                         className={`
-                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
-                        ${isEven ? 'md:origin-right' : 'md:origin-left'}
-                    `}>
+                         text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
+                         ${styles['year-label']}
+                     `}>
                         {item.year}
                     </motion.div>
+
 
                     <div className="p-0 bg-transparent flex flex-col md:block">
                         <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
@@ -634,9 +640,10 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
 
                         {/* Image - Museum Frame style */}
                         {item.image && (
-                            <div className={`mb-8 ${styles['museum-frame-container']} ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
+                            <div className={`mb-8 ${styles['museum-frame-container']}`}>
                                 <div className={styles['museum-frame']}>
                                     <Image
+
                                         src={item.image}
                                         alt={item.title}
                                         width={500}
@@ -653,11 +660,12 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
 
                         {item.detail && (
                             <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 transition-opacity flex items-center gap-2
-                                ${isEven ? 'md:justify-end' : 'md:justify-start'}
-                            `}>
+                                 ${styles['view-details']}
+                             `}>
                                 VIEW DETAILS <span className="text-xl transform group-hover:translate-x-1 transition-transform">→</span>
                             </div>
                         )}
+
                     </div>
                 </div>
             </div>
