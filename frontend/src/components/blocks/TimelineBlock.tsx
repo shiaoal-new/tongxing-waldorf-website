@@ -441,7 +441,7 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                         </p>
 
                         {item.detail && (
-                            <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 group-hover:opacity-100 transition-opacity flex items-center gap-2
+                            <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 transition-opacity flex items-center gap-2
                                 ${isEven ? 'md:justify-end' : 'md:justify-start'}
                             `}>
                                 VIEW DETAILS <span className="text-xl transform group-hover:translate-x-1 transition-transform">→</span>
