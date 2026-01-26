@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
 import Modal from '../ui/Modal';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
 
 
 import Image from 'next/image';
@@ -19,16 +19,24 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
     // Scroll progress for the timeline line
     const containerRef = useRef<HTMLDivElement>(null);
+    const progressRef = useRef<HTMLSpanElement>(null);
+
+    // Smooth out the progress - made snappier to catch up with scroll
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start center", "end center"] // Sync line tip with viewport center
     });
 
-    // Smooth out the progress - made snappier to catch up with scroll
     const scaleY = useSpring(scrollYProgress, {
         stiffness: 200,
         damping: 25,
         restDelta: 0.001
+    });
+
+    useMotionValueEvent(scaleY, "change", (latest) => {
+        if (progressRef.current) {
+            progressRef.current.innerText = `${Math.round(latest * 100)}%`;
+        }
     });
 
     const rawItems = data.items || [];
@@ -121,6 +129,14 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                                 transform: 'translateY(-1px)' // Tiny overlap to ensure seamless connection
                             }}
                         />
+
+                        {/* Progress Percentage */}
+                        <span
+                            ref={progressRef}
+                            className="absolute top-4 text-[10px] font-bold text-[var(--accent-primary)] bg-white/90 dark:bg-zinc-900/90 px-1.5 py-0.5 rounded-md shadow-sm border border-[var(--accent-primary)]/20 whitespace-nowrap tabular-nums z-20 pointer-events-auto"
+                        >
+                            0%
+                        </span>
                     </div>
                 </motion.div>
 
@@ -136,7 +152,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         />
                     ))}
                 </div>
-            </div>
+            </div >
 
             <Modal
                 isOpen={!!selectedDetail}
@@ -197,7 +213,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     </div>
                 )}
             </Modal>
-        </div>
+        </div >
     );
 };
 
@@ -357,7 +373,7 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                         borderColor: "var(--accent-primary)",
                         boxShadow: "0 0 0 4px var(--accent-light)"
                     }}
-                    viewport={{ margin: "-50% 0px -50% 0px" }}
+                    viewport={{ margin: "0px 0px -50% 0px" }}
                     transition={{ duration: 0.4 }}
                     className="w-4 h-4 rounded-full border border-[var(--timeline-text)] shadow-sm relative z-10"
                 >
@@ -368,7 +384,7 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                             opacity: [0, 0.5, 0],
                             scale: [1, 2, 2.5],
                         }}
-                        viewport={{ margin: "-50% 0px -50% 0px" }}
+                        viewport={{ margin: "0px 0px -50% 0px" }}
                         transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
                         className="absolute inset-0 rounded-full bg-[var(--accent-primary)] z-[-1]"
                     />
@@ -402,10 +418,10 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                     <motion.div
                         initial={{ opacity: 0.5, x: isEven ? -20 : 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ margin: "-40% 0px -40% 0px" }}
+                        viewport={{ margin: "0% 0px -40% 0px" }}
                         transition={{ duration: 0.5 }}
                         className={`
-                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight
+                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
                         ${isEven ? 'md:origin-right' : 'md:origin-left'}
                     `}>
                         {item.year}
