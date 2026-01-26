@@ -72,13 +72,13 @@
     "quality": 80
   },
   "daily-routine.jpg": {
-    "hash": "aa99c41eae7c5b63add56f03676a90a5",
-    "processedAt": "2026-01-21T04:29:22.423Z",
-    "originalSize": 154358,
-    "optimizedSize": 108796,
+    "hash": "01c4791074e330e282fb1c7f12fd5a2d",
+    "processedAt": "2026-01-26T08:51:28.064Z",
+    "originalSize": 883794,
+    "optimizedSize": 322706,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "featured-academic.png": {
     "hash": "82ba2235c595ac554dc17d9f68596fee",
