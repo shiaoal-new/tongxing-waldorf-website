@@ -1,4 +1,4 @@
-import ListRenderer from "../ListRenderer";
+import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListRenderer";
 import { usePageData } from "../../context/PageDataContext";
 import BlockDispatcher from "./BlockDispatcher";
 import { ListBlock as ListBlockType, FaqItem, ListItem } from "../../types/content";
@@ -58,3 +58,18 @@ export default function ListBlock({ block }: ListBlockProps) {
         </div>
     );
 }
+
+import { BlockPolicy } from './interfaces';
+
+export const listPolicy: BlockPolicy = {
+    shouldIgnorePadding: (block: any) => {
+        const layoutMethod = block.layout_method;
+        const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
+        return config?.fullWidth === true;
+    },
+    isSectionWide: (block: any) => {
+        const layoutMethod = block.layout_method;
+        const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
+        return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid"].includes(layoutMethod);
+    }
+};

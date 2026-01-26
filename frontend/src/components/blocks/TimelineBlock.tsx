@@ -181,8 +181,8 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     }
 
     return (
-        <div ref={containerRef} className={`w-full py-20 ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
-            <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
+        <div ref={containerRef} className={`w-full ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
+            <div className="max-w-7xl mx-auto relative">
                 {/* Central Line with Time Ruler Effect (Static) */}
                 <div
                     className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[1px] ${styles['timeline-axis']}`}
@@ -613,3 +613,10 @@ export function getTOC(block: TimelineBlockType, sectionId?: string) {
     return result;
 }
 
+
+import { BlockPolicy } from './interfaces';
+
+export const timelinePolicy: BlockPolicy = {
+    shouldIgnorePadding: () => true,
+    isSectionWide: () => true
+};

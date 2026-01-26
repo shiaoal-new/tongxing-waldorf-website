@@ -1,7 +1,7 @@
 import React from "react";
 import Section from "./layout/Section";
 import BlockDispatcher from "./blocks/BlockDispatcher";
-import { LIST_LAYOUT_CONFIG } from "./ListRenderer";
+import { shouldBlockIgnorePadding, isBlockSectionWide } from "./blocks/blockPolicies";
 import { Section as SectionType, Block, TextBlock } from "../types/content";
 
 interface SectionRendererProps {
@@ -123,19 +123,12 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
         "visit_process_block",
         "spacing_demo_block",
         "typography_demo_block",
-        "micro_interactions_block",
-        "timeline_block"
+        "micro_interactions_block"
     ];
 
     const hasWideBlock = blocks.some(b => {
         if (wideBlockTypes.includes(b.type)) return true;
-        if (b.type === "list_block") {
-            const layoutMethod = (b as any).layout_method;
-            const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
-            // 寬版區塊通常是那些 fullWidth 的佈局
-            return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid"].includes(layoutMethod);
-        }
-        return false;
+        return isBlockSectionWide(b);
     });
 
     return !hasWideBlock;
@@ -146,13 +139,6 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
  * 遍歷所有 Block，若有任何 Block 需要全寬顯示（如輪播類型），則整個 Section 忽略內邊距
  */
 function determineIgnorePadding(blocks: Block[]): boolean {
-    return blocks.some(b => {
-        if (b.type === "list_block") {
-            const layoutMethod = (b as any).layout_method;
-            const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
-            return config?.fullWidth === true;
-        }
-        return false;
-    });
+    return blocks.some(b => shouldBlockIgnorePadding(b));
 }
 
