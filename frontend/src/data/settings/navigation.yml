@@ -5,12 +5,10 @@ items:
       - slug: "timeline"
   - title: "課程與教學"
     children:
+      - slug: "rhythm-of-life"
       - slug: "curriculum-development"
       - slug: "featured-courses"
       - slug: "waldorf-assessment"
-  - title: "校園生活"
-    children:
-      - slug: "rhythm-of-life"
   - title: "招生入學"
     children:
       - slug: "visit"
