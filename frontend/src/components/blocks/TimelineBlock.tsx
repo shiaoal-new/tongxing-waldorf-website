@@ -72,12 +72,57 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     return (
         <div ref={containerRef} className={`w-full py-20 ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
             <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
-                {/* Central Line with Animated Progress */}
-                <div className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 ${styles['timeline-axis']}`} />
-                <motion.div
-                    className="absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[3px] bg-[var(--accent-primary)] origin-top z-[2]"
-                    style={{ scaleY }}
+                {/* Central Line with Time Ruler Effect (Static) */}
+                <div
+                    className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[1px] ${styles['timeline-axis']}`}
+                    style={{
+                        background: `repeating-linear-gradient(to bottom, 
+                            var(--timeline-text) 0px, 
+                            var(--timeline-text) 4px, 
+                            transparent 4px, 
+                            transparent 8px
+                        )`,
+                        opacity: 0.2
+                    }}
                 />
+
+
+
+                {/* Active Gradient Line */}
+                <motion.div
+                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[60px] origin-top z-[2]"
+                    style={{
+                        x: "-50%",
+                        scaleY,
+                        background: "linear-gradient(to bottom, transparent 0%, var(--accent-primary) 30%, var(--accent-primary) 100%)",
+                        boxShadow: "5px 5px 20px rgba(242, 161, 84, 1)"
+                    }}
+                />
+
+                {/* Time Arrow Tip */}
+                <motion.div
+                    className="absolute left-4 md:left-1/2 z-[5] pointer-events-none w-[6px]"
+                    style={{
+                        x: "-50%",
+                        top: useTransform(scaleY, (v) => `${v * 100}%`),
+                        marginTop: "-2px" // Fine tune to overlap end of line
+                    }}
+                >
+                    <div className="relative flex flex-col items-center">
+                        {/* CSS Border Arrow Head */}
+                        <div
+                            className="z-10 filter drop-shadow-[0_4px_8px_rgba(242,161,84,0.4)]"
+                            style={{
+                                width: 0,
+                                height: 0,
+                                borderLeft: '7px solid transparent',
+                                borderRight: '7px solid transparent',
+                                borderTop: '14px solid var(--accent-primary)',
+                                transform: 'translateY(-1px)' // Tiny overlap to ensure seamless connection
+                            }}
+                        />
+                    </div>
+                </motion.div>
 
 
                 <div className="relative flex flex-col">
