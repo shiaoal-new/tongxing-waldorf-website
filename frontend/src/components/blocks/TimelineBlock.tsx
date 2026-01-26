@@ -81,8 +81,8 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     });
 
     const scaleY = useSpring(scrollYProgress, {
-        stiffness: 200,
-        damping: 25,
+        stiffness: 100,
+        damping: 30,
         restDelta: 0.001
     });
 
@@ -274,7 +274,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Time Arrow Tip */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 z-[5] pointer-events-none w-[6px]"
+                    className="absolute left-4 md:left-1/2 z-[50] pointer-events-none w-[6px]"
                     style={{
                         x: "-50%",
                         top: useTransform(scaleY, (v) => `${v * 100}%`),
