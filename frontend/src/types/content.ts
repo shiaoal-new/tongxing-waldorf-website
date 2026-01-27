@@ -263,3 +263,26 @@ export interface Course {
     content?: string;
     [key: string]: any;
 }
+
+export interface SiteData {
+    name: string;
+    url: string;
+    logo: string;
+    description: string;
+    address: {
+        streetAddress: string;
+        addressLocality: string;
+        addressRegion: string;
+        postalCode: string;
+        addressCountry: string;
+    };
+    contact: {
+        telephone: string;
+        email: string;
+    };
+    socialLinks: {
+        facebook?: string;
+        instagram?: string;
+        youtube?: string;
+    };
+}

@@ -6,7 +6,8 @@ import SvgFilters from "../ui/SvgFilters";
 import PageContent from "./PageContent";
 import { useEffect, useState, ReactNode } from "react";
 import { useTheme } from "next-themes";
-import { PageData, NavigationData, SEOData, HeroData } from "../../types/content";
+import { PageData, NavigationData, SEOData, HeroData, FaqItem, Course, SiteData } from "../../types/content";
+import StructuredData from "./StructuredData";
 import { useScrollRestoration } from "../../hooks/useScrollRestoration";
 
 interface LayoutProps {
@@ -20,6 +21,11 @@ interface LayoutProps {
     navigation: NavigationData;
     className?: string;
     backgroundSpeed?: number;
+    slug?: string;
+    faqList?: FaqItem[];
+    courseList?: Course[];
+    contentType?: 'page' | 'course';
+    siteSettings?: SiteData;
 }
 
 export default function Layout({
@@ -32,7 +38,12 @@ export default function Layout({
     pages,
     navigation,
     className,
-    backgroundSpeed = 0.2
+    backgroundSpeed = 0.2,
+    slug,
+    faqList = [],
+    courseList = [],
+    contentType = 'page',
+    siteSettings
 }: LayoutProps) {
     const { resolvedTheme } = useTheme();
     const [themeColor, setThemeColor] = useState("#F2F2F0");
@@ -44,14 +55,15 @@ export default function Layout({
     }, [resolvedTheme]);
 
     // --- Smart SEO Logic ---
-    const SITE_NAME = "台北市同心華德福實驗教育機構";
+    const SITE_NAME = siteSettings?.name || "台北市同心華德福實驗教育機構";
 
     // 1. Title Priority: Custom Props > SEO Data > Hero Title > Current Page Title > Site Name
     const pageTitle = seo?.title || (hero?.title ? `${hero.title} | ${SITE_NAME}` : title ? `${title} | ${SITE_NAME}` : SITE_NAME);
     const displayTitle = title === pageTitle ? title : pageTitle; // Avoid double SITE_NAME if Passed title already contains it
 
     // 2. Description Priority: Custom Props > SEO Data > Hero Subtitle > Hero Content (Truncated) > Default
-    const fallbackDesc = hero?.subtitle || (hero?.content ? `${hero.content.substring(0, 155)}...` : "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。");
+    const defaultDesc = siteSettings?.description || "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。";
+    const fallbackDesc = hero?.subtitle || (hero?.content ? `${hero.content.substring(0, 155)}...` : defaultDesc);
     const displayDescription = description || seo?.description || fallbackDesc;
 
     return (
@@ -70,6 +82,40 @@ export default function Layout({
                 <meta name="theme-color" content={themeColor} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            {/* --- Structured Data (JSON-LD) --- */}
+            {slug === 'index' && (
+                <StructuredData
+                    type="EducationalOrganization"
+                    data={{ name: SITE_NAME, description: displayDescription, siteSettings }}
+                />
+            )}
+
+            {faqList.length > 0 && (
+                <StructuredData
+                    type="FAQPage"
+                    data={faqList}
+                    siteSettings={siteSettings}
+                />
+            )}
+
+            {slug === 'featured-courses' && courseList.length > 0 && courseList.map((course) => (
+                <StructuredData
+                    key={course.slug}
+                    type="Course"
+                    data={course}
+                    siteSettings={siteSettings}
+                />
+            ))}
+
+            {/* If on a specific course page */}
+            {contentType === 'course' && (
+                <StructuredData
+                    type="Course"
+                    data={{ title: title || seo?.title, description: displayDescription }}
+                    siteSettings={siteSettings}
+                />
+            )}
 
             <Script
                 id="clarity-script"

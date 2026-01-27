@@ -1,13 +1,13 @@
 import { getAllCourses, getCourseBySlug } from "../../lib/courses";
 import { getAllPages } from "../../lib/pages";
 import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
-import { getNavigation } from "../../lib/settings";
+import { getNavigation, getSiteSettings } from "../../lib/settings";
 import { getPageDataOptimized } from "../../lib/dataLoader";
 import DynamicPageContent from "../../components/DynamicPage";
 
 export default function CoursePage(props) {
     // We can use the same DynamicPageContent component as it's designed to render sections/blocks
-    return <DynamicPageContent {...props} page={props.course} />;
+    return <DynamicPageContent {...props} page={props.course} contentType="course" />;
 }
 
 export async function getStaticPaths() {
@@ -24,6 +24,7 @@ export async function getStaticProps({ params }) {
     const course = getCourseBySlug(slug);
     const pages = getAllPages();
     const navigation = getNavigation();
+    const siteSettings = getSiteSettings();
     const coursesList = getAllCourses();
 
     // 处理 section layouts
@@ -47,6 +48,7 @@ export async function getStaticProps({ params }) {
             course: course || null,
             pages,
             navigation,
+            siteSettings,
             data: {
                 facultyList: pageData.facultyList || [],
                 faqList: pageData.faqList || [],

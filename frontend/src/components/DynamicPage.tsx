@@ -12,21 +12,23 @@ import { useTheme } from "next-themes";
 import { SectionRenderer } from "./SectionRenderer";
 import { PageDataProvider } from "../context/PageDataContext";
 import { useDynamicTOC } from "../hooks/useDynamicTOC";
-import { PageData, NavigationData, FaqItem, Member, Course, QuestionnaireData } from "../types/content";
+import { PageData, NavigationData, FaqItem, Member, Course, QuestionnaireData, SiteData } from "../types/content";
 
 interface DynamicPageContentProps {
     page: PageData | null;
     pages: PageData[];
     navigation: NavigationData;
+    siteSettings?: SiteData;
     data?: {
         facultyList?: Member[];
         faqList?: FaqItem[];
         coursesList?: Course[];
         questionnaire?: QuestionnaireData | null;
     };
+    contentType?: 'page' | 'course';
 }
 
-export default function DynamicPageContent({ page, pages, navigation, data = {} }: DynamicPageContentProps) {
+export default function DynamicPageContent({ page, pages, navigation, siteSettings, data = {}, contentType = 'page' }: DynamicPageContentProps) {
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
     const {
         facultyList = [],
@@ -68,10 +70,33 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
         ...heroData
     } : null;
 
+    // Filter FAQ list to only include FAQs used on this page
+    const pageFaqIds = new Set<string>();
+    sections.forEach(section => {
+        section.blocks?.forEach(block => {
+            if (block.type === 'list_block' && block.item_type === 'faq_item' && block.faq_ids) {
+                block.faq_ids.forEach(id => pageFaqIds.add(id));
+            }
+        });
+    });
+    const filteredFaqList = faqList.filter(faq => pageFaqIds.has(faq.id));
+
     return (
         <>
             <TableOfContents sections={tocSections} />
-            <Layout pages={pages} navigation={navigation} title={page.title} seo={page.seo} hero={page.hero} navbarPadding={!effectiveHeroData}>
+            <Layout
+                pages={pages}
+                navigation={navigation}
+                title={page.title}
+                seo={page.seo}
+                hero={page.hero}
+                navbarPadding={!effectiveHeroData}
+                slug={page.slug}
+                faqList={filteredFaqList}
+                courseList={coursesList}
+                contentType={contentType}
+                siteSettings={siteSettings}
+            >
                 {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
 
                 <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>

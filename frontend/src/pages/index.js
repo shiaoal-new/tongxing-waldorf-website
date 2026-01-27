@@ -3,7 +3,7 @@ import { getAllPages, getPageBySlug } from "../lib/pages";
 import { getAllFaculty } from "../lib/faculty";
 import { getAllFaq } from "../lib/faq";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
-import { getNavigation } from "../lib/settings";
+import { getNavigation, getSiteSettings } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
 
 export default function Home(props) {
@@ -36,7 +36,7 @@ export default function Home(props) {
           />
         )}
       </Head>
-      <DynamicPageContent {...props} />
+      <DynamicPageContent {...props} contentType="page" />
     </>
   );
 }
@@ -45,6 +45,7 @@ export async function getStaticProps() {
   const page = getPageBySlug("index");
   const pages = getAllPages();
   const navigation = getNavigation();
+  const siteSettings = getSiteSettings();
   const facultyList = getAllFaculty();
   const faqList = getAllFaq();
 
@@ -65,6 +66,7 @@ export async function getStaticProps() {
       page: page || null,
       pages,
       navigation,
+      siteSettings,
       data: {
         facultyList,
         faqList,

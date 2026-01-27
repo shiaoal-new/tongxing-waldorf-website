@@ -580,3 +580,68 @@
                         widget: "string",
                         required: false,
                       }
+            - name: "site_settings"
+              label: "網站基本設定 (Site Info)"
+              file: "src/data/settings/site-settings.yml"
+              fields:
+                - { label: "網站名稱", name: "name", widget: "string" }
+                - { label: "網址", name: "url", widget: "string" }
+                - { label: "Logo 路徑", name: "logo", widget: "image" }
+                - { label: "網站描述", name: "description", widget: "text" }
+                - label: "地址資訊"
+                  name: "address"
+                  widget: "object"
+                  fields:
+                    - {
+                        label: "地址 (Street)",
+                        name: "streetAddress",
+                        widget: "string",
+                      }
+                    - {
+                        label: "區 (Locality)",
+                        name: "addressLocality",
+                        widget: "string",
+                      }
+                    - {
+                        label: "城市 (Region)",
+                        name: "addressRegion",
+                        widget: "string",
+                      }
+                    - {
+                        label: "郵遞區號",
+                        name: "postalCode",
+                        widget: "string",
+                      }
+                    - {
+                        label: "國家代碼",
+                        name: "addressCountry",
+                        widget: "string",
+                      }
+                - label: "聯絡資訊"
+                  name: "contact"
+                  widget: "object"
+                  fields:
+                    - { label: "電話", name: "telephone", widget: "string" }
+                    - { label: "Email", name: "email", widget: "string" }
+                - label: "社群連結"
+                  name: "socialLinks"
+                  widget: "object"
+                  fields:
+                    - {
+                        label: "Facebook",
+                        name: "facebook",
+                        widget: "string",
+                        required: false,
+                      }
+                    - {
+                        label: "Instagram",
+                        name: "instagram",
+                        widget: "string",
+                        required: false,
+                      }
+                    - {
+                        label: "YouTube",
+                        name: "youtube",
+                        widget: "string",
+                        required: false,
+                      }

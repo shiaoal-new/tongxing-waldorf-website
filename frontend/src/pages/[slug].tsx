@@ -1,15 +1,16 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { getAllPages, getPageBySlug } from "../lib/pages";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
-import { getNavigation } from "../lib/settings";
+import { getNavigation, getSiteSettings } from "../lib/settings";
 import { getPageDataOptimized } from "../lib/dataLoader";
 import DynamicPageContent from "../components/DynamicPage";
-import { PageData, NavigationData, FaqItem, Member, Course } from "../types/content";
+import { PageData, NavigationData, FaqItem, Member, Course, SiteData } from "../types/content";
 
 interface DynamicPageProps {
     page: PageData | null;
     pages: PageData[];
     navigation: NavigationData;
+    siteSettings: SiteData;
     data: {
         facultyList: Member[];
         faqList: FaqItem[];
@@ -18,7 +19,7 @@ interface DynamicPageProps {
 }
 
 export default function DynamicPage(props: DynamicPageProps) {
-    return <DynamicPageContent {...props} />;
+    return <DynamicPageContent {...props} contentType="page" />;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -38,6 +39,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     const page = getPageBySlug(slug) || null;
     const pages = getAllPages();
     const navigation = getNavigation();
+    const siteSettings = getSiteSettings();
 
     // 处理 Hero Layout
     if (page && page.hero && typeof page.hero.layout === 'string') {
@@ -68,6 +70,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
             page,
             pages,
             navigation,
+            siteSettings,
             data: {
                 facultyList: pageData.facultyList || [],
                 faqList: pageData.faqList || [],
