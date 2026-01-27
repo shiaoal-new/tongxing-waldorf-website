@@ -47,6 +47,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
                 slidesPerView={1.4}
                 centeredSlides={true}
                 loop={true}
+                slideToClickedSlide={true}
                 navigation={{
                     prevEl,
                     nextEl,
@@ -66,7 +67,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
                 {items.map((item, index) => (
                     <SwiperSlide key={item.id || index} className="transition-all duration-500 pt-16 pb-12 md:py-20 px-0">
                         {({ isActive }) => (
-                            <div className={`transition-all duration-500 h-full ${isActive ? 'scale-110 z-10' : 'scale-90 opacity-60 grayscale-[0.5]'}`}>
+                            <div className={`transition-all duration-500 h-full ${isActive ? 'scale-110 z-10' : 'scale-90 opacity-60 grayscale-[0.5] cursor-pointer'}`}>
                                 {renderItem(item, index, { current: index + 1, total: items.length })}
                             </div>
                         )}
