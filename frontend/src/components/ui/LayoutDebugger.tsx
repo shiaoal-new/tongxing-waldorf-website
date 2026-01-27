@@ -12,60 +12,168 @@ export default function LayoutDebugger() {
         // 僅在開發模式且客戶端運行
         if (process.env.NODE_ENV === 'production' || typeof window === 'undefined') return;
 
+        let timeoutId: NodeJS.Timeout;
+
         const checkOverflow = () => {
             const innerWidth = window.innerWidth;
             const scrollWidth = document.documentElement.scrollWidth;
+            const bodyScrollWidth = document.body.scrollWidth;
 
-            // 允許 1px 的誤差（處理瀏覽器渲染取整問題）
-            if (scrollWidth > innerWidth + 1) {
-                const elements = Array.from(document.querySelectorAll('*'));
-                const offending = elements
-                    .map(el => {
-                        const rect = el.getBoundingClientRect();
-                        return {
-                            el,
-                            tag: el.tagName,
-                            className: el.className,
-                            id: el.id,
-                            right: rect.right,
-                            amount: rect.right - innerWidth
-                        };
-                    })
-                    .filter(item => item.amount > 1)
-                    // 只保留最外層的錯誤元素，避免列出所有子元素
-                    .filter((item, index, self) => {
-                        return !self.some((other, otherIndex) =>
-                            otherIndex !== index && other.el.contains(item.el)
-                        );
-                    })
-                    .map(({ tag, className, id, amount }) => ({ tag, className, id, amount }));
+            // 檢查是否被父層裁切 (Overflow Hidden)
+            const isClippedByAncestor = (el: Element, viewportWidth: number) => {
+                let parent = el.parentElement;
+                while (parent && parent !== document.body && parent !== document.documentElement) {
+                    const style = window.getComputedStyle(parent);
+                    const overflowX = style.overflowX;
+                    const overflow = style.overflow;
 
-                if (offending.length > 0) {
-                    setOverflowElements(offending);
-                    setIsVisible(true);
-
-                    // 同時輸出到 Console 方便偵錯
-                    console.warn(`[Layout Check] ⚠️ 偵測到橫向溢出 (${scrollWidth - innerWidth}px)`);
-                    console.table(offending);
-                } else {
-                    setIsVisible(false);
+                    // 如果父層設有隱藏或滾動，且父層本身沒有溢出視窗太嚴重 (給予 2px 寬限)
+                    if (['hidden', 'scroll', 'auto', 'clip'].includes(overflowX) || ['hidden', 'scroll', 'auto', 'clip'].includes(overflow)) {
+                        const parentRect = parent.getBoundingClientRect();
+                        // 檢查父層右邊界是否在大致安全的範圍內
+                        if (parentRect.right <= viewportWidth + 2) {
+                            // 被一個安全的父層裁切或管理，視為安全
+                            return true;
+                        }
+                    }
+                    parent = parent.parentElement;
                 }
-            } else {
-                setIsVisible(false);
+                return false;
+            };
+
+            // 檢查所有元素
+            const elements = Array.from(document.querySelectorAll('*'));
+            const offendingRawFull = elements
+                .map(el => {
+                    const rect = el.getBoundingClientRect();
+                    const overflowRight = rect.right - innerWidth;
+                    const overflowLeft = -rect.left;
+                    return {
+                        el,
+                        tag: el.tagName,
+                        className: el.className,
+                        id: el.id,
+                        amount: Math.max(overflowRight, overflowLeft)
+                    };
+                });
+
+            // Debug: log top 3 distinct overflows
+            // const potentialIssues = offendingRawFull.filter(i => i.amount > 0.5).sort((a, b) => b.amount - a.amount).slice(0, 5);
+            // if (potentialIssues.length > 0) {
+            //      console.log('[LayoutDebugger] Potential overflows (>0.5px):', potentialIssues.map(p => `${p.tag}.${p.className} (${p.amount}px)`));
+            // }
+
+            const offendingRaw = offendingRawFull
+                .filter(item => item.amount > 1.0) // 回歸 1.0，避免 0.5px 的精密誤差
+                .filter(item => !isClippedByAncestor(item.el, innerWidth)); // 過濾掉被安全裁切的元素
+
+            if (offendingRaw.length > 0 && offendingRaw.length !== elements.filter(item => {
+                const rect = item.getBoundingClientRect();
+                return Math.max(rect.right - innerWidth, -rect.left) > 1.0;
+            }).length) {
+                // Double check count logic
             }
+
+            const offending = offendingRaw
+                // 只保留最外層的錯誤元素，避免列出所有子元素
+                .filter((item, index, self) => {
+                    return !self.some((other, otherIndex) =>
+                        otherIndex !== index && other.el.contains(item.el)
+                    );
+                })
+                .map(({ tag, className, id, amount }) => ({ tag, className, id, amount }));
+
+            // 判斷是否真的有溢出 (scrollWidth 大於 innerWidth 或者有明顯的 offending 元素)
+            const hasActualOverflow = (scrollWidth > innerWidth + 1) || (bodyScrollWidth > innerWidth + 1) || offending.length > 0;
+
+            if (hasActualOverflow && offending.length > 0) {
+                setOverflowElements(offending);
+                setIsVisible(true);
+
+                // 頻率限制的 Console 輸出
+                console.warn(`[Layout Check] ⚠️ 偵測到橫向溢出！`);
+                console.table(offending);
+            }
+            // else if (!hasActualOverflow) {
+            //      // 以前會自動關閉，現在改為 Sticky，一旦出現就不自動消失，直到使用者手動關閉
+            //      // 這能避免警告視窗閃爍
+            // }
         };
 
-        // 在加載後、改變視窗大小後、或操作 Swiper 後進行檢測
-        window.addEventListener('load', checkOverflow);
-        window.addEventListener('resize', checkOverflow);
+        const throttledCheck = () => {
+            if (timeoutId) return;
+            timeoutId = setTimeout(() => {
+                checkOverflow();
+                timeoutId = undefined as any;
+            }, 500);
+        };
 
-        // 延遲檢測，確保動態組件載入完成
-        const timer = setTimeout(checkOverflow, 2000);
+        const observer = new MutationObserver(throttledCheck);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+        });
+
+        window.addEventListener('load', throttledCheck);
+        window.addEventListener('resize', throttledCheck);
+        // 新增：監聽捲動事件，這是最直接的證據
+        // 如果使用者能橫向捲動，代表一定有溢出
+        const onScroll = (e: Event) => {
+            const vv = window.visualViewport;
+            // if (vv) {
+            //     console.log(`[LayoutDebugger] Scroll detected. type: ${e.type}, scrollX: ${window.scrollX}, vv.offsetLeft: ${vv.offsetLeft}, scale: ${vv.scale}`);
+            // }
+
+            const currentScrollX = window.scrollX;
+            const vvOffset = vv ? vv.offsetLeft : 0;
+
+            if (currentScrollX > 1 || Math.abs(vvOffset) > 1) {
+                // 確認不是因為放大 (Pinch Zoom) 造成的
+                if (vv && Math.abs(vv.scale - 1) > 0.01) {
+                    return;
+                }
+
+                // 再次執行檢查以找出元兇
+                checkOverflow();
+
+                // 強制顯示警告
+                setIsVisible(true);
+
+                // 如果 checkOverflow 沒找到元素（overflowElements 為空），手動塞一個「不明原因」讓它顯示
+                setOverflowElements(prev => {
+                    if (prev.length === 0) {
+                        return [{
+                            tag: 'VIEWPORT',
+                            className: 'viewport-shift',
+                            id: 'visual-viewport',
+                            amount: Math.abs(vvOffset) || window.scrollX
+                        }];
+                    }
+                    return prev;
+                });
+            }
+        };
+        window.addEventListener('scroll', onScroll);
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('scroll', onScroll);
+            window.visualViewport.addEventListener('resize', throttledCheck);
+        }
+
+        throttledCheck();
 
         return () => {
-            window.removeEventListener('load', checkOverflow);
-            window.removeEventListener('resize', checkOverflow);
-            clearTimeout(timer);
+            observer.disconnect();
+            window.removeEventListener('load', throttledCheck);
+            window.removeEventListener('resize', throttledCheck);
+            window.removeEventListener('scroll', onScroll);
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('scroll', onScroll);
+                window.visualViewport.removeEventListener('resize', throttledCheck);
+            }
+            if (timeoutId) clearTimeout(timeoutId);
         };
     }, []);
 

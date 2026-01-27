@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
         >
           {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
+          {/* <LayoutDebugger /> */}
           <Component {...pageProps} />
         </main>
       </ThemeProvider>
