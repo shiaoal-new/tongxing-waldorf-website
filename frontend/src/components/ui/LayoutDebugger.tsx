@@ -65,7 +65,23 @@ export default function LayoutDebugger() {
 
             const offendingRaw = offendingRawFull
                 .filter(item => item.amount > 1.0) // 回歸 1.0，避免 0.5px 的精密誤差
-                .filter(item => !isClippedByAncestor(item.el, innerWidth)); // 過濾掉被安全裁切的元素
+                .filter(item => {
+                    // 1. 忽略完全在視窗右側以外的元素 (通常是 Off-screen Menu / Drawer)
+                    if (item.el.getBoundingClientRect().left >= innerWidth) return false;
+
+                    // 2. 忽略 Aria Hidden 的元素 (無障礙隱藏元素，通常也視覺隱藏)
+                    if (item.el.getAttribute('aria-hidden') === 'true') return false;
+
+                    // 3. 忽略正在做半透明動畫或不可見的元素 (例如 Exit Animation)
+                    const style = window.getComputedStyle(item.el);
+                    if (parseFloat(style.opacity) < 1 || style.pointerEvents === 'none') return false;
+                    // 忽略高 z-index 的絕對定位元素 (通常是 Modal/Drawer/Overlay，溢出多為有意)
+                    if ((style.position === 'absolute' || style.position === 'fixed') && parseInt(style.zIndex) > 10) return false;
+
+                    // 4. 檢查是否被父層裁切
+                    const clipped = isClippedByAncestor(item.el, innerWidth);
+                    return !clipped;
+                }); // 過濾掉被安全裁切和其他無害元素
 
             if (offendingRaw.length > 0 && offendingRaw.length !== elements.filter(item => {
                 const rect = item.getBoundingClientRect();
