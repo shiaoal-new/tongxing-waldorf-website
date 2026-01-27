@@ -6,8 +6,9 @@ class MyDocument extends Document {
     return (
       <Html lang="zh-TW" suppressHydrationWarning>
         <Head>
-
-          {/* Hero poster preload moved to page-level components for dynamic configuration */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet" />
         </Head>
         <body suppressHydrationWarning>
           <Main />

@@ -44,7 +44,7 @@ export default function TypographyDemoBlock({ data }) {
             <div className="grid md:grid-cols-2 gap-6 py-4">
                 <FontFamilyCard
                     title="標題字體 (Heading)"
-                    fontName="思源宋體 (Source Han Serif)"
+                    fontName="思源宋體 (Noto Serif TC)"
                     fontClass="font-heading"
                 />
                 <FontFamilyCard

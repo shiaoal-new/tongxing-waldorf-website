@@ -48,7 +48,7 @@
     --typography-letter-spacing: 0.05em;
 
     /* 字體系統 (Typography Fonts) */
-    --font-heading: var(--font-noto-serif), "Source Han Serif TC", "Noto Serif TC", serif;
+    --font-heading: "Noto Serif TC", serif;
     --font-body: var(--font-noto-sans), "Source Han Sans TC", "Noto Sans TC", sans-serif;
     --font-accent: "Zeyada", "Indie Flower", "Handwriting", cursive;
 
