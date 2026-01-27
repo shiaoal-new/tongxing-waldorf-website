@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import ActionButtons from "../ui/ActionButtons";
-
 import MediaRenderer from "../ui/MediaRenderer";
-import ExpandableText from "../ui/ExpandableText";
 import { MediaItem, CTAButton } from "../../types/content";
+import StaggeredReveal from "../ui/StaggeredReveal";
 
 interface FeatureItemProps {
   span?: number;
@@ -57,30 +55,16 @@ export default function FeatureItem({ span, media, title, children, icon, button
           <Icon icon={icon} className="w-8 h-8" />
         </div>
 
-        <div className="flex flex-col">
-          <h3 className="text-2xl md:text-3xl font-bold text-brand-text dark:text-brand-bg leading-tight mb-4 tracking-tight group-hover:text-brand-accent transition-colors duration-500">
-            {title}
-          </h3>
-          <div className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-            <ExpandableText
-              content={children}
-              collapsedHeight={220}
-
-              expanded={isExpanded}
-              onToggle={setIsExpanded}
-            />
-
-          </div>
-        </div>
-
-        {buttons && buttons.length > 0 && (
-          <div
-            className="mt-10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ActionButtons buttons={buttons} align={align} size="sm" />
-          </div>
-        )}
+        <StaggeredReveal
+          title={title}
+          content={children}
+          buttons={buttons}
+          align={align}
+          isNested={true}
+          expanded={isExpanded}
+          onToggle={setIsExpanded}
+          className="w-full"
+        />
       </div>
 
       {/* Extreme hover shadow effect */}

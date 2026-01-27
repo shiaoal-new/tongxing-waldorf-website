@@ -69,10 +69,12 @@ export default function BlockDispatcher({ block, align = "center", context = "st
     const type = (block as any).type || (block as any).item_type || "text_block";
 
     switch (type) {
-        case "text_block":
-        case "text":
         case "faq_item":
         case "faq":
+            return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} disableExpand={true} />;
+
+        case "text_block":
+        case "text":
             return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} />;
 
         case "feature_item":

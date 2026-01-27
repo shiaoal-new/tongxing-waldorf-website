@@ -610,6 +610,8 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
     );
 }
 
+import StaggeredReveal from '../ui/StaggeredReveal';
+
 const PhaseHeader = ({ phase }: { phase: { phaseNumber: number; header?: TimelineItem } }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { margin: "-10% 0px -40% 0px" });
@@ -633,20 +635,18 @@ const PhaseHeader = ({ phase }: { phase: { phaseNumber: number; header?: Timelin
 };
 
 const PhaseIntro = ({ content }: { content: string }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { margin: "0px 0px -30% 0px", once: true });
-
     return (
-        <div
-            ref={ref}
-            className={`relative z-20 max-w-3xl mx-auto mb-24 px-6 ${styles['phase-intro-anim']} ${isInView ? styles['in-view'] : ''}`}
-        >
+        <div className="relative z-20 max-w-3xl mx-auto mb-24 px-6">
             <div className="relative bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[var(--accent-border)] text-center shadow-lg group hover:shadow-xl transition-shadow duration-500">
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-1 bg-[var(--accent-primary)] rounded-full shadow-sm"></div>
 
-                <p className={`text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif text-justify ${styles['phase-text-anim']}`}>
-                    {content}
-                </p>
+                <StaggeredReveal
+                    content={content}
+                    align="center"
+                    isNested={false} // Use primary text style for intro
+                    collapsedHeight={400} // Don't collapse prematurely in timeline intro
+                    className="font-serif !text-justify"
+                />
             </div>
         </div>
     );

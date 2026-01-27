@@ -22,6 +22,8 @@ interface VideoItemProps {
     className?: string;
 }
 
+import StaggeredReveal from "./ui/StaggeredReveal";
+
 export default function VideoItem({ video, className }: VideoItemProps) {
 
     // Normalize media data
@@ -145,21 +147,14 @@ export default function VideoItem({ video, className }: VideoItemProps) {
             <div className="p-8 flex flex-col flex-grow relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
 
-                <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-4 flex-wrap">
-                        <h3 className="text-xl md:text-2xl font-bold text-brand-text dark:text-brand-bg leading-tight">
-                            {video.title}
-                        </h3>
-                        {video.duration && (
-                            <span className="text-sm font-medium text-brand-taupe dark:text-brand-taupe/80 bg-stone-100 dark:bg-white/10 px-2.5 py-0.5 rounded-full border border-stone-200 dark:border-white/10 whitespace-nowrap">
-                                {video.duration}
-                            </span>
-                        )}
-                    </div>
-                    <p className="text-brand-taupe dark:text-brand-taupe/80 text-base leading-relaxed line-clamp-3">
-                        {video.content}
-                    </p>
-                </div>
+                <StaggeredReveal
+                    title={video.title}
+                    content={video.content}
+                    duration={video.duration}
+                    align="left"
+                    isNested={true}
+                    className="relative z-10"
+                />
             </div>
         </div>
     );
