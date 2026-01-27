@@ -191,7 +191,7 @@ const ScheduleBlock = ({ data }: ScheduleBlockProps) => {
                 className="max-w-3xl mx-auto mb-12"
             >
                 <div className="bg-gradient-to-br from-brand-accent/5 to-brand-accent/10 dark:from-brand-accent/10 dark:to-brand-accent/5 rounded-3xl p-6 border border-brand-accent/20 backdrop-blur-sm">
-                    <h3 className="text-center text-brand-accent font-bold mb-4 text-lg">
+                    <h3 className="text-center text-brand-accent font-bold mb-4 text-lg animate-breathing">
                         一呼一吸的學習節奏
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
