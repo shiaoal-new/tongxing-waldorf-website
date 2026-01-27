@@ -2,8 +2,24 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 /**
+ * Global state that persists across component remounts during client-side navigation.
+ */
+let isPopStateGlobal = false;
+let isFirstLoad = true; // Track if this is the very first time the hook/app is loading
+
+if (typeof window !== 'undefined') {
+    // Listen for back/forward navigation
+    window.addEventListener('popstate', () => {
+        isPopStateGlobal = true;
+    });
+}
+
+/**
  * Hook to manually handle scroll restoration.
- * Enhanced for iOS Safari compatibility.
+ * Correctly distinguishes between:
+ * 1. Initial page load (Check if reload)
+ * 2. Back/Forward navigation (Restore position)
+ * 3. New navigation (Scroll to top)
  */
 export function useScrollRestoration() {
     const router = useRouter();
@@ -17,26 +33,22 @@ export function useScrollRestoration() {
         }
 
         const saveScrollPos = (url: string) => {
-            if (isRestoring.current) return; // Don't save 0 while restoring
+            if (isRestoring.current) return;
 
             const scrollY = window.scrollY;
-            if (scrollY < 0) return; // Ignore iOS overscroll bounce
+            if (scrollY < 0) return; // iOS bounce
 
             scrollPositions.current[url] = scrollY;
             try {
                 sessionStorage.setItem(`scrollPos:${url}`, scrollY.toString());
-            } catch (e) {
-                // Ignore storage errors
-            }
+            } catch (e) { }
         };
 
         const restoreScrollPos = (url: string) => {
             let pos = 0;
-            // First check memory cache (fastest)
             if (scrollPositions.current[url] !== undefined) {
                 pos = scrollPositions.current[url];
             } else {
-                // Fallback to session storage (persistence)
                 try {
                     const sessionPos = sessionStorage.getItem(`scrollPos:${url}`);
                     if (sessionPos) pos = parseInt(sessionPos, 10);
@@ -45,44 +57,54 @@ export function useScrollRestoration() {
 
             if (pos > 0) {
                 isRestoring.current = true;
-
-                // Immediate restoration
                 window.scrollTo(0, pos);
 
-                // Multiple checks for iOS/laggy content
-                // iOS Safari sometimes ignores the first scrollTo if layout isn't ready
-                const attempts = [10, 50, 100, 200];
+                // iOS and dynamic content handling
+                const attempts = [10, 50, 100, 200, 400];
                 attempts.forEach(delay => {
                     setTimeout(() => {
-                        // Only force if we haven't scrolled manually away
-                        // Allow small variance (browser quirks)
-                        if (Math.abs(window.scrollY - pos) > 20) {
-                            // User moved? or Failed restoration?
-                            // We re-force only if still near top (failed restore)
-                            if (window.scrollY < 50) {
-                                window.scrollTo(0, pos);
-                            }
+                        // Re-verify if we are still where we should be
+                        // If user has manually scrolled a lot, we stop forcing
+                        if (Math.abs(window.scrollY - pos) > 50 && window.scrollY > 100) {
+                            return;
+                        }
+                        if (Math.abs(window.scrollY - pos) > 10) {
+                            window.scrollTo(0, pos);
                         }
                     }, delay);
                 });
 
-                // Cleanup flag
                 setTimeout(() => {
                     isRestoring.current = false;
-                }, 250);
+                }, 500);
             }
         };
 
-        // Save scroll on scroll event (throttled) - essential for Mobile Safari
-        // which might kill the page before 'routeChangeStart' or 'beforeunload' completes
+        const scrollToTop = () => {
+            isRestoring.current = true;
+            window.scrollTo(0, 0);
+
+            // Repeat to ensure we win against any internal scroll restoration
+            [10, 50, 100].forEach(delay => {
+                setTimeout(() => {
+                    if (window.scrollY > 0) {
+                        window.scrollTo(0, 0);
+                    }
+                }, delay);
+            });
+
+            setTimeout(() => {
+                isRestoring.current = false;
+            }, 150);
+        };
+
         let scrollTimeout: NodeJS.Timeout;
         const handleScroll = () => {
             if (isRestoring.current) return;
-
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 saveScrollPos(router.asPath);
-            }, 100);
+            }, 150);
         };
 
         const handleRouteChangeStart = () => {
@@ -90,7 +112,12 @@ export function useScrollRestoration() {
         };
 
         const handleRouteChangeComplete = (url: string) => {
-            restoreScrollPos(url);
+            if (isPopStateGlobal) {
+                restoreScrollPos(url);
+            } else {
+                scrollToTop();
+            }
+            isPopStateGlobal = false;
         };
 
         const handleBeforeUnload = () => {
@@ -100,13 +127,30 @@ export function useScrollRestoration() {
         // Listeners
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('beforeunload', handleBeforeUnload);
-        window.addEventListener('pagehide', handleBeforeUnload); // iOS workaround
+        window.addEventListener('pagehide', handleBeforeUnload);
 
         router.events.on('routeChangeStart', handleRouteChangeStart);
         router.events.on('routeChangeComplete', handleRouteChangeComplete);
 
-        // Initial restore
-        restoreScrollPos(router.asPath);
+        // Logic for current page hit (Initial mount or Route change)
+        if (isFirstLoad) {
+            // Check if actual document reload
+            const navigationEntries = performance.getEntriesByType('navigation');
+            const isReload = navigationEntries.length > 0 &&
+                (navigationEntries[0] as PerformanceNavigationTiming).type === 'reload';
+
+            if (isReload) {
+                restoreScrollPos(router.asPath);
+            } else {
+                scrollToTop();
+            }
+            isFirstLoad = false;
+        } else if (isPopStateGlobal) {
+            // This case handles when the component mounts DUE to a popstate transition
+            // (if it wasn't already handled by handleRouteChangeComplete)
+            restoreScrollPos(router.asPath);
+            isPopStateGlobal = false;
+        }
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
