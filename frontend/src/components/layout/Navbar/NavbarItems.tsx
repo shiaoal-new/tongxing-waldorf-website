@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { ThemeList } from "../../ui/DarkSwitch";
-import { NextRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 export interface NavbarItemType {
     title: string;
@@ -22,6 +23,7 @@ interface NavbarActionItemProps {
     showBackgroundGrid: boolean;
     className?: string;
     isMobile?: boolean;
+    isSubMenu?: boolean;
     router?: NextRouter;
 }
 
@@ -36,6 +38,7 @@ export function NavbarActionItem({
     showBackgroundGrid,
     className = "",
     isMobile = false,
+    isSubMenu = false,
     router
 }: NavbarActionItemProps) {
     const baseStyles = isMobile
@@ -43,8 +46,8 @@ export function NavbarActionItem({
             ? 'text-brand-accent font-semibold bg-brand-accent/10'
             : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 active:bg-brand-accent/10'
         }`
-        : `flex items-center justify-between transition-colors micro-hover-link rounded-md ${active
-            ? "bg-brand-accent text-brand-bg"
+        : `flex items-center justify-between transition-all duration-300 micro-hover-link rounded-md relative ${active
+            ? "text-brand-accent bg-brand-accent/5 font-medium"
             : "text-brand-text dark:text-brand-bg hover:text-brand-accent"
         }`;
 
@@ -135,6 +138,15 @@ export function NavbarActionItem({
             {item.children && item.children.length > 0 && !isMobile && (
                 <ChevronDownIcon className="w-4 h-4 -rotate-90" />
             )}
+            {active && !isMobile && !isSubMenu && (
+                <motion.div
+                    layoutId="nav-active"
+                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-accent rounded-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                />
+            )}
         </Link>
     );
 }
@@ -145,19 +157,48 @@ interface NavbarListItemProps {
     showBackgroundGrid: boolean;
 }
 
+const isItemActive = (item: NavbarItemType, currentPath: string): boolean => {
+    if (!item.path) return false;
+    if (item.path === '/') return currentPath === '/';
+    return currentPath === item.path || currentPath.startsWith(item.path + '/');
+};
+
+const hasActiveChild = (item: NavbarItemType, currentPath: string): boolean => {
+    if (item.children) {
+        return item.children.some(child => isItemActive(child, currentPath) || hasActiveChild(child, currentPath));
+    }
+    return false;
+};
+
 export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: NavbarListItemProps) {
+    const router = useRouter();
+    const currentPath = router.asPath.split('?')[0]; // Ignore query params
+    const active = isItemActive(item, currentPath) || hasActiveChild(item, currentPath);
+
     if (item.children && item.children.length > 0) {
         return (
             <Menu as="div" className="relative inline-block text-left group">
                 {({ open }: { open: boolean }) => (
                     <>
-                        <MenuButton className="inline-flex items-center px-4 py-2 text-base font-normal text-brand-text no-underline rounded-md dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none group">
+                        <MenuButton className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${active
+                            ? "text-brand-accent bg-brand-accent/5 font-medium"
+                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none"
+                            }`}>
                             <span className="micro-hover-link">{item.title}</span>
                             <ChevronDownIcon
                                 className={`${open ? "transform rotate-180" : ""
                                     } w-5 h-5 ml-1 transition-transform duration-200 group-hover:text-brand-accent`}
                                 aria-hidden="true"
                             />
+                            {active && (
+                                <motion.div
+                                    layoutId="nav-active"
+                                    className="absolute bottom-0 left-4 right-8 h-0.5 bg-brand-accent rounded-full"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                />
+                            )}
                         </MenuButton>
                         <Transition
                             as={Fragment}
@@ -170,38 +211,46 @@ export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: Nav
                         >
                             <MenuItems className="absolute left-0 w-48 mt-2 origin-top-left bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700 overflow-hidden">
                                 <div className="py-1">
-                                    {item.children.map((child, idx) => (
-                                        <MenuItem key={idx}>
-                                            {({ active }: { active: boolean }) => (
-                                                <div className="relative group/sub">
-                                                    <NavbarActionItem
-                                                        item={child}
-                                                        active={active}
-                                                        actionHandlers={actionHandlers}
-                                                        showBackgroundGrid={showBackgroundGrid}
-                                                        className="text-sm px-4 py-2"
-                                                    />
+                                    {item.children.map((child, idx) => {
+                                        const childActive = isItemActive(child, currentPath) || hasActiveChild(child, currentPath);
+                                        return (
+                                            <MenuItem key={idx}>
+                                                {({ active: hoverActive }: { active: boolean }) => (
+                                                    <div className="relative group/sub">
+                                                        <NavbarActionItem
+                                                            item={child}
+                                                            active={childActive || hoverActive}
+                                                            actionHandlers={actionHandlers}
+                                                            showBackgroundGrid={showBackgroundGrid}
+                                                            className="text-sm px-4 py-2"
+                                                            isSubMenu
+                                                        />
 
-                                                    {child.children && child.children.length > 0 && (
-                                                        <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
-                                                            <div className="py-1">
-                                                                {child.children.map((grandChild, gIdx) => (
-                                                                    <NavbarActionItem
-                                                                        key={gIdx}
-                                                                        item={grandChild}
-                                                                        active={false}
-                                                                        actionHandlers={actionHandlers}
-                                                                        showBackgroundGrid={showBackgroundGrid}
-                                                                        className="text-sm px-4 py-2 block w-full text-left"
-                                                                    />
-                                                                ))}
+                                                        {child.children && child.children.length > 0 && (
+                                                            <div className="absolute left-full top-0 w-48 ml-px bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
+                                                                <div className="py-1">
+                                                                    {child.children.map((grandChild, gIdx) => {
+                                                                        const grandChildActive = isItemActive(grandChild, currentPath);
+                                                                        return (
+                                                                            <NavbarActionItem
+                                                                                key={gIdx}
+                                                                                item={grandChild}
+                                                                                active={grandChildActive}
+                                                                                actionHandlers={actionHandlers}
+                                                                                showBackgroundGrid={showBackgroundGrid}
+                                                                                className="text-sm px-4 py-2 block w-full text-left"
+                                                                                isSubMenu
+                                                                            />
+                                                                        );
+                                                                    })}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </MenuItem>
-                                    ))}
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </MenuItem>
+                                        );
+                                    })}
                                 </div>
                             </MenuItems>
                         </Transition>
@@ -214,10 +263,10 @@ export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: Nav
     return (
         <NavbarActionItem
             item={item}
-            active={false}
+            active={active}
             actionHandlers={actionHandlers}
             showBackgroundGrid={showBackgroundGrid}
-            className="text-base font-normal px-4 py-2"
+            className="text-base font-normal px-4 py-2 relative"
         />
     );
 }
@@ -230,13 +279,15 @@ interface MobileNavbarItemProps {
 }
 
 export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundGrid }: MobileNavbarItemProps) {
-    const isActive = router.pathname === item.path;
+    const currentPath = router.asPath.split('?')[0];
+    const isActive = isItemActive(item, currentPath);
+    const hasActiveChildItem = hasActiveChild(item, currentPath);
 
     if (item.children && item.children.length > 0) {
         return (
             <li>
-                <details className="group" name="mobile-nav-main">
-                    <summary className="list-none font-medium text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2.5 px-3 rounded-lg hover:bg-brand-accent/5 active:bg-brand-accent/10 [&::-webkit-details-marker]:hidden">
+                <details className="group" name="mobile-nav-main" open={hasActiveChildItem}>
+                    <summary className={`list-none font-medium transition-colors cursor-pointer py-2.5 px-3 rounded-lg hover:bg-brand-accent/5 active:bg-brand-accent/10 [&::-webkit-details-marker]:hidden ${hasActiveChildItem ? 'text-brand-accent bg-brand-accent/5' : 'text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent'}`}>
                         <span className="flex items-center gap-2">
                             <svg className="w-4 h-4 opacity-60 group-open:rotate-90 group-open:opacity-100 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -246,12 +297,13 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
                     </summary>
                     <ul className="ml-4 mt-1 space-y-0.5 border-l-2 border-brand-taupe/10 dark:border-brand-structural/30 pl-3">
                         {item.children.map((child, idx) => {
-                            const childIsActive = router.pathname === child.path;
+                            const childActive = isItemActive(child, currentPath);
+                            const childHasActiveChild = hasActiveChild(child, currentPath);
                             return (
                                 <li key={idx}>
                                     {child.children && child.children.length > 0 ? (
-                                        <details className="group/sub" name={`mobile-nav-sub-${item.title}`}>
-                                            <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden">
+                                        <details className="group/sub" name={`mobile-nav-sub-${item.title}`} open={childHasActiveChild}>
+                                            <summary className={`list-none text-sm transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden ${childHasActiveChild ? 'text-brand-accent font-medium' : 'text-brand-taupe dark:text-brand-taupe hover:text-brand-accent focus:text-brand-accent'}`}>
                                                 <span className="flex items-center gap-2">
                                                     <svg className="w-3 h-3 opacity-60 group-open/sub:rotate-90 group-open/sub:opacity-100 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -261,12 +313,12 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
                                             </summary>
                                             <ul className="ml-3 mt-1 space-y-0.5 border-l border-brand-taupe/10 dark:border-brand-structural/20 pl-2">
                                                 {child.children.map((grandChild, gIdx) => {
-                                                    const grandChildIsActive = router.pathname === grandChild.path;
+                                                    const grandChildActive = isItemActive(grandChild, currentPath);
                                                     return (
                                                         <li key={gIdx}>
                                                             <NavbarActionItem
                                                                 item={grandChild}
-                                                                active={grandChildIsActive}
+                                                                active={grandChildActive}
                                                                 actionHandlers={actionHandlers}
                                                                 showBackgroundGrid={showBackgroundGrid}
                                                                 className="text-xs py-1.5 px-2 mb-0.5"
@@ -281,7 +333,7 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
                                     ) : (
                                         <NavbarActionItem
                                             item={child}
-                                            active={childIsActive}
+                                            active={childActive}
                                             actionHandlers={actionHandlers}
                                             showBackgroundGrid={showBackgroundGrid}
                                             className="text-sm py-2 px-2 mb-0.5"
