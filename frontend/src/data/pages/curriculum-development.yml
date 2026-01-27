@@ -49,7 +49,7 @@ sections:
             icon: lucide:scale
             media:
               type: image
-              image: /img/curriculum-development/balance.jpg
+              image: /img/curriculum-development/balance.webp
             content: 如果只有思考會變得冷酷乾枯，只有意志會變得盲目衝動，唯有透過「情感」的滋養，才能讓兩者平衡。
 
   - section_id: curriculum-main

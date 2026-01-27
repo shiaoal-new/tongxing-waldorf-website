@@ -39,6 +39,14 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     const pages = getAllPages();
     const navigation = getNavigation();
 
+    // 处理 Hero Layout
+    if (page && page.hero && typeof page.hero.layout === 'string') {
+        const heroLayoutData = getSectionLayoutByTitle(page.hero.layout);
+        if (heroLayoutData) {
+            page.hero.layout = heroLayoutData;
+        }
+    }
+
     // 处理 section layouts
     if (page && page.sections) {
         page.sections = page.sections.map(section => {

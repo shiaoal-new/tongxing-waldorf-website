@@ -1,6 +1,7 @@
 items:
   - title: "認識同心"
     children:
+      - slug: "philosophy"
       - slug: "teacher-group"
       - slug: "timeline"
   - title: "課程與教學"

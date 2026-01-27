@@ -529,5 +529,32 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "curriculum-development/balance.jpg": {
+    "hash": "e0b66ec5cfb2db9f6e0e24fcc986c45b",
+    "processedAt": "2026-01-27T01:38:38.064Z",
+    "originalSize": 415136,
+    "optimizedSize": 28890,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "curriculum-development/stages.jpg": {
+    "hash": "f95c3e9797d5fcafe9a0d63d564b85dd",
+    "processedAt": "2026-01-27T01:38:38.138Z",
+    "originalSize": 410579,
+    "optimizedSize": 22848,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "vision-header.png": {
+    "hash": "ccf3ea779ff2726b11db96bf14ab111e",
+    "processedAt": "2026-01-27T01:38:38.252Z",
+    "originalSize": 801342,
+    "optimizedSize": 88796,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }

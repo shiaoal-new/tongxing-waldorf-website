@@ -1,0 +1,7 @@
+title: "Hero: 中央圖文 (願景頁風格)"
+css_classes: |
+  wrapper_class: absolute inset-0 w-full h-full flex flex-col items-center justify-center p-mobile-margin md:p-desktop-margin z-20 text-center
+  container_class: relative flex items-center justify-center min-h-[100lvh] overflow-hidden bg-brand-structural
+  title_class: text-4xl font-serif font-bold leading-tight tracking-wide text-white lg:text-5xl xl:text-6xl mb-6 drop-shadow-lg max-w-4xl
+  pretitle_class: hidden
+  description_class: text-lg md:text-2xl font-light tracking-wider opacity-90 drop-shadow-md text-white max-w-2xl

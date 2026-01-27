@@ -1,0 +1,7 @@
+title: "Hero: 滿版背景圖文 (願景風格)"
+css_classes: |
+  container_class: relative flex items-center justify-center py-32 lg:py-48 overflow-hidden
+  wrapper_class: relative z-10 text-center max-w-4xl px-4
+  title_class: text-3xl font-serif font-bold tracking-wide text-white lg:text-5xl drop-shadow-lg leading-tight mb-8
+  subtitle_class: text-brand-accent/80 font-bold tracking-brand text-sm uppercase mb-4
+  description_class: text-lg lg:text-2xl font-light tracking-wider text-white/90 drop-shadow-md leading-relaxed
