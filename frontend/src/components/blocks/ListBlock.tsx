@@ -1,4 +1,6 @@
-import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListRenderer";
+import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListLayoutRenderer";
+
+
 import { usePageData } from "../../context/PageDataContext";
 import BlockDispatcher from "./BlockDispatcher";
 import { ListBlock as ListBlockType, FaqItem, ListItem } from "../../types/content";
@@ -46,7 +48,8 @@ export default function ListBlock({ block }: ListBlockProps) {
                 </div>
             )}
             <ListRenderer
-                direction={direction}
+                direction={direction as "horizontal" | "vertical"}
+
                 items={listItems}
                 layout={block.layout_method || "scrollable_grid"}
                 columns={3}

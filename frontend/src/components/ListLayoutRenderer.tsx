@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// Touch fix build cache
 import { motion } from "framer-motion";
+
 import dynamic from 'next/dynamic';
 
 import ActionButtons from "./ui/ActionButtons";
 import Disclosure from "./ui/Disclosure";
 import DevComment from "./ui/DevComment";
 
-const ListSwiper = dynamic(() => import('./ListSwiper'), {
+const ListSwiper = dynamic<any>(() => import('./ListSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
-const TestimonialSwiper = dynamic(() => import('./TestimonialSwiper'), {
+
+const TestimonialSwiper = dynamic<any>(() => import('./TestimonialSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
+
 
 /**
  * List Layout Configuration
  * 定義各個佈局的特性，例如是否為全寬顯示
  */
-export const LIST_LAYOUT_CONFIG = {
+export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     grid_cards: { fullWidth: false },
     compact_grid: { fullWidth: false },
     bento_grid: { fullWidth: false },
@@ -27,20 +31,17 @@ export const LIST_LAYOUT_CONFIG = {
     accordion: { fullWidth: false, direction: 'vertical' },
 };
 
+interface ListRendererProps {
+    items?: any[];
+    renderItem: (item: any, index: number, extra?: any) => React.ReactNode;
+    direction?: "horizontal" | "vertical";
+    layout?: string;
+    buttons?: any[];
+    columns?: number;
+}
+
 /**
  * ListRenderer - 一个通用的列表渲染组件
- * 
- * 使用 direction 参数决定排列方向:
- * - horizontal: 横向排列 (scrollable_grid, grid_cards, compact_grid)
- * - vertical: 纵向排列 (accordion)
- * 
- * @param {Object} props
- * @param {Array} props.items - 要渲染的数据项数组
- * @param {Function} props.renderItem - 渲染每个项目的函数 (item, index) => ReactNode
- * @param {string} props.direction - 排列方向: 'horizontal' | 'vertical'
- * @param {string} props.layout - 布局样式: 'scrollable_grid' | 'grid_cards' | 'compact_grid' | 'accordion'
- * @param {Array} props.buttons - 可选的底部按钮配置
- * @param {number} props.columns - 桌面端的列数,默认为 3 (仅用于 scrollable_grid)
  */
 export default function ListRenderer({
     items = [],
@@ -49,8 +50,8 @@ export default function ListRenderer({
     layout = "scrollable_grid",
     buttons,
     columns = 3,
-}) {
-    const [activeIndex, setActiveIndex] = useState(null);
+}: ListRendererProps) {
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     // 如果没有数据,返回 null
     if (!items || items.length === 0) {
@@ -58,7 +59,7 @@ export default function ListRenderer({
     }
 
     // Accordion 模式的切换函数
-    const toggleItem = (index) => {
+    const toggleItem = (index: number) => {
         const isOpening = activeIndex !== index;
         setActiveIndex(isOpening ? index : null);
 
@@ -78,20 +79,19 @@ export default function ListRenderer({
     };
 
     // 根据列数生成对应的 grid-cols 类名
-    const gridColsClass = {
+    const gridColsClass = ({
         1: "lg:grid-cols-1",
         2: "lg:grid-cols-2",
         3: "lg:grid-cols-3",
         4: "lg:grid-cols-4",
         5: "lg:grid-cols-5",
         6: "lg:grid-cols-6",
-    }[columns] || "lg:grid-cols-3";
+    } as Record<number, string>)[columns] || "lg:grid-cols-3";
 
     // 垂直排列 - 使用 Disclosure 折叠面板
-    if (direction === "vertical") {
-        // 監聽來自其他組件（如 ScheduleBlock）的觸發事件
-        React.useEffect(() => {
-            const handleDictionaryTrigger = (event) => {
+    useEffect(() => {
+        if (direction === "vertical") {
+            const handleDictionaryTrigger = (event: any) => {
                 const { id } = event.detail;
                 const targetIndex = items.findIndex(item => item.id === id);
 
@@ -119,8 +119,10 @@ export default function ListRenderer({
             return () => {
                 window.removeEventListener('trigger-dictionary-item', handleDictionaryTrigger);
             };
-        }, [items]);
+        }
+    }, [direction, items]);
 
+    if (direction === "vertical") {
         return (
             <div className="w-full max-w-2xl p-2 mx-auto rounded-2xl">
                 {items.map((item, index) => (
@@ -150,8 +152,6 @@ export default function ListRenderer({
             </div>
         );
     }
-
-    // 横向排列 - 根据 layout 决定具体样式
 
     // Grid Cards 布局 - 静态三栏网格
     if (layout === "grid_cards") {
@@ -202,14 +202,13 @@ export default function ListRenderer({
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6 max-w-brand mx-auto px-1">
                 {items.map((item, index) => {
-                    // 根據預設或項目指定的 span 來決定寬度 (12 欄位制)
-                    // span 12 = 全寬, 6 = 半寬, 4 = 1/3寬, 8 = 2/3寬
-                    const spanClass = {
+                    const span: number = item.span || 4;
+                    const spanClass = ({
                         12: "lg:col-span-12",
                         8: "lg:col-span-8",
                         6: "lg:col-span-6",
                         4: "lg:col-span-4",
-                    }[item.span || 4] || "lg:col-span-4";
+                    } as Record<number, string>)[span] || "lg:col-span-4";
 
                     return (
                         <motion.div
@@ -253,7 +252,7 @@ export default function ListRenderer({
         return (
             <TestimonialSwiper
                 items={items}
-                renderItem={(item, index, pagination) => renderItem(item, index, { pagination })}
+                renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
             />
         );
     }

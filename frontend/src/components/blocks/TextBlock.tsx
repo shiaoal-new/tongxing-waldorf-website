@@ -29,7 +29,7 @@ export default function TextBlock({ data, align, isNested }: TextBlockProps) {
                 <div className={`py-2 ${isNested ? 'text-base' : 'text-lg'} text-brand-taupe dark:text-brand-taupe`}>
                     <ExpandableText
                         content={data.content}
-                        collapsedHeight={isNested ? 80 : 120}
+                        collapsedHeight={isNested ? 80 : 160}
                         disableExpand={isNested || false}
                     />
                 </div>

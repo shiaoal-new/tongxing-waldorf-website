@@ -63,10 +63,12 @@ export default function FeatureItem({ span, media, title, children, icon, button
           <div className="text-brand-taupe dark:text-brand-taupe/90 leading-relaxed text-lg md:text-xl font-medium opacity-80 group-hover:opacity-100 transition-opacity duration-500">
             <ExpandableText
               content={children}
-              collapsedHeight={100}
+              collapsedHeight={220}
+
               expanded={isExpanded}
               onToggle={setIsExpanded}
             />
+
           </div>
         </div>
 

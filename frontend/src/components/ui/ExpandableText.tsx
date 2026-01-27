@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, MouseEvent } from 'react';
 import MarkdownContent from './MarkdownContent';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
+import ExpandToggleButton from './ExpandToggleButton';
+
 
 interface ExpandableTextProps {
     content: string;
@@ -18,7 +20,9 @@ interface ExpandableTextProps {
 const ExpandableText = ({
     content,
     className = "",
-    collapsedHeight = 100,
+    collapsedHeight = 220,
+
+
     disableExpand = false,
     expanded: externalExpanded,
     onToggle: externalOnToggle
@@ -38,9 +42,11 @@ const ExpandableText = ({
         }
 
         if (contentRef.current) {
-            const { scrollHeight, clientHeight } = contentRef.current;
-            setHasOverflow(scrollHeight > collapsedHeight + 20); // 加上一點緩衝
+            const { scrollHeight } = contentRef.current;
+            setHasOverflow(scrollHeight > collapsedHeight + 50); // 增加緩衝空間
+
         }
+
     }, [content, collapsedHeight, disableExpand]);
 
     const toggleExpand = (e: MouseEvent<HTMLButtonElement>) => {
@@ -63,36 +69,26 @@ const ExpandableText = ({
         <div className={`relative ${className}`}>
             <div
                 ref={contentRef}
-                className={`${disableExpand ? '' : 'overflow-hidden transition-[max-height] duration-700 ease-in-out'} relative`}
+                className={`${(disableExpand || !hasOverflow) ? '' : 'overflow-hidden transition-[max-height] duration-700 ease-in-out'} relative`}
                 style={disableExpand ? {} : {
-                    maxHeight: isExpanded ? '2000px' : `${collapsedHeight}px`,
-                    maskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none',
-                    WebkitMaskImage: !isExpanded && hasOverflow ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none'
+                    maxHeight: (hasOverflow || isExpanded) ? (isExpanded ? '2000px' : `${collapsedHeight}px`) : 'none',
+                    maskImage: isExpanded || !hasOverflow ? 'none' : 'linear-gradient(to bottom, black 60%, transparent 100%)',
+                    WebkitMaskImage: isExpanded || !hasOverflow ? 'none' : 'linear-gradient(to bottom, black 60%, transparent 100%)'
                 }}
             >
+
                 <MarkdownContent content={content} />
             </div>
 
             {hasOverflow && (
                 <div className="mt-2 flex justify-center relative z-20">
-                    <button
-                        onClick={toggleExpand}
-                        className="group flex items-center gap-1.5 text-sm font-bold text-brand-accent hover:text-white transition-all duration-300 bg-brand-accent/10 hover:bg-brand-accent backdrop-blur-md px-4 py-1.5 rounded-full border border-brand-accent/30 shadow-sm hover:shadow-brand-accent/20"
-                    >
-                        {isExpanded ? (
-                            <>
-                                <span>收合</span>
-                                <ChevronUpIcon className="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform" />
-                            </>
-                        ) : (
-                            <>
-                                <span>展開</span>
-                                <ChevronDownIcon className="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" />
-                            </>
-                        )}
-                    </button>
+                    <ExpandToggleButton
+                        isExpanded={isExpanded}
+                        onToggle={toggleExpand}
+                    />
                 </div>
             )}
+
         </div>
     );
 };

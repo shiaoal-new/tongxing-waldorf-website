@@ -8,7 +8,13 @@ import styles from "./ListSwiper.module.css";
 import DevComment from "./ui/DevComment";
 import ActionButtons from "./ui/ActionButtons";
 
-export default function ListSwiper({ items, renderItem, buttons }) {
+interface ListSwiperProps {
+    items: any[];
+    renderItem: (item: any, index: number) => React.ReactNode;
+    buttons?: any[];
+}
+
+export default function ListSwiper({ items, renderItem, buttons }: ListSwiperProps) {
     return (
         <div className={`w-full mx-auto ${styles['list-swiper-container']}`}>
             <DevComment text="Swiper Effect Cards Container" />

@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
+// Touch fix build
 import React from "react";
+
 import FeatureItem from "./FeatureItem";
 import VideoItem from "../Video";
 import TextBlock from "./TextBlock";

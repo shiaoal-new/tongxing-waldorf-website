@@ -1,8 +1,31 @@
 import React from "react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import { motion, AnimatePresence } from "framer-motion";
+import ExpandToggleButton from "./ExpandToggleButton";
 
-export default function Disclosure({ title, subtitle, children, isOpen, onToggle, className = "", index }) {
+interface DisclosureProps {
+    title: string;
+    subtitle?: string;
+    children: React.ReactNode;
+    isOpen: boolean;
+    onToggle: () => void;
+    className?: string;
+    index?: number;
+}
+
+/**
+ * Disclosure Component
+ * 統一的折疊面板組件
+ */
+export default function Disclosure({
+    title,
+    subtitle,
+    children,
+    isOpen,
+    onToggle,
+    className = "",
+    index
+}: DisclosureProps) {
     // Format index to 01, 02, etc.
     const displayIndex = index !== undefined ? (index + 1).toString().padStart(2, '0') : null;
 
@@ -70,17 +93,14 @@ export default function Disclosure({ title, subtitle, children, isOpen, onToggle
                                 {children}
 
                                 <div className="mt-6 flex justify-end">
-                                    <button
-                                        onClick={(e) => {
+                                    <ExpandToggleButton
+                                        isExpanded={isOpen}
+                                        onToggle={(e) => {
                                             e.stopPropagation();
                                             onToggle();
                                         }}
-                                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-accent transition-all duration-300 rounded-full hover:bg-brand-accent/10 hover:shadow-sm"
-                                        aria-label="收合"
-                                    >
-                                        <span>收合</span>
-                                        <ChevronUpIcon className="w-4 h-4" />
-                                    </button>
+                                        showLabel={true}
+                                    />
                                 </div>
                             </div>
                         </div>

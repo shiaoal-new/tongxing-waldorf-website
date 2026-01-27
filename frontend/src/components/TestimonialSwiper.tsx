@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+interface TestimonialSwiperProps {
+    items: any[];
+    renderItem: (item: any, index: number, meta: { current: number, total: number }) => React.ReactNode;
+}
+
 /**
  * TestimonialSwiper
  * 專為見證設計的輪播組件，具有置中放大的視覺效果
  */
-export default function TestimonialSwiper({ items, renderItem }) {
-    const [prevEl, setPrevEl] = useState(null);
-    const [nextEl, setNextEl] = useState(null);
-    const [realIndex, setRealIndex] = useState(0);
+export default function TestimonialSwiper({ items, renderItem }: TestimonialSwiperProps) {
+    const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
+    const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
 
     return (
         <div className="testimonial-swiper-wrapper py-6 md:py-16 relative px-0 md:px-12 lg:px-20 overflow-x-hidden w-full group">
@@ -43,7 +47,6 @@ export default function TestimonialSwiper({ items, renderItem }) {
                 slidesPerView={1.4}
                 centeredSlides={true}
                 loop={true}
-                onSlideChange={(swiper) => setRealIndex(swiper.realIndex)}
                 navigation={{
                     prevEl,
                     nextEl,
