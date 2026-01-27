@@ -236,7 +236,7 @@ export default function PageHero({ data }: PageHeroProps) {
                         {accent_text && (
                             <motion.span
                                 variants={accentVariants}
-                                className="absolute -top-6 -right-2 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
+                                className="absolute -top-6 right-0 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
                             >
                                 {accent_text}
                             </motion.span>
