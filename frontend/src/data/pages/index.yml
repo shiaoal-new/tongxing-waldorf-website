@@ -49,6 +49,7 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+      - type: cta_block
         buttons:
           - text: 了解同心的課程設計
             link: /curriculum-development
@@ -85,6 +86,11 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
+      - type: cta_block
+        buttons:
+          - text: 了解我們的教育理念
+            link: /philosophy
+            style: btn-primary
   - section_id: videos
     divider:
       type: wave
@@ -218,15 +224,11 @@ sections:
           - graduates
           - transition
   - layout: 紫色大型看板 (CTA)
-    divider:
-      type: curve
-      position: top
-      color: fill-brand-bg
-      flip: true
     blocks:
       - type: text_block
         title: 點亮教育新願景
         content: 網站看再久，都不如親自走一趟深坑大學校區。歡迎預約參觀，看見「山林間暖火」的活力，體驗 1-9 年級完整學制的穩定力量。
+      - type: cta_block
         buttons:
           - text: 預約參觀
             link: /visit

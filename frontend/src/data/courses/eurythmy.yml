@@ -86,6 +86,7 @@ sections:
       - type: text_block
         title: 親自來感受生命律動
         content: 優律思美是同心孩子們最特別的體驗之一。
+      - type: cta_block
         buttons:
           - text: 返回特色課程
             link: /featured-courses

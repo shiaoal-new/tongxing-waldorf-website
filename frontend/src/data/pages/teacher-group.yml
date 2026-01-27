@@ -150,6 +150,7 @@ sections:
       - type: text_block
         title: 點亮深坑：開箱教育地標
         content: 您是否也在尋找一個能與高等教育資源共榮、並提供 1-9 年級穩定成長環境的教育機構？與其聽說，不如親自走入同心的專業校園，看見孩子生命力的綻放。
+      - type: cta_block
         buttons:
           - text: 預約參觀
             link: /visit

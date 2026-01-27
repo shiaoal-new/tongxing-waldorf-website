@@ -118,4 +118,18 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    /* --- layout-cta-banner 專用樣式 (用於覆蓋 TextBlock 預設顏色) --- */
+    .layout-cta-banner h3 {
+        @apply text-white !important;
+    }
+
+    .layout-cta-banner .text-brand-taupe {
+        @apply text-white/80 !important;
+    }
+
+
+    .layout-cta-banner .label-accent {
+        @apply text-white/90 !important;
+    }
 }

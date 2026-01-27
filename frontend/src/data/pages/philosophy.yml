@@ -104,15 +104,11 @@ sections:
         content: "這是最終綻放的花。我們許下願望：教育不應是工廠的生產線，而是花園的滋養。我們預見一個由「自由心靈」組成的未來——那裡的每個人都深知自己的天賦，擁有愛人的能力，並能勇敢地在變動的世界中定錨。"
 
   - layout: 紫色大型看板 (CTA)
-    divider:
-      type: curve
-      position: top
-      color: fill-brand-bg
-      flip: true
     blocks:
       - type: text_block
         title: "「如果你也聽見了內心的召喚……」"
         content: "教育可以有一種不一樣的可能。邀請你走入同心，與我們一起見證花開的聲音。"
+      - type: cta_block
         buttons:
           - text: "了解更多入學資訊"
             link: "/visit"

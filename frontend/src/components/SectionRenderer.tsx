@@ -56,7 +56,9 @@ function resolveSectionData(section: any) {
     // 1. 處理 Header 提取邏輯
     let headerProps: any = {};
     let contentBlocks = blocks;
-    if (firstBlock?.type === 'text_block' && (firstBlock.title || firstBlock.subtitle)) {
+    const isCTABanner = section._layout?.title === "紫色大型看板 (CTA)";
+
+    if (!isCTABanner && firstBlock?.type === 'text_block' && (firstBlock.title || firstBlock.subtitle)) {
         const textBlock = firstBlock as TextBlock;
         headerProps = {
             title: textBlock.title,
@@ -84,9 +86,10 @@ function resolveSectionData(section: any) {
             media_list: section.media_list,
             parallax_ratio: section.parallax_ratio,
             divider: section.divider,
-            shader_gradient: section.shader_gradient || section._layout?.title === "紫色大型看板 (CTA)",
+            shader_gradient: section.shader_gradient || isCTABanner,
             silk_background: section.silk_background,
             ignore_padding: section.ignore_padding || determineIgnorePadding(blocks),
+            content_inside_wrapper: isCTABanner
         }
     };
 }

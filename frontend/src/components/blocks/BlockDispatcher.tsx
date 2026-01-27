@@ -6,8 +6,9 @@ import TextBlock from "./TextBlock";
 import Card from "./Card";
 import ListBlock from "./ListBlock";
 import MemberBlock from "./MemberBlock";
+import CTABlock from "./CTABlock";
 import TestimonialItem from "./TestimonialItem";
-import { Block, ListItem, TextBlock as TextBlockType, FeatureItem as FeatureItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType } from "../../types/content";
+import { Block, ListItem, TextBlock as TextBlockType, FeatureItem as FeatureItemType, ListBlock as ListBlockType, ScheduleBlock as ScheduleBlockType, CurriculumBlock as CurriculumBlockType, QuestionnaireBlock as QuestionnaireBlockType, CTABlock as CTABlockType } from "../../types/content";
 
 /**
  * Loading Fallback Component
@@ -115,6 +116,9 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "list_block":
             return <ListBlock block={block as ListBlockType} />;
+
+        case "cta_block":
+            return <CTABlock block={block as CTABlockType} />;
 
         case "member_block":
             return <MemberBlock block={block as any} />;

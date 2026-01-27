@@ -186,6 +186,7 @@ sections:
       - type: text_block
         title: 親自來感受
         content: 課表看完了，但真實的感覺是什麼樣？歡迎來學校走走，看看孩子們上課的樣子——那種專注又放鬆的氛圍，真的要親眼看過才懂。
+      - type: cta_block
         buttons:
           - text: 預約參觀
             link: /visit

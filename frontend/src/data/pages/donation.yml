@@ -81,6 +81,7 @@ sections:
       - type: text_block
         title: 與我們聯繫
         content: 對於捐款細節、抵稅方式或資源媒合有任何想法，歡迎隨時與行政辦公室聯繫。
+      - type: cta_block
         buttons:
           - text: 寄信給我們
             link: "mailto:office@tongxing.org.tw"

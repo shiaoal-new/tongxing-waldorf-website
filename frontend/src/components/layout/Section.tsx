@@ -38,6 +38,7 @@ interface SectionProps {
     shader_gradient?: boolean;
     silk_background?: boolean;
     ignore_padding?: boolean;
+    content_inside_wrapper?: boolean;
     [key: string]: any;
 }
 
@@ -60,6 +61,7 @@ export default function Section(props: SectionProps) {
         shader_gradient,
         silk_background,
         ignore_padding,
+        content_inside_wrapper,
         ...rest
     } = props;
 
@@ -114,6 +116,12 @@ export default function Section(props: SectionProps) {
             }}
             {...rest}
         >
+            {/* Moved shader gradient inside motion.div for contained effect if content_inside_wrapper is true, 
+                otherwise keep it here for full-section effect. 
+                Actually, the user wants it to be a billboard, so it should be inside the wrapper. */}
+            {shader_gradient && !content_inside_wrapper && isInView && (
+                <ShaderGradientBackgroundDynamic />
+            )}
             {/* SVG Divider */}
             {divider && (
                 <SectionDivider
@@ -133,7 +141,7 @@ export default function Section(props: SectionProps) {
             )}
 
             <Container
-                limit={true}
+                limit={limit !== false}
                 ignorePadding={ignore_padding}
                 className={`flex w-full flex-col relative ${align === "left" ? "" : "items-center justify-center text-center"}`}>
                 <motion.div
@@ -144,7 +152,7 @@ export default function Section(props: SectionProps) {
                     variants={variants}
                     className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class} ${shader_gradient ? '!bg-transparent' : ''}`}
                 >
-                    {shader_gradient && isInView && (
+                    {shader_gradient && content_inside_wrapper && isInView && (
                         <ShaderGradientBackgroundDynamic />
                     )}
                     {subtitle && (
@@ -172,11 +180,17 @@ export default function Section(props: SectionProps) {
                             className="mt-6 relative z-10"
                         />
                     )}
+
+                    {content_inside_wrapper && bodyContent && (
+                        <div className="w-full relative z-10">
+                            {bodyContent}
+                        </div>
+                    )}
                 </motion.div>
             </Container>
 
             {
-                bodyContent && (
+                !content_inside_wrapper && bodyContent && (
                     <Container limit={!!limit} ignorePadding={ignore_padding} className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
                         {bodyContent}
                     </Container>

@@ -170,7 +170,13 @@ export interface TimelineBlock extends BaseBlock {
     items: TimelineItem[];
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock;
+export interface CTABlock extends BaseBlock {
+    type: 'cta_block';
+    buttons: CTAButton[];
+    align?: 'left' | 'center' | 'right';
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock;
 
 export interface Divider {
     type: 'wave' | 'curve';
