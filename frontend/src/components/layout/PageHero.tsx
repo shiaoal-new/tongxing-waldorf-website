@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "../ui/Container";
+import ShinyText from "../ui/ShinyText";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import BackgroundCarousel from "../BackgroundCarousel";
@@ -107,7 +108,7 @@ export default function PageHero({ data }: PageHeroProps) {
         type: entryType = 'fade_to_dim',
         delay: entryDelay = 1,
         duration: entryDuration = 2,
-        brightness: entryBrightness = 0.6
+        brightness: entryBrightness = 0.4
     } = entry_effect;
 
     // Resolve content 
@@ -223,7 +224,12 @@ export default function PageHero({ data }: PageHeroProps) {
 
                     <motion.div variants={itemVariants} className="relative">
                         <h1 className={title_class}>
-                            {effectiveTitle}
+                            <ShinyText
+                                text={effectiveTitle}
+                                disabled={false}
+                                speed={3}
+                                className=""
+                            />
                         </h1>
 
                         {/* 裝飾性手寫文字 - 響應式顯示 */}
