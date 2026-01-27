@@ -1,0 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Allow AI Bots
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap
+Sitemap: https://tongxing.org.tw/sitemap.xml
