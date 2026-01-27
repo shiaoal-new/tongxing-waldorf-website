@@ -82,7 +82,7 @@ sections:
         layout_method: vertical
         item_type: faq_item
         items:
-          - title: 季節座
+          - title: 季節桌
             id: term-season-table
             subtitle: Season Table
             content: 教室或校園內的特定角落，會隨節氣變化佈置自然花材與手工品。這不只是裝飾，而是讓孩子透過感官直接與大地的色彩、陽光、溫度變化連結。
@@ -127,7 +127,7 @@ sections:
             subtitle: Season & Community
             icon: lucide:users-2
             content: |
-              透過校園的「季節座 (Season Table)」佈置，讓孩子敏銳感知二十四節氣的變化。
+              透過校園的「季節桌 (Season Table)」佈置，讓孩子敏銳感知二十四節氣的變化。
 
               行政與教師團的「圍圓共聚」與家長的深度參與（如自然日陪伴、節慶湯圓製作），共同建構成一個極具安全感的守護場域。
   - section_id: yearly-cycle
@@ -149,7 +149,7 @@ sections:
             content: |
               萬物甦醒，生命力迸發。慶典結合清明與寒食傳統，孩子體驗包「潤餅」，感念祖先與土地。
 
-              **核心**：透過「季節座」視覺傳遞重生氣息，並在社群中實踐「我擁有的可以與他人分享」，建立穩固的支持系統。
+              **核心**：透過「季節桌」視覺傳遞重生氣息，並在社群中實踐「我擁有的可以與他人分享」，建立穩固的支持系統。
           - title: 夏季：奔放意志的巔峰
             subtitle: Summer Festival
             icon: lucide:sun
