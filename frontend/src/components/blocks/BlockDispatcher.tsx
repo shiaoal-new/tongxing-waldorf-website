@@ -87,6 +87,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
                     buttons={feature.buttons as any}
                     media={feature.media}
                     span={feature.span}
+                    align={(block as any).align || align}
                 >
                     {feature.content}
                 </FeatureItem>
@@ -117,7 +118,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             return <Card data={block as any} variant="compact" />;
 
         case "list_block":
-            return <ListBlock block={block as ListBlockType} />;
+            return <ListBlock block={block as ListBlockType} align={(block as any).align || align} />;
 
         case "cta_block":
             return <CTABlock block={block as CTABlockType} />;

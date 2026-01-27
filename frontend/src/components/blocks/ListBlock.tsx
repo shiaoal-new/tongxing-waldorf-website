@@ -26,13 +26,14 @@ function prepareListItems(block: ListBlockType, faqList: FaqItem[], direction: s
 
 interface ListBlockProps {
     block: ListBlockType;
+    align?: 'left' | 'center' | 'right';
 }
 
 /**
  * ListBlock Component
  * 渲染列表塊
  */
-export default function ListBlock({ block }: ListBlockProps) {
+export default function ListBlock({ block, align }: ListBlockProps) {
     const { faqList } = usePageData();
     const direction = block.direction || (block.layout_method === "vertical" ? "vertical" : "horizontal");
 
@@ -55,7 +56,7 @@ export default function ListBlock({ block }: ListBlockProps) {
                 columns={3}
                 buttons={block.buttons}
                 renderItem={(item: ListItem, index: number, extra: any) => (
-                    <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" />
+                    <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
                 )}
             />
         </div>

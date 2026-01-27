@@ -13,13 +13,14 @@ interface FeatureItemProps {
   children: string;
   icon: string;
   buttons?: CTAButton[];
+  align?: 'left' | 'center' | 'right';
 }
 
-export default function FeatureItem({ span, media, title, children, icon, buttons }: FeatureItemProps) {
+export default function FeatureItem({ span, media, title, children, icon, buttons, align = 'left' }: FeatureItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isFullWidth = span === 12;
 
-  const cardClasses = `feature-card group ${isFullWidth ? 'flex-col md:flex-row' : 'flex-col'}`;
+  const cardClasses = `feature-card group ${isFullWidth ? 'flex-col md:flex-row' : 'flex-col'} ${align === 'center' ? 'items-center text-center' : 'items-start text-left'}`;
 
   const handleCardClick = () => {
     setIsExpanded(!isExpanded);
@@ -51,7 +52,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
         </div>
       )}
 
-      <div className={`relative z-20 flex flex-col px-8 pt-8 pb-8 md:px-12 md:pt-12 md:pb-12 ${isFullWidth ? 'w-full md:w-1/2 justify-center' : `w-full ${media ? '-mt-20 md:-mt-24' : ''}`}`}>
+      <div className={`relative z-20 flex flex-col px-8 pt-8 pb-8 md:px-12 md:pt-12 md:pb-12 ${isFullWidth ? 'w-full md:w-1/2 justify-center' : `w-full ${media ? '-mt-20 md:-mt-24' : ''}`} ${align === 'center' ? 'items-center' : 'items-start'}`}>
         <div className="feature-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-16 h-16 rounded-full text-brand-accent group-hover:scale-110 group-hover:text-white transition-all duration-700 ease-out">
           <Icon icon={icon} className="w-8 h-8" />
         </div>
@@ -77,7 +78,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
             className="mt-10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100"
             onClick={(e) => e.stopPropagation()}
           >
-            <ActionButtons buttons={buttons} align="left" size="sm" />
+            <ActionButtons buttons={buttons} align={align} size="sm" />
           </div>
         )}
       </div>

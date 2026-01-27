@@ -6,7 +6,8 @@ import BackgroundCarousel from "../BackgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "../ui/DevComment";
 import SectionDivider from "../SectionDivider";
-import { HeroData } from "../../types/content";
+import { HeroData, CTAButton } from "../../types/content";
+import ActionButtons from "../ui/ActionButtons";
 
 /**
  * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
@@ -97,7 +98,8 @@ export default function PageHero({ data }: PageHeroProps) {
         transition_type = 'fade',
         scrolling_effect = 'fadeToWhite', // none, fadeToDark, fadeToWhite
         entry_effect = {},
-        accent_text = "手、心、腦的均衡成長" // Default or from data
+        accent_text = "手、心、腦的均衡成長", // Default or from data
+        buttons = []
     } = data as any;
 
     const effect = scrolling_effect;
@@ -240,9 +242,14 @@ export default function PageHero({ data }: PageHeroProps) {
                             <div className={`${description_class} backdrop-blur-md bg-black/10 shadow-2xl overflow-hidden group relative`}>
                                 {/* Subtle inner glow for glass effect */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-                                <p className="relative z-10">
+                                <p className="relative z-10 pb-4">
                                     {effectiveContent}
                                 </p>
+                                {buttons && buttons.length > 0 && (
+                                    <div className="relative z-10 mt-6 flex justify-center pb-6">
+                                        <ActionButtons buttons={buttons} align="center" size="lg" />
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     )}

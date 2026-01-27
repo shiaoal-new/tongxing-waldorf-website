@@ -5,6 +5,10 @@ hero:
   subtitle: 山林間的暖火：領航深坑的完整全人教育
   accent_text: "點亮新北市的教育地標"
   content: 在變動的時代，我們於深坑大學校區建立首座教育燈塔，陪伴 1-9 年級孩子在專業學術與靈性成長中，長成完整而穩定的人。
+  buttons:
+    - text: 預約參觀
+      link: /visit
+      style: btn-primary
   media_list:
     - type: video
       video: /img/hero-video-vp9.webm
@@ -24,9 +28,14 @@ sections:
         title: 領航深坑：全人教育的新地標
         subtitle: 教育特色
         content: 面對教育的百家爭鳴，同心不只是搬家，更是區域教育的升級帶動者。在優質的大學校區校舍中，我們點燃這把人文教育的火種，提供從 1 到 9 年級最穩定的成長支持。
+        buttons:
+          - text: 查看九年一貫學制
+            link: /timeline
+            style: btn-outline-primary
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
+        align: center
         items:
           - title: 在大人的大學裡，長出孩子的中小學
             span: 4
@@ -35,6 +44,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
+            buttons:
+              - text: 預約參觀校園
+                link: /visit
+                style: btn-sm-outline
           - title: 108課綱？那是日常
             span: 4
             content: 很多家長擔心非主流教育會讓孩子與社會脫節。其實，我們跟體制教育的關係，比較像是一對「性格互補」的好友。政府現在推的 108 課綱——「自發、互動、共好」，雖然名詞很新，但這本來就是華德福孩子呼吸般的日常。我們不只是在回應體制，更多時候是在「補位」——補上那些被考卷填滿、卻被遺忘的感知與生活實踐。我們不打算把孩子關在溫室，而是要讓他們在保有自我的同時，也能與社會自在地「連線」。
@@ -42,6 +55,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
+            buttons:
+              - text: 深入了解教育理念
+                link: /philosophy
+                style: btn-sm-outline
           - title: 不熄滅的長跑：1-9 年級的穩定守護
             span: 4
             content: 台灣實驗教育最讓家長焦慮的是銜接與穩定性。同心提供 1-9 年級九年一貫的完整學制，這是一場不熄滅的長跑，讓孩子在藝術、科學與意志力上獲得連續性的成長。我們點燃孩子心中對世界的好奇，這份火光將一路延燒到大學、職場，成為他終身學習的熱情。
@@ -49,6 +66,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+            buttons:
+              - text: 探索特色課程
+                link: /featured-courses
+                style: btn-sm-outline
       - type: cta_block
         buttons:
           - text: 了解同心的課程設計
@@ -64,6 +85,7 @@ sections:
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
+        align: center
         items:
           - title: 老師懂孩子，也懂你的不容易
             span: 4
@@ -72,6 +94,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
+            buttons:
+              - text: 認識我們的老師
+                link: /teacher-group
+                style: btn-sm-outline
           - title: 最浪漫的告白：「你小孩跟我走」
             span: 4
             content: 我們的家長群組，大概是全台灣最有行動力的地方。大家不只一起決定午餐菜色、把校園弄得美美的，最感人的往往發生在課後： 「今天加班趕不回來？沒關係，小孩跟我走，我餵飽他再幫他洗個澡，你下班來我家接就好。」
@@ -79,6 +105,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
+            buttons:
+              - text: 了解校園生活節奏
+                link: /rhythm-of-life
+                style: btn-sm-outline
           - title: 家長不焦慮，小孩才敢放心長大
             span: 4
             content: 為什麼我們要搞得這麼「親密」？因為我們發現，當大人擁有足夠的安全感和支援網，孩子那雙看世界的眼睛也會跟著安穩下來。在一個被愛與信任包圍的「村子」裡長大，孩子踏出的每一小步，都會比別人更穩固。畢竟養育是一場長跑，一群人跑才像是在度假。
@@ -86,6 +116,10 @@ sections:
             media:
               type: image
               image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
+            buttons:
+              - text: 支持同心永續發展
+                link: /donation
+                style: btn-sm-outline
       - type: cta_block
         buttons:
           - text: 了解我們的教育理念
@@ -101,6 +135,10 @@ sections:
         title: 同心影音專區
         subtitle: 深入了解華德福
         content: 文字說再多，不如親眼看看。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，但都是真的。
+        buttons:
+          - text: 探索特色課程
+            link: /featured-courses
+            style: btn-outline-primary
       - type: list_block
         layout_method: bento_grid
         item_type: video_item
@@ -134,6 +172,10 @@ sections:
       - type: text_block
         title: 真實見證：在同心長大的故事
         subtitle: 聽聽他們怎麼說
+        buttons:
+          - text: 深入了解教育理念
+            link: /philosophy
+            style: btn-outline-primary
       - type: list_block
         layout_method: testimonial_carousel
         item_type: testimonial_item
@@ -213,6 +255,10 @@ sections:
         title: 常見問答
         subtitle: FAQ
         content: 學費多少？會不會跟不上進度？畢業後怎麼辦？——這些你想問但不好意思問的，我們都整理好了。
+        buttons:
+          - text: 預約參觀與諮詢
+            link: /visit
+            style: btn-outline-primary
       - type: list_block
         layout_method: vertical
         item_type: faq_item
