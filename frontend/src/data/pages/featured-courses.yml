@@ -93,7 +93,8 @@ sections:
   - section_id: conclusion
     blocks:
       - type: text_block
-        title: 領航未來：具備「自轉」能力的生命力
+        title: 具備「自轉」能力的生命力
+        subtitle: 領航未來
         content: 同心的課程不急於填鴨標準答案，而是在 1-9 年級的穩定節奏中，陪伴孩子走入自然、操弄土木、參與戲劇。這些歷程如同點燃一盞心燈，讓孩子在火年變動的時代，依然具備清晰的思考與穩定的內在。我們點亮孩子心中的火種，讓他們具備「自轉」的能力，成為自己生命航道的領航者。
   - section_id: cta
     layout: 紫色大型看板 (CTA)

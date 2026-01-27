@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 // Dynamically import ShaderGradient and its canvas to avoid SSR issues with Three.js
@@ -13,8 +14,23 @@ const ShaderGradient = dynamic(
 );
 
 const ShaderGradientBackground = () => {
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        // Wait for shader simulation to stabilize (fix for initial fast movement artifact)
+        const timer = setTimeout(() => {
+            setLoaded(true);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: loaded ? 1 : 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+        >
             <ShaderGradientCanvas
                 pointerEvents="none"
                 style={{
@@ -73,7 +89,7 @@ const ShaderGradientBackground = () => {
             </ShaderGradientCanvas>
             {/* Overlay to ensure text readability - subtle dark tint for white text contrast */}
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />
-        </div>
+        </motion.div>
     );
 };
 

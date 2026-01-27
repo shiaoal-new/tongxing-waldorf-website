@@ -150,7 +150,7 @@ export default function Section(props: SectionProps) {
                     viewport={{ once: true, margin: "-100px" }}
                     onViewportEnter={() => setIsInView(true)}
                     variants={variants}
-                    className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class} ${shader_gradient ? '!bg-transparent' : ''}`}
+                    className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class}`}
                 >
                     {shader_gradient && content_inside_wrapper && isInView && (
                         <ShaderGradientBackgroundDynamic />
