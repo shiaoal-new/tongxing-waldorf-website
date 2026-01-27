@@ -198,40 +198,40 @@
     "quality": 80
   },
   "teacher-photos/呂孟庭.jpg": {
-    "hash": "53ef0c5c11df50ad2f4d74b086c352aa",
-    "processedAt": "2026-01-21T04:29:23.845Z",
-    "originalSize": 23921,
-    "optimizedSize": 9636,
+    "hash": "a809b2dbd651af8554c166843d657155",
+    "processedAt": "2026-01-27T12:00:14.373Z",
+    "originalSize": 297722,
+    "optimizedSize": 109162,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/周天禧.jpg": {
-    "hash": "f53db5743b5e8fe8e58409cc2c94ac42",
-    "processedAt": "2026-01-21T04:29:23.948Z",
-    "originalSize": 158323,
-    "optimizedSize": 43222,
+    "hash": "edcc685eb9c5924920c89a9d6cfa1071",
+    "processedAt": "2026-01-27T12:00:14.488Z",
+    "originalSize": 218289,
+    "optimizedSize": 66628,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/姚昱廷.jpg": {
-    "hash": "763cf7f3ab8bd16cc5d967cc8142de2e",
-    "processedAt": "2026-01-21T04:29:23.984Z",
-    "originalSize": 37318,
-    "optimizedSize": 13204,
+    "hash": "6754d7c12f3602755f16fca9e07f55dd",
+    "processedAt": "2026-01-27T12:05:47.592Z",
+    "originalSize": 304818,
+    "optimizedSize": 113826,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/姜怡伶.jpg": {
-    "hash": "82b0cde0840cce5504be0a21bd8ed966",
-    "processedAt": "2026-01-21T04:29:24.062Z",
-    "originalSize": 109879,
-    "optimizedSize": 64868,
+    "hash": "61b33bfba2a2e6847a2ff161aa5f51a0",
+    "processedAt": "2026-01-27T12:00:14.597Z",
+    "originalSize": 172529,
+    "optimizedSize": 55636,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/廖容.jpg": {
     "hash": "a513e0e3fc77859e0d1908af6d049768",
@@ -279,13 +279,13 @@
     "quality": 80
   },
   "teacher-photos/連涓妏.jpg": {
-    "hash": "9a4fe2984153e899f0222953dcaee0d9",
-    "processedAt": "2026-01-21T04:29:24.736Z",
-    "originalSize": 272956,
-    "optimizedSize": 141746,
+    "hash": "43e2095093d847cf6eee2b24c75a5db3",
+    "processedAt": "2026-01-27T12:05:47.707Z",
+    "originalSize": 149570,
+    "optimizedSize": 40516,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/陸文婧.jpg": {
     "hash": "3f66eb1ba61ed1f09946de03a8433671",
@@ -297,22 +297,22 @@
     "quality": 80
   },
   "teacher-photos/高嘉淇.jpg": {
-    "hash": "77f3d83377ee53fc1b9b091a07c425eb",
-    "processedAt": "2026-01-21T04:29:25.037Z",
-    "originalSize": 94065,
-    "optimizedSize": 35612,
+    "hash": "3e6f165e407e098f1c961be30abb7bd3",
+    "processedAt": "2026-01-27T12:05:47.813Z",
+    "originalSize": 166408,
+    "optimizedSize": 54068,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/黃千瑜.jpg": {
-    "hash": "14a70fd556265d19cf39e87ef9dfb554",
-    "processedAt": "2026-01-21T04:29:25.172Z",
-    "originalSize": 273852,
-    "optimizedSize": 151498,
+    "hash": "8f43a77be73343feff6546c1f090d275",
+    "processedAt": "2026-01-27T12:05:47.906Z",
+    "originalSize": 131178,
+    "optimizedSize": 38120,
     "hasAlpha": false,
     "preservedAlpha": false,
-    "quality": 80
+    "quality": 60
   },
   "teacher-photos/黃郁容.jpg": {
     "hash": "02348acb848f7984d73a7dd1b69dc8d3",
@@ -553,6 +553,24 @@
     "processedAt": "2026-01-27T01:38:38.252Z",
     "originalSize": 801342,
     "optimizedSize": 88796,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "teacher-photos/林品嫻.png": {
+    "hash": "5fa2c2119464000cff5697301d2d5889",
+    "processedAt": "2026-01-27T12:00:14.772Z",
+    "originalSize": 2349797,
+    "optimizedSize": 122340,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "teacher-photos/高縈婕.jpg": {
+    "hash": "6774a3c5e63db254fbff828a58b16542",
+    "processedAt": "2026-01-27T12:00:14.866Z",
+    "originalSize": 169592,
+    "optimizedSize": 61750,
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
