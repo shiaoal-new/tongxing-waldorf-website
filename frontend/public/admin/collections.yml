@@ -264,6 +264,39 @@
                 step: 0.05,
                 hint: "1=不變暗, 0=全黑, 0.6=常見適中亮度",
               }
+    - label: "SEO 設定 (Search Engine Optimization)"
+      name: "seo"
+      widget: "object"
+      collapsed: true
+      required: false
+      fields:
+        - {
+            label: "SEO 標題 (Title)",
+            name: "title",
+            widget: "string",
+            required: false,
+            hint: "若留空則使用頁面標題",
+          }
+        - {
+            label: "SEO 描述 (Description)",
+            name: "description",
+            widget: "text",
+            required: false,
+            hint: "若留空則使用 Hero 內容或預設描述",
+          }
+        - {
+            label: "關鍵字 (Keywords)",
+            name: "keywords",
+            widget: "string",
+            required: false,
+          }
+        - {
+            label: "社群分享預覽圖 (OG Image)",
+            name: "ogImage",
+            widget: "image",
+            required: false,
+            hint: "建議尺寸 1200x630",
+          }
     - label: "頁面內容段落 (Sections)"
       name: "sections"
       widget: "list"

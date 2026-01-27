@@ -19,7 +19,7 @@
   "scripts": {
     "dev": "npm run restore-full-font && next dev --webpack",
     "restore-full-font": "cp public/fonts/ChenYuluoyan-2.0-Thin.full.woff2 public/fonts/ChenYuluoyan-2.0-Thin.woff2",
-    "build": "npm run restore-full-font && NEXT_OUTPUT=export next build && node scripts/subset-font.js",
+    "build": "npm run restore-full-font && npx tsx scripts/generate-og-images.tsx && NEXT_OUTPUT=export next build && node scripts/subset-font.js",
     "deploy": "npm run build && firebase deploy",
     "start": "next start",
     "lighthouse": "node scripts/lighthouse-audit.js",
@@ -66,6 +66,7 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
@@ -76,7 +77,9 @@
     "glob": "^13.0.0",
     "postcss": "^8.5.6",
     "postcss-import": "^16.1.1",
+    "satori": "^0.19.1",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "overrides": {

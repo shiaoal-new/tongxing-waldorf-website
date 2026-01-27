@@ -66,21 +66,48 @@ export default function Layout({
     const fallbackDesc = hero?.subtitle || (hero?.content ? `${hero.content.substring(0, 155)}...` : defaultDesc);
     const displayDescription = description || seo?.description || fallbackDesc;
 
+    // 3. Open Graph / Twitter Data
+    const siteUrl = siteSettings?.url || "https://tongxing.org.tw";
+    const currentPath = slug === 'index' ? '' : `/${slug || ''}`;
+    const canonicalUrl = `${siteUrl}${currentPath}`;
+
+    // Auto-generated OG Image path
+    const autoOgImage = slug ? `${siteUrl}/og-images/${slug}.png` : `${siteUrl}/img/video-poster.webp`;
+
+    // Priority: Custom SEO Image > Auto Generated > Default Fallback
+    const ogImage = seo?.ogImage
+        ? (seo.ogImage.startsWith('http') ? seo.ogImage : `${siteUrl}${seo.ogImage}`)
+        : autoOgImage;
+
     return (
         <>
             <SvgFilters />
             <Head>
                 <title>{displayTitle}</title>
-                <meta
-                    name="description"
-                    content={displayDescription}
-                />
+                <meta name="description" content={displayDescription} />
                 {seo?.keywords && <meta name="keywords" content={seo.keywords} />}
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <meta name="theme-color" content={themeColor} />
                 <link rel="icon" href="/favicon.ico" />
+                <link rel="canonical" href={canonicalUrl} />
+
+                {/* Open Graph */}
+                <meta property="og:title" content={displayTitle} />
+                <meta property="og:description" content={displayDescription} />
+                <meta property="og:url" content={canonicalUrl} />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content={SITE_NAME} />
+                <meta property="og:image" content={ogImage} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={displayTitle} />
+                <meta name="twitter:description" content={displayDescription} />
+                <meta name="twitter:image" content={ogImage} />
             </Head>
 
             {/* --- Structured Data (JSON-LD) --- */}
