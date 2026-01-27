@@ -444,71 +444,15 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
             >
                 {/* Phase Header - Sticky & Glassmorphism */}
                 {phase.header && (
-                    <div className="sticky top-24 z-30 flex justify-center w-full my-12 pointer-events-none">
-                        <motion.div
-                            initial={{ y: -20, opacity: 0, scale: 0.95 }}
-                            whileInView={{
-                                y: 0,
-                                opacity: 1,
-                                scale: 1,
-                                transition: { duration: 0.5 }
-                            }}
-                            viewport={{ margin: "-10% 0px -40% 0px" }} // Trigger "active" state when near top-center
-                            className="pointer-events-auto backdrop-blur-xl bg-white/90 dark:bg-black/80 px-8 py-3 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-2xl flex items-center gap-4 group hover:scale-105 transition-transform duration-300"
-                        >
-                            <motion.span
-                                initial={{ color: "var(--timeline-text)", opacity: 0.5 }}
-                                whileInView={{
-                                    color: "var(--accent-primary)",
-                                    opacity: 1,
-                                    textShadow: "0 0 10px rgba(242, 161, 84, 0.5)"
-                                }}
-                                viewport={{ margin: "-10% 0px -40% 0px" }}
-                                className="text-sm font-black tracking-widest uppercase font-display"
-                            >
-                                0{phase.phaseNumber}
-                            </motion.span>
-                            <div className="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
-                            <h2 className="text-lg md:text-xl font-bold text-[var(--timeline-text)] m-0 leading-none">
-                                {phase.header.title}
-                            </h2>
-                        </motion.div>
-                    </div>
+                    <PhaseHeader phase={phase} />
                 )}
+
 
                 {/* Phase Intro Content - Narrative Card */}
                 {phase.header?.content && (
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ margin: "0px 0px -50% 0px", once: true }}
-                        variants={{
-                            hidden: { opacity: 0, y: 30, scale: 0.95 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                scale: 1,
-                                transition: { duration: 0.8, ease: "circOut", staggerChildren: 0.3 }
-                            }
-                        }}
-                        className="relative z-20 max-w-3xl mx-auto mb-24 px-6"
-                    >
-                        <div className="relative bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[var(--accent-border)] text-center shadow-lg group hover:shadow-xl transition-shadow duration-500">
-                            {/* Decorative Accent Line */}
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-1 bg-[var(--accent-primary)] rounded-full shadow-sm"></div>
-
-                            <motion.p
-                                variants={{
-                                    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-                                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1.2, ease: "easeOut" } }
-                                }}
-                                className="text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif text-justify"
-                            >
-                                {phase.header.content}
-                            </motion.p>
-                        </div>
-                    </motion.div>
+                    <PhaseIntro content={phase.header.content} />
                 )}
+
 
                 {/* Phase Items */}
                 <div className="relative z-10 block">
@@ -548,17 +492,15 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
     // Which is already handled by CSS variable inheritance from PhaseSection.
 
     return (
-        <motion.div
+        <div
             ref={ref}
             data-timeline-year={item.year}
-            initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             className={`relative w-full md:w-1/2 mb-12 md:mb-24 ${styles['timeline-entry']}
              ${isEven ? styles['is-even'] : styles['is-odd']}
              ${shiftRightColumn ? 'md:mt-32' : ''}
+             ${styles['entry-anim']} ${isInView ? styles['in-view'] : ''}
         `}>
+
 
             {/* Axis Dot with "Passed" Effect */}
             <div className={`absolute top-5 z-20 flex flex-col items-center
@@ -615,17 +557,12 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                     />
 
                     {/* Year Label */}
-                    <motion.div
-                        initial={{ opacity: 0.5, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ margin: "0% 0px -40% 0px" }}
-                        transition={{ duration: 0.5 }}
-                        className={`
-                         text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
-                         ${styles['year-label']}
-                     `}>
+                    <div className={`
+                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
+                        ${styles['year-label']}
+                    `}>
                         {item.year}
-                    </motion.div>
+                    </div>
 
 
                     <div className="p-0 bg-transparent flex flex-col md:block">
@@ -669,9 +606,51 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }
+
+const PhaseHeader = ({ phase }: { phase: { phaseNumber: number; header?: TimelineItem } }) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { margin: "-10% 0px -40% 0px" });
+
+    return (
+        <div ref={ref} className="sticky top-24 z-30 flex justify-center w-full my-12 pointer-events-none">
+            <div className={`
+                pointer-events-auto backdrop-blur-xl bg-white/90 dark:bg-black/80 px-8 py-3 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-2xl flex items-center gap-4 group hover:scale-105 transition-transform duration-300
+                ${styles['phase-header-anim']} ${isInView ? styles['in-view'] : ''}
+            `}>
+                <span className={`text-sm font-black tracking-widest uppercase font-display ${styles['phase-number-anim']}`}>
+                    0{phase.phaseNumber}
+                </span>
+                <div className="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
+                <h2 className="text-lg md:text-xl font-bold text-[var(--timeline-text)] m-0 leading-none">
+                    {phase.header?.title}
+                </h2>
+            </div>
+        </div>
+    );
+};
+
+const PhaseIntro = ({ content }: { content: string }) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { margin: "0px 0px -30% 0px", once: true });
+
+    return (
+        <div
+            ref={ref}
+            className={`relative z-20 max-w-3xl mx-auto mb-24 px-6 ${styles['phase-intro-anim']} ${isInView ? styles['in-view'] : ''}`}
+        >
+            <div className="relative bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[var(--accent-border)] text-center shadow-lg group hover:shadow-xl transition-shadow duration-500">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-1 bg-[var(--accent-primary)] rounded-full shadow-sm"></div>
+
+                <p className={`text-lg md:text-xl leading-loose text-[var(--timeline-text)] font-serif text-justify ${styles['phase-text-anim']}`}>
+                    {content}
+                </p>
+            </div>
+        </div>
+    );
+};
 
 
 const TimelineBlock = (props: TimelineBlockProps) => {

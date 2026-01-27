@@ -366,3 +366,97 @@
     /* 保持卡紙為淺色才有畫框感 */
     border-color: #000000;
 }
+
+/* ========================================
+   Intersection Observer Animations (Option 2)
+   ======================================== */
+
+.animate-on-scroll {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Phase Header Animation */
+.phase-header-anim {
+    transform: translateY(-20px) scale(0.95);
+}
+
+.phase-header-anim.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.phase-number-anim {
+    color: var(--timeline-text);
+    opacity: 0.5;
+    transition: all 0.8s ease-out;
+}
+
+.in-view .phase-number-anim {
+    color: var(--accent-primary);
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(242, 161, 84, 0.5);
+}
+
+/* Phase Intro Animation */
+.phase-intro-anim {
+    transform: translateY(30px) scale(0.95);
+}
+
+.phase-intro-anim.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.phase-text-anim {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+    transition: all 1.2s ease-out;
+}
+
+.in-view .phase-text-anim {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+}
+
+/* Timeline Entry Animation */
+.entry-anim {
+    transform: translateY(50px);
+    filter: blur(10px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.entry-anim.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+}
+
+/* Year Label Direction-aware Animation */
+.year-label {
+    opacity: 0.5;
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Mobile-first: slide from right */
+    transform: translateX(20px);
+}
+
+@media (min-width: 768px) {
+
+    /* Desktop: Left Column (even) slides from left */
+    .is-even .year-label {
+        transform: translateX(-20px);
+    }
+
+    /* Desktop: Right Column (odd) slides from right */
+    .is-odd .year-label {
+        transform: translateX(20px);
+    }
+}
+
+/* Base state when active */
+.in-view .year-label {
+    opacity: 1;
+    transform: translateX(0);
+}
