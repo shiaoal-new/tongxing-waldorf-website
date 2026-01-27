@@ -1,0 +1,141 @@
+title: 人智學：人類使用說明書
+slug: anthroposophy
+seo:
+  title: 什麼是人智學？別被名字嚇到，這其實是育兒的靈感來源 | 同心華德福
+  description: 很多家長問：人智學是不是很神祕？說實話，它更像是關於「人」的深度觀察。從為什麼孩子愛玩泥巴到青春期的自我懷疑，人智學幫我們在混亂的育兒路上找到一點清明與幽默。
+  keywords: 人智學, 華德福教育, 育兒焦慮, 兒童發展, 史代納, 生命節奏
+hero:
+  title: 人智學
+  subtitle: 其實，就是那本你一直弄丟的「人類使用說明書」
+  accent_text: "看懂孩子，也找回自己"
+  content: 第一次聽到「人智學」的人，腦中通常會浮現出穿著長袍的哲學家。但對我們來說，它沒那麼嚴肅，它更像是陪著如果你也在想「為什麼這小孩這麼難懂？」時，提供的一盞暖心小燈。它教我們不只看見孩子的行為，更看見行為背後的那個「人」。
+  media_list:
+    - type: image
+      image: /img/artifacts/human_wisdom.webp
+  layout: "Hero: 中央圖文 (願景頁風格)"
+  divider:
+    type: wave
+    position: bottom
+    color: fill-brand-bg
+
+sections:
+  - section_id: what-is-it
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: 它是什麼？（如果不說術語的話）
+        subtitle: 關於人的深度觀察
+        content: |
+          說白了，人智學不是一門課，而是一種觀點。它觀察到小孩不是縮小版的大人，而是一個正在慢慢「開機」的複雜系統。
+
+          我們將人視為「意志、情感、思考」的交織。想知道這些設計如何轉化為真實的課表嗎？請參考[九年一貫課程脈絡](/curriculum-development)。
+      - type: list_block
+        layout_method: bento_grid
+        item_type: feature_item
+        align: center
+        items:
+          - title: 意志：別急著讓他坐下
+            span: 4
+            content: 孩子如果是個永備電池，那是因為他在用「意志」探索物理世界。這階段他不聽大道理，他要的是動手做、重複做。與其叫他靜坐，不如給他一塊泥土，讓他把生命能量「落地」。
+            icon: lucide:hand
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
+          - title: 情感：心靈的調色盤
+            span: 4
+            content: 有時候覺得小孩的情緒比八點檔還戲劇化？那是因為他的「情感」剛萌芽，正在感受世界的節奏。透過藝術與慶典，我們幫這份敏感找到出口，讓他在長大後，心靈依然有韌性、有色彩。
+            icon: lucide:palette
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+          - title: 思考：大腦的開機儀式
+            span: 4
+            content: 到中學時，孩子變得很愛質疑「為什麼」。恭喜你，他的獨立思考功能正式上線。我們不給標準答案，是為了讓他能透過自己的雙眼看見真理，而不是只會背誦老師的話。
+            icon: lucide:lightbulb
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_science_logic.webp
+
+  - section_id: relationship
+    shader_gradient: true
+    content_inside_wrapper: true
+    layout: "Hero: 左方圖文 (通訊頁風格)"
+    blocks:
+      - type: text_block
+        title: 華德福與人智學：前台介面與底層代碼
+        subtitle: 不只是木頭玩具
+        media:
+          type: image
+          image: /img/artifacts/anthroposophy_tree.webp
+        content: |
+          很多人以為華德福就是有很多木頭玩具、有很多畫畫課。
+          但如果華德福教育是你在校園看到的**風景**，那麼人智學就是其下的**地圖與羅盤**。
+
+          為什麼我們要唱歌進教室？為什麼孩子要自己織圍巾？這些設計背後不是隨興的儀式感，而是因為人智學讓我們看見，此時此刻的生命狀態，最需要這份養分。
+
+          **因為理解，所以不急。** 這就是為什麼在同心，我們能用一種「慢養」的定力，陪孩子走過每一次成長的陣痛。
+
+  - section_id: seven-year-cycles
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: 七年一發展：給家長的降落傘
+        subtitle: 懂了節奏，就不焦慮
+        content: 育兒最累的往往是「拿別人的進度來嚇自己」。人智學觀察到人類發展的天然波段，讓我們知道：有些技能，等到時候到了，孩子自然會像花開一樣綻放。
+      - type: list_block
+        layout_method: bento_grid
+        item_type: feature_item
+        align: center
+        items:
+          - title: 0-7 歲：模仿是我的超能力
+            span: 4
+            content: 孩子這時是全開放的接收器。與其跟他說教，不如讓他看見你「認真地工作、溫暖地生活」。你是他的環境，也是他最早的榜樣。
+            icon: lucide:baby
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
+          - title: 7-14 歲：世界是場壯闊的冒險
+            span: 4
+            content: 孩子開始尋找英雄與楷模。在這個階段，透過美的教育與文學，我們能幫他在心中建立一座穩定的內在舞台。
+            icon: lucide:brush
+            media:
+              type: image
+              image: /img/featured-artistic.webp
+          - title: 14-21 歲：我是誰？我在哪？
+            span: 4
+            content: 青春期是靈魂的二次誕生。雖然他們看起來像隻刺蝟，但其實是在保護剛長出的嫩芽。這時，我們給的是思辨的空間與無條件的信任。
+            icon: lucide:brain
+            media:
+              type: image
+              image: /img/featured-exploration.webp
+
+  - section_id: why-it-matters
+    silk_background: true
+    divider:
+      type: wave
+      position: bottom
+      color: fill-brand-bg
+    blocks:
+      - type: text_block
+        title: 所以，這對我有什麼好處？
+        subtitle: 找到育兒的定心咒
+        content: 最大的收穫，是我們終於能放下「改造孩子」的慾望，轉而學習「支持孩子」。當你理解了人智學，你會發現，世界上的孩子沒有所謂的缺陷，只有還沒被理解的節奏。這份理解，能讓你從焦慮的「直升機家長」，變成孩子生命中最強大的後盾。
+      - type: cta_block
+        buttons:
+          - text: 來校園走走，看見實踐中的智慧
+            link: /visit
+            style: btn-primary
+          - text: 看看我們怎麼落實理念
+            link: /curriculum-development
+            style: btn-outline-primary
+
+  - layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        title: 如果你也想找回育兒的笑容
+        content: 人智學不只是史代納博士的理論，它是發生在同心校園裡的每一場對話、每一頓午餐。這份對人的深刻熱愛，我們想與你分享。
+      - type: cta_block
+        buttons:
+          - text: 預約參觀，預見孩子未來的模樣
+            link: /visit
+            style: btn-inverse

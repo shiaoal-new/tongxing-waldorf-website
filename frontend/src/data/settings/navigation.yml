@@ -10,6 +10,7 @@ items:
       - slug: "curriculum-development"
       - slug: "featured-courses"
       - slug: "waldorf-assessment"
+      - slug: "anthroposophy"
   - title: "招生入學"
     children:
       - slug: "visit"

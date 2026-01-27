@@ -14,32 +14,35 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: 核心教育目標：三元力量的平衡
+        title: 教學現場：三元力量的真實落地
+        content: |
+          在同心，我們不只教授學科，更在乎孩子內在力量的平衡。
+          這些設計源自於對[人智學](/anthroposophy)的深刻理解，將抽象的生命智慧轉化為孩子雙手、心靈與大腦的真實體驗。
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: 意志 (Will) - 手的做為
+          - title: 意志的鍛鍊：透過雙手工作
             span: 4
             color: "#7e22ce"
-            icon: lucide:hand
-            content: 第一階段 (0-7歲) 動手做、親身試，培養「說到做到」的堅毅。
+            icon: lucide:hammer
+            content: 從 1 年級的編織到高年級的木工、農耕。這不只是手工課，而是在「與物質搏鬥」中，長出克服困難、實踐目標的意志力。
             media:
               type: lottie
               lottie: /lottie/SculptingArt.lottie
-          - title: 情感 (Feeling) - 心的感受
+          - title: 情感的滋養：藝術性的呼吸
             span: 4
             color: "#fb7185"
-            icon: lucide:heart
-            content: 第二階段 (7-14歲) 透過藝術、音樂、節慶，滋養對世界的感受力。
+            icon: lucide:palette
+            content: 透過晨圈的歌唱、濕彩畫與戲劇，我們讓學習充滿感受性。當心靈獲得滋養，孩子能建立對世界的熱愛與穩固的內在穩定度。
             media:
               type: lottie
               lottie: /lottie/Painting.lottie
-          - title: 思考 (Thinking) - 頭的清晰
+          - title: 思考的開啟：清明的觀察力
             span: 4
             color: "#38bdf8"
             icon: lucide:brain
-            content: 第三階段 (14-21歲) 從經驗中長出智慧，培養獨立判斷的能力。
+            content: 從自然觀察到 8 年級的大專題研究。我們不給標準答案，是引導孩子在經驗中找尋規律，長出獨立判斷與邏輯思考的能力。
             media:
               type: lottie
               lottie: /lottie/Thinking.lottie

@@ -574,5 +574,23 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "artifacts/anthroposophy_tree.png": {
+    "hash": "c25e0904961a10f820cfb91ee329bdda",
+    "processedAt": "2026-01-27T15:18:49.441Z",
+    "originalSize": 809161,
+    "optimizedSize": 57608,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "artifacts/human_wisdom.png": {
+    "hash": "fa7c3c57683d19c48b2116344e7e2a6b",
+    "processedAt": "2026-01-27T15:18:49.527Z",
+    "originalSize": 570634,
+    "optimizedSize": 19088,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }
