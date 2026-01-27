@@ -4,6 +4,7 @@ import React from "react";
 import localFont from 'next/font/local';
 
 const ThemeProvider = dynamic(() => import("next-themes").then((mod) => mod.ThemeProvider), { ssr: false }) as any;
+const LayoutDebugger = dynamic(() => import("../components/ui/LayoutDebugger"), { ssr: false });
 import "../css/tailwind.css";
 
 // Third party styles - moved to specific components where possible
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           className={`${chenYuluoyan.variable} ${notoSans.variable}`}
           style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
         >
+          {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
           <Component {...pageProps} />
         </main>
       </ThemeProvider>
