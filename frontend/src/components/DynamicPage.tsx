@@ -71,7 +71,7 @@ export default function DynamicPageContent({ page, pages, navigation, data = {} 
     return (
         <>
             <TableOfContents sections={tocSections} />
-            <Layout pages={pages} navigation={navigation} title={page.title} navbarPadding={!effectiveHeroData}>
+            <Layout pages={pages} navigation={navigation} title={page.title} seo={page.seo} hero={page.hero} navbarPadding={!effectiveHeroData}>
                 {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
 
                 <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>

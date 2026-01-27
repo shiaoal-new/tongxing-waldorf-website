@@ -3,6 +3,13 @@ export interface BaseBlock {
     type: string;
 }
 
+export interface SEOData {
+    title?: string;
+    description?: string;
+    keywords?: string;
+    ogImage?: string;
+}
+
 export interface CTAButton {
     text: string;
     link: string;
@@ -234,9 +241,10 @@ export interface PageData {
     slug: string;
     hero: HeroData;
     sections: Section[];
-    content?: string; // Optional top-level content seen in curriculum-development.yml
-    faq?: FaqItem[]; // faq list usually loaded separately or in page context
+    content?: string;
+    faq?: FaqItem[];
     questionnaire?: QuestionnaireData;
+    seo?: SEOData;
 }
 
 export interface NavigationItem {

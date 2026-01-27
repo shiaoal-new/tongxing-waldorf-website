@@ -6,13 +6,15 @@ import SvgFilters from "../ui/SvgFilters";
 import PageContent from "./PageContent";
 import { useEffect, useState, ReactNode } from "react";
 import { useTheme } from "next-themes";
-import { PageData, NavigationData } from "../../types/content";
+import { PageData, NavigationData, SEOData, HeroData } from "../../types/content";
 import { useScrollRestoration } from "../../hooks/useScrollRestoration";
 
 interface LayoutProps {
     children: ReactNode;
     title?: string;
     description?: string;
+    seo?: SEOData;
+    hero?: HeroData;
     navbarPadding?: boolean;
     pages: PageData[];
     navigation: NavigationData;
@@ -24,6 +26,8 @@ export default function Layout({
     children,
     title,
     description,
+    seo,
+    hero,
     navbarPadding = false,
     pages,
     navigation,
@@ -39,15 +43,27 @@ export default function Layout({
         setThemeColor(resolvedTheme === 'dark' ? '#1C1917' : '#F2F2F0');
     }, [resolvedTheme]);
 
+    // --- Smart SEO Logic ---
+    const SITE_NAME = "台北市同心華德福實驗教育機構";
+
+    // 1. Title Priority: Custom Props > SEO Data > Hero Title > Current Page Title > Site Name
+    const pageTitle = seo?.title || (hero?.title ? `${hero.title} | ${SITE_NAME}` : title ? `${title} | ${SITE_NAME}` : SITE_NAME);
+    const displayTitle = title === pageTitle ? title : pageTitle; // Avoid double SITE_NAME if Passed title already contains it
+
+    // 2. Description Priority: Custom Props > SEO Data > Hero Subtitle > Hero Content (Truncated) > Default
+    const fallbackDesc = hero?.subtitle || (hero?.content ? `${hero.content.substring(0, 155)}...` : "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。");
+    const displayDescription = description || seo?.description || fallbackDesc;
+
     return (
         <>
             <SvgFilters />
             <Head>
-                <title>{title || "台北市同心華德福實驗教育機構"}</title>
+                <title>{displayTitle}</title>
                 <meta
                     name="description"
-                    content={description || "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。"}
+                    content={displayDescription}
                 />
+                {seo?.keywords && <meta name="keywords" content={seo.keywords} />}
                 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
