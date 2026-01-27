@@ -4,10 +4,11 @@
  * Lighthouse 性能评估脚本
  * 
  * 用法:
- *   npm run lighthouse              # 评估所有页面
+ *   npm run lighthouse              # 评估所有页面 (預設 Desktop)
  *   npm run lighthouse -- /         # 评估首页
  *   npm run lighthouse -- / /about  # 评估多个页面
  *   npm run lighthouse -- --all     # 明确评估所有页面
+ *   npm run lighthouse -- --mobile  # 使用手機模式評估所有頁面
  */
 
 const { spawn } = require('child_process');
@@ -72,27 +73,29 @@ if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// 解析命令行参数
 const args = process.argv.slice(2);
+const isMobile = args.includes('--mobile');
+const preset = isMobile ? 'mobile' : 'desktop';
 let pagesToAudit = [];
 
-if (args.length === 0 || args.includes('--all')) {
+if (args.length === 0 || args.includes('--all') || (args.length === 1 && isMobile)) {
     pagesToAudit = ALL_PAGES;
-    console.log('📊 评估所有页面...\n');
+    console.log(`📊 评估所有页面 (${preset.toUpperCase()} 模式)...\n`);
 } else {
     pagesToAudit = args.filter(arg => !arg.startsWith('--'));
-    console.log(`📊 评估指定页面: ${pagesToAudit.join(', ')}\n`);
+    console.log(`📊 评估指定页面 (${preset.toUpperCase()} 模式): ${pagesToAudit.join(', ')}\n`);
 }
 
 // 运行 Lighthouse 评估
-async function runLighthouse(page) {
+async function runLighthouse(page, mode = 'desktop') {
     const url = `${BASE_URL}${page}`;
     const pageName = page === '/' ? 'index' : page.replace(/\//g, '_');
-    const baseOutputPath = path.join(OUTPUT_DIR, `lighthouse_${pageName}_${TIMESTAMP}`);
+    const modeSuffix = mode === 'mobile' ? '_mobile' : '_desktop';
+    const baseOutputPath = path.join(OUTPUT_DIR, `lighthouse_${pageName}${modeSuffix}_${TIMESTAMP}`);
     const outputPath = `${baseOutputPath}.report.json`;
     const htmlOutputPath = `${baseOutputPath}.report.html`;
 
-    console.log(`🔍 正在评估: ${url}`);
+    console.log(`🔍 正在评估 [${mode.toUpperCase()}]: ${url}`);
 
     return new Promise((resolve, reject) => {
         const lighthouse = spawn('npx', [
@@ -103,7 +106,7 @@ async function runLighthouse(page) {
             `--output-path=${baseOutputPath}`,
             '--chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"',
             '--only-categories=performance,accessibility,best-practices,seo',
-            '--preset=desktop',
+            `--preset=${mode}`,
         ], {
             stdio: 'inherit',
             shell: true,
@@ -239,7 +242,7 @@ async function main() {
 
     for (const page of pagesToAudit) {
         try {
-            const result = await runLighthouse(page);
+            const result = await runLighthouse(page, preset);
             results.push(result);
         } catch (err) {
             console.error(`跳过页面 ${page}，继续下一个...\n`);

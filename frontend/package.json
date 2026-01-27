@@ -23,6 +23,7 @@
     "deploy": "npm run build && firebase deploy",
     "start": "next start",
     "lighthouse": "node scripts/lighthouse-audit.js",
+    "lighthouse:mobile": "node scripts/lighthouse-audit.js --mobile",
     "lighthouse:all": "node scripts/lighthouse-audit.js --all",
     "lighthouse:compact": "node scripts/compact-lighthouse.js"
   },

@@ -16,9 +16,11 @@
 ### 1. 评估所有页面
 
 ```bash
-npm run lighthouse
+npm run lighthouse              # 评估所有页面 (預設 Desktop)
 # 或
 npm run lighthouse:all
+# 手機版評估
+npm run lighthouse:mobile
 ```
 
 這將評估所有自動偵測到的頁面（包括根目錄頁面、`src/data/pages` 中的內容以及 `src/pages` 中的固定頁面）。
@@ -49,16 +51,16 @@ LIGHTHOUSE_URL=https://tongxing-waldorf-website.web.app npm run lighthouse
 
 所有报告都保存在 `frontend/measurement_result/` 目录下:
 
-### JSON 报告
-- 文件名格式: `lighthouse_[页面名]_[日期].report.json`
-- 包含完整的 Lighthouse 评估数据
-- 可用于程序化分析
+### JSON 報告
+- 文件名格式: `lighthouse_[頁面名]_[mode]_[日期].report.json` (mode 為 desktop 或 mobile)
+- 包含完整的 Lighthouse 評估數據
+- 可用於程序化分析
 
-### 精简版 JSON 报告 (推荐用于 AI 分析)
-- 文件名格式: `lighthouse_[页面名]_[日期].compact.json`
-- 移除了 base64 编码的截图数据
-- 文件体积大幅缩小(通常减少 80-90%),节省 LLM token
-- 保留了所有性能、可访问性等评估数据
+### 精簡版 JSON 報告 (推薦用於 AI 分析)
+- 文件名格式: `lighthouse_[頁面名]_[mode]_[日期].compact.json`
+- 移除了 base64 編碼的截圖數據
+- 文件體積大幅縮小(通常減少 80-90%),節省 LLM token
+- 保留了所有性能、可訪問性等評估數據
 
 ### HTML 报告
 - 文件名格式: `lighthouse_[页面名]_[日期].html`
