@@ -85,20 +85,30 @@ export default function DynamicPageContent({ page, pages, navigation, siteSettin
     return (
         <>
             <TableOfContents sections={tocSections} />
-            <Layout
-                pages={pages}
-                navigation={navigation}
-                title={page.title}
-                seo={page.seo}
-                hero={page.hero}
-                navbarPadding={!effectiveHeroData}
-                slug={page.slug}
-                faqList={filteredFaqList}
-                courseList={coursesList}
-                contentType={contentType}
-                siteSettings={siteSettings}
-            >
-                <LayoutGroup>
+            <LayoutGroup>
+                <Layout
+                    pages={pages}
+                    navigation={navigation}
+                    title={page.title}
+                    seo={page.seo}
+                    hero={page.hero}
+                    navbarPadding={!effectiveHeroData}
+                    slug={page.slug}
+                    faqList={filteredFaqList}
+                    courseList={coursesList}
+                    contentType={contentType}
+                    siteSettings={siteSettings}
+                    modal={
+                        <AnimatePresence>
+                            {selectedMember && (
+                                <MemberDetailModal
+                                    selectedMember={selectedMember}
+                                    onClose={() => setSelectedMember(null)}
+                                />
+                            )}
+                        </AnimatePresence>
+                    }
+                >
                     {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
 
                     <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
@@ -125,19 +135,8 @@ export default function DynamicPageContent({ page, pages, navigation, siteSettin
                             </PageDataProvider>
                         </div>
                     </div>
-
-                    <AnimatePresence>
-                        {selectedMember && (
-                            <MemberDetailModal
-                                selectedMember={selectedMember}
-                                onClose={() => setSelectedMember(null)}
-                            />
-                        )}
-                    </AnimatePresence>
-                </LayoutGroup>
-
-            </Layout>
+                </Layout>
+            </LayoutGroup>
         </>
     );
 }
-

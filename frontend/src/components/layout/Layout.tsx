@@ -26,6 +26,7 @@ interface LayoutProps {
     courseList?: Course[];
     contentType?: 'page' | 'course';
     siteSettings?: SiteData;
+    modal?: ReactNode;
 }
 
 export default function Layout({
@@ -43,7 +44,8 @@ export default function Layout({
     faqList = [],
     courseList = [],
     contentType = 'page',
-    siteSettings
+    siteSettings,
+    modal
 }: LayoutProps) {
     const { resolvedTheme } = useTheme();
     const [themeColor, setThemeColor] = useState("#F2F2F0");
@@ -174,6 +176,7 @@ export default function Layout({
             </PageContent>
 
             <Footer />
+            {modal}
         </>
     );
 }
