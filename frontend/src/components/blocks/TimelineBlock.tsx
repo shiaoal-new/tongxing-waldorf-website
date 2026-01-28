@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
-import Modal from '../ui/Modal';
+import ImmersiveModal from '../ui/ImmersiveModal';
 import MuseumLabel from '../ui/MuseumLabel';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
@@ -343,33 +343,59 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                 </div>
             </div >
 
-            <Modal
+            <ImmersiveModal
                 isOpen={!!selectedDetail}
                 onClose={() => setSelectedDetail(null)}
-                title=""
-                padding="p-0"
-                maxWidth="max-w-md"
+                layoutId={selectedDetail ? `timeline-img-${selectedDetail.year}-${selectedDetail.title.replace(/\s+/g, '-')}` : undefined}
+                backgroundContent={
+                    selectedDetail?.image ? (
+                        <Image
+                            src={selectedDetail.image}
+                            alt={selectedDetail.title}
+                            fill
+                            className="object-cover"
+                            sizes="100vw"
+                            priority
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-900">
+                            <div className="text-6xl font-black text-white/10">{selectedDetail?.year}</div>
+                        </div>
+                    )
+                }
             >
+                {/* Timeline Detail Inner Layout */}
                 {selectedDetail && (
-                    <MuseumLabel
-                        image={selectedDetail.image}
-                        title={selectedDetail.title}
-                        metadata={
-                            <>
-                                <span>{selectedDetail.year}</span>
-                                <span>Timeline Collection</span>
-                            </>
-                        }
-                        footerItems={[
-                            { label: "Exhibition", value: "The Heart of Waldorf" },
-                            { label: "Accession", value: "Tongxing Official Archives" }
-                        ]}
-                        brandText="TONG XING"
-                    >
-                        {selectedDetail.detail}
-                    </MuseumLabel>
+                    <div className="space-y-8">
+                        <div>
+                            <div className="flex items-center gap-4 mb-2">
+                                <span className="text-4xl md:text-5xl font-black text-white shadow-black drop-shadow-lg font-display">
+                                    {selectedDetail.year}
+                                </span>
+                                <div className="h-px flex-grow bg-white/20"></div>
+                            </div>
+
+                            <h2 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">
+                                {selectedDetail.title}
+                            </h2>
+                            {selectedDetail.subtitle && (
+                                <div className="text-xl text-brand-accent font-medium">
+                                    {selectedDetail.subtitle}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="text-white/80 text-lg leading-relaxed font-light whitespace-pre-line border-l-2 border-white/20 pl-6">
+                            {selectedDetail.detail}
+                        </div>
+
+                        <div className="pt-8 border-t border-white/10 flex flex-col gap-2">
+                            <span className="text-xs font-bold tracking-widest uppercase text-white/40">COLLECTION</span>
+                            <span className="text-white/60 font-serif italic">Tongxing Official Archives</span>
+                        </div>
+                    </div>
                 )}
-            </Modal>
+            </ImmersiveModal>
         </div >
     );
 };
@@ -548,15 +574,19 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                         {item.image && (
                             <div className={`mb-8 ${styles['museum-frame-container']}`}>
                                 <div className={styles['museum-frame']}>
-                                    <Image
-
-                                        src={item.image}
-                                        alt={item.title}
-                                        width={500}
-                                        height={375}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        className="max-w-full h-auto object-cover max-h-[250px] md:max-h-[300px]"
-                                    />
+                                    <motion.div
+                                        className="relative w-full h-full"
+                                        layoutId={`timeline-img-${item.year}-${item.title.replace(/\s+/g, '-')}`}
+                                    >
+                                        <Image
+                                            src={item.image}
+                                            alt={item.title}
+                                            width={500}
+                                            height={375}
+                                            sizes="(max-width: 768px) 100vw, 400px"
+                                            className="max-w-full h-auto object-cover max-h-[250px] md:max-h-[300px]"
+                                        />
+                                    </motion.div>
                                 </div>
                             </div>
                         )}
