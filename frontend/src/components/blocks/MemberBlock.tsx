@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import MediaRenderer from "../ui/MediaRenderer";
 import { usePageData } from "../../context/PageDataContext";
 import { MemberBlock as MemberBlockType, PageContextValue } from "../../types/content";
@@ -12,13 +13,15 @@ interface MemberBlockProps {
  * 渲染成員塊
  */
 export default function MemberBlock({ block }: MemberBlockProps) {
-    const { getMemberDetails, setSelectedMember } = usePageData() as PageContextValue;
+    const { getMemberDetails, setSelectedMember, selectedMember } = usePageData() as PageContextValue;
     return (
         <div className="brand-container">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {block.members && block.members.map((memberName, mIndex) => {
                     const member = getMemberDetails(memberName);
                     if (!member) return null;
+                    const isSelected = selectedMember?.title === member.title;
+
                     return (
                         <div
                             key={mIndex}
@@ -26,14 +29,20 @@ export default function MemberBlock({ block }: MemberBlockProps) {
                             className="group relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-gray-100 dark:bg-gray-800"
                         >
                             {/* Background Image */}
-                            <div className="absolute inset-0">
+                            <div className={`absolute inset-0 ${isSelected ? 'opacity-0' : 'opacity-100'}`}>
                                 {member.media ? (
-                                    <MediaRenderer
-                                        media={member.media as any}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        className="w-full h-full transition-transform duration-700 group-hover:scale-105"
-                                        imgClassName="object-cover w-full h-full"
-                                    />
+                                    <motion.div
+                                        layoutId={`member-image-${member.title}`}
+                                        layout
+                                        className="w-full h-full"
+                                    >
+                                        <MediaRenderer
+                                            media={member.media as any}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            className="w-full h-full transition-transform duration-700 group-hover:scale-105"
+                                            imgClassName="object-cover w-full h-full"
+                                        />
+                                    </motion.div>
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center bg-brand-accent/5 dark:bg-white/5">
                                         <span className="text-brand-accent/20 text-7xl font-bold select-none">

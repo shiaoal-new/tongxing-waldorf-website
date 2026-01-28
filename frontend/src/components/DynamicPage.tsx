@@ -13,6 +13,7 @@ import { SectionRenderer } from "./SectionRenderer";
 import { PageDataProvider } from "../context/PageDataContext";
 import { useDynamicTOC } from "../hooks/useDynamicTOC";
 import { PageData, NavigationData, FaqItem, Member, Course, QuestionnaireData, SiteData } from "../types/content";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
 
 interface DynamicPageContentProps {
     page: PageData | null;
@@ -97,36 +98,43 @@ export default function DynamicPageContent({ page, pages, navigation, siteSettin
                 contentType={contentType}
                 siteSettings={siteSettings}
             >
-                {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
+                <LayoutGroup>
+                    {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
 
-                <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
-                    {!effectiveHeroData && (
-                        <Section
-                            title={page.title}
-                            align="left"
-                            {...(page as any).description ? { description: (page as any).description } : {}}
-                        />
-                    )}
+                    <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
+                        {!effectiveHeroData && (
+                            <Section
+                                title={page.title}
+                                align="left"
+                                {...(page as any).description ? { description: (page as any).description } : {}}
+                            />
+                        )}
 
-                    <div className={effectiveHeroData ? "" : "mt-10"}>
-                        <PageDataProvider value={{
-                            getMemberDetails,
-                            setSelectedMember,
-                            faqList,
-                            getImagePath,
-                            questionnaire
-                        }}>
-                            {sections.map((section, index) => (
-                                <SectionRenderer key={index} section={section} index={index} />
-                            ))}
-                        </PageDataProvider>
+                        <div className={effectiveHeroData ? "" : "mt-10"}>
+                            <PageDataProvider value={{
+                                getMemberDetails,
+                                setSelectedMember,
+                                selectedMember,
+                                faqList,
+                                getImagePath,
+                                questionnaire
+                            }}>
+                                {sections.map((section, index) => (
+                                    <SectionRenderer key={index} section={section} index={index} />
+                                ))}
+                            </PageDataProvider>
+                        </div>
                     </div>
-                </div>
 
-                <MemberDetailModal
-                    selectedMember={selectedMember}
-                    onClose={() => setSelectedMember(null)}
-                />
+                    <AnimatePresence>
+                        {selectedMember && (
+                            <MemberDetailModal
+                                selectedMember={selectedMember}
+                                onClose={() => setSelectedMember(null)}
+                            />
+                        )}
+                    </AnimatePresence>
+                </LayoutGroup>
 
             </Layout>
         </>

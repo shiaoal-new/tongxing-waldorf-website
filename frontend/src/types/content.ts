@@ -231,6 +231,7 @@ export interface Member {
 export interface PageContextValue {
     getMemberDetails: (title: string) => Member | undefined;
     setSelectedMember: (member: Member | null) => void;
+    selectedMember: Member | null;
     faqList: FaqItem[];
     getImagePath: (path: string) => string;
     questionnaire?: QuestionnaireData;
