@@ -10,7 +10,12 @@ interface MemberDetailModalProps {
 }
 
 export default function MemberDetailModal({ selectedMember, onClose }: MemberDetailModalProps) {
+    const [isClosing, setIsClosing] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+
     useEffect(() => {
+        setIsClosing(false);
+        setIsExpanded(false);
         // if (selectedMember) {
         //     document.body.style.overflow = "hidden";
         // } else {
@@ -21,13 +26,22 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
         // };
     }, [selectedMember]);
 
+    const handleClose = (e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        setIsClosing(true);
+        // Wait for text fade out (200ms) before triggering actual close
+        setTimeout(() => {
+            onClose();
+        }, 200);
+    };
+
     if (!selectedMember) return null;
     if (typeof document === "undefined") return null;
 
     return (
         <div
-            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 touch-none"
-            onClick={onClose}
+            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 touch-none pointer-events-auto"
+            onClick={handleClose}
         >
             {/* Backdrop */}
             <motion.div
@@ -48,6 +62,7 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
                     layoutId={`member-image-${selectedMember.title}`}
                     layout
                     className="absolute inset-0 z-0 bg-neutral-900 shadow-2xl rounded-[2rem] overflow-hidden"
+                    onLayoutAnimationComplete={() => setIsExpanded(true)}
                     transition={{
                         type: "spring",
                         stiffness: 100,
@@ -73,12 +88,12 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
                     <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
                 </motion.div>
 
-                {/* Close Button - Floating with fade in */}
+                {/* Close Button - Floating with fade in only after expansion */}
                 <motion.button
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    onClick={onClose}
+                    animate={{ opacity: isExpanded && !isClosing ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={handleClose}
                     className="absolute top-5 right-5 z-50 p-2 bg-black/20 hover:bg-black/40 text-white/80 hover:text-white rounded-full backdrop-blur-md transition-colors"
                 >
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,8 +110,11 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
                         {/* Content Section */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.4 }}
+                            animate={{
+                                opacity: isExpanded && !isClosing ? 1 : 0,
+                                y: isExpanded && !isClosing ? 0 : 20
+                            }}
+                            transition={{ duration: 0.4 }}
                             className="p-8 md:p-10 space-y-8 text-white/90"
                         >
                             {/* Header */}
