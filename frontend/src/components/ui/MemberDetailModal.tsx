@@ -16,14 +16,14 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
     useEffect(() => {
         setIsClosing(false);
         setIsExpanded(false);
-        // if (selectedMember) {
-        //     document.body.style.overflow = "hidden";
-        // } else {
-        //     document.body.style.overflow = "";
-        // }
-        // return () => {
-        //     document.body.style.overflow = "";
-        // };
+
+        if (selectedMember) {
+            document.body.style.overflow = "hidden";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
     }, [selectedMember]);
 
     const handleClose = (e?: React.MouseEvent) => {
