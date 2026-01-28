@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
-import Modal from '../ui/Modal';
-import MuseumLabel from '../ui/MuseumLabel';
+import TimelineDetailModal from '../ui/TimelineDetailModal';
+
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
 
@@ -343,33 +343,12 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                 </div>
             </div >
 
-            <Modal
-                isOpen={!!selectedDetail}
+
+
+            <TimelineDetailModal
+                item={selectedDetail}
                 onClose={() => setSelectedDetail(null)}
-                title=""
-                padding="p-0"
-                maxWidth="max-w-md"
-            >
-                {selectedDetail && (
-                    <MuseumLabel
-                        image={selectedDetail.image}
-                        title={selectedDetail.title}
-                        metadata={
-                            <>
-                                <span>{selectedDetail.year}</span>
-                                <span>Timeline Collection</span>
-                            </>
-                        }
-                        footerItems={[
-                            { label: "Exhibition", value: "The Heart of Waldorf" },
-                            { label: "Accession", value: "Tongxing Official Archives" }
-                        ]}
-                        brandText="TONG XING"
-                    >
-                        {selectedDetail.detail}
-                    </MuseumLabel>
-                )}
-            </Modal>
+            />
         </div >
     );
 };
@@ -548,15 +527,20 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                         {item.image && (
                             <div className={`mb-8 ${styles['museum-frame-container']}`}>
                                 <div className={styles['museum-frame']}>
-                                    <Image
-
-                                        src={item.image}
-                                        alt={item.title}
-                                        width={500}
-                                        height={375}
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        className="max-w-full h-auto object-cover max-h-[250px] md:max-h-[300px]"
-                                    />
+                                    <motion.div
+                                        layoutId={`timeline-image-${item.year}-${item.title}`}
+                                        layout
+                                        className="relative w-full h-full"
+                                    >
+                                        <Image
+                                            src={item.image}
+                                            alt={item.title}
+                                            width={500}
+                                            height={375}
+                                            sizes="(max-width: 768px) 100vw, 400px"
+                                            className="max-w-full h-auto object-cover max-h-[250px] md:max-h-[300px]"
+                                        />
+                                    </motion.div>
                                 </div>
                             </div>
                         )}
