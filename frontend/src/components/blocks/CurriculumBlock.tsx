@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../ui/Modal";
+import MuseumLabel from "../ui/MuseumLabel";
 import DevComment from "../ui/DevComment";
 import { CurriculumBlock as CurriculumBlockType } from "../../types/content";
 
@@ -175,19 +176,28 @@ const CurriculumBlock = ({ data }: CurriculumBlockProps) => {
             <Modal
                 isOpen={!!activeYear}
                 onClose={closeModal}
-                title={activeYear ? detailData[activeYear]?.title : undefined}
+                title=""
+                padding="p-0"
+                maxWidth="max-w-md"
             >
-                <div className="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
-                    {activeYear ? detailData[activeYear]?.content : null}
-                </div>
-                <div className="mt-10 pt-6 border-t border-brand-taupe/10 dark:border-brand-structural/50 flex justify-end">
-                    <button
-                        onClick={closeModal}
-                        className="btn btn-primary px-8"
+                {activeYear && detailData[activeYear] && (
+                    <MuseumLabel
+                        title={detailData[activeYear].title.split(' ')[0]} // e.g. "一年級"
+                        metadata={
+                            <span className="text-warning-600 font-bold tracking-wider">
+                                {detailData[activeYear].title.split(' ').slice(1).join(' ')}
+                            </span>
+                        }
+                        footerItems={[
+                            { label: "Year Level", value: activeYear },
+                            { label: "Category", value: "Development Task" }
+                        ]}
                     >
-                        關閉解析
-                    </button>
-                </div>
+                        <div className="text-lg leading-loose text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
+                            {detailData[activeYear].content}
+                        </div>
+                    </MuseumLabel>
+                )}
             </Modal>
         </div>
     );

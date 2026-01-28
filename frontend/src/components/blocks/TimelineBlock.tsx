@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './TimelineBlock.module.css';
 import Modal from '../ui/Modal';
+import MuseumLabel from '../ui/MuseumLabel';
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
 
@@ -350,55 +351,23 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                 maxWidth="max-w-md"
             >
                 {selectedDetail && (
-                    <div className={styles['museum-label']}>
-                        {/* Image at top */}
-                        {selectedDetail.image && (
-                            <div className="w-full h-auto overflow-hidden">
-                                <Image
-                                    src={selectedDetail.image}
-                                    alt={selectedDetail.title}
-                                    width={400}
-                                    height={300}
-                                    className="w-full h-auto object-cover max-h-[400px]"
-                                />
-                            </div>
-                        )}
-
-                        <div className={styles['label-content']}>
-                            <h2 className={styles['label-title']}>
-                                {selectedDetail.title}
-                            </h2>
-
-                            <div className={styles['label-metadata']}>
+                    <MuseumLabel
+                        image={selectedDetail.image}
+                        title={selectedDetail.title}
+                        metadata={
+                            <>
                                 <span>{selectedDetail.year}</span>
                                 <span>Timeline Collection</span>
-                            </div>
-
-                            <div className={styles['label-description']}>
-                                {selectedDetail.detail}
-                            </div>
-
-                            {/* Museum label footer style */}
-                            <div className={styles['label-footer']}>
-                                <div className={styles['footer-item']}>
-                                    <span className={styles['footer-item-label']}>Exhibition</span>
-                                    <span className={styles['footer-item-value']}>The Heart of Waldorf</span>
-                                </div>
-                                <div className={styles['footer-item']}>
-                                    <span className={styles['footer-item-label']}>Accession</span>
-                                    <span className={styles['footer-item-value']}>Tongxing Official Archives</span>
-                                </div>
-                            </div>
-
-                            <div className={styles['label-brand']}>
-                                <span>tongxing.edu.tw</span>
-                                <span>
-                                    <span className="opacity-50 text-xs mr-2 font-normal">INSTITUTION</span>
-                                    TONG XING
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                            </>
+                        }
+                        footerItems={[
+                            { label: "Exhibition", value: "The Heart of Waldorf" },
+                            { label: "Accession", value: "Tongxing Official Archives" }
+                        ]}
+                        brandText="TONG XING"
+                    >
+                        {selectedDetail.detail}
+                    </MuseumLabel>
                 )}
             </Modal>
         </div >
