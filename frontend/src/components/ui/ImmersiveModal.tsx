@@ -24,12 +24,12 @@ export default function ImmersiveModal({
         if (isOpen) {
             setIsClosing(false);
             setIsExpanded(false);
-            document.body.style.overflow = "hidden";
+            // document.body.style.overflow = "hidden";
         } else {
-            document.body.style.overflow = "";
+            // document.body.style.overflow = "";
         }
         return () => {
-            document.body.style.overflow = "";
+            // document.body.style.overflow = "";
         };
     }, [isOpen]);
 

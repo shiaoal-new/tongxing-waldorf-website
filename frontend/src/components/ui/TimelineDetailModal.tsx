@@ -13,7 +13,7 @@ export default function TimelineDetailModal({ item, onClose }: TimelineDetailMod
     if (!item) return null;
 
     // Use a strict consistent layoutId key
-    const layoutId = `timeline-image-${item.year}-${item.title}`;
+    const layoutId = `timeline-image-${String(item.year)}-${item.title}`;
 
     return (
         <ImmersiveModal

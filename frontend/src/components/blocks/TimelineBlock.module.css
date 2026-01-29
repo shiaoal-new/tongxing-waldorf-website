@@ -67,7 +67,7 @@
     position: relative;
     z-index: 10;
     padding: 4rem 0;
-    margin: 2rem 0;
+    margin: 2rem auto;
 }
 
 
@@ -202,7 +202,6 @@
 
 /* Museum Frame Effect */
 .museum-frame-container {
-    perspective: 1000px;
     display: inline-block;
     transition: transform 0.5s ease;
 }
@@ -247,7 +246,7 @@
 
 /* Hover effects */
 .museum-frame-container:hover .museum-frame {
-    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+    transform: translateY(-8px);
     box-shadow:
         0 20px 40px -15px rgba(0, 0, 0, 0.6),
         0 4px 8px rgba(0, 0, 0, 0.3);

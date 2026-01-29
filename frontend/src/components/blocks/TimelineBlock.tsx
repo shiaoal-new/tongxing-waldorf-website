@@ -4,7 +4,9 @@ import styles from './TimelineBlock.module.css';
 import TimelineDetailModal from '../ui/TimelineDetailModal';
 
 import { TimelineBlock as TimelineBlockType, TimelineItem } from '../../types/content';
-import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView, useMotionValueEvent, LayoutGroup, AnimatePresence } from 'framer-motion';
+
+
 
 
 
@@ -37,7 +39,6 @@ const formatDate = (timestamp: number) => {
 
 const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
-
 
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
     const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
@@ -77,7 +78,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             result.push(currentPhase);
         }
         return result;
-    }, [data.items]);
+    }, [data.items]); // Depend on data.items
 
     // Smooth out the progress - made snappier to catch up with scroll
     const { scrollYProgress } = useScroll({
@@ -259,19 +260,21 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
+    const onSelectDetail = (item: TimelineItem) => setSelectedDetail(item);
+
     return (
-        <div ref={containerRef} className={`w-full ${styles['timeline-container']} relative overflow-hidden`} data-theme={theme}>
+        <div ref={containerRef} className={`w-full ${styles['timeline-container']} relative`} data-theme={theme}>
             <div className="max-w-7xl mx-auto relative">
                 {/* Central Line with Time Ruler Effect (Static) */}
                 <div
                     className={`absolute left-4 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[5px] ${styles['timeline-axis']}`}
                     style={{
                         background: `repeating-linear-gradient(to bottom, 
-                            var(--timeline-text) 0px, 
-                            var(--timeline-text) 4px, 
-                            transparent 4px, 
-                            transparent 8px
-                        )`,
+                        var(--timeline-text) 0px, 
+                        var(--timeline-text) 4px, 
+                        transparent 4px, 
+                        transparent 8px
+                    )`,
                         opacity: .3
                     }}
                 />
@@ -337,6 +340,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                             phase={phase}
                             phaseIndex={phaseIndex}
                             anchor={anchor}
+                            selectedDetail={selectedDetail}
                             onSelectDetail={setSelectedDetail}
                         />
                     ))}
@@ -345,11 +349,13 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
 
 
-            <TimelineDetailModal
-                item={selectedDetail}
-                onClose={() => setSelectedDetail(null)}
-            />
-        </div >
+            {selectedDetail && (
+                <TimelineDetailModal
+                    item={selectedDetail}
+                    onClose={() => setSelectedDetail(null)}
+                />
+            )}
+        </div>
     );
 };
 
@@ -357,10 +363,14 @@ interface PhaseSectionProps {
     phase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] };
     phaseIndex: number;
     anchor: string;
+    selectedDetail: TimelineItem | null;
     onSelectDetail: (item: TimelineItem) => void;
 }
 
-const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectionProps) => {
+const PhaseSection = ({ phase, phaseIndex, anchor, selectedDetail, onSelectDetail }: PhaseSectionProps) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { margin: "-10% 0px -40% 0px" });
+
     // If header provides a color, use it as accent-primary for this section
     const sectionStyle = phase.header?.color
         ? ({ '--accent-primary': phase.header.color } as React.CSSProperties)
@@ -368,57 +378,38 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
 
     return (
         <div
-            className={styles['phase-section']}
-            data-phase={phase.phaseNumber}
-            data-phase-index={phaseIndex} // For position calculation
+            ref={ref}
+            className={`${styles['phase-section']} relative z-10 w-full`}
+            data-phase-index={phaseIndex}
             style={sectionStyle}
         >
-            {/* Background Layer with Clipping - z-index 0 to sit behind central line (z-2) */}
+            <div id={`phase-${phaseIndex + 1}`} className="absolute -top-24" />
+
+            {/* Background Layer with Clipping - Restored with correct background_image property */}
             <div className="absolute inset-0 z-0" style={{ clipPath: 'inset(0)' }}>
-                {/* Sticky Background Layer */}
-                <div
-                    className={styles['phase-background']}
-                    data-phase={phase.phaseNumber}
-                    style={phase.header?.background_image ? {
-                        backgroundImage: `url(${phase.header.background_image})`
-                    } : undefined}
-                />
+                <div className={styles['phase-background']} style={{
+                    backgroundImage: (phase.header as any)?.background_image ? `url(${(phase.header as any).background_image})` : phase.header?.image ? `url(${phase.header.image})` : undefined,
+                    backgroundColor: phase.header?.color,
+                }} />
             </div>
 
-            {/* Content Wrapper - z-index 10 to sit above central line (z-2) */}
-            <div
-                id={`${anchor}-header-${phaseIndex}`}
-                className={`${styles['phase-content']} relative z-10`}
-            >
-                {/* Phase Header - Sticky & Glassmorphism */}
-                {phase.header && (
-                    <PhaseHeader phase={phase} />
-                )}
+            {phase.header && <PhaseHeader phase={phase} />}
+            {phase.header?.content && <PhaseIntro content={phase.header.content} />}
 
-
-                {/* Phase Intro Content - Narrative Card */}
-                {phase.header?.content && (
-                    <PhaseIntro content={phase.header.content} />
-                )}
-
-
-                {/* Phase Items */}
-                <div className="relative z-10 block">
-                    {phase.items.map((item, itemIndex) => {
-                        const isEven = itemIndex % 2 === 0;
-
-                        return (
-                            <TimelineEntry
-                                key={itemIndex}
-                                item={item}
-                                isEven={isEven}
-                                shiftRightColumn={itemIndex === 1}
-                                onSelect={() => item.detail && onSelectDetail(item)}
-                            />
-                        );
-                    })}
-                    <div className="clear-both" />
-                </div>
+            <div className={`${styles['phase-content']} max-w-5xl mx-auto px-6 relative z-10 block`}>
+                {phase.items.map((item, index) => {
+                    const isSelected = selectedDetail?.title === item.title && selectedDetail?.year === item.year;
+                    return (
+                        <TimelineEntry
+                            key={`${item.year}-${index}`}
+                            item={item}
+                            index={index}
+                            isSelected={isSelected}
+                            onSelect={() => onSelectDetail(item)}
+                        />
+                    );
+                })}
+                <div className="clear-both" />
             </div>
         </div>
     );
@@ -426,111 +417,79 @@ const PhaseSection = ({ phase, phaseIndex, anchor, onSelectDetail }: PhaseSectio
 
 interface TimelineEntryProps {
     item: TimelineItem;
-    isEven: boolean;
-    shiftRightColumn?: boolean;
+    index: number;
+    isSelected: boolean;
     onSelect: () => void;
 }
 
-const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEntryProps) => {
+const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-    // We can also optionally apply specific event color if item has color override
-    // But requirement says "event text in the phase should follow the change" which implies Phase color.
-    // Which is already handled by CSS variable inheritance from PhaseSection.
+    const isInView = useInView(ref, { margin: "0px 0px -100px 0px", once: true });
+    const isEven = index % 2 === 0;
 
     return (
         <div
             ref={ref}
-            data-timeline-year={item.year}
-            className={`relative w-full md:w-1/2 mb-12 md:mb-24 ${styles['timeline-entry']}
-             ${isEven ? styles['is-even'] : styles['is-odd']}
-             ${shiftRightColumn ? 'md:mt-32' : ''}
-             ${styles['entry-anim']} ${isInView ? styles['in-view'] : ''}
-        `}>
+            className={`
+                ${styles['timeline-entry']} 
+                ${isEven ? styles['is-even'] : styles['is-odd']} 
+                relative mb-12 block w-full md:w-1/2
+            `}
+        >
+            {/* Dot on the Axis */}
+            <div className={`
+                 absolute top-[1.8rem] w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 bg-[var(--accent-primary)] shadow-md z-[11]
+                 ${styles['axis-dot-container']}
+                 group-hover:scale-125 transition-transform duration-300
+             `} />
 
-
-            {/* Axis Dot with "Passed" Effect */}
-            <div className={`absolute top-5 z-20 flex flex-col items-center
-                left-4 transform -translate-x-1/2
-                ${styles['axis-dot-container']}
-             `}>
+            {/* Content Card with Hover Effect */}
+            <div
+                onClick={item.detail ? onSelect : undefined}
+                className={`
+                     relative group cursor-pointer
+                     ${styles['entry-anim']} ${isInView ? styles['in-view'] : ''}
+                 `}
+            >
+                {/* Desktop Connection Line - Enhanced Visibility */}
                 <motion.div
-                    initial={{ scale: 0.8, backgroundColor: "var(--timeline-bg)", borderColor: "var(--timeline-text)", borderWidth: "2px" }}
-                    whileInView={{
-                        scale: 1.2,
-                        backgroundColor: "var(--accent-primary)",
-                        borderColor: "var(--accent-primary)",
-                        boxShadow: "0 0 0 4px var(--accent-light)"
-                    }}
-                    viewport={{ margin: "0px 0px -50% 0px" }}
-                    transition={{ duration: 0.4 }}
-                    className="w-4 h-4 rounded-full border border-[var(--timeline-text)] shadow-sm relative z-10"
-                >
-                    {/* Ripple/Pulse Effect when Active */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 1 }}
-                        whileInView={{
-                            opacity: [0, 0.5, 0],
-                            scale: [1, 2, 2.5],
-                        }}
-                        viewport={{ margin: "0px 0px -50% 0px" }}
-                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
-                        className="absolute inset-0 rounded-full bg-[var(--accent-primary)] z-[-1]"
-                    />
-                </motion.div>
-            </div>
+                    initial={{ scaleX: 0, opacity: 0.5 }}
+                    whileInView={{ scaleX: 1, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className={`hidden md:block absolute top-[1.5rem] h-[2px] bg-[var(--accent-primary)]
+                         w-24
+                         ${styles['connection-line']}
+                     `}
+                />
 
-            {/* Content Container */}
-            <div className="w-full pl-12 pr-4 md:pl-0 md:pr-0 flex flex-col md:block">
-
-                {/* Content Box Positioned via Margins on Desktop */}
-                <div
-                    className={`
-                        relative group
-                        w-full
-                        ${item.detail ? 'cursor-pointer' : ''}
-                    `}
-                    onClick={onSelect}
-                >
-                    {/* Desktop Connection Line - Enhanced Visibility */}
-                    <motion.div
-                        initial={{ scaleX: 0, opacity: 0.5 }}
-                        whileInView={{ scaleX: 1, opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className={`hidden md:block absolute top-[1.5rem] h-[2px] bg-[var(--accent-primary)]
-                             w-24
-                             ${styles['connection-line']}
-                         `}
-                    />
-
-                    {/* Year Label */}
-                    <div className={`
-                        text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
-                        ${styles['year-label']}
-                    `}>
-                        {item.year}
-                    </div>
+                {/* Year Label */}
+                <div className={`
+                    text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
+                    ${styles['year-label']}
+                `}>
+                    {item.year}
+                </div>
 
 
-                    <div className="p-0 bg-transparent flex flex-col md:block">
-                        <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
-                            {item.title}
-                        </h3>
-                        {item.subtitle && (
-                            <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
-                                {item.subtitle}
-                            </h4>
-                        )}
+                <div className="p-0 bg-transparent flex flex-col md:block">
+                    <h3 className="text-2xl font-bold text-[var(--timeline-text)] mb-3 group-hover:text-[var(--accent-primary)] transition-colors leading-tight">
+                        {item.title}
+                    </h3>
+                    {item.subtitle && (
+                        <h4 className="text-sm font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-4 border-none p-0 border-b-2 border-transparent hover:border-[var(--accent-primary)] transition-all">
+                            {item.subtitle}
+                        </h4>
+                    )}
 
-                        {/* Image - Museum Frame style */}
-                        {item.image && (
-                            <div className={`mb-8 ${styles['museum-frame-container']}`}>
-                                <div className={styles['museum-frame']}>
+                    {/* Image - Museum Frame style */}
+                    {item.image && (
+                        <div className={`mb-8 ${styles['museum-frame-container']}`}>
+                            <div className={styles['museum-frame']}>
+                                <div className={`relative w-full h-full ${isSelected ? 'opacity-0' : 'opacity-100'}`}>
                                     <motion.div
-                                        layoutId={`timeline-image-${item.year}-${item.title}`}
+                                        layoutId={`timeline-image-${String(item.year)}-${item.title}`}
                                         layout
-                                        className="relative w-full h-full"
+                                        className="relative w-full h-full z-10"
                                     >
                                         <Image
                                             src={item.image}
@@ -543,20 +502,20 @@ const TimelineEntry = ({ item, isEven, shiftRightColumn, onSelect }: TimelineEnt
                                     </motion.div>
                                 </div>
                             </div>
-                        )}
-                        <p className="text-gray-600 dark:text-gray-400 leading-loose text-base md:text-lg max-w-prose">
-                            {item.content}
-                        </p>
+                        </div>
+                    )}
+                    <p className="text-gray-600 dark:text-gray-400 leading-loose text-base md:text-lg max-w-prose">
+                        {item.content}
+                    </p>
 
-                        {item.detail && (
-                            <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 transition-opacity flex items-center gap-2
-                                 ${styles['view-details']}
-                             `}>
-                                VIEW DETAILS <span className="text-xl transform group-hover:translate-x-1 transition-transform">→</span>
-                            </div>
-                        )}
+                    {item.detail && (
+                        <div className={`mt-6 text-sm font-bold tracking-widest uppercase text-[var(--accent-primary)] opacity-60 transition-opacity flex items-center gap-2
+                             ${styles['view-details']}
+                         `}>
+                            VIEW DETAILS <span className="text-xl transform group-hover:translate-x-1 transition-transform">→</span>
+                        </div>
+                    )}
 
-                    </div>
                 </div>
             </div>
         </div>
