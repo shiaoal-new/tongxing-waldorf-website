@@ -4,7 +4,7 @@ import { QuestionnaireData, QuestionnaireResult } from '../types/content';
 export interface QuestionnaireState {
     answers: Record<string, number>;
     showResult: boolean;
-    result: (QuestionnaireResult & { feedbackItems: any[], score: number }) | null;
+    result: (QuestionnaireResult & { feedbackItems: any[], score: number; categoryScores: any[] }) | null;
     activeTooltip: string | null;
     unansweredStats: { above: number; below: number };
     showHints: boolean;
@@ -18,16 +18,20 @@ export interface QuestionnaireState {
     setShowResult: (show: boolean) => void;
     setActiveTooltip: (id: string | null) => void;
     calculateScore: () => number | null;
+    popupFeedback: { title: string; content: string } | null;
+    closePopup: () => void;
 }
 
 export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState => {
     const [answers, setAnswers] = useState<Record<string, number>>({});
     const [showResult, setShowResult] = useState(false);
-    const [result, setResult] = useState<(QuestionnaireResult & { feedbackItems: any[], score: number }) | null>(null);
+    const [result, setResult] = useState<(QuestionnaireResult & { feedbackItems: any[], score: number; categoryScores: any[] }) | null>(null);
     const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
     const [unansweredStats, setUnansweredStats] = useState({ above: 0, below: 0 });
     const [showHints, setShowHints] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
+    const [popupFeedback, setPopupFeedback] = useState<{ title: string; content: string } | null>(null);
+    const [notifiedCategories, setNotifiedCategories] = useState<Set<string>>(new Set());
 
     const storageKey = `questionnaire_progress_${data.slug || 'default'}`;
 
@@ -56,7 +60,7 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
     // Unanswered stats update logic
     useEffect(() => {
         const updateUnansweredStats = () => {
-            const questions = Array.from(document.querySelectorAll('.question-item'));
+            const questions = Array.from(document.querySelectorAll('[data-question-id]'));
             let above = 0;
             let below = 0;
 
@@ -74,7 +78,8 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
 
             setUnansweredStats({ above, below });
 
-            if (window.scrollY > window.innerHeight - 200) {
+            // Show hints if there's anything to show
+            if (above > 0 || below > 0) {
                 setShowHints(true);
             } else {
                 setShowHints(false);
@@ -106,10 +111,48 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
     };
 
     const handleAnswerChange = (questionId: string, value: string | number) => {
-        setAnswers(prev => ({
-            ...prev,
-            [questionId]: typeof value === 'string' ? parseInt(value) : value
-        }));
+        const val = typeof value === 'string' ? parseInt(value) : value;
+
+        const newAnswers = {
+            ...answers,
+            [questionId]: val
+        };
+        setAnswers(newAnswers);
+
+        // Check for category completion
+        data.categories.forEach((cat, index) => {
+            if (notifiedCategories.has(cat.id)) return;
+
+            const isComplete = cat.questions.every(q =>
+                (q.id === questionId && val !== undefined) ||
+                (newAnswers[q.id] !== undefined)
+            );
+
+            if (isComplete) {
+                // Mark as notified
+                const newNotified = new Set(notifiedCategories);
+                newNotified.add(cat.id);
+                setNotifiedCategories(newNotified);
+
+                // Calculate category score
+                const catScore = cat.questions.reduce((sum, q) => {
+                    const ans = q.id === questionId ? val : newAnswers[q.id];
+                    return sum + (ans || 0);
+                }, 0);
+                const maxScore = cat.questions.length * 5;
+                const percentage = (catScore / maxScore) * 100;
+
+                // Triger feedback
+                const feedbackConfig = (cat as any).feedback;
+                if (feedbackConfig) {
+                    const isHigh = percentage >= 80;
+                    setPopupFeedback({
+                        title: isHigh ? "太棒了！" : "感謝您的用心！",
+                        content: isHigh ? (feedbackConfig.high || feedbackConfig.general) : feedbackConfig.general
+                    });
+                }
+            }
+        });
     };
 
     const handleSubmit = () => {
@@ -133,8 +176,40 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
                 });
             });
 
+            const categoryScores = data.categories.map(cat => {
+                const catScore = cat.questions.reduce((sum, q) => {
+                    return sum + (answers[q.id] || 0);
+                }, 0);
+                const maxScore = cat.questions.length * 5;
+                return {
+                    id: cat.id,
+                    title: cat.title,
+                    score: catScore,
+                    maxScore,
+                    percentage: Math.round((catScore / maxScore) * 100)
+                };
+            });
+
+            const tailoredAdvice = data.categories.map((cat, idx) => {
+                const catScore = categoryScores[idx];
+                const adviceConfig = (cat as any).advice;
+                if (!adviceConfig) return null;
+
+                const isHigh = catScore.percentage >= 80;
+                return {
+                    title: cat.title,
+                    content: isHigh ? adviceConfig.high : adviceConfig.low
+                };
+            }).filter(Boolean);
+
             if (resultData) {
-                setResult({ score, ...resultData, feedbackItems });
+                setResult({
+                    score,
+                    ...resultData,
+                    feedbackItems,
+                    categoryScores,
+                    expert_advice: tailoredAdvice as any
+                });
                 setShowResult(true);
             }
         } else {
@@ -168,7 +243,7 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
 
     // Scroll helper
     const scrollToNextUnanswered = (direction: 'first' | 'up' | 'down') => {
-        const questions = Array.from(document.querySelectorAll('.question-item'));
+        const questions = Array.from(document.querySelectorAll('[data-question-id]'));
         const targetQuestions = questions.filter(el => {
             const id = el.getAttribute('data-question-id');
             if (id && answers[id] !== undefined) return false;
@@ -212,6 +287,8 @@ export const useQuestionnaire = (data: QuestionnaireData): QuestionnaireState =>
         scrollToNextUnanswered,
         setShowResult,
         setActiveTooltip,
-        calculateScore
+        calculateScore,
+        popupFeedback,
+        closePopup: () => setPopupFeedback(null)
     };
 };

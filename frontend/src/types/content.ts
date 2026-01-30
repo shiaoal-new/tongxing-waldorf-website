@@ -101,14 +101,31 @@ export interface Category {
     id: string;
     title: string;
     questions: Question[];
+    feedback?: {
+        high: string;
+        general: string;
+    };
+    advice?: {
+        high: string;
+        low: string;
+    };
 }
 
 export interface QuestionnaireResult {
     minScore: number;
     maxScore: number;
+    level: string;
     title: string;
-    content: string;
+    description: string;
     color?: string;
+    radar_chart?: {
+        label: string;
+    };
+    future_prediction?: string;
+    expert_advice?: {
+        title: string;
+        content: string;
+    }[];
 }
 
 export interface QuestionnaireData {

@@ -47,10 +47,93 @@ export default function QuestionnaireResult({ showResult, result, onClose, onRes
                     </div>
                 </motion.div>
 
+
+
                 <div className={styles['result-content']}>
                     <h3 className={styles['result-level']}>{result?.level}</h3>
                     <h4 className={styles['result-title']}>{result?.title}</h4>
                     <p className={styles['result-description']}>{result?.description}</p>
+
+                    {/* Radar Chart */}
+                    {result?.categoryScores && (
+                        <div className="my-8 flex justify-center">
+                            <div className="relative w-64 h-64">
+                                <svg viewBox="-50 -50 300 300" className="w-full h-full">
+                                    {/* Grid */}
+                                    {[0.25, 0.5, 0.75, 1].map((scale, i) => (
+                                        <polygon
+                                            key={i}
+                                            points={result.categoryScores.map((_, index, arr) => {
+                                                const angle = (Math.PI * 2 * index) / arr.length - Math.PI / 2;
+                                                const r = 80 * scale;
+                                                return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
+                                            }).join(' ')}
+                                            fill="none"
+                                            stroke="#e5e7eb"
+                                            strokeWidth="1"
+                                        />
+                                    ))}
+                                    {/* Data */}
+                                    <motion.polygon
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 0.8, scale: 1 }}
+                                        transition={{ delay: 0.5, duration: 1 }}
+                                        points={result.categoryScores.map((cat, index, arr) => {
+                                            const angle = (Math.PI * 2 * index) / arr.length - Math.PI / 2;
+                                            const r = 80 * (cat.percentage / 100);
+                                            return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
+                                        }).join(' ')}
+                                        fill="rgba(16, 185, 129, 0.2)"
+                                        stroke="#10b981"
+                                        strokeWidth="2"
+                                    />
+                                    {/* Labels */}
+                                    {result.categoryScores.map((cat, index, arr) => {
+                                        const angle = (Math.PI * 2 * index) / arr.length - Math.PI / 2;
+                                        const r = 105;
+                                        const x = 100 + r * Math.cos(angle);
+                                        const y = 100 + r * Math.sin(angle);
+                                        return (
+                                            <text
+                                                key={cat.id}
+                                                x={x}
+                                                y={y}
+                                                textAnchor="middle"
+                                                fontSize="10"
+                                                fill="#6b7280"
+                                                alignmentBaseline="middle"
+                                            >
+                                                {cat.title}
+                                            </text>
+                                        );
+                                    })}
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Future Prediction */}
+                    {result?.future_prediction && (
+                        <div className="bg-brand-bg/50 p-6 rounded-xl my-6 border border-brand-taupe/20 text-left">
+                            <h5 className="font-bold text-brand-structural mb-2">🔮 專家預測：十年後的孩子</h5>
+                            <p className="text-brand-text">{result.future_prediction}</p>
+                        </div>
+                    )}
+
+                    {/* Expert Advice */}
+                    {result?.expert_advice && (
+                        <div className="my-8 text-left">
+                            <h5 className="font-bold text-xl text-brand-structural mb-4 text-center">給您的教養錦囊</h5>
+                            <div className="grid grid-cols-1 gap-4">
+                                {result.expert_advice.map((item, idx) => (
+                                    <div key={idx} className="bg-white border-l-4 border-brand-accent p-4 shadow-sm rounded-r-lg">
+                                        <h6 className="font-bold text-brand-accent mb-1">{item.title}</h6>
+                                        <p className="text-sm text-gray-600">{item.content}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {result?.feedbackItems?.length > 0 && (
                         <div className={styles['feedback-section']}>
@@ -62,6 +145,10 @@ export default function QuestionnaireResult({ showResult, result, onClose, onRes
                                         <div className={styles['feedback-question-wrap']}>
                                             <span className={styles['feedback-q-icon']}>Q</span>
                                             <p className={styles['feedback-question']}>{item.question}</p>
+                                            <div className={styles['user-score-badge']}>
+                                                <span className={styles['score-label']}>您的評分</span>
+                                                <span className={styles['score-value']}>{item.score}</span>
+                                            </div>
                                         </div>
                                         <div className={styles['feedback-details']}>
                                             <div className={styles['feedback-detail-block']}>
@@ -89,6 +176,6 @@ export default function QuestionnaireResult({ showResult, result, onClose, onRes
                     </a>
                 </div>
             </div>
-        </Modal>
+        </Modal >
     );
 }

@@ -23,7 +23,9 @@ export default function QuestionnaireComponent({ data }) {
         scrollToNextUnanswered,
         setShowResult,
         setActiveTooltip,
-        calculateScore
+        calculateScore,
+        popupFeedback,
+        closePopup
     } = useQuestionnaire(data);
 
     return (
@@ -36,6 +38,12 @@ export default function QuestionnaireComponent({ data }) {
             />
 
             <div className={styles['questionnaire-container']}>
+                {data.meta?.social_proof && (
+                    <div className="text-center mb-6 text-brand-taupe/80 text-sm">
+                        ✨ 已有 <span className="font-bold text-brand-primary">{data.meta.social_proof}</span> {data.meta.social_proof_text}
+                    </div>
+                )}
+
                 <QuestionnaireProgressBar progress={progress()} />
 
                 {/* Categories Tabs Container */}
@@ -91,6 +99,22 @@ export default function QuestionnaireComponent({ data }) {
                     onScroll={scrollToNextUnanswered}
                 />
             </div>
+
+            {popupFeedback && (
+                <div className="fixed bottom-8 right-8 z-50 animate-bounce-in">
+                    <div className="bg-white rounded-lg shadow-xl p-4 border border-brand-primary/20 max-w-sm relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-brand-primary"></div>
+                        <button
+                            onClick={closePopup}
+                            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+                        >
+                            ×
+                        </button>
+                        <h4 className="text-brand-primary font-bold mb-1">{popupFeedback.title}</h4>
+                        <p className="text-sm text-gray-600">{popupFeedback.content}</p>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

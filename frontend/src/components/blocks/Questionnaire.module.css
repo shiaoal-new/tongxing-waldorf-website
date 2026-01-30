@@ -578,9 +578,28 @@
 
 .feedback-question-wrap {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
     margin-bottom: 1.25rem;
-    align-items: flex-start;
+    align-items: center;
+}
+
+@media (max-width: 480px) {
+    .feedback-question-wrap {
+        flex-wrap: wrap;
+    }
+
+    .user-score-badge {
+        order: -1;
+        margin-left: 2rem;
+        flex-direction: row;
+        gap: 0.5rem;
+        min-width: unset;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .score-value {
+        font-size: 1rem;
+    }
 }
 
 .feedback-q-icon {
@@ -604,6 +623,33 @@
     color: rgb(var(--color-brand-structural));
     margin: 0;
     line-height: 1.5;
+}
+
+.user-score-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid rgb(var(--color-brand-accent));
+    border-radius: 12px;
+    padding: 0.25rem 0.75rem;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.score-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: rgb(var(--color-brand-accent));
+    white-space: nowrap;
+}
+
+.score-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: rgb(var(--color-brand-accent));
+    line-height: 1;
 }
 
 .feedback-details {
@@ -640,7 +686,7 @@
 }
 
 /* 懸浮未回答提示 */
-.unanswered-hint.btn {
+.unanswered-hint {
     position: fixed !important;
     left: 50% !important;
     transform: translateX(-50%);
@@ -652,12 +698,16 @@
     font-size: 0.875rem;
     font-weight: 600;
     backdrop-filter: blur(8px);
+    background-color: white !important;
+    color: rgb(var(--color-brand-structural)) !important;
+    border: 1px solid rgba(var(--color-brand-taupe), 0.3) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.2s ease, transform 0.2s ease;
     width: auto;
 }
 
-.unanswered-hint.btn:hover {
+.unanswered-hint:hover {
     transform: translateX(-50%) scale(1.05);
 }
 
@@ -676,7 +726,7 @@
 }
 
 @media (max-width: 768px) {
-    .unanswered-hint.btn {
+    .unanswered-hint {
         width: calc(100% - 2rem) !important;
         max-width: 320px;
         justify-content: center;

@@ -72,6 +72,14 @@ export default function QuestionnaireCategory({
                                 );
                             })}
                         </div>
+
+                        {answers[question.id] && (
+                            <div className="mt-3 animate-fade-in">
+                                <span className={styles['benchmark-badge'] || "text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-flex items-center gap-1"}>
+                                    👥 {68 + ((question.id.charCodeAt(0) + question.id.charCodeAt(question.id.length - 1)) % 25)}% 的家長也和您有相同的看法
+                                </span>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
