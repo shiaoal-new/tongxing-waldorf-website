@@ -67,11 +67,16 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "@emotion/babel-plugin": "^11.13.5",
+    "@locator/babel-jsx": "^0.5.1",
+    "@locator/runtime": "^0.5.1",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-twin": "^1.1.0",
     "cheerio": "^1.1.2",
     "daisyui": "^5.5.14",
     "fontmin": "^1.1.1",
