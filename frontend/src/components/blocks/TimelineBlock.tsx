@@ -42,6 +42,8 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
     const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
+    const [dotInfos, setDotInfos] = useState<{ element: HTMLElement, position: number }[]>([]);
+    const [containerHeight, setContainerHeight] = useState(0);
     const [colorMap, setColorMap] = useState<{ inputs: number[], outputs: string[] }>({
         inputs: [0, 1],
         outputs: ["var(--accent-primary)", "var(--accent-primary)"]
@@ -100,6 +102,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             if (!containerRef.current) return;
             const container = containerRef.current;
             const containerRect = container.getBoundingClientRect();
+            setContainerHeight(containerRect.height);
 
             // 1. Calculate Year Text Update Positions
             const yearElements = container.querySelectorAll('[data-timeline-year]');
@@ -112,7 +115,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     if (time > 0) {
                         const rect = el.getBoundingClientRect();
                         const relativeTop = rect.top - containerRect.top;
-                        const dotOffset = 20;
+                        const dotOffset = 0; // Align exactly with the element top for now
                         const position = (relativeTop + dotOffset) / containerRect.height;
                         positions.push({ time, position });
                     }
@@ -121,7 +124,22 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             positions.sort((a, b) => a.position - b.position);
             setItemPositions(positions);
 
-            // 2. Calculate Color Phase Positions
+            // 2. Calculate Entry Positions for Visual Hint
+            const entryElements = container.querySelectorAll('[data-timeline-entry]');
+            const dInfos: { element: HTMLElement, position: number }[] = [];
+            entryElements.forEach((el) => {
+                const dot = el.querySelector('[data-timeline-dot]');
+                if (dot) {
+                    const rect = dot.getBoundingClientRect();
+                    // Center of the dot relative to the container
+                    const relativeTop = rect.top - containerRect.top + (rect.height / 2);
+                    const position = relativeTop / containerRect.height;
+                    dInfos.push({ element: el as HTMLElement, position });
+                }
+            });
+            setDotInfos(dInfos);
+
+            // 3. Calculate Color Phase Positions
             // We want to change color as soon as we enter a new phase area
             // Find inputs/outputs for color transform
             const inputs: number[] = [];
@@ -250,6 +268,24 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             const firstYear = data.items.find(i => i.year)?.year;
             if (firstYear) progressRef.current.innerText = formatDate(parseYearStr(firstYear));
         }
+
+        // Check for passed dots and update their visuals directly
+        // The arrow head is approx 100px tall. We want to trigger when the TIP (bottom) of the arrow hits the dot.
+        // latest is the position of the arrow BASE.
+        // So ArrowTip = latest + (100px / containerHeight).
+        const arrowHeightPx = 98; // 100px border - 2px margin
+        const arrowOffset = containerHeight > 0 ? (arrowHeightPx / containerHeight) : 0;
+
+        if (dotInfos.length > 0) {
+            dotInfos.forEach(info => {
+                // Check if the Arrow Tip is past the dot position
+                if (latest + arrowOffset >= info.position) {
+                    info.element.classList.add(styles['entry-passed']);
+                } else {
+                    info.element.classList.remove(styles['entry-passed']);
+                }
+            });
+        }
     });
 
     useEffect(() => {
@@ -281,14 +317,14 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Active Gradient Line */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[60px] origin-top z-[2]"
+                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[4px] md:w-[60px] origin-top z-[2]"
                     style={{
                         x: "-50%",
                         scaleY,
                         // Animate background color via activeColor
                         // We use a linear gradient where the color comes from activeColor
                         backgroundImage: useTransform(activeColor, (c) => `linear-gradient(to bottom, transparent 0%, ${c} 30%, ${c} 100%)`),
-                        boxShadow: useTransform(activeColor, (c) => `5px 5px 20px ${c}`), // Optional glow effect matching color
+                        boxShadow: useTransform(activeColor, (c) => `0px 0px 20px ${c}`), // Reduced shadow spread for mobile
                     }}
                 />
 
@@ -302,7 +338,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     }}
                 >
                     <div className="relative flex flex-col items-center">
-                        {/* CSS Border Arrow Head */}
+                        {/* CSS Border Arrow Head - Responsive Size */}
                         <motion.div
                             className="z-10 filter drop-shadow-sm"
                             style={{
@@ -310,12 +346,28 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                                 height: 0,
                                 borderLeft: '50px solid transparent',
                                 borderRight: '50px solid transparent',
-                                borderTopColor: activeColor, // Dynamic color
+                                borderTopColor: activeColor as any, // Dynamic color
                                 borderTopWidth: '100px',
                                 borderTopStyle: 'solid',
                                 transform: 'translateY(-1px)'
                             }}
                         />
+                        {/* Desktop-only larger arrow decoration if needed, or just keep it simple */}
+                        <div className="hidden md:block absolute top-0">
+                            <motion.div
+                                style={{
+                                    width: 0,
+                                    height: 0,
+                                    borderLeft: '50px solid transparent',
+                                    borderRight: '50px solid transparent',
+                                    borderTopColor: activeColor as any,
+                                    borderTopWidth: '100px',
+                                    borderTopStyle: 'solid',
+                                    opacity: 0.3,
+                                    filter: 'blur(10px)'
+                                }}
+                            />
+                        </div>
 
                         {/* Progress Percentage */}
                         <motion.span
@@ -430,6 +482,7 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
     return (
         <div
             ref={ref}
+            data-timeline-entry={item.year}
             className={`
                 ${styles['timeline-entry']} 
                 ${isEven ? styles['is-even'] : styles['is-odd']} 
@@ -437,10 +490,11 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
             `}
         >
             {/* Dot on the Axis */}
-            <div className={`
-                 absolute top-[1.8rem] w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 bg-[var(--accent-primary)] shadow-md z-[11]
+            <div
+                data-timeline-dot={item.year}
+                className={`
+                 absolute top-[1.0625rem] w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 bg-gray-300 dark:bg-gray-600 shadow-md z-[11]
                  ${styles['axis-dot-container']}
-                 group-hover:scale-125 transition-transform duration-300
              `} />
 
             {/* Content Card with Hover Effect */}
@@ -463,7 +517,9 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
                 />
 
                 {/* Year Label */}
-                <div className={`
+                <div
+                    data-timeline-year={item.year}
+                    className={`
                     text-4xl md:text-6xl font-black text-[var(--accent-primary)] opacity-90 mb-4 font-display ${styles['big-year']} tracking-tight drop-shadow-md
                     ${styles['year-label']}
                 `}>
