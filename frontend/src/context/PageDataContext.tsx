@@ -6,8 +6,9 @@ import { PageContextValue } from '../types/content';
  * 用於避免在組件樹中層層傳遞 props
  */
 const PageDataContext = createContext<PageContextValue>({
-    getMemberDetails: () => null,
+    getMemberDetails: () => undefined,
     setSelectedMember: () => { },
+    selectedMember: null,
     faqList: [],
     getImagePath: (path: string) => path,
 });
