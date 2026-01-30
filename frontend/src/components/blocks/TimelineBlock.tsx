@@ -34,7 +34,8 @@ const formatDate = (timestamp: number) => {
     if (isNaN(d.getTime())) return "";
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
-    return `${year}.${month < 10 ? '0' + month : month}`;
+    const day = d.getDate();
+    return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
 };
 
 const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
@@ -317,7 +318,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Active Gradient Line */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[60px] md:w-[60px] origin-top z-[2]"
+                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[40px] md:w-[60px] origin-top z-[2]"
                     style={{
                         x: "-50%",
                         scaleY,
@@ -379,7 +380,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                                 // boxShadow: useTransform(activeColor, c => `0 0 5px ${c}`) // Add glow instead of transparency
                             }}
                         >
-                            {data.items.find(i => i.year)?.year || "Start"}
+                            {data.items.find(i => i.year)?.year ? formatDate(parseYearStr(data.items.find(i => i.year)!.year)) : "Start"}
                         </motion.span>
                     </div>
                 </motion.div>
@@ -486,7 +487,7 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
             className={`
                 ${styles['timeline-entry']} 
                 ${isEven ? styles['is-even'] : styles['is-odd']} 
-                relative mb-12 block w-full md:w-1/2 p-8
+                relative mb-12 block w-full md:w-1/2 p-12 md:p-8
             `}
         >
             {/* Dot on the Axis */}
@@ -497,13 +498,13 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
                  ${styles['axis-dot-container']}
              `} />
 
-            {/* Desktop Connection Line - Moved here to share alignment with Dot */}
+            {/* Connection Line - Share alignment with Dot */}
             <motion.div
                 initial={{ scaleX: 0, opacity: 0.5 }}
                 whileInView={{ scaleX: 1, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className={`hidden md:block absolute h-[2px] bg-[var(--accent-primary)]
-                     w-24 z-[10]
+                className={`absolute h-[2px] bg-[var(--accent-primary)]
+                     w-2 md:w-14 z-[10]
                      ${styles['connection-line']}
                  `}
             />
@@ -585,7 +586,7 @@ const PhaseHeader = ({ phase }: { phase: { phaseNumber: number; header?: Timelin
     const isInView = useInView(ref, { margin: "-10% 0px -40% 0px" });
 
     return (
-        <div ref={ref} className="sticky top-24 z-30 flex justify-center w-full my-12 pointer-events-none">
+        <div ref={ref} className="sticky top-0 z-30 flex justify-center w-full my-12 pointer-events-none">
             <div className={`
                 pointer-events-auto backdrop-blur-xl bg-white/90 dark:bg-black/80 px-8 py-3 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-2xl flex items-center gap-4 group hover:scale-105 transition-transform duration-300
                 ${styles['phase-header-anim']} ${isInView ? styles['in-view'] : ''}

@@ -117,6 +117,13 @@
     transform: translateY(-50%) translateX(-50%);
 }
 
+.connection-line {
+    left: 1rem;
+    /* Start from left axis on mobile */
+    top: var(--align-top);
+    transform: translateY(-50%);
+}
+
 .view-details {
     justify-content: flex-start;
 }
@@ -160,22 +167,24 @@
     }
 
     .is-even .connection-line {
-        right: -6rem;
-        /* -right-24 */
         left: auto;
+        right: 0;
+        /* Align with right edge of left-floating entry (center axis) */
         top: var(--align-top);
         transform: translateY(-50%) scaleX(1);
         /* Preserve scale from motion if needed */
-        transform-origin: left;
+        transform-origin: right;
+        /* Scale from the axis out to the left */
     }
 
     .is-odd .connection-line {
-        left: -6rem;
-        /* -left-24 */
         right: auto;
+        left: 0;
+        /* Align with left edge of right-floating entry (center axis) */
         top: var(--align-top);
         transform: translateY(-50%) scaleX(1);
-        transform-origin: right;
+        transform-origin: left;
+        /* Scale from the axis out to the right */
     }
 
     .is-even .museum-frame-container {
