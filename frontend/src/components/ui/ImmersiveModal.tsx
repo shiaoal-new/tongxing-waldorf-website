@@ -24,12 +24,22 @@ export default function ImmersiveModal({
         if (isOpen) {
             setIsClosing(false);
             setIsExpanded(false);
-            // document.body.style.overflow = "hidden";
+
+            // Prevent body scroll and handle scrollbar width to avoid jumping
+            const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.overflow = "hidden";
+            if (scrollBarWidth > 0) {
+                document.body.style.paddingRight = `${scrollBarWidth}px`;
+            }
         } else {
-            // document.body.style.overflow = "";
+            // Restore overflow and padding when closing
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         }
+
         return () => {
-            // document.body.style.overflow = "";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         };
     }, [isOpen]);
 
