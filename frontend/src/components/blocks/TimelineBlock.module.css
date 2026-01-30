@@ -424,22 +424,12 @@
 
 .entry-passed h3 {
     color: var(--accent-primary) !important;
-    transform: translateX(-10px);
-    /* Mobile default: move left towards axis */
 }
 
 @media (min-width: 768px) {
 
     /* Move closer to center axis when passed on desktop */
-    .is-even.entry-passed h3 {
-        transform: translateX(10px);
-        /* Move right towards axis */
-    }
-
-    .is-odd.entry-passed h3 {
-        transform: translateX(-10px);
-        /* Move left towards axis */
-    }
+    /* Title animation removed to keep alignment with year */
 }
 
 .entry-passed p {
