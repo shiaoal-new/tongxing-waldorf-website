@@ -586,7 +586,7 @@ const PhaseHeader = ({ phase }: { phase: { phaseNumber: number; header?: Timelin
     const isInView = useInView(ref, { margin: "-10% 0px -40% 0px" });
 
     return (
-        <div ref={ref} className="sticky top-0 z-30 flex justify-center w-full my-12 pointer-events-none">
+        <div ref={ref} className={styles['phase-header-sticky']}>
             <div className={`
                 pointer-events-auto backdrop-blur-xl bg-white/90 dark:bg-black/80 px-8 py-3 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-2xl flex items-center gap-4 group hover:scale-105 transition-transform duration-300
                 ${styles['phase-header-anim']} ${isInView ? styles['in-view'] : ''}

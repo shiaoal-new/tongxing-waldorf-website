@@ -8,15 +8,35 @@
     font-family: var(--font-body), sans-serif;
     position: relative;
     background: #ffffff;
-    overflow-x: hidden;
-    /* Prevent horizontal scroll from animations */
-
+    overflow: clip;
+    /* Prevents horizontal overflow from animations without breaking sticky */
+    scroll-behavior: smooth;
+    /* Use a larger offset and account for mobile safe areas (notches) */
+    --navbar-offset: calc(5.5rem + env(safe-area-inset-top, 0px));
+    /* Default mobile height */
     /* 極簡色彩系統 */
     --timeline-bg: #ffffff;
     --timeline-text: #1a1a1a;
     --accent-primary: #f2a154;
     --accent-light: #fef3e7;
     --accent-border: #e8ddd0;
+}
+
+@media (min-width: 1024px) {
+    .timeline-container {
+        --navbar-offset: 6.5rem;
+    }
+}
+
+.phase-header-sticky {
+    position: sticky;
+    top: var(--navbar-offset);
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 3rem 0;
+    pointer-events: none;
 }
 
 .timeline-container[data-theme="dark"] {
@@ -40,8 +60,7 @@
     position: relative;
     padding: 0;
     margin: 0;
-    overflow: hidden;
-    /* Safety measure for mobile overflow */
+    /* Removed overflow: hidden to allow position: sticky to work */
 }
 
 /* Fixed background layer */
