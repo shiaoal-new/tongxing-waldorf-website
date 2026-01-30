@@ -31,7 +31,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
 
       {/* Media Support with sophisticated masking */}
       {media && (
-        <div className={`relative ${isFullWidth ? 'w-full md:w-1/2 h-72 md:h-auto' : 'w-full h-56 md:h-64'} overflow-hidden`}>
+        <div className={`relative ${isFullWidth ? 'w-full md:w-1/2 h-72 md:h-auto md:self-stretch' : 'w-full h-56 md:h-64'} overflow-hidden`}>
           <div className={`absolute inset-0 z-10 bg-gradient-to-t md:bg-gradient-to-r ${isFullWidth ? 'from-white/80 via-white/20 to-transparent dark:from-black/80 dark:via-black/20' : 'from-white/80 via-white/20 to-transparent dark:from-black/80 dark:via-black/20'}`} />
           <MediaRenderer
             media={media as any}
