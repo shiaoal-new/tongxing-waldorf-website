@@ -74,11 +74,6 @@ sections:
               - text: 探索特色課程
                 link: /featured-courses
                 style: btn-sm-outline
-      - type: cta_block
-        buttons:
-          - text: 了解同心的課程設計
-            link: /curriculum-development
-            style: btn-primary
   - section_id: community
     layout: 精緻特色區塊 (Features Premium)
     blocks:
@@ -86,6 +81,11 @@ sections:
         title: 別再一個人單打獨鬥了 (抱)
         subtitle: 把「村子」找回來
         content: 在台北養小孩，根本是極限運動吧？加班、小孩生病、沒人顧... (崩潰)。生活秩序瞬間就像骨牌一樣全倒。我們懂那種孤立無援。所以這裡不只是學校，更是一個「村落」。大家互相支援，讓你的血壓不要飆太高。
+      - type: cta_block
+        buttons:
+          - text: 了解我們的教育理念
+            link: /philosophy
+            style: btn-primary
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
@@ -124,11 +124,6 @@ sections:
               - text: 支持同心永續發展
                 link: /donation
                 style: btn-sm-outline
-      - type: cta_block
-        buttons:
-          - text: 了解我們的教育理念
-            link: /philosophy
-            style: btn-primary
   - section_id: videos
     blocks:
       - type: text_block
@@ -259,10 +254,6 @@ sections:
         title: 常見問答 (誠實豆沙包版)
         subtitle: FAQ
         content: 學費多少？畢業去哪？會不會餓死？ (誤)。那些你想問又不敢開口的，我們都懂。這裡有誠實豆沙包等級的回答，不轉彎抹角，直接給你真相。
-        buttons:
-          - text: 預約參觀與諮詢
-            link: /visit
-            style: btn-outline-primary
       - type: list_block
         layout_method: vertical
         item_type: faq_item
