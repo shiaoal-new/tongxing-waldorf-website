@@ -317,7 +317,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
                 {/* Active Gradient Line */}
                 <motion.div
-                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[4px] md:w-[60px] origin-top z-[2]"
+                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[60px] md:w-[60px] origin-top z-[2]"
                     style={{
                         x: "-50%",
                         scaleY,
