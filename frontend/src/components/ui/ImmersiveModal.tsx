@@ -2,6 +2,21 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
+const ANIMATION_DURATION = 300;
+
+function lockBodyScroll() {
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
+}
+
+function unlockBodyScroll() {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+}
+
 interface ImmersiveModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -24,23 +39,12 @@ export default function ImmersiveModal({
         if (isOpen) {
             setIsClosing(false);
             setIsExpanded(false);
-
-            // Prevent body scroll and handle scrollbar width to avoid jumping
-            const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-            document.body.style.overflow = "hidden";
-            if (scrollBarWidth > 0) {
-                document.body.style.paddingRight = `${scrollBarWidth}px`;
-            }
+            lockBodyScroll();
         } else {
-            // Restore overflow and padding when closing
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
+            unlockBodyScroll();
         }
 
-        return () => {
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
-        };
+        return unlockBodyScroll;
     }, [isOpen]);
 
     const handleClose = (e?: React.MouseEvent) => {
@@ -49,7 +53,7 @@ export default function ImmersiveModal({
         // Wait for animation frame or short timeout to sync animations if needed
         setTimeout(() => {
             onClose();
-        }, 300);
+        }, ANIMATION_DURATION);
     };
 
     if (!isOpen) return null;

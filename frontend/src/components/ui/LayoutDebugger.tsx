@@ -58,10 +58,8 @@ export default function LayoutDebugger() {
                 });
 
             // Debug: log top 3 distinct overflows
-            // const potentialIssues = offendingRawFull.filter(i => i.amount > 0.5).sort((a, b) => b.amount - a.amount).slice(0, 5);
-            // if (potentialIssues.length > 0) {
-            //      console.log('[LayoutDebugger] Potential overflows (>0.5px):', potentialIssues.map(p => `${p.tag}.${p.className} (${p.amount}px)`));
-            // }
+            // code removed
+
 
             const offendingRaw = offendingRawFull
                 .filter(item => item.amount > 1.0) // 回歸 1.0，避免 0.5px 的精密誤差
@@ -111,8 +109,7 @@ export default function LayoutDebugger() {
                 console.table(offending);
             }
             // else if (!hasActualOverflow) {
-            //      // 以前會自動關閉，現在改為 Sticky，一旦出現就不自動消失，直到使用者手動關閉
-            //      // 這能避免警告視窗閃爍
+            //      // previously auto-closed
             // }
         };
 
@@ -138,9 +135,7 @@ export default function LayoutDebugger() {
         // 如果使用者能橫向捲動，代表一定有溢出
         const onScroll = (e: Event) => {
             const vv = window.visualViewport;
-            // if (vv) {
-            //     console.log(`[LayoutDebugger] Scroll detected. type: ${e.type}, scrollX: ${window.scrollX}, vv.offsetLeft: ${vv.offsetLeft}, scale: ${vv.scale}`);
-            // }
+
 
             const currentScrollX = window.scrollX;
             const vvOffset = vv ? vv.offsetLeft : 0;

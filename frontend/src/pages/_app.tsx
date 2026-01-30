@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { AppProps } from "next/app";
 import React, { useEffect } from "react";
-// import localFont from 'next/font/local';
+
 
 const ThemeProvider = dynamic(() => import("next-themes").then((mod) => mod.ThemeProvider), { ssr: false }) as any;
 const LayoutDebugger = dynamic(() => import("../components/ui/LayoutDebugger"), { ssr: false });
