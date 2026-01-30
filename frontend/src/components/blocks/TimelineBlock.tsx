@@ -486,16 +486,27 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
             className={`
                 ${styles['timeline-entry']} 
                 ${isEven ? styles['is-even'] : styles['is-odd']} 
-                relative mb-12 block w-full md:w-1/2
+                relative mb-12 block w-full md:w-1/2 p-8
             `}
         >
             {/* Dot on the Axis */}
             <div
                 data-timeline-dot={item.year}
                 className={`
-                 absolute top-[1.0625rem] w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 bg-gray-300 dark:bg-gray-600 shadow-md z-[11]
+                 absolute w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 bg-gray-300 dark:bg-gray-600 shadow-md z-[11]
                  ${styles['axis-dot-container']}
              `} />
+
+            {/* Desktop Connection Line - Moved here to share alignment with Dot */}
+            <motion.div
+                initial={{ scaleX: 0, opacity: 0.5 }}
+                whileInView={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className={`hidden md:block absolute h-[2px] bg-[var(--accent-primary)]
+                     w-24 z-[10]
+                     ${styles['connection-line']}
+                 `}
+            />
 
             {/* Content Card with Hover Effect */}
             <div
@@ -505,17 +516,6 @@ const TimelineEntry = ({ item, index, isSelected, onSelect }: TimelineEntryProps
                      ${styles['entry-anim']} ${isInView ? styles['in-view'] : ''}
                  `}
             >
-                {/* Desktop Connection Line - Enhanced Visibility */}
-                <motion.div
-                    initial={{ scaleX: 0, opacity: 0.5 }}
-                    whileInView={{ scaleX: 1, opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className={`hidden md:block absolute top-[1.5rem] h-[2px] bg-[var(--accent-primary)]
-                         w-24
-                         ${styles['connection-line']}
-                     `}
-                />
-
                 {/* Year Label */}
                 <div
                     data-timeline-year={item.year}
