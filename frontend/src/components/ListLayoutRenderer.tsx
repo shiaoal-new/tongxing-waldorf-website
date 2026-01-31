@@ -28,6 +28,7 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     bento_grid: { fullWidth: false },
     scrollable_grid: { fullWidth: true },
     testimonial_carousel: { fullWidth: true },
+    masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
 };
 
@@ -231,6 +232,35 @@ export default function ListRenderer({
                     <div className="col-span-full">
                         <ActionButtons buttons={buttons} align="center" className="mt-12" />
                     </div>
+                )}
+            </div>
+        );
+    }
+
+    // Masonry Grid 佈局 - 瀑布流 (Pinterest 風格)
+    if (layout === "masonry_grid") {
+        return (
+            <div className="w-full max-w-brand mx-auto px-4">
+                <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                    {items.map((item, index) => (
+                        <motion.div
+                            key={item.id || index}
+                            className="break-inside-avoid mb-6"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.05, duration: 0.5 }}
+                        >
+                            <div className="w-full">
+                                {renderItem(item, index)}
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+
+                <DevComment text="Masonry Grid Action Buttons" />
+                {buttons && buttons.length > 0 && (
+                    <ActionButtons buttons={buttons} align="center" className="mt-12" />
                 )}
             </div>
         );

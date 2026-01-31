@@ -11,6 +11,9 @@ interface ExpandableTextProps {
     disableExpand?: boolean;
     expanded?: boolean;
     onToggle?: (expanded: boolean) => void;
+    variant?: 'default' | 'minimal';
+    expandText?: string;
+    collapseText?: string;
 }
 
 /**
@@ -21,11 +24,12 @@ const ExpandableText = ({
     content,
     className = "",
     collapsedHeight = 220,
-
-
     disableExpand = false,
     expanded: externalExpanded,
-    onToggle: externalOnToggle
+    onToggle: externalOnToggle,
+    variant = 'default',
+    expandText,
+    collapseText
 }: ExpandableTextProps) => {
     const [internalExpanded, setInternalExpanded] = useState(false);
     const [hasOverflow, setHasOverflow] = useState(false);
@@ -80,11 +84,14 @@ const ExpandableText = ({
                 <MarkdownContent content={content} />
             </div>
 
-            {hasOverflow && (
-                <div className="mt-2 flex justify-center relative z-20">
+            {(hasOverflow || (variant === 'minimal' && !isExpanded)) && (
+                <div className={`mt-2 flex ${variant === 'minimal' ? 'justify-start' : 'justify-center'} relative z-20`}>
                     <ExpandToggleButton
                         isExpanded={isExpanded}
                         onToggle={toggleExpand}
+                        variant={variant}
+                        expandText={expandText}
+                        collapseText={collapseText}
                     />
                 </div>
             )}

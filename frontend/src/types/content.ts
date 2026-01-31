@@ -67,6 +67,12 @@ export interface FeatureItem {
     media?: MediaItem;
     span?: number;
     buttons?: CTAButton[];
+    sub_items?: {
+        title: string;
+        content: string;
+        icon?: string;
+        buttons?: CTAButton[];
+    }[];
 }
 
 export interface VideoItem {

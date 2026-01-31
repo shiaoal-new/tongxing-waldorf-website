@@ -74,6 +74,6 @@ export const listPolicy: BlockPolicy = {
     isSectionWide: (block: any) => {
         const layoutMethod = block.layout_method;
         const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
-        return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid"].includes(layoutMethod);
+        return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid", "masonry_grid"].includes(layoutMethod);
     }
 };

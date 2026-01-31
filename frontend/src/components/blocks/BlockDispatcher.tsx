@@ -90,6 +90,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
                     media={feature.media}
                     span={feature.span}
                     align={(block as any).align || align}
+                    sub_items={feature.sub_items}
                 >
                     {feature.content}
                 </FeatureItem>

@@ -8,6 +8,7 @@ interface ExpandToggleButtonProps {
     showLabel?: boolean;
     expandText?: string;
     collapseText?: string;
+    variant?: 'default' | 'minimal';
 }
 
 /**
@@ -19,8 +20,27 @@ const ExpandToggleButton = ({
     className = "",
     showLabel = true,
     expandText = "展開",
-    collapseText = "收合"
+    collapseText = "收合",
+    variant = 'default'
 }: ExpandToggleButtonProps) => {
+    if (variant === 'minimal') {
+        return (
+            <button
+                onClick={onToggle}
+                className={`group flex items-center gap-2 text-[10px] font-bold text-brand-accent/60 uppercase tracking-widest hover:text-brand-accent transition-colors ${className}`}
+                aria-expanded={isExpanded}
+                aria-label={isExpanded ? collapseText : expandText}
+            >
+                {showLabel && (
+                    <span>{isExpanded ? collapseText : expandText}</span>
+                )}
+                <div className={`${isExpanded ? 'rotate-180' : ''} transition-transform duration-300`}>
+                    <ChevronDownIcon className={`w-3 h-3 ${!isExpanded ? 'animate-bounce' : ''}`} />
+                </div>
+            </button>
+        );
+    }
+
     return (
         <button
             onClick={onToggle}

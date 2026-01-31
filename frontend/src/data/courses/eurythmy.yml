@@ -1,96 +1,35 @@
 title: 優律思美 (Eurythmy)
 slug: eurythmy
-content: 看得見的語言與音樂 - 同心華德福特色課程
 hero:
-  title: 優律思美
-  subtitle: 看得見的語言與音樂
+  title: 優律思美 (Eurythmy)
+  subtitle: 靈動的語言，看得見的音樂
+  content: 優律思美是一種將語言與音樂透過肢體動作呈現出來的藝術。它並非單純的舞蹈，而是一種能平衡身心、鍛鍊協調感並深化內在力量的華德福特色課程。
   media_list:
     - type: image
-      image: /img/featured-artistic.webp # Using an existing image placeholder
+      image: /img/featured-artistic.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
-  - section_id: opening
+  - section_id: intro
     blocks:
       - type: text_block
         title: 什麼是優律思美？
-        content: 同心華德福的優律思美（Eurythmy）課程是一門深植於人智學背景的藝術課程，其名稱源自古希臘語，意為「和諧有律動的動作」。它不單純是舞蹈或戲劇，而是一種透過肢體將「看不見」的聲音、顏色與音樂轉化為「看得見」的藝術形式。
-  - section_id: core-concepts
-    blocks:
-      - type: list_block
-        title: 核心概念
-        layout_method: grid_cards
-        item_type: card
-        items:
-          - title: 語言的轉化
-            content: 將子音與母音的發音特質轉化為特定動作。母音表達內在感受，子音模仿外在力量。
-            image: /img/icons/language-transform.svg # Placeholder or icon if any
-          - title: 音樂的呈現
-            content: 將音符、節奏、音階與調性透過全身律動呈現，讓身體成為一個歌唱的樂器。
-            image: /img/icons/music-rendering.svg
-          - title: 正直的力道
-            content: 帶給人一種正直的力量，讓人回歸內在的專注與平和，甚至能對抗虛偽。
-            image: /img/icons/inner-strength.svg
-  - section_id: curriculum
-    blocks:
-      - type: text_block
-        title: 針對兒童發展的年段課綱設計
-        content: 同心的課程嚴格遵循孩子的發展需求進行設計，從一至十二年級各有重點。
-      - type: tabbed_content_block
-        tabs:
-          - title: 低年級 (1-3)
-            content: |
-              *   **一年級：** 學習如何住在身體這個「家」裡，從最基礎的**直線與曲線**行進開始。
-              *   **二年級：** 引入**鏡像**概念，練習與團體互動中的內外對稱。
-              *   **三年級（九歲危機）：** 透過大量「A」的動作與小調音樂，接納孩子降落到大地的動盪感，建立內在世界。
-          - title: 中年級 (4-6)
-            content: |
-              *   **四年級：** 配合語文主課程學習**文法動作**，從圓形隊伍轉向面向前方隊伍，訓練新的意識。
-              *   **五年級：** 孩子身心平橫的黃金時期。練習**銅棒 (Copper Rods)**，意識身體中軸與節奏對稱美。
-              *   **六年級：** 配合羅馬歷史學習規矩與法律，練習複雜的幾何隊形行走，挑戰社交移動。
-          - title: 高年級 (7-12)
-            content: |
-              重點轉向探索與自我表現。例如十一年級會練習戲劇張力強大的音樂作品，讓學生練習「用靈魂在舞台上歌唱」，展現內在的真實情感。
-  - section_id: features
-    blocks:
-      - type: list_block
-        title: 課程的教育與療癒功能
-        layout_method: scrollable_grid
-        item_type: benefit
-        items:
-          - title: 感官保護
-            content: 在現代 3C 與資訊氾濫的干擾下，優律思美幫助孩子重新感知自己的身體與內心訊息。
-            media:
-              type: image
-              image: /img/featured-protection.webp
-          - title: 意志力與和諧
-            content: 透過意志力的鍛鍊（如精準的步法與手勢），達成內在心靈與外在動作的和諧。
-            media:
-              type: image
-              image: /img/featured-willpower.webp
-          - title: 社交練習
-            content: 在團體隊形的變換中，孩子必須感知彼此的距離與節奏，這是一種深刻的社交學習。
-            media:
-              type: image
-              image: /img/featured-social.webp
-  - section_id: community
-    blocks:
-      - type: text_block
-        title: 成人優律思美與社群連結
         content: |
-          同心不僅為孩子安排課程，也積極向家長與成人推廣。透過有節奏的行走與呼吸，幫助被現代生活「僵化」或「過度焦慮」的大人找回平衡，活化生命體。
+          「優律思美」一詞源自希臘語，意為「美麗的節奏」。在華德福教育中，這是一門核心的藝術課程，旨在將語言的子音、母音以及音樂的音階、旋律與節奏，轉化為具體的肢體流動。
 
-          我們曾邀請「台灣優律思美學校」到校演出，並由資深的許尤利（Shiori）老師帶領專業培訓與家長推廣課，為社群注入美感與療癒力。
-  - section_id: cta
-    layout: 紫色大型看板 (CTA)
+          透過這些動作，孩子能學習如何有意識地移動身體，並在團隊合作中找到自己的空間位置，培養對自我與他人的敏銳覺察。
+  - section_id: levels
     blocks:
-      - type: text_block
-        title: 親自來感受生命律動
-        content: 優律思美是同心孩子們最特別的體驗之一。
-      - type: cta_block
-        buttons:
-          - text: 返回特色課程
-            link: /featured-courses
-            style: btn-white
-          - text: 預約參觀
-            link: /visit
-            style: btn-outline-white
+      - type: list_block
+        layout_method: masonry_grid
+        title: 不同階段的發展重點
+        item_type: feature_item
+        items:
+          - title: 低年級：模仿與想像
+            content: 透過童話故事、自然韻律的模仿，讓動作充滿想像力與生命力。
+            icon: mdi:child-variant
+          - title: 中年級：空間與協調
+            content: 開始學習複雜的幾何圖形移動，訓練肢體的平衡與空間感。
+            icon: mdi:vector-rectangle
+          - title: 高年級：表達與力量
+            content: 深入探索語言的情感與音樂的結構，展現更具張力與意志力的表達。
+            icon: mdi:human-handsup

@@ -19,6 +19,9 @@ interface StaggeredRevealProps {
     // Allows passing external click handlers (e.g., from FeatureItem card click)
     expanded?: boolean;
     onToggle?: (expanded: boolean) => void;
+    variant?: 'default' | 'minimal';
+    expandText?: string;
+    collapseText?: string;
 }
 
 /**
@@ -37,7 +40,10 @@ export default function StaggeredReveal({
     duration,
     disableExpand,
     expanded,
-    onToggle
+    onToggle,
+    variant = 'default',
+    expandText,
+    collapseText
 }: StaggeredRevealProps) {
 
     // 容器動畫變體：控制子元素交錯出現 (Stagger)
@@ -107,6 +113,9 @@ export default function StaggeredReveal({
                         disableExpand={disableExpand !== undefined ? disableExpand : isNested}
                         expanded={expanded}
                         onToggle={onToggle}
+                        variant={variant}
+                        expandText={expandText}
+                        collapseText={collapseText}
                     />
                 </motion.div>
             )}
