@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import Modal from "../ui/Modal";
 import MuseumLabel from "../ui/MuseumLabel";
 import DevComment from "../ui/DevComment";
@@ -32,7 +33,7 @@ const detailData: Record<string, DetailData> = {
     },
     'G6': {
         title: '六年級 發展圖像 (發展任務：規矩)',
-        content: '六年級的孩子開始「轉大人」——手腳變長、動作變笨拙，整個人看起來有點尷尬。心理上也開始面對「童年要結束了」的失落感。\n\n這時候他們需要「規矩」和「秩序」來穩住自己。所以我們會教羅馬史、法律，讓他們理解「因果關係」。老師也要夠有權威，才能hold住這群開始叛逆的孩子。'
+        content: '六年級的孩子開始「轉大人」——手腳變長、動作變笨拙，整個人看起來有點尷尬。心理上也開始面對「童年要結束了」的失落感。\n\n這時候他們需要「規矩」和「秩序\"來穩住自己。所以我們會教羅馬史、法律，讓他們理解「因果關係」。老師也要夠有權威，才能hold住這群開始叛逆的孩子。'
     },
     'G7': {
         title: '七年級 發展圖像 (發展任務：探索)',
@@ -40,7 +41,7 @@ const detailData: Record<string, DetailData> = {
     },
     'G8': {
         title: '八年級 發展圖像 (發展任務：革命)',
-        content: '十四歲的孩子開始「革命」——挑戰規定、質疑權威。這很正常，因為他們正在找自己。\n\n八年級的重頭戲是「個人專題」：選一個自己有興趣的主題，花幾個月研究，最後上台發表。這個過程會讓他們學到：我可以獨立完成一件事、我有能力把想法變成作品。這種成就感，會陪他們一輩子。'
+        content: '十四歲的孩子開始「革命\"——挑戰規定、質疑權威。這很正常，因為他們正在找自己。\n\n八年級的重頭戲是「個人專題」：選一個自己有興趣的主題，花幾個月研究，最後上台發表。這個過程會讓他們學到：我可以獨立完成一件事、我有能力把想法變成作品。這種成就感，會陪他們一輩子。'
     },
     'G9': {
         title: '九年級 發展圖像 (發展任務：兩極)',
@@ -76,6 +77,18 @@ interface CurriculumBlockProps {
 
 const CurriculumBlock = ({ data }: CurriculumBlockProps) => {
     const [activeYear, setActiveYear] = useState<string | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end end"]
+    });
+
+    const pathLength = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     const showDetail = (year: string) => {
         setActiveYear(year);
@@ -85,49 +98,146 @@ const CurriculumBlock = ({ data }: CurriculumBlockProps) => {
         setActiveYear(null);
     };
 
+    const getGradeColor = (year: string) => {
+        const colors: Record<string, string> = {
+            'G1': 'bg-rose-100 text-rose-700 border-rose-200',
+            'G2': 'bg-orange-100 text-orange-700 border-orange-200',
+            'G3': 'bg-amber-100 text-amber-700 border-amber-200',
+            'G4': 'bg-emerald-100 text-emerald-700 border-emerald-200',
+            'G5': 'bg-teal-100 text-teal-700 border-teal-200',
+            'G6': 'bg-sky-100 text-sky-700 border-sky-200',
+            'G7': 'bg-indigo-100 text-indigo-700 border-indigo-200',
+            'G8': 'bg-violet-100 text-violet-700 border-violet-200',
+            'G9': 'bg-purple-100 text-purple-700 border-purple-200',
+        };
+        return colors[year] || 'bg-brand-accent/10 text-brand-accent border-brand-accent/20';
+    };
+
     return (
-        <div className="w-full">
+        <div className="w-full" ref={containerRef}>
             <h3 className="text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component">1-9 年級課程脈絡與發展任務</h3>
 
-            <DevComment text="Curriculum Block Desktop Table View" />
-            {/* 1-9 年級脈絡表 - 桌面版 */}
+            <DevComment text="Curriculum Block Growth Path View" />
 
-            <div className="hidden lg:block overflow-hidden bg-brand-bg dark:bg-brand-structural/20 rounded-xl shadow-md border border-brand-taupe/10">
-                <table className="w-full text-left border-collapse">
-                    <thead>
-                        <tr className="bg-brand-accent text-brand-bg">
-                            <th className="p-4 whitespace-nowrap leading-brand">年段</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">發展狀態</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">發展任務</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">年段目標</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">文史</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">數學</th>
-                            <th className="p-4 whitespace-nowrap leading-brand">自然</th>
-                            <th className="p-4"> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {curriculumData.map((row, idx) => (
-                            <tr key={idx} className="border-b border-brand-taupe/10 dark:border-brand-structural/50 hover:bg-brand-accent/5 dark:hover:bg-brand-structural/40 transition-colors">
-                                <td className="p-4 font-bold text-brand-accent bg-brand-accent/5 text-center">{row.year}</td>
-                                <td className="p-4 text-brand-accent/80 font-bold text-sm leading-brand">{row.state}</td>
-                                <td className="p-4 font-bold whitespace-nowrap text-brand-text dark:text-brand-bg leading-brand">{row.task}</td>
-                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.objective}</td>
-                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.history}</td>
-                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.math}</td>
-                                <td className="p-4 text-sm text-brand-text/80 dark:text-brand-bg/80 leading-brand">{row.nature}</td>
-                                <td className="p-4">
-                                    <button
-                                        onClick={() => showDetail(row.year)}
-                                        className="btn btn-outline-primary btn-xs whitespace-nowrap"
+            {/* 1-9 年級成長小徑 - 桌面版 */}
+            <div className="hidden lg:block relative py-20 px-10">
+                {/* 裝飾性背景元素 */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-10 right-[-5%] w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl" />
+                    <div className="absolute bottom-40 left-[-5%] w-80 h-80 bg-brand-taupe/5 rounded-full blur-3xl" />
+                </div>
+
+                {/* SVG 成長路徑 */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-0">
+                    <svg width="400" height="100%" viewBox="0 0 400 1600" preserveAspectRatio="none" className="h-full overflow-visible">
+                        {/* 底色路徑 */}
+                        <path
+                            d="M 200 0 Q 350 200 200 400 T 200 800 T 200 1200 T 200 1600"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            className="text-brand-taupe/10"
+                        />
+                        {/* 動態生長路徑 */}
+                        <motion.path
+                            d="M 200 0 Q 350 200 200 400 T 200 800 T 200 1200 T 200 1600"
+                            fill="none"
+                            stroke="url(#pathGradient)"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            style={{ pathLength }}
+                        />
+                        <defs>
+                            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stopColor="var(--color-brand-accent)" stopOpacity="0.3" />
+                                <stop offset="50%" stopColor="var(--color-brand-accent)" />
+                                <stop offset="100%" stopColor="var(--color-brand-accent)" stopOpacity="0.6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                {/* 年級節點與卡片 */}
+                <div className="relative z-10 space-y-32">
+                    {curriculumData.map((row, idx) => {
+                        const isEven = idx % 2 === 0;
+                        return (
+                            <div key={idx} className={`flex items-center gap-12 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
+                                {/* 卡片區 */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.6, type: "spring" }}
+                                    className="flex-1"
+                                >
+                                    <div className="bg-brand-bg/80 dark:bg-brand-structural/40 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-brand-taupe/10 hover:shadow-2xl transition-all group overflow-hidden relative">
+                                        {/* 背景裝飾 */}
+                                        <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full opacity-10 group-hover:scale-110 transition-transform ${getGradeColor(row.year).split(' ')[0]}`} />
+
+                                        <div className="relative z-10">
+                                            <div className="flex justify-between items-start mb-4">
+                                                <div>
+                                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 border ${getGradeColor(row.year)}`}>
+                                                        {row.state}
+                                                    </span>
+                                                    <h4 className="text-xl font-black text-brand-text dark:text-brand-bg flex items-center gap-2">
+                                                        發展任務：{row.task}
+                                                    </h4>
+                                                </div>
+                                                <span className="text-4xl font-black opacity-10 group-hover:opacity-20 transition-opacity">
+                                                    {row.year}
+                                                </span>
+                                            </div>
+
+                                            <p className="text-brand-text/70 dark:text-brand-bg/70 text-sm mb-6 leading-relaxed">
+                                                {row.objective}
+                                            </p>
+
+                                            <div className="grid grid-cols-3 gap-4 border-t border-brand-taupe/5 pt-4 text-xs">
+                                                <div className="space-y-1">
+                                                    <div className="font-bold text-brand-accent">文史</div>
+                                                    <div className="opacity-80">{row.history}</div>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <div className="font-bold text-brand-accent">數學</div>
+                                                    <div className="opacity-80">{row.math}</div>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <div className="font-bold text-brand-accent">自然</div>
+                                                    <div className="opacity-80">{row.nature}</div>
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                onClick={() => showDetail(row.year)}
+                                                className="mt-6 w-full py-2 rounded-lg border border-brand-accent/20 hover:bg-brand-accent hover:text-brand-bg transition-colors text-sm font-bold tracking-wider"
+                                            >
+                                                探索圖像
+                                            </button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* 中央節點 */}
+                                <div className="relative flex flex-col items-center">
+                                    <motion.div
+                                        initial={{ scale: 0 }}
+                                        whileInView={{ scale: 1 }}
+                                        viewport={{ once: true }}
+                                        className={`w-12 h-12 rounded-full border-4 border-brand-bg dark:border-brand-structural bg-brand-accent shadow-lg z-20 flex items-center justify-center text-brand-bg font-black`}
                                     >
-                                        深度解析
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                        {row.year.replace('G', '')}
+                                    </motion.div>
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-brand-accent/10 rounded-full animate-pulse z-10" />
+                                </div>
+
+                                {/* 空白區（平衡佈局） */}
+                                <div className="flex-1" />
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
 
             <DevComment text="Curriculum Block Mobile Card View" />
