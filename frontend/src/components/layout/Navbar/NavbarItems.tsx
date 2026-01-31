@@ -46,9 +46,9 @@ export function NavbarActionItem({
             ? 'text-brand-accent font-semibold bg-brand-accent/10'
             : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 active:bg-brand-accent/10'
         }`
-        : `flex items-center justify-between transition-all duration-300 micro-hover-link rounded-md relative ${active
+        : `flex items-center justify-between transition-all duration-300 rounded-md relative ${active
             ? "text-brand-accent bg-brand-accent/5 font-medium"
-            : "text-brand-text dark:text-brand-bg hover:text-brand-accent"
+            : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
         }`;
 
     const combinedClassName = `${baseStyles} ${className}`;
@@ -229,15 +229,7 @@ export function NavbarActionItem({
             {item.children && item.children.length > 0 && !isMobile && (
                 <ChevronDownIcon className="w-4 h-4 -rotate-90" />
             )}
-            {active && !isMobile && !isSubMenu && (
-                <motion.div
-                    layoutId="nav-active"
-                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-accent rounded-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                />
-            )}
+            {/* Active indicator underline removed as per user request to avoid clashing with background colors */}
         </Link>
     );
 }
@@ -273,23 +265,15 @@ export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: Nav
                     <>
                         <MenuButton className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${active
                             ? "text-brand-accent bg-brand-accent/5 font-medium"
-                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent focus:text-brand-accent focus:bg-primary-100 focus:outline-none"
+                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5 focus:text-brand-accent focus:bg-primary-100 focus:outline-none"
                             }`}>
-                            <span className="micro-hover-link">{item.title}</span>
+                            <span>{item.title}</span>
                             <ChevronDownIcon
                                 className={`${open ? "transform rotate-180" : ""
                                     } w-5 h-5 ml-1 transition-transform duration-200 group-hover:text-brand-accent`}
                                 aria-hidden="true"
                             />
-                            {active && (
-                                <motion.div
-                                    layoutId="nav-active"
-                                    className="absolute bottom-0 left-4 right-8 h-0.5 bg-brand-accent rounded-full"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                />
-                            )}
+                            {/* Active indicator underline removed as per user request to avoid clashing with background colors */}
                         </MenuButton>
                         <Transition
                             as={Fragment}
