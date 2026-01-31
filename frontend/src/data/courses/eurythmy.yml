@@ -3,33 +3,106 @@ slug: eurythmy
 hero:
   title: 優律思美 (Eurythmy)
   subtitle: 靈動的語言，看得見的音樂
-  content: 優律思美是一種將語言與音樂透過肢體動作呈現出來的藝術。它並非單純的舞蹈，而是一種能平衡身心、鍛鍊協調感並深化內在力量的華德福特色課程。
+  content: |
+    優律思美源自希臘語，意為「和諧有韻律的動作」。它不僅僅是舞蹈或默劇，而是人智學中獨特的一門藝術，被稱為「看得見的語言」與「看得見的音樂」。
+
+    在同心華德福，優律思美是一條協助生命從「無意識的合一」走向「有意識的自由」的藝術路徑。
   media_list:
     - type: image
       image: /img/featured-artistic.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
+
 sections:
-  - section_id: intro
+  - section_id: origin
     blocks:
       - type: text_block
-        title: 什麼是優律思美？
+        title: 起源：因「提問」而誕生的藝術
         content: |
-          「優律思美」一詞源自希臘語，意為「美麗的節奏」。在華德福教育中，這是一門核心的藝術課程，旨在將語言的子音、母音以及音樂的音階、旋律與節奏，轉化為具體的肢體流動。
+          優律思美正式誕生於 **1912 年**。當時一位母親詢問魯道夫·史代納（Rudolf Steiner），是否有適合她熱愛舞蹈的女兒（Lori）且結合人智學精神的舞動方式？史代納回應：「有的。」並表示若有人**「提問」**（Ask），他便能給予指引。
 
-          透過這些動作，孩子能學習如何有意識地移動身體，並在團隊合作中找到自己的空間位置，培養對自我與他人的敏銳覺察。
-  - section_id: levels
+          這反映了一個重要的靈性法則——老師不能強加給予，必須等待學生準備好並提出請求，知識與藝術才能流動。史代納早在講解《約翰福音》時就有了這個概念：「太初有道，道與神同在。」優律思美即是將這個創造世界的「道」（Word/Logos）透過身體展現出來。
+
+  - section_id: core-principles
     blocks:
+      - type: text_block
+        title: 核心原理：看得見的語言與音樂
+        content: |
+          優律思美將內在不可見的聲音能量轉化為外在可見的肢體動作，它模仿的是人類發聲時喉頭的氣流狀態與宇宙的創造法則。
+
       - type: list_block
-        layout_method: masonry_grid
-        title: 不同階段的發展重點
+        layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: 低年級：模仿與想像
-            content: 透過童話故事、自然韻律的模仿，讓動作充滿想像力與生命力。
+          - title: 看得見的語言 (Visible Speech)
+            icon: mdi:message-text-outline
+            content: |
+              優律思美透過動作呈現聲音的質地與形狀。四年級後，孩子甚至會透過動作表現主動詞（向前）、被動詞（退後）等語法結構。
+            sub_items:
+              - title: 母音 (Vowels)
+                content: 如 A、E、I、O、U。表達內在心魂的感受（如驚訝、敬畏、以此為家）。
+              - title: 子音 (Consonants)
+                content: 如 B、M、K。對外在世界的模仿。例如「K」帶有硬度與阻擋的特質，「M」帶有溫柔包覆的特質。
+          - title: 看得見的音樂 (Visible Music)
+            icon: mdi:music
+            content: |
+              將音符、節奏、大調（外放）、小調（內省）轉化為律動。
+            sub_items:
+              - title: 間隙 (Intervals)
+                content: 特別重視「音與音之間的間隙」，引導人去聆聽那不可見但真實存在的空間。
+
+  - section_id: education
+    blocks:
+      - type: list_block
+        layout_method: vertical
+        title: 教育中的應用：依循兒童發展的螺旋
+        item_type: feature_item
+        items:
+          - title: 低年級（G1-G3）：與世界合一
             icon: mdi:child-variant
-          - title: 中年級：空間與協調
-            content: 開始學習複雜的幾何圖形移動，訓練肢體的平衡與空間感。
+            content: 透過模仿與想像，建立身體與世界的關係，讓動作充滿想像力與生命力。
+            sub_items:
+              - title: G1
+                content: 走直線與曲線，建立身體與地面的關係。
+              - title: G2
+                content: 鏡像練習（Symmetry），開始意識到左右與對稱。
+              - title: G3（九歲危機）
+                content: 孩子開始意識到「我」與「世界」的分離（大調轉小調的體驗）。課程引導孩子在圓圈中既能與團體同在，又能安住於自身。
+          - title: 中年級（G4-G6）：建立秩序與和諧
             icon: mdi:vector-rectangle
-          - title: 高年級：表達與力量
-            content: 深入探索語言的情感與音樂的結構，展現更具張力與意志力的表達。
+            content: 進入規則與律法，鍛鍊意志力與精準度，強調身體的平衡與幾何之美。
+            sub_items:
+              - title: G4
+                content: 面向圓心轉為面向前方，開始有「我與你」、「我與後方」的空間意識。
+              - title: G5（黃金時期）
+                content: 對應希臘時期，強調身體的平衡與幾何之美，這是孩子身心最和諧的階段。
+              - title: G6（羅馬時期）
+                content: 進入規則與律法。動作強調幾何結構與群體規則（如不能隨意穿越他人），鍛鍊意志力與精準度。
+          - title: 高年級與中學（G7-G12）：向外探索與內在表達
             icon: mdi:human-handsup
+            content: 學生將內在深層的情感轉化為藝術形式，這是一種「靈魂的歌唱」。
+            sub_items:
+              - title: G7
+                content: 探索音程（Intervals），感受「之間」的關係。
+              - title: 高中部 (如 G11)
+                content: 學生選擇具戲劇張力的音樂（如貝多芬），將悲傷、憤怒、喜悅等情感轉化為舞台藝術。對青春期孩子具有強大的療癒作用，幫助他們表達難以言說的內在世界。
+
+  - section_id: adult-healing
+    blocks:
+      - type: text_block
+        title: 成人優律思美與療癒
+        content: |
+          成人優律思美不僅是藝術，更是一種身心的調和路徑。
+
+      - type: list_block
+        layout_method: grid_cards
+        item_type: feature_item
+        items:
+          - title: 調音 (Tuning)
+            icon: mdi:tune-variant
+            content: 成人的身體像是一個已經定型的樂器，往往帶有長期的緊繃。課程首要任務是「調音」，找回放鬆與專注的平衡。
+          - title: 連結世界
+            icon: mdi:earth
+            content: 透過練習，重新建立「我」與「物質身」、「以太身（生命力）」以及「外在世界」的健康關係。
+          - title: 療癒力
+            icon: mdi:heart-pulse
+            content: 史代納曾說優律思美能「對抗虛偽」。它幫現代人在過度用腦或焦慮中，找回身心的整合與流動。
