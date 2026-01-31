@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 /**
  * LayoutDebugger - 僅在開發模式下運行的佈局偵測器
  * 用於自動偵測手機版橫向溢出問題 (Horizontal Overflow)
  */
 export default function LayoutDebugger() {
+    const isVisibleRef = useRef(false);
     const [overflowElements, setOverflowElements] = useState<{ tag: string; className: string; id: string; amount: number }[]>([]);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -12,12 +13,16 @@ export default function LayoutDebugger() {
         // 僅在開發模式且客戶端運行
         if (process.env.NODE_ENV === 'production' || typeof window === 'undefined') return;
 
-        let timeoutId: NodeJS.Timeout;
+        let throttleTimer: NodeJS.Timeout | undefined;
+        let confirmationTimer: NodeJS.Timeout | undefined;
 
-        const checkOverflow = () => {
+        const scan = () => {
             const innerWidth = window.innerWidth;
             const scrollWidth = document.documentElement.scrollWidth;
             const bodyScrollWidth = document.body.scrollWidth;
+            const vv = window.visualViewport;
+            const currentScrollX = window.scrollX;
+            const vvOffset = vv ? vv.offsetLeft : 0;
 
             // 檢查是否被父層裁切 (Overflow Hidden)
             const isClippedByAncestor = (el: Element, viewportWidth: number) => {
@@ -32,7 +37,6 @@ export default function LayoutDebugger() {
                         const parentRect = parent.getBoundingClientRect();
                         // 檢查父層右邊界是否在大致安全的範圍內
                         if (parentRect.right <= viewportWidth + 2) {
-                            // 被一個安全的父層裁切或管理，視為安全
                             return true;
                         }
                     }
@@ -57,68 +61,89 @@ export default function LayoutDebugger() {
                     };
                 });
 
-            // Debug: log top 3 distinct overflows
-            // code removed
-
-
-            const offendingRaw = offendingRawFull
-                .filter(item => item.amount > 1.0) // 回歸 1.0，避免 0.5px 的精密誤差
+            let offending = offendingRawFull
+                .filter(item => item.amount > 1.0) // 避免 1px 以內的精密誤差
                 .filter(item => {
                     // 1. 忽略完全在視窗右側以外的元素 (通常是 Off-screen Menu / Drawer)
                     if (item.el.getBoundingClientRect().left >= innerWidth) return false;
 
-                    // 2. 忽略 Aria Hidden 的元素 (無障礙隱藏元素，通常也視覺隱藏)
+                    // 2. 忽略 Aria Hidden 的元素
                     if (item.el.getAttribute('aria-hidden') === 'true') return false;
 
-                    // 3. 忽略正在做半透明動畫或不可見的元素 (例如 Exit Animation)
+                    // 3. 忽略正在做半透明動畫或不可見的元素
                     const style = window.getComputedStyle(item.el);
                     if (parseFloat(style.opacity) < 1 || style.pointerEvents === 'none') return false;
-                    // 忽略高 z-index 的絕對定位元素 (通常是 Modal/Drawer/Overlay，溢出多為有意)
+
+                    // 忽略高 z-index 的絕對定位元素 (通常是 Modal/Drawer，溢出多為有意)
                     if ((style.position === 'absolute' || style.position === 'fixed') && parseInt(style.zIndex) > 10) return false;
 
                     // 4. 檢查是否被父層裁切
-                    const clipped = isClippedByAncestor(item.el, innerWidth);
-                    return !clipped;
-                }); // 過濾掉被安全裁切和其他無害元素
-
-            if (offendingRaw.length > 0 && offendingRaw.length !== elements.filter(item => {
-                const rect = item.getBoundingClientRect();
-                return Math.max(rect.right - innerWidth, -rect.left) > 1.0;
-            }).length) {
-                // Double check count logic
-            }
-
-            const offending = offendingRaw
-                // 只保留最外層的錯誤元素，避免列出所有子元素
+                    return !isClippedByAncestor(item.el, innerWidth);
+                })
                 .filter((item, index, self) => {
+                    // 只保留最外層的錯誤元素
                     return !self.some((other, otherIndex) =>
                         otherIndex !== index && other.el.contains(item.el)
                     );
                 })
                 .map(({ tag, className, id, amount }) => ({ tag, className, id, amount }));
 
-            // 判斷是否真的有溢出 (scrollWidth 大於 innerWidth 或者有明顯的 offending 元素)
+            // 修正：如果 offending 為空但有明顯捲動偏移，且非 Pinch Zoom，塞入一個視覺提示
+            if (offending.length === 0 && (currentScrollX > 1 || Math.abs(vvOffset) > 1)) {
+                if (!(vv && Math.abs(vv.scale - 1) > 0.01)) {
+                    offending = [{
+                        tag: 'VIEWPORT',
+                        className: 'viewport-shift',
+                        id: 'visual-viewport',
+                        amount: Math.max(Math.abs(vvOffset), currentScrollX)
+                    }];
+                }
+            }
+
             const hasActualOverflow = (scrollWidth > innerWidth + 1) || (bodyScrollWidth > innerWidth + 1) || offending.length > 0;
 
-            if (hasActualOverflow && offending.length > 0) {
-                setOverflowElements(offending);
-                setIsVisible(true);
+            return { offending, hasActualOverflow };
+        };
 
-                // 頻率限制的 Console 輸出
-                console.warn(`[Layout Check] ⚠️ 偵測到橫向溢出！`);
-                console.table(offending);
+        const checkOverflow = () => {
+            const { offending, hasActualOverflow } = scan();
+
+            if (hasActualOverflow && offending.length > 0) {
+                // 如果已經顯示中，直接更新內容
+                if (isVisibleRef.current) {
+                    setOverflowElements(offending);
+                    return;
+                }
+
+                // 如果還沒顯示，且沒在計時，就進入 0.5s 確認期
+                if (!confirmationTimer) {
+                    confirmationTimer = setTimeout(() => {
+                        const secondResult = scan();
+                        if (secondResult.hasActualOverflow && secondResult.offending.length > 0) {
+                            setOverflowElements(secondResult.offending);
+                            setIsVisible(true);
+                            isVisibleRef.current = true;
+                            console.warn(`[Layout Check] ⚠️ 偵測到持續橫向溢出！(已確認 0.5s)`);
+                            console.table(secondResult.offending);
+                        }
+                        confirmationTimer = undefined;
+                    }, 500);
+                }
+            } else {
+                // 沒有溢出，清除確認計時器
+                if (confirmationTimer) {
+                    clearTimeout(confirmationTimer);
+                    confirmationTimer = undefined;
+                }
             }
-            // else if (!hasActualOverflow) {
-            //      // previously auto-closed
-            // }
         };
 
         const throttledCheck = () => {
-            if (timeoutId) return;
-            timeoutId = setTimeout(() => {
+            if (throttleTimer) return;
+            throttleTimer = setTimeout(() => {
                 checkOverflow();
-                timeoutId = undefined as any;
-            }, 500);
+                throttleTimer = undefined;
+            }, 200); // 縮短觀察延遲，讓「確認期」的主導權回到 0.5s 計時器
         };
 
         const observer = new MutationObserver(throttledCheck);
@@ -131,41 +156,19 @@ export default function LayoutDebugger() {
 
         window.addEventListener('load', throttledCheck);
         window.addEventListener('resize', throttledCheck);
-        // 新增：監聽捲動事件，這是最直接的證據
-        // 如果使用者能橫向捲動，代表一定有溢出
-        const onScroll = (e: Event) => {
+
+        const onScroll = () => {
             const vv = window.visualViewport;
-
-
             const currentScrollX = window.scrollX;
             const vvOffset = vv ? vv.offsetLeft : 0;
 
             if (currentScrollX > 1 || Math.abs(vvOffset) > 1) {
-                // 確認不是因為放大 (Pinch Zoom) 造成的
-                if (vv && Math.abs(vv.scale - 1) > 0.01) {
-                    return;
-                }
-
-                // 再次執行檢查以找出元兇
+                // 排除 Pinch Zoom
+                if (vv && Math.abs(vv.scale - 1) > 0.01) return;
                 checkOverflow();
-
-                // 強制顯示警告
-                setIsVisible(true);
-
-                // 如果 checkOverflow 沒找到元素（overflowElements 為空），手動塞一個「不明原因」讓它顯示
-                setOverflowElements(prev => {
-                    if (prev.length === 0) {
-                        return [{
-                            tag: 'VIEWPORT',
-                            className: 'viewport-shift',
-                            id: 'visual-viewport',
-                            amount: Math.abs(vvOffset) || window.scrollX
-                        }];
-                    }
-                    return prev;
-                });
             }
         };
+
         window.addEventListener('scroll', onScroll);
 
         if (window.visualViewport) {
@@ -184,7 +187,8 @@ export default function LayoutDebugger() {
                 window.visualViewport.removeEventListener('scroll', onScroll);
                 window.visualViewport.removeEventListener('resize', throttledCheck);
             }
-            if (timeoutId) clearTimeout(timeoutId);
+            if (throttleTimer) clearTimeout(throttleTimer);
+            if (confirmationTimer) clearTimeout(confirmationTimer);
         };
     }, []);
 
@@ -218,7 +222,10 @@ export default function LayoutDebugger() {
                     </div>
                 </div>
                 <button
-                    onClick={() => setIsVisible(false)}
+                    onClick={() => {
+                        setIsVisible(false);
+                        isVisibleRef.current = false;
+                    }}
                     className="mt-3 w-full py-1 bg-white/10 hover:bg-white/20 rounded text-[10px] transition-colors"
                 >
                     暫時關閉
