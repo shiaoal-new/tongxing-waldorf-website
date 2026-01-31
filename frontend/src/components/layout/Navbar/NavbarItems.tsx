@@ -106,6 +106,97 @@ export function NavbarActionItem({
             );
         }
 
+        if (item.action === 'wordingStyle') {
+            const { getStyle, setStyle } = actionHandlers.wordingContext;
+            const router = actionHandlers.router;
+            const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
+            const pageId = rawPageId || 'index';
+            const currentStyle = getStyle(pageId);
+            const [availableStyles, setAvailableStyles] = React.useState<string[]>(['default']);
+
+            React.useEffect(() => {
+                const fetchStyles = async () => {
+                    try {
+                        const res = await fetch(`/api/wording?page=${pageId}&action=list`);
+                        if (res.ok) {
+                            const styles = await res.json();
+                            setAvailableStyles(styles);
+                        }
+                    } catch (e) {
+                        setAvailableStyles(['default']);
+                    }
+                };
+                fetchStyles();
+            }, [pageId]);
+
+            return (
+                <div className="w-full">
+                    {isMobile ? (
+                        <details className="group/wording" name="mobile-nav-dev">
+                            <summary className="list-none text-sm text-brand-taupe dark:text-brand-taupe hover:text-brand-accent transition-colors cursor-pointer py-2 px-2 rounded-md hover:bg-brand-accent/5 [&::-webkit-details-marker]:hidden flex justify-between items-center w-full">
+                                <span className="flex flex-col items-start">
+                                    <span>{item.title}</span>
+                                    <span className="text-[10px] opacity-70">當前: {currentStyle}</span>
+                                </span>
+                                <ChevronDownIcon className="w-4 h-4 group-open/wording:rotate-180 transition-transform" />
+                            </summary>
+                            <ul className="menu menu-compact bg-brand-bg/50 dark:bg-brand-structural/50 rounded-lg p-1 mt-1 space-y-1">
+                                {availableStyles.map((style: string) => (
+                                    <li key={style}>
+                                        <button
+                                            onClick={() => {
+                                                setStyle(pageId, style);
+                                                // Close mobile menu
+                                                const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]') as HTMLButtonElement;
+                                                if (disclosureButton) disclosureButton.click();
+                                            }}
+                                            className={`w-full text-left px-3 py-1.5 rounded text-xs flex justify-between items-center ${currentStyle === style
+                                                ? 'bg-brand-accent/10 text-brand-accent'
+                                                : 'hover:bg-brand-accent/5'
+                                                }`}
+                                        >
+                                            <span className="capitalize">{style}</span>
+                                            {currentStyle === style && <span>✓</span>}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </details>
+                    ) : (
+                        <div className="group/wording relative">
+                            <div className={combinedClassName}>
+                                <span>{item.title}</span>
+                                <ChevronDownIcon className="w-4 h-4 -rotate-90" />
+                            </div>
+                            <div className="absolute left-full top-0 w-48 pl-2 opacity-0 invisible group-hover/wording:opacity-100 group-hover/wording:visible transition-all duration-200">
+                                <div className="bg-brand-bg dark:bg-brand-structural rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                                    <div className="p-2 border-b border-brand-taupe/10 text-[10px] text-brand-taupe px-3">
+                                        目前頁面: {pageId}
+                                    </div>
+                                    <ul className="menu menu-compact p-1">
+                                        {availableStyles.map((style: string) => (
+                                            <li key={style}>
+                                                <button
+                                                    onClick={() => setStyle(pageId, style)}
+                                                    className={`w-full text-left px-3 py-1.5 rounded text-xs flex justify-between items-center ${currentStyle === style
+                                                        ? 'bg-brand-accent/10 text-brand-accent'
+                                                        : 'hover:bg-brand-accent/5'
+                                                        }`}
+                                                >
+                                                    <span className="capitalize">{style}</span>
+                                                    {currentStyle === style && <span>✓</span>}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
         return (
             <button
                 onClick={actionHandlers[item.action]}
@@ -209,7 +300,7 @@ export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: Nav
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                         >
-                            <MenuItems className="absolute left-0 w-48 mt-2 origin-top-left bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700 overflow-hidden">
+                            <MenuItems className="absolute left-0 w-48 mt-2 origin-top-left bg-brand-bg divide-y divide-brand-taupe/10 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-brand-structural dark:divide-gray-700">
                                 <div className="py-1">
                                     {item.children.map((child, idx) => {
                                         const childActive = isItemActive(child, currentPath) || hasActiveChild(child, currentPath);

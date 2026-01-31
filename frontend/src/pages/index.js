@@ -5,11 +5,20 @@ import { getAllFaq } from "../lib/faq";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation, getSiteSettings } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
+import { useWording } from "../hooks/useWording";
 
 export default function Home(props) {
+  // Use wording hook to handle dynamic style switching in dev
+  // Resolve both page structure and additional data (like faqList)
+  // Explicitly ask for 'faq' category wordings
+  const { page, data } = useWording("index", {
+    page: props.page,
+    data: props.data
+  }, ["faq"]);
+
   // Extract hero poster images for preloading
-  const heroPoster = props.page?.hero?.media_list?.[0]?.poster;
-  const heroMobilePoster = props.page?.hero?.media_list?.[0]?.mobilePoster;
+  const heroPoster = page?.hero?.media_list?.[0]?.poster;
+  const heroMobilePoster = page?.hero?.media_list?.[0]?.mobilePoster;
 
   return (
     <>
@@ -36,7 +45,7 @@ export default function Home(props) {
           />
         )}
       </Head>
-      <DynamicPageContent {...props} contentType="page" />
+      <DynamicPageContent {...props} page={page} data={data} contentType="page" />
     </>
   );
 }

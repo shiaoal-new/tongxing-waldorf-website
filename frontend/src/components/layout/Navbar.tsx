@@ -8,11 +8,13 @@ import AboutModal from "../AboutModal";
 import DevComment from "../ui/DevComment";
 import { useSession } from "../../context/SessionContext";
 import { PageData, NavigationData } from "../../types/content";
+import { useWordingContext } from "../../context/WordingContext";
 
 // Modularized Components
 import UserMenu from "./Navbar/UserMenu";
 import { NavbarListItem, MobileNavbarItem } from "./Navbar/NavbarItems";
 import { ScrollLock, NavBarContainer } from "./Navbar/NavbarLayout";
+import { isDevEnvironment } from "../../lib/env";
 
 interface NavbarProps {
   pages?: PageData[];
@@ -68,7 +70,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
     };
   };
 
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = isDevEnvironment();
   const navigation = (customNavigation?.items || [])
     .filter((item: any) => isDev || !item.debugOnly)
     .map(resolveItem);
@@ -86,7 +88,10 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
   const actionHandlers = {
     showAbout: () => setShowAboutModal(true),
     toggleGrid: (current: boolean) => setShowBackgroundGrid(!current),
-    themeList: 'THEME_LIST_COMPONENT' // Special marker
+    themeList: 'THEME_LIST_COMPONENT', // Special marker
+    wordingStyle: 'WORDING_STYLE_COMPONENT', // Special marker
+    wordingContext: useWordingContext(),
+    router
   };
 
   useEffect(() => {

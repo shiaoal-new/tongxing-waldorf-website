@@ -11,20 +11,23 @@ import "../css/tailwind.css";
 // Questionnaire and Swiper styles are now component-level imports
 
 import { SessionProvider } from "../context/SessionContext";
+import { WordingProvider } from "../context/WordingContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider>
-      <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-        <main
-          className="font-body"
-          style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
-        >
-          {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
-          <Component {...pageProps} />
-        </main>
-      </ThemeProvider>
-    </SessionProvider>
+    <WordingProvider>
+      <SessionProvider>
+        <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+          <main
+            className="font-body"
+            style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
+          >
+            {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
+      </SessionProvider>
+    </WordingProvider>
   );
 }
 
