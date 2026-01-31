@@ -38,19 +38,22 @@ sections:
               type: image
               image: /img/featured-artistic.webp
             sub_items:
-              - title: 優律思美 (Eurythmy)
+              - title: 優律思美
                 content: 「看得見的語言與音樂」，建立內在平衡。
                 icon: mdi:human-handsup
                 buttons:
                   - text: 瞭解更多細節
                     link: "/courses/eurythmy"
                     style: btn-outline-primary
-              - title: 泥塑課 (Clay Modeling)
+              - title: 泥塑課
                 content: 四、五年級開設。從球體開始，進入動物造型（如猴子），強調對材質（土）的掌握與意志力的鍛鍊，並非單純的才藝，而是結合主課程故事（如西遊記）的內化過程。
                 icon: mdi:brush
               - title: 戲劇課
                 content: 團隊合作教育，每個人都是不可或缺的零件。
                 icon: mdi:theater
+              - title: 蜜蠟塑形
+                content: 蜂蠟（在同心課程中常稱為「蜜蠟」）在華德福教育中不僅是藝術創作的媒材，更是連結孩子內在意志與季節氛圍的重要元素。
+                icon: mdi:bee-flower
           - title: 3. 與土地連結的生存技能
             content: 從校園農耕到建築實作，讓孩子具備在生活中「自給自足」的能力與自信。
             media:
