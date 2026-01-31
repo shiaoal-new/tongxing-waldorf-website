@@ -17,10 +17,11 @@ sections:
   - section_id: course-list
     blocks:
       - type: list_block
-        layout_method: scrollable_grid
+        layout_method: bento_grid
         item_type: feature_item
         items:
           - title: 1. 節奏與深度的學術架構
+            span: 8
             content: 同心沒有統一的教科書，而是由老師自行設計教案。每天早上的前兩小時是主課程時間，會在數週內持續探索同一個主題，讓學習像「走螺旋」一樣深度內化，而非破碎的知識切片。
             media:
               type: image
@@ -33,6 +34,7 @@ sections:
                 content: 透過「有意識的觀察」歸納真理.
                 icon: mdi:flask-outline
           - title: 2. 意志與藝術的實作課程
+            span: 4
             content: 透過藝術與動作，幫助孩子建立內在與外在世界的連結與平衡。
             media:
               type: image
@@ -52,6 +54,7 @@ sections:
                 content: 團隊合作教育，每個人都是不可或缺的零件。
                 icon: mdi:theater
           - title: 3. 與土地連結的生存技能
+            span: 4
             content: 從校園農耕到建築實作，讓孩子具備在生活中「自給自足」的能力與自信。
             media:
               type: image
@@ -67,6 +70,7 @@ sections:
                 content: 鍛鍊體魄、平衡感與專注力.
                 icon: mdi:bike
           - title: 4. 跨越挑戰的戶外課程（自然日）
+            span: 8
             content: 同心堅持每週三為「自然日」，並隨年段增加難度，讓孩子在移動中看見世界與尋找自我。
             media:
               type: image
@@ -79,6 +83,7 @@ sections:
                 content: 山林生活、大航海時代海洋探索及馬偕之路。
                 icon: mdi:ship-wheel
           - title: 5. 自我探索的專題課程
+            span: 4
             content: 不同於大人的指派，孩子需自行找尋感興趣的主題，是向自由與負責邁進的重要歷程。
             media:
               type: image

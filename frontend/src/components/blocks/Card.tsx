@@ -20,7 +20,9 @@ export default function Card({ data, variant = 'default' }: CardProps) {
         return (
             <div className="card-compact">
                 <div className="label-accent">{compactData.subtitle}</div>
-                <h3 className="font-bold text-brand-text dark:text-brand-bg">{compactData.title}</h3>
+                <h3 className="font-bold text-brand-text dark:text-brand-bg">
+                    <MarkdownContent content={compactData.title} isInline />
+                </h3>
                 {compactData.content && (
                     <div className="text-brand-taupe dark:text-brand-taupe text-xs mt-1">
                         <MarkdownContent content={compactData.content} />
@@ -48,7 +50,7 @@ export default function Card({ data, variant = 'default' }: CardProps) {
 
             {/* 標題 */}
             <h3 className="font-bold text-brand-text dark:text-brand-bg mb-2 text-xl group-hover:text-brand-accent transition-colors duration-300">
-                {standardData.title}
+                <MarkdownContent content={standardData.title} isInline />
             </h3>
 
             {/* 副標題 */}

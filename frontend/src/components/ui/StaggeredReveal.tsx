@@ -2,6 +2,7 @@ import React from "react";
 import { motion, Variants } from "framer-motion";
 import ActionButtons from "./ActionButtons";
 import ExpandableText from "./ExpandableText";
+import MarkdownContent from "./MarkdownContent";
 import { CTAButton } from "../../types/content";
 
 interface StaggeredRevealProps {
@@ -88,7 +89,7 @@ export default function StaggeredReveal({
             {title && (
                 <motion.div variants={itemVariants} className={`flex items-baseline gap-3 flex-wrap ${align === 'center' ? 'justify-center' : ''}`}>
                     <h3 className={`${isNested ? 'text-xl md:text-2xl font-bold' : 'text-3xl md:text-4xl font-bold mt-3'} text-brand-text dark:text-brand-bg leading-tight tracking-tight`}>
-                        {title}
+                        <MarkdownContent content={title} isInline />
                     </h3>
                     {duration && (
                         <span className="text-sm font-medium text-brand-taupe dark:text-brand-taupe/80 bg-stone-100 dark:bg-white/10 px-2.5 py-0.5 rounded-full border border-stone-200 dark:border-white/10 whitespace-nowrap">

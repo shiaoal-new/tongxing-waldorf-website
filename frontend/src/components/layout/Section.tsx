@@ -163,7 +163,7 @@ export default function Section(props: SectionProps) {
 
                     {title && (
                         <h2 className={`title_class ${title_class} relative z-10 ${align === "left" ? "self-start" : ""}`}>
-                            {title}
+                            <MarkdownContent content={title} isInline />
                         </h2>
                     )}
 

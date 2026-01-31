@@ -29,7 +29,7 @@ sections:
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
-        title: 我們在深坑做什麼？(不是賣豆腐)
+        title: 我們在深坑做什麼[？]{不是賣豆腐}
         subtitle: 教育特色
         content: 說真的，教育理論多到讓人眼花。我們搬進大學校區，不是為了看起來厲害 (雖然風景真的不錯)，而是想在這片安靜的山裡，幫孩子把「根」紮深一點。不用急著開花，先長穩了再說。這不只是搬家，更是為了讓教育升級。
         buttons:
@@ -127,7 +127,7 @@ sections:
   - section_id: videos
     blocks:
       - type: text_block
-        title: 沒圖沒真相 (直接看影片)
+        title: 沒圖沒[真相]{直接看影片}
         subtitle: 深入了解華德福
         content: 文案寫得再天花亂墜，不如看真的。這些影片記錄了孩子、老師、家長的真實日常——有笑有淚，可能還有點混亂 (笑)，但這就是我們最真實的樣子。
         buttons:
@@ -169,7 +169,7 @@ sections:
       background: bg-neutral-50 dark:bg-neutral-950
     blocks:
       - type: text_block
-        title: 聽聽過來人怎麼說 (絕無業配)
+        title: 聽聽過來人怎麼[說]{絕無業配}
         subtitle: 家長與老師的真心話大冒險
         buttons:
           - text: 深入了解教育理念
