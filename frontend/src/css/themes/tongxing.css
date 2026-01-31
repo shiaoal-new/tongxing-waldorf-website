@@ -35,9 +35,25 @@
                 mask-size: 100% 100%; */
                 /* 半透明背景让 backdrop-filter 效果可见 */
                 /* background-color: rgba(255, 255, 255, 0.1); */
+                background-color: rgba(var(--color-brand-bg), 0);
+                transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
                 pointer-events: none;
                 z-index: 0;
                 /* 在内容下方但在背景上方 */
+            }
+
+            /* Scrolled or menu open state - slightly more opaque */
+            &.navbar--active::before {
+                background-color: rgba(var(--color-brand-bg), 0.8);
+            }
+
+            /* Hover or open state - fully opaque for readability */
+            &:hover::before,
+            &.navbar--hover::before,
+            &.navbar--open::before {
+                background-color: rgba(var(--color-brand-bg), 1);
+                backdrop-filter: blur(20px) brightness(1.1);
+                box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
             }
         }
 

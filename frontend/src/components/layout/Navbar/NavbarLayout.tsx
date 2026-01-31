@@ -32,8 +32,8 @@ export function NavBarContainer({ children, open, scroll, onClick }: NavBarConta
     return (
         <header
             onClick={onClick}
-            className={`navbar-container fixed w-full z-50 left-0 top-0 transition-all duration-300 ${!open && scroll ? "bg-transparent" : "bg-transparent"
-                }`}>
+            className={`navbar-container fixed w-full z-50 left-0 top-0 transition-all duration-300 ${(open || scroll) ? "navbar--active" : "navbar--top"
+                } ${open ? "navbar--open" : ""} hover:navbar--hover`}>
             {children}
         </header>
     );
