@@ -98,6 +98,22 @@ sections:
               - title: 高中部特色挑戰
                 content: 包含航海、獨木舟及十一年級 48 小時「獨處」任務。
                 icon: ph:shooting-star-bold
+          - title: 6. 點亮心魂的音樂與樂器教育
+            icon: ph:music-notes-fill
+            content: 在同心，音樂與樂器的學習被視為心靈的滋養。核心目的並非追求極致技巧或比賽，而是協助孩子建立與內在自我的連結，讓音樂成為陪伴一生的情感寄託。
+            media:
+              type: image
+              image: /img/featured-music.webp
+            sub_items:
+              - title: 學習進程：從傾聽到自轉
+                content: 從一年級的五聲音階笛開始，強調「聽與模仿」；三年級起可選擇個別樂器深耕，讓音樂逐漸成為抒發情感的管道，最終在中學階段綻放自信與成長。
+                icon: ph:ear-bold
+              - title: 拒絕競賽，回歸情感
+                content: 樂器學習不以比賽為目的，而是為了讓孩子在面對低潮或挫折時，能有一個溫暖心魂的藝術工具，建立對生命探索的熱忱。
+                icon: ph:heart-bold
+              - title: 課程節奏與專業引導
+                content: 音樂課作為「副課程」融入每日節奏，透過合唱與合奏，讓孩子在和諧氛圍中感受集體的力量，培養身心靈平衡。
+                icon: ph:users-three-bold
   - section_id: conclusion
     blocks:
       - type: text_block
