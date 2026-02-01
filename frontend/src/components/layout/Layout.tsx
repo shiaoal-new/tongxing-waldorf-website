@@ -65,7 +65,7 @@ export default function Layout({
 
     // 2. Description Priority: Custom Props > SEO Data > Hero Subtitle > Hero Content (Truncated) > Default
     const defaultDesc = siteSettings?.description || "台北市同心華德福實驗教育機構 - 以身心靈全面發展為核心，為孩子提供順應生命節奏的教育環境。";
-    const fallbackDesc = hero?.subtitle || (hero?.content ? `${hero.content.substring(0, 155)}...` : defaultDesc);
+    const fallbackDesc = hero?.subtitle || defaultDesc;
     const displayDescription = description || seo?.description || fallbackDesc;
 
     // 3. Open Graph / Twitter Data
