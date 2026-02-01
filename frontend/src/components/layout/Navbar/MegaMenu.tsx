@@ -188,8 +188,15 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
         }
 
         if (item.action === 'wordingStyle') {
-            const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
-            const pageId = rawPageId || 'index';
+            const pathParts = router.asPath.split('?')[0].split('/').filter(Boolean);
+            let pageId = 'index';
+            if (pathParts.length > 0) {
+                if (pathParts[0] === 'courses' && pathParts[1]) {
+                    pageId = pathParts[1];
+                } else {
+                    pageId = pathParts[0];
+                }
+            }
 
             return (
                 <NavigationMenu.Item className="relative">
@@ -325,8 +332,15 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                         }
 
                                         if (child.action === 'wordingStyle') {
-                                            const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
-                                            const pageId = rawPageId || 'index';
+                                            const pathParts = router.asPath.split('?')[0].split('/').filter(Boolean);
+                                            let pageId = 'index';
+                                            if (pathParts.length > 0) {
+                                                if (pathParts[0] === 'courses' && pathParts[1]) {
+                                                    pageId = pathParts[1];
+                                                } else {
+                                                    pageId = pathParts[0];
+                                                }
+                                            }
 
                                             return (
                                                 <div key={idx} className="relative group">
