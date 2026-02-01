@@ -4,10 +4,16 @@ import { getSectionLayoutByTitle } from "../../lib/sectionLayouts";
 import { getNavigation, getSiteSettings } from "../../lib/settings";
 import { getPageDataOptimized } from "../../lib/dataLoader";
 import DynamicPageContent from "../../components/DynamicPage";
+import { useWording } from "../../hooks/useWording";
 
 export default function CoursePage(props) {
-    // We can use the same DynamicPageContent component as it's designed to render sections/blocks
-    return <DynamicPageContent {...props} page={props.course} contentType="course" />;
+    // Use wording hook to handle dynamic style switching
+    const { page, data } = useWording(props.course?.slug || "course", {
+        page: props.course,
+        data: props.data
+    });
+
+    return <DynamicPageContent {...props} page={page} data={data} contentType="course" />;
 }
 
 export async function getStaticPaths() {
