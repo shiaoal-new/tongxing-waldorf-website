@@ -32,6 +32,97 @@ const hasActiveChild = (item: NavbarItemType, currentPath: string): boolean => {
     return false;
 };
 
+const SideSubMenu = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+    const containerRef = React.useRef<HTMLDivElement>(null);
+    const [flipLeft, setFlipLeft] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkOverflow = () => {
+            if (!containerRef.current) return;
+            const parent = containerRef.current.parentElement;
+            if (!parent) return;
+
+            const parentRect = parent.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const submenuWidth = 192; // w-48 is 12rem = 192px (approx)
+
+            // If showing to the right would go off-screen, flip to left
+            if (parentRect.right + submenuWidth > viewportWidth - 20) {
+                setFlipLeft(true);
+            } else {
+                setFlipLeft(false);
+            }
+        };
+
+        const parent = containerRef.current?.parentElement;
+        if (parent) {
+            parent.addEventListener('mouseenter', checkOverflow);
+            window.addEventListener('resize', checkOverflow);
+            // Initial check
+            checkOverflow();
+            return () => {
+                parent.removeEventListener('mouseenter', checkOverflow);
+                window.removeEventListener('resize', checkOverflow);
+            };
+        }
+    }, []);
+
+    return (
+        <div
+            ref={containerRef}
+            className={`absolute top-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto ${flipLeft ? 'right-full -translate-x-1' : 'left-full translate-x-1'
+                } ${className}`}
+        >
+            {children}
+        </div>
+    );
+};
+
+const WordingStyleContent = ({ actionHandlers, pageId }: { actionHandlers: any, pageId: string }) => {
+    const { getStyle, setStyle } = actionHandlers.wordingContext;
+    const currentStyle = getStyle(pageId);
+    const [availableStyles, setAvailableStyles] = React.useState<string[]>(['default']);
+
+    React.useEffect(() => {
+        const fetchStyles = async () => {
+            try {
+                const res = await fetch(`/api/wording?page=${pageId}&action=list`);
+                if (res.ok) {
+                    const styles = await res.json();
+                    setAvailableStyles(styles);
+                }
+            } catch (e) {
+                setAvailableStyles(['default']);
+            }
+        };
+        fetchStyles();
+    }, [pageId]);
+
+    return (
+        <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 overflow-hidden">
+            <div className="p-2 border-b border-brand-taupe/10 text-[10px] text-brand-taupe px-3">
+                目前頁面: {pageId}
+            </div>
+            <ul className="menu menu-compact p-1">
+                {availableStyles.map((style: string) => (
+                    <li key={style}>
+                        <button
+                            onClick={() => setStyle(pageId, style)}
+                            className={`w-full text-left px-3 py-1.5 rounded text-xs flex justify-between items-center ${currentStyle === style
+                                ? 'bg-brand-accent/10 text-brand-accent'
+                                : 'hover:bg-brand-accent/5'
+                                }`}
+                        >
+                            <span className="capitalize">{style}</span>
+                            {currentStyle === style && <span>✓</span>}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
 function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItemProps) {
     const router = useRouter();
     const currentPath = router.asPath.split('?')[0];
@@ -97,26 +188,8 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
         }
 
         if (item.action === 'wordingStyle') {
-            const { getStyle, setStyle } = actionHandlers.wordingContext;
             const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
             const pageId = rawPageId || 'index';
-            const currentStyle = getStyle(pageId);
-            const [availableStyles, setAvailableStyles] = React.useState<string[]>(['default']);
-
-            React.useEffect(() => {
-                const fetchStyles = async () => {
-                    try {
-                        const res = await fetch(`/api/wording?page=${pageId}&action=list`);
-                        if (res.ok) {
-                            const styles = await res.json();
-                            setAvailableStyles(styles);
-                        }
-                    } catch (e) {
-                        setAvailableStyles(['default']);
-                    }
-                };
-                fetchStyles();
-            }, [pageId]);
 
             return (
                 <NavigationMenu.Item className="relative">
@@ -136,27 +209,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                             transition={{ duration: 0.2, ease: "easeOut" }}
                             className="absolute left-0 top-full mt-2 w-48 origin-top z-50"
                         >
-                            <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 overflow-hidden">
-                                <div className="p-2 border-b border-brand-taupe/10 text-[10px] text-brand-taupe px-3">
-                                    目前頁面: {pageId}
-                                </div>
-                                <ul className="menu menu-compact p-1">
-                                    {availableStyles.map((style: string) => (
-                                        <li key={style}>
-                                            <button
-                                                onClick={() => setStyle(pageId, style)}
-                                                className={`w-full text-left px-3 py-1.5 rounded text-xs flex justify-between items-center ${currentStyle === style
-                                                    ? 'bg-brand-accent/10 text-brand-accent'
-                                                    : 'hover:bg-brand-accent/5'
-                                                    }`}
-                                            >
-                                                <span className="capitalize">{style}</span>
-                                                {currentStyle === style && <span>✓</span>}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <WordingStyleContent actionHandlers={actionHandlers} pageId={pageId} />
                         </motion.div>
                     </NavigationMenu.Content>
                 </NavigationMenu.Item>
@@ -199,7 +252,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute left-0 top-full mt-2 w-auto min-w-[200px] origin-top z-50"
                     >
-                        <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 overflow-hidden">
+                        <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5">
                             <div className="py-1">
                                 {item.children.map((child, idx) => {
                                     const childActive = isItemActive(child, currentPath) || hasActiveChild(child, currentPath);
@@ -207,7 +260,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                     // 子菜单有孙子菜单
                                     if (child.children && child.children.length > 0) {
                                         return (
-                                            <div key={idx} className="relative group/submenu">
+                                            <div key={idx} className="relative group">
                                                 <div
                                                     className={`flex items-center justify-between px-4 py-2 text-sm transition-all cursor-pointer ${childActive
                                                         ? 'text-brand-accent bg-brand-accent/10 font-medium'
@@ -218,14 +271,9 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                                     <ChevronDownIcon className="w-4 h-4 -rotate-90" />
                                                 </div>
 
-                                                {/* 三级菜单 */}
-                                                <motion.div
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    whileHover={{ opacity: 1, x: 0 }}
-                                                    transition={{ duration: 0.15 }}
-                                                    className="absolute left-full top-0 ml-1 w-48 opacity-0 invisible group-hover/submenu:opacity-100 group-hover/submenu:visible transition-all duration-200 z-50"
-                                                >
-                                                    <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 overflow-hidden">
+                                                {/* 三級菜單 */}
+                                                <SideSubMenu>
+                                                    <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5">
                                                         <div className="py-1">
                                                             {child.children.map((grandChild, gIdx) => {
                                                                 const grandChildActive = isItemActive(grandChild, currentPath);
@@ -246,7 +294,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                                             })}
                                                         </div>
                                                     </div>
-                                                </motion.div>
+                                                </SideSubMenu>
                                             </div>
                                         );
                                     }
@@ -255,7 +303,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                     if (child.action) {
                                         if (child.action === 'themeList') {
                                             return (
-                                                <div key={idx} className="relative group/submenu">
+                                                <div key={idx} className="relative group">
                                                     <div
                                                         className={`flex items-center justify-between px-4 py-2 text-sm transition-all cursor-pointer ${childActive
                                                             ? 'text-brand-accent bg-brand-accent/10 font-medium'
@@ -265,13 +313,35 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                                                         <span>{child.title}</span>
                                                         <ChevronDownIcon className="w-4 h-4 -rotate-90" />
                                                     </div>
-                                                    <div className="absolute left-full top-0 ml-1 w-48 opacity-0 invisible group-hover/submenu:opacity-100 group-hover/submenu:visible transition-all duration-200 z-50">
-                                                        <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 overflow-hidden">
+                                                    <SideSubMenu>
+                                                        <div className="bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5">
                                                             <ul className="menu menu-compact p-1">
                                                                 <ThemeList />
                                                             </ul>
                                                         </div>
+                                                    </SideSubMenu>
+                                                </div>
+                                            );
+                                        }
+
+                                        if (child.action === 'wordingStyle') {
+                                            const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
+                                            const pageId = rawPageId || 'index';
+
+                                            return (
+                                                <div key={idx} className="relative group">
+                                                    <div
+                                                        className={`flex items-center justify-between px-4 py-2 text-sm transition-all cursor-pointer ${childActive
+                                                            ? 'text-brand-accent bg-brand-accent/10 font-medium'
+                                                            : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5'
+                                                            }`}
+                                                    >
+                                                        <span>{child.title}</span>
+                                                        <ChevronDownIcon className="w-4 h-4 -rotate-90" />
                                                     </div>
+                                                    <SideSubMenu>
+                                                        <WordingStyleContent actionHandlers={actionHandlers} pageId={pageId} />
+                                                    </SideSubMenu>
                                                 </div>
                                             );
                                         }

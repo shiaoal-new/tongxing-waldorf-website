@@ -133,7 +133,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}>
-            <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-4 z-10">
+            <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-1 z-10">
               <DevComment text="Navbar Logo Section" />
               {/* Logo  */}
 
@@ -205,9 +205,9 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                             />
                           ))}
                         </ul>
-                        <div className="mt-4 border-t border-brand-taupe/10 pt-4">
+                        {/* <div className="mt-4 border-t border-brand-taupe/10 pt-4">
                           <UserMenu session={session} isMobile />
-                        </div>
+                        </div> */}
                       </>
                     </DisPanel>
                   )}
@@ -223,7 +223,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                   actionHandlers={actionHandlers}
                   showBackgroundGrid={showBackgroundGrid}
                 />
-                <UserMenu session={session} />
+                {/* <UserMenu session={session} /> */}
               </div>
 
             </nav>
