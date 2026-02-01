@@ -5,6 +5,7 @@ import { getNavigation, getSiteSettings } from "../lib/settings";
 import { getPageDataOptimized } from "../lib/dataLoader";
 import DynamicPageContent from "../components/DynamicPage";
 import { PageData, NavigationData, FaqItem, Member, Course, SiteData } from "../types/content";
+import { getWordingDictionary, resolveWording } from "../lib/wording.server";
 
 interface DynamicPageProps {
     page: PageData | null;
@@ -65,17 +66,22 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     // 按需加载数据 - 只加载页面实际需要的数据
     const pageData = getPageDataOptimized(page);
 
+    // Resolve default wordings for static generation
+    const dictionary = getWordingDictionary(slug, "default", ["faq"]);
+    const resolvedPage = page ? resolveWording(page, dictionary) : null;
+    const resolvedDataList = resolveWording({
+        facultyList: pageData.facultyList || [],
+        faqList: pageData.faqList || [],
+        coursesList: pageData.coursesList || [],
+    }, dictionary);
+
     return {
         props: {
-            page,
+            page: resolvedPage,
             pages,
             navigation,
             siteSettings,
-            data: {
-                facultyList: pageData.facultyList || [],
-                faqList: pageData.faqList || [],
-                coursesList: pageData.coursesList || [],
-            },
+            data: resolvedDataList,
         },
     };
 };

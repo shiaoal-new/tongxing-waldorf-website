@@ -6,6 +6,7 @@ import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation, getSiteSettings } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
 import { useWording } from "../hooks/useWording";
+import { getWordingDictionary, resolveWording } from "../lib/wording.server";
 
 export default function Home(props) {
   // Use wording hook to handle dynamic style switching in dev
@@ -70,16 +71,18 @@ export async function getStaticProps() {
     });
   }
 
+  // Resolve default wordings for static generation
+  const dictionary = getWordingDictionary("index", "default", ["faq"]);
+  const resolvedPage = resolveWording(page, dictionary);
+  const resolvedData = resolveWording({ facultyList, faqList }, dictionary);
+
   return {
     props: {
-      page: page || null,
+      page: resolvedPage || null,
       pages,
       navigation,
       siteSettings,
-      data: {
-        facultyList,
-        faqList,
-      },
+      data: resolvedData,
     },
   };
 }

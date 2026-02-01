@@ -18,17 +18,36 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
 
     useEffect(() => {
         const loadDictionaries = async () => {
-            const styleToLoad = process.env.NODE_ENV === 'production' ? 'default' : currentStyle;
+            const isDev = require('../lib/env').isDevEnvironment();
+            const styleToLoad = !isDev ? 'default' : currentStyle;
             const categories = [pageId, ...extraCategories];
 
             try {
                 const results = await Promise.all(
                     categories.map(async (cat) => {
-                        const res = await fetch(`/api/wording?page=${cat}&style=${styleToLoad}`);
-                        if (res.ok) {
-                            const text = await res.ok ? await res.text() : '';
-                            return yaml.load(text) || {};
+                        // Try API first (for dev server)
+                        try {
+                            const res = await fetch(`/api/wording?page=${cat}&style=${styleToLoad}`);
+                            if (res.ok) {
+                                const text = await res.text();
+                                return yaml.load(text) || {};
+                            }
+                        } catch (apiError) {
+                            // API not available, try static file (for static hosting)
+                            console.log(`API not available for ${cat}, trying static file...`);
                         }
+
+                        // Fallback to static file
+                        try {
+                            const staticRes = await fetch(`/data/wordings/${cat}/${styleToLoad}.yml`);
+                            if (staticRes.ok) {
+                                const text = await staticRes.text();
+                                return yaml.load(text) || {};
+                            }
+                        } catch (staticError) {
+                            console.warn(`Could not load static wording for ${cat}/${styleToLoad}`, staticError);
+                        }
+
                         return {};
                     })
                 );
