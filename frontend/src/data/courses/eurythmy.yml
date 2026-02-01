@@ -3,7 +3,6 @@ slug: eurythmy
 hero:
   title: hero.title
   subtitle: hero.subtitle
-  content: hero.content
   media_list:
     - type: image
       image: /img/featured-artistic.webp

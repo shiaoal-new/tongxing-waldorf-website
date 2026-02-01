@@ -3,7 +3,6 @@ slug: layout-spacing
 hero:
   title: Layout & Spacing
   subtitle: Design System Tokens
-  content: 同心華德福設計系統佈局與間距規範。基於 8px 比例系統，確保網站的「呼吸感」與視覺一致性。
   layout: Hero Default
   media_list:
     - type: image

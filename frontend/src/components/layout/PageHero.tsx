@@ -88,11 +88,9 @@ export default function PageHero({ data }: PageHeroProps) {
         layout,
         title,
         subtitle,
-        content,
         // Legacy support
         header: legacyHeader,
         sub_header: legacySubHeader,
-        description: legacyDescription,
         media_list = [],
         bg_images,
         bg_video,
@@ -114,13 +112,11 @@ export default function PageHero({ data }: PageHeroProps) {
     // Resolve content 
     const effectiveTitle = title || legacyHeader;
     const effectiveSubTitle = subtitle || legacySubHeader;
-    const effectiveContent = content || legacyDescription;
 
     // Resolve Layout CSS
     const layoutClasses = layout || {};
     const title_class = layoutClasses.title_class || "mb-component text-brand-bg";
     const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/90 uppercase bg-brand-structural/50 rounded-full border border-brand-accent/20";
-    const description_class = layoutClasses.description_class || "text-lg leading-brand tracking-brand text-brand-bg lg:text-xl xl:text-2xl opacity-90";
     const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
     const container_class = layoutClasses.container_class || "items-center justify-center";
     const ref = useRef<HTMLDivElement>(null);
@@ -243,20 +239,9 @@ export default function PageHero({ data }: PageHeroProps) {
                         )}
                     </motion.div>
 
-                    {effectiveContent && (
-                        <motion.div variants={itemVariants}>
-                            <div className={`${description_class} backdrop-blur-md bg-black/10 shadow-2xl overflow-hidden group relative`}>
-                                {/* Subtle inner glow for glass effect */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-                                <p className="relative z-10 pb-4">
-                                    {effectiveContent}
-                                </p>
-                                {buttons && buttons.length > 0 && (
-                                    <div className="relative z-10 mt-6 flex justify-center pb-6">
-                                        <ActionButtons buttons={buttons} align="center" size="lg" />
-                                    </div>
-                                )}
-                            </div>
+                    {buttons && buttons.length > 0 && (
+                        <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center pb-6">
+                            <ActionButtons buttons={buttons} align="center" size="lg" />
                         </motion.div>
                     )}
                 </motion.div>

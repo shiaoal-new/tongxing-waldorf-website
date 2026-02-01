@@ -4,7 +4,6 @@ description: "同心華德福自 2012 年發起至今，經歷了從無到有、
 hero:
   title: "同心大事記"
   subtitle: "十二年接力式的開拓之旅"
-  content: "從最初九對父母點燃的小火星，到跨越校區的遷徙，這十二年不只是校址的搬遷，更是社群韌性的鍛鍊。"
   layout: "Hero Default"
   media_list:
     - type: "image"

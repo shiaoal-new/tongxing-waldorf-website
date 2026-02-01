@@ -8,7 +8,6 @@ hero:
   title: "hero.title"
   subtitle: "hero.subtitle"
   accent_text: "hero.accent_text"
-  content: "hero.content"
   buttons:
     - text: "hero.button_visit"
       link: /visit

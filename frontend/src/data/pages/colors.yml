@@ -3,7 +3,6 @@ slug: colors
 hero:
   title: Color Palette
   subtitle: Design System Tokens
-  content: 同心華德福設計系統色彩規範。點擊色塊即可複製 Hex Code，確保品牌視覺一致性。
   layout: Hero Default
   media_list:
     - type: image

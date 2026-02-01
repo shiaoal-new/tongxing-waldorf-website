@@ -234,7 +234,6 @@ export interface HeroMedia {
 export interface HeroData {
     title: string;
     subtitle: string;
-    content: string;
     accent_text?: string;
     media_list?: HeroMedia[];
     layout?: string;

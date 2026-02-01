@@ -8,7 +8,6 @@ hero:
   title: 人智學
   subtitle: 其實，就是那本你一直弄丟的「人類使用說明書」
   accent_text: "看懂孩子，也找回自己"
-  content: 第一次聽到「人智學」的人，腦中通常會浮現出穿著長袍的哲學家。但對我們來說，它沒那麼嚴肅，它更像是陪著如果你也在想「為什麼這小孩這麼難懂？」時，提供的一盞暖心小燈。它教我們不只看見孩子的行為，更看見行為背後的那個「人」。
   media_list:
     - type: image
       image: /img/artifacts/human_wisdom.webp
