@@ -25,32 +25,33 @@
                 content: "";
                 position: absolute;
                 inset: 0;
-                /* backdrop-filter 模糊背后的内容 */
-                backdrop-filter: blur(16px) brightness(1.2);
-                /* 使用背景图片作为遮罩效果 */
-                /* background-image: url('/img/themes/tongxing/background/menu-bg.png'); */
-                /* background-size: 100% 100%; */
-                /* background-blend-mode: multiply;
-                mask-image: url('/img/themes/tongxing/background/menu-bg.png');
-                mask-size: 100% 100%; */
                 /* 半透明背景让 backdrop-filter 效果可见 */
-                /* background-color: rgba(255, 255, 255, 0.1); */
                 background-color: rgba(var(--color-brand-bg), 0);
-                transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+                backdrop-filter: blur(0px) brightness(1);
+                transition: background-color 0.4s ease, backdrop-filter 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
                 pointer-events: none;
                 z-index: 0;
+                opacity: 0;
                 /* 在内容下方但在背景上方 */
             }
 
             /* Scrolled or menu open state - slightly more opaque */
             &.navbar--active::before {
+                opacity: 1;
                 background-color: rgba(var(--color-brand-bg), 0.8);
+                backdrop-filter: blur(16px) brightness(1.2);
+            }
+
+            &.navbar--top::before {
+                opacity: 0;
+                backdrop-filter: blur(0px) brightness(1);
             }
 
             /* Hover or open state - fully opaque for readability */
             &:hover::before,
             &.navbar--hover::before,
             &.navbar--open::before {
+                opacity: 1;
                 background-color: rgba(var(--color-brand-bg), 1);
                 backdrop-filter: blur(20px) brightness(1.1);
                 box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);

@@ -143,7 +143,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                   className="flex items-center space-x-3 group transition-all duration-500 ease-out py-1">
                   <Logo className="transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" />
                   <div className="flex flex-col -space-y-1">
-                    <span className="text-2xl font-medium tracking-wider text-brand-accent dark:text-brand-bg font-accent">
+                    <span className="text-2xl font-medium tracking-wider text-brand-accent dark:text-brand-bg font-accent transition-all duration-500">
                       同心華德福
                     </span>
                     <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-accent/70 dark:text-brand-bg/60 transition-all duration-700">
@@ -222,6 +222,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                   items={finalNavigation}
                   actionHandlers={actionHandlers}
                   showBackgroundGrid={showBackgroundGrid}
+                  scroll={scroll}
                 />
                 {/* <UserMenu session={session} /> */}
               </div>

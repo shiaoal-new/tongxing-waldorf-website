@@ -11,12 +11,14 @@ interface MegaMenuProps {
     items: NavbarItemType[];
     actionHandlers: Record<string, any>;
     showBackgroundGrid: boolean;
+    scroll: boolean;
 }
 
 interface MegaMenuItemProps {
     item: NavbarItemType;
     actionHandlers: Record<string, any>;
     showBackgroundGrid: boolean;
+    scroll: boolean;
 }
 
 const isItemActive = (item: NavbarItemType, currentPath: string): boolean => {
@@ -123,10 +125,14 @@ const WordingStyleContent = ({ actionHandlers, pageId }: { actionHandlers: any, 
     );
 };
 
-function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItemProps) {
+function MegaMenuItem({ item, actionHandlers, showBackgroundGrid, scroll }: MegaMenuItemProps) {
     const router = useRouter();
     const currentPath = router.asPath.split('?')[0];
     const active = isItemActive(item, currentPath) || hasActiveChild(item, currentPath);
+
+    const textColorClass = active
+        ? "text-brand-accent bg-brand-accent/5 font-medium"
+        : `${scroll ? "text-brand-text dark:text-brand-bg" : "text-white/50 dark:text-white group-hover/navbar:text-brand-text dark:group-hover/navbar:text-brand-bg"} hover:text-brand-accent hover:bg-brand-accent/5`;
 
     // 处理 action 类型的菜单项
     if (item.action) {
@@ -134,10 +140,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
             return (
                 <NavigationMenu.Item className="relative">
                     <NavigationMenu.Trigger
-                        className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${active
-                            ? "text-brand-accent bg-brand-accent/5 font-medium"
-                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                            }`}
+                        className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${textColorClass}`}
                     >
                         <span>{item.title}</span>
                     </NavigationMenu.Trigger>
@@ -165,10 +168,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                 <NavigationMenu.Item>
                     <button
                         onClick={() => actionHandlers.toggleGrid(showBackgroundGrid)}
-                        className={`inline-flex items-center justify-between px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${active
-                            ? "text-brand-accent bg-brand-accent/5 font-medium"
-                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                            }`}
+                        className={`inline-flex items-center justify-between px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${textColorClass}`}
                     >
                         <span>{item.title}</span>
                         <div className="relative ml-2" onClick={(e) => e.stopPropagation()}>
@@ -201,10 +201,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
             return (
                 <NavigationMenu.Item className="relative">
                     <NavigationMenu.Trigger
-                        className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${active
-                            ? "text-brand-accent bg-brand-accent/5 font-medium"
-                            : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                            }`}
+                        className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${textColorClass}`}
                     >
                         <span>{item.title}</span>
                     </NavigationMenu.Trigger>
@@ -228,10 +225,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
             <NavigationMenu.Item>
                 <button
                     onClick={actionHandlers[item.action]}
-                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${active
-                        ? "text-brand-accent bg-brand-accent/5 font-medium"
-                        : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                        }`}
+                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${textColorClass}`}
                 >
                     {item.title}
                 </button>
@@ -244,10 +238,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
         return (
             <NavigationMenu.Item className="relative">
                 <NavigationMenu.Trigger
-                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${active
-                        ? "text-brand-accent bg-brand-accent/5 font-medium"
-                        : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                        }`}
+                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 group ${textColorClass}`}
                 >
                     <span>{item.title}</span>
                 </NavigationMenu.Trigger>
@@ -405,10 +396,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
                     href={item.path || "#"}
                     target={item.target}
                     rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${active
-                        ? "text-brand-accent bg-brand-accent/5 font-medium"
-                        : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5"
-                        }`}
+                    className={`inline-flex items-center px-4 py-2 text-base font-normal no-underline rounded-md transition-all duration-300 ${textColorClass}`}
                 >
                     {item.title}
                 </Link>
@@ -417,7 +405,7 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid }: MegaMenuItem
     );
 }
 
-export default function MegaMenu({ items, actionHandlers, showBackgroundGrid }: MegaMenuProps) {
+export default function MegaMenu({ items, actionHandlers, showBackgroundGrid, scroll }: MegaMenuProps) {
     return (
         <NavigationMenu.Root className="relative">
             <NavigationMenu.List className="flex items-center justify-end gap-1">
@@ -427,6 +415,7 @@ export default function MegaMenu({ items, actionHandlers, showBackgroundGrid }: 
                         item={item}
                         actionHandlers={actionHandlers}
                         showBackgroundGrid={showBackgroundGrid}
+                        scroll={scroll}
                     />
                 ))}
             </NavigationMenu.List>
