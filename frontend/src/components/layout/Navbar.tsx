@@ -15,6 +15,7 @@ import UserMenu from "./Navbar/UserMenu";
 import { NavbarListItem, MobileNavbarItem } from "./Navbar/NavbarItems";
 import { ScrollLock, NavBarContainer } from "./Navbar/NavbarLayout";
 import { isDevEnvironment } from "../../lib/env";
+import MegaMenu from "./Navbar/MegaMenu";
 
 interface NavbarProps {
   pages?: PageData[];
@@ -217,17 +218,11 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               {/* menu  */}
 
               <div className="hidden text-center lg:flex lg:items-center">
-                <ul className="items-center justify-end flex-1 pt-6 list-none lg:pt-0 lg:flex">
-                  {finalNavigation.map((menu, index) => (
-                    <li className="mr-3 nav__item" key={index}>
-                      <NavbarListItem
-                        item={menu}
-                        actionHandlers={actionHandlers}
-                        showBackgroundGrid={showBackgroundGrid}
-                      />
-                    </li>
-                  ))}
-                </ul>
+                <MegaMenu
+                  items={finalNavigation}
+                  actionHandlers={actionHandlers}
+                  showBackgroundGrid={showBackgroundGrid}
+                />
                 <UserMenu session={session} />
               </div>
 

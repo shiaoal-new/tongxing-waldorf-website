@@ -44,6 +44,7 @@
     "@heroicons/react": "^1.0.1",
     "@iconify/react": "^6.0.2",
     "@line/liff": "^2.27.3",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@tailwindcss/aspect-ratio": "^0.2.1",
