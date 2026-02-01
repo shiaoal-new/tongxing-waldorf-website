@@ -39,6 +39,9 @@ jobs:
       # 5. 依 branch 做 build/export
       - name: Build & Export
         run: |
+          if [ "${{ github.ref_name }}" = "dev" ]; then
+            export NEXT_PUBLIC_APP_ENV=dev
+          fi
           export NEXT_PUBLIC_ACTION_RUN_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           npm run build
 
