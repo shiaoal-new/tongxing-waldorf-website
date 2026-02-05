@@ -113,13 +113,30 @@ async function subsetFont() {
                 }
             });
 
-            // 3. CRITICAL: Overwrite the hashed version in 'out/' so Firebase deploys the small one
+            // 3. CRITICAL: Overwrite the font in 'out/fonts/' so Firebase deploys the optimized one
             if (subsetBuffer) {
+                // Update the font in out/fonts/ directory (where Next.js copies public/fonts/)
+                const buildFontsDir = path.join(FRONTEND_ROOT, 'out/fonts');
+                if (fs.existsSync(buildFontsDir)) {
+                    const targetFont = path.join(buildFontsDir, 'ChenYuluoyan-2.0-Thin.woff2');
+                    if (fs.existsSync(targetFont)) {
+                        const originalSize = (fs.statSync(targetFont).size / 1024).toFixed(2);
+                        fs.writeFileSync(targetFont, subsetBuffer);
+                        const newSize = (subsetBuffer.length / 1024).toFixed(2);
+                        console.log(`✨ Updated out/fonts/ChenYuluoyan-2.0-Thin.woff2: ${originalSize} KB → ${newSize} KB`);
+                    } else {
+                        console.warn(`⚠️ Font file not found in build output: ${targetFont}`);
+                    }
+                } else {
+                    console.warn(`⚠️ Build fonts directory not found: ${buildFontsDir}`);
+                }
+
+                // Also check for hashed versions in _next/static/media (if Next.js uses them)
                 const buildMediaDir = path.join(FRONTEND_ROOT, 'out/_next/static/media');
                 if (fs.existsSync(buildMediaDir)) {
                     const hashedFonts = await glob('ChenYuluoyan*.woff2', { cwd: buildMediaDir });
                     if (hashedFonts.length > 0) {
-                        console.log(`Found ${hashedFonts.length} hashed fonts in build output. Overwriting...`);
+                        console.log(`Found ${hashedFonts.length} hashed fonts in _next/static/media. Overwriting...`);
                         hashedFonts.forEach(hashedFile => {
                             const fullPath = path.join(buildMediaDir, hashedFile);
                             fs.writeFileSync(fullPath, subsetBuffer);
