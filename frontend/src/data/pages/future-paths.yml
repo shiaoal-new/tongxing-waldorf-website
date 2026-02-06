@@ -1,4 +1,4 @@
-title: "hero.title"
+title: "seo.title"
 slug: future-paths
 seo:
   title: "seo.title"
@@ -65,6 +65,15 @@ sections:
             span: 4
             content: "adaptation.item_hk_case.content"
             icon: lucide:globe
+
+  - section_id: roadmap
+    layout: "精緻特色區塊 (Features Premium)"
+    blocks:
+      - type: text_block
+        title: "roadmap.title"
+        subtitle: "roadmap.subtitle"
+      - type: mermaid_block
+        chart: "roadmap.chart"
 
   - section_id: pathway
     layout: "精緻特色區塊 (Features Premium)"

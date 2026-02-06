@@ -49,7 +49,8 @@ const ScheduleBlock = createDynamicBlock("ScheduleBlock");
 const CurriculumBlock = createDynamicBlock("CurriculumBlock");
 const ColorPaletteBlock = createDynamicBlock("ColorPaletteBlock");
 const VisitProcess = createDynamicBlock("VisitProcess", "載入參訪流程中...");
-const VisitSchedule = createDynamicBlock("VisitSchedule", "載入參訪時程中...");
+const VisitSchedule = createDynamicBlock("VisitSchedule");
+const MermaidBlock = createDynamicBlock("MermaidBlock");
 
 interface BlockDispatcherProps {
     block: Block | ListItem;
@@ -158,6 +159,9 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "questionnaire_block":
             return <QuestionnaireBlock data={block as QuestionnaireBlockType} />;
+
+        case "mermaid_block":
+            return <MermaidBlock data={block as any} />;
 
         case "timeline_block":
             return <TimelineBlock data={block as any} anchor={anchor} />;

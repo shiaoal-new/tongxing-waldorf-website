@@ -206,7 +206,13 @@ export interface CTABlock extends BaseBlock {
     align?: 'left' | 'center' | 'right';
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock;
+export interface MermaidBlock extends BaseBlock {
+    type: 'mermaid_block';
+    chart: string;
+    caption?: string;
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';
