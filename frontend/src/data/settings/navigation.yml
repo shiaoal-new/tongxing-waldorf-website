@@ -4,6 +4,8 @@ items:
       - slug: "philosophy"
       - slug: "teacher-group"
       - slug: "timeline"
+      - slug: "future-paths"
+        title: "未來出路 (Future Paths)"
   - title: "課程與教學"
     children:
       - slug: "rhythm-of-life"
