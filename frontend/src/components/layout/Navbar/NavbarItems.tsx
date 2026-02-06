@@ -109,8 +109,9 @@ export function NavbarActionItem({
         if (item.action === 'wordingStyle') {
             const { getStyle, setStyle } = actionHandlers.wordingContext;
             const router = actionHandlers.router;
-            const rawPageId = router.asPath === '/' ? 'index' : router.asPath.split('/')[1].split('?')[0];
-            const pageId = rawPageId || 'index';
+            const querySlug = router.query.slug as string;
+            const pathParts = router.asPath.split('?')[0].split('/').filter(Boolean);
+            const pageId = querySlug || (pathParts.length > 0 ? pathParts[pathParts.length - 1] : 'index');
             const currentStyle = getStyle(pageId);
             const [availableStyles, setAvailableStyles] = React.useState<string[]>(['default']);
 
@@ -276,7 +277,7 @@ export function NavbarListItem({ item, actionHandlers, showBackgroundGrid }: Nav
                             {/* Active indicator underline removed as per user request to avoid clashing with background colors */}
                         </MenuButton>
                         <Transition
-                            as={Fragment}
+                            as="div"
                             enter="transition ease-out duration-100"
                             enterFrom="transform opacity-0 scale-95"
                             enterTo="transform opacity-100 scale-100"

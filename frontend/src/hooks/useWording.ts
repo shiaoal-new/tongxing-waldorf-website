@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWordingContext } from '../context/WordingContext';
 import { resolveWording } from '../lib/wording';
+import { isDevEnvironment } from '../lib/env';
 import yaml from 'js-yaml';
 
 /**
@@ -18,8 +19,7 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
 
     useEffect(() => {
         const loadDictionaries = async () => {
-            const isDev = require('../lib/env').isDevEnvironment();
-            const styleToLoad = !isDev ? 'default' : currentStyle;
+            const styleToLoad = !isDevEnvironment() ? 'default' : currentStyle;
             const categories = [pageId, ...extraCategories];
 
             try {

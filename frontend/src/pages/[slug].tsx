@@ -66,14 +66,19 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     // 按需加载数据 - 只加载页面实际需要的数据
     const pageData = getPageDataOptimized(page);
 
-    // Resolve default wordings for static generation
+    // Resolve default wordings for static generation (only in production for SEO)
+    const isProd = process.env.NODE_ENV === 'production';
     const dictionary = getWordingDictionary(slug, "default", ["faq"]);
-    const resolvedPage = page ? resolveWording(page, dictionary) : null;
-    const resolvedDataList = resolveWording({
+    const resolvedPage = isProd ? (page ? resolveWording(page, dictionary) : null) : page;
+    const resolvedDataList = isProd ? resolveWording({
         facultyList: pageData.facultyList || [],
         faqList: pageData.faqList || [],
         coursesList: pageData.coursesList || [],
-    }, dictionary);
+    }, dictionary) : {
+        facultyList: pageData.facultyList || [],
+        faqList: pageData.faqList || [],
+        coursesList: pageData.coursesList || [],
+    };
 
     return {
         props: {

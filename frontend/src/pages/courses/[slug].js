@@ -7,13 +7,8 @@ import DynamicPageContent from "../../components/DynamicPage";
 import { useWording } from "../../hooks/useWording";
 
 export default function CoursePage(props) {
-    // Use wording hook to handle dynamic style switching
-    const { page, data } = useWording(props.course?.slug || "course", {
-        page: props.course,
-        data: props.data
-    });
-
-    return <DynamicPageContent {...props} page={page} data={data} contentType="course" />;
+    // Wording resolution is now handled inside DynamicPageContent via useWording hook
+    return <DynamicPageContent {...props} page={props.course} data={props.data} contentType="course" />;
 }
 
 export async function getStaticPaths() {
@@ -46,8 +41,12 @@ export async function getStaticProps({ params }) {
         });
     }
 
-    // 按需加载数据 - 只加载课程页面实际需要的数据
+    // 按需加载数据 - 只加载课程页面實際需要的數據
     const pageData = getPageDataOptimized(course);
+
+    // Note: Wording resolution is deferred to the client in development
+    // For production, we can optionally pre-resolve here for SEO if needed,
+    // but CoursePage currently relies more on client-side loading.
 
     return {
         props: {

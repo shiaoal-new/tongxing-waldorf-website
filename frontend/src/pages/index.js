@@ -9,17 +9,11 @@ import { useWording } from "../hooks/useWording";
 import { getWordingDictionary, resolveWording } from "../lib/wording.server";
 
 export default function Home(props) {
-  // Use wording hook to handle dynamic style switching in dev
-  // Resolve both page structure and additional data (like faqList)
-  // Explicitly ask for 'faq' category wordings
-  const { page, data } = useWording("index", {
-    page: props.page,
-    data: props.data
-  }, ["faq"]);
+  // Wording resolution is now handled inside DynamicPageContent via useWording hook
 
   // Extract hero poster images for preloading
-  const heroPoster = page?.hero?.media_list?.[0]?.poster;
-  const heroMobilePoster = page?.hero?.media_list?.[0]?.mobilePoster;
+  const heroPoster = props.page?.hero?.media_list?.[0]?.poster;
+  const heroMobilePoster = props.page?.hero?.media_list?.[0]?.mobilePoster;
 
   return (
     <>
@@ -46,7 +40,7 @@ export default function Home(props) {
           />
         )}
       </Head>
-      <DynamicPageContent {...props} page={page} data={data} contentType="page" />
+      <DynamicPageContent {...props} page={props.page} data={props.data} contentType="page" />
     </>
   );
 }
@@ -71,10 +65,11 @@ export async function getStaticProps() {
     });
   }
 
-  // Resolve default wordings for static generation
+  // Resolve default wordings for static generation (only in production for SEO)
+  const isProd = process.env.NODE_ENV === 'production';
   const dictionary = getWordingDictionary("index", "default", ["faq"]);
-  const resolvedPage = resolveWording(page, dictionary);
-  const resolvedData = resolveWording({ facultyList, faqList }, dictionary);
+  const resolvedPage = isProd ? (page ? resolveWording(page, dictionary) : null) : page;
+  const resolvedData = isProd ? resolveWording({ facultyList, faqList }, dictionary) : { facultyList, faqList };
 
   return {
     props: {

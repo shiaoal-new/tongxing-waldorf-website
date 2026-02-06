@@ -12,6 +12,7 @@ import { useTheme } from "next-themes";
 import { SectionRenderer } from "./SectionRenderer";
 import { PageDataProvider } from "../context/PageDataContext";
 import { useDynamicTOC } from "../hooks/useDynamicTOC";
+import { useWording } from "../hooks/useWording";
 import { PageData, NavigationData, FaqItem, Member, Course, QuestionnaireData, SiteData } from "../types/content";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 
@@ -29,7 +30,14 @@ interface DynamicPageContentProps {
     contentType?: 'page' | 'course';
 }
 
-export default function DynamicPageContent({ page, pages, navigation, siteSettings, data = {}, contentType = 'page' }: DynamicPageContentProps) {
+export default function DynamicPageContent({ page: initialPage, pages, navigation, siteSettings, data: initialData = {}, contentType = 'page' }: DynamicPageContentProps) {
+    // 使用 useWording Hook 處理客戶端動態文案切換 (主要用於開發環境)
+    const pageId = initialPage?.slug || (contentType === 'course' ? 'course' : 'index');
+    const { page, data } = useWording(pageId, {
+        page: initialPage,
+        data: initialData
+    }, ["faq"]);
+
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
     const {
         facultyList = [],
