@@ -1,0 +1,52 @@
+seo:
+  title: 四季假：順應自然的呼吸節奏 | 同心華德福
+  description: 同心華德福的四季假依循大自然韻律設計，作為學習過程中的「呼氣」與休息，讓孩子內化所學並恢復生命力。
+
+hero:
+  title: 四季假
+  subtitle: 在季節轉替的韻律中，體現生命的呼吸
+  accent_text: Four Seasons Holidays
+
+philosophy:
+  title: 順應自然的呼吸節奏
+  subtitle: 學習與休整的規律感
+  content: 四季假並非單純的休息，而是課程架構中不可或缺的「呼氣」。在密集的週期主課程後，讓孩子有空間內化知識，恢復生命力。
+  item_rhythm:
+    title: 建立安定的規律
+    content: 假期是為了在變動的環境中找到定錨點，透過穩定的節奏帶給親師生安定的力量。
+  item_breathing:
+    title: 內化與恢復
+    content: 作為學習過程中的「呼氣」時刻，守護孩子的感官發展，讓所學在休息中自然沉澱。
+
+deep_time:
+  title: 活在深層的時光中
+  subtitle: 放下效率，回歸連結
+  content: 四季假的設計鼓勵家長與孩子慢下來，放下追求效率的慣性，專心陪伴彼此並與大自然連結。
+  item_connection:
+    title: 與大地連結
+    content: 利用假期走入自然，感受節氣的微小變化，讓身心靈重新獲得滋養。
+  item_quality:
+    title: 質量的陪伴
+    content: 在深層時光中，家長與孩子共享寧靜與喜悅，建立深厚的情感基礎。
+
+festivals:
+  title: 結合四季慶典
+  subtitle: 儀式感與季節的交織
+  content: 假期通常安排在重大慶典前後，透過「慶典儀式感」與「假期休整」的交替，強化對季節變化的體知。
+  spring:
+    title: 春學季假期
+    content: 在春慶後休整，感受萬物復甦的生機。
+  summer:
+    title: 夏學季假期
+    content: 盛夏的休整，連結夏慶的熱情與大地能量。
+  autumn:
+    title: 秋學季假期
+    content: 特別提到 11 月的秋假，是親師反思與預備冬學季的重要時刻。
+  winter:
+    title: 冬學季假期
+    content: 配合冬慶，在歲末寒冬中尋找內在的溫暖光芒。
+
+summary:
+  title: 守護成長的律動
+  content: 同心的四季假是守護孩子感官發展的重要機制，讓親師生社群在規律的律動中共同成長，找回與自然和諧共處的能力。
+  button: 回到首頁
