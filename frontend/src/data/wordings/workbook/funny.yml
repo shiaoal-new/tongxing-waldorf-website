@@ -1,0 +1,56 @@
+seo:
+  title: 💡 不只是筆記本，這是我們孩子的「生命裝備特刊」 | 同心華德福
+  description: 誰說上學只能背老師寫的書？在同心，每個孩子都是自己的教科書作者！來看看發著光的工作本是怎麼煉成的。
+
+hero:
+  title: 工作本：孩子的秘密武器
+  subtitle: 拒絕公版教材，我的教科書我自己畫！
+  accent_text: My Own Textbook
+
+concept:
+  title: 這裡沒有現成的「正確答案」
+  subtitle: 課本？那是給普通人的，我們自己動手！
+  content: 老師不發書，他們只在黑板上勾勒世界的輪廓。剩下的，由你把這些知識吃進心裡，再用雙手變出來！
+
+path:
+  title: 魔法發生的瞬間
+  subtitle: 從大腦到指尖的奇幻旅程
+  content: 寫工作本可不是罰站、罰寫！它是靈魂的體操。當孩子全神貫注地繪製，你會發現他們眼裡真的有星星。
+  item_internalization:
+    title: 謝絕複製貼上
+    content: 這裡沒有 Ctrl+C、Ctrl+V。每一筆都是心跳的頻率，每一畫都是思考的腳印。
+  item_connection:
+    title: 看到自己成果時的「強光」
+    content: 當孩子拿著完成的本子，那個「這是我做的！」的神情，比任何獎狀都要耀眼。
+  item_expression:
+    title: 百人百味，絕不撞衫
+    content: 給一百個孩子畫同一棵樹，你會得到一百片森林。這就是華德福的浪漫！
+
+assessment:
+  title: 老師在看什麼？
+  subtitle: 不是在找錯字，是在尋寶！
+  content: 我們不玩積分賽。我們透過本子看見你最近在想什麼、感覺如何。如果你努力了，哪怕有點小瑕疵，也是最美的亮點。
+  item_observation:
+    title: 靈魂探測器
+    content: 老師看的是你的進步曲線，而不是冰冷的紅字勾選。
+  item_protection:
+    title: 胃口比對錯更重要
+    content: 別擔心寫錯，我們更在乎你明天還想不想繼續動筆！
+
+grades:
+  title: 成長的升級清單
+  subtitle: 每一級都有新的冒險
+  low:
+    title: G1-G2：色彩與線條的遊戲
+    content: 用彩色蠟磚和文字玩躲貓貓，開啟對世界的第一次溫柔觸摸。
+  mid:
+    title: G3-G4：我是小小的探險家
+    content: 蓋房子、種地、畫地圖，我們要把世界裝進這個本子裡。
+  high:
+    title: 高年級：理性的極限挑戰
+    content: 從科學實驗到歷史思辨，這裡記錄著你逐步成長為「自由人」的證據。
+
+summary:
+  title: 這是你生命的一部分
+  content: 翻開這本厚實的紀錄，你看到的不是考卷，而是你活過的證據。
+  button: 回到首頁，繼續冒險

@@ -592,5 +592,59 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "workbook/workbook01.jpg": {
+    "hash": "fbc9bfb11c462d4d6dbb90668bbc9db2",
+    "processedAt": "2026-02-06T04:16:27.495Z",
+    "originalSize": 1176176,
+    "optimizedSize": 75038,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "workbook/workbook02.jpg": {
+    "hash": "826d456e8c38891cb093f5c3a4f38b26",
+    "processedAt": "2026-02-06T04:16:27.694Z",
+    "originalSize": 1208898,
+    "optimizedSize": 100320,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "workbook/blackboard01.jpg": {
+    "hash": "bd100859ec1d671482d2dbd54c75ad97",
+    "processedAt": "2026-02-06T04:18:12.325Z",
+    "originalSize": 356516,
+    "optimizedSize": 120648,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "workbook/workbook03.jpg": {
+    "hash": "5ede800532cbcd1c9706f765312d10bc",
+    "processedAt": "2026-02-06T04:20:01.468Z",
+    "originalSize": 379793,
+    "optimizedSize": 60772,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "workbook/blackboard02.jpg": {
+    "hash": "d071532c569eb86eeb51703c8b6f0823",
+    "processedAt": "2026-02-06T04:21:53.350Z",
+    "originalSize": 485301,
+    "optimizedSize": 102526,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "workbook/workbook04.jpg": {
+    "hash": "45028cc25d239a040f1d0e4c2e50b6d2",
+    "processedAt": "2026-02-06T04:23:23.276Z",
+    "originalSize": 351281,
+    "optimizedSize": 52814,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }

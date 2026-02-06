@@ -8,6 +8,8 @@ items:
     children:
       - slug: "rhythm-of-life"
       - slug: "curriculum-development"
+      - slug: "workbook"
+        title: "工作本 (Main Lesson Book)"
       - slug: "featured-courses"
         title: "特色課程"
       - slug: "eurythmy"
