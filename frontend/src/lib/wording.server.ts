@@ -10,9 +10,29 @@ export function getWordingDictionary(pageId: string, style: string = 'default', 
     const categories = [pageId, ...extraCategories];
     let mergedDictionary = {};
 
+    const searchDirs = ['pages', 'courses', 'faq'];
+
     categories.forEach(cat => {
-        const filePath = path.join(process.cwd(), `src/data/wordings/${cat}/${style}.yml`);
-        if (fs.existsSync(filePath)) {
+        let filePath: string | null = null;
+
+        // 1. Check new structure in multiple potential folders
+        for (const dir of searchDirs) {
+            const newPath = path.join(process.cwd(), `src/data/${dir}/${cat}.wording.${style}.yml`);
+            if (fs.existsSync(newPath)) {
+                filePath = newPath;
+                break;
+            }
+        }
+
+        // 2. Fallback to old path: src/data/wordings/cat/style.yml
+        if (!filePath) {
+            const oldPath = path.join(process.cwd(), `src/data/wordings/${cat}/${style}.yml`);
+            if (fs.existsSync(oldPath)) {
+                filePath = oldPath;
+            }
+        }
+
+        if (filePath && fs.existsSync(filePath)) {
             try {
                 const content = fs.readFileSync(filePath, 'utf8');
                 const data = yaml.load(content) || {};

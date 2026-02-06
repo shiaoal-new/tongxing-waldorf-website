@@ -13,7 +13,7 @@ export function getAllPages(): PageData[] {
 
     const fileNames = fs.readdirSync(pagesDirectory);
     const allPagesData = fileNames
-        .filter(fileName => fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml'))
+        .filter(fileName => (fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml')) && !fileName.includes('.wording.'))
         .map(fileName => {
             const extension = path.extname(fileName);
             const slug = fileName.replace(new RegExp(`\\${extension}$`), '');

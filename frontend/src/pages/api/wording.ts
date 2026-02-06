@@ -12,35 +12,73 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(400).send('Missing page');
     }
 
-    const pageDir = path.join(process.cwd(), `src/data/wordings/${page}`);
+    const searchDirs = ['pages', 'courses', 'faq'];
+    const oldPageDir = path.join(process.cwd(), `src/data/wordings/${page}`);
 
     // 新增：列出該頁面所有的風格選項
     if (action === 'list') {
-        if (!fs.existsSync(pageDir)) {
-            return res.status(200).json(['default']); // 最少會有個預設
+        let styles: string[] = [];
+
+        // 1. Check new structure in multiple potential folders
+        for (const dir of searchDirs) {
+            const dirPath = path.join(process.cwd(), `src/data/${dir}`);
+            if (fs.existsSync(dirPath)) {
+                const files = fs.readdirSync(dirPath);
+                const newStyles = files
+                    .filter(f => f.startsWith(`${page}.wording.`) && (f.endsWith('.yml') || f.endsWith('.yaml')))
+                    .map(f => f.replace(`${page}.wording.`, '').replace(/\.(yml|yaml)$/, ''));
+                styles = [...styles, ...newStyles];
+            }
         }
-        try {
-            const files = fs.readdirSync(pageDir);
-            const styles = files
-                .filter(f => f.endsWith('.yml') || f.endsWith('.json'))
-                .map(f => f.replace(/\.(yml|json)$/, ''));
-            // 確保 default 永遠在前面
-            const uniqueStyles = Array.from(new Set(['default', ...styles]));
-            return res.status(200).json(uniqueStyles);
-        } catch (e) {
-            return res.status(500).send('Error listing styles');
+
+        // 2. Check old structure fallback
+        if (fs.existsSync(oldPageDir)) {
+            try {
+                const files = fs.readdirSync(oldPageDir);
+                const oldStyles = files
+                    .filter(f => f.endsWith('.yml') || f.endsWith('.json'))
+                    .map(f => f.replace(/\.(yml|json)$/, ''));
+                styles = [...styles, ...oldStyles];
+            } catch (e) {
+                console.error('Error listing old styles');
+            }
         }
+
+        // 確保 default 永遠在前面且唯一
+        const uniqueStyles = Array.from(new Set(['default', ...styles]));
+        return res.status(200).json(uniqueStyles);
     }
 
     if (!style) {
         return res.status(400).send('Missing style');
     }
 
-    const wordingPath = path.join(pageDir, `${style}.yml`);
+    // Try new paths first
+    let wordingPath: string | null = null;
+    for (const dir of searchDirs) {
+        const p1 = path.join(process.cwd(), `src/data/${dir}/${page}.wording.${style}.yml`);
+        const p2 = path.join(process.cwd(), `src/data/${dir}/${page}.wording.${style}.yaml`);
+        if (fs.existsSync(p1)) {
+            wordingPath = p1;
+            break;
+        }
+        if (fs.existsSync(p2)) {
+            wordingPath = p2;
+            break;
+        }
+    }
 
-    if (!fs.existsSync(wordingPath)) {
+    // Fallback to old path
+    if (!wordingPath) {
+        const oldPath = path.join(oldPageDir, `${style}.yml`);
+        if (fs.existsSync(oldPath)) {
+            wordingPath = oldPath;
+        }
+    }
+
+    if (!wordingPath || !fs.existsSync(wordingPath)) {
         // 如果 yml 不存在，嘗試回退到 json (相容過渡期)
-        const jsonPath = path.join(pageDir, `${style}.json`);
+        const jsonPath = path.join(oldPageDir, `${style}.json`);
         if (fs.existsSync(jsonPath)) {
             const content = fs.readFileSync(jsonPath, 'utf8');
             return res.status(200).send(content);
