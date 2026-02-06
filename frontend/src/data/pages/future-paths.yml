@@ -1,4 +1,4 @@
-title: "seo.title"
+title: "hero.title"
 slug: future-paths
 seo:
   title: "seo.title"
@@ -29,13 +29,17 @@ sections:
         item_type: feature_item
         items:
           - title: "waldorf.item_yuguang.title"
-            span: 6
+            span: 4
             content: "waldorf.item_yuguang.content"
             icon: lucide:graduation-cap
-          - title: "waldorf.item_experiment.title"
-            span: 6
-            content: "waldorf.item_experiment.content"
-            icon: lucide:compass
+          - title: "waldorf.item_shi.title"
+            span: 4
+            content: "waldorf.item_shi.content"
+            icon: lucide:award
+          - title: "waldorf.item_li.title"
+            span: 4
+            content: "waldorf.item_li.content"
+            icon: lucide:pencil-ruler
 
   - section_id: adaptation
     layout: "精緻特色區塊 (Features Premium)"
@@ -49,58 +53,46 @@ sections:
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "adaptation.item_translation.title"
-            span: 6
-            content: "adaptation.item_translation.content"
-            icon: lucide:languages
-          - title: "adaptation.item_motivation.title"
-            span: 6
-            content: "adaptation.item_motivation.content"
-            icon: lucide:flame
+          - title: "adaptation.item_transfer.title"
+            span: 4
+            content: "adaptation.item_transfer.content"
+            icon: lucide:book-open
+          - title: "adaptation.item_academic_case.title"
+            span: 4
+            content: "adaptation.item_academic_case.content"
+            icon: lucide:trending-up
+          - title: "adaptation.item_hk_case.title"
+            span: 4
+            content: "adaptation.item_hk_case.content"
+            icon: lucide:globe
 
-  - section_id: academic
+  - section_id: pathway
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "academic.title"
-        subtitle: "academic.subtitle"
-        content: "academic.content"
+        title: "pathway.title"
+        subtitle: "pathway.subtitle"
+        content: "pathway.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "academic.item_domestic.title"
-            span: 6
-            content: "academic.item_domestic.content"
-            icon: lucide:building-2
-          - title: "academic.item_special.title"
-            span: 6
-            content: "academic.item_special.content"
-            icon: lucide:award
-
-  - section_id: mindset
-    layout: "精緻特色區塊 (Features Premium)"
-    silk_background: true
-    blocks:
-      - type: text_block
-        title: "mindset.title"
-        subtitle: "mindset.subtitle"
-        content: "mindset.content"
-      - type: list_block
-        layout_method: bento_grid
-        item_type: feature_item
-        items:
-          - title: "mindset.item_resilience.title"
-            span: 6
-            content: "mindset.item_resilience.content"
-            icon: lucide:heart
-          - title: "mindset.item_future.title"
-            span: 6
-            content: "mindset.item_future.content"
-            icon: lucide:sparkles
+          - title: "pathway.item_special.title"
+            span: 4
+            content: "pathway.item_special.content"
+            icon: lucide:star
+          - title: "pathway.item_stats.title"
+            span: 4
+            content: "pathway.item_stats.content"
+            icon: lucide:bar-chart-3
+          - title: "pathway.item_diverse.title"
+            span: 4
+            content: "pathway.item_diverse.content"
+            icon: lucide:rocket
 
   - section_id: support
     layout: "精緻特色區塊 (Features Premium)"
+    silk_background: true
     blocks:
       - type: text_block
         title: "support.title"
@@ -110,22 +102,22 @@ sections:
         layout_method: bento_grid
         item_type: feature_item
         items:
+          - title: "support.advice_transition.title"
+            span: 6
+            content: "support.advice_transition.content"
+            icon: lucide:coffee
+          - title: "support.advice_rhythm.title"
+            span: 6
+            content: "support.advice_rhythm.content"
+            icon: lucide:heart
+          - title: "support.advice_coop.title"
+            span: 6
+            content: "support.advice_coop.content"
+            icon: lucide:users
           - title: "support.item_awareness.title"
             span: 6
             content: "support.item_awareness.content"
             icon: lucide:eye
-          - title: "support.item_redefine.title"
-            span: 6
-            content: "support.item_redefine.content"
-            icon: lucide:target
-          - title: "support.item_role.title"
-            span: 6
-            content: "support.item_role.content"
-            icon: lucide:users
-          - title: "support.item_reality.title"
-            span: 6
-            content: "support.item_reality.content"
-            icon: lucide:map
 
   - section_id: final
     layout: "Hero: 滿版背景圖文 (願景風格)"
