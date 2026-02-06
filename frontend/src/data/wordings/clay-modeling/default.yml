@@ -1,0 +1,47 @@
+seo:
+  title: 泥塑課：形塑自我的力量 | 同心華德福
+  description: 同心華德福的泥塑課並非傳統的美術課，而是一門結合兒童發展、鍛鍊孩子意志力與感官知覺的藝術課程。
+
+hero:
+  title: 泥塑課
+  subtitle: 在泥土的溫度中，形塑內在的平衡
+  accent_text: Clay Modeling
+
+concept:
+  title: 藝術與意志的交織
+  subtitle: 呼吸節奏中的「呼」
+  content: 華德福教育講求規律。早上的主課程是吸收知識的「吸」，下午的泥塑課則是透過雙手將內在感受釋放出來的「呼」。
+  item_non_talent:
+    title: 非才藝導向
+    content: 目的不在於製作精美的成品，而在於激發學習熱情，將內在想像具象化。
+  item_breathing:
+    title: 釋放與平衡
+    content: 透過雙手對土的掌握，將主課程吸收的能量轉化為具體的藝術呈現。
+
+grades:
+  title: 年段發展與空間挑戰
+  subtitle: 根據孩子意識狀態設計的課程
+  g4:
+    title: 四年級：動物與性格形塑
+    content: 配合主課程如《西遊記》，從基本的土球變形為各種具備個性的動物，探索初步的立體空間。
+  g5:
+    title: 五年級：人與空間的平衡
+    content: 配合古希臘主題，挑戰捏製人物造型，學習掌握身體比例與姿態的和諧，發展完整的立體感。
+
+features:
+  title: 教學特色與鍛鍊
+  subtitle: 用最真實的觸覺感知世界
+  item_hands:
+    title: 雙手作為主要工具
+    content: 儘量不使用工具，直接感受泥土的溫度、濕度與阻力，建立最直接的感官連結。
+  item_will:
+    title: 意志力的修煉
+    content: 學習控制手溫與力道以應對泥土的乾裂與重量，從中建立強大的自信。
+  item_inner_image:
+    title: 守護內在圖像
+    content: 尊重孩子心中對事物的定義，老師守護那份不被局限的想像力。
+
+summary:
+  title: 安放身心，形塑自我
+  content: 泥塑課是孩子在水泥叢林中，透過雙手與土地工作的珍貴時刻。它不僅是美感的培養，更是協助孩子在混亂的成長過程中，找到安放身心、形塑自我的力量。
+  button: 回到首頁

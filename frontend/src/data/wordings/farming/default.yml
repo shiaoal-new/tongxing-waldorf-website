@@ -1,0 +1,60 @@
+seo:
+  title: 農耕課：鍛鍊意志力與感官經驗的靈魂學科 | 同心華德福
+  description: 同心華德福的農耕課不僅是勞作，更是一門落實人智學理念、鍛鍊孩子意志力與感官經驗的靈魂學科。
+
+hero:
+  title: 農耕課
+  subtitle: 在汗水與工作中，長出面對未來的強韌力量
+  accent_text: Farming & Gardening
+
+willpower:
+  title: 三年級的「入世」轉折
+  subtitle: 鍛鍊意志力與感官經驗
+  content: 三年級是孩子經歷「九歲危機」的關鍵期，透過農耕課，學校引導孩子用「真實的意志」走向外在世界。
+  item_crisis:
+    title: 九歲危機的支柱
+    content: 孩子開始感知自己與世界分離，透過與土地工作達成自給自足，帶給不安的孩子強大的安放力量。
+  item_practice:
+    title: 實踐重於知識
+    content: 重點在於「種出東西」。孩子必須親手堆肥、撥種、照顧，在實作中學習如何解決問題。
+
+spiral:
+  title: 大螺旋田地
+  subtitle: 都會中的生態實踐
+  content: 師生共同挖開水泥地，親手搬運石塊排列，將原本的花圃建立成目前的「大螺旋田地」。
+  item_creation:
+    title: 從水泥到田園
+    content: 大孩子帶著小孩子分工合作，親手搬運石塊，將原本的水泥地改造成目前的田地。
+  item_bd:
+    title: BD農法與養土
+    content: 引進生物動力農法（BD農法），載運發酵牛糞並利用校內廚餘堆肥，讓貧瘠的土地恢復生命力。
+  item_respect:
+    title: 敬虔的祝福
+    content: 工作結束後為田地祝福，培養孩對大地的「敬意」，學會尊重生命並踩在步道上。
+
+horticulture:
+  title: 中學部園藝課
+  subtitle: 思辨與科學的結合
+  content: 七至八年級的園藝課融入植物學、動物學與生態學，將感官經驗轉化為思考與邏輯判斷。
+  item_integration:
+    title: 跨學科整合
+    content: 探討「為什麼扦插可以活？」等問題，將小學的經驗進階為科學性的思考。
+  item_technique:
+    title: 進階專業技術
+    content: 學習扦插、高壓嫁接及維護大規模堆肥，讓學習與真實的生產活動產生連結。
+
+community:
+  title: 全村共養：客家親子農耕
+  subtitle: 家校協作與永續生活
+  content: 同心與客家文化中心長期合作，家長與孩子在週末共同守護農地。
+  item_cooperation:
+    title: 家校聯合守護
+    content: 親子共同實踐厚土種植法與自然農法，共同照顧作物。
+  item_cycle:
+    title: 完整教育循環
+    content: 「從土地到餐桌」，收成物成為美味佳餚或製成防護用品（如防蚊包、敲染）。
+
+summary:
+  title: 在水泥叢林中保有一片自然
+  content: 同心的農耕課是為了讓孩子在水泥叢林中保有一片開闊的自然景致，並在汗水與工作中，長出能獨自面對未來的強韌力量。
+  button: 回到首頁
