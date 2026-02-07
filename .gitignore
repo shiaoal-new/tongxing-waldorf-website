@@ -58,3 +58,6 @@ frontend/public/fonts/*.subset.woff2
 # 注意：請務必確保以下「原始母片」檔案被 Git 追蹤
 # /frontend/public/fonts/ChenYuluoyan-2.0-Thin.ttf
 # /frontend/public/fonts/ChenYuluoyan-2.0-Thin.full.woff2
+
+# Wording files
+frontend/public/data/wordings/
