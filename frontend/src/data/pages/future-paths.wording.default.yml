@@ -136,16 +136,16 @@ paths:
         - type: header
           title: 第一階段：探索與決策
           color: "#6A1B9A"
-        - year: "8 年級下"
+        - year: "8 年級下學期"
           title: 探索與意向
           content: 家庭深談與初步題型接觸。
-        - year: "9 年級上"
+        - year: "9 年級上學期"
           title: 心理調適期
           content: 在「畢業專題」與「總複習」之間取得平衡。
         - type: header
           title: 第二階段：衝刺與銜接
           color: "#E65100"
-        - year: "9 年級下"
+        - year: "9 年級下學期"
           title: 意志爆發期
           content: 5月會考，6月畢業公演/專題發表。
         - year: "10 年級"

@@ -198,6 +198,7 @@ export interface TimelineItem {
 export interface TimelineBlock extends BaseBlock {
     type: 'timeline_block';
     items: TimelineItem[];
+    show_progress_text?: boolean;
 }
 
 export interface CTABlock extends BaseBlock {

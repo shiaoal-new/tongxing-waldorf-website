@@ -40,6 +40,7 @@ const formatDate = (timestamp: number) => {
 
 const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     const { theme } = useTheme();
+    const showProgressText = data.show_progress_text !== false; // Default to true
 
     const [selectedDetail, setSelectedDetail] = useState<TimelineItem | null>(null);
     const [itemPositions, setItemPositions] = useState<{ time: number, position: number }[]>([]);
@@ -239,7 +240,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
     }, [phases]); // Depend on phases structure
 
     useMotionValueEvent(scaleY, "change", (latest) => {
-        if (progressRef.current && itemPositions.length > 0) {
+        if (progressRef.current && itemPositions.length > 0 && showProgressText) {
             let text = "";
 
             if (latest <= itemPositions[0].position) {
@@ -266,7 +267,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             }
 
             if (text) progressRef.current.innerText = text;
-        } else if (progressRef.current && Array.isArray(data.items)) {
+        } else if (progressRef.current && Array.isArray(data.items) && showProgressText) {
             const firstYear = data.items.find(item => item.year)?.year;
             if (firstYear) progressRef.current.innerText = formatDate(parseYearStr(firstYear));
         }
@@ -372,13 +373,15 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         </div>
 
                         {/* Progress Percentage */}
-                        <motion.span
-                            ref={progressRef}
-                            className="absolute left-0 -rotate-90 -translate-x-1/2 text-[16px] font-bold whitespace-nowrap tabular-nums pointer-events-auto text-white z-10"
-                            style={{}}
-                        >
-                            {(Array.isArray(data.items) && data.items.find(i => i.year)?.year) ? formatDate(parseYearStr(data.items.find(i => i.year)!.year)) : "Start"}
-                        </motion.span>
+                        {showProgressText && (
+                            <motion.span
+                                ref={progressRef}
+                                className="absolute left-0 -rotate-90 -translate-x-1/2 text-[16px] font-bold whitespace-nowrap tabular-nums pointer-events-auto text-white z-10"
+                                style={{}}
+                            >
+                                {(Array.isArray(data.items) && data.items.find(i => i.year)?.year) ? formatDate(parseYearStr(data.items.find(i => i.year)!.year)) : "Start"}
+                            </motion.span>
+                        )}
                     </div>
                 </motion.div>
 

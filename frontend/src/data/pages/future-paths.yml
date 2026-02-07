@@ -163,6 +163,7 @@ sections:
                 layout: centered
               - type: timeline_block
                 items: "paths.mainstream.timeline.items"
+                show_progress_text: false
 
           # --- Path 3: Diverse ---
           - id: diverse
