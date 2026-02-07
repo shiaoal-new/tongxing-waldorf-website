@@ -98,13 +98,15 @@ export function resolveWording(data: any, dictionary: any): any {
  * 從字典中根據路徑獲取值 (例如 "hero.title")
  */
 function getValueByPath(obj: any, path: string): string | null {
-    if (!path || !path.includes('.')) return null;
+    if (!path) return null;
 
     const parts = path.split('.');
     let current = obj;
 
     for (const part of parts) {
-        if (current === null || current === undefined) return null;
+        if (current === null || current === undefined || typeof current !== 'object') {
+            return null;
+        }
         current = current[part];
     }
 

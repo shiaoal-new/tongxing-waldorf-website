@@ -2,97 +2,271 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tongxing.org.tw/</loc>
-    <lastmod>2026-02-01T14:29:36.801Z</lastmod>
+    <lastmod>2026-02-07T03:06:51.485Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://tongxing.org.tw/workbook</loc>
+    <lastmod>2026-02-07T02:54:41.784Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/workbook.wording.funny</loc>
+    <lastmod>2026-02-07T02:54:41.784Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/workbook.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.784Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tongxing.org.tw/waldorf-assessment</loc>
-    <lastmod>2026-02-01T14:29:36.808Z</lastmod>
+    <lastmod>2026-02-07T03:04:20.509Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/waldorf-assessment.wording.default</loc>
+    <lastmod>2026-02-07T03:04:15.449Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/visit</loc>
-    <lastmod>2026-02-01T14:29:36.807Z</lastmod>
+    <lastmod>2026-02-07T03:04:07.363Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/visit.wording.default</loc>
+    <lastmod>2026-02-07T03:04:02.131Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/typography</loc>
-    <lastmod>2026-02-01T14:29:36.806Z</lastmod>
+    <lastmod>2026-02-07T02:54:41.783Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/timeline</loc>
-    <lastmod>2026-02-01T14:29:36.805Z</lastmod>
+    <lastmod>2026-02-07T03:05:04.429Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/timeline.wording.default</loc>
+    <lastmod>2026-02-07T03:04:49.104Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/teacher-group</loc>
-    <lastmod>2026-02-01T14:29:36.803Z</lastmod>
+    <lastmod>2026-02-07T03:06:18.819Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/teacher-group.wording.default</loc>
+    <lastmod>2026-02-07T03:06:08.296Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/seasons-holiday</loc>
+    <lastmod>2026-02-07T02:54:41.783Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/seasons-holiday.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.783Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/rhythm-of-life</loc>
-    <lastmod>2026-02-01T14:29:36.803Z</lastmod>
+    <lastmod>2026-02-07T03:03:54.240Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/rhythm-of-life.wording.default</loc>
+    <lastmod>2026-02-07T03:03:41.102Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/philosophy</loc>
-    <lastmod>2026-02-01T14:29:36.802Z</lastmod>
+    <lastmod>2026-02-07T03:03:25.388Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/philosophy.wording.default</loc>
+    <lastmod>2026-02-07T03:03:15.004Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/micro-interactions</loc>
-    <lastmod>2026-01-26T09:54:51.929Z</lastmod>
+    <lastmod>2026-02-07T02:54:41.782Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/layout-spacing</loc>
-    <lastmod>2026-02-01T14:29:36.802Z</lastmod>
+    <lastmod>2026-02-07T02:54:41.782Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/index.wording.funny</loc>
+    <lastmod>2026-02-07T02:54:41.782Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/index.wording.default</loc>
+    <lastmod>2026-02-07T03:06:35.321Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/future-paths</loc>
+    <lastmod>2026-02-07T02:54:41.781Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/future-paths.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.781Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/featured-courses</loc>
-    <lastmod>2026-02-01T14:29:36.801Z</lastmod>
+    <lastmod>2026-02-07T03:03:02.870Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/featured-courses.wording.default</loc>
+    <lastmod>2026-02-07T03:02:50.004Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/farming</loc>
+    <lastmod>2026-02-07T02:54:41.780Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/farming.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.780Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/faq.wording.funny</loc>
+    <lastmod>2026-02-07T02:54:41.779Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/faq.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.779Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/donation</loc>
-    <lastmod>2026-02-01T14:29:36.799Z</lastmod>
+    <lastmod>2026-02-07T03:05:53.230Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/donation.wording.default</loc>
+    <lastmod>2026-02-07T03:05:44.638Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/curriculum-development</loc>
-    <lastmod>2026-01-30T11:24:18.514Z</lastmod>
+    <lastmod>2026-02-07T03:02:36.470Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/curriculum-development.wording.default</loc>
+    <lastmod>2026-02-07T03:02:26.469Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/crossing</loc>
+    <lastmod>2026-02-07T02:54:41.778Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/crossing.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.778Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/colors</loc>
-    <lastmod>2026-02-01T14:29:36.798Z</lastmod>
+    <lastmod>2026-02-07T02:54:41.777Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/clay-modeling</loc>
+    <lastmod>2026-02-07T02:54:41.777Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/clay-modeling.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.777Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/anthroposophy</loc>
-    <lastmod>2026-02-01T14:29:36.798Z</lastmod>
+    <lastmod>2026-02-07T03:02:14.171Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/anthroposophy.wording.default</loc>
+    <lastmod>2026-02-07T03:02:03.536Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tongxing.org.tw/courses/eurythmy</loc>
-    <lastmod>2026-02-01T14:29:36.793Z</lastmod>
+    <lastmod>2026-02-07T02:54:41.774Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/courses/eurythmy.wording.funny</loc>
+    <lastmod>2026-02-07T02:54:41.774Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tongxing.org.tw/courses/eurythmy.wording.default</loc>
+    <lastmod>2026-02-07T02:54:41.773Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

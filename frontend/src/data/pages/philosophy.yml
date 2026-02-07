@@ -1,11 +1,11 @@
-title: "使命．願景．價值觀"
+title: title
 slug: "philosophy"
 seo:
-  title: 教育理念、使命與願景 | 同心華德福實驗教育
-  description: 深入了解同心華德福的核心價值觀——慢的藝術、雙手的智慧、同心的社群與人的理解。我們致力於守護童年、連結土地，培養具備自由心靈的未來公民。
-  keywords: 華德福教育理念, 全人教育, 實驗教育使命, 兒童發展, 華德福價值觀
+  title: seo.title
+  description: seo.description
+  keywords: seo.keywords
 hero:
-  title: "在這裡，教育是生命影響生命的交織。"
+  title: hero.title
   media_list:
     - type: image
       image: /img/vision-header.webp
@@ -17,41 +17,41 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "我們的核心價值"
-        subtitle: "Roots: Core Values"
-        content: "這是我們的根。在快時代裡，我們試圖守護「人」的本質。從泥土到星辰，從雙手到心靈，我們相信教育不只是灌輸知識，而是喚醒孩子與生俱來對世界的好奇與愛。"
+        title: core-values.blocks.0.title
+        subtitle: core-values.blocks.0.subtitle
+        content: core-values.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "慢的藝術"
-            subtitle: "Rhythms of Nature"
+          - title: core-values.blocks.1.items.0.title
+            subtitle: core-values.blocks.1.items.0.subtitle
             span: 6
-            content: "在快時代裡，我們守護「慢」的價值。每週三的「自然日」，我們走進山林呼吸；在季節慶典裡，我們感知大地的脈動。因為慢，感官才得以覺醒。"
+            content: core-values.blocks.1.items.0.content
             icon: "lucide:clock"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
-          - title: "雙手的智慧"
-            subtitle: "Will to Create"
+          - title: core-values.blocks.1.items.1.title
+            subtitle: core-values.blocks.1.items.1.subtitle
             span: 6
-            content: "從一塊泥土的揉捏、一根木頭的削磨，到廚房裡的食農實踐。我們相信，透過雙手創造出的真實溫度，能長出孩子面對未來的意志力與信心。"
+            content: core-values.blocks.1.items.1.content
             icon: "lucide:hand"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
-          - title: "同心的社群"
-            subtitle: "Community"
+          - title: core-values.blocks.1.items.2.title
+            subtitle: core-values.blocks.1.items.2.subtitle
             span: 6
-            content: "我們稱呼彼此為「夥伴」。老師、家長與孩子像三股編成的繩子，緊密連結。我們一起工作、一起學習、一起在春慶中分享祝福，接住彼此。"
+            content: core-values.blocks.1.items.2.content
             icon: "lucide:users"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
-          - title: "人的理解"
-            subtitle: "Understanding"
+          - title: core-values.blocks.1.items.3.title
+            subtitle: core-values.blocks.1.items.3.subtitle
             span: 6
-            content: "教育的核心是「理解人」。我們不只看成績，更深入研究孩子每個階段的發展圖解，給予最合時宜的引導，讓學習真正發生在孩子的心裡。"
+            content: core-values.blocks.1.items.3.content
             icon: "lucide:heart"
             media:
               type: image
@@ -61,33 +61,33 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "我們的使命"
-        subtitle: "Trunk: Our Mission"
-        content: "這是我們生長的幹。為了讓孩子能站得穩、長得高，我們致力於建立一個穩定的支持系統。"
+        title: mission.blocks.0.title
+        subtitle: mission.blocks.0.subtitle
+        content: mission.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "守護童年"
-            subtitle: "Protection"
+          - title: mission.blocks.1.items.0.title
+            subtitle: mission.blocks.1.items.0.subtitle
             span: 4
-            content: "護衛孩子純真的想像力，不讓過早的競爭剝奪童年的光采。我們給予充分的時間，讓夢想在心中發芽。"
+            content: mission.blocks.1.items.0.content
             icon: "lucide:shield-check"
             media:
               type: image
               image: /img/featured-protection.webp
-          - title: "連結土地"
-            subtitle: "Connection"
+          - title: mission.blocks.1.items.1.title
+            subtitle: mission.blocks.1.items.1.subtitle
             span: 4
-            content: "創造孩子與土地、人與自我之間最深刻的聯繫。透過農耕與戶外活動，讓生命不孤單，始終有根。"
+            content: mission.blocks.1.items.1.content
             icon: "lucide:link"
             media:
               type: image
               image: /img/featured-nature.webp
-          - title: "啟航未來"
-            subtitle: "Navigation"
+          - title: mission.blocks.1.items.2.title
+            subtitle: mission.blocks.1.items.2.subtitle
             span: 4
-            content: "當孩子走出同心，他帶走的不只是課本，而是足以支撐一輩子的韌性、美感與創造力，勇敢航向未知。"
+            content: mission.blocks.1.items.2.content
             icon: "lucide:send"
             media:
               type: image
@@ -97,25 +97,24 @@ sections:
     layout: "Hero: 滿版背景圖文 (願景風格)"
     media_list:
       - type: image
-        image:
-          /img/vision-header.webp
-          # 這裡建議換成一張更「大器」、有開闊感（如晨曦田園）的圖片，若無新圖暫用原圖或尋找替代
+        image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "願每一顆種子，都能以最自然的姿態綻放。"
-        subtitle: "Flower: Our Vision"
-        content: "這是最終綻放的花。我們許下願望：教育不應是工廠的生產線，而是花園的滋養。我們預見一個由「自由心靈」組成的未來——那裡的每個人都深知自己的天賦，擁有愛人的能力，並能勇敢地在變動的世界中定錨。"
+        title: vision-statement.blocks.0.title
+        subtitle: vision-statement.blocks.0.subtitle
+        content: vision-statement.blocks.0.content
 
-  - layout: 紫色大型看板 (CTA)
+  - section_id: cta
+    layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: "「如果你也聽見了內心的召喚……」"
-        content: "教育可以有一種不一樣的可能。邀請你走入同心，與我們一起見證花開的聲音。"
+        title: cta.blocks.0.title
+        content: cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: "了解更多入學資訊"
+          - text: cta.blocks.1.buttons.0.text
             link: "/visit"
             style: btn-inverse
-          - text: "預約校園參觀"
+          - text: cta.blocks.1.buttons.1.text
             link: "/visit"
             style: btn-white-outline

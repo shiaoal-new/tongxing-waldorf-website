@@ -1,8 +1,8 @@
-title: "教師團隊"
+title: title
 slug: "teacher-group"
 hero:
-  title: "同心教師領航團"
-  subtitle: "專業與靈性共榮：點亮區域教育的燈塔"
+  title: hero.title
+  subtitle: hero.subtitle
   media_list:
     - type: image
       image: /img/teacher.webp
@@ -11,15 +11,15 @@ sections:
   - section_id: intro
     blocks:
       - type: text_block
-        title: "守護文化精神自由"
-        content: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
+        title: intro.blocks.0.title
+        content: intro.blocks.0.content
 
   - section_id: full-time
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: "專任教師群"
-        subtitle: "Full-time Faculty"
+        title: full-time.blocks.0.title
+        subtitle: full-time.blocks.0.subtitle
       - type: member_block
         members:
           - "詹雅智"
@@ -38,8 +38,8 @@ sections:
   - section_id: administrative
     blocks:
       - type: text_block
-        title: "行政教師群"
-        subtitle: "Administration"
+        title: administrative.blocks.0.title
+        subtitle: administrative.blocks.0.subtitle
       - type: member_block
         members:
           - "吳俊輝"
@@ -53,12 +53,12 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: "兼任教師群"
-        subtitle: "Part-time & Specialist Teachers"
-        content: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
+        title: part-time.blocks.0.title
+        subtitle: part-time.blocks.0.subtitle
+        content: part-time.blocks.0.content
 
       - type: list_block
-        title: "人文、自然與外語"
+        title: part-time.blocks.1.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -76,7 +76,7 @@ sections:
             subtitle: "英文"
 
       - type: list_block
-        title: "藝術、手作與生活"
+        title: part-time.blocks.2.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -98,7 +98,7 @@ sections:
             subtitle: "戲劇"
 
       - type: list_block
-        title: "肢體、動能與環境"
+        title: part-time.blocks.3.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -112,7 +112,7 @@ sections:
             subtitle: "藝術 / 體育 / 園藝"
 
       - type: list_block
-        title: "音樂與合奏"
+        title: part-time.blocks.4.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -134,7 +134,7 @@ sections:
             subtitle: "合奏（長笛）"
 
       - type: list_block
-        title: "安親課後輔導"
+        title: part-time.blocks.5.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -146,11 +146,11 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: 點亮深坑：開箱教育地標
-        content: 您是否也在尋找一個能與高等教育資源共榮、並提供 1-9 年級穩定成長環境的教育機構？與其聽說，不如親自走入同心的專業校園，看見孩子生命力的綻放。
+        title: cta.blocks.0.title
+        content: cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: 預約參觀
+          - text: cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white
         subtitle: 下一步

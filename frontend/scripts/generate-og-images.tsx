@@ -5,6 +5,7 @@ import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
+import { getWordingDictionary, resolveWording } from '../src/lib/wording.server';
 
 // --- Configuration ---
 const SOURCE_DIRS = [
@@ -101,18 +102,24 @@ async function generate() {
     }
 
     // 3. Collect Files
-    const files = SOURCE_DIRS.flatMap(pattern => globSync(pattern));
+    const files = SOURCE_DIRS
+        .flatMap(pattern => globSync(pattern))
+        .filter(file => !file.includes('.wording.')); // Skip wording files
     console.log(`📂 Found ${files.length} pages to process.`);
 
     for (const file of files) {
         try {
             // Read Data
             const fileContent = fs.readFileSync(file, 'utf8');
-            const data = yaml.load(fileContent) as PageData;
+            let data = yaml.load(fileContent) as PageData;
 
             // Determine Slug (filename is default)
             const filename = path.basename(file, '.yml');
             const slug = data.slug || filename;
+
+            // Resolve Wording
+            const dictionary = getWordingDictionary(slug, 'default', ['faq']);
+            data = resolveWording(data, dictionary);
 
             // Don't generate for 'index' if you want it to be named 'og-home.png' or similar, 
             // but usually index.png or home.png works. Let's stick to slug.

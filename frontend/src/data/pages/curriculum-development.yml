@@ -1,88 +1,77 @@
-title: 學生發展圖像與課程脈絡
+title: title
 slug: curriculum-development
-content: 我們想給孩子的，不只是考試成績，而是一輩子帶得走的能力——懂得動手做、懂得感受、也懂得思考。
+content: content
 hero:
   media_list:
     - type: image
       image: /img/curriculum-hero.webp
-  title: 1-9 年級九年一貫課程脈絡
-  subtitle: 為變動時代打造的穩定之火
-  content: 面對火年的變動，同心提供長達九年的連續性成長路徑。我們在大人的大學校區裡，為孩子點燃清晰思考與穩定內在的燈塔，培養領航未來的全人力量。
+  title: hero.title
+  subtitle: hero.subtitle
+  content: hero.content
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: core-vision
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: 教學現場：三元力量的真實落地
-        content: |
-          在同心，我們不只教授學科，更在乎孩子[三元力量]{思考、情感、意志}的平衡。
-          這些設計源自於對[人智學](/anthroposophy)的深刻理解，將抽象的生命智慧轉化為孩子雙手、心靈與大腦的真實體驗。
+        title: core-vision.blocks.0.title
+        content: core-vision.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: 意志的鍛鍊：透過雙手工作
+          - title: core-vision.blocks.1.items.0.title
             span: 4
             color: "#7e22ce"
             icon: lucide:hammer
-            content: 從 1 年級的編織到高年級的木工、農耕。這不只是手工課，而是在「與物質搏鬥」中，長出克服困難、實踐目標的意志力。
+            content: core-vision.blocks.1.items.0.content
             media:
               type: lottie
               lottie: /lottie/SculptingArt.lottie
-          - title: 情感的滋養：藝術性的呼吸
+          - title: core-vision.blocks.1.items.1.title
             span: 4
             color: "#fb7185"
             icon: lucide:palette
-            content: 透過晨圈的歌唱、濕彩畫與戲劇，我們讓學習充滿感受性。當心靈獲得滋養，孩子能建立對世界的熱愛與穩固的內在穩定度。
+            content: core-vision.blocks.1.items.1.content
             media:
               type: lottie
               lottie: /lottie/Painting.lottie
-          - title: 思考的開啟：清明的觀察力
+          - title: core-vision.blocks.1.items.2.title
             span: 4
             color: "#38bdf8"
             icon: lucide:brain
-            content: 從自然觀察到 8 年級的大專題研究。我們不給標準答案，是引導孩子在經驗中找尋規律，長出獨立判斷與邏輯思考的能力。
+            content: core-vision.blocks.1.items.2.content
             media:
               type: lottie
               lottie: /lottie/Thinking.lottie
-          - title: 情感的滋養：追求平衡的藝術
+          - title: core-vision.blocks.1.items.3.title
             span: 12
             color: "#f59e0b"
             icon: lucide:scale
             media:
               type: image
               image: /img/curriculum-development/balance.webp
-            content: 如果只有思考會變得冷酷乾枯，只有意志會變得盲目衝動，唯有透過「情感」的滋養，才能讓兩者平衡。
+            content: core-vision.blocks.1.items.3.content
 
   - section_id: curriculum-continuity
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: 九年一貫的生命發展歷程
-        content: |
-          在同心，九年一貫不僅是學籍的銜接，更是一段呼應孩子內在節奏、完整且不可分割的生命發展歷程。
-
-          華德福教育將這九年視為孩子「第二個七年」（7-14 歲）及進入青少年轉折點的整體圖像。學校顧問常提醒：若孩子在六年級便離開，就像一棟蓋了一半的建築，許多在七、八年級才會成熟的能力（如獨立思辨、大專題研究）將失去最後完成的關鍵契機。
+        title: curriculum-continuity.blocks.0.title
+        content: curriculum-continuity.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: 從意志到思考的轉化
+          - title: curriculum-continuity.blocks.1.items.0.title
             icon: lucide:refresh-cw
-            content: |
-              一到四年級是「意志與情感」的啟蒙期，強調透過動手做與感官經驗來學習生活；五到八年級則是「思考與智慧」的萌芽期，教學才逐漸轉向抽象思考與判斷力的培養。這九年的連續性，確保了孩子能穩定地從「身體學習」過渡到「心理思辨」。
-          - title: 跨年段的長期陪伴與信任
+            content: curriculum-continuity.blocks.1.items.0.content
+          - title: curriculum-continuity.blocks.1.items.1.title
             icon: lucide:users
-            content: |
-              *   **導師長期帶領**：主帶老師通常陪伴班級多年，這種深厚的信任讓老師能精確觀察孩子在不同年段的細微轉變，給予最即時的引導。
-              *   **社群共同守護**：教師團與家長社群形成的穩固支持網，確保了孩子從低年級到高年級的教育脈絡始終如一，生活節奏不因升學壓力而中斷。
-          - title: 行動中的能力堆疊
+            content: curriculum-continuity.blocks.1.items.1.content
+          - title: curriculum-continuity.blocks.1.items.2.title
             icon: lucide:layers
-            content: |
-              同心的課程設計讓能力逐年累加：
-              *   **挑戰升級**：從初期的每週「自然日」，到中高年段的農場生活，再到 8-9 年級的「山河海」戶外挑戰，旨在透過真實行動磨練耐力與獨立性。
-              *   **藝術與學科融合**：九年的泥塑、木工、優律思美與戲劇練習，不僅是學習技能，更是練習將「思考、情感與意志」合而為一。
+            content: curriculum-continuity.blocks.1.items.2.content
 
   - section_id: curriculum-main
     blocks:
@@ -90,56 +79,39 @@ sections:
   - section_id: senior-transition
     blocks:
       - type: text_block
-        title: 領航未來：從感受到思考的深度轉化
-        content: 隨著孩子邁向青少年前期，同心在大學校區的學術氛圍下，提供 7-9 年級更具挑戰性的專業課程。我們陪伴孩子從「用身體感受世界」轉向「用清晰思考領航世界」，在穩定的節奏中培養獨立思考與行動的能力。
+        title: senior-transition.blocks.0.title
+        content: senior-transition.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: 年段任務與專題
+          - title: senior-transition.blocks.1.items.0.title
             subtitle: Grade Projects
             icon: lucide:presentation
-            content: |
-              **8 年級大專題**：深入研究一個主題，從資料蒐集到公開發表，培養獨立研究能力。
-
-              **9 年級社會實習**：走出校園，到真實的工作場域體驗，學習與社會接軌。
-
-              這些任務不只是作業，而是讓孩子在真實世界裡試試身手，發現自己的興趣和能力。
-          - title: 學術銜接與資訊素養
+            content: senior-transition.blocks.1.items.0.content
+          - title: senior-transition.blocks.1.items.1.title
             subtitle: Academic Preparation
             icon: lucide:laptop
-            content: |
-              **學科輔導**：從 7 年級開始加強數學、語文等學科，確保學術能力的扎實基礎。
-
-              **資訊素養**：教導電腦、程式設計、資訊工具的使用，但我們相信孩子要先長好，再用科技。
-
-              我們不排斥科技，而是希望孩子有足夠的判斷力和自制力，成為科技的主人而非奴隸。
-          - title: 工藝與意志力
+            content: senior-transition.blocks.1.items.1.content
+          - title: senior-transition.blocks.1.items.2.title
             subtitle: Crafts & Willpower
             icon: lucide:hammer
-            content: |
-              **木工、泥塑、編織**：這些課程不只是做做手工，而是在與材料的搏鬥中，培養堅韌的意志力。
-
-              **從構思到完成**：每個作品都需要耐心、專注和毅力，這些特質會伴隨孩子一生。
-
-              當孩子完成一件作品時，那種成就感和自信，是任何考試分數都無法給予的。
+            content: senior-transition.blocks.1.items.2.content
   - section_id: parent-sharing
     layout: 突出標題風格
     blocks:
       - type: text_block
-        title: 家長分享
-        content: >
-          「以前我也擔心孩子只會玩、不會讀書。但看到他 8 年級專題發表時那種自信和條理，我才發現——華德福給的不是考試技巧，而是一輩子帶得走的能力。」
-          —— 九年級畢業生家長
+        title: parent-sharing.blocks.0.title
+        content: parent-sharing.blocks.0.content
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: 親自來感受
-        content: 課程表看完了，但真實的感覺是什麼樣？歡迎來學校走走，看看孩子們學習的樣子——那種專注又充滿生命力的氛圍，真的要親眼看過才懂。
+        title: cta.blocks.0.title
+        content: cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: 預約參觀
+          - text: cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white
         subtitle: 下一步

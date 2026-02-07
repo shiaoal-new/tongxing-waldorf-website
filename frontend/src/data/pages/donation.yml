@@ -1,9 +1,9 @@
-title: 支持與捐贈
+title: title
 slug: donation
 hero:
-  title: 支持同心教育的火種
-  subtitle: 讓這份溫暖，點亮更多孩子的生命
-  accent_text: "支持與捐贈"
+  title: hero.title
+  subtitle: hero.subtitle
+  accent_text: hero.accent_text
   media_list:
     - type: image
       image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
@@ -17,27 +17,27 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: 為什麼我們需要您的支持？
-        content: 同心華德福是一所由家長、老師共同支撐的教育社群。我們追求的不只是學術的成長，更是孩子內在靈魂的健全。您的捐助，將支撐以下核心發展：
+        title: mission.blocks.0.title
+        content: mission.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: 助學金計畫
+          - title: mission.blocks.1.items.0.title
             icon: lucide:users
-            content: 確保具備相同教育理念、但經濟面臨挑戰的家庭，其孩子也能在此安心學習，維持社群的多樣性。
+            content: mission.blocks.1.items.0.content
             media:
               type: image
               image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
-          - title: 校園設施優化
+          - title: mission.blocks.1.items.1.title
             icon: lucide:home
-            content: 持續優化深坑大學校區的實驗室、木工教室與濕水彩教室，提供孩子更專業且符合感官發展的環境。
+            content: mission.blocks.1.items.1.content
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
-          - title: 師資培訓與學術交流
+          - title: mission.blocks.1.items.2.title
             icon: lucide:book-open
-            content: 引進國內外資深專家顧問，支持老師持續進修培訓，維持教育品質與國際華德福動態接軌。
+            content: mission.blocks.1.items.2.content
             media:
               type: image
               image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
@@ -46,27 +46,20 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: 捐款方式
-        subtitle: Ways to Donate
-        content: 您可以透過以下方式支持同心的教育計畫。每一筆捐款，我們都將開立正式收據。
+        title: how-to.blocks.0.title
+        subtitle: how-to.blocks.0.subtitle
+        content: how-to.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: 銀行轉帳
+          - title: how-to.blocks.1.items.0.title
             span: 6
-            content: |
-              您可以直接匯款至以下帳戶：
-
-              **銀行代碼**：[008] 華南銀行
-              **帳號**：[請填寫正確帳號]
-              **戶名**：[台北市同心華德福教育協會]
-
-              匯款後請填寫「捐款回報表單」或來信聯絡行政辦公室。
+            content: how-to.blocks.1.items.0.content
             icon: lucide:credit-card
-          - title: 專案贊助
+          - title: how-to.blocks.1.items.1.title
             span: 6
-            content: 如果您對校園建設、藝術教育或特定專案有興趣進行較大額度的單筆贊助，歡迎直接與執行長室聯絡，我們將由專人為您說明。
+            content: how-to.blocks.1.items.1.content
             icon: lucide:hand-metal
 
   - section_id: contact
@@ -78,13 +71,13 @@ sections:
       flip: true
     blocks:
       - type: text_block
-        title: 與我們聯繫
-        content: 對於捐款細節、抵稅方式或資源媒合有任何想法，歡迎隨時與行政辦公室聯繫。
+        title: contact.blocks.0.title
+        content: contact.blocks.0.content
       - type: cta_block
         buttons:
-          - text: 寄信給我們
+          - text: contact.blocks.1.buttons.0.text
             link: "mailto:office@tongxing.org.tw"
             style: btn-inverse
-          - text: 填寫捐款意願表單
+          - text: contact.blocks.1.buttons.1.text
             link: "#"
             style: btn-white

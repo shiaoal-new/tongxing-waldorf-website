@@ -1,8 +1,8 @@
-title: 華德福教育適合度評估
+title: title
 slug: waldorf-assessment
 hero:
-  title: 華德福教育適合度評估
-  subtitle: 兒童教養與生活哲學自我評估問卷
+  title: hero.title
+  subtitle: hero.subtitle
   media_list:
     - type: image
       image: /img/themes/tongxing/background/questionnaire.webp
