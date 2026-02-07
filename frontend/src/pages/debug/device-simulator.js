@@ -547,7 +547,7 @@ export default function DeviceSimulator() {
     return (
         <div className={`fixed inset-0 bg-[#0f172a] text-slate-200 flex flex-col font-sans overflow-hidden ${isResizing ? 'select-none' : ''}`}>
             <Head>
-                <title>多裝置展示模式 | 同心華德福</title>
+                <title>多裝置展示模式</title>
             </Head>
 
             {/* Toolbar */}
