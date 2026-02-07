@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import BlockDispatcher from './BlockDispatcher';
@@ -21,22 +21,31 @@ interface InteractiveSwitcherProps {
 const InteractiveSwitcherBlock = ({ data }: InteractiveSwitcherProps) => {
     const options = data.options || [];
     const [activeId, setActiveId] = useState(options[0]?.id);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     if (options.length === 0) return null;
 
     const activeOption = options.find(opt => opt.id === activeId) || options[0];
 
+    const handleTabClick = (id: string) => {
+        setActiveId(id);
+        if (containerRef.current) {
+            const top = containerRef.current.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <div className="w-full py-6 md:py-12">
+        <div className="w-full py-6 md:py-12" ref={containerRef}>
             {/* Selection Area - Unified Sticky Tabs for all screens */}
-            <div className="sticky top-[72px] z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 mb-8 md:mb-16">
-                <div className="max-w-6xl mx-auto px-4 md:px-6">
-                    <div className="flex overflow-x-auto no-scrollbar justify-center gap-3 md:gap-4 py-3 md:py-4 items-center">
+            <div className="sticky top-[72px] z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 mb-8 md:mb-16 -mx-mobile-margin md:mx-0">
+                <div className="max-w-6xl mx-auto px-0 md:px-6">
+                    <div className="flex overflow-x-auto no-scrollbar justify-start md:justify-center gap-3 md:gap-4 py-3 md:py-4 items-center px-mobile-margin md:px-0">
                         {options.map((option) => (
                             <motion.div
                                 key={option.id}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => setActiveId(option.id)}
+                                onClick={() => handleTabClick(option.id)}
                                 className={`
                                     flex-shrink-0 flex items-center cursor-pointer transition-all duration-300
                                     ${activeId === option.id
