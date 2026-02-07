@@ -14,65 +14,21 @@ sections:
         title: interactive-schedule.blocks.0.title
         subtitle: interactive-schedule.blocks.0.subtitle
         content: interactive-schedule.blocks.0.content
-      - type: schedule_block
-        low:
-          - time: 08:10
-            title: interactive-schedule.blocks.1.low.0.title
-            content: interactive-schedule.blocks.1.low.0.content
-            type: in
-          - time: 08:45
-            title: interactive-schedule.blocks.1.low.1.title
-            content: interactive-schedule.blocks.1.low.1.content
-            type: in
-          - time: 10:30
-            title: interactive-schedule.blocks.1.low.2.title
-            content: interactive-schedule.blocks.1.low.2.content
-            type: out
-          - time: 11:10
-            title: interactive-schedule.blocks.1.low.3.title
-            content: interactive-schedule.blocks.1.low.3.content
-            type: in
-          - time: 12:00
-            title: interactive-schedule.blocks.1.low.4.title
-            content: interactive-schedule.blocks.1.low.4.content
-            type: out
-          - time: 13:20
-            title: interactive-schedule.blocks.1.low.5.title
-            content: interactive-schedule.blocks.1.low.5.content
-            type: out
-          - time: 14:00
-            title: interactive-schedule.blocks.1.low.6.title
-            content: interactive-schedule.blocks.1.low.6.content
-            type: out
-        high:
-          - time: 08:10
-            title: interactive-schedule.blocks.1.high.0.title
-            content: interactive-schedule.blocks.1.high.0.content
-            type: in
-          - time: 08:45
-            title: interactive-schedule.blocks.1.high.1.title
-            content: interactive-schedule.blocks.1.high.1.content
-            type: in
-          - time: 10:45
-            title: interactive-schedule.blocks.1.high.2.title
-            content: interactive-schedule.blocks.1.high.2.content
-            type: out
-          - time: 11:10
-            title: interactive-schedule.blocks.1.high.3.title
-            content: interactive-schedule.blocks.1.high.3.content
-            type: in
-          - time: 12:10
-            title: interactive-schedule.blocks.1.high.4.title
-            content: interactive-schedule.blocks.1.high.4.content
-            type: out
-          - time: 13:20
-            title: interactive-schedule.blocks.1.high.5.title
-            content: interactive-schedule.blocks.1.high.5.content
-            type: in
-          - time: 15:40
-            title: interactive-schedule.blocks.1.high.6.title
-            content: interactive-schedule.blocks.1.high.6.content
-            type: out
+      - type: breathing_intro_block
+      - type: interactive_switcher_block
+        options:
+          - id: grade_low
+            label: "rhythm.grade.low"
+            icon: "lucide:baby"
+            blocks:
+              - type: schedule_list_block
+                items: "rhythm.schedule.low"
+          - id: grade_high
+            label: "rhythm.grade.high"
+            icon: "lucide:graduation-cap"
+            blocks:
+              - type: schedule_list_block
+                items: "rhythm.schedule.high"
       - type: text_block
         title: interactive-schedule.blocks.2.title
         subtitle: interactive-schedule.blocks.2.subtitle

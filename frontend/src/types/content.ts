@@ -250,7 +250,17 @@ export interface BarChartBlock extends BaseBlock {
     unit?: string;
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock;
+export interface BreathingIntroBlock extends BaseBlock {
+    type: 'breathing_intro_block';
+}
+
+export interface ScheduleListBlock extends BaseBlock {
+    type: 'schedule_list_block';
+    items: ScheduleItem[];
+    title?: string;
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';

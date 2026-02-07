@@ -40,7 +40,7 @@ const InteractiveSwitcherBlock = ({ data }: InteractiveSwitcherProps) => {
             {/* Selection Area - Unified Sticky Tabs for all screens */}
             <div className="sticky top-[72px] z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 mb-8 md:mb-16 -mx-mobile-margin md:mx-0">
                 <div className="max-w-6xl mx-auto px-0 md:px-6">
-                    <div className="flex overflow-x-auto no-scrollbar justify-start md:justify-center gap-3 md:gap-4 py-3 md:py-4 items-center px-mobile-margin md:px-0">
+                    <div className="flex overflow-x-auto no-scrollbar justify-start md:justify-center gap-2 md:gap-4 py-3 md:py-4 items-center px-mobile-margin md:px-0">
                         {options.map((option) => (
                             <motion.div
                                 key={option.id}
@@ -51,19 +51,19 @@ const InteractiveSwitcherBlock = ({ data }: InteractiveSwitcherProps) => {
                                     ${activeId === option.id
                                         ? 'bg-brand-accent/5 dark:bg-brand-accent/10 border-2 border-brand-accent shadow-lg shadow-brand-accent/10'
                                         : 'bg-brand-bg/20 dark:bg-brand-structural/10 border-2 border-transparent hover:border-brand-accent/30 opacity-70 hover:opacity-100'}
-                                    rounded-full px-4 py-1.5 md:px-6 md:py-2.5
+                                    rounded-full px-3 py-1.5 md:px-6 md:py-2.5
                                 `}
                             >
                                 <div className={`
-                                    w-7 h-7 md:w-8 md:h-8 rounded-lg flex items-center justify-center transition-colors duration-500
+                                    hidden md:flex w-7 h-7 md:w-8 md:h-8 rounded-lg items-center justify-center transition-colors duration-500
                                     ${activeId === option.id ? 'bg-brand-accent text-white' : 'bg-brand-accent/10 text-brand-accent'}
-                                    mr-2 md:mr-3
+                                    mr-0 md:mr-3
                                 `}>
                                     <Icon icon={option.icon} className="text-base md:text-lg" />
                                 </div>
 
                                 <div>
-                                    <h3 className={`text-sm md:text-base font-bold whitespace-nowrap ${activeId === option.id ? 'text-brand-dark dark:text-white' : 'text-gray-500'}`}>
+                                    <h3 className={`text-xs md:text-base font-bold whitespace-nowrap ${activeId === option.id ? 'text-brand-dark dark:text-white' : 'text-gray-500'}`}>
                                         {option.label}
                                     </h3>
                                 </div>

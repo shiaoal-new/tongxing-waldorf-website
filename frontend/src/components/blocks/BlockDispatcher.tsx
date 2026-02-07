@@ -55,6 +55,8 @@ const PieChartBlock = createDynamicBlock("PieChartBlock");
 const RadarChartBlock = createDynamicBlock("RadarChartBlock");
 const BarChartBlock = createDynamicBlock("BarChartBlock");
 const InteractiveSwitcherBlock = createDynamicBlock("InteractiveSwitcherBlock");
+const BreathingIntroBlock = createDynamicBlock("BreathingIntroBlock");
+const ScheduleListBlock = createDynamicBlock("ScheduleListBlock");
 
 interface BlockDispatcherProps {
     block: Block | ListItem;
@@ -178,6 +180,12 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             return <BarChartBlock data={block as any} />;
         case "interactive_switcher_block":
             return <InteractiveSwitcherBlock data={block as any} />;
+
+        case "breathing_intro_block":
+            return <BreathingIntroBlock />;
+
+        case "schedule_list_block":
+            return <ScheduleListBlock data={block as any} />;
 
         case "testimonial_item":
         case "testimonial":
