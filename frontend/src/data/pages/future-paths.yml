@@ -1,12 +1,12 @@
-title: "seo.title"
+title: "intro.seo.title"
 slug: future-paths
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "intro.seo.title"
+  description: "intro.seo.description"
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "intro.hero.title"
+  subtitle: "intro.hero.subtitle"
+  accent_text: "intro.hero.accent_text"
   media_list:
     - type: image
       image: /img/future-paths/hero.png
@@ -17,117 +17,177 @@ hero:
     color: fill-brand-bg
 
 sections:
-  - section_id: waldorf
+  # Pillar 1: 數據與流向概覽
+  - section_id: pillar_overview
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "waldorf.title"
-        subtitle: "waldorf.subtitle"
-        content: "waldorf.content"
-      - type: list_block
-        layout_method: bento_grid
-        item_type: feature_item
-        items:
-          - title: "waldorf.item_yuguang.title"
-            span: 4
-            content: "waldorf.item_yuguang.content"
-            icon: lucide:graduation-cap
-          - title: "waldorf.item_shi.title"
-            span: 4
-            content: "waldorf.item_shi.content"
-            icon: lucide:award
-          - title: "waldorf.item_li.title"
-            span: 4
-            content: "waldorf.item_li.content"
-            icon: lucide:pencil-ruler
+        title: "overview.title"
+        layout: centered
+      - type: text_block
+        title: "overview.distribution.title"
+        content: "overview.distribution.content"
+      - type: pie_chart_block
+        title: "overview.distribution.chart_title"
+        data: "overview.distribution.data"
 
-  - section_id: adaptation
+  # Pillar 2: 深度比較與分析
+  - section_id: pillar_analysis
     layout: "精緻特色區塊 (Features Premium)"
     silk_background: true
     blocks:
       - type: text_block
-        title: "adaptation.title"
-        subtitle: "adaptation.subtitle"
-        content: "adaptation.content"
+        title: "analysis.comparison.title"
+        subtitle: "analysis.comparison.subtitle"
+        content: "analysis.comparison.content"
+      - type: radar_chart_block
+        title: "analysis.comparison.chart_title"
+        labels: "analysis.comparison.radar.labels"
+        datasets: "analysis.comparison.radar.datasets"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "adaptation.item_transfer.title"
+          - title: "analysis.comparison.waldorf.title"
             span: 4
-            content: "adaptation.item_transfer.content"
-            icon: lucide:book-open
-          - title: "adaptation.item_academic_case.title"
-            span: 4
-            content: "adaptation.item_academic_case.content"
-            icon: lucide:trending-up
-          - title: "adaptation.item_hk_case.title"
-            span: 4
-            content: "adaptation.item_hk_case.content"
-            icon: lucide:globe
-
-  - section_id: roadmap
-    layout: "精緻特色區塊 (Features Premium)"
-    blocks:
-      - type: text_block
-        title: "roadmap.title"
-        subtitle: "roadmap.subtitle"
-      - type: mermaid_block
-        chart: "roadmap.chart"
-
-  - section_id: pathway
-    layout: "精緻特色區塊 (Features Premium)"
-    blocks:
-      - type: text_block
-        title: "pathway.title"
-        subtitle: "pathway.subtitle"
-        content: "pathway.content"
-      - type: list_block
-        layout_method: bento_grid
-        item_type: feature_item
-        items:
-          - title: "pathway.item_special.title"
-            span: 4
-            content: "pathway.item_special.content"
-            icon: lucide:star
-          - title: "pathway.item_stats.title"
-            span: 4
-            content: "pathway.item_stats.content"
-            icon: lucide:bar-chart-3
-          - title: "pathway.item_diverse.title"
-            span: 4
-            content: "pathway.item_diverse.content"
-            icon: lucide:rocket
-
-  - section_id: support
-    layout: "精緻特色區塊 (Features Premium)"
-    silk_background: true
-    blocks:
-      - type: text_block
-        title: "support.title"
-        subtitle: "support.subtitle"
-        content: "support.content"
-      - type: list_block
-        layout_method: bento_grid
-        item_type: feature_item
-        items:
-          - title: "support.advice_transition.title"
-            span: 6
-            content: "support.advice_transition.content"
-            icon: lucide:coffee
-          - title: "support.advice_rhythm.title"
-            span: 6
-            content: "support.advice_rhythm.content"
+            content: "analysis.comparison.waldorf.content"
             icon: lucide:heart
-          - title: "support.advice_coop.title"
-            span: 6
-            content: "support.advice_coop.content"
+          - title: "analysis.comparison.mainstream.title"
+            span: 4
+            content: "analysis.comparison.mainstream.content"
+            icon: lucide:graduation-cap
+          - title: "analysis.comparison.vocational.title"
+            span: 4
+            content: "analysis.comparison.vocational.content"
+            icon: lucide:hammer
+      - type: text_block
+        title: "analysis.advice.title"
+        layout: centered
+      - type: list_block
+        layout_method: grid_cards
+        item_type: feature_item
+        items:
+          - title: "analysis.advice.parent.title"
+            subtitle: "analysis.advice.parent.badge"
+            content: "analysis.advice.parent.content"
             icon: lucide:users
-          - title: "support.item_awareness.title"
-            span: 6
-            content: "support.item_awareness.content"
-            icon: lucide:eye
+            span: 4
+          - title: "analysis.advice.student.title"
+            subtitle: "analysis.advice.student.badge"
+            content: "analysis.advice.student.content"
+            icon: lucide:palette
+            span: 4
+          - title: "analysis.advice.vocational.title"
+            subtitle: "analysis.advice.vocational.badge"
+            content: "analysis.advice.vocational.content"
+            icon: lucide:hammer
+            span: 4
 
+  # Pillar 3: 互動式路徑切換 (Interactive Switcher)
+  - section_id: pillar_interactive_paths
+    layout: "精緻特色區塊 (Features Premium)"
+    blocks:
+      - type: text_block
+        title: "paths.title"
+        subtitle: "paths.subtitle"
+        layout: centered
+      - type: interactive_switcher_block
+        options:
+          # --- Path 1: Waldorf ---
+          - id: waldorf
+            label: "paths.waldorf.label"
+            icon: "lucide:heart"
+            description: "paths.waldorf.desc"
+            blocks:
+              - type: text_block
+                title: "paths.waldorf.title"
+                subtitle: "paths.waldorf.subtitle"
+                content: "paths.waldorf.content"
+              - type: list_block
+                layout_method: bento_grid
+                item_type: feature_item
+                items:
+                  - title: "paths.waldorf.item_yuguang.title"
+                    span: 6
+                    content: "paths.waldorf.item_yuguang.content"
+                    icon: lucide:school
+                  - title: "paths.waldorf.case_shi.title"
+                    span: 6
+                    content: "paths.waldorf.case_shi.content"
+                    icon: lucide:award
+              - type: text_block
+                title: "paths.waldorf.advice.title"
+                content: "paths.waldorf.advice.content"
+                layout: centered
+
+          # --- Path 2: Mainstream (Transition) ---
+          - id: mainstream
+            label: "paths.mainstream.label"
+            icon: "lucide:graduation-cap"
+            description: "paths.mainstream.desc"
+            blocks:
+              - type: text_block
+                title: "paths.mainstream.title"
+                subtitle: "paths.mainstream.subtitle"
+                content: "paths.mainstream.content"
+              - type: list_block
+                layout_method: bento_grid
+                item_type: feature_item
+                items:
+                  - title: "paths.mainstream.item_transfer.title"
+                    span: 6
+                    content: "paths.mainstream.item_transfer.content"
+                    icon: lucide:book-open
+                  - title: "paths.mainstream.case_academic.title"
+                    span: 6
+                    content: "paths.mainstream.case_academic.content"
+                    icon: lucide:trending-up
+              - type: text_block
+                title: "paths.mainstream.advice.title"
+                content: "paths.mainstream.advice.content"
+                layout: centered
+              - type: text_block
+                title: "analysis.success_factors.title"
+                content: "analysis.success_factors.content"
+              - type: bar_chart_block
+                title: "analysis.success_factors.chart_title"
+                labels: "analysis.success_factors.bar.labels"
+                datasets: "analysis.success_factors.bar.datasets"
+                horizontal: true
+              - type: text_block
+                layout: centered
+                content: "analysis.success_factors.insight"
+              # Only this path has the timeline
+              - type: text_block
+                title: "paths.mainstream.timeline_title"
+                layout: centered
+              - type: timeline_block
+                items: "paths.mainstream.timeline.items"
+
+          # --- Path 3: Diverse ---
+          - id: diverse
+            label: "paths.diverse.label"
+            icon: "lucide:rocket"
+            description: "paths.diverse.desc"
+            blocks:
+              - type: text_block
+                title: "paths.diverse.title"
+                subtitle: "paths.diverse.subtitle"
+                content: "paths.diverse.content"
+              - type: list_block
+                layout_method: bento_grid
+                item_type: feature_item
+                items:
+                  - title: "paths.diverse.item_special.title"
+                    span: 6
+                    content: "paths.diverse.item_diverse.content"
+                    icon: lucide:star
+                  - title: "paths.diverse.advice.title"
+                    span: 6
+                    content: "paths.diverse.advice.content"
+                    icon: lucide:wrench
+
+  # Final Summary
   - section_id: final
     layout: "Hero: 滿版背景圖文 (願景風格)"
     media_list:
@@ -135,10 +195,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "summary.title"
-        content: "summary.content"
+        title: "footer.summary.title"
+        content: "footer.summary.content"
       - type: cta_block
         buttons:
-          - text: "summary.button"
+          - text: "footer.summary.button"
             link: /
             style: btn-inverse

@@ -56,7 +56,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
 
     // Group items by phase (headers define phase boundaries)
     const phases = useMemo(() => {
-        const rawItems = data.items || [];
+        const rawItems = Array.isArray(data.items) ? data.items : [];
         const result: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] }[] = [];
         let currentPhase: { phaseNumber: number; header?: TimelineItem; items: TimelineItem[] } | null = null;
         let phaseCounter = 0;
@@ -160,6 +160,7 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                     if (idxStr === null) return;
                     const idx = parseInt(idxStr, 10);
                     const phase = phases[idx];
+                    if (!phase) return;
                     const color = phase.header?.color || defaultColor;
 
                     const rect = el.getBoundingClientRect();
@@ -265,8 +266,8 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
             }
 
             if (text) progressRef.current.innerText = text;
-        } else if (progressRef.current) {
-            const firstYear = data.items.find(i => i.year)?.year;
+        } else if (progressRef.current && Array.isArray(data.items)) {
+            const firstYear = data.items.find(item => item.year)?.year;
             if (firstYear) progressRef.current.innerText = formatDate(parseYearStr(firstYear));
         }
 
@@ -374,13 +375,9 @@ const TimelineContent = ({ data, anchor = 'timeline' }: TimelineBlockProps) => {
                         <motion.span
                             ref={progressRef}
                             className="absolute left-0 -rotate-90 -translate-x-1/2 text-[16px] font-bold whitespace-nowrap tabular-nums pointer-events-auto text-white z-10"
-                            style={{
-                                // color: activeColor,
-                                // borderColor: activeColor, // Solid border for Hex compatibility
-                                // boxShadow: useTransform(activeColor, c => `0 0 5px ${c}`) // Add glow instead of transparency
-                            }}
+                            style={{}}
                         >
-                            {data.items.find(i => i.year)?.year ? formatDate(parseYearStr(data.items.find(i => i.year)!.year)) : "Start"}
+                            {(Array.isArray(data.items) && data.items.find(i => i.year)?.year) ? formatDate(parseYearStr(data.items.find(i => i.year)!.year)) : "Start"}
                         </motion.span>
                     </div>
                 </motion.div>
@@ -638,6 +635,10 @@ export default TimelineBlock;
 
 export function getTOC(block: TimelineBlockType, sectionId?: string) {
     if (!block?.items) {
+        return [];
+    }
+
+    if (!Array.isArray(block.items)) {
         return [];
     }
 

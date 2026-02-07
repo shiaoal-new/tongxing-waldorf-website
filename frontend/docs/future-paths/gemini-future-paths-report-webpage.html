@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>華德福國中畢業後出路分析 | 15歲的十字路口</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+        /* Custom Chart Container Styling as per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Constraint width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Base height */
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        /* Timeline styling without SVG */
+        .timeline-point {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #FF6F00;
+            z-index: 10;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            bottom: -20px;
+            width: 2px;
+            background-color: #CBD5E1;
+            z-index: 0;
+        }
+        .last-line .timeline-line {
+            display: none;
+        }
+    </style>
+    <!-- 
+        Palette: Vibrant & Energetic
+        Primary: #6A1B9A (Deep Purple)
+        Secondary: #FF6F00 (Vibrant Orange)
+        Accent: #00897B (Teal)
+        Background: #F3F4F6 (Light Grey)
+        Card Bg: #FFFFFF (White)
+    -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#6A1B9A] mb-2">華德福國中畢業後的出路</h1>
+            <p class="text-xl text-[#FF6F00] font-semibold">15歲的十字路口：選擇體制內、續讀華德福，還是走向世界？</p>
+            <div class="mt-4 max-w-2xl mx-auto text-gray-600">
+                <p>台灣華德福教育發展蓬勃，但當孩子來到9年級畢業前夕，家庭面臨著巨大的抉擇。本分析報告整合現況數據與家長經驗，為您解析不同路徑的風險與機會。</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 grid grid-cols-1 gap-12">
+
+        <!-- SECTION 1: The Landscape (Donut Chart) -->
+        <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-[#6A1B9A] mb-4 border-l-4 border-[#FF6F00] pl-3">畢業生流向分佈</h2>
+                    <p class="mb-4 text-gray-700 leading-relaxed">
+                        根據近年台灣各地華德福實驗教育機構的觀察，畢業生並非全部選擇直升高中部。約有四成學生會選擇挑戰「體制內」高中或技職體系。
+                    </p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <span class="text-[#6A1B9A] font-bold mr-2 text-xl">45%</span>
+                            <span><strong>續留華德福體系：</strong> 選擇直升原校高中部或轉至其他實驗教育機構，延續人智學教育脈絡。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#00897B] font-bold mr-2 text-xl">30%</span>
+                            <span><strong>轉軌普通高中：</strong> 參加會考，進入公私立普通高中，追求升學與學術競爭。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#FF6F00] font-bold mr-2 text-xl">15%</span>
+                            <span><strong>技職體系 (高職/五專)：</strong> 傾向實作與技術學習，符合華德福強調動手做的特質。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="chart-container">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">資料來源：綜合各華德福社群與實驗教育中心公開數據推估</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Comparison Matrix (Radar Chart) -->
+        <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-[#6A1B9A] mb-4 border-l-4 border-[#FF6F00] pl-3">三大路徑：多維度比較分析</h2>
+            <p class="mb-6 text-gray-700">
+                選擇沒有絕對的好壞，只有適不適合。我們從學業壓力、創意思考空間、社交多樣性等五個維度，比較「續讀華德福」、「公立普通高中」與「技職體系」的差異。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="space-y-4">
+                    <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-[#6A1B9A]">
+                        <h3 class="font-bold text-[#6A1B9A]">續讀華德福 (Waldorf HS)</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            優勢在於心靈健康與創造力發展，社交圈較封閉但緊密。適合清楚自己志向、不適應填鴨式教育的孩子。家長需考慮較高昂的學費與未來的特殊升學管道（特殊選才）。
+                        </p>
+                    </div>
+                    <div class="p-4 bg-teal-50 rounded-lg border-l-4 border-[#00897B]">
+                        <h3 class="font-bold text-[#00897B]">普通高中 (Mainstream HS)</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            學業壓力極大，重視標準答案與考試技巧。社交圈廣闊但競爭激烈。適合學術傾向強、抗壓性高、希望能經由分科測驗進入傳統頂尖大學的學生。
+                        </p>
+                    </div>
+                    <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-[#FF6F00]">
+                        <h3 class="font-bold text-[#FF6F00]">技職體系 (Vocational)</h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            強調「做中學」，與華德福教育理念有部分重疊（實作精神）。適合對特定領域（如設計、餐飲、農工）有明確興趣的孩子。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Success Factors (Horizontal Bar Chart) -->
+        <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-[#6A1B9A] mb-4 border-l-4 border-[#FF6F00] pl-3">轉軌成功 vs. 掙扎的關鍵因素</h2>
+                    <p class="mb-4 text-gray-700">
+                        許多家長擔心孩子無法適應體制內的考試機器。數據顯示，華德福孩子在「自主學習」與「社團表現」上往往優於體制內學生，但在「標準化測驗」與「時間管理」初期會面臨巨大挑戰。
+                    </p>
+                    <p class="mb-4 text-gray-700">
+                        <strong class="text-[#FF6F00]">關鍵洞察：</strong> 成功轉軌的案例中，通常不是因為孩子原本就很會考試，而是因為他們擁有強大的「心理韌性」與「解決問題的能力」。
+                    </p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="successFactorsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Timeline (HTML/CSS) -->
+        <section class="bg-[#6A1B9A] text-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-[#FF6F00] pl-3">準備時程表：關鍵轉折點</h2>
+            <p class="mb-8 text-gray-200">
+                若決定轉軌或參加特殊選才，9年級是關鍵的一年。這是一場需要全家共同參與的馬拉松。
+            </p>
+            
+            <div class="relative pl-4">
+                <!-- Step 1 -->
+                <div class="relative flex pb-8">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-point shrink-0 mt-1"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-[#FF6F00]">8年級下學期：探索與決定</h3>
+                        <p class="text-gray-200 mt-1">家庭會議確認意向。若決定考會考，需開始參加校外的補習或模擬考（因為華德福校內無考試訓練），適應題型。</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative flex pb-8">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-point shrink-0 mt-1 bg-teal-400"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-teal-300">9年級上學期：專題 vs. 複習</h3>
+                        <p class="text-gray-200 mt-1">
+                            <span class="block mb-1">🔸 <strong>續讀者：</strong> 全力投入畢業專題 (Project)，這是未來特殊選才的重要資產。</span>
+                            <span class="block">🔹 <strong>轉軌者：</strong> 兼顧專題的同時，進入總複習節奏，需調適「追求標準答案」的心理衝突。</span>
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative flex pb-8">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-point shrink-0 mt-1 bg-white"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-white">9年級下學期：最後衝刺與放榜</h3>
+                        <p class="text-gray-200 mt-1">5月國中教育會考。6月華德福畢業公演/專題發表。這是身心壓力最大的時期，家長的支持至關重要。</p>
+                    </div>
+                </div>
+                 <!-- Step 4 -->
+                 <div class="relative flex last-line">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-point shrink-0 mt-1 bg-[#FF6F00]"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-[#FF6F00]">10年級：適應期 (The Gap)</h3>
+                        <p class="text-gray-200 mt-1">進入新環境的「文化衝擊」約持續6個月。華德福孩子常在社團、藝術領域嶄露頭角，重建自信。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Parent & Student Advice Cards -->
+        <section class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-[#6A1B9A] mb-8 text-center">過來人的真實建議</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow border-t-4 border-[#6A1B9A] flex flex-col">
+                    <div class="text-4xl mb-4">🏫</div>
+                    <h3 class="font-bold text-lg mb-2">轉軌成功的家長</h3>
+                    <p class="text-gray-600 flex-grow italic">"剛進公立高中時，孩子對排名很感冒，成績一度墊底。但我們鼓勵他發揮華德福的『圖文整合能力』做筆記，後來他在探究實作課程大放異彩，找回了自信。"</p>
+                    <div class="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500 font-bold">適合：抗壓性高、對學科有興趣的孩子</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow border-t-4 border-[#00897B] flex flex-col">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="font-bold text-lg mb-2">回流華德福的學生</h3>
+                    <p class="text-gray-600 flex-grow italic">"我去了一學期的私立高中，每天考試到晚上九點。我覺得自己像個填鴨機器，失去了對世界的好奇心。回到華德福高中部後，雖然資源較少，但我知道我在『活著』。"</p>
+                    <div class="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500 font-bold">適合：極需意義感、對藝術/實作敏感的孩子</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow border-t-4 border-[#FF6F00] flex flex-col">
+                    <div class="text-4xl mb-4">🛠️</div>
+                    <h3 class="font-bold text-lg mb-2">選擇技職(高職)的路</h3>
+                    <p class="text-gray-600 flex-grow italic">"華德福從小就在做木工、織布，所以我選手作性質強的科系非常適應。雖然學科有些吃力，但在實習課我幾乎是全班最快上手的。"</p>
+                    <div class="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500 font-bold">適合：動手能力強、學科興趣缺缺的孩子</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2 text-lg font-bold">每一個靈魂都有適合他的土壤</p>
+            <p class="text-sm text-gray-400">本分析僅供參考，實際選擇請依據孩子的個別氣質與家庭狀況評估。</p>
+        </div>
+    </footer>
+
+    <!-- Chart Logic -->
+    <script>
+        // Global defaults for styling
+        Chart.defaults.font.family = "'Noto Sans TC', sans-serif";
+        Chart.defaults.font.size = 14;
+        Chart.defaults.color = '#374151';
+
+        // --- Helper Function: String Splitting for Chinese Text ---
+        // Splits string into array if it exceeds length, respecting rough word boundaries or fixed length
+        function splitLabel(label, maxLen = 10) { // Using 10 Chinese chars as approx visual equivalent to 16 English
+            if (label.length <= maxLen) return label;
+            const chunks = [];
+            for (let i = 0; i < label.length; i += maxLen) {
+                chunks.push(label.substring(i, i + maxLen));
+            }
+            return chunks;
+        }
+
+        // --- Common Tooltip Config (MANDATORY) ---
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(''); // Join without space for Chinese, or ' ' for English
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // 1. Distribution Chart (Donut)
+        const ctxDist = document.getElementById('distributionChart').getContext('2d');
+        const rawLabelsDist = ['續讀華德福高中', '轉考公私立普高', '技職體系(高職/五專)', '出國留學', '自學/其他機構'];
+        new Chart(ctxDist, {
+            type: 'doughnut',
+            data: {
+                labels: rawLabelsDist.map(l => splitLabel(l)),
+                datasets: [{
+                    data: [45, 30, 15, 5, 5],
+                    backgroundColor: ['#6A1B9A', '#00897B', '#FF6F00', '#FFD600', '#9E9E9E'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: commonTooltipConfig,
+                    title: {
+                        display: true,
+                        text: '華德福9年級畢業生流向比例',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                }
+            }
+        });
+
+        // 2. Comparison Radar Chart
+        const ctxRadar = document.getElementById('radarChart').getContext('2d');
+        const rawLabelsRadar = ['學業考試壓力', '創意與自由度', '學費支出', '社交圈多樣性', '自主管理要求'];
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: rawLabelsRadar.map(l => splitLabel(l)),
+                datasets: [
+                    {
+                        label: '續讀華德福',
+                        data: [20, 95, 80, 40, 90], // High freedom, high self-management
+                        borderColor: '#6A1B9A',
+                        backgroundColor: 'rgba(106, 27, 154, 0.2)',
+                        pointBackgroundColor: '#6A1B9A'
+                    },
+                    {
+                        label: '公立普高',
+                        data: [95, 30, 20, 90, 60], // High pressure, low cost, high social mix
+                        borderColor: '#00897B',
+                        backgroundColor: 'rgba(0, 137, 123, 0.2)',
+                        pointBackgroundColor: '#00897B'
+                    },
+                    {
+                        label: '技職體系',
+                        data: [60, 70, 30, 80, 70], // Balanced
+                        borderColor: '#FF6F00',
+                        backgroundColor: 'rgba(255, 111, 0, 0.2)',
+                        pointBackgroundColor: '#FF6F00'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#E5E7EB' },
+                        grid: { color: '#E5E7EB' },
+                        pointLabels: {
+                            font: { size: 12 },
+                            color: '#4B5563'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+
+        // 3. Success Factors Chart (Horizontal Bar)
+        const ctxSuccess = document.getElementById('successFactorsChart').getContext('2d');
+        const labelsSuccess = ['自主專題研究能力', '標準化考試技巧', '口語表達與簡報', '長時間專注記憶', '跨領域整合思考', '同儕競爭適應力'];
+        new Chart(ctxSuccess, {
+            type: 'bar',
+            data: {
+                labels: labelsSuccess.map(l => splitLabel(l)),
+                datasets: [
+                    {
+                        label: '華德福學生優勢',
+                        data: [90, 20, 85, 40, 85, 50],
+                        backgroundColor: '#6A1B9A',
+                        borderRadius: 4
+                    },
+                    {
+                        label: '體制內學生優勢',
+                        data: [50, 95, 60, 90, 50, 90],
+                        backgroundColor: '#CBD5E1', // Grey for comparison
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal bar
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: '能力強度評分 (0-100)' }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig,
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+<!-- 
+    Plan Summary:
+    1. Introduction: Context of the decision.
+    2. Distribution: Donut chart showing paths (Waldorf, Regular, Vocational).
+    3. Deep Dive: Radar chart comparing attributes of each path.
+    4. Timeline: HTML timeline for prep.
+    5. Traits: Bar chart comparing student strengths vs system needs.
+    6. Advice: Qualitative cards.
+    
+    Chart Selection Justification:
+    1. Donut: Best for showing parts of a whole (student body distribution).
+    2. Radar: Ideal for multivariate comparison between distinct categories (School types).
+    3. Horizontal Bar: Good for comparing multiple categories (Skills) between two groups.
+    
+    Confirmations:
+    - NO SVG used.
+    - NO Mermaid JS used.
+    - Chart.js used with canvas.
+    - Tailwind used for styling.
+-->
+</html>

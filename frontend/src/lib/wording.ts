@@ -14,7 +14,8 @@ export function resolveWording(data: any, dictionary: any): any {
 
     // 如果是字串，嘗試替換
     if (typeof data === 'string') {
-        return getValueByPath(dictionary, data) || data;
+        const resolved = getValueByPath(dictionary, data);
+        return resolved !== null ? resolved : data;
     }
 
     // 如果是陣列，遞迴處理每個元素
@@ -55,5 +56,5 @@ function getValueByPath(obj: any, path: string): string | null {
         current = current[part];
     }
 
-    return typeof current === 'string' ? current : null;
+    return current !== undefined ? current : null;
 }

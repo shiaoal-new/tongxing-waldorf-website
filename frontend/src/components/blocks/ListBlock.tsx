@@ -18,7 +18,8 @@ function prepareListItems(block: ListBlockType, faqList: FaqItem[], direction: s
             .filter((item): item is FaqItem & { type: 'faq_item' } => Boolean(item));
     }
 
-    return (block.items || []).map(item => ({
+    const rawItems = Array.isArray(block.items) ? block.items : [];
+    return rawItems.map(item => ({
         ...item,
         type: (item as any).item_type || block.item_type || "text"
     })) as ListItem[];

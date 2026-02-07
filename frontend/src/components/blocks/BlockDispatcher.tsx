@@ -51,6 +51,10 @@ const ColorPaletteBlock = createDynamicBlock("ColorPaletteBlock");
 const VisitProcess = createDynamicBlock("VisitProcess", "載入參訪流程中...");
 const VisitSchedule = createDynamicBlock("VisitSchedule");
 const MermaidBlock = createDynamicBlock("MermaidBlock");
+const PieChartBlock = createDynamicBlock("PieChartBlock");
+const RadarChartBlock = createDynamicBlock("RadarChartBlock");
+const BarChartBlock = createDynamicBlock("BarChartBlock");
+const InteractiveSwitcherBlock = createDynamicBlock("InteractiveSwitcherBlock");
 
 interface BlockDispatcherProps {
     block: Block | ListItem;
@@ -165,6 +169,15 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "timeline_block":
             return <TimelineBlock data={block as any} anchor={anchor} />;
+
+        case "pie_chart_block":
+            return <PieChartBlock data={block as any} />;
+        case "radar_chart_block":
+            return <RadarChartBlock data={block as any} />;
+        case "bar_chart_block":
+            return <BarChartBlock data={block as any} />;
+        case "interactive_switcher_block":
+            return <InteractiveSwitcherBlock data={block as any} />;
 
         case "testimonial_item":
         case "testimonial":

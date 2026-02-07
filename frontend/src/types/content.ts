@@ -212,7 +212,45 @@ export interface MermaidBlock extends BaseBlock {
     caption?: string;
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock;
+export interface ChartItem {
+    name: string;
+    value: number;
+}
+
+export interface PieChartBlock extends BaseBlock {
+    type: 'pie_chart_block';
+    title?: string;
+    data: ChartItem[];
+    unit?: string;
+}
+
+export interface RadarChartDataset {
+    label: string;
+    data: number[];
+}
+
+export interface RadarChartBlock extends BaseBlock {
+    type: 'radar_chart_block';
+    title?: string;
+    labels: string[];
+    datasets: RadarChartDataset[];
+}
+
+export interface BarChartDataset {
+    label: string;
+    data: number[];
+}
+
+export interface BarChartBlock extends BaseBlock {
+    type: 'bar_chart_block';
+    title?: string;
+    labels: string[];
+    datasets: BarChartDataset[];
+    horizontal?: boolean;
+    unit?: string;
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';
