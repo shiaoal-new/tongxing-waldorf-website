@@ -4,7 +4,17 @@ import matter from 'gray-matter';
 import yaml from 'js-yaml';
 import { PageData } from '../types/content';
 
-const pagesDirectory = path.join(process.cwd(), 'src/data/pages');
+function getPagesDirectory() {
+    const baseCwd = process.cwd();
+    const p1 = path.join(baseCwd, 'src/data/pages');
+    const p2 = path.join(baseCwd, 'frontend/src/data/pages');
+
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    return p1; // Fallback
+}
+
+const pagesDirectory = getPagesDirectory();
 
 export function getAllPages(): PageData[] {
     if (!fs.existsSync(pagesDirectory)) {

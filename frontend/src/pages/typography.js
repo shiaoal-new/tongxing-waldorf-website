@@ -9,6 +9,7 @@ import PageHero from "../components/layout/PageHero";
 import TypographyDemoBlock from "../components/blocks/TypographyDemoBlock";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
+import { getWordingDictionary, resolveWording } from "../lib/wording.server";
 
 export default function TypographyPage({ page, pages, navigation }) {
     const [isMobileSim, setIsMobileSim] = useState(false);
@@ -117,6 +118,16 @@ export async function getStaticProps() {
     const pages = getAllPages();
     const navigation = getNavigation();
 
+    // Resolve page titles for navigation (pages list)
+    // This allows the Navbar to display correct titles instead of placeholders
+    const resolvedPages = pages.map(p => {
+        const dict = getWordingDictionary(p.slug, "default");
+        return {
+            ...p,
+            title: resolveWording(p.title, dict)
+        };
+    });
+
     if (page && page.sections) {
         page.sections = page.sections.map(section => {
             if (section.layout) {
@@ -132,7 +143,7 @@ export async function getStaticProps() {
     return {
         props: {
             page,
-            pages,
+            pages: resolvedPages,
             navigation,
         },
     };

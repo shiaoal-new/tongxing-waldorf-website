@@ -4,15 +4,23 @@ import matter from 'gray-matter';
 import yaml from 'js-yaml';
 import { FaqItem } from '../types/content';
 
-const faqDirectory = path.join(process.cwd(), 'src/data/faq');
+function getFaqDirectory() {
+    const baseCwd = process.cwd();
+    const p1 = path.join(baseCwd, 'src/data/faq');
+    const p2 = path.join(baseCwd, 'frontend/src/data/faq');
+
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    return p1;
+}
+
+const faqDirectory = getFaqDirectory();
 
 export function getAllFaq(): FaqItem[] {
-    // 檢查目錄是否存在
     if (!fs.existsSync(faqDirectory)) {
         return [];
     }
 
-    // 獲取所有相關文件
     const fileNames = fs.readdirSync(faqDirectory);
     const allFaqData = fileNames
         .filter(fileName => fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml'))
@@ -23,25 +31,22 @@ export function getAllFaq(): FaqItem[] {
             const fileContents = fs.readFileSync(fullPath, 'utf8');
 
             let data: any = {};
+            let content = '';
 
             if (extension === '.yml' || extension === '.yaml') {
                 data = yaml.load(fileContents) || {};
             } else {
                 const matterResult = matter(fileContents);
                 data = matterResult.data;
+                content = matterResult.content;
             }
 
-            // 合併數據
             return {
                 id,
                 ...data,
+                content: content,
             } as FaqItem;
         });
 
-    // 按照 order 字段排序
-    return allFaqData.sort((a, b) => {
-        const orderA = a.order || 999;
-        const orderB = b.order || 999;
-        return orderA - orderB;
-    });
+    return allFaqData;
 }

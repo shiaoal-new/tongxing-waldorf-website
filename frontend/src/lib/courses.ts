@@ -4,7 +4,17 @@ import matter from 'gray-matter';
 import yaml from 'js-yaml';
 import { Course } from '../types/content';
 
-const coursesDirectory = path.join(process.cwd(), 'src/data/courses');
+function getCoursesDirectory() {
+    const baseCwd = process.cwd();
+    const p1 = path.join(baseCwd, 'src/data/courses');
+    const p2 = path.join(baseCwd, 'frontend/src/data/courses');
+
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    return p1;
+}
+
+const coursesDirectory = getCoursesDirectory();
 
 export function getAllCourses(): Course[] {
     if (!fs.existsSync(coursesDirectory)) {
@@ -33,16 +43,10 @@ export function getAllCourses(): Course[] {
 
             return {
                 slug: data.slug || slug,
-                id: data.slug || slug, // keep id for backward compatibility if needed
                 ...data,
                 content: content,
             } as Course;
         });
 
     return allCoursesData;
-}
-
-export function getCourseBySlug(slug: string): Course | undefined {
-    const allCourses = getAllCourses();
-    return allCourses.find(course => course.slug === slug);
 }
