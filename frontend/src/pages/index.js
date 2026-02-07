@@ -65,6 +65,16 @@ export async function getStaticProps() {
     });
   }
 
+  // Resolve page titles for navigation (pages list)
+  // This allows the Navbar to display correct titles instead of placeholders
+  const resolvedPages = pages.map(p => {
+    const dict = getWordingDictionary(p.slug, "default");
+    return {
+      ...p,
+      title: resolveWording(p.title, dict)
+    };
+  });
+
   // Resolve default wordings for static generation (only in production for SEO)
   const isProd = process.env.NODE_ENV === 'production';
   const dictionary = getWordingDictionary("index", "default", ["faq"]);
@@ -74,7 +84,7 @@ export async function getStaticProps() {
   return {
     props: {
       page: resolvedPage || null,
-      pages,
+      pages: resolvedPages,
       navigation,
       siteSettings,
       data: resolvedData,

@@ -2,32 +2,31 @@ title: "教師團隊"
 hero:
   title: "同心教師領航團"
   subtitle: "專業與靈性共榮：點亮區域教育的燈塔"
-sections:
-  intro:
-    blocks:
-      - title: "守護文化精神自由"
-        content: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
-  full-time:
-    blocks:
-      - title: "專任教師群"
-        subtitle: "Full-time Faculty"
-  administrative:
-    blocks:
-      - title: "行政教師群"
-        subtitle: "Administration"
-  part-time:
-    blocks:
-      - title: "兼任教師群"
-        subtitle: "Part-time & Specialist Teachers"
-        content: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
-      - title: "人文、自然與外語"
-      - title: "藝術、手作與生活"
-      - title: "肢體、動能與環境"
-      - title: "音樂與合奏"
-      - title: "安親課後輔導"
-  cta:
-    blocks:
-      - title: 點亮深坑：開箱教育地標
-        content: 您是否也在尋找一個能與高等教育資源共榮、並提供 1-9 年級穩定成長環境的教育機構？與其聽說，不如親自走入同心的專業校園，看見孩子生命力的綻放。
-      - buttons:
-          - text: 預約參觀
+intro:
+  blocks:
+    - title: "守護文化精神自由"
+      content: "我們願意共同管理學校，也共同承擔為學校做的每一個決定。我們在教學中尊重個體開創課程的自由，並致力於守護「文化精神自由」。"
+full-time:
+  blocks:
+    - title: "專任教師群"
+      subtitle: "Full-time Faculty"
+administrative:
+  blocks:
+    - title: "行政教師群"
+      subtitle: "Administration"
+part-time:
+  blocks:
+    - title: "兼任教師群"
+      subtitle: "Part-time & Specialist Teachers"
+      content: "我們邀請各個領域的專家，為孩子帶來豐富多元的課程體驗。"
+    - title: "人文、自然與外語"
+    - title: "藝術、手作與生活"
+    - title: "肢體、動能與環境"
+    - title: "音樂與合奏"
+    - title: "安親課後輔導"
+cta:
+  blocks:
+    - title: 點亮深坑：開箱教育地標
+      content: 您是否也在尋找一個能與高等教育資源共榮、並提供 1-9 年級穩定成長環境的教育機構？與其聽說，不如親自走入同心的專業校園，看見孩子生命力的綻放。
+    - buttons:
+        - text: 預約參觀

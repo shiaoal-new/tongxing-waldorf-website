@@ -10,6 +10,7 @@ import ColorPaletteBlock from "../components/blocks/ColorPaletteBlock";
 import ActionButtons from "../components/ui/ActionButtons";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
+import { getWordingDictionary, resolveWording } from "../lib/wording.server";
 
 export default function ColorsDynamicPage({ page, pages, navigation }) {
     if (!page) return <div>Page data not found</div>;
@@ -95,6 +96,16 @@ export async function getStaticProps() {
     const pages = getAllPages();
     const navigation = getNavigation();
 
+    // Resolve page titles for navigation (pages list)
+    // This allows the Navbar to display correct titles instead of placeholders
+    const resolvedPages = pages.map(p => {
+        const dict = getWordingDictionary(p.slug, "default");
+        return {
+            ...p,
+            title: resolveWording(p.title, dict)
+        };
+    });
+
     if (page && page.sections) {
         page.sections = page.sections.map(section => {
             if (section.layout) {
@@ -110,7 +121,7 @@ export async function getStaticProps() {
     return {
         props: {
             page,
-            pages,
+            pages: resolvedPages,
             navigation,
         },
     };

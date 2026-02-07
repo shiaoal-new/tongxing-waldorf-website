@@ -4,7 +4,17 @@ import matter from 'gray-matter';
 import yaml from 'js-yaml';
 import { Member } from '../types/content';
 
-const facultyDirectory = path.join(process.cwd(), 'src/data/faculty');
+function getFacultyDirectory() {
+    const baseCwd = process.cwd();
+    const p1 = path.join(baseCwd, 'src/data/faculty');
+    const p2 = path.join(baseCwd, 'frontend/src/data/faculty');
+
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    return p1;
+}
+
+const facultyDirectory = getFacultyDirectory();
 
 export function getAllFaculty(): Member[] {
     // 檢查目錄是否存在

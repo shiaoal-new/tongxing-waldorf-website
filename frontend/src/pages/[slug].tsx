@@ -63,6 +63,16 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
         });
     }
 
+    // Resolve page titles for navigation (pages list)
+    // This allows the Navbar to display correct titles instead of placeholders
+    const resolvedPages = pages.map(p => {
+        const dict = getWordingDictionary(p.slug, "default");
+        return {
+            ...p,
+            title: resolveWording(p.title, dict)
+        };
+    });
+
     // 按需加载数据 - 只加载页面实际需要的数据
     const pageData = getPageDataOptimized(page);
 
@@ -83,7 +93,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     return {
         props: {
             page: resolvedPage,
-            pages,
+            pages: resolvedPages,
             navigation,
             siteSettings,
             data: resolvedDataList,
