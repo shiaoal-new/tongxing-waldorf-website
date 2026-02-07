@@ -107,12 +107,16 @@ sections:
                 layout_method: bento_grid
                 item_type: feature_item
                 items:
+                  - title: "paths.waldorf.item_curriculum.title"
+                    span: 4
+                    content: "paths.waldorf.item_curriculum.content"
+                    icon: lucide:book-open
                   - title: "paths.waldorf.item_yuguang.title"
-                    span: 6
+                    span: 4
                     content: "paths.waldorf.item_yuguang.content"
                     icon: lucide:school
                   - title: "paths.waldorf.case_shi.title"
-                    span: 6
+                    span: 4
                     content: "paths.waldorf.case_shi.content"
                     icon: lucide:award
               - type: text_block
@@ -180,11 +184,15 @@ sections:
                 item_type: feature_item
                 items:
                   - title: "paths.diverse.item_special.title"
-                    span: 6
-                    content: "paths.diverse.item_diverse.content"
+                    span: 4
+                    content: "paths.diverse.item_special.content"
                     icon: lucide:star
+                  - title: "paths.diverse.item_global.title"
+                    span: 4
+                    content: "paths.diverse.item_global.content"
+                    icon: lucide:globe
                   - title: "paths.diverse.advice.title"
-                    span: 6
+                    span: 4
                     content: "paths.diverse.advice.content"
                     icon: lucide:wrench
 
