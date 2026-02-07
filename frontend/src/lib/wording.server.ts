@@ -118,5 +118,5 @@ function getValueByPath(obj: any, path: string): string | null {
         current = current[part];
     }
 
-    return typeof current === 'string' ? current : null;
+    return current;
 }

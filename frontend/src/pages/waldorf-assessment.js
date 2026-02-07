@@ -26,7 +26,7 @@ export async function getStaticProps() {
 
     return {
         props: {
-            page: page || null,
+            page: page ? resolveWording(page, getWordingDictionary('waldorf-assessment', "default")) : null,
             pages: resolvedPages,
             navigation,
             data: {

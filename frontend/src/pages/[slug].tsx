@@ -79,7 +79,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     // Resolve default wordings for static generation (only in production for SEO)
     const isProd = process.env.NODE_ENV === 'production';
     const dictionary = getWordingDictionary(slug, "default", ["faq"]);
-    const resolvedPage = isProd ? (page ? resolveWording(page, dictionary) : null) : page;
+    const resolvedPage = page ? resolveWording(page, dictionary) : null;
     const resolvedDataList = isProd ? resolveWording({
         facultyList: pageData.facultyList || [],
         faqList: pageData.faqList || [],

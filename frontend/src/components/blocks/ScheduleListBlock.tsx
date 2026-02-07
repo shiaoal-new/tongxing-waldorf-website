@@ -60,7 +60,7 @@ interface ScheduleListBlockProps {
 }
 
 const ScheduleListBlock = ({ data }: ScheduleListBlockProps) => {
-    const items = data.items || [];
+    const items = Array.isArray(data.items) ? data.items : [];
 
     return (
         <div className="max-w-3xl mx-auto px-4">
