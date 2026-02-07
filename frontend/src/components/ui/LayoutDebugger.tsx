@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import DebuggerPopup from './DebuggerPopup';
 
 /**
  * LayoutDebugger - 僅在開發模式下運行的佈局偵測器
@@ -195,42 +196,30 @@ export default function LayoutDebugger() {
     if (!isVisible || overflowElements.length === 0) return null;
 
     return (
-        <div
-            className="fixed bottom-4 right-4 z-[9999] max-w-xs animate-bounce-subtle"
-            style={{ pointerEvents: 'none' }}
+        <DebuggerPopup
+            title="佈局溢出警告 (Layout Overflow)"
+            icon="⚠️"
+            colorClass="bg-red-600"
+            onClose={() => {
+                setIsVisible(false);
+                isVisibleRef.current = false;
+            }}
+            positionClass="bottom-4 right-4"
         >
-            <div
-                className="bg-red-600 text-white p-4 rounded-2xl shadow-2xl border-2 border-white/20 backdrop-blur-md"
-                style={{ pointerEvents: 'auto' }}
-            >
-                <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">⚠️</span>
-                    <span className="font-bold text-sm">佈局溢出警告 (Layout Overflow)</span>
+            <div className="space-y-1">
+                <p>手機版寬度超標，可能導致左右晃動。</p>
+                <div className="bg-black/20 p-2 rounded-lg mt-2 max-h-32 overflow-auto custom-scrollbar">
+                    {overflowElements.slice(0, 2).map((el, i) => (
+                        <div key={i} className="mb-1 border-b border-white/10 pb-1 last:border-0">
+                            <span className="font-mono text-[10px] text-yellow-300">
+                                {el.tag.toLowerCase()}{el.id ? `#${el.id}` : ''}{el.className ? `.${el.className.split(' ')[0]}` : ''}
+                            </span>
+                            <div className="text-[10px] text-white/70">溢出: {Math.round(el.amount)}px</div>
+                        </div>
+                    ))}
+                    {overflowElements.length > 2 && <div className="text-[10px]">...及其他 {overflowElements.length - 2} 個元素</div>}
                 </div>
-                <div className="text-xs opacity-90 space-y-1">
-                    <p>手機版寬度超標，可能導致左右晃動。</p>
-                    <div className="bg-black/20 p-2 rounded-lg mt-2 max-h-32 overflow-auto">
-                        {overflowElements.slice(0, 2).map((el, i) => (
-                            <div key={i} className="mb-1 border-b border-white/10 pb-1 last:border-0">
-                                <span className="font-mono text-[10px] text-yellow-300">
-                                    {el.tag.toLowerCase()}{el.id ? `#${el.id}` : ''}{el.className ? `.${el.className.split(' ')[0]}` : ''}
-                                </span>
-                                <div className="text-[10px] text-white/70">溢出: {Math.round(el.amount)}px</div>
-                            </div>
-                        ))}
-                        {overflowElements.length > 2 && <div className="text-[10px]">...及其他 {overflowElements.length - 2} 個元素</div>}
-                    </div>
-                </div>
-                <button
-                    onClick={() => {
-                        setIsVisible(false);
-                        isVisibleRef.current = false;
-                    }}
-                    className="mt-3 w-full py-1 bg-white/10 hover:bg-white/20 rounded text-[10px] transition-colors"
-                >
-                    暫時關閉
-                </button>
             </div>
-        </div>
+        </DebuggerPopup>
     );
 }

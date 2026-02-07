@@ -11,7 +11,7 @@ import yaml from 'js-yaml';
  * @param extraCategories 額外要加載的文案包 (例如 ["faq", "ui"])
  */
 export function useWording<T>(pageId: string, initialData: T, extraCategories: string[] = []): T {
-    const { getStyle } = useWordingContext();
+    const { getStyle, reportMissingKeys } = useWordingContext();
     const currentStyle = getStyle(pageId);
 
     const [dictionary, setDictionary] = useState<any>(null);
@@ -82,7 +82,15 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
             return;
         }
 
-        const newResolved = resolveWording(initialData, dictionary);
+        const missing: string[] = [];
+        const newResolved = resolveWording(initialData, dictionary, (key) => {
+            missing.push(key);
+        });
+
+        if (missing.length > 0) {
+            reportMissingKeys(missing);
+        }
+
         setResolvedData(newResolved);
     }, [initialData, dictionary]);
 
