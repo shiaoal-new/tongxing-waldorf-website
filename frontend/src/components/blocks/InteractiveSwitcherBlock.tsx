@@ -27,55 +27,41 @@ const InteractiveSwitcherBlock = ({ data }: InteractiveSwitcherProps) => {
     const activeOption = options.find(opt => opt.id === activeId) || options[0];
 
     return (
-        <div className="w-full py-12">
-            {/* Selection Area - Premium Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 mb-16">
-                {options.map((option) => (
-                    <motion.div
-                        key={option.id}
-                        whileHover={{ y: -5 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setActiveId(option.id)}
-                        className={`
-                            relative cursor-pointer p-8 rounded-[2.5rem] border-2 transition-all duration-500
-                            ${activeId === option.id
-                                ? 'bg-white dark:bg-gray-900 border-brand-accent shadow-2xl shadow-brand-accent/20 scale-105 z-10'
-                                : 'bg-brand-bg/30 dark:bg-brand-structural/10 border-transparent hover:border-brand-accent/30 opacity-70 hover:opacity-100'}
-                        `}
-                    >
-                        {activeId === option.id && (
+        <div className="w-full py-6 md:py-12">
+            {/* Selection Area - Unified Sticky Tabs for all screens */}
+            <div className="sticky top-[72px] z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 mb-8 md:mb-16">
+                <div className="max-w-6xl mx-auto px-4 md:px-6">
+                    <div className="flex overflow-x-auto no-scrollbar justify-center gap-3 md:gap-4 py-3 md:py-4 items-center">
+                        {options.map((option) => (
                             <motion.div
-                                layoutId="active-bg"
-                                className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent rounded-[2.3rem] -z-1"
-                            />
-                        )}
+                                key={option.id}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => setActiveId(option.id)}
+                                className={`
+                                    flex-shrink-0 flex items-center cursor-pointer transition-all duration-300
+                                    ${activeId === option.id
+                                        ? 'bg-brand-accent/5 dark:bg-brand-accent/10 border-2 border-brand-accent shadow-lg shadow-brand-accent/10'
+                                        : 'bg-brand-bg/20 dark:bg-brand-structural/10 border-2 border-transparent hover:border-brand-accent/30 opacity-70 hover:opacity-100'}
+                                    rounded-full px-4 py-1.5 md:px-6 md:py-2.5
+                                `}
+                            >
+                                <div className={`
+                                    w-7 h-7 md:w-8 md:h-8 rounded-lg flex items-center justify-center transition-colors duration-500
+                                    ${activeId === option.id ? 'bg-brand-accent text-white' : 'bg-brand-accent/10 text-brand-accent'}
+                                    mr-2 md:mr-3
+                                `}>
+                                    <Icon icon={option.icon} className="text-base md:text-lg" />
+                                </div>
 
-                        <div className={`
-                            w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-500
-                            ${activeId === option.id ? 'bg-brand-accent text-white' : 'bg-brand-accent/10 text-brand-accent'}
-                        `}>
-                            <Icon icon={option.icon} className="text-3xl" />
-                        </div>
-
-                        <h3 className={`text-xl font-bold mb-2 ${activeId === option.id ? 'text-brand-dark dark:text-white' : 'text-gray-500'}`}>
-                            {option.label}
-                        </h3>
-
-                        {option.description && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                                {option.description}
-                            </p>
-                        )}
-
-                        {activeId === option.id && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-brand-accent rounded-full border-4 border-white dark:border-gray-900 shadow-lg"
-                            />
-                        )}
-                    </motion.div>
-                ))}
+                                <div>
+                                    <h3 className={`text-sm md:text-base font-bold whitespace-nowrap ${activeId === option.id ? 'text-brand-dark dark:text-white' : 'text-gray-500'}`}>
+                                        {option.label}
+                                    </h3>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             {/* Content Area */}
