@@ -50,3 +50,8 @@ export function getAllCourses(): Course[] {
 
     return allCoursesData;
 }
+
+export function getCourseBySlug(slug: string): Course | undefined {
+    const courses = getAllCourses();
+    return courses.find(course => course.slug === slug);
+}
