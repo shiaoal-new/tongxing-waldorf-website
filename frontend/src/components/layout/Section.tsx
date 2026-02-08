@@ -73,13 +73,44 @@ export default function Section(props: SectionProps) {
     const wrapper_class = classes.wrapper_class || "";
     // If background media or shader gradient is present, default to white text for better visibility
     const hasSpecialBg = (media_list && media_list.length > 0) || shader_gradient || silk_background;
-    const defaultTitleColor = hasSpecialBg ? "text-brand-bg" : "text-brand-text dark:text-brand-bg";
-    const defaultDescColor = hasSpecialBg ? "text-brand-bg" : "text-brand-taupe dark:text-brand-taupe";
-    const defaultSubtitleColor = hasSpecialBg ? "text-brand-accent/40" : "text-brand-accent";
+    // Use fixed white/stone colors for special backgrounds to avoid dark-mode flipping to dark grey
+    const defaultTitleColor = hasSpecialBg ? "text-white drop-shadow-md" : "text-brand-text dark:text-brand-bg";
+    const defaultDescColor = hasSpecialBg ? "text-stone-100/90" : "text-brand-taupe dark:text-brand-taupe";
+    const defaultSubtitleColor = hasSpecialBg ? "text-brand-accent brightness-125 drop-shadow-sm" : "text-brand-accent";
 
-    const subtitle_class = classes.subtitle_class || `text-sm font-bold tracking-brand ${defaultSubtitleColor} uppercase`;
-    const title_class = classes.title_class || `max-w-2xl mt-component ${defaultTitleColor}`;
-    const content_class_default = classes.content_class || `max-w-4xl py-component text-lg ${defaultDescColor} lg:text-xl xl:text-xl`;
+
+    /**
+     * Helper to resolve classes. 
+     * If a custom class is provided but lacks a color (text-*), it appends the default color.
+     */
+    const resolveClass = (custom: string | undefined, defaults: string, color: string) => {
+        if (!custom) return `${defaults} ${color}`;
+
+        // Smarter check: ignore text-size, text-alignment and other utility classes
+        // Only consider it "having a color" if it has a text- color class that isn't one of the excluded ones
+        const tokens = custom.split(/\s+/);
+        const hasColor = tokens.some(token => {
+            if (!token.startsWith('text-')) return false;
+
+            // Check if this token matches any of the non-color patterns
+            // Use simple string checks where possible for performance, regex for patterns
+            const isSize = /^text-(xs|sm|base|lg|([2-9])?xl)$/.test(token);
+            const isAlign = ['text-left', 'text-center', 'text-right', 'text-justify', 'text-start', 'text-end'].includes(token);
+            const isWrap = ['text-clip', 'text-ellipsis', 'text-wrap', 'text-nowrap', 'text-balance'].includes(token);
+
+            return !(isSize || isAlign || isWrap);
+        });
+
+        if (hasColor) return custom;
+        return `${custom} ${color}`;
+    };
+
+
+    const subtitle_class = resolveClass(classes.subtitle_class, "text-sm font-bold tracking-brand uppercase", defaultSubtitleColor);
+    const title_class = resolveClass(classes.title_class, "max-w-2xl mt-component", defaultTitleColor);
+    const content_class_default = resolveClass(classes.content_class, `max-w-4xl py-component text-lg lg:text-xl xl:text-xl ${hasSpecialBg ? 'prose-invert' : ''}`, defaultDescColor);
+
+
 
     // Define animation variants based on direction
     const variants: any = {

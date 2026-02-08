@@ -2,6 +2,6 @@ title: 精緻特色區塊 (Features Premium)
 css_classes: |
   .container_class { bg-brand-bg relative }
   .wrapper_class { mb-16 relative z-10 }
-  .title_class { text-4xl lg:text-5xl font-bold text-brand-text mb-4 tracking-tighter }
-  .subtitle_class { text-brand-accent font-bold tracking-widest uppercase mb-2 text-sm }
-  .description_class { text-brand-taupe text-lg lg:text-xl max-w-3xl border-l-4 border-brand-accent/20 pl-6 }
+  .title_class { text-4xl lg:text-5xl font-bold mb-4 tracking-tighter }
+  .subtitle_class { font-bold tracking-widest uppercase mb-2 text-sm }
+  .description_class { text-lg lg:text-xl max-w-3xl border-l-4 border-brand-accent/20 pl-6 }
