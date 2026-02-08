@@ -1,0 +1,29 @@
+id: waldorf
+label: "paths.waldorf.label"
+icon: "lucide:heart"
+description: "paths.waldorf.desc"
+blocks:
+  - type: text_block
+    title: "paths.waldorf.title"
+    subtitle: "paths.waldorf.subtitle"
+    content: "paths.waldorf.content"
+  - type: list_block
+    layout_method: bento_grid
+    item_type: feature_item
+    items:
+      - title: "paths.waldorf.item_curriculum.title"
+        span: 4
+        content: "paths.waldorf.item_curriculum.content"
+        icon: lucide:book-open
+      - title: "paths.waldorf.item_yuguang.title"
+        span: 4
+        content: "paths.waldorf.item_yuguang.content"
+        icon: lucide:school
+      - title: "paths.waldorf.case_shi.title"
+        span: 4
+        content: "paths.waldorf.case_shi.content"
+        icon: lucide:award
+  - type: text_block
+    title: "paths.waldorf.advice.title"
+    content: "paths.waldorf.advice.content"
+    layout: centered

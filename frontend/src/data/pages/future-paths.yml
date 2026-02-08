@@ -83,6 +83,7 @@ sections:
             icon: lucide:hammer
             span: 4
 
+  # Pillar 3: 互動式路徑切換 (Interactive Switcher) - Modularized
   # Pillar 3: 互動式路徑切換 (Interactive Switcher)
   - section_id: pillar_interactive_paths
     layout: "精緻特色區塊 (Features Premium)"
@@ -93,138 +94,9 @@ sections:
         layout: centered
       - type: interactive_switcher_block
         options:
-          # --- Path 1: Waldorf ---
-          - id: waldorf
-            label: "paths.waldorf.label"
-            icon: "lucide:heart"
-            description: "paths.waldorf.desc"
-            blocks:
-              - type: text_block
-                title: "paths.waldorf.title"
-                subtitle: "paths.waldorf.subtitle"
-                content: "paths.waldorf.content"
-              - type: list_block
-                layout_method: bento_grid
-                item_type: feature_item
-                items:
-                  - title: "paths.waldorf.item_curriculum.title"
-                    span: 4
-                    content: "paths.waldorf.item_curriculum.content"
-                    icon: lucide:book-open
-                  - title: "paths.waldorf.item_yuguang.title"
-                    span: 4
-                    content: "paths.waldorf.item_yuguang.content"
-                    icon: lucide:school
-                  - title: "paths.waldorf.case_shi.title"
-                    span: 4
-                    content: "paths.waldorf.case_shi.content"
-                    icon: lucide:award
-              - type: text_block
-                title: "paths.waldorf.advice.title"
-                content: "paths.waldorf.advice.content"
-                layout: centered
-
-          # --- Path 2: Mainstream (Transition) ---
-          - id: mainstream
-            label: "paths.mainstream.label"
-            icon: "lucide:graduation-cap"
-            description: "paths.mainstream.desc"
-            blocks:
-              - type: text_block
-                title: "paths.mainstream.title"
-                subtitle: "paths.mainstream.subtitle"
-                content: "paths.mainstream.content"
-
-              # 1. 轉回體制內更細的路徑，及比較
-              - type: text_block
-                title: "paths.mainstream.path_comparison.title"
-                layout: centered
-              - type: list_block
-                layout_method: grid_cards
-                item_type: feature_item
-                items: "paths.mainstream.path_comparison.items"
-
-              # 2. 成功、失敗案例分析
-              - type: text_block
-                title: "paths.mainstream.case_analysis.title"
-                layout: centered
-              - type: list_block
-                layout_method: bento_grid
-                item_type: feature_item
-                items:
-                  - title: "paths.mainstream.case_analysis.success.title"
-                    span: 6
-                    content: "paths.mainstream.case_analysis.success.content"
-                    icon: lucide:check-circle
-                    color: "text-green-600"
-                  - title: "paths.mainstream.case_analysis.failure.title"
-                    span: 6
-                    content: "paths.mainstream.case_analysis.failure.content"
-                    icon: lucide:alert-triangle
-                    color: "text-red-500"
-
-              # 3. 轉軌成敗的關鍵因素
-              - type: text_block
-                title: "paths.mainstream.success_factors_summary.title"
-                content: "paths.mainstream.success_factors_summary.content"
-              - type: bar_chart_block
-                title: "analysis.success_factors.chart_title"
-                labels: "analysis.success_factors.bar.labels"
-                datasets: "analysis.success_factors.bar.datasets"
-                horizontal: true
-              - type: text_block
-                layout: centered
-                content: "analysis.success_factors.insight"
-
-              # 4. 準備時程表 (Timeline)
-              - type: text_block
-                title: "paths.mainstream.timeline_title"
-                layout: centered
-              - type: timeline_block
-                items: "paths.mainstream.timeline.items"
-                show_progress_text: false
-
-              # 5. 給轉軌家庭的調適建議
-              - type: text_block
-                title: "paths.mainstream.parent_guide.title"
-                layout: centered
-              - type: list_block
-                layout_method: grid_cards
-                item_type: feature_item
-                items: "paths.mainstream.parent_guide.items"
-
-              # 6. 家長轉銜心得分享
-              - type: text_block
-                title: "paths.mainstream.advice.title"
-                content: "paths.mainstream.advice.content"
-                layout: centered
-
-          # --- Path 3: Diverse ---
-          - id: diverse
-            label: "paths.diverse.label"
-            icon: "lucide:rocket"
-            description: "paths.diverse.desc"
-            blocks:
-              - type: text_block
-                title: "paths.diverse.title"
-                subtitle: "paths.diverse.subtitle"
-                content: "paths.diverse.content"
-              - type: list_block
-                layout_method: bento_grid
-                item_type: feature_item
-                items:
-                  - title: "paths.diverse.item_special.title"
-                    span: 4
-                    content: "paths.diverse.item_special.content"
-                    icon: lucide:star
-                  - title: "paths.diverse.item_global.title"
-                    span: 4
-                    content: "paths.diverse.item_global.content"
-                    icon: lucide:globe
-                  - title: "paths.diverse.advice.title"
-                    span: 4
-                    content: "paths.diverse.advice.content"
-                    icon: lucide:wrench
+          - !include future-paths/paths/waldorf.yml
+          - !include future-paths/paths/mainstream.yml
+          - !include future-paths/paths/diverse.yml
 
   # Final Summary
   - section_id: final

@@ -1,6 +1,30 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+import yaml, { Schema, Type } from 'js-yaml';
+
+// Define the !include custom type
+const createIncludeType = (basePath: string) => {
+    return new Type('!include', {
+        kind: 'scalar',
+        construct: (data: string) => {
+            const fullPath = path.isAbsolute(data) ? data : path.join(basePath, data);
+            if (!fs.existsSync(fullPath)) {
+                console.warn(`Included file not found: ${fullPath}`);
+                return null;
+            }
+            return loadYamlWithIncludes(fullPath);
+        }
+    });
+};
+
+function loadYamlWithIncludes(fullPath: string): any {
+    if (!fs.existsSync(fullPath)) return {};
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const basePath = path.dirname(fullPath);
+    // js-yaml v4 uses DEFAULT_SCHEMA.extend instead of Schema.create
+    const schema = yaml.DEFAULT_SCHEMA.extend([createIncludeType(basePath)]);
+    return yaml.load(fileContents, { schema }) || {};
+}
 
 /**
  * 伺服器端獲取文案字典 (用於 getStaticProps)
@@ -42,8 +66,7 @@ export function getWordingDictionary(pageId: string, style: string = 'default', 
 
         if (filePath && fs.existsSync(filePath)) {
             try {
-                const content = fs.readFileSync(filePath, 'utf8');
-                const data = yaml.load(content) || {};
+                const data = loadYamlWithIncludes(filePath);
                 mergedDictionary = deepMerge(mergedDictionary, data);
             } catch (e) {
                 console.error(`Error loading wording for ${cat}:`, e);
