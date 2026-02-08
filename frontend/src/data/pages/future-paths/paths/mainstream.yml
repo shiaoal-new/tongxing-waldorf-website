@@ -35,6 +35,16 @@ blocks:
         content: "paths.mainstream.case_analysis.failure.content"
         icon: lucide:alert-triangle
         color: "text-red-500"
+      - title: "paths.mainstream.case_analysis.success_bridge.title"
+        span: 6
+        content: "paths.mainstream.case_analysis.success_bridge.content"
+        icon: lucide:book-open
+        color: "text-blue-500"
+      - title: "paths.mainstream.case_analysis.failure_pace.title"
+        span: 6
+        content: "paths.mainstream.case_analysis.failure_pace.content"
+        icon: lucide:clock
+        color: "text-orange-500"
 
   # 3. 轉軌成敗的關鍵因素
   - type: text_block

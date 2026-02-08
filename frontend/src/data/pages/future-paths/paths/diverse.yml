@@ -23,3 +23,7 @@ blocks:
         span: 4
         content: "paths.diverse.advice.content"
         icon: lucide:wrench
+      - title: "paths.diverse.item_vocational.title"
+        span: 4
+        content: "paths.diverse.item_vocational.content"
+        icon: lucide:hammer
