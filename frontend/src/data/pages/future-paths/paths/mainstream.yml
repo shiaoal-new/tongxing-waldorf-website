@@ -9,13 +9,12 @@ blocks:
     content: "$paths.mainstream.content"
 
   # 1. 轉回體制內更細的路徑，及比較
-  - type: text_block
+  - type: comparison_block
     title: "$paths.mainstream.path_comparison.title"
-    layout: centered
-  - type: list_block
-    layout_method: grid_cards
-    item_type: feature_item
-    items: "$paths.mainstream.path_comparison.items"
+    subtitle: "$paths.mainstream.path_comparison.subtitle"
+    left: "$paths.mainstream.path_comparison.left"
+    right: "$paths.mainstream.path_comparison.right"
+    image: "/img/future-paths/watercolor_split_student.webp"
 
   # 2. 成功、失敗案例分析
   - type: text_block

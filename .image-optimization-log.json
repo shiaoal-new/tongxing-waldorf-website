@@ -727,5 +727,23 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "future-paths/split_student.png": {
+    "hash": "a743c764fc214a7bc0fc54bfa8fd92bb",
+    "processedAt": "2026-02-08T14:34:35.708Z",
+    "originalSize": 22788,
+    "optimizedSize": 7982,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/watercolor_split_student.png": {
+    "hash": "e57ff33188b20cf90d52f004eb03c25a",
+    "processedAt": "2026-02-08T14:34:35.762Z",
+    "originalSize": 63727,
+    "optimizedSize": 25132,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }

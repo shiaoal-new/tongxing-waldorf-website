@@ -265,7 +265,28 @@ export interface ScheduleListBlock extends BaseBlock {
     title?: string;
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock;
+export interface ComparisonItem {
+    text: string;
+    icon?: string;
+    description?: string;
+}
+
+export interface ComparisonSide {
+    label: string;
+    items: ComparisonItem[];
+    badge?: string;
+}
+
+export interface ComparisonBlock extends BaseBlock {
+    type: 'comparison_block';
+    title?: string;
+    subtitle?: string;
+    left: ComparisonSide;
+    right: ComparisonSide;
+    image?: string;
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock | ComparisonBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';

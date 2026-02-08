@@ -6,12 +6,34 @@ content: 華德福孩子在國中階段培養的「洞察力」與「抗壓性�
 
 # 1. 轉回體制內更細的路徑及比較
 path_comparison:
-  title: 體制內路徑細分與比較
-  items:
-    - title: 公立普通高中 (Senior High)
-      content: 學費低廉，學術競爭激烈。適合學術傾向強、抗壓性高、目標為傳統頂尖大學的學生。入學主要管道為「國中教育會考」。
-    - title: 私立普高/各類實驗班
-      content: 管理較嚴格，常設有醫科班或資優班。適合需要結構化管理、或希望在特定學科加速的孩子。入學管道包括會考、直升或入學測試。
+  title: 體制內主流高中：路徑對比
+  subtitle: 選擇適合孩子氣質與抗壓性的銜接環境
+  left:
+    label: 公立普通高中 (Senior High)
+    badge: 低負擔・高學術
+    items:
+      - text: 學費低廉
+        icon: lucide:banknote
+        description: 國民義務教育資源，學費負擔極輕。
+      - text: 學術競爭激烈
+        icon: lucide:swords
+        description: 適合學術傾向強、抗壓性高、目標為頂尖大學的孩子。
+      - text: 入學管道明確
+        icon: lucide:target
+        description: 主要依賴「國中教育會考」成績分發。
+  right:
+    label: 私立普高/各類實驗班
+    badge: 強結構・精準管理
+    items:
+      - text: 結構化管理
+        icon: lucide:layers
+        description: 生活與學習節奏緊湊，適合需要外部驅動力的孩子。
+      - text: 特定學科加速
+        icon: lucide:zap
+        description: 常設醫科班或資優班，針對特定職涯提早佈局。
+      - text: 多元入學策略
+        icon: lucide:key
+        description: 包含會考、直升或入學測試。
 
 # 2. 成功、失敗案例分析
 case_analysis:

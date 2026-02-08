@@ -58,6 +58,7 @@ const BarChartBlock = createDynamicBlock("BarChartBlock");
 const InteractiveSwitcherBlock = createDynamicBlock("InteractiveSwitcherBlock");
 const BreathingIntroBlock = createDynamicBlock("BreathingIntroBlock");
 const ScheduleListBlock = createDynamicBlock("ScheduleListBlock");
+const ComparisonBlock = createDynamicBlock("ComparisonBlock");
 
 interface BlockDispatcherProps {
     block: Block | ListItem;
@@ -191,6 +192,9 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "schedule_list_block":
             return <ScheduleListBlock data={block as any} />;
+
+        case "comparison_block":
+            return <ComparisonBlock data={block as any} />;
 
         case "testimonial_item":
         case "testimonial":
