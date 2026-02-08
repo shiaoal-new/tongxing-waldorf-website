@@ -10,6 +10,7 @@ node_modules/
 out/
 frontend/.next/
 frontend/out/
+frontend/next-env.d.ts
 
 # production
 /build
