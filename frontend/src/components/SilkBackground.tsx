@@ -30,12 +30,13 @@ const SilkBackground = (props: SilkBackgroundProps) => {
     return (
         <div className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${className}`}>
             <div className={`w-full h-full transition-opacity duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-                <Canvas dpr={[1, 2]} frameloop="always">
+                <Canvas dpr={[1, 2]} frameloop="always" events={undefined}>
                     <Suspense fallback={null}>
                         <SilkAnimation {...rest} onLoad={() => setIsLoaded(true)} />
                     </Suspense>
                 </Canvas>
             </div>
+
             {/* Subtle overlay to ensure content readability */}
             <div className="absolute inset-0 bg-white/10 dark:bg-black/20 pointer-events-none" />
         </div>
