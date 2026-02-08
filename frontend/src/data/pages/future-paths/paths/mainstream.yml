@@ -14,7 +14,7 @@ blocks:
     subtitle: "$paths.mainstream.path_comparison.subtitle"
     left: "$paths.mainstream.path_comparison.left"
     right: "$paths.mainstream.path_comparison.right"
-    image: "/img/future-paths/watercolor_split_student.webp"
+    image: "/img/future-paths/watercolor_split_student_v3.webp"
 
   # 2. 成功、失敗案例分析
   - type: text_block
