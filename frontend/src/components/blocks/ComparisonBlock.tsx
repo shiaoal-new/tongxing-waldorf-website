@@ -11,7 +11,7 @@ const ComparisonBlock = ({ data }: ComparisonBlockProps) => {
     // Prevent crash if data is missing
     if (!data) return null;
 
-    const { left, right, title, subtitle, image } = data;
+    const { left, right, image } = data;
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -39,32 +39,6 @@ const ComparisonBlock = ({ data }: ComparisonBlockProps) => {
     return (
         <section className="relative py-16 md:py-32 overflow-hidden bg-brand-bg/30">
             <div className="max-w-[1500px] mx-auto px-6">
-                {/* Header */}
-                {(title || subtitle) && (
-                    <div className="text-center mb-16 md:mb-24">
-                        {title && (
-                            <motion.h2
-                                initial={{ opacity: 0, y: -20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4"
-                            >
-                                {title}
-                            </motion.h2>
-                        )}
-                        {subtitle && (
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                className="text-lg text-brand-taupe/80 max-w-2xl mx-auto"
-                            >
-                                {subtitle}
-                            </motion.p>
-                        )}
-                    </div>
-                )}
-
                 {/* Comparison Container */}
                 <motion.div
                     variants={containerVariants}

@@ -279,8 +279,6 @@ export interface ComparisonSide {
 
 export interface ComparisonBlock extends BaseBlock {
     type: 'comparison_block';
-    title?: string;
-    subtitle?: string;
     left: ComparisonSide;
     right: ComparisonSide;
     image?: string;

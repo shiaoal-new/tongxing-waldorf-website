@@ -9,9 +9,11 @@ blocks:
     content: "$paths.mainstream.content"
 
   # 1. 轉回體制內更細的路徑，及比較
-  - type: comparison_block
+  - type: text_block
     title: "$paths.mainstream.path_comparison.title"
     subtitle: "$paths.mainstream.path_comparison.subtitle"
+    layout: centered
+  - type: comparison_block
     left: "$paths.mainstream.path_comparison.left"
     right: "$paths.mainstream.path_comparison.right"
     image: "/img/future-paths/watercolor_split_student_v3.webp"
