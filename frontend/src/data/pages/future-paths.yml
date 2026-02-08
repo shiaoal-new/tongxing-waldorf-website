@@ -134,25 +134,39 @@ sections:
                 title: "paths.mainstream.title"
                 subtitle: "paths.mainstream.subtitle"
                 content: "paths.mainstream.content"
+
+              # 1. 轉回體制內更細的路徑，及比較
+              - type: text_block
+                title: "paths.mainstream.path_comparison.title"
+                layout: centered
+              - type: list_block
+                layout_method: grid_cards
+                item_type: feature_item
+                items: "paths.mainstream.path_comparison.items"
+
+              # 2. 成功、失敗案例分析
+              - type: text_block
+                title: "paths.mainstream.case_analysis.title"
+                layout: centered
               - type: list_block
                 layout_method: bento_grid
                 item_type: feature_item
                 items:
-                  - title: "paths.mainstream.item_transfer.title"
+                  - title: "paths.mainstream.case_analysis.success.title"
                     span: 6
-                    content: "paths.mainstream.item_transfer.content"
-                    icon: lucide:book-open
-                  - title: "paths.mainstream.case_academic.title"
+                    content: "paths.mainstream.case_analysis.success.content"
+                    icon: lucide:check-circle
+                    color: "text-green-600"
+                  - title: "paths.mainstream.case_analysis.failure.title"
                     span: 6
-                    content: "paths.mainstream.case_academic.content"
-                    icon: lucide:trending-up
+                    content: "paths.mainstream.case_analysis.failure.content"
+                    icon: lucide:alert-triangle
+                    color: "text-red-500"
+
+              # 3. 轉軌成敗的關鍵因素
               - type: text_block
-                title: "paths.mainstream.advice.title"
-                content: "paths.mainstream.advice.content"
-                layout: centered
-              - type: text_block
-                title: "analysis.success_factors.title"
-                content: "analysis.success_factors.content"
+                title: "paths.mainstream.success_factors_summary.title"
+                content: "paths.mainstream.success_factors_summary.content"
               - type: bar_chart_block
                 title: "analysis.success_factors.chart_title"
                 labels: "analysis.success_factors.bar.labels"
@@ -161,13 +175,29 @@ sections:
               - type: text_block
                 layout: centered
                 content: "analysis.success_factors.insight"
-              # Only this path has the timeline
+
+              # 4. 準備時程表 (Timeline)
               - type: text_block
                 title: "paths.mainstream.timeline_title"
                 layout: centered
               - type: timeline_block
                 items: "paths.mainstream.timeline.items"
                 show_progress_text: false
+
+              # 5. 給轉軌家庭的調適建議
+              - type: text_block
+                title: "paths.mainstream.parent_guide.title"
+                layout: centered
+              - type: list_block
+                layout_method: grid_cards
+                item_type: feature_item
+                items: "paths.mainstream.parent_guide.items"
+
+              # 6. 家長轉銜心得分享
+              - type: text_block
+                title: "paths.mainstream.advice.title"
+                content: "paths.mainstream.advice.content"
+                layout: centered
 
           # --- Path 3: Diverse ---
           - id: diverse
