@@ -77,12 +77,13 @@ const PieChartBlock: React.FC<PieChartBlockProps> = ({ data }) => {
                     padding: 12,
                     displayColors: true,
                     callbacks: {
+                        title: () => '',
                         label: function (context: any) {
                             const label = context.label || '';
                             const value = context.parsed || 0;
                             const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
                             const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0';
-                            return ` ${label}: ${value}${data.unit || '%'} (${percentage}%)`;
+                            return ` ${label} ${percentage}%`;
                         }
                     }
                 },
