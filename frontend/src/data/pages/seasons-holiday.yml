@@ -9,7 +9,7 @@ hero:
   accent_text: "hero.accent_text"
   media_list:
     - type: image
-      image: /img/seasons-holiday/hero.png
+      image: /img/seasons-holiday/hero.webp
   layout: "Hero: 中央圖文 (願景頁風格)"
   divider:
     type: wave

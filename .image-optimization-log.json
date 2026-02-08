@@ -646,5 +646,86 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "clay-modeling/hero.png": {
+    "hash": "5e3f61c6d9c8b96a8c1c94d88e69af19",
+    "processedAt": "2026-02-08T05:43:10.555Z",
+    "originalSize": 57311,
+    "optimizedSize": 25108,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "crossing/hero.png": {
+    "hash": "63e5632ce4417038dad1333078eb015a",
+    "processedAt": "2026-02-08T05:43:10.616Z",
+    "originalSize": 88902,
+    "optimizedSize": 52276,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "farming/hero.png": {
+    "hash": "1e87d18ca6940d0807c99befadd48317",
+    "processedAt": "2026-02-08T05:43:10.682Z",
+    "originalSize": 127063,
+    "optimizedSize": 83714,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/hero.png": {
+    "hash": "718a0a23cc3e8203eeb1838d22820cbf",
+    "processedAt": "2026-02-08T05:43:10.737Z",
+    "originalSize": 75591,
+    "optimizedSize": 42478,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/timeline_event_adaptation.png": {
+    "hash": "fb06eb381ce28952a28cfca3365ac164",
+    "processedAt": "2026-02-08T05:43:10.797Z",
+    "originalSize": 114772,
+    "optimizedSize": 67284,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/timeline_event_balance.png": {
+    "hash": "ba7b766a8e886c32816539b27eaed3a8",
+    "processedAt": "2026-02-08T05:43:10.852Z",
+    "originalSize": 82150,
+    "optimizedSize": 40306,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/timeline_event_exploration.png": {
+    "hash": "df4290965f2eacf45f61c66e74a652ca",
+    "processedAt": "2026-02-08T05:43:10.921Z",
+    "originalSize": 107113,
+    "optimizedSize": 61462,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-paths/timeline_event_sprint.png": {
+    "hash": "fca614f6d0bd3212daba9f6e8414166a",
+    "processedAt": "2026-02-08T05:43:10.983Z",
+    "originalSize": 69379,
+    "optimizedSize": 28106,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "seasons-holiday/hero.png": {
+    "hash": "dcea0c35eb4e0a8edf1fa21b28d59912",
+    "processedAt": "2026-02-08T05:43:11.040Z",
+    "originalSize": 63130,
+    "optimizedSize": 33696,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }

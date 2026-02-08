@@ -9,7 +9,7 @@ hero:
   accent_text: "hero.accent_text"
   media_list:
     - type: image
-      image: /img/crossing/hero.png
+      image: /img/crossing/hero.webp
   layout: "Hero: 中央圖文 (願景頁風格)"
   divider:
     type: wave

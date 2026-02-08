@@ -64,7 +64,29 @@ blocks:
     title: "paths.mainstream.timeline_title"
     layout: centered
   - type: timeline_block
-    items: "paths.mainstream.timeline.items"
+    items:
+      - type: header
+        title: "paths.mainstream.timeline.stage1.title"
+        color: "#9C27B0" # Purple
+      - year: "paths.mainstream.timeline.8th.year"
+        title: "paths.mainstream.timeline.8th.title"
+        content: "paths.mainstream.timeline.8th.content"
+        image: "/img/future-paths/timeline_event_exploration.webp"
+      - year: "paths.mainstream.timeline.9th_up.year"
+        title: "paths.mainstream.timeline.9th_up.title"
+        content: "paths.mainstream.timeline.9th_up.content"
+        image: "/img/future-paths/timeline_event_balance.webp"
+      - type: header
+        title: "paths.mainstream.timeline.stage2.title"
+        color: "#FF5722" # Deep Orange
+      - year: "paths.mainstream.timeline.9th_down.year"
+        title: "paths.mainstream.timeline.9th_down.title"
+        content: "paths.mainstream.timeline.9th_down.content"
+        image: "/img/future-paths/timeline_event_sprint.webp"
+      - year: "paths.mainstream.timeline.10th.year"
+        title: "paths.mainstream.timeline.10th.title"
+        content: "paths.mainstream.timeline.10th.content"
+        image: "/img/future-paths/timeline_event_adaptation.webp"
     show_progress_text: false
 
   # 5. 給轉軌家庭的調適建議
