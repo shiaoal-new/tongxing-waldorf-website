@@ -27,3 +27,20 @@ blocks:
     title: "$paths.waldorf.advice.title"
     content: "$paths.waldorf.advice.content"
     layout: centered
+  - type: list_block
+    title: "$paths.waldorf.external_resources.title"
+    layout_method: grid_cards
+    item_type: feature_item
+    items: "$paths.waldorf.external_resources.items"
+
+  # CTA
+  - type: text_block
+    title: "$paths.waldorf.cta.title"
+    subtitle: "$paths.waldorf.cta.subtitle"
+    layout: centered
+  - type: cta_block
+    buttons:
+      - text: "$paths.waldorf.cta.button_text"
+        link: "https://www.yuguangwaldorf.org/"
+        style: "btn-primary"
+    align: center

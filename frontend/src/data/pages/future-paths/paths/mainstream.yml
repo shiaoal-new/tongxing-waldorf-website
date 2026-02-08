@@ -99,8 +99,21 @@ blocks:
     item_type: feature_item
     items: "$paths.mainstream.parent_guide.items"
 
-  # 6. 家長轉銜心得分享
+  # 7. 外部參考資料
+  - type: list_block
+    title: "$paths.mainstream.external_resources.title"
+    layout_method: grid_cards
+    item_type: feature_item
+    items: "$paths.mainstream.external_resources.items"
+
+  # 8. CTA
   - type: text_block
-    title: "$paths.mainstream.advice.title"
-    content: "$paths.mainstream.advice.content"
+    title: "$paths.mainstream.cta.title"
+    subtitle: "$paths.mainstream.cta.subtitle"
     layout: centered
+  - type: cta_block
+    buttons:
+      - text: "$paths.mainstream.cta.button_text"
+        link: "/contact" # Assuming there is a contact page for booking
+        style: "btn-primary"
+    align: center

@@ -27,3 +27,20 @@ blocks:
         span: 4
         content: "$paths.diverse.item_vocational.content"
         icon: lucide:hammer
+  - type: list_block
+    title: "$paths.diverse.external_resources.title"
+    layout_method: grid_cards
+    item_type: feature_item
+    items: "$paths.diverse.external_resources.items"
+
+  # CTA
+  - type: text_block
+    title: "$paths.diverse.cta.title"
+    subtitle: "$paths.diverse.cta.subtitle"
+    layout: centered
+  - type: cta_block
+    buttons:
+      - text: "$paths.diverse.cta.button_text"
+        link: "https://twef.tw/"
+        style: "btn-primary"
+    align: center

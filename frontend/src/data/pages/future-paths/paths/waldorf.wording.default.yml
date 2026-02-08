@@ -15,3 +15,35 @@ case_shi:
 advice:
   title: 回流生的心聲
   content: "我去了一學期的私立高中，每天考試到晚上九點。我覺得自己像個填鴨機器，失去了對世界的好奇心。回到華德福高中部後，雖然資源較少，但我知道我在『活著』。"
+
+# 外部參考資料
+external_resources:
+  title: 華德福教育深度資源
+  items:
+    - title: "台灣華德福教育運動聯盟 (TWEF)"
+      content: "連結全台華德福學校與機構，提供最新的教育脈動與合作訊息。"
+      icon: "lucide:link"
+      buttons:
+        - text: "前往 TWEF 官網"
+          link: "https://twef.tw/"
+          style: "btn-outline"
+    - title: "昱光華德福實驗教育機構"
+      content: "同心畢業生主要的銜接高中部，了解其課程設計與招生資訊。"
+      icon: "lucide:facebook"
+      buttons:
+        - text: "前往 Facebook 專頁"
+          link: "https://www.facebook.com/yukuangwaldorf/"
+          style: "btn-outline"
+    - title: "世界華德福學校名錄 (World List)"
+      content: "查看全球受認證的華德福學校，為海外銜接做準備。"
+      icon: "lucide:globe"
+      buttons:
+        - text: "查看全球名錄"
+          link: "https://www.freunde-waldorf.de/en/waldorf-worldwide/waldorf-education/waldorf-world-list/"
+          style: "btn-outline"
+
+# CTA
+cta:
+  title: "延續十二一貫的完整滋養"
+  subtitle: "我們協助孩子在青春期的關鍵轉折，銜接最適合的華德福高中環境。"
+  button_text: "預約昱光高中部參觀"

@@ -15,3 +15,35 @@ item_global:
 advice:
   title: 技職生的實作力
   content: "華德福孩子具備卓越的『動手做』精神。在注重實習的技術中學裡，這份對材料的敏感度與自律性常讓他們在專業科目上脫穎而出。"
+
+# 外部參考資料
+external_resources:
+  title: 多元升學與自學資源
+  items:
+    - title: "大學多元入學升學網"
+      content: "由大學招聯會提供，了解包含特殊選才在內的多元入學管道與重要時程。"
+      icon: "lucide:graduation-cap"
+      buttons:
+        - text: "前往招生資訊網"
+          link: "https://www.jbcrc.edu.tw/"
+          style: "btn-outline"
+    - title: "台灣實驗教育資訊網"
+      content: "提供自學申請、實驗機構查詢及相關法律規範的官方資源。"
+      icon: "lucide:info"
+      buttons:
+        - text: "探索實驗教育資源"
+          link: "https://fw.moe.edu.tw/"
+          style: "btn-outline"
+    - title: "技專校院招生委員會聯合會"
+      content: "針對想深耕實務技能的孩子，探索技職體系的各類入學管道與資訊。"
+      icon: "lucide:wrench"
+      buttons:
+        - text: "查看技職路徑"
+          link: "https://www.techadmi.edu.tw/"
+          style: "btn-outline"
+
+# CTA
+cta:
+  title: "讓天賦在最適宜的土壤發芽"
+  subtitle: "我們擅長協助孩子整理多年的學習歷程，將華德福的專題轉化為強大的升學優勢。"
+  button_text: "了解特殊選才全攻略"

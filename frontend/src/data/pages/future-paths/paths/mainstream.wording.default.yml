@@ -99,3 +99,34 @@ parent_guide:
 advice:
   title: 家長轉銜心得分享
   content: "不要將孩子視為待修補的產品。我們鼓勵他發揮圖文整合能力做筆記，後來他在探究實作課程大放異彩，找回了自信。"
+# 7. 外部參考資料
+external_resources:
+  title: 外部參考資料
+  items:
+    - title: "國中教育會考：簡章與最新消息"
+      content: "了解主流高中入學的最主要管道，包含考試時程與分發規則。"
+      icon: "lucide:external-link"
+      buttons:
+        - text: "前往官方網站"
+          link: "https://cap.rcpet.edu.tw/"
+          style: "btn-outline"
+    - title: "特殊選才：華德福生的升學利器"
+      content: "報導華德福畢業生如何透過「特殊選才」進入頂尖大學，避開單一會考競爭。"
+      icon: "lucide:newspaper"
+      buttons:
+        - text: "閱讀報導案例"
+          link: "https://www.parenting.com.tw/article/5097946"
+          style: "btn-outline"
+    - title: "升學銜接 7 問：跨體制適應指南"
+      content: "親子天下整理的實驗教育銜接攻略，解答家長對學習與社交適應的常見疑惑。"
+      icon: "lucide:info"
+      buttons:
+        - text: "查看適應指南"
+          link: "https://flipedu.parenting.com.tw/article/004636"
+          style: "btn-outline"
+
+# 8. CTA
+cta:
+  title: "準備好為孩子規劃下一步了嗎？"
+  subtitle: "我們提供專業的轉軌適應諮詢，協助孩子平穩降落體制內環境。"
+  button_text: "預約轉軌適應 1-on-1 諮詢"
