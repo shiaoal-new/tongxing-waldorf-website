@@ -29,7 +29,7 @@ features:
 
 community:
   intro:
-    title: 建立支持成長的[社群]{親師共學}
+    title: 建立支持成長的社群 - 親師共學
     subtitle: 溫暖而專業的互助體系
     content: 教育不應只是學校的責任。在忙碌的城市生活中，同心致力於建立一個支援網絡，讓家長在育兒過程中不再感到孤立。我們邀請家庭走進校園，共同營造一個穩定且充滿支持力量的成長村落。
     button: 深入了解親師合作
@@ -48,7 +48,7 @@ community:
 
 videos:
   intro:
-    title: 見證學習的[真實]{紀實影片}
+    title: 見證學習的真實
     subtitle: 華德福教學現場直擊
     content: 我們透過影像紀錄，真實呈現在校園中發生的教學火花與師生對話。透過這些珍貴的鏡頭，您可以更直觀地理解華德福教育如何溫潤地與心靈接軌。
     button: 探索課程設計
@@ -64,7 +64,7 @@ videos:
 
 testimonials:
   intro:
-    title: 華德福家長與教師[見證]{深度分享}
+    title: 華德福家長與教師見證
     subtitle: 真誠而深刻的成長故事
     button: 查看詳細訪談
   items:
@@ -98,7 +98,7 @@ testimonials:
 
 faq:
   intro:
-    title: 常見問答整理與[解惑]{FAQ}
+    title: 常見問答整理與解惑
     subtitle: 關於入學與教學的詳細說明
     content: 針對學費結構、畢業銜接及課程設計等家長關切議題，我們提供詳盡且透明的說明，協助您做出最適合家庭與孩子的教育抉擇。
 
