@@ -40,7 +40,7 @@ function getAvailablePages() {
     // 1. 從資料目錄獲取 (動態路由)
     if (fs.existsSync(PAGES_DATA_DIR)) {
         fs.readdirSync(PAGES_DATA_DIR).forEach(file => {
-            if (file.endsWith('.yml') || file.endsWith('.yaml') || file.endsWith('.md')) {
+            if ((file.endsWith('.yml') || file.endsWith('.yaml') || file.endsWith('.md')) && !file.includes('.wording.')) {
                 const slug = file.replace(/\.(yml|yaml|md)$/, '');
                 if (!excludedSlugs.includes(slug) && !pages.includes(`/${slug}`)) {
                     pages.push(`/${slug}`);

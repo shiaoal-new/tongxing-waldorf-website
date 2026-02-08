@@ -71,7 +71,7 @@ async function generateSitemap() {
     if (fs.existsSync(DATA_PAGES_DIR)) {
         const pageFiles = await glob('*.yml', { cwd: DATA_PAGES_DIR });
         for (const file of pageFiles) {
-            if (file === 'index.yml') continue;
+            if (file === 'index.yml' || file.includes('.wording.')) continue;
             const slug = file.replace('.yml', '');
             addUrl(`/${slug}`, path.join(DATA_PAGES_DIR, file), 0.8, 'weekly');
         }
@@ -81,6 +81,7 @@ async function generateSitemap() {
     if (fs.existsSync(DATA_COURSES_DIR)) {
         const courseFiles = await glob('*.yml', { cwd: DATA_COURSES_DIR });
         for (const file of courseFiles) {
+            if (file.includes('.wording.')) continue;
             const slug = file.replace('.yml', '');
             addUrl(`/courses/${slug}`, path.join(DATA_COURSES_DIR, file), 0.8, 'monthly');
         }
