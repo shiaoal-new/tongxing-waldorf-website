@@ -1,77 +1,77 @@
-title: title
+title: $title
 slug: curriculum-development
-content: content
+content: $content
 hero:
   media_list:
     - type: image
       image: /img/curriculum-hero.webp
-  title: hero.title
-  subtitle: hero.subtitle
-  content: hero.content
+  title: $hero.title
+  subtitle: $hero.subtitle
+  content: $hero.content
   layout: "Hero: 左下方文字方塊 (首頁風格)"
 sections:
   - section_id: core-vision
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: core-vision.blocks.0.title
-        content: core-vision.blocks.0.content
+        title: $core-vision.blocks.0.title
+        content: $core-vision.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: core-vision.blocks.1.items.0.title
+          - title: $core-vision.blocks.1.items.0.title
             span: 4
             color: "#7e22ce"
             icon: lucide:hammer
-            content: core-vision.blocks.1.items.0.content
+            content: $core-vision.blocks.1.items.0.content
             media:
               type: lottie
               lottie: /lottie/SculptingArt.lottie
-          - title: core-vision.blocks.1.items.1.title
+          - title: $core-vision.blocks.1.items.1.title
             span: 4
             color: "#fb7185"
             icon: lucide:palette
-            content: core-vision.blocks.1.items.1.content
+            content: $core-vision.blocks.1.items.1.content
             media:
               type: lottie
               lottie: /lottie/Painting.lottie
-          - title: core-vision.blocks.1.items.2.title
+          - title: $core-vision.blocks.1.items.2.title
             span: 4
             color: "#38bdf8"
             icon: lucide:brain
-            content: core-vision.blocks.1.items.2.content
+            content: $core-vision.blocks.1.items.2.content
             media:
               type: lottie
               lottie: /lottie/Thinking.lottie
-          - title: core-vision.blocks.1.items.3.title
+          - title: $core-vision.blocks.1.items.3.title
             span: 12
             color: "#f59e0b"
             icon: lucide:scale
             media:
               type: image
               image: /img/curriculum-development/balance.webp
-            content: core-vision.blocks.1.items.3.content
+            content: $core-vision.blocks.1.items.3.content
 
   - section_id: curriculum-continuity
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: curriculum-continuity.blocks.0.title
-        content: curriculum-continuity.blocks.0.content
+        title: $curriculum-continuity.blocks.0.title
+        content: $curriculum-continuity.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: curriculum-continuity.blocks.1.items.0.title
+          - title: $curriculum-continuity.blocks.1.items.0.title
             icon: lucide:refresh-cw
-            content: curriculum-continuity.blocks.1.items.0.content
-          - title: curriculum-continuity.blocks.1.items.1.title
+            content: $curriculum-continuity.blocks.1.items.0.content
+          - title: $curriculum-continuity.blocks.1.items.1.title
             icon: lucide:users
-            content: curriculum-continuity.blocks.1.items.1.content
-          - title: curriculum-continuity.blocks.1.items.2.title
+            content: $curriculum-continuity.blocks.1.items.1.content
+          - title: $curriculum-continuity.blocks.1.items.2.title
             icon: lucide:layers
-            content: curriculum-continuity.blocks.1.items.2.content
+            content: $curriculum-continuity.blocks.1.items.2.content
 
   - section_id: curriculum-main
     blocks:
@@ -79,39 +79,39 @@ sections:
   - section_id: senior-transition
     blocks:
       - type: text_block
-        title: senior-transition.blocks.0.title
-        content: senior-transition.blocks.0.content
+        title: $senior-transition.blocks.0.title
+        content: $senior-transition.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: senior-transition.blocks.1.items.0.title
+          - title: $senior-transition.blocks.1.items.0.title
             subtitle: Grade Projects
             icon: lucide:presentation
-            content: senior-transition.blocks.1.items.0.content
-          - title: senior-transition.blocks.1.items.1.title
+            content: $senior-transition.blocks.1.items.0.content
+          - title: $senior-transition.blocks.1.items.1.title
             subtitle: Academic Preparation
             icon: lucide:laptop
-            content: senior-transition.blocks.1.items.1.content
-          - title: senior-transition.blocks.1.items.2.title
+            content: $senior-transition.blocks.1.items.1.content
+          - title: $senior-transition.blocks.1.items.2.title
             subtitle: Crafts & Willpower
             icon: lucide:hammer
-            content: senior-transition.blocks.1.items.2.content
+            content: $senior-transition.blocks.1.items.2.content
   - section_id: parent-sharing
     layout: 突出標題風格
     blocks:
       - type: text_block
-        title: parent-sharing.blocks.0.title
-        content: parent-sharing.blocks.0.content
+        title: $parent-sharing.blocks.0.title
+        content: $parent-sharing.blocks.0.content
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: cta.blocks.0.title
-        content: cta.blocks.0.content
+        title: $cta.blocks.0.title
+        content: $cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: cta.blocks.1.buttons.0.text
+          - text: $cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white
         subtitle: 下一步

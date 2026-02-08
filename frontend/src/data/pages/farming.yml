@@ -1,12 +1,12 @@
-title: "seo.title"
+title: "$seo.title"
 slug: farming
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "$seo.title"
+  description: "$seo.description"
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  accent_text: "$hero.accent_text"
   media_list:
     - type: image
       image: /img/farming/hero.webp
@@ -21,23 +21,23 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "willpower.title"
-        subtitle: "willpower.subtitle"
-        content: "willpower.content"
+        title: "$willpower.title"
+        subtitle: "$willpower.subtitle"
+        content: "$willpower.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "willpower.item_crisis.title"
+          - title: "$willpower.item_crisis.title"
             span: 6
-            content: "willpower.item_crisis.content"
+            content: "$willpower.item_crisis.content"
             icon: lucide:anchor
             media:
               type: image
               image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
-          - title: "willpower.item_practice.title"
+          - title: "$willpower.item_practice.title"
             span: 6
-            content: "willpower.item_practice.content"
+            content: "$willpower.item_practice.content"
             icon: lucide:hammer
             media:
               type: image
@@ -48,44 +48,44 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "spiral.title"
-        subtitle: "spiral.subtitle"
-        content: "spiral.content"
+        title: "$spiral.title"
+        subtitle: "$spiral.subtitle"
+        content: "$spiral.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "spiral.item_creation.title"
+          - title: "$spiral.item_creation.title"
             span: 4
-            content: "spiral.item_creation.content"
+            content: "$spiral.item_creation.content"
             icon: lucide:layers
-          - title: "spiral.item_bd.title"
+          - title: "$spiral.item_bd.title"
             span: 4
-            content: "spiral.item_bd.content"
+            content: "$spiral.item_bd.content"
             icon: lucide:heart-pulse
-          - title: "spiral.item_respect.title"
+          - title: "$spiral.item_respect.title"
             span: 4
-            content: "spiral.item_respect.content"
+            content: "$spiral.item_respect.content"
             icon: lucide:peace
 
   - section_id: horticulture
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "horticulture.title"
-        subtitle: "horticulture.subtitle"
-        content: "horticulture.content"
+        title: "$horticulture.title"
+        subtitle: "$horticulture.subtitle"
+        content: "$horticulture.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "horticulture.item_integration.title"
+          - title: "$horticulture.item_integration.title"
             span: 6
-            content: "horticulture.item_integration.content"
+            content: "$horticulture.item_integration.content"
             icon: lucide:microscope
-          - title: "horticulture.item_technique.title"
+          - title: "$horticulture.item_technique.title"
             span: 6
-            content: "horticulture.item_technique.content"
+            content: "$horticulture.item_technique.content"
             icon: lucide:scissors
 
   - section_id: community
@@ -93,20 +93,20 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "community.title"
-        subtitle: "community.subtitle"
-        content: "community.content"
+        title: "$community.title"
+        subtitle: "$community.subtitle"
+        content: "$community.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "community.item_cooperation.title"
+          - title: "$community.item_cooperation.title"
             span: 6
-            content: "community.item_cooperation.content"
+            content: "$community.item_cooperation.content"
             icon: lucide:hand-metal
-          - title: "community.item_cycle.title"
+          - title: "$community.item_cycle.title"
             span: 6
-            content: "community.item_cycle.content"
+            content: "$community.item_cycle.content"
             icon: lucide:utensils
 
   - section_id: final
@@ -116,10 +116,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "summary.title"
-        content: "summary.content"
+        title: "$summary.title"
+        content: "$summary.content"
       - type: cta_block
         buttons:
-          - text: "summary.button"
+          - text: "$summary.button"
             link: /
             style: btn-inverse

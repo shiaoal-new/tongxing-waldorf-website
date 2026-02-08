@@ -1,12 +1,12 @@
-title: "intro.seo.title"
+title: "$intro.seo.title"
 slug: future-paths
 seo:
-  title: "intro.seo.title"
-  description: "intro.seo.description"
+  title: "$intro.seo.title"
+  description: "$intro.seo.description"
 hero:
-  title: "intro.hero.title"
-  subtitle: "intro.hero.subtitle"
-  accent_text: "intro.hero.accent_text"
+  title: "$intro.hero.title"
+  subtitle: "$intro.hero.subtitle"
+  accent_text: "$intro.hero.accent_text"
   media_list:
     - type: image
       image: /img/future-paths/hero.webp
@@ -22,14 +22,14 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "overview.title"
+        title: "$overview.title"
         layout: centered
       - type: text_block
-        title: "overview.distribution.title"
-        content: "overview.distribution.content"
+        title: "$overview.distribution.title"
+        content: "$overview.distribution.content"
       - type: pie_chart_block
-        title: "overview.distribution.chart_title"
-        data: "overview.distribution.data"
+        title: "$overview.distribution.chart_title"
+        data: "$overview.distribution.data"
 
   # Pillar 2: 深度比較與分析
   - section_id: pillar_analysis
@@ -37,49 +37,49 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "analysis.comparison.title"
-        subtitle: "analysis.comparison.subtitle"
-        content: "analysis.comparison.content"
+        title: "$analysis.comparison.title"
+        subtitle: "$analysis.comparison.subtitle"
+        content: "$analysis.comparison.content"
       - type: radar_chart_block
-        title: "analysis.comparison.chart_title"
-        labels: "analysis.comparison.radar.labels"
-        datasets: "analysis.comparison.radar.datasets"
+        title: "$analysis.comparison.chart_title"
+        labels: "$analysis.comparison.radar.labels"
+        datasets: "$analysis.comparison.radar.datasets"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "analysis.comparison.waldorf.title"
+          - title: "$analysis.comparison.waldorf.title"
             span: 4
-            content: "analysis.comparison.waldorf.content"
+            content: "$analysis.comparison.waldorf.content"
             icon: lucide:heart
-          - title: "analysis.comparison.mainstream.title"
+          - title: "$analysis.comparison.mainstream.title"
             span: 4
-            content: "analysis.comparison.mainstream.content"
+            content: "$analysis.comparison.mainstream.content"
             icon: lucide:graduation-cap
-          - title: "analysis.comparison.vocational.title"
+          - title: "$analysis.comparison.vocational.title"
             span: 4
-            content: "analysis.comparison.vocational.content"
+            content: "$analysis.comparison.vocational.content"
             icon: lucide:hammer
       - type: text_block
-        title: "analysis.advice.title"
+        title: "$analysis.advice.title"
         layout: centered
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: "analysis.advice.parent.title"
-            subtitle: "analysis.advice.parent.badge"
-            content: "analysis.advice.parent.content"
+          - title: "$analysis.advice.parent.title"
+            subtitle: "$analysis.advice.parent.badge"
+            content: "$analysis.advice.parent.content"
             icon: lucide:users
             span: 4
-          - title: "analysis.advice.student.title"
-            subtitle: "analysis.advice.student.badge"
-            content: "analysis.advice.student.content"
+          - title: "$analysis.advice.student.title"
+            subtitle: "$analysis.advice.student.badge"
+            content: "$analysis.advice.student.content"
             icon: lucide:palette
             span: 4
-          - title: "analysis.advice.vocational.title"
-            subtitle: "analysis.advice.vocational.badge"
-            content: "analysis.advice.vocational.content"
+          - title: "$analysis.advice.vocational.title"
+            subtitle: "$analysis.advice.vocational.badge"
+            content: "$analysis.advice.vocational.content"
             icon: lucide:hammer
             span: 4
 
@@ -89,8 +89,8 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "paths.title"
-        subtitle: "paths.subtitle"
+        title: "$paths.title"
+        subtitle: "$paths.subtitle"
         layout: centered
       - type: interactive_switcher_block
         options:
@@ -106,10 +106,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "footer.summary.title"
-        content: "footer.summary.content"
+        title: "$footer.summary.title"
+        content: "$footer.summary.content"
       - type: cta_block
         buttons:
-          - text: "footer.summary.button"
+          - text: "$footer.summary.button"
             link: /
             style: btn-inverse

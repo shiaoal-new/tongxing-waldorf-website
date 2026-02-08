@@ -1,12 +1,12 @@
-title: "seo.title"
+title: "$seo.title"
 slug: clay-modeling
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "$seo.title"
+  description: "$seo.description"
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  accent_text: "$hero.accent_text"
   media_list:
     - type: image
       image: /img/clay-modeling/hero.webp
@@ -21,20 +21,20 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "concept.title"
-        subtitle: "concept.subtitle"
-        content: "concept.content"
+        title: "$concept.title"
+        subtitle: "$concept.subtitle"
+        content: "$concept.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "concept.item_non_talent.title"
+          - title: "$concept.item_non_talent.title"
             span: 6
-            content: "concept.item_non_talent.content"
+            content: "$concept.item_non_talent.content"
             icon: lucide:heart
-          - title: "concept.item_breathing.title"
+          - title: "$concept.item_breathing.title"
             span: 6
-            content: "concept.item_breathing.content"
+            content: "$concept.item_breathing.content"
             icon: lucide:wind
 
   - section_id: grades
@@ -42,22 +42,22 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "grades.title"
-        subtitle: "grades.subtitle"
+        title: "$grades.title"
+        subtitle: "$grades.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "grades.g4.title"
+          - title: "$grades.g4.title"
             span: 6
-            content: "grades.g4.content"
+            content: "$grades.g4.content"
             icon: lucide:dog
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
-          - title: "grades.g5.title"
+          - title: "$grades.g5.title"
             span: 6
-            content: "grades.g5.content"
+            content: "$grades.g5.content"
             icon: lucide:user
             media:
               type: image
@@ -67,23 +67,23 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "features.title"
-        subtitle: "features.subtitle"
+        title: "$features.title"
+        subtitle: "$features.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "features.item_hands.title"
+          - title: "$features.item_hands.title"
             span: 4
-            content: "features.item_hands.content"
+            content: "$features.item_hands.content"
             icon: lucide:hand
-          - title: "features.item_will.title"
+          - title: "$features.item_will.title"
             span: 4
-            content: "features.item_will.content"
+            content: "$features.item_will.content"
             icon: lucide:zap
-          - title: "features.item_inner_image.title"
+          - title: "$features.item_inner_image.title"
             span: 4
-            content: "features.item_inner_image.content"
+            content: "$features.item_inner_image.content"
             icon: lucide:lightbulb
 
   - section_id: final
@@ -93,10 +93,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "summary.title"
-        content: "summary.content"
+        title: "$summary.title"
+        content: "$summary.content"
       - type: cta_block
         buttons:
-          - text: "summary.button"
+          - text: "$summary.button"
             link: /
             style: btn-inverse

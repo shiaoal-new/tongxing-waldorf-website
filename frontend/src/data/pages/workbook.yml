@@ -1,12 +1,12 @@
-title: "seo.title"
+title: "$seo.title"
 slug: workbook
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "$seo.title"
+  description: "$seo.description"
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  accent_text: "$hero.accent_text"
   media_list:
     - type: image
       image: /img/workbook/workbook02.webp
@@ -21,30 +21,30 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "concept.title"
-        subtitle: "concept.subtitle"
-        content: "concept.content"
+        title: "$concept.title"
+        subtitle: "$concept.subtitle"
+        content: "$concept.content"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "path.item_internalization.title"
+          - title: "$path.item_internalization.title"
             span: 4
-            content: "path.item_internalization.content"
+            content: "$path.item_internalization.content"
             icon: lucide:brain
             media:
               type: image
               image: /img/workbook/blackboard01.webp
-          - title: "path.item_connection.title"
+          - title: "$path.item_connection.title"
             span: 4
-            content: "path.item_connection.content"
+            content: "$path.item_connection.content"
             icon: lucide:sparkles
             media:
               type: image
               image: /img/workbook/blackboard02.webp
-          - title: "path.item_expression.title"
+          - title: "$path.item_expression.title"
             span: 4
-            content: "path.item_expression.content"
+            content: "$path.item_expression.content"
             icon: lucide:palette
             media:
               type: image
@@ -55,44 +55,44 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "assessment.title"
-        subtitle: "assessment.subtitle"
-        content: "assessment.content"
+        title: "$assessment.title"
+        subtitle: "$assessment.subtitle"
+        content: "$assessment.content"
       - type: list_block
         layout_method: vertical
         item_type: feature_item
         items:
-          - title: "assessment.item_observation.title"
-            content: "assessment.item_observation.content"
+          - title: "$assessment.item_observation.title"
+            content: "$assessment.item_observation.content"
             icon: lucide:eye
-          - title: "assessment.item_protection.title"
-            content: "assessment.item_protection.content"
+          - title: "$assessment.item_protection.title"
+            content: "$assessment.item_protection.content"
             icon: lucide:heart-handshake
 
   - section_id: grades
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "grades.title"
-        subtitle: "grades.subtitle"
+        title: "$grades.title"
+        subtitle: "$grades.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "grades.low.title"
+          - title: "$grades.low.title"
             span: 4
-            content: "grades.low.content"
+            content: "$grades.low.content"
             icon: lucide:pencil
             media:
               type: image
               image: /img/workbook/workbook04.webp
-          - title: "grades.mid.title"
+          - title: "$grades.mid.title"
             span: 4
-            content: "grades.mid.content"
+            content: "$grades.mid.content"
             icon: lucide:map
-          - title: "grades.high.title"
+          - title: "$grades.high.title"
             span: 4
-            content: "grades.high.content"
+            content: "$grades.high.content"
             icon: lucide:microscope
 
   - section_id: final
@@ -102,10 +102,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "summary.title"
-        content: "summary.content"
+        title: "$summary.title"
+        content: "$summary.content"
       - type: cta_block
         buttons:
-          - text: "summary.button"
+          - text: "$summary.button"
             link: /
             style: btn-inverse

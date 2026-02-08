@@ -1,8 +1,8 @@
-title: title
+title: $title
 slug: eurythmy
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
+  title: $hero.title
+  subtitle: $hero.subtitle
   media_list:
     - type: image
       image: /img/featured-artistic.webp
@@ -12,86 +12,86 @@ sections:
   - section_id: origin
     blocks:
       - type: text_block
-        title: origin.title
-        content: origin.content
+        title: $origin.title
+        content: $origin.content
 
   - section_id: core-principles
     blocks:
       - type: text_block
-        title: core.title
-        content: core.content
+        title: $core.title
+        content: $core.content
 
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: speech.title
+          - title: $speech.title
             icon: mdi:message-text-outline
-            content: speech.content
+            content: $speech.content
             sub_items:
-              - title: speech.vowels.title
-                content: speech.vowels.content
-              - title: speech.consonants.title
-                content: speech.consonants.content
-          - title: music.title
+              - title: $speech.vowels.title
+                content: $speech.vowels.content
+              - title: $speech.consonants.title
+                content: $speech.consonants.content
+          - title: $music.title
             icon: mdi:music
-            content: music.content
+            content: $music.content
             sub_items:
-              - title: music.intervals.title
-                content: music.intervals.content
+              - title: $music.intervals.title
+                content: $music.intervals.content
 
   - section_id: education
     blocks:
       - type: list_block
         layout_method: vertical
-        title: education.title
+        title: $education.title
         item_type: feature_item
         items:
-          - title: grade1_3.title
+          - title: $grade1_3.title
             icon: mdi:child-variant
-            content: grade1_3.content
+            content: $grade1_3.content
             sub_items:
-              - title: grade1_3.g1.title
-                content: grade1_3.g1.content
-              - title: grade1_3.g2.title
-                content: grade1_3.g2.content
-              - title: grade1_3.g3.title
-                content: grade1_3.g3.content
-          - title: grade4_6.title
+              - title: $grade1_3.g1.title
+                content: $grade1_3.g1.content
+              - title: $grade1_3.g2.title
+                content: $grade1_3.g2.content
+              - title: $grade1_3.g3.title
+                content: $grade1_3.g3.content
+          - title: $grade4_6.title
             icon: mdi:vector-rectangle
-            content: grade4_6.content
+            content: $grade4_6.content
             sub_items:
-              - title: grade4_6.g4.title
-                content: grade4_6.g4.content
-              - title: grade4_6.g5.title
-                content: grade4_6.g5.content
-              - title: grade4_6.g6.title
-                content: grade4_6.g6.content
-          - title: grade7_12.title
+              - title: $grade4_6.g4.title
+                content: $grade4_6.g4.content
+              - title: $grade4_6.g5.title
+                content: $grade4_6.g5.content
+              - title: $grade4_6.g6.title
+                content: $grade4_6.g6.content
+          - title: $grade7_12.title
             icon: mdi:human-handsup
-            content: grade7_12.content
+            content: $grade7_12.content
             sub_items:
-              - title: grade7_12.g7.title
-                content: grade7_12.g7.content
-              - title: grade7_12.g11.title
-                content: grade7_12.g11.content
+              - title: $grade7_12.g7.title
+                content: $grade7_12.g7.content
+              - title: $grade7_12.g11.title
+                content: $grade7_12.g11.content
 
   - section_id: adult-healing
     blocks:
       - type: text_block
-        title: adult.title
-        content: adult.content
+        title: $adult.title
+        content: $adult.content
 
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: adult.tuning.title
+          - title: $adult.tuning.title
             icon: mdi:tune-variant
-            content: adult.tuning.content
-          - title: adult.connection.title
+            content: $adult.tuning.content
+          - title: $adult.connection.title
             icon: mdi:earth
-            content: adult.connection.content
-          - title: adult.healing.title
+            content: $adult.connection.content
+          - title: $adult.healing.title
             icon: mdi:heart-pulse
-            content: adult.healing.content
+            content: $adult.healing.content

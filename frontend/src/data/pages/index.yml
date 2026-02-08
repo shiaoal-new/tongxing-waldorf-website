@@ -1,15 +1,15 @@
-title: "seo.title"
+title: "$seo.title"
 slug: index
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "$seo.title"
+  description: "$seo.description"
   keywords: 同心華德福, 台北實驗教育, 華德福教育, 深坑教育, 全人教育, 九年一貫, 108課綱
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  accent_text: "$hero.accent_text"
   buttons:
-    - text: "hero.button_visit"
+    - text: "$hero.button_visit"
       link: /visit
       style: btn-primary
   media_list:
@@ -28,11 +28,11 @@ sections:
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
-        title: "features.intro.title"
-        subtitle: "features.intro.subtitle"
-        content: "features.intro.content"
+        title: "$features.intro.title"
+        subtitle: "$features.intro.subtitle"
+        content: "$features.intro.content"
         buttons:
-          - text: "features.intro.button"
+          - text: "$features.intro.button"
             link: /timeline
             style: btn-outline-primary
       - type: list_block
@@ -40,49 +40,49 @@ sections:
         item_type: feature_item
         align: center
         items:
-          - title: "features.item_university.title"
+          - title: "$features.item_university.title"
             span: 4
-            content: "features.item_university.content"
+            content: "$features.item_university.content"
             icon: lucide:school
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
             buttons:
-              - text: "features.item_university.button"
+              - text: "$features.item_university.button"
                 link: /visit
                 style: btn-sm-outline
-          - title: "features.item_curriculum.title"
+          - title: "$features.item_curriculum.title"
             span: 4
-            content: "features.item_curriculum.content"
+            content: "$features.item_curriculum.content"
             icon: lucide:hand
             media:
               type: image
               image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
             buttons:
-              - text: "features.item_curriculum.button"
+              - text: "$features.item_curriculum.button"
                 link: /philosophy
                 style: btn-sm-outline
-          - title: "features.item_marathon.title"
+          - title: "$features.item_marathon.title"
             span: 4
-            content: "features.item_marathon.content"
+            content: "$features.item_marathon.content"
             icon: lucide:flame
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
             buttons:
-              - text: "features.item_marathon.button"
+              - text: "$features.item_marathon.button"
                 link: /featured-courses
                 style: btn-sm-outline
   - section_id: community
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
-        title: "community.intro.title"
-        subtitle: "community.intro.subtitle"
-        content: "community.intro.content"
+        title: "$community.intro.title"
+        subtitle: "$community.intro.subtitle"
+        content: "$community.intro.content"
       - type: cta_block
         buttons:
-          - text: "community.intro.button"
+          - text: "$community.intro.button"
             link: /philosophy
             style: btn-primary
       - type: list_block
@@ -90,74 +90,74 @@ sections:
         item_type: feature_item
         align: center
         items:
-          - title: "community.item_connection.title"
+          - title: "$community.item_connection.title"
             span: 4
-            content: "community.item_connection.content"
+            content: "$community.item_connection.content"
             icon: "lucide:users"
             media:
               type: image
               image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
             buttons:
-              - text: "community.item_connection.button"
+              - text: "$community.item_connection.button"
                 link: /teacher-group
                 style: btn-sm-outline
-          - title: "community.item_support.title"
+          - title: "$community.item_support.title"
             span: 4
-            content: "community.item_support.content"
+            content: "$community.item_support.content"
             icon: "lucide:message-square"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
             buttons:
-              - text: "community.item_support.button"
+              - text: "$community.item_support.button"
                 link: /rhythm-of-life
                 style: btn-sm-outline
-          - title: "community.item_secure.title"
+          - title: "$community.item_secure.title"
             span: 4
-            content: "community.item_secure.content"
+            content: "$community.item_secure.content"
             icon: "lucide:heart"
             media:
               type: image
               image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
             buttons:
-              - text: "community.item_secure.button"
+              - text: "$community.item_secure.button"
                 link: /donation
                 style: btn-sm-outline
   - section_id: videos
     blocks:
       - type: text_block
-        title: "videos.intro.title"
-        subtitle: "videos.intro.subtitle"
-        content: "videos.intro.content"
+        title: "$videos.intro.title"
+        subtitle: "$videos.intro.subtitle"
+        content: "$videos.intro.content"
         buttons:
-          - text: "videos.intro.button"
+          - text: "$videos.intro.button"
             link: /featured-courses
             style: btn-outline-primary
       - type: list_block
         layout_method: bento_grid
         item_type: video_item
         items:
-          - title: "videos.item_essence.title"
+          - title: "$videos.item_essence.title"
             span: 4
             media:
               type: youtube
               url: https://youtu.be/oermgcwIkC8
             duration: "08:05"
-            content: "videos.item_essence.content"
-          - title: "videos.item_golden_line.title"
+            content: "$videos.item_essence.content"
+          - title: "$videos.item_golden_line.title"
             span: 4
             media:
               type: youtube
               url: https://youtu.be/atLmqSjhnxs
             duration: "02:47"
-            content: "videos.item_golden_line.content"
-          - title: "videos.item_revolution.title"
+            content: "$videos.item_golden_line.content"
+          - title: "$videos.item_revolution.title"
             span: 4
             media:
               type: youtube
               url: https://youtu.be/-kLpchWvdh4
             duration: "04:40"
-            content: "videos.item_revolution.content"
+            content: "$videos.item_revolution.content"
   - section_id: testimonials
     silk_background: true
     divider:
@@ -168,75 +168,75 @@ sections:
       background: bg-neutral-50 dark:bg-neutral-950
     blocks:
       - type: text_block
-        title: "testimonials.intro.title"
-        subtitle: "testimonials.intro.subtitle"
+        title: "$testimonials.intro.title"
+        subtitle: "$testimonials.intro.subtitle"
         buttons:
-          - text: "testimonials.intro.button"
+          - text: "$testimonials.intro.button"
             link: /philosophy
             style: btn-outline-primary
       - type: list_block
         layout_method: testimonial_carousel
         item_type: testimonial_item
         items:
-          - quote: testimonials.items.0.quote
-            author: testimonials.items.0.author
-            title: testimonials.items.0.title
+          - quote: $testimonials.items.0.quote
+            author: $testimonials.items.0.author
+            title: $testimonials.items.0.title
             media:
               type: image
               image: /img/featured-academic.webp
             span: 4
-          - quote: testimonials.items.1.quote
-            author: testimonials.items.1.author
-            title: testimonials.items.1.title
+          - quote: $testimonials.items.1.quote
+            author: $testimonials.items.1.author
+            title: $testimonials.items.1.title
             media:
               type: image
               image: /img/featured-social.webp
             span: 4
-          - quote: testimonials.items.2.quote
-            author: testimonials.items.2.author
-            title: testimonials.items.2.title
+          - quote: $testimonials.items.2.quote
+            author: $testimonials.items.2.author
+            title: $testimonials.items.2.title
             media:
               type: image
               image: /img/featured-willpower.webp
             span: 4
-          - quote: testimonials.items.3.quote
-            author: testimonials.items.3.author
-            title: testimonials.items.3.title
+          - quote: $testimonials.items.3.quote
+            author: $testimonials.items.3.author
+            title: $testimonials.items.3.title
             media:
               type: image
               image: /img/featured-protection.webp
             span: 4
-          - quote: testimonials.items.4.quote
-            author: testimonials.items.4.author
-            title: testimonials.items.4.title
+          - quote: $testimonials.items.4.quote
+            author: $testimonials.items.4.author
+            title: $testimonials.items.4.title
             media:
               type: image
               image: /img/featured-artistic.webp
             span: 4
-          - quote: testimonials.items.5.quote
-            author: testimonials.items.5.author
-            title: testimonials.items.5.title
+          - quote: $testimonials.items.5.quote
+            author: $testimonials.items.5.author
+            title: $testimonials.items.5.title
             media:
               type: image
               image: /img/featured-exploration.webp
             span: 4
-          - quote: testimonials.items.6.quote
-            author: testimonials.items.6.author
-            title: testimonials.items.6.title
+          - quote: $testimonials.items.6.quote
+            author: $testimonials.items.6.author
+            title: $testimonials.items.6.title
             media:
               type: image
               image: /img/featured-nature.webp
             span: 4
-          - quote: testimonials.items.7.quote
-            author: testimonials.items.7.author
-            title: testimonials.items.7.title
+          - quote: $testimonials.items.7.quote
+            author: $testimonials.items.7.author
+            title: $testimonials.items.7.title
             media:
               type: image
               image: /img/featured-outdoor.webp
             span: 4
-          - quote: testimonials.items.8.quote
-            author: testimonials.items.8.author
-            title: testimonials.items.8.title
+          - quote: $testimonials.items.8.quote
+            author: $testimonials.items.8.author
+            title: $testimonials.items.8.title
             avatar: /img/teacher-photos/詹雅智.webp
             media:
               type: image
@@ -245,9 +245,9 @@ sections:
   - section_id: faq
     blocks:
       - type: text_block
-        title: "faq.intro.title"
-        subtitle: "faq.intro.subtitle"
-        content: "faq.intro.content"
+        title: "$faq.intro.title"
+        subtitle: "$faq.intro.subtitle"
+        content: "$faq.intro.content"
       - type: list_block
         layout_method: vertical
         item_type: faq_item
@@ -261,10 +261,10 @@ sections:
   - layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: "cta_bottom.title"
-        content: "cta_bottom.content"
+        title: "$cta_bottom.title"
+        content: "$cta_bottom.content"
       - type: cta_block
         buttons:
-          - text: "cta_bottom.button"
+          - text: "$cta_bottom.button"
             link: /visit
             style: btn-inverse

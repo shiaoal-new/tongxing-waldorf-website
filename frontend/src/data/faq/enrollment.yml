@@ -1,3 +1,3 @@
-title: "faq.enrollment.title"
-content: "faq.enrollment.content"
+title: "$faq.enrollment.title"
+content: "$faq.enrollment.content"
 order: 4

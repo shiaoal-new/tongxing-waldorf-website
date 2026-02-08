@@ -1,8 +1,8 @@
-title: title
+title: $title
 slug: featured-courses
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
+  title: $hero.title
+  subtitle: $hero.subtitle
   media_list:
     - type: image
       image: /img/featured-outdoor.webp
@@ -11,122 +11,122 @@ sections:
   - section_id: curriculum-intro
     blocks:
       - type: text_block
-        title: curriculum-intro.blocks.0.title
-        content: curriculum-intro.blocks.0.content
+        title: $curriculum-intro.blocks.0.title
+        content: $curriculum-intro.blocks.0.content
   - section_id: course-list
     blocks:
       - type: list_block
         layout_method: masonry_grid
         item_type: feature_item
         items:
-          - title: course-list.blocks.0.items.0.title
+          - title: $course-list.blocks.0.items.0.title
             icon: ph:brain-bold
-            content: course-list.blocks.0.items.0.content
+            content: $course-list.blocks.0.items.0.content
             media:
               type: image
               image: /img/featured-academic.webp
             sub_items:
-              - title: course-list.blocks.0.items.0.sub_items.0.title
-                content: course-list.blocks.0.items.0.sub_items.0.content
+              - title: $course-list.blocks.0.items.0.sub_items.0.title
+                content: $course-list.blocks.0.items.0.sub_items.0.content
                 icon: ph:book-open-text-bold
-              - title: course-list.blocks.0.items.0.sub_items.1.title
-                content: course-list.blocks.0.items.0.sub_items.1.content
+              - title: $course-list.blocks.0.items.0.sub_items.1.title
+                content: $course-list.blocks.0.items.0.sub_items.1.content
                 icon: ph:microscope-bold
-          - title: course-list.blocks.0.items.1.title
+          - title: $course-list.blocks.0.items.1.title
             icon: ph:palette-bold
-            content: course-list.blocks.0.items.1.content
+            content: $course-list.blocks.0.items.1.content
             media:
               type: image
               image: /img/featured-artistic.webp
             sub_items:
-              - title: course-list.blocks.0.items.1.sub_items.0.title
-                content: course-list.blocks.0.items.1.sub_items.0.content
+              - title: $course-list.blocks.0.items.1.sub_items.0.title
+                content: $course-list.blocks.0.items.1.sub_items.0.content
                 icon: ph:figure-simple-run-bold
                 buttons:
-                  - text: course-list.blocks.0.items.1.sub_items.0.buttons.0.text
+                  - text: $course-list.blocks.0.items.1.sub_items.0.buttons.0.text
                     link: "/courses/eurythmy"
                     style: btn-outline-primary
-              - title: course-list.blocks.0.items.1.sub_items.1.title
-                content: course-list.blocks.0.items.1.sub_items.1.content
+              - title: $course-list.blocks.0.items.1.sub_items.1.title
+                content: $course-list.blocks.0.items.1.sub_items.1.content
                 icon: ph:hand-fist-bold
-              - title: course-list.blocks.0.items.1.sub_items.2.title
-                content: course-list.blocks.0.items.1.sub_items.2.content
+              - title: $course-list.blocks.0.items.1.sub_items.2.title
+                content: $course-list.blocks.0.items.1.sub_items.2.content
                 icon: ph:mask-happy-bold
-              - title: course-list.blocks.0.items.1.sub_items.3.title
-                content: course-list.blocks.0.items.1.sub_items.3.content
+              - title: $course-list.blocks.0.items.1.sub_items.3.title
+                content: $course-list.blocks.0.items.1.sub_items.3.content
                 icon: ph:circle-notch-bold
-          - title: course-list.blocks.0.items.2.title
+          - title: $course-list.blocks.0.items.2.title
             icon: ph:plant-bold
-            content: course-list.blocks.0.items.2.content
+            content: $course-list.blocks.0.items.2.content
             media:
               type: image
               image: /img/featured-nature.webp
             sub_items:
-              - title: course-list.blocks.0.items.2.sub_items.0.title
-                content: course-list.blocks.0.items.2.sub_items.0.content
+              - title: $course-list.blocks.0.items.2.sub_items.0.title
+                content: $course-list.blocks.0.items.2.sub_items.0.content
                 icon: ph:leaf-bold
-              - title: course-list.blocks.0.items.2.sub_items.1.title
-                content: course-list.blocks.0.items.2.sub_items.1.content
+              - title: $course-list.blocks.0.items.2.sub_items.1.title
+                content: $course-list.blocks.0.items.2.sub_items.1.content
                 icon: ph:hammer-bold
-              - title: course-list.blocks.0.items.2.sub_items.2.title
-                content: course-list.blocks.0.items.2.sub_items.2.content
+              - title: $course-list.blocks.0.items.2.sub_items.2.title
+                content: $course-list.blocks.0.items.2.sub_items.2.content
                 icon: ph:unicycle-bold
-          - title: course-list.blocks.0.items.3.title
+          - title: $course-list.blocks.0.items.3.title
             icon: ph:mountains-bold
-            content: course-list.blocks.0.items.3.content
+            content: $course-list.blocks.0.items.3.content
             media:
               type: image
               image: /img/featured-outdoor.webp
             sub_items:
-              - title: course-list.blocks.0.items.3.sub_items.0.title
-                content: course-list.blocks.0.items.3.sub_items.0.content
+              - title: $course-list.blocks.0.items.3.sub_items.0.title
+                content: $course-list.blocks.0.items.3.sub_items.0.content
                 icon: ph:path-bold
-              - title: course-list.blocks.0.items.3.sub_items.1.title
-                content: course-list.blocks.0.items.3.sub_items.1.content
+              - title: $course-list.blocks.0.items.3.sub_items.1.title
+                content: $course-list.blocks.0.items.3.sub_items.1.content
                 icon: ph:compass-bold
-          - title: course-list.blocks.0.items.4.title
+          - title: $course-list.blocks.0.items.4.title
             icon: ph:lightbulb-bold
-            content: course-list.blocks.0.items.4.content
+            content: $course-list.blocks.0.items.4.content
             media:
               type: image
               image: /img/featured-exploration.webp
             sub_items:
-              - title: course-list.blocks.0.items.4.sub_items.0.title
-                content: course-list.blocks.0.items.4.sub_items.0.content
+              - title: $course-list.blocks.0.items.4.sub_items.0.title
+                content: $course-list.blocks.0.items.4.sub_items.0.content
                 icon: ph:article-bold
-              - title: course-list.blocks.0.items.4.sub_items.1.title
-                content: course-list.blocks.0.items.4.sub_items.1.content
+              - title: $course-list.blocks.0.items.4.sub_items.1.title
+                content: $course-list.blocks.0.items.4.sub_items.1.content
                 icon: ph:shooting-star-bold
-          - title: course-list.blocks.0.items.5.title
+          - title: $course-list.blocks.0.items.5.title
             icon: ph:music-notes-fill
-            content: course-list.blocks.0.items.5.content
+            content: $course-list.blocks.0.items.5.content
             media:
               type: image
               image: /img/featured-music.webp
             sub_items:
-              - title: course-list.blocks.0.items.5.sub_items.0.title
-                content: course-list.blocks.0.items.5.sub_items.0.content
+              - title: $course-list.blocks.0.items.5.sub_items.0.title
+                content: $course-list.blocks.0.items.5.sub_items.0.content
                 icon: ph:ear-bold
-              - title: course-list.blocks.0.items.5.sub_items.1.title
-                content: course-list.blocks.0.items.5.sub_items.1.content
+              - title: $course-list.blocks.0.items.5.sub_items.1.title
+                content: $course-list.blocks.0.items.5.sub_items.1.content
                 icon: ph:heart-bold
-              - title: course-list.blocks.0.items.5.sub_items.2.title
-                content: course-list.blocks.0.items.5.sub_items.2.content
+              - title: $course-list.blocks.0.items.5.sub_items.2.title
+                content: $course-list.blocks.0.items.5.sub_items.2.content
                 icon: ph:users-three-bold
   - section_id: conclusion
     blocks:
       - type: text_block
-        title: conclusion.blocks.0.title
-        subtitle: conclusion.blocks.0.subtitle
-        content: conclusion.blocks.0.content
+        title: $conclusion.blocks.0.title
+        subtitle: $conclusion.blocks.0.subtitle
+        content: $conclusion.blocks.0.content
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: cta.blocks.0.title
-        content: cta.blocks.0.content
+        title: $cta.blocks.0.title
+        content: $cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: cta.blocks.1.buttons.0.text
+          - text: $cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white

@@ -1,29 +1,29 @@
 id: diverse
-label: "paths.diverse.label"
+label: "$paths.diverse.label"
 icon: "lucide:rocket"
-description: "paths.diverse.desc"
+description: "$paths.diverse.desc"
 blocks:
   - type: text_block
-    title: "paths.diverse.title"
-    subtitle: "paths.diverse.subtitle"
-    content: "paths.diverse.content"
+    title: "$paths.diverse.title"
+    subtitle: "$paths.diverse.subtitle"
+    content: "$paths.diverse.content"
   - type: list_block
     layout_method: bento_grid
     item_type: feature_item
     items:
-      - title: "paths.diverse.item_special.title"
+      - title: "$paths.diverse.item_special.title"
         span: 4
-        content: "paths.diverse.item_special.content"
+        content: "$paths.diverse.item_special.content"
         icon: lucide:star
-      - title: "paths.diverse.item_global.title"
+      - title: "$paths.diverse.item_global.title"
         span: 4
-        content: "paths.diverse.item_global.content"
+        content: "$paths.diverse.item_global.content"
         icon: lucide:globe
-      - title: "paths.diverse.advice.title"
+      - title: "$paths.diverse.advice.title"
         span: 4
-        content: "paths.diverse.advice.content"
+        content: "$paths.diverse.advice.content"
         icon: lucide:wrench
-      - title: "paths.diverse.item_vocational.title"
+      - title: "$paths.diverse.item_vocational.title"
         span: 4
-        content: "paths.diverse.item_vocational.content"
+        content: "$paths.diverse.item_vocational.content"
         icon: lucide:hammer

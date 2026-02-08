@@ -1,105 +1,105 @@
 id: mainstream
-label: "paths.mainstream.label"
+label: "$paths.mainstream.label"
 icon: "lucide:graduation-cap"
-description: "paths.mainstream.desc"
+description: "$paths.mainstream.desc"
 blocks:
   - type: text_block
-    title: "paths.mainstream.title"
-    subtitle: "paths.mainstream.subtitle"
-    content: "paths.mainstream.content"
+    title: "$paths.mainstream.title"
+    subtitle: "$paths.mainstream.subtitle"
+    content: "$paths.mainstream.content"
 
   # 1. 轉回體制內更細的路徑，及比較
   - type: text_block
-    title: "paths.mainstream.path_comparison.title"
+    title: "$paths.mainstream.path_comparison.title"
     layout: centered
   - type: list_block
     layout_method: grid_cards
     item_type: feature_item
-    items: "paths.mainstream.path_comparison.items"
+    items: "$paths.mainstream.path_comparison.items"
 
   # 2. 成功、失敗案例分析
   - type: text_block
-    title: "paths.mainstream.case_analysis.title"
+    title: "$paths.mainstream.case_analysis.title"
     layout: centered
   - type: list_block
     layout_method: bento_grid
     item_type: feature_item
     items:
-      - title: "paths.mainstream.case_analysis.success.title"
+      - title: "$paths.mainstream.case_analysis.success.title"
         span: 6
-        content: "paths.mainstream.case_analysis.success.content"
+        content: "$paths.mainstream.case_analysis.success.content"
         icon: lucide:check-circle
         color: "text-green-600"
-      - title: "paths.mainstream.case_analysis.failure.title"
+      - title: "$paths.mainstream.case_analysis.failure.title"
         span: 6
-        content: "paths.mainstream.case_analysis.failure.content"
+        content: "$paths.mainstream.case_analysis.failure.content"
         icon: lucide:alert-triangle
         color: "text-red-500"
-      - title: "paths.mainstream.case_analysis.success_bridge.title"
+      - title: "$paths.mainstream.case_analysis.success_bridge.title"
         span: 6
-        content: "paths.mainstream.case_analysis.success_bridge.content"
+        content: "$paths.mainstream.case_analysis.success_bridge.content"
         icon: lucide:book-open
         color: "text-blue-500"
-      - title: "paths.mainstream.case_analysis.failure_pace.title"
+      - title: "$paths.mainstream.case_analysis.failure_pace.title"
         span: 6
-        content: "paths.mainstream.case_analysis.failure_pace.content"
+        content: "$paths.mainstream.case_analysis.failure_pace.content"
         icon: lucide:clock
         color: "text-orange-500"
 
   # 3. 轉軌成敗的關鍵因素
   - type: text_block
-    title: "paths.mainstream.success_factors_summary.title"
-    content: "paths.mainstream.success_factors_summary.content"
+    title: "$paths.mainstream.success_factors_summary.title"
+    content: "$paths.mainstream.success_factors_summary.content"
   - type: bar_chart_block
-    title: "analysis.success_factors.chart_title"
-    labels: "analysis.success_factors.bar.labels"
-    datasets: "analysis.success_factors.bar.datasets"
+    title: "$analysis.success_factors.chart_title"
+    labels: "$analysis.success_factors.bar.labels"
+    datasets: "$analysis.success_factors.bar.datasets"
     horizontal: true
   - type: text_block
     layout: centered
-    content: "analysis.success_factors.insight"
+    content: "$analysis.success_factors.insight"
 
   # 4. 準備時程表 (Timeline)
   - type: text_block
-    title: "paths.mainstream.timeline_title"
+    title: "$paths.mainstream.timeline_title"
     layout: centered
   - type: timeline_block
     items:
       - type: header
-        title: "paths.mainstream.timeline.stage1.title"
+        title: "$paths.mainstream.timeline.stage1.title"
         color: "#9C27B0" # Purple
-      - year: "paths.mainstream.timeline.8th.year"
-        title: "paths.mainstream.timeline.8th.title"
-        content: "paths.mainstream.timeline.8th.content"
+      - year: "$paths.mainstream.timeline.8th.year"
+        title: "$paths.mainstream.timeline.8th.title"
+        content: "$paths.mainstream.timeline.8th.content"
         image: "/img/future-paths/timeline_event_exploration.webp"
-      - year: "paths.mainstream.timeline.9th_up.year"
-        title: "paths.mainstream.timeline.9th_up.title"
-        content: "paths.mainstream.timeline.9th_up.content"
+      - year: "$paths.mainstream.timeline.9th_up.year"
+        title: "$paths.mainstream.timeline.9th_up.title"
+        content: "$paths.mainstream.timeline.9th_up.content"
         image: "/img/future-paths/timeline_event_balance.webp"
       - type: header
-        title: "paths.mainstream.timeline.stage2.title"
+        title: "$paths.mainstream.timeline.stage2.title"
         color: "#FF5722" # Deep Orange
-      - year: "paths.mainstream.timeline.9th_down.year"
-        title: "paths.mainstream.timeline.9th_down.title"
-        content: "paths.mainstream.timeline.9th_down.content"
+      - year: "$paths.mainstream.timeline.9th_down.year"
+        title: "$paths.mainstream.timeline.9th_down.title"
+        content: "$paths.mainstream.timeline.9th_down.content"
         image: "/img/future-paths/timeline_event_sprint.webp"
-      - year: "paths.mainstream.timeline.10th.year"
-        title: "paths.mainstream.timeline.10th.title"
-        content: "paths.mainstream.timeline.10th.content"
+      - year: "$paths.mainstream.timeline.10th.year"
+        title: "$paths.mainstream.timeline.10th.title"
+        content: "$paths.mainstream.timeline.10th.content"
         image: "/img/future-paths/timeline_event_adaptation.webp"
     show_progress_text: false
 
   # 5. 給轉軌家庭的調適建議
   - type: text_block
-    title: "paths.mainstream.parent_guide.title"
+    title: "$paths.mainstream.parent_guide.title"
     layout: centered
   - type: list_block
     layout_method: grid_cards
     item_type: feature_item
-    items: "paths.mainstream.parent_guide.items"
+    items: "$paths.mainstream.parent_guide.items"
 
   # 6. 家長轉銜心得分享
   - type: text_block
-    title: "paths.mainstream.advice.title"
-    content: "paths.mainstream.advice.content"
+    title: "$paths.mainstream.advice.title"
+    content: "$paths.mainstream.advice.content"
     layout: centered

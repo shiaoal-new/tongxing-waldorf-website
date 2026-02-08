@@ -1,9 +1,9 @@
-title: title
+title: $title
 slug: donation
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
-  accent_text: hero.accent_text
+  title: $hero.title
+  subtitle: $hero.subtitle
+  accent_text: $hero.accent_text
   media_list:
     - type: image
       image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
@@ -17,27 +17,27 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: mission.blocks.0.title
-        content: mission.blocks.0.content
+        title: $mission.blocks.0.title
+        content: $mission.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: mission.blocks.1.items.0.title
+          - title: $mission.blocks.1.items.0.title
             icon: lucide:users
-            content: mission.blocks.1.items.0.content
+            content: $mission.blocks.1.items.0.content
             media:
               type: image
               image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
-          - title: mission.blocks.1.items.1.title
+          - title: $mission.blocks.1.items.1.title
             icon: lucide:home
-            content: mission.blocks.1.items.1.content
+            content: $mission.blocks.1.items.1.content
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
-          - title: mission.blocks.1.items.2.title
+          - title: $mission.blocks.1.items.2.title
             icon: lucide:book-open
-            content: mission.blocks.1.items.2.content
+            content: $mission.blocks.1.items.2.content
             media:
               type: image
               image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
@@ -46,20 +46,20 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: how-to.blocks.0.title
-        subtitle: how-to.blocks.0.subtitle
-        content: how-to.blocks.0.content
+        title: $how-to.blocks.0.title
+        subtitle: $how-to.blocks.0.subtitle
+        content: $how-to.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: how-to.blocks.1.items.0.title
+          - title: $how-to.blocks.1.items.0.title
             span: 6
-            content: how-to.blocks.1.items.0.content
+            content: $how-to.blocks.1.items.0.content
             icon: lucide:credit-card
-          - title: how-to.blocks.1.items.1.title
+          - title: $how-to.blocks.1.items.1.title
             span: 6
-            content: how-to.blocks.1.items.1.content
+            content: $how-to.blocks.1.items.1.content
             icon: lucide:hand-metal
 
   - section_id: contact
@@ -71,13 +71,13 @@ sections:
       flip: true
     blocks:
       - type: text_block
-        title: contact.blocks.0.title
-        content: contact.blocks.0.content
+        title: $contact.blocks.0.title
+        content: $contact.blocks.0.content
       - type: cta_block
         buttons:
-          - text: contact.blocks.1.buttons.0.text
+          - text: $contact.blocks.1.buttons.0.text
             link: "mailto:office@tongxing.org.tw"
             style: btn-inverse
-          - text: contact.blocks.1.buttons.1.text
+          - text: $contact.blocks.1.buttons.1.text
             link: "#"
             style: btn-white

@@ -1,8 +1,8 @@
-title: title
+title: $title
 slug: visit
-content: content
+content: $content
 hero:
-  title: hero.title
+  title: $hero.title
   media_list:
     - type: image
       image: /img/visit.webp
@@ -13,14 +13,14 @@ sections:
   - section_id: process
     blocks:
       - type: text_block
-        title: process.blocks.0.title
-        subtitle: process.blocks.0.subtitle
-        content: process.blocks.0.content
+        title: $process.blocks.0.title
+        subtitle: $process.blocks.0.subtitle
+        content: $process.blocks.0.content
       - type: visit_process_block
   - section_id: schedule
     blocks:
       - type: text_block
-        title: schedule.blocks.0.title
-        subtitle: schedule.blocks.0.subtitle
-        content: schedule.blocks.0.content
+        title: $schedule.blocks.0.title
+        subtitle: $schedule.blocks.0.subtitle
+        content: $schedule.blocks.0.content
       - type: visit_schedule_block

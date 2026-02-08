@@ -61,3 +61,5 @@ frontend/public/fonts/*.subset.woff2
 
 # Wording files
 frontend/public/data/wordings/
+.playwright-cli/console-2026-02-08T13-04-55-722Z.log
+.playwright-cli/page-2026-02-08T13-04-58-886Z.yml

@@ -1,9 +1,9 @@
-title: title
+title: $title
 slug: "timeline"
-description: description
+description: $description
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
+  title: $hero.title
+  subtitle: $hero.subtitle
   layout: "Hero Default"
   media_list:
     - type: "image"
@@ -15,178 +15,178 @@ sections:
         items:
           # 一、 創校與萌芽期
           - type: "header"
-            title: timeline.blocks.0.items.0.title
+            title: $timeline.blocks.0.items.0.title
             background_image: "/img/timeline/backgrounds/phase1.webp"
             color: "#E67E22" # Orange
-            content: timeline.blocks.0.items.0.content
-          - year: "2012.10"
-            title: timeline.blocks.0.items.1.title
+            content: $timeline.blocks.0.items.0.content
+          - year: "$2012.10"
+            title: $timeline.blocks.0.items.1.title
             icon: "💡"
             image: "/img/timeline/founding_meeting.webp"
-            subtitle: timeline.blocks.0.items.1.subtitle
-            content: timeline.blocks.0.items.1.content
-            detail: timeline.blocks.0.items.1.detail
+            subtitle: $timeline.blocks.0.items.1.subtitle
+            content: $timeline.blocks.0.items.1.content
+            detail: $timeline.blocks.0.items.1.detail
 
-          - year: "2012.11"
-            title: timeline.blocks.0.items.2.title
+          - year: "$2012.11"
+            title: $timeline.blocks.0.items.2.title
             icon: "🤝"
             image: "/img/timeline/seeking_guidance.webp"
-            subtitle: timeline.blocks.0.items.2.subtitle
-            content: timeline.blocks.0.items.2.content
-            detail: timeline.blocks.0.items.2.detail
+            subtitle: $timeline.blocks.0.items.2.subtitle
+            content: $timeline.blocks.0.items.2.content
+            detail: $timeline.blocks.0.items.2.detail
 
-          - year: "2013.05.26"
-            title: timeline.blocks.0.items.3.title
+          - year: "$2013.05.26"
+            title: $timeline.blocks.0.items.3.title
             icon: "🏛️"
             image: "/img/timeline/association_foundation.webp"
-            subtitle: timeline.blocks.0.items.3.subtitle
-            content: timeline.blocks.0.items.3.content
-            detail: timeline.blocks.0.items.3.detail
+            subtitle: $timeline.blocks.0.items.3.subtitle
+            content: $timeline.blocks.0.items.3.content
+            detail: $timeline.blocks.0.items.3.detail
 
-          - year: "2013.09.07"
-            title: timeline.blocks.0.items.4.title
+          - year: "$2013.09.07"
+            title: $timeline.blocks.0.items.4.title
             icon: "🎓"
             image: "/img/timeline/first_opening.webp"
-            subtitle: timeline.blocks.0.items.4.subtitle
-            content: timeline.blocks.0.items.4.content
-            detail: timeline.blocks.0.items.4.detail
+            subtitle: $timeline.blocks.0.items.4.subtitle
+            content: $timeline.blocks.0.items.4.content
+            detail: $timeline.blocks.0.items.4.detail
 
           # 二、 華江校區發展期
           - type: "header"
-            title: timeline.blocks.0.items.5.title
+            title: $timeline.blocks.0.items.5.title
             background_image: "/img/timeline/backgrounds/phase2.webp"
             color: "#27AE60" # Green
-            content: timeline.blocks.0.items.5.content
+            content: $timeline.blocks.0.items.5.content
           - year: "2014"
-            title: timeline.blocks.0.items.6.title
+            title: $timeline.blocks.0.items.6.title
             icon: "📈"
             image: "/img/timeline/steady_growth.webp"
-            subtitle: timeline.blocks.0.items.6.subtitle
-            content: timeline.blocks.0.items.6.content
-            detail: timeline.blocks.0.items.6.detail
+            subtitle: $timeline.blocks.0.items.6.subtitle
+            content: $timeline.blocks.0.items.6.content
+            detail: $timeline.blocks.0.items.6.detail
 
-          - year: "2015.07"
-            title: timeline.blocks.0.items.7.title
+          - year: "$2015.07"
+            title: $timeline.blocks.0.items.7.title
             icon: "👔"
             image: "/img/timeline/mayor_visit.webp"
-            subtitle: timeline.blocks.0.items.7.subtitle
-            content: timeline.blocks.0.items.7.content
-            detail: timeline.blocks.0.items.7.detail
+            subtitle: $timeline.blocks.0.items.7.subtitle
+            content: $timeline.blocks.0.items.7.content
+            detail: $timeline.blocks.0.items.7.detail
 
           - year: "2016"
-            title: timeline.blocks.0.items.8.title
+            title: $timeline.blocks.0.items.8.title
             icon: "🎭"
             image: "/img/timeline/2016.webp"
-            subtitle: timeline.blocks.0.items.8.subtitle
-            content: timeline.blocks.0.items.8.content
-            detail: timeline.blocks.0.items.8.detail
+            subtitle: $timeline.blocks.0.items.8.subtitle
+            content: $timeline.blocks.0.items.8.content
+            detail: $timeline.blocks.0.items.8.detail
 
           - year: "2017"
-            title: timeline.blocks.0.items.9.title
+            title: $timeline.blocks.0.items.9.title
             icon: "📜"
             image: "/img/timeline/official_registration.webp"
-            subtitle: timeline.blocks.0.items.9.subtitle
-            content: timeline.blocks.0.items.9.content
-            detail: timeline.blocks.0.items.9.detail
+            subtitle: $timeline.blocks.0.items.9.subtitle
+            content: $timeline.blocks.0.items.9.content
+            detail: $timeline.blocks.0.items.9.detail
 
           - year: "2018"
-            title: timeline.blocks.0.items.10.title
+            title: $timeline.blocks.0.items.10.title
             icon: "🏠"
-            subtitle: timeline.blocks.0.items.10.subtitle
-            content: timeline.blocks.0.items.10.content
+            subtitle: $timeline.blocks.0.items.10.subtitle
+            content: $timeline.blocks.0.items.10.content
             image: "/img/timeline/2018.webp"
-            detail: timeline.blocks.0.items.10.detail
+            detail: $timeline.blocks.0.items.10.detail
 
           # 三、 永建校區深耕期
           - type: "header"
-            title: timeline.blocks.0.items.11.title
+            title: $timeline.blocks.0.items.11.title
             background_image: "/img/timeline/backgrounds/phase3.webp"
             color: "#2980B9" # Blue
-            content: timeline.blocks.0.items.11.content
+            content: $timeline.blocks.0.items.11.content
 
-          - year: "2019.01.11"
-            title: timeline.blocks.0.items.12.title
+          - year: "$2019.01.11"
+            title: $timeline.blocks.0.items.12.title
             icon: "✍️"
-            subtitle: timeline.blocks.0.items.12.subtitle
-            content: timeline.blocks.0.items.12.content
-            detail: timeline.blocks.0.items.12.detail
+            subtitle: $timeline.blocks.0.items.12.subtitle
+            content: $timeline.blocks.0.items.12.content
+            detail: $timeline.blocks.0.items.12.detail
 
-          - year: "2019.10.26"
-            title: timeline.blocks.0.items.13.title
+          - year: "$2019.10.26"
+            title: $timeline.blocks.0.items.13.title
             icon: "🎊"
-            subtitle: timeline.blocks.0.items.13.subtitle
-            content: timeline.blocks.0.items.13.content
+            subtitle: $timeline.blocks.0.items.13.subtitle
+            content: $timeline.blocks.0.items.13.content
             image: "/img/timeline/2019.10.26.webp"
-            detail: timeline.blocks.0.items.13.detail
+            detail: $timeline.blocks.0.items.13.detail
 
           - year: "2021"
-            title: timeline.blocks.0.items.14.title
+            title: $timeline.blocks.0.items.14.title
             icon: "🛶"
-            subtitle: timeline.blocks.0.items.14.subtitle
-            content: timeline.blocks.0.items.14.content
+            subtitle: $timeline.blocks.0.items.14.subtitle
+            content: $timeline.blocks.0.items.14.content
             image: "/img/timeline/2021.webp"
-            detail: timeline.blocks.0.items.14.detail
+            detail: $timeline.blocks.0.items.14.detail
 
-          - year: "2022.01"
-            title: timeline.blocks.0.items.15.title
+          - year: "$2022.01"
+            title: $timeline.blocks.0.items.15.title
             icon: "🌱"
-            subtitle: timeline.blocks.0.items.15.subtitle
-            content: timeline.blocks.0.items.15.content
-            detail: timeline.blocks.0.items.15.detail
+            subtitle: $timeline.blocks.0.items.15.subtitle
+            content: $timeline.blocks.0.items.15.content
+            detail: $timeline.blocks.0.items.15.detail
 
-          - year: "2022.06"
-            title: timeline.blocks.0.items.16.title
+          - year: "$2022.06"
+            title: $timeline.blocks.0.items.16.title
             icon: "🤲"
-            subtitle: timeline.blocks.0.items.16.subtitle
-            content: timeline.blocks.0.items.16.content
-            detail: timeline.blocks.0.items.16.detail
+            subtitle: $timeline.blocks.0.items.16.subtitle
+            content: $timeline.blocks.0.items.16.content
+            detail: $timeline.blocks.0.items.16.detail
 
           - year: "2022"
-            title: timeline.blocks.0.items.17.title
+            title: $timeline.blocks.0.items.17.title
             icon: "🍲"
-            subtitle: timeline.blocks.0.items.17.subtitle
-            content: timeline.blocks.0.items.17.content
+            subtitle: $timeline.blocks.0.items.17.subtitle
+            content: $timeline.blocks.0.items.17.content
             image: "/img/timeline/2022.webp"
-            detail: timeline.blocks.0.items.17.detail
+            detail: $timeline.blocks.0.items.17.detail
 
           - year: "2023"
-            title: timeline.blocks.0.items.18.title
+            title: $timeline.blocks.0.items.18.title
             icon: "🎯"
-            subtitle: timeline.blocks.0.items.18.subtitle
-            content: timeline.blocks.0.items.18.content
-            detail: timeline.blocks.0.items.18.detail
+            subtitle: $timeline.blocks.0.items.18.subtitle
+            content: $timeline.blocks.0.items.18.content
+            detail: $timeline.blocks.0.items.18.detail
 
           - year: "2024"
-            title: timeline.blocks.0.items.19.title
+            title: $timeline.blocks.0.items.19.title
             icon: "🏆"
-            subtitle: timeline.blocks.0.items.19.subtitle
-            content: timeline.blocks.0.items.19.content
-            detail: timeline.blocks.0.items.19.detail
+            subtitle: $timeline.blocks.0.items.19.subtitle
+            content: $timeline.blocks.0.items.19.content
+            detail: $timeline.blocks.0.items.19.detail
 
           # 四、 邁向新里程
           - type: "header"
-            title: timeline.blocks.0.items.20.title
+            title: $timeline.blocks.0.items.20.title
             background_image: "/img/timeline/backgrounds/phase4.webp"
-            content: timeline.blocks.0.items.20.content
+            content: $timeline.blocks.0.items.20.content
             color: "#CE449D" # Purple
           - year: "2025"
-            title: timeline.blocks.0.items.21.title
+            title: $timeline.blocks.0.items.21.title
             icon: "🚀"
-            subtitle: timeline.blocks.0.items.21.subtitle
-            content: timeline.blocks.0.items.21.content
-            detail: timeline.blocks.0.items.21.detail
+            subtitle: $timeline.blocks.0.items.21.subtitle
+            content: $timeline.blocks.0.items.21.content
+            detail: $timeline.blocks.0.items.21.detail
 
           - year: "2026"
-            title: timeline.blocks.0.items.22.title
+            title: $timeline.blocks.0.items.22.title
             icon: "🔥"
-            subtitle: timeline.blocks.0.items.22.subtitle
-            content: timeline.blocks.0.items.22.content
-            detail: timeline.blocks.0.items.22.detail
+            subtitle: $timeline.blocks.0.items.22.subtitle
+            content: $timeline.blocks.0.items.22.content
+            detail: $timeline.blocks.0.items.22.detail
   - section_id: timeline-footer
     silk_background: true
     _layout:
       background: bg-neutral-50 dark:bg-neutral-950
     blocks:
       - type: text_block
-        title: timeline-footer.blocks.0.title
-        content: timeline-footer.blocks.0.content
+        title: $timeline-footer.blocks.0.title
+        content: $timeline-footer.blocks.0.content

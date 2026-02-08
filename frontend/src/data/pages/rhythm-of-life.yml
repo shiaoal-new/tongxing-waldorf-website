@@ -1,9 +1,9 @@
-title: title
+title: $title
 slug: rhythm-of-life
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
-  accent_text: hero.accent_text
+  title: $hero.title
+  subtitle: $hero.subtitle
+  accent_text: $hero.accent_text
   media_list:
     - type: image
       image: /img/daily-routine.webp
@@ -11,116 +11,116 @@ sections:
   - section_id: interactive-schedule
     blocks:
       - type: text_block
-        title: interactive-schedule.blocks.0.title
-        subtitle: interactive-schedule.blocks.0.subtitle
-        content: interactive-schedule.blocks.0.content
+        title: $interactive-schedule.blocks.0.title
+        subtitle: $interactive-schedule.blocks.0.subtitle
+        content: $interactive-schedule.blocks.0.content
       - type: breathing_intro_block
       - type: interactive_switcher_block
         options:
           - id: grade_low
-            label: "rhythm.grade.low"
+            label: "$rhythm.grade.low"
             icon: "lucide:baby"
             blocks:
               - type: schedule_list_block
-                items: "rhythm.schedule.low"
+                items: "$rhythm.schedule.low"
           - id: grade_high
-            label: "rhythm.grade.high"
+            label: "$rhythm.grade.high"
             icon: "lucide:graduation-cap"
             blocks:
               - type: schedule_list_block
-                items: "rhythm.schedule.high"
+                items: "$rhythm.schedule.high"
       - type: text_block
-        title: interactive-schedule.blocks.2.title
-        subtitle: interactive-schedule.blocks.2.subtitle
-        content: interactive-schedule.blocks.2.content
+        title: $interactive-schedule.blocks.2.title
+        subtitle: $interactive-schedule.blocks.2.subtitle
+        content: $interactive-schedule.blocks.2.content
       - type: list_block
         layout_method: vertical
         item_type: faq_item
         items:
-          - title: interactive-schedule.blocks.3.items.0.title
+          - title: $interactive-schedule.blocks.3.items.0.title
             id: term-season-table
             subtitle: Season Table
-            content: interactive-schedule.blocks.3.items.0.content
-          - title: interactive-schedule.blocks.3.items.1.title
+            content: $interactive-schedule.blocks.3.items.0.content
+          - title: $interactive-schedule.blocks.3.items.1.title
             id: term-circle-gathering
             subtitle: Circle Gathering
-            content: interactive-schedule.blocks.3.items.1.content
+            content: $interactive-schedule.blocks.3.items.1.content
   - section_id: weekly-core
     blocks:
       - type: text_block
-        title: weekly-core.blocks.0.title
-        subtitle: weekly-core.blocks.0.subtitle
-        content: weekly-core.blocks.0.content
+        title: $weekly-core.blocks.0.title
+        subtitle: $weekly-core.blocks.0.subtitle
+        content: $weekly-core.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: weekly-core.blocks.1.items.0.title
+          - title: $weekly-core.blocks.1.items.0.title
             subtitle: Main Lesson
             icon: lucide:book-open
-            content: weekly-core.blocks.1.items.0.content
-          - title: weekly-core.blocks.1.items.1.title
+            content: $weekly-core.blocks.1.items.0.content
+          - title: $weekly-core.blocks.1.items.1.title
             subtitle: Specialty Subjects
             icon: lucide:palette
-            content: weekly-core.blocks.1.items.1.content
-          - title: weekly-core.blocks.1.items.2.title
+            content: $weekly-core.blocks.1.items.1.content
+          - title: $weekly-core.blocks.1.items.2.title
             subtitle: Nature Day
             icon: lucide:mountain
-            content: weekly-core.blocks.1.items.2.content
-          - title: weekly-core.blocks.1.items.3.title
+            content: $weekly-core.blocks.1.items.2.content
+          - title: $weekly-core.blocks.1.items.3.title
             subtitle: Season & Community
             icon: lucide:users-2
-            content: weekly-core.blocks.1.items.3.content
+            content: $weekly-core.blocks.1.items.3.content
   - section_id: yearly-cycle
     blocks:
       - type: text_block
-        title: yearly-cycle.blocks.0.title
-        subtitle: yearly-cycle.blocks.0.subtitle
-        content: yearly-cycle.blocks.0.content
+        title: $yearly-cycle.blocks.0.title
+        subtitle: $yearly-cycle.blocks.0.subtitle
+        content: $yearly-cycle.blocks.0.content
       - type: list_block
         layout_method: grid_cards
         item_type: feature_item
         items:
-          - title: yearly-cycle.blocks.1.items.0.title
+          - title: $yearly-cycle.blocks.1.items.0.title
             subtitle: Spring Festival
             icon: lucide:sprout
             media:
               type: image
               image: /img/season-spring-bg.webp
-            content: yearly-cycle.blocks.1.items.0.content
-          - title: yearly-cycle.blocks.1.items.1.title
+            content: $yearly-cycle.blocks.1.items.0.content
+          - title: $yearly-cycle.blocks.1.items.1.title
             subtitle: Summer Festival
             icon: lucide:sun
             media:
               type: image
               image: /img/season-summer-bg.webp
-            content: yearly-cycle.blocks.1.items.1.content
-          - title: yearly-cycle.blocks.1.items.2.title
+            content: $yearly-cycle.blocks.1.items.1.content
+          - title: $yearly-cycle.blocks.1.items.2.title
             subtitle: Autumn Festival
             icon: lucide:leaf
             media:
               type: image
               image: /img/season-autumn-bg.webp
-            content: yearly-cycle.blocks.1.items.2.content
-          - title: yearly-cycle.blocks.1.items.3.title
+            content: $yearly-cycle.blocks.1.items.2.content
+          - title: $yearly-cycle.blocks.1.items.3.title
             subtitle: Winter Festival
             icon: lucide:snowflake
             media:
               type: image
               image: /img/season-winter-bg.webp
-            content: yearly-cycle.blocks.1.items.3.content
+            content: $yearly-cycle.blocks.1.items.3.content
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: cta.blocks.0.title
-        content: cta.blocks.0.content
+        title: $cta.blocks.0.title
+        content: $cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: cta.blocks.1.buttons.0.text
+          - text: $cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white
-          - text: cta.blocks.1.buttons.1.text
+          - text: $cta.blocks.1.buttons.1.text
             link: /curriculum-development
             style: btn-primary
         subtitle: 下一步

@@ -1,8 +1,8 @@
-title: title
+title: $title
 slug: "teacher-group"
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
+  title: $hero.title
+  subtitle: $hero.subtitle
   media_list:
     - type: image
       image: /img/teacher.webp
@@ -11,15 +11,15 @@ sections:
   - section_id: intro
     blocks:
       - type: text_block
-        title: intro.blocks.0.title
-        content: intro.blocks.0.content
+        title: $intro.blocks.0.title
+        content: $intro.blocks.0.content
 
   - section_id: full-time
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: full-time.blocks.0.title
-        subtitle: full-time.blocks.0.subtitle
+        title: $full-time.blocks.0.title
+        subtitle: $full-time.blocks.0.subtitle
       - type: member_block
         members:
           - "詹雅智"
@@ -38,8 +38,8 @@ sections:
   - section_id: administrative
     blocks:
       - type: text_block
-        title: administrative.blocks.0.title
-        subtitle: administrative.blocks.0.subtitle
+        title: $administrative.blocks.0.title
+        subtitle: $administrative.blocks.0.subtitle
       - type: member_block
         members:
           - "吳俊輝"
@@ -53,12 +53,12 @@ sections:
     layout: "突出標題風格"
     blocks:
       - type: text_block
-        title: part-time.blocks.0.title
-        subtitle: part-time.blocks.0.subtitle
-        content: part-time.blocks.0.content
+        title: $part-time.blocks.0.title
+        subtitle: $part-time.blocks.0.subtitle
+        content: $part-time.blocks.0.content
 
       - type: list_block
-        title: part-time.blocks.1.title
+        title: $part-time.blocks.1.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -76,7 +76,7 @@ sections:
             subtitle: "英文"
 
       - type: list_block
-        title: part-time.blocks.2.title
+        title: $part-time.blocks.2.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -98,7 +98,7 @@ sections:
             subtitle: "戲劇"
 
       - type: list_block
-        title: part-time.blocks.3.title
+        title: $part-time.blocks.3.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -112,7 +112,7 @@ sections:
             subtitle: "藝術 / 體育 / 園藝"
 
       - type: list_block
-        title: part-time.blocks.4.title
+        title: $part-time.blocks.4.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -134,7 +134,7 @@ sections:
             subtitle: "合奏（長笛）"
 
       - type: list_block
-        title: part-time.blocks.5.title
+        title: $part-time.blocks.5.title
         layout_method: compact_grid
         item_type: compact_card
         items:
@@ -146,11 +146,11 @@ sections:
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: cta.blocks.0.title
-        content: cta.blocks.0.content
+        title: $cta.blocks.0.title
+        content: $cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: cta.blocks.1.buttons.0.text
+          - text: $cta.blocks.1.buttons.0.text
             link: /visit
             style: btn-white
         subtitle: 下一步

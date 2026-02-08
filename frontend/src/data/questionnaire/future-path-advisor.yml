@@ -24,41 +24,41 @@ categories:
         reason: 華德福高中強調藝術實作與創造力培養，適合在這些領域有天賦的孩子。
         benefit: 能在高中階段深度發展藝術特長，透過戲劇排演、手工藝等活動建立獨特的表達能力。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.5
-          diverse: 1.5
+          waldorf: $2.0
+          mainstream: $0.5
+          diverse: $1.5
       - id: q2
         text: 孩子具備強大的自主學習能力，不需要外在的分數或排名來驅動學習動機。
         reason: 華德福教育不以考試為目的，需要孩子具備內在驅動力。
         benefit: 在沒有分數壓力的環境中，能更專注於探索自己真正感興趣的領域。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.3
-          diverse: 1.5
+          waldorf: $2.0
+          mainstream: $0.3
+          diverse: $1.5
       - id: q3
         text: 孩子在面對標準化測驗時表現出色，能快速掌握考試技巧。
         reason: 體制內高中重視學科能力測驗與學術競爭。
         benefit: 能在激烈的升學競爭中取得優勢，為進入頂尖大學鋪路。
         scoring:
-          waldorf: 0.2
-          mainstream: 2.0
-          diverse: 0.8
+          waldorf: $0.2
+          mainstream: $2.0
+          diverse: $0.8
       - id: q4
         text: 孩子對特定實用技能 (如程式設計、烹飪、木工等) 有明確的興趣與目標。
         reason: 技術高中或多元路徑強調專業技能實務與產學合作。
         benefit: 能提早進入專業領域，建立一技之長，縮短學用落差。
         scoring:
-          waldorf: 0.8
-          mainstream: 0.5
-          diverse: 2.0
+          waldorf: $0.8
+          mainstream: $0.5
+          diverse: $2.0
       - id: q5
         text: 孩子具備強大的心理韌性，能在高壓環境中保持穩定的情緒。
         reason: 轉入體制內高中需要面對密集的考試與排名壓力。
         benefit: 能在競爭環境中維持身心健康，避免因壓力導致的適應不良。
         scoring:
-          waldorf: 0.5
-          mainstream: 2.0
-          diverse: 1.0
+          waldorf: $0.5
+          mainstream: $2.0
+          diverse: $1.0
 
   - id: learning_goals
     title: 學習目標與職涯規劃
@@ -68,41 +68,41 @@ categories:
         reason: 這些專業需要透過傳統升學管道取得學位與執照。
         benefit: 體制內高中能提供扎實的學術訓練，為專業考試做好準備。
         scoring:
-          waldorf: 0.3
-          mainstream: 2.0
-          diverse: 0.5
+          waldorf: $0.3
+          mainstream: $2.0
+          diverse: $0.5
       - id: q7
         text: 孩子希望透過「特殊選才」等多元管道進入大學，而非傳統的學測分數。
         reason: 華德福高中學生主要透過特殊選才展現學習歷程與專題成果。
         benefit: 能在面試中展現遠超同齡人的自我覺察與論述能力。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.5
-          diverse: 1.5
+          waldorf: $2.0
+          mainstream: $0.5
+          diverse: $1.5
       - id: q8
         text: 孩子對國際化發展有興趣，希望未來能到海外求學或工作。
         reason: 國際華德福高中或特殊選才管道能為海外發展鋪路。
         benefit: 培養跨文化學習能力與國際視野，提升全球移動力。
         scoring:
-          waldorf: 1.5
-          mainstream: 1.0
-          diverse: 2.0
+          waldorf: $1.5
+          mainstream: $1.0
+          diverse: $2.0
       - id: q9
         text: 孩子希望儘早進入職場，不一定要追求傳統的大學學歷。
         reason: 技術高中提供專業技能訓練與產學合作機會。
         benefit: 能提早累積實務經驗，建立職場競爭力。
         scoring:
-          waldorf: 0.3
-          mainstream: 0.5
-          diverse: 2.0
+          waldorf: $0.3
+          mainstream: $0.5
+          diverse: $2.0
       - id: q10
         text: 孩子對哲學、文學、藝術史等人文領域有深刻的研究熱忱。
         reason: 華德福高中課程涵蓋黑格爾哲學、世界文學等深度人文主題。
         benefit: 能在青少年心理轉折的關鍵期，獲得完整的人文支援。
         scoring:
-          waldorf: 2.0
-          mainstream: 1.0
-          diverse: 1.2
+          waldorf: $2.0
+          mainstream: $1.0
+          diverse: $1.2
 
   - id: family_resources
     title: 家庭資源與支持系統
@@ -112,41 +112,41 @@ categories:
         reason: 大多數華德福高中以實驗教育機構形式存在，學費較高。
         benefit: 能讓孩子在理想的教育環境中成長，不受經濟壓力影響。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.5
-          diverse: 1.0
+          waldorf: $2.0
+          mainstream: $0.5
+          diverse: $1.0
       - id: q12
         text: 家長能投入較多時間參與學校事務 (如工作日、節慶活動、家長座談)。
         reason: 華德福教育強調親師生共同合作，需要家長積極參與。
         benefit: 建立緊密的互助網絡，形成共榮成長的理想社群環境。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.3
-          diverse: 1.0
+          waldorf: $2.0
+          mainstream: $0.3
+          diverse: $1.0
       - id: q13
         text: 家長能抵禦來自親友或主流社會對「非傳統路徑」的質疑。
         reason: 選擇華德福或多元路徑需要強大的心理韌性。
         benefit: 能堅持對孩子最有利的教育選擇，不被外界評價動搖。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.2
-          diverse: 1.8
+          waldorf: $2.0
+          mainstream: $0.2
+          diverse: $1.8
       - id: q14
         text: 家長願意在國八、國九階段安排適度的學科補強，幫助孩子適應體制內評量。
         reason: 轉入體制內需要掌握標準化測驗的「溝通語言」。
         benefit: 降低升學時的門檻效應，緩衝「考題轟炸」的震撼。
         scoring:
-          waldorf: 0.3
-          mainstream: 2.0
-          diverse: 1.2
+          waldorf: $0.3
+          mainstream: $2.0
+          diverse: $1.2
       - id: q15
         text: 家長不將「名校錄取」視為唯一的成功指標，更看重孩子的全人發展。
         reason: 華德福教育的核心在於培養「健全的個人」。
         benefit: 培養出身心平衡、具備創造力的人，能在變動的未來保持內在平靜。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.5
-          diverse: 1.5
+          waldorf: $2.0
+          mainstream: $0.5
+          diverse: $1.5
 
   - id: adaptation_concerns
     title: 適應能力與轉銜準備
@@ -156,41 +156,41 @@ categories:
         reason: 體制內高中通常規模較大，需要較強的社會化能力。
         benefit: 能接觸更多元的同儕背景，拓展社交圈。
         scoring:
-          waldorf: 0.5
-          mainstream: 2.0
-          diverse: 1.5
+          waldorf: $0.5
+          mainstream: $2.0
+          diverse: $1.5
       - id: q17
         text: 孩子對華德福的「慢學」節奏感到滿意，不急於追求快速的學術進展。
         reason: 華德福教育尊重每個孩子獨特的成長曲線。
         benefit: 減少不對稱進度下的學習壓力，建立基於自我節奏的自信心。
         scoring:
-          waldorf: 2.0
-          mainstream: 0.3
-          diverse: 1.0
+          waldorf: $2.0
+          mainstream: $0.3
+          diverse: $1.0
       - id: q18
         text: 孩子在華德福階段培養的「圖文整合力」與「自主學習習慣」已相當成熟。
         reason: 這些能力能幫助轉入體制內的學生快速補齊數理落差。
         benefit: 在探究實作課程中大放異彩，找回自信。
         scoring:
-          waldorf: 1.0
-          mainstream: 2.0
-          diverse: 1.5
+          waldorf: $1.0
+          mainstream: $2.0
+          diverse: $1.5
       - id: q19
         text: 孩子對「每小時換課、每天考試」的機械化節奏有心理準備且能接受。
         reason: 體制內高中的時間表與華德福差異極大。
         benefit: 避免因節奏斷層導致的身心失調。
         scoring:
-          waldorf: 0.2
-          mainstream: 2.0
-          diverse: 1.0
+          waldorf: $0.2
+          mainstream: $2.0
+          diverse: $1.0
       - id: q20
         text: 家長與孩子已經過深度對話，孩子對未來路徑有清晰的自我認知。
         reason: 成功轉銜的關鍵在於孩子的內在動機，而非家長的單方面決定。
         benefit: 減少因被動轉向導致的心理崩潰與認同衝突。
         scoring:
-          waldorf: 1.5
-          mainstream: 1.5
-          diverse: 1.5
+          waldorf: $1.5
+          mainstream: $1.5
+          diverse: $1.5
 
 # 結果配置 - 基於三條路徑的得分
 results:

@@ -1,12 +1,12 @@
-title: "seo.title"
+title: "$seo.title"
 slug: crossing
 seo:
-  title: "seo.title"
-  description: "seo.description"
+  title: "$seo.title"
+  description: "$seo.description"
 hero:
-  title: "hero.title"
-  subtitle: "hero.subtitle"
-  accent_text: "hero.accent_text"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  accent_text: "$hero.accent_text"
   media_list:
     - type: image
       image: /img/crossing/hero.webp
@@ -21,31 +21,31 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "intro.title"
-        subtitle: "intro.subtitle"
-        content: "intro.content"
+        title: "$intro.title"
+        subtitle: "$intro.subtitle"
+        content: "$intro.content"
 
   - section_id: primary
     layout: "精緻特色區塊 (Features Premium)"
     silk_background: true
     blocks:
       - type: text_block
-        title: "primary.title"
-        subtitle: "primary.subtitle"
+        title: "$primary.title"
+        subtitle: "$primary.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "primary.g3.title"
+          - title: "$primary.g3.title"
             span: 6
-            content: "primary.g3.content"
+            content: "$primary.g3.content"
             icon: lucide:home
             media:
               type: image
               image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
-          - title: "primary.g4.title"
+          - title: "$primary.g4.title"
             span: 6
-            content: "primary.g4.content"
+            content: "$primary.g4.content"
             icon: lucide:tree-pine
             media:
               type: image
@@ -55,22 +55,22 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: "middle.title"
-        subtitle: "middle.subtitle"
+        title: "$middle.title"
+        subtitle: "$middle.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "middle.g5.title"
+          - title: "$middle.g5.title"
             span: 6
-            content: "middle.g5.content"
+            content: "$middle.g5.content"
             icon: lucide:mountain
             media:
               type: image
               image: /img/featured-willpower.webp
-          - title: "middle.g6.title"
+          - title: "$middle.g6.title"
             span: 6
-            content: "middle.g6.content"
+            content: "$middle.g6.content"
             icon: lucide:tent
             media:
               type: image
@@ -81,23 +81,23 @@ sections:
     silk_background: true
     blocks:
       - type: text_block
-        title: "secondary.title"
-        subtitle: "secondary.subtitle"
+        title: "$secondary.title"
+        subtitle: "$secondary.subtitle"
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: "secondary.g7.title"
+          - title: "$secondary.g7.title"
             span: 4
-            content: "secondary.g7.content"
+            content: "$secondary.g7.content"
             icon: lucide:ship
-          - title: "secondary.g8.title"
+          - title: "$secondary.g8.title"
             span: 4
-            content: "secondary.g8.content"
+            content: "$secondary.g8.content"
             icon: lucide:moon
-          - title: "secondary.g9.title"
+          - title: "$secondary.g9.title"
             span: 4
-            content: "secondary.g9.content"
+            content: "$secondary.g9.content"
             icon: lucide:compass
 
   - section_id: final
@@ -107,10 +107,10 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: "summary.title"
-        content: "summary.content"
+        title: "$summary.title"
+        content: "$summary.content"
       - type: cta_block
         buttons:
-          - text: "summary.button"
+          - text: "$summary.button"
             link: /
             style: btn-inverse

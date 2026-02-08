@@ -1,11 +1,11 @@
-title: title
+title: $title
 slug: "philosophy"
 seo:
-  title: seo.title
-  description: seo.description
-  keywords: seo.keywords
+  title: $seo.title
+  description: $seo.description
+  keywords: $seo.keywords
 hero:
-  title: hero.title
+  title: $hero.title
   media_list:
     - type: image
       image: /img/vision-header.webp
@@ -17,41 +17,41 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: core-values.blocks.0.title
-        subtitle: core-values.blocks.0.subtitle
-        content: core-values.blocks.0.content
+        title: $core-values.blocks.0.title
+        subtitle: $core-values.blocks.0.subtitle
+        content: $core-values.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: core-values.blocks.1.items.0.title
-            subtitle: core-values.blocks.1.items.0.subtitle
+          - title: $core-values.blocks.1.items.0.title
+            subtitle: $core-values.blocks.1.items.0.subtitle
             span: 6
-            content: core-values.blocks.1.items.0.content
+            content: $core-values.blocks.1.items.0.content
             icon: "lucide:clock"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
-          - title: core-values.blocks.1.items.1.title
-            subtitle: core-values.blocks.1.items.1.subtitle
+          - title: $core-values.blocks.1.items.1.title
+            subtitle: $core-values.blocks.1.items.1.subtitle
             span: 6
-            content: core-values.blocks.1.items.1.content
+            content: $core-values.blocks.1.items.1.content
             icon: "lucide:hand"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
-          - title: core-values.blocks.1.items.2.title
-            subtitle: core-values.blocks.1.items.2.subtitle
+          - title: $core-values.blocks.1.items.2.title
+            subtitle: $core-values.blocks.1.items.2.subtitle
             span: 6
-            content: core-values.blocks.1.items.2.content
+            content: $core-values.blocks.1.items.2.content
             icon: "lucide:users"
             media:
               type: image
               image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
-          - title: core-values.blocks.1.items.3.title
-            subtitle: core-values.blocks.1.items.3.subtitle
+          - title: $core-values.blocks.1.items.3.title
+            subtitle: $core-values.blocks.1.items.3.subtitle
             span: 6
-            content: core-values.blocks.1.items.3.content
+            content: $core-values.blocks.1.items.3.content
             icon: "lucide:heart"
             media:
               type: image
@@ -61,33 +61,33 @@ sections:
     layout: "精緻特色區塊 (Features Premium)"
     blocks:
       - type: text_block
-        title: mission.blocks.0.title
-        subtitle: mission.blocks.0.subtitle
-        content: mission.blocks.0.content
+        title: $mission.blocks.0.title
+        subtitle: $mission.blocks.0.subtitle
+        content: $mission.blocks.0.content
       - type: list_block
         layout_method: bento_grid
         item_type: feature_item
         items:
-          - title: mission.blocks.1.items.0.title
-            subtitle: mission.blocks.1.items.0.subtitle
+          - title: $mission.blocks.1.items.0.title
+            subtitle: $mission.blocks.1.items.0.subtitle
             span: 4
-            content: mission.blocks.1.items.0.content
+            content: $mission.blocks.1.items.0.content
             icon: "lucide:shield-check"
             media:
               type: image
               image: /img/featured-protection.webp
-          - title: mission.blocks.1.items.1.title
-            subtitle: mission.blocks.1.items.1.subtitle
+          - title: $mission.blocks.1.items.1.title
+            subtitle: $mission.blocks.1.items.1.subtitle
             span: 4
-            content: mission.blocks.1.items.1.content
+            content: $mission.blocks.1.items.1.content
             icon: "lucide:link"
             media:
               type: image
               image: /img/featured-nature.webp
-          - title: mission.blocks.1.items.2.title
-            subtitle: mission.blocks.1.items.2.subtitle
+          - title: $mission.blocks.1.items.2.title
+            subtitle: $mission.blocks.1.items.2.subtitle
             span: 4
-            content: mission.blocks.1.items.2.content
+            content: $mission.blocks.1.items.2.content
             icon: "lucide:send"
             media:
               type: image
@@ -100,21 +100,21 @@ sections:
         image: /img/vision-header.webp
     blocks:
       - type: text_block
-        title: vision-statement.blocks.0.title
-        subtitle: vision-statement.blocks.0.subtitle
-        content: vision-statement.blocks.0.content
+        title: $vision-statement.blocks.0.title
+        subtitle: $vision-statement.blocks.0.subtitle
+        content: $vision-statement.blocks.0.content
 
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: cta.blocks.0.title
-        content: cta.blocks.0.content
+        title: $cta.blocks.0.title
+        content: $cta.blocks.0.content
       - type: cta_block
         buttons:
-          - text: cta.blocks.1.buttons.0.text
+          - text: $cta.blocks.1.buttons.0.text
             link: "/visit"
             style: btn-inverse
-          - text: cta.blocks.1.buttons.1.text
+          - text: $cta.blocks.1.buttons.1.text
             link: "/visit"
             style: btn-white-outline

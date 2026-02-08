@@ -100,7 +100,18 @@ export function resolveWording(data: any, dictionary: any): any {
 
     // 如果是字串，嘗試替換
     if (typeof data === 'string') {
-        return getValueByPath(dictionary, data) || data;
+        // 處理轉義
+        if (data.startsWith('\\$')) {
+            return data.substring(1);
+        }
+
+        // 顯式聲明
+        if (data.startsWith('$')) {
+            const id = data.substring(1);
+            return getValueByPath(dictionary, id) || id;
+        }
+
+        return data;
     }
 
     // 如果是陣列，遞迴處理每個元素
@@ -128,7 +139,7 @@ export function resolveWording(data: any, dictionary: any): any {
 /**
  * 從字典中根據路徑獲取值 (例如 "hero.title")
  */
-function getValueByPath(obj: any, path: string): string | null {
+function getValueByPath(obj: any, path: string): any | null {
     if (!path) return null;
 
     const parts = path.split('.');
@@ -141,5 +152,5 @@ function getValueByPath(obj: any, path: string): string | null {
         current = current[part];
     }
 
-    return current;
+    return (current !== undefined && current !== null) ? current : null;
 }

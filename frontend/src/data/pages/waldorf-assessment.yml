@@ -1,8 +1,8 @@
-title: title
+title: $title
 slug: waldorf-assessment
 hero:
-  title: hero.title
-  subtitle: hero.subtitle
+  title: $hero.title
+  subtitle: $hero.subtitle
   media_list:
     - type: image
       image: /img/themes/tongxing/background/questionnaire.webp
