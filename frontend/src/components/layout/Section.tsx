@@ -145,8 +145,10 @@ export default function Section(props: SectionProps) {
                 backgroundColor: silk_background ? "rgb(var(--color-brand-taupe))" : undefined,
                 ...rest.style
             }}
+            data-special-bg={hasSpecialBg}
             {...rest}
         >
+
             {/* Moved shader gradient inside motion.div for contained effect if content_inside_wrapper is true, 
                 otherwise keep it here for full-section effect. 
                 Actually, the user wants it to be a billboard, so it should be inside the wrapper. */}
