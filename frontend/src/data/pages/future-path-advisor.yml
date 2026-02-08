@@ -1,0 +1,18 @@
+slug: future-path-advisor
+title: "seo.title"
+seo:
+  title: "seo.title"
+  description: "seo.description"
+hero:
+  title: "hero.title"
+  subtitle: "hero.subtitle"
+  content: "hero.content"
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+  media_list:
+    - type: image
+      image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+sections:
+  - section_id: questionnaire
+    blocks:
+      - type: path_questionnaire_block
+        title: "questionnaire.title"

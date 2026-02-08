@@ -142,6 +142,10 @@ export interface QuestionnaireData {
     scale: { value: number; label: string }[];
     categories: Category[];
     results: QuestionnaireResult[];
+    meta?: {
+        social_proof?: string;
+        social_proof_text?: string;
+    };
 }
 
 export interface CurriculumBlock extends BaseBlock {

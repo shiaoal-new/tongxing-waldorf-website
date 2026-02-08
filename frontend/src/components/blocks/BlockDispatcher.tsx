@@ -44,6 +44,7 @@ const TypographyDemoBlock = createDynamicBlock("TypographyDemoBlock");
 const MicroInteractionsBlock = createDynamicBlock("MicroInteractionsBlock");
 const TabbedContentBlock = createDynamicBlock("TabbedContentBlock");
 const QuestionnaireBlock = createDynamicBlock("QuestionnaireBlock", "載入問卷中...");
+const PathQuestionnaire = createDynamicBlock("PathQuestionnaire", "載入路径诊断系统中...");
 const TimelineBlock = createDynamicBlock("TimelineBlock", "載入時間軸中...");
 const ScheduleBlock = createDynamicBlock("ScheduleBlock");
 const CurriculumBlock = createDynamicBlock("CurriculumBlock");
@@ -165,6 +166,10 @@ export default function BlockDispatcher({ block, align = "center", context = "st
 
         case "questionnaire_block":
             return <QuestionnaireBlock data={block as QuestionnaireBlockType} />;
+
+        case "path_questionnaire_block":
+            return <PathQuestionnaire data={block as QuestionnaireBlockType} />;
+
 
         case "mermaid_block":
             return <MermaidBlock data={block as any} />;

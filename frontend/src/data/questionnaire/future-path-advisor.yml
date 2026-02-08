@@ -1,0 +1,306 @@
+title: 孩子未來路徑專家診斷系統
+description: 幫助您為孩子選擇最適合的教育路徑
+meta:
+  social_proof: 856
+  social_proof_text: 位家長已完成診斷
+instruction: 請根據您對孩子的了解與家庭情況，對以下描述進行評分
+
+scale:
+  min: 1
+  max: 5
+  labels:
+    1: 完全不符合
+    2: 不太符合
+    3: 中立/不確定
+    4: 比較符合
+    5: 非常符合
+
+categories:
+  - id: child_characteristics
+    title: 孩子的特質與學習風格
+    questions:
+      - id: q1
+        text: 孩子對藝術、音樂、戲劇等創造性活動展現出強烈的興趣與天賦。
+        reason: 華德福高中強調藝術實作與創造力培養，適合在這些領域有天賦的孩子。
+        benefit: 能在高中階段深度發展藝術特長，透過戲劇排演、手工藝等活動建立獨特的表達能力。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.5
+          diverse: 1.5
+      - id: q2
+        text: 孩子具備強大的自主學習能力，不需要外在的分數或排名來驅動學習動機。
+        reason: 華德福教育不以考試為目的，需要孩子具備內在驅動力。
+        benefit: 在沒有分數壓力的環境中，能更專注於探索自己真正感興趣的領域。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.3
+          diverse: 1.5
+      - id: q3
+        text: 孩子在面對標準化測驗時表現出色，能快速掌握考試技巧。
+        reason: 體制內高中重視學科能力測驗與學術競爭。
+        benefit: 能在激烈的升學競爭中取得優勢，為進入頂尖大學鋪路。
+        scoring:
+          waldorf: 0.2
+          mainstream: 2.0
+          diverse: 0.8
+      - id: q4
+        text: 孩子對特定實用技能 (如程式設計、烹飪、木工等) 有明確的興趣與目標。
+        reason: 技術高中或多元路徑強調專業技能實務與產學合作。
+        benefit: 能提早進入專業領域，建立一技之長，縮短學用落差。
+        scoring:
+          waldorf: 0.8
+          mainstream: 0.5
+          diverse: 2.0
+      - id: q5
+        text: 孩子具備強大的心理韌性，能在高壓環境中保持穩定的情緒。
+        reason: 轉入體制內高中需要面對密集的考試與排名壓力。
+        benefit: 能在競爭環境中維持身心健康，避免因壓力導致的適應不良。
+        scoring:
+          waldorf: 0.5
+          mainstream: 2.0
+          diverse: 1.0
+
+  - id: learning_goals
+    title: 學習目標與職涯規劃
+    questions:
+      - id: q6
+        text: 孩子對醫學、法律等高度仰賴體制內學位與專業執照的領域有明確目標。
+        reason: 這些專業需要透過傳統升學管道取得學位與執照。
+        benefit: 體制內高中能提供扎實的學術訓練，為專業考試做好準備。
+        scoring:
+          waldorf: 0.3
+          mainstream: 2.0
+          diverse: 0.5
+      - id: q7
+        text: 孩子希望透過「特殊選才」等多元管道進入大學，而非傳統的學測分數。
+        reason: 華德福高中學生主要透過特殊選才展現學習歷程與專題成果。
+        benefit: 能在面試中展現遠超同齡人的自我覺察與論述能力。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.5
+          diverse: 1.5
+      - id: q8
+        text: 孩子對國際化發展有興趣，希望未來能到海外求學或工作。
+        reason: 國際華德福高中或特殊選才管道能為海外發展鋪路。
+        benefit: 培養跨文化學習能力與國際視野，提升全球移動力。
+        scoring:
+          waldorf: 1.5
+          mainstream: 1.0
+          diverse: 2.0
+      - id: q9
+        text: 孩子希望儘早進入職場，不一定要追求傳統的大學學歷。
+        reason: 技術高中提供專業技能訓練與產學合作機會。
+        benefit: 能提早累積實務經驗，建立職場競爭力。
+        scoring:
+          waldorf: 0.3
+          mainstream: 0.5
+          diverse: 2.0
+      - id: q10
+        text: 孩子對哲學、文學、藝術史等人文領域有深刻的研究熱忱。
+        reason: 華德福高中課程涵蓋黑格爾哲學、世界文學等深度人文主題。
+        benefit: 能在青少年心理轉折的關鍵期，獲得完整的人文支援。
+        scoring:
+          waldorf: 2.0
+          mainstream: 1.0
+          diverse: 1.2
+
+  - id: family_resources
+    title: 家庭資源與支持系統
+    questions:
+      - id: q11
+        text: 家庭具備足夠的經濟能力，能負擔私立實驗教育機構的學費 (每學期 8-11 萬)。
+        reason: 大多數華德福高中以實驗教育機構形式存在，學費較高。
+        benefit: 能讓孩子在理想的教育環境中成長，不受經濟壓力影響。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.5
+          diverse: 1.0
+      - id: q12
+        text: 家長能投入較多時間參與學校事務 (如工作日、節慶活動、家長座談)。
+        reason: 華德福教育強調親師生共同合作，需要家長積極參與。
+        benefit: 建立緊密的互助網絡，形成共榮成長的理想社群環境。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.3
+          diverse: 1.0
+      - id: q13
+        text: 家長能抵禦來自親友或主流社會對「非傳統路徑」的質疑。
+        reason: 選擇華德福或多元路徑需要強大的心理韌性。
+        benefit: 能堅持對孩子最有利的教育選擇，不被外界評價動搖。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.2
+          diverse: 1.8
+      - id: q14
+        text: 家長願意在國八、國九階段安排適度的學科補強，幫助孩子適應體制內評量。
+        reason: 轉入體制內需要掌握標準化測驗的「溝通語言」。
+        benefit: 降低升學時的門檻效應，緩衝「考題轟炸」的震撼。
+        scoring:
+          waldorf: 0.3
+          mainstream: 2.0
+          diverse: 1.2
+      - id: q15
+        text: 家長不將「名校錄取」視為唯一的成功指標，更看重孩子的全人發展。
+        reason: 華德福教育的核心在於培養「健全的個人」。
+        benefit: 培養出身心平衡、具備創造力的人，能在變動的未來保持內在平靜。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.5
+          diverse: 1.5
+
+  - id: adaptation_concerns
+    title: 適應能力與轉銜準備
+    questions:
+      - id: q16
+        text: 孩子能快速適應新環境，在大型學校中也能建立良好的人際關係。
+        reason: 體制內高中通常規模較大，需要較強的社會化能力。
+        benefit: 能接觸更多元的同儕背景，拓展社交圈。
+        scoring:
+          waldorf: 0.5
+          mainstream: 2.0
+          diverse: 1.5
+      - id: q17
+        text: 孩子對華德福的「慢學」節奏感到滿意，不急於追求快速的學術進展。
+        reason: 華德福教育尊重每個孩子獨特的成長曲線。
+        benefit: 減少不對稱進度下的學習壓力，建立基於自我節奏的自信心。
+        scoring:
+          waldorf: 2.0
+          mainstream: 0.3
+          diverse: 1.0
+      - id: q18
+        text: 孩子在華德福階段培養的「圖文整合力」與「自主學習習慣」已相當成熟。
+        reason: 這些能力能幫助轉入體制內的學生快速補齊數理落差。
+        benefit: 在探究實作課程中大放異彩，找回自信。
+        scoring:
+          waldorf: 1.0
+          mainstream: 2.0
+          diverse: 1.5
+      - id: q19
+        text: 孩子對「每小時換課、每天考試」的機械化節奏有心理準備且能接受。
+        reason: 體制內高中的時間表與華德福差異極大。
+        benefit: 避免因節奏斷層導致的身心失調。
+        scoring:
+          waldorf: 0.2
+          mainstream: 2.0
+          diverse: 1.0
+      - id: q20
+        text: 家長與孩子已經過深度對話，孩子對未來路徑有清晰的自我認知。
+        reason: 成功轉銜的關鍵在於孩子的內在動機，而非家長的單方面決定。
+        benefit: 減少因被動轉向導致的心理崩潰與認同衝突。
+        scoring:
+          waldorf: 1.5
+          mainstream: 1.5
+          diverse: 1.5
+
+# 結果配置 - 基於三條路徑的得分
+results:
+  - path: waldorf
+    minScore: 0
+    title: 續讀華德福高中
+    subtitle: 深耕體系的完整十二年一貫教育
+    description: 根據您的回答，孩子非常適合續留華德福體系。孩子在藝術、人文領域展現出強烈的內在動機，家庭也具備支持這條路徑所需的理念認同與資源投入。
+    color: success
+    icon: lucide:heart
+    strengths:
+      - 保護創造力與心理健康，避開體制內高壓
+      - 深度人文課程培養批判思考能力
+      - 透過特殊選才展現獨特的學習歷程
+      - 長期穩定的師生關係提供情感安全感
+    challenges:
+      - 升學管道主要依賴特殊選才，競爭激烈
+      - 私立機構學費較高 (每學期 8-11 萬)
+      - 需要家長高度參與學校事務
+      - 可能面臨親友對非傳統路徑的質疑
+    preparation:
+      - title: 8 年級下學期
+        content: 與孩子共同繪製「生命地圖」，確認對華德福理念的認同
+      - title: 9 年級上學期
+        content: 在畢業專題深度投入，同時了解特殊選才管道
+      - title: 9 年級下學期
+        content: 完成畢業公演，準備高中入學面試
+      - title: 10 年級
+        content: 適應高中主修課程，開始規劃大學學習歷程
+    expert_advice:
+      - 確認家庭經濟能力能支撐三年學費
+      - 積極參與學校社群，建立支持網絡
+      - 鼓勵孩子發展特定領域的深度專題
+      - 提早了解大學特殊選才的評選標準
+    case_study:
+      title: 成功案例：石恩亞
+      content: 華德福 16 年畢業生，透過特殊選才錄取陽明交大。現為運動媒體專欄作家，認為華德福教育賦予他極強的「自學力」與追求熱情的自信。
+
+  - path: mainstream
+    minScore: 0
+    title: 轉軌主流高中
+    subtitle: 跨體制的生命挑戰與適應力培養
+    description: 根據您的回答，孩子具備轉入體制內高中的條件。孩子展現出強大的心理韌性與學術能力，家庭也準備好提供必要的支持與緩衝。
+    color: info
+    icon: lucide:trending-up
+    strengths:
+      - 學術訓練扎實，為傳統升學管道鋪路
+      - 接觸更多元的同儕背景，拓展社交圈
+      - 培養在高壓環境中的抗壓性與韌性
+      - 公立學校學費低廉，經濟負擔較小
+    challenges:
+      - 初期面臨標準化考試的文化衝擊
+      - 「慢學」背景可能導致學科落差
+      - 機械化節奏可能引發身心失調
+      - 需要強大的心理緩衝與家長支持
+    preparation:
+      - title: 8 年級下學期
+        content: 開始接觸補充教材，熟悉體制內的「溝通語言」
+      - title: 9 年級上學期
+        content: 在畢業專題與學科總複習間取得平衡
+      - title: 9 年級下學期
+        content: 5 月教育會考衝刺，6 月畢業公演
+      - title: 10 年級 (高一)
+        content: 前 6 個月是關鍵適應期，降低對分數的期待
+    expert_advice:
+      - 前 6 個月優先關注社交融入與心理韌性，而非分數
+      - 利用華德福培養的「圖文整合力」做筆記
+      - 尋找能解釋學科「為什麼」的資源，避免純題海
+      - 家長成為孩子的「支持盾」，緩衝量化評價壓力
+      - 將眼光放遠到大學甚至職涯，不被短期分數動搖
+    case_study:
+      title: 成功案例：武陵高中畢業生
+      content: 初期面臨分數墊底的衝擊，但在高二憑藉華德福培養的「自主學習習慣」與「圖文整合力」，快速補齊數理落差，最終錄取頂尖大學。
+    warning:
+      title: 失敗風險提醒
+      content: 當家長強制將未經溝通的孩子送入高壓私校，常引發嚴重的心理崩潰與厭學情緒。成功關鍵在於孩子的內在動機與充分的心理緩衝。
+
+  - path: diverse
+    minScore: 0
+    title: 多元創新路徑
+    subtitle: 特殊選才、國際化與技職專業發展
+    description: 根據您的回答，孩子適合探索更多元的教育路徑。無論是國際華德福、技術高中或特殊選才，都能發揮孩子的獨特優勢。
+    color: warning
+    icon: lucide:rocket
+    strengths:
+      - 能發展特定專業技能，建立一技之長
+      - 國際化路徑培養跨文化能力與全球視野
+      - 透過特殊選才展現多元智能
+      - 提早進入職場或專業領域
+    challenges:
+      - 需要更明確的職涯目標與規劃
+      - 國際路徑需要較高的經濟投入
+      - 技職路徑可能面臨學歷貶值疑慮
+      - 需要家長更積極的資源整合
+    options:
+      - title: 特殊選才管道
+        content: 透過學習歷程與專題成果，申請頂尖大學的特殊選才名額
+        icon: lucide:star
+      - title: 國際華德福高中
+        content: 前往德國、澳洲或美國的華德福高中，為海外大學鋪路
+        icon: lucide:globe
+      - title: 技術高中
+        content: 選擇專業技能實務訓練，取得丙乙級證照，提早進入職場
+        icon: lucide:hammer
+      - title: 實驗教育機構
+        content: 探索其他創新教育模式，如自主學習、民主學校等
+        icon: lucide:lightbulb
+    expert_advice:
+      - 與孩子深度對話，確認真正的興趣與目標
+      - 研究各種管道的入學條件與未來發展
+      - 評估家庭資源能支持哪些選項
+      - 保持開放心態，不被單一路徑限制
+      - 建立多元的支持網絡與資源管道

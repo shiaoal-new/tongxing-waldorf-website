@@ -5,6 +5,8 @@ items:
       - slug: "teacher-group"
       - slug: "timeline"
       - slug: "future-paths"
+      - slug: "future-path-advisor"
+        title: "未來路徑診斷系統"
   - title: "課程與教學"
     children:
       - slug: "rhythm-of-life"
