@@ -35,6 +35,10 @@ export function getAllFaq(): FaqItem[] {
 
             if (extension === '.yml' || extension === '.yaml') {
                 data = yaml.load(fileContents) || {};
+                // 如果是 YAML 文件，内容可能在 data.content 中
+                if (data.content) {
+                    content = data.content;
+                }
             } else {
                 const matterResult = matter(fileContents);
                 data = matterResult.data;
