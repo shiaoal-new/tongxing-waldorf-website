@@ -43,8 +43,10 @@
             }
 
             &.navbar--top::before {
-                opacity: 0;
-                backdrop-filter: blur(0px) brightness(1);
+                opacity: var(--navbar-bg-opacity, 0);
+                background-color: rgba(var(--color-brand-bg), 1);
+                backdrop-filter: blur(20px) brightness(1.1);
+                box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
             }
 
             /* Hover or open state - fully opaque for readability */
