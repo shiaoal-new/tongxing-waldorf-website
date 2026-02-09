@@ -227,6 +227,56 @@ git dstats
 | v1.0 | 2026-01-18 | 初始實現 - 基本的 Git Notes 功能 |
 | v1.1 | 2026-01-18 11:09 | 修復權限問題 |
 | v1.2 | 2026-01-18 11:27 | 修復推送衝突,添加重試機制 |
+| v1.3 | 2026-02-10 07:55 | 修復 Firebase 部署內部錯誤,添加自動重試機制 |
+
+---
+
+### 問題 3: Firebase 部署內部錯誤 (Internal Error) ✅ 已修復
+
+**錯誤訊息:**
+```
+Error: An Internal error has occurred. Please try again in a few minutes.
+```
+
+**原因:**
+- Google Cloud 或 Firebase 的暫時性內部問題，特別是在生成服務身份或啟用 API 時。
+
+**解決方案:**
+
+1. **添加自動重試機制:**
+在 `.github/workflows/firebase-deploy.yml` 中將部署命令包裹在重試循環中。
+
+2. **重試邏輯:**
+- 最多重試 3 次。
+- 每次失敗後等待 60 秒（符合錯誤提示中的 "try again in a few minutes"）。
+- 只有在三次嘗試都失敗後才中止 workflow。
+
+**修復代碼範例:**
+```yaml
+DEPLOY_SUCCESS=false
+for i in {1..3}; do
+  echo "🚀 開始第 $i 次部署嘗試..."
+  if firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --force; then
+    echo "✅ Firebase 部署成功"
+    DEPLOY_SUCCESS=true
+    break
+  else
+    if [ $i -lt 3 ]; then
+      echo "⚠️ Firebase 部署失敗 (嘗試 $i/3)，等待 60 秒後重試..."
+      sleep 60
+    else
+      echo "❌ Firebase 部署三次嘗試後仍然失敗"
+    fi
+  fi
+done
+
+if [ "$DEPLOY_SUCCESS" = false ]; then
+  exit 1
+fi
+```
+
+**修復時間:** 2026-02-10 07:55 UTC  
+**狀態:** ✅ 已解決
 
 ---
 

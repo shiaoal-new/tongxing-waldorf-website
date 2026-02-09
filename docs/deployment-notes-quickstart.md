@@ -131,4 +131,17 @@ for i in {1..3}; do
 done
 ```
 
+### Firebase 部署內部錯誤 (Internal Error)
+
+如果看到類似以下錯誤:
+```
+Error: An Internal error has occurred. Please try again in a few minutes.
+```
+
+**原因**: 這通常是 Google Cloud 或 Firebase 的暫時性內部問題。
+
+**解決方案**: 已在 workflow 中為 Firebase 部署添加了自動重試機制:
+1. 部署失敗時自動重試(最多 3 次)
+2. 每次重試前等待 60 秒以增加成功機率
+
 這些改進已經包含在最新的 workflow 文件中。
