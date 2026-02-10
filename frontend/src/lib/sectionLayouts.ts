@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import yaml from 'js-yaml';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 const layoutsDirectory = path.join(process.cwd(), 'src/data/section_layouts');
 
@@ -36,7 +36,7 @@ export function getAllSectionLayouts(): any[] {
             let data: any = {};
 
             if (extension === '.yml' || extension === '.yaml') {
-                data = yaml.load(fileContents) || {};
+                data = loadYamlWithIncludes(fullPath);
             } else {
                 const matterResult = matter(fileContents);
                 data = matterResult.data;

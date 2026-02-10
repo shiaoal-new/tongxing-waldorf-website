@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
 import { NavigationData, SiteData } from '../types/content';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 const settingsDirectory = path.join(process.cwd(), 'src/data/settings');
 
@@ -11,7 +11,7 @@ export function getNavigation(): NavigationData {
         return { items: [] };
     }
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    return (yaml.load(fileContents) as NavigationData) || { items: [] };
+    return (loadYamlWithIncludes(fullPath) as NavigationData) || { items: [] };
 }
 
 export function getSiteSettings(): SiteData {
@@ -37,6 +37,5 @@ export function getSiteSettings(): SiteData {
             socialLinks: {}
         };
     }
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    return yaml.load(fileContents) as SiteData;
+    return loadYamlWithIncludes(fullPath) as SiteData;
 }

@@ -1,8 +1,8 @@
 
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
 import { glob } from 'glob';
+import { loadYamlWithIncludes } from '../src/lib/yaml-loader';
 
 // Configuration
 const BASE_DIR = process.cwd();
@@ -30,7 +30,7 @@ async function generateSitemap() {
     let baseUrl = 'https://tongxing.org.tw'; // Default fallback
     try {
         if (fs.existsSync(SETTINGS_FILE)) {
-            const settings = yaml.load(fs.readFileSync(SETTINGS_FILE, 'utf8')) as SiteSettings;
+            const settings = loadYamlWithIncludes(SETTINGS_FILE) as SiteSettings;
             if (settings.url) {
                 baseUrl = settings.url.replace(/\/$/, '');
             }

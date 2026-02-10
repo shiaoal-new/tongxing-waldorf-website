@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import yaml from 'js-yaml';
 import { FaqItem } from '../types/content';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 function getFaqDirectory() {
     const baseCwd = process.cwd();
@@ -34,7 +34,7 @@ export function getAllFaq(): FaqItem[] {
             let content = '';
 
             if (extension === '.yml' || extension === '.yaml') {
-                data = yaml.load(fileContents) || {};
+                data = loadYamlWithIncludes(fullPath);
                 // 如果是 YAML 文件，内容可能在 data.content 中
                 if (data.content) {
                     content = data.content;

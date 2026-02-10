@@ -1,14 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 const questionnairesDirectory = path.join(process.cwd(), 'src/data/questionnaire');
 
 export function getQuestionnaireBySlug(slug) {
     try {
         const fullPath = path.join(questionnairesDirectory, `${slug}.yml`);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-        const data = yaml.load(fileContents);
+        const data = loadYamlWithIncludes(fullPath);
         return { ...data, slug };
     } catch (error) {
         console.error(`Error loading questionnaire ${slug}:`, error);

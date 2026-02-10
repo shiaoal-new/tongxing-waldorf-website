@@ -6,6 +6,7 @@ import { Resvg } from '@resvg/resvg-js';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
 import { getWordingDictionary, resolveWording } from '../src/lib/wording.server';
+import { loadYamlWithIncludes } from '../src/lib/yaml-loader';
 
 // --- Configuration ---
 const SOURCE_DIRS = [
@@ -94,7 +95,7 @@ async function generate() {
     let siteName = '同心華德福';
     try {
         if (fs.existsSync(SITE_SETTINGS_PATH)) {
-            const settings = yaml.load(fs.readFileSync(SITE_SETTINGS_PATH, 'utf8')) as SiteSettings;
+            const settings = loadYamlWithIncludes(path.isAbsolute(SITE_SETTINGS_PATH) ? SITE_SETTINGS_PATH : path.join(process.cwd(), SITE_SETTINGS_PATH)) as SiteSettings;
             if (settings?.name) siteName = settings.name;
         }
     } catch (e) {
@@ -110,8 +111,7 @@ async function generate() {
     for (const file of files) {
         try {
             // Read Data
-            const fileContent = fs.readFileSync(file, 'utf8');
-            let data = yaml.load(fileContent) as PageData;
+            let data = loadYamlWithIncludes(path.isAbsolute(file) ? file : path.join(process.cwd(), file)) as PageData;
 
             // Determine Slug (filename is default)
             const filename = path.basename(file, '.yml');

@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import yaml from 'js-yaml';
 import { Course } from '../types/content';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 function getCoursesDirectory() {
     const baseCwd = process.cwd();
@@ -34,7 +34,7 @@ export function getAllCourses(): Course[] {
             let content = '';
 
             if (extension === '.yml' || extension === '.yaml') {
-                data = yaml.load(fileContents) || {};
+                data = loadYamlWithIncludes(fullPath);
             } else {
                 const matterResult = matter(fileContents);
                 data = matterResult.data;
