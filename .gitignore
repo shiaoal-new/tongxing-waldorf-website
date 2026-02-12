@@ -1,7 +1,7 @@
 # dependencies
 node_modules/
 .firebase/
-
+.playwright-cli/
 # testing
 /coverage
 
