@@ -1,0 +1,80 @@
+title: "$seo.title"
+slug: index-option2
+seo:
+  title: "$seo.title"
+hero:
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+  media_list:
+    - type: video
+      video: /img/hero-video-vp9.webm
+      poster: /img/video-poster.webp
+
+sections:
+  - section_id: bento_features
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$bento.title"
+        subtitle: "$bento.subtitle"
+        layout: centered
+      - type: list_block
+        layout_method: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$bento.academic.title"
+            span: 8
+            content: "$bento.academic.content"
+            media:
+              type: image
+              image: /img/featured-academic.webp
+            buttons:
+              - text: "了解教學法"
+                link: /curriculum-development
+                style: btn-sm-outline
+          - title: "$bento.future.title"
+            span: 4
+            content: "$bento.future.content"
+            icon: lucide:trending-up
+          - title: "$bento.rhythm.title"
+            span: 4
+            content: "$bento.rhythm.content"
+            icon: lucide:calendar
+          - title: "$bento.courses.title"
+            span: 4
+            content: "$bento.courses.content"
+            icon: lucide:palette
+          - title: "$bento.milestones.title"
+            span: 4
+            content: "$bento.milestones.content"
+            icon: lucide:mountain
+
+  - section_id: graduates
+    silk_background: true
+    blocks:
+      - type: text_block
+        title: "$graduates.title"
+      - type: pie_chart_block
+        data: "$graduates.chart.data"
+
+  - section_id: testimonials
+    blocks:
+      - type: list_block
+        layout_method: testimonial_carousel
+        item_type: testimonial_item
+        items:
+          - quote: $testimonials.items.0.quote
+            author: $testimonials.items.0.author
+            title: $testimonials.items.0.title
+
+  - layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        title: "$cta_bottom.title"
+        content: "$cta_bottom.content"
+      - type: cta_block
+        buttons:
+          - text: "$cta_bottom.button"
+            link: /visit
+            style: btn-inverse

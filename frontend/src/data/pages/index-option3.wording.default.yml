@@ -1,0 +1,35 @@
+seo:
+  title: 同心華德福 | 方案三：成長旅程版
+hero:
+  title: 同心華德福
+  subtitle: 於自然的節奏中，培育穩定且有創意的自由人
+journey:
+  title: 在同心的成長旅程
+  subtitle: 方案三：生命流動敘事
+  content: 每個來到同心的孩子，都展開了一場為期九年的英雄之旅。
+  step1:
+    title: 第一階段：建立安定的節奏
+    subtitle: 給予孩子安靜的力量
+    content: 透過規律的作息與四季假期，孩子在穩定的環境中學會自律與修復。
+  step2:
+    title: 第二階段：在藝術中學習學科
+    subtitle: 點燃對知識的熱情
+    content: 從濕彩畫中學色彩原理，從建築課中學幾何，學習不再是被動的吸納，而是主動的創造。
+  step3:
+    title: 第三階段：意志的鍛鍊與挑戰
+    subtitle: 航向成熟的關鍵任務
+    content: 在中學時期，透過大縱走、畢業專題與馬拉松，孩子看見自己的力量，建立真實的自信。
+  step4:
+    title: 第四階段：自信銜接未來
+    subtitle: 畢業不是終點，是能力的展現
+    content: 面對未來的挑戰，同心畢業生具備清晰的路徑感與扎實的底蘊。
+    chart:
+      data:
+        - name: 銜接高中
+          value: 60
+        - name: 其他發展
+          value: 40
+cta_bottom:
+  title: 方案三：生命旅程的起點
+  content: 歡迎親自來體驗。
+  button: 立即預約

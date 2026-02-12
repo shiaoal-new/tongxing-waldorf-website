@@ -8,6 +8,8 @@
     "dev:local": "node scripts/run_local.js",
     "build": "npm run build --prefix frontend && npm run build --prefix functions",
     "deploy": "firebase deploy",
+    "deploy:preview": "npm run build && firebase hosting:channel:deploy iphone-test --expires 7d",
+    "deploy:mobile": "node scripts/deploy_to_mobile.js",
     "install:all": "npm install --prefix frontend && npm install --prefix functions",
     "optimize-images": "node scripts/image-optimizer/optimize-images.js",
     "optimize-images:preview": "node scripts/image-optimizer/optimize-images.js --dry-run --check-unused",

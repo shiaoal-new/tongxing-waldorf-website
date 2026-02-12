@@ -1,0 +1,78 @@
+seo:
+  title: 同心華德福 | 方案一：專業教學版
+  description: 深入介紹同心華德福的特色教學法、課程設計與未來發展藍圖。
+
+hero:
+  title: 同心華德福
+  subtitle: 於自然的節奏中，培育穩定且有創意的自由人
+  accent_text: 方案一：專業教學深耕
+  button_visit: 預約參觀校園
+
+academic:
+  title: 特色教學法 (學科學習)
+  subtitle: 將知識轉化為生命的養分
+  content: 我們不預先給予標準答案，而是引導孩子透過親身體驗、感官觀察到理性的思考。從 1-9 年級，主修課程（Epoch/Block Teaching）讓學科得以在專注的節奏中深入內化。
+
+courses:
+  title: 全人特色課程
+  subtitle: 藝術與實務的交織
+  humanities:
+    title: 人文與語言
+    content: 透過故事、文學與歷史，連結人類文化的脈絡。
+  art:
+    title: 藝術與工藝
+    content: 手工、木工、濕彩畫，在創造中鍛鍊意志與美感。
+  nature:
+    title: 農耕與生態
+    content: 在校園土地中勞作，建立與自然界真實的連結。
+
+milestones:
+  title: 跨越任務
+  subtitle: 成長的指標里程碑
+  trekking:
+    title: 五年級：台北大縱走
+    content: 透過雙腳跨越山巒，鍛鍊意志力與夥伴互助。
+  project:
+    title: 八年級：個人畢業專題
+    content: 獨立研究感興趣的主題，展現自主學習與整合能力。
+  marathon:
+    title: 九年級：馬拉松挑戰
+    content: 在身心轉變的關鍵時刻，以耐力長跑迎接青春期。
+
+rhythm:
+  title: 作息與節奏 (四季假)
+  subtitle: 呼吸般的律動生活
+  content: 華德福教育強調「呼吸」的節奏。我們不僅有每日的節奏，更遵循大自然的規律。首創「四季假」制度，讓孩子與家庭在季節更迭之際，獲得充分的修復與內省時間。
+  seasons:
+    spring: 春假：清明節慶
+    summer: 暑假：夏日祭典
+    autumn: 秋假：秋收節慶
+    winter: 冬假：冬至點燈
+
+future:
+  title: 未來藍圖 (畢業出路)
+  subtitle: 銜接世界的多元路徑
+  content: 同心的畢業生在心理素質、自主學習與問題解決能力上展現出顯著優勢。無論是銜接主流高中、藝術高中或跨國學習，他們都能帶著清晰的自我認同穩健前行。
+  chart:
+    title: 畢業生發展流向概覽
+    data:
+      - name: 主流高中
+        value: 45
+      - name: 藝術/技術學院
+        value: 30
+      - name: 多元/自學/出國
+        value: 25
+
+benefits:
+  title: 教育社群與資源
+  university:
+    title: 大學校園資源
+  community:
+    title: 親師共學社群
+  support:
+    title: 育兒心理支援
+
+cta_bottom:
+  title: 方案一：看見教育的深層價值
+  content: 歡迎親自來到深坑校區，見證孩子在穩定節奏中的成長。
+  button: 立即預約

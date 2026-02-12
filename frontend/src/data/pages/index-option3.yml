@@ -1,0 +1,86 @@
+title: "$seo.title"
+slug: index-option3
+seo:
+  title: "$seo.title"
+hero:
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+  media_list:
+    - type: video
+      video: /img/hero-video-vp9.webm
+      poster: /img/video-poster.webp
+
+sections:
+  - section_id: journey_intro
+    blocks:
+      - type: text_block
+        title: "$journey.title"
+        subtitle: "$journey.subtitle"
+        content: "$journey.content"
+        layout: centered
+
+  - section_id: step1_rhythm
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$journey.step1.title"
+        subtitle: "$journey.step1.subtitle"
+        content: "$journey.step1.content"
+      - type: list_block
+        layout_method: horizontal_scroll
+        item_type: feature_item
+        items:
+          - title: "每日節奏"
+            icon: lucide:clock
+          - title: "每週節奏"
+            icon: lucide:calendar-days
+          - title: "四季假"
+            icon: lucide:leaf
+
+  - section_id: step2_learning
+    silk_background: true
+    blocks:
+      - type: text_block
+        title: "$journey.step2.title"
+        subtitle: "$journey.step2.subtitle"
+        content: "$journey.step2.content"
+      - type: curriculum_block
+
+  - section_id: step3_milestones
+    blocks:
+      - type: text_block
+        title: "$journey.step3.title"
+        subtitle: "$journey.step3.subtitle"
+        content: "$journey.step3.content"
+      - type: list_block
+        layout_method: vertical
+        item_type: feature_item
+        items:
+          - title: "五年級大縱走"
+            icon: lucide:mountain
+          - title: "八年級畢業報告"
+            icon: lucide:book-open
+          - title: "九年級馬拉松"
+            icon: lucide:timer
+
+  - section_id: step4_future
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$journey.step4.title"
+        subtitle: "$journey.step4.subtitle"
+        content: "$journey.step4.content"
+      - type: pie_chart_block
+        data: "$journey.step4.chart.data"
+
+  - layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        title: "$cta_bottom.title"
+        content: "$cta_bottom.content"
+      - type: cta_block
+        buttons:
+          - text: "$cta_bottom.button"
+            link: /visit
+            style: btn-inverse
