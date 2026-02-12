@@ -39,21 +39,48 @@ sections:
         title: "$courses.title"
         subtitle: "$courses.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout_method: featured_course_carousel
         item_type: feature_item
+        buttons:
+          - text: "$courses.button"
+            link: /featured-courses
+            style: btn-outline-primary
         items:
           - title: "$courses.humanities.title"
             span: 4
             icon: ph:book-open-text-bold
             content: "$courses.humanities.content"
+            media:
+              type: image
+              image: /img/featured-academic.webp
           - title: "$courses.art.title"
             span: 4
             icon: ph:palette-bold
             content: "$courses.art.content"
+            media:
+              type: image
+              image: /img/featured-artistic.webp
           - title: "$courses.nature.title"
             span: 4
             icon: ph:plant-bold
             content: "$courses.nature.content"
+            media:
+              type: image
+              image: /img/featured-nature.webp
+          - title: "$courses.outdoor.title"
+            span: 4
+            icon: ph:mountains-bold
+            content: "$courses.outdoor.content"
+            media:
+              type: image
+              image: /img/featured-outdoor.webp
+          - title: "$courses.project.title"
+            span: 4
+            icon: ph:lightbulb-bold
+            content: "$courses.project.content"
+            media:
+              type: image
+              image: /img/featured-exploration.webp
 
   # 3. 跨越任務 (成長里程碑)
   - section_id: milestones

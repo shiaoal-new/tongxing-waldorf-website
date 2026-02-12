@@ -13,7 +13,12 @@ const ListSwiper = dynamic<any>(() => import('./ListSwiper'), {
 });
 
 
+
 const TestimonialSwiper = dynamic<any>(() => import('./TestimonialSwiper'), {
+    loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
+});
+
+const FeaturedCourseSwiper = dynamic<any>(() => import('./FeaturedCourseSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
@@ -28,6 +33,7 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     bento_grid: { fullWidth: false },
     scrollable_grid: { fullWidth: true },
     testimonial_carousel: { fullWidth: true },
+    featured_course_carousel: { fullWidth: true },
     masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
 };
@@ -283,6 +289,17 @@ export default function ListRenderer({
             <TestimonialSwiper
                 items={items}
                 renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
+            />
+        );
+    }
+
+    // Featured Course Carousel 佈局 (特色課程輪播)
+    if (layout === "featured_course_carousel") {
+        return (
+            <FeaturedCourseSwiper
+                items={items}
+                renderItem={(item: any, index: number) => renderItem(item, index)}
+                buttons={buttons}
             />
         );
     }

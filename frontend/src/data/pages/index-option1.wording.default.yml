@@ -25,6 +25,13 @@ courses:
   nature:
     title: 農耕與生態
     content: 在校園土地中勞作，建立與自然界真實的連結。
+  outdoor:
+    title: 戶外與冒險
+    content: 透過登山與壯遊，在挑戰中鍛鍊意志與團隊合作。
+  project:
+    title: 專題與自主
+    content: 從興趣出發的獨立研究，培養解決問題的實戰力。
+  button: 查看全部特色課程
 
 milestones:
   title: 跨越任務
