@@ -8,7 +8,7 @@ async function run() {
 
     // 1. Execute the build and deploy command
     // We use spawn to see the output in real-time
-    const deploy = spawn('npm', ['run', 'deploy:preview'], { shell: true });
+    const deploy = spawn('npm', ['run', 'deploy:preview:fast'], { shell: true });
 
     let output = '';
     deploy.stdout.on('data', (data) => {
