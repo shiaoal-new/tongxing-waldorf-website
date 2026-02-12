@@ -2,7 +2,12 @@ import dynamic from "next/dynamic";
 // Touch fix build
 import React from "react";
 
+import HeroCardItem from "./HeroCardItem"; // Assuming file is created
 import FeatureItem from "./FeatureItem";
+
+// ... existing code ...
+
+// ... (removed the block)
 import VideoItem from "../Video";
 import TextBlock from "./TextBlock";
 import Card from "./Card";
@@ -78,6 +83,12 @@ export default function BlockDispatcher({ block, align = "center", context = "st
     const type = (block as any).type || (block as any).item_type || "text_block";
 
     switch (type) {
+        case "hero_card_item":
+            return (
+                <HeroCardItem
+                    {...(block as any)}
+                />
+            );
         case "faq_item":
         case "faq":
             return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} disableExpand={true} />;

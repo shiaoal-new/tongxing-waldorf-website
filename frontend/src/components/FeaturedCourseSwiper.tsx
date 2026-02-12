@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { Icon } from "@iconify/react";
 import ActionButtons from "./ui/ActionButtons";
 
 interface FeaturedCourseSwiperProps {
@@ -14,6 +15,14 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
     const [showRightButton, setShowRightButton] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    // Helper to get current gap based on window width
+    const getGap = () => {
+        if (typeof window === 'undefined') return 16;
+        if (window.innerWidth >= 1024) return 32;
+        if (window.innerWidth >= 640) return 24;
+        return 16;
+    };
+
     const handleScroll = () => {
         if (!scrollRef.current) return;
         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -22,7 +31,7 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
 
         // Calculate current index based on scroll position
         const cardWidth = scrollRef.current.querySelector('.featured-card')?.clientWidth || 0;
-        const gap = 16;
+        const gap = getGap();
         const newIndex = Math.round(scrollLeft / (cardWidth + gap));
         setCurrentIndex(newIndex);
     };
@@ -30,7 +39,8 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
     const scroll = (direction: 'left' | 'right') => {
         if (!scrollRef.current) return;
         const cardWidth = scrollRef.current.querySelector('.featured-card')?.clientWidth || 0;
-        const scrollAmount = cardWidth + 16; // card width + gap
+        const gap = getGap();
+        const scrollAmount = cardWidth + gap;
         const newScrollLeft = scrollRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
         scrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
     };
@@ -45,6 +55,8 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
     }, []);
 
     const displayItems = items.slice(0, 5);
+    const hasMoreButton = buttons && buttons.length > 0;
+    const totalSlides = displayItems.length + (hasMoreButton ? 1 : 0);
 
     return (
         <div className="featured-course-swiper-wrapper py-8 relative w-full group">
@@ -125,6 +137,7 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
                 ref={scrollRef}
                 className="scroll-container"
             >
+                {/* Regular Items */}
                 {displayItems.map((item, index) => (
                     <div key={item.id || index} className="featured-card py-4">
                         <div className="h-full transform transition-all duration-300 hover:-translate-y-2">
@@ -132,6 +145,25 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
                         </div>
                     </div>
                 ))}
+
+                {/* View All Card */}
+                {hasMoreButton && (
+                    <div className="featured-card py-4">
+                        <div className="h-full transform transition-transform duration-300 hover:-translate-y-2">
+                            <a
+                                href={buttons![0].link}
+                                className="h-full w-full flex flex-col items-center justify-center bg-white/50 dark:bg-white/5 border-2 border-dashed border-brand-accent/30 rounded-3xl group/card hover:bg-brand-accent/5 hover:border-brand-accent hover:shadow-lg transition-all duration-300 gap-4 text-center p-6 cursor-pointer min-h-[300px]"
+                            >
+                                <div className="w-20 h-20 rounded-full bg-brand-accent/10 flex items-center justify-center group-hover/card:scale-110 group-hover/card:bg-brand-accent group-hover/card:text-white transition-all duration-300 text-brand-accent">
+                                    <Icon icon="ph:arrow-right-bold" className="w-10 h-10" />
+                                </div>
+                                <span className="text-xl font-bold text-brand-text dark:text-brand-bg group-hover/card:text-brand-accent transition-colors">
+                                    {buttons![0].text}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Custom Navigation Buttons (Desktop only) */}
@@ -154,13 +186,13 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
 
             {/* Pagination Dots */}
             <div className="pagination-dots">
-                {displayItems.map((_, index) => (
+                {Array.from({ length: totalSlides }).map((_, index) => (
                     <button
                         key={index}
                         onClick={() => {
                             if (!scrollRef.current) return;
                             const cardWidth = scrollRef.current.querySelector('.featured-card')?.clientWidth || 0;
-                            const gap = 16;
+                            const gap = getGap();
                             scrollRef.current.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
                         }}
                         className={`pagination-dot ${currentIndex === index ? 'active' : ''}`}
@@ -168,12 +200,6 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
                     />
                 ))}
             </div>
-
-            {buttons && buttons.length > 0 && (
-                <div className="mt-8 flex justify-center">
-                    <ActionButtons buttons={buttons} align="center" />
-                </div>
-            )}
         </div>
     );
 }
