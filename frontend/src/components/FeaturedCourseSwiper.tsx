@@ -14,7 +14,7 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
 
     const config: ScrollCarouselConfig = {
         cardClassName: 'featured-card',
-        wrapperClassName: 'featured-course-swiper-wrapper py-8 relative w-full group',
+        wrapperClassName: 'featured-course-swiper-wrapper py-8 relative w-full group overflow-x-hidden',
         showNavigation: true,
         showPagination: true,
         navButtonVariant: 'default',
