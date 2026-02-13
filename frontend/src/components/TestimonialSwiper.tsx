@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import React from 'react';
+import ScrollCarousel, { ScrollCarouselConfig } from './ui/ScrollCarousel';
 
 interface TestimonialSwiperProps {
     items: any[];
-    renderItem: (item: any, index: number, meta: { current: number, total: number }) => React.ReactNode;
+    renderItem: (item: any, index: number, pagination: { current: number; total: number }) => React.ReactNode;
 }
 
 /**
@@ -16,72 +11,82 @@ interface TestimonialSwiperProps {
  * 專為見證設計的輪播組件，具有置中放大的視覺效果
  */
 export default function TestimonialSwiper({ items, renderItem }: TestimonialSwiperProps) {
-    const [prevEl, setPrevEl] = useState<HTMLElement | null>(null);
-    const [nextEl, setNextEl] = useState<HTMLElement | null>(null);
+    const config: ScrollCarouselConfig = {
+        cardClassName: 'testimonial-card',
+        wrapperClassName: 'testimonial-swiper-wrapper py-6 md:py-16 relative px-0 w-full group',
+        showNavigation: true,
+        showPagination: false,
+        navButtonVariant: 'large',
+        snapAlign: 'center',
+        clickableCards: true,
+        activeCardClassName: 'active z-10 scale-100 md:scale-110 opacity-100 grayscale-0',
+        inactiveCardClassName: 'scale-90 opacity-60 grayscale-[0.5]',
+        containerStyles: `
+            .scroll-container {
+                gap: 1rem;
+                padding: 2rem 0;
+                align-items: center;
+            }
+
+            /* 為了讓第一項和最後一項能置中，添加 spacer */
+            .scroll-container::before,
+            .scroll-container::after {
+                content: '';
+                flex: 0 0 auto;
+                width: calc((100vw - 75vw) / 2);
+            }
+
+            @media (min-width: 640px) {
+                .scroll-container::before,
+                .scroll-container::after {
+                    width: calc((100vw - 520px) / 2);
+                }
+            }
+
+            @media (min-width: 1024px) {
+                .scroll-container::before,
+                .scroll-container::after {
+                    width: calc((100vw - 700px) / 2);
+                }
+            }
+        `,
+        cardStyles: `
+            .testimonial-card {
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+                flex-shrink: 0;
+                width: 75vw;
+                transition: all 0.5s ease;
+                padding: 2.5rem 0;
+                cursor: pointer;
+            }
+
+            @media (min-width: 640px) {
+                .testimonial-card {
+                    width: 520px;
+                }
+            }
+
+            @media (min-width: 1024px) {
+                .testimonial-card {
+                    width: 700px;
+                }
+            }
+        `,
+    };
 
     return (
-        <div className="testimonial-swiper-wrapper py-6 md:py-16 relative px-0 md:px-12 lg:px-20 overflow-x-hidden w-full group">
-            {/* Custom Navigation Buttons */}
-            <div className="absolute top-1/2 left-4 md:left-8 z-30 -translate-y-1/2 hidden lg:block">
-                <button
-                    ref={(node) => setPrevEl(node)}
-                    className="btn btn-circle bg-white/90 dark:bg-black/40 backdrop-blur-sm border-none shadow-xl text-brand-accent hover:bg-brand-accent hover:text-white hover:scale-110 transition-all duration-300"
-                    aria-label="Previous slide"
-                >
-                    <ChevronLeftIcon className="w-8 h-8" />
-                </button>
-            </div>
-            <div className="absolute top-1/2 right-4 md:right-8 z-30 -translate-y-1/2 hidden lg:block">
-                <button
-                    ref={(node) => setNextEl(node)}
-                    className="btn btn-circle bg-white/90 dark:bg-black/40 backdrop-blur-sm border-none shadow-xl text-brand-accent hover:bg-brand-accent hover:text-white hover:scale-110 transition-all duration-300"
-                    aria-label="Next slide"
-                >
-                    <ChevronRightIcon className="w-8 h-8" />
-                </button>
-            </div>
-
-            <Swiper
-                modules={[Navigation]}
-                spaceBetween={16}
-                slidesPerView={1.4}
-                centeredSlides={true}
-                loop={true}
-                slideToClickedSlide={true}
-                navigation={{
-                    prevEl,
-                    nextEl,
-                }}
-                breakpoints={{
-                    640: {
-                        slidesPerView: 1.8,
-                        spaceBetween: 30,
-                    },
-                    1024: {
-                        slidesPerView: 2.2,
-                        spaceBetween: 50,
-                    },
-                }}
-                className="testimonial-swiper !overflow-visible"
-            >
-                {items.map((item, index) => (
-                    <SwiperSlide key={item.id || index} className="transition-all duration-500 pt-16 pb-12 md:py-20 px-0">
-                        {({ isActive }) => (
-                            <div className={`transition-all duration-500 h-full ${isActive ? 'scale-110 z-10' : 'scale-90 opacity-60 grayscale-[0.5] cursor-pointer'}`}>
-                                {renderItem(item, index, { current: index + 1, total: items.length })}
-                            </div>
-                        )}
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-
-            <style jsx global>{`
-                .testimonial-swiper .swiper-slide {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-            `}</style>
-        </div>
+        <ScrollCarousel
+            items={items}
+            config={config}
+            renderItem={(item, index, extra) => (
+                <div className="h-full w-full">
+                    {renderItem(item, index, {
+                        current: index + 1,
+                        total: extra?.totalItems || items.length,
+                    })}
+                </div>
+            )}
+        />
     );
 }
