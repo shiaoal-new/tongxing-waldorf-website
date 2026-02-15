@@ -2,6 +2,9 @@ title: "董品喬"
 subtitle: "註冊"
 media:
   type: image
+  image: "/img/teacher-photos/董品喬_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/董品喬.webp"
 
 group: "admin"

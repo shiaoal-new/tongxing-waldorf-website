@@ -17,9 +17,9 @@ export default function MemberDetailModal({ selectedMember, onClose }: MemberDet
             onClose={onClose}
             layoutId={`member-image-${selectedMember.title}`}
             backgroundContent={
-                selectedMember.media ? (
+                (selectedMember.hover_media || selectedMember.media) ? (
                     <MediaRenderer
-                        media={selectedMember.media as any}
+                        media={(selectedMember.hover_media || selectedMember.media) as any}
                         className="w-full h-full"
                         imgClassName="object-cover w-full h-full"
                         priority={true}

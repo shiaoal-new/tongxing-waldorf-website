@@ -323,6 +323,7 @@ export interface Member {
     title: string;
     subtitle?: string;
     media?: MediaItem;
+    hover_media?: MediaItem;
     content?: string;
     order?: number;
     [key: string]: any;

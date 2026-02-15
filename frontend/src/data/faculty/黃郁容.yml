@@ -2,6 +2,9 @@ title: "黃郁容"
 subtitle: "G3 琥珀班導師"
 media:
   type: image
+  image: "/img/teacher-photos/黃郁容_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/黃郁容.webp"
 
 group: "full_time"

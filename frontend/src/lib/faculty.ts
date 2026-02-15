@@ -44,11 +44,17 @@ export function getAllFaculty(): Member[] {
             }
 
             // 合併數據
-            return {
+            const memberData = {
                 id,
                 ...data,
                 content: content,
             } as Member;
+
+            if (memberData.title === '連涓妏') {
+                console.log('Loaded 連涓妏 data:', JSON.stringify(memberData, null, 2));
+            }
+
+            return memberData;
         });
 
     // 按照 order 字段排序

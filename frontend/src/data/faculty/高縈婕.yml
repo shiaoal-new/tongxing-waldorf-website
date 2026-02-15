@@ -3,6 +3,9 @@ subtitle: "專任教師"
 group: "admin"
 media:
   type: image
+  image: "/img/teacher-photos/高縈婕_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/高縈婕.webp"
 experience: |
   主修會計，投入資訊領域工作多年，在成為自己的道路上，遇見了人智學，進到教育現場，與孩子們共同學習與遊戲。

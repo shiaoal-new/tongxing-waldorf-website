@@ -2,6 +2,9 @@ title: "廖容"
 subtitle: "教學"
 media:
   type: image
+  image: "/img/teacher-photos/廖容_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/廖容.webp"
 
 group: "admin"

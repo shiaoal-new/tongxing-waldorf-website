@@ -2,6 +2,9 @@ title: "姜怡伶"
 subtitle: "G7 沐陽班導師 / 數學專任老師"
 media:
   type: image
+  image: "/img/teacher-photos/姜怡伶_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/姜怡伶.webp"
 
 group: "full_time"

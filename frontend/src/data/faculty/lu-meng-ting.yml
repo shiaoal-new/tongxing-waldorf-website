@@ -2,6 +2,9 @@ title: "呂孟庭"
 subtitle: "行政主任 / G4 山嵐班導師"
 media:
   type: image
+  image: "/img/teacher-photos/呂孟庭_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/呂孟庭.webp"
 
 group: "full_time"

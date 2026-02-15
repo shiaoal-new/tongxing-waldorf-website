@@ -2,6 +2,9 @@ title: "姚昱廷"
 subtitle: "G1 晨光班導師"
 media:
   type: image
+  image: "/img/teacher-photos/姚昱廷_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/姚昱廷.webp"
 
 group: "full_time"

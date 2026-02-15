@@ -2,6 +2,9 @@ title: "周天禧"
 subtitle: "G5 日初班導師"
 media:
   type: image
+  image: "/img/teacher-photos/周天禧_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/周天禧.webp"
 
 group: "full_time"

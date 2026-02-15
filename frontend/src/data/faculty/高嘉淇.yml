@@ -2,6 +2,9 @@ title: "高嘉淇"
 subtitle: "英文專任教師"
 media:
   type: image
+  image: "/img/teacher-photos/高嘉淇_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/高嘉淇.webp"
 
 group: "part_time"

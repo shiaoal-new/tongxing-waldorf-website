@@ -2,6 +2,9 @@ title: "吳俊輝"
 subtitle: "總務"
 media:
   type: image
+  image: "/img/teacher-photos/吳俊輝_pencil.webp"
+hover_media:
+  type: image
   image: "/img/teacher-photos/吳俊輝.webp"
 
 group: "admin"
