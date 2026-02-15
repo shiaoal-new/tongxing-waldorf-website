@@ -70,3 +70,15 @@ frontend/public/og-images/
 # Generated SEO files
 frontend/public/sitemap.xml
 frontend/public/robots.txt
+
+# AI Context
+.cobridge
+
+# .traerules
+.traerules
+
+# .cursorrules
+.cursorrules
+
+# GitHub Copilot Instructions
+.github/copilot-instructions.md
