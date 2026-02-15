@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import { PlayIcon } from "@heroicons/react/solid";
 import ActionButtons from "./ActionButtons";
 import ExpandableText from "./ExpandableText";
 import MarkdownContent from "./MarkdownContent";
@@ -94,14 +95,15 @@ export default function StaggeredReveal({
 
             {title && (
                 <motion.div variants={itemVariants} className={`flex items-baseline gap-3 flex-wrap ${align === 'center' ? 'justify-center' : ''}`}>
-                    <h3 className={`${isNested ? 'text-xl md:text-2xl font-bold' : 'text-3xl md:text-4xl font-bold mt-3'} text-brand-text dark:text-brand-bg leading-tight tracking-tight`}>
-                        <MarkdownContent content={title} isInline />
-                    </h3>
                     {duration && (
-                        <span className="text-sm font-medium text-brand-taupe dark:text-brand-taupe/80 bg-stone-100 dark:bg-white/10 px-2.5 py-0.5 rounded-full border border-stone-200 dark:border-white/10 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold tracking-tight bg-black/80 dark:bg-black/60 text-white px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap tabular-nums">
+                            <PlayIcon className="w-2.5 h-2.5 mb-0.5" />
                             {duration}
                         </span>
                     )}
+                    <h3 className={`${isNested ? 'text-xl md:text-2xl font-bold' : 'text-3xl md:text-4xl font-bold mt-3'} text-brand-text dark:text-brand-bg leading-tight tracking-tight`}>
+                        <MarkdownContent content={title} isInline />
+                    </h3>
                 </motion.div>
             )}
 

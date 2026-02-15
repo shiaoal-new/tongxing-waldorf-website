@@ -33,7 +33,7 @@ sections:
         content: "$features.intro.content"
         buttons:
           - text: "$features.intro.button"
-            link: /timeline
+            link: /curriculum-development
             style: btn-outline-primary
       - type: list_block
         layout_method: bento_grid
