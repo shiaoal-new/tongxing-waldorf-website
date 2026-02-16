@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -160,36 +160,71 @@ const WordingStyleContent = ({ actionHandlers, pageId }: { actionHandlers: any, 
 };
 
 // Renamed from DropdownContentWrapper and removed overflow-hidden and styling
-const DropdownTransition = ({ children }: { children: React.ReactNode }) => (
-    <NavigationMenu.Content asChild>
-        <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute left-0 top-full pt-2 w-auto min-w-[200px] origin-top z-50"
-        >
-            {children}
-        </motion.div>
-    </NavigationMenu.Content>
-);
+const DropdownTransition = ({ children, shakeKey = 0 }: { children: React.ReactNode, shakeKey?: number }) => {
+    const controls = useAnimation();
+    const isFirstRender = useRef(true);
+
+    useEffect(() => {
+        // Skip the animation on the very first render (when the menu first opens via hover)
+        // This prevents the menu from "jumping" every time it is opened if shakeKey > 0
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        if (shakeKey > 0) {
+            controls.start({
+                y: [0, -10, 0, -5, 0],
+                transition: { duration: 0.4, ease: "easeInOut" }
+            });
+        }
+    }, [shakeKey, controls]);
+
+    return (
+        <NavigationMenu.Content asChild>
+            <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="absolute left-0 top-full pt-2 w-auto min-w-[200px] origin-top z-50 pointer-events-none"
+            >
+                <div className="pointer-events-auto">
+                    <motion.div animate={controls}>
+                        {children}
+                    </motion.div>
+                </div>
+            </motion.div>
+        </NavigationMenu.Content>
+    );
+};
 
 // --- Menu Item Types ---
 
-const ThemeListItem = ({ item, styles }: CommonItemProps) => (
-    <NavigationMenu.Item className="relative">
-        <NavigationMenu.Trigger className={`${styles} group`}>
-            <span>{item.title}</span>
-        </NavigationMenu.Trigger>
-        <DropdownTransition>
-            <MenuCard className="overflow-hidden">
-                <ul className="menu menu-compact p-1">
-                    <ThemeList />
-                </ul>
-            </MenuCard>
-        </DropdownTransition>
-    </NavigationMenu.Item>
-);
+const ThemeListItem = ({ item, styles }: CommonItemProps) => {
+    const [shakeKey, setShakeKey] = useState(0);
+    return (
+        <NavigationMenu.Item className="relative">
+            <NavigationMenu.Trigger
+                className={`${styles} group`}
+                onPointerDown={(e) => {
+                    setShakeKey(prev => prev + 1);
+                    e.preventDefault(); // 阻止 Radix UI 的切換行為
+                }}
+                onClick={(e) => e.preventDefault()}
+            >
+                <span>{item.title}</span>
+            </NavigationMenu.Trigger>
+            <DropdownTransition shakeKey={shakeKey}>
+                <MenuCard className="overflow-hidden">
+                    <ul className="menu menu-compact p-1">
+                        <ThemeList />
+                    </ul>
+                </MenuCard>
+            </DropdownTransition>
+        </NavigationMenu.Item>
+    );
+};
 
 const GridToggleItem = ({ item, styles, showGrid, onToggle }: CommonItemProps & { showGrid: boolean, onToggle: (v: boolean) => void }) => (
     <NavigationMenu.Item>
@@ -207,13 +242,21 @@ const GridToggleItem = ({ item, styles, showGrid, onToggle }: CommonItemProps & 
 const WordingStyleItem = ({ item, styles, actionHandlers }: CommonItemProps) => {
     const router = useRouter();
     const pageId = getPageIdFromRouter(router);
+    const [shakeKey, setShakeKey] = useState(0);
 
     return (
         <NavigationMenu.Item className="relative">
-            <NavigationMenu.Trigger className={`${styles} group`}>
+            <NavigationMenu.Trigger
+                className={`${styles} group`}
+                onPointerDown={(e) => {
+                    setShakeKey(prev => prev + 1);
+                    e.preventDefault(); // 阻止 Radix UI 的切換行為
+                }}
+                onClick={(e) => e.preventDefault()}
+            >
                 <span>{item.title}</span>
             </NavigationMenu.Trigger>
-            <DropdownTransition>
+            <DropdownTransition shakeKey={shakeKey}>
                 <WordingStyleContent actionHandlers={actionHandlers} pageId={pageId} />
             </DropdownTransition>
         </NavigationMenu.Item>
@@ -310,22 +353,37 @@ const SubMenuItem = ({ item, currentPath, actionHandlers }: { item: NavbarItemTy
     );
 };
 
-const StandardDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonItemProps & { currentPath: string }) => (
-    <NavigationMenu.Item className="relative">
-        <NavigationMenu.Trigger className={`${styles} group`}>
-            <span>{item.title}</span>
-        </NavigationMenu.Trigger>
-        <DropdownTransition>
-            <MenuCard>
-                <div className="py-1">
-                    {item.children?.map((child, idx) => (
-                        <SubMenuItem key={idx} item={child} currentPath={currentPath} actionHandlers={actionHandlers} />
-                    ))}
-                </div>
-            </MenuCard>
-        </DropdownTransition>
-    </NavigationMenu.Item>
-);
+const StandardDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonItemProps & { currentPath: string }) => {
+    const [shakeKey, setShakeKey] = useState(0);
+
+    return (
+        <NavigationMenu.Item className="relative">
+            <NavigationMenu.Trigger
+                className={`${styles} group`}
+                onPointerDown={(e) => {
+                    if (!item.path) {
+                        setShakeKey(prev => prev + 1);
+                        e.preventDefault(); // 阻止 Radix UI 的切換行為
+                    }
+                }}
+                onClick={(e) => {
+                    if (!item.path) e.preventDefault();
+                }}
+            >
+                <span>{item.title}</span>
+            </NavigationMenu.Trigger>
+            <DropdownTransition shakeKey={shakeKey}>
+                <MenuCard>
+                    <div className="py-1">
+                        {item.children?.map((child, idx) => (
+                            <SubMenuItem key={idx} item={child} currentPath={currentPath} actionHandlers={actionHandlers} />
+                        ))}
+                    </div>
+                </MenuCard>
+            </DropdownTransition>
+        </NavigationMenu.Item>
+    );
+};
 
 const SimpleLinkItem = ({ item, styles, actionHandlers }: CommonItemProps) => {
     if (item.action) {
