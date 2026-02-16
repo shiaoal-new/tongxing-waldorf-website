@@ -282,15 +282,16 @@ const SubMenuItem = ({ item, currentPath, actionHandlers }: { item: NavbarItemTy
                             const gcActive = isItemActive(grandChild, currentPath);
                             const gcStyles = getSubItemStyles(gcActive).replace('flex items-center justify-between', 'block');
                             return (
-                                <Link
-                                    key={idx}
-                                    href={grandChild.path || "#"}
-                                    target={grandChild.target}
-                                    rel={grandChild.target === '_blank' ? 'noopener noreferrer' : undefined}
-                                    className={gcStyles}
-                                >
-                                    {grandChild.title}
-                                </Link>
+                                <NavigationMenu.Link asChild key={idx}>
+                                    <Link
+                                        href={grandChild.path || "#"}
+                                        target={grandChild.target}
+                                        rel={grandChild.target === '_blank' ? 'noopener noreferrer' : undefined}
+                                        className={gcStyles}
+                                    >
+                                        {grandChild.title}
+                                    </Link>
+                                </NavigationMenu.Link>
                             );
                         })}
                     </MenuCard>
@@ -332,24 +333,28 @@ const SubMenuItem = ({ item, currentPath, actionHandlers }: { item: NavbarItemTy
 
     if (item.action) {
         return (
-            <button
-                onClick={actionHandlers[item.action]}
-                className={`w-full text-left block px-4 py-2 text-sm transition-all ${active ? 'text-brand-accent bg-brand-accent/10 font-medium' : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5'}`}
-            >
-                {item.title}
-            </button>
+            <NavigationMenu.Link asChild>
+                <button
+                    onClick={actionHandlers[item.action]}
+                    className={`w-full text-left block px-4 py-2 text-sm transition-all ${active ? 'text-brand-accent bg-brand-accent/10 font-medium' : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5'}`}
+                >
+                    {item.title}
+                </button>
+            </NavigationMenu.Link>
         );
     }
 
     return (
-        <Link
-            href={item.path || "#"}
-            target={item.target}
-            rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-            className={`block px-4 py-2 text-sm transition-all ${active ? 'text-brand-accent bg-brand-accent/10 font-medium' : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5'}`}
-        >
-            {item.title}
-        </Link>
+        <NavigationMenu.Link asChild>
+            <Link
+                href={item.path || "#"}
+                target={item.target}
+                rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                className={`block px-4 py-2 text-sm transition-all ${active ? 'text-brand-accent bg-brand-accent/10 font-medium' : 'text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5'}`}
+            >
+                {item.title}
+            </Link>
+        </NavigationMenu.Link>
     );
 };
 
@@ -389,9 +394,11 @@ const SimpleLinkItem = ({ item, styles, actionHandlers }: CommonItemProps) => {
     if (item.action) {
         return (
             <NavigationMenu.Item>
-                <button onClick={actionHandlers?.[item.action]} className={styles}>
-                    {item.title}
-                </button>
+                <NavigationMenu.Link asChild>
+                    <button onClick={actionHandlers?.[item.action]} className={styles}>
+                        {item.title}
+                    </button>
+                </NavigationMenu.Link>
             </NavigationMenu.Item>
         );
     }
