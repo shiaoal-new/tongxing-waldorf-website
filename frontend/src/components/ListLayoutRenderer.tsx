@@ -32,7 +32,9 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     compact_grid: { fullWidth: false },
     bento_grid: { fullWidth: false },
     card_deck_swiper: { fullWidth: true },
+    scrollable_grid: { fullWidth: true },
     spotlight_carousel: { fullWidth: true },
+    testimonial_carousel: { fullWidth: true },
     highlight_carousel: { fullWidth: true },
     masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
@@ -297,7 +299,7 @@ export default function ListRenderer(props: ListRendererProps) {
     }
 
     // Scrollable Grid 佈局 (使用 Swiper EffectCards)
-    if (layout === "card_deck_swiper") {
+    if (layout === "card_deck_swiper" || layout === "scrollable_grid") {
         return (
             <CardDeckSwiper
                 items={items}
@@ -308,7 +310,7 @@ export default function ListRenderer(props: ListRendererProps) {
     }
 
     // Testimonial Carousel 佈局 (置中放大效果)
-    if (layout === "spotlight_carousel") {
+    if (layout === "spotlight_carousel" || layout === "testimonial_carousel") {
         return (
             <SpotlightCarousel
                 items={items}

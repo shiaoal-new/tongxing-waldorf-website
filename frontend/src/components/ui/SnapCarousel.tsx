@@ -267,7 +267,7 @@ export default function SnapCarousel({
     return (
         <div className={wrapperClassName}>
             <style>{`
-                .scroll-container {
+                .snap-carousel-container {
                     display: flex;
                     overflow-x: auto;
                     scroll-snap-type: x mandatory;
@@ -276,7 +276,7 @@ export default function SnapCarousel({
                     overscroll-behavior-x: contain;
                     position: relative;
                 }
-                .scroll-container::-webkit-scrollbar { display: none; }
+                .snap-carousel-container::-webkit-scrollbar { display: none; }
                 ${containerStyles}
                 ${cardStyles}
             `}</style>
@@ -303,7 +303,7 @@ export default function SnapCarousel({
 
             <div
                 ref={scrollRef}
-                className="scroll-container"
+                className="snap-carousel-container"
                 onScroll={!enableLoop ? handleScroll : undefined} // 非 Loop 模式時使用 react prop 綁定，Loop模式因為有複雜 useEffect，我們在 useEffect 裡 unified bind
             >
                 {!enableLoop && snapAlign === 'center' && (

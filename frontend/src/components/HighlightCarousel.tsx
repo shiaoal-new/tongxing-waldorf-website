@@ -21,20 +21,21 @@ export default function HighlightCarousel({ items, renderItem, buttons }: Highli
         snapAlign: 'start',
         clickableCards: false,
         containerStyles: `
-            .scroll-container {
+            .snap-carousel-container {
+                display: flex;
                 gap: 1rem;
                 padding: 0 1rem;
             }
 
             @media (min-width: 640px) {
-                .scroll-container {
+                .snap-carousel-container {
                     gap: 1.5rem;
                     padding: 0 2rem;
                 }
             }
 
             @media (min-width: 1024px) {
-                .scroll-container {
+                .snap-carousel-container {
                     gap: 2rem;
                 }
             }

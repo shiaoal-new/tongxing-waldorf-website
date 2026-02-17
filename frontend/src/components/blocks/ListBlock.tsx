@@ -90,7 +90,7 @@ export const listPolicy: BlockPolicy = {
         const isWide = (method?: string) => {
             if (!method) return false;
             const config = (LIST_LAYOUT_CONFIG as any)[method];
-            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "masonry_grid"].includes(method);
+            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "scrollable_grid", "masonry_grid"].includes(method);
         };
 
         const desktopWide = isWide(block.layout_method);

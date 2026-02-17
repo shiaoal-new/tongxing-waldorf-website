@@ -23,8 +23,9 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
         activeCardClassName: 'active z-10 scale-100 md:scale-110 opacity-100 grayscale-0',
         inactiveCardClassName: 'scale-90 opacity-60 grayscale-[0.5]',
         containerStyles: `
-            .scroll-container {
-                gap: 1.5rem; /* 稍微加大間距提升呼吸感 */
+            .snap-carousel-container {
+                display: flex;
+                gap: 0.75rem; /* 縮小間距讓側邊卡片更靠攏 */
                 align-items: center;
                 padding: 0; 
             }
@@ -33,21 +34,21 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
             /* 寬度計算：一半容器寬度 - 一半卡片寬度 */
             .carousel-spacer-start,
             .carousel-spacer-end {
-                width: calc(50% - 37.5vw); 
+                width: calc(50% - 36vw); 
                 flex: 0 0 auto;
             }
 
             @media (min-width: 640px) {
                 .carousel-spacer-start,
                 .carousel-spacer-end {
-                    width: calc(50% - 260px);
+                    width: calc(50% - 240px);
                 }
             }
 
             @media (min-width: 1024px) {
                 .carousel-spacer-start,
                 .carousel-spacer-end {
-                     width: calc(50% - 350px);
+                     width: calc(50% - 320px);
                 }
             }
 
@@ -60,8 +61,8 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
             }
             
             /* 隱藏偽元素如果 SnapCarousel 預設有 */
-            .scroll-container::before,
-            .scroll-container::after {
+            .snap-carousel-container::before,
+            .snap-carousel-container::after {
                 display: none;
             }
         `,
@@ -70,7 +71,7 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
                 scroll-snap-align: center;
                 scroll-snap-stop: always;
                 flex-shrink: 0;
-                width: 75vw;
+                width: 72vw;
                 transition: all 0.5s ease;
                 padding: 0;
                 cursor: pointer;
@@ -78,13 +79,13 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
 
             @media (min-width: 640px) {
                 .testimonial-card {
-                    width: 520px;
+                    width: 480px;
                 }
             }
 
             @media (min-width: 1024px) {
                 .testimonial-card {
-                    width: 700px;
+                    width: 640px;
                 }
             }
         `,
