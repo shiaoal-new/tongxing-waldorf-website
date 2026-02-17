@@ -116,7 +116,7 @@ function determineAlignment(contentBlocks: Block[]): "left" | "center" {
 /**
  * 判斷寬度限制 Helper
  */
-function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolean {
+function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolean | string {
     if (explicitLimit !== undefined) return explicitLimit;
 
     const wideBlockTypes = [
@@ -129,19 +129,43 @@ function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolea
         "micro_interactions_block"
     ];
 
+    let responsiveClasses: string[] = [];
+
     const hasWideBlock = blocks.some(b => {
         if (wideBlockTypes.includes(b.type)) return true;
-        return isBlockSectionWide(b);
+        const result = isBlockSectionWide(b);
+        if (typeof result === 'string') {
+            responsiveClasses.push(result);
+            return false; // Don't trigger full true yet
+        }
+        return result === true;
     });
 
-    return !hasWideBlock;
+    if (hasWideBlock) return false;
+    if (responsiveClasses.length > 0) return responsiveClasses.join(' ');
+
+    return true;
 }
 
 /**
  * 判斷是否需要忽略內邊距 (Ignore Padding) Helper
  * 遍歷所有 Block，若有任何 Block 需要全寬顯示（如輪播類型），則整個 Section 忽略內邊距
  */
-function determineIgnorePadding(blocks: Block[]): boolean {
-    return blocks.some(b => shouldBlockIgnorePadding(b));
+function determineIgnorePadding(blocks: Block[]): boolean | string {
+    let responsiveClasses: string[] = [];
+
+    const hasFullIgnore = blocks.some(b => {
+        const result = shouldBlockIgnorePadding(b);
+        if (typeof result === 'string') {
+            responsiveClasses.push(result);
+            return false;
+        }
+        return result === true;
+    });
+
+    if (hasFullIgnore) return true;
+    if (responsiveClasses.length > 0) return responsiveClasses.join(' ');
+
+    return false;
 }
 

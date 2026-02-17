@@ -39,7 +39,7 @@ sections:
         title: "$courses.title"
         subtitle: "$courses.subtitle"
       - type: list_block
-        layout_method: featured_course_carousel
+        layout_method: highlight_carousel
         item_type: hero_card_item
         items:
           - title: "$courses.humanities.title"

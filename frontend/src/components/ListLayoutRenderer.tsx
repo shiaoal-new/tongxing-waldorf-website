@@ -18,7 +18,7 @@ const TestimonialSwiper = dynamic<any>(() => import('./TestimonialSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
-const FeaturedCourseSwiper = dynamic<any>(() => import('./FeaturedCourseSwiper'), {
+const HighlightSwiper = dynamic<any>(() => import('./HighlightSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
@@ -33,7 +33,7 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     bento_grid: { fullWidth: false },
     scrollable_grid: { fullWidth: true },
     testimonial_carousel: { fullWidth: true },
-    featured_course_carousel: { fullWidth: true },
+    highlight_carousel: { fullWidth: true },
     masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
 };
@@ -45,24 +45,44 @@ interface ListRendererProps {
     layout?: string;
     buttons?: any[];
     columns?: number;
+    mobile_scroll?: boolean;
+    mobile_layout?: string;
 }
 
 /**
  * ListRenderer - 一个通用的列表渲染组件
  */
-export default function ListRenderer({
-    items = [],
-    renderItem,
-    direction = "horizontal",
-    layout = "scrollable_grid",
-    buttons,
-    columns = 3,
-}: ListRendererProps) {
+export default function ListRenderer(props: ListRendererProps) {
+    const {
+        items = [],
+        renderItem,
+        direction = "horizontal",
+        layout = "scrollable_grid",
+        buttons,
+        columns = 3,
+        mobile_scroll = false,
+        mobile_layout,
+    } = props;
+
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     // 如果没有数据,返回 null
     if (!items || items.length === 0) {
         return null;
+    }
+
+    // 響應式佈局切換：如果指定了不同的行動端佈局，則分別渲染桌機與行動版並透過 CSS 切換
+    if (mobile_layout && mobile_layout !== layout) {
+        return (
+            <>
+                <div className="hidden md:block w-full">
+                    <ListRenderer {...props} mobile_layout={undefined} />
+                </div>
+                <div className="md:hidden w-full">
+                    <ListRenderer {...props} layout={mobile_layout} mobile_layout={undefined} />
+                </div>
+            </>
+        );
     }
 
     // Accordion 模式的切换函数
@@ -206,8 +226,12 @@ export default function ListRenderer({
 
     // Bento Grid 佈局 - 具備不同權重的動態網格
     if (layout === "bento_grid") {
+        const containerClass = mobile_scroll
+            ? "flex overflow-x-auto pb-8 -mx-4 px-4 scroll-smooth snap-x snap-mandatory md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6 max-w-brand mx-auto"
+            : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6 max-w-brand mx-auto px-1";
+
         return (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-6 max-w-brand mx-auto px-1">
+            <div className={containerClass}>
                 {items.map((item, index) => {
                     const span: number = item.span || 4;
                     const spanClass = ({
@@ -220,7 +244,7 @@ export default function ListRenderer({
                     return (
                         <motion.div
                             key={item.id || index}
-                            className={`${spanClass} flex`}
+                            className={`${spanClass} ${mobile_scroll ? 'flex-shrink-0 w-[85vw] md:w-full snap-center' : 'flex'}`}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -235,8 +259,8 @@ export default function ListRenderer({
 
                 <DevComment text="Bento Grid Action Buttons" />
                 {buttons && buttons.length > 0 && (
-                    <div className="col-span-full">
-                        <ActionButtons buttons={buttons} align="center" className="mt-12" />
+                    <div className={`${mobile_scroll ? 'min-w-[10vw] flex items-center justify-center' : 'col-span-full'}`}>
+                        <ActionButtons buttons={buttons} align="center" className={mobile_scroll ? "" : "mt-12"} />
                     </div>
                 )}
             </div>
@@ -293,10 +317,10 @@ export default function ListRenderer({
         );
     }
 
-    // Featured Course Carousel 佈局 (特色課程輪播)
-    if (layout === "featured_course_carousel") {
+    // Highlight Carousel 佈局 (特色項目輪播)
+    if (layout === "highlight_carousel") {
         return (
-            <FeaturedCourseSwiper
+            <HighlightSwiper
                 items={items}
                 renderItem={(item: any, index: number) => renderItem(item, index)}
                 buttons={buttons}

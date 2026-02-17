@@ -2,19 +2,19 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 import ScrollCarousel, { ScrollCarouselConfig } from './ui/ScrollCarousel';
 
-interface FeaturedCourseSwiperProps {
+interface HighlightSwiperProps {
     items: any[];
     renderItem: (item: any, index: number) => React.ReactNode;
     buttons?: any[];
 }
 
-export default function FeaturedCourseSwiper({ items, renderItem, buttons }: FeaturedCourseSwiperProps) {
+export default function HighlightSwiper({ items, renderItem, buttons }: HighlightSwiperProps) {
     const displayItems = items.slice(0, 5);
     const hasMoreButton = buttons && buttons.length > 0;
 
     const config: ScrollCarouselConfig = {
-        cardClassName: 'featured-card',
-        wrapperClassName: 'featured-course-swiper-wrapper py-8 relative w-full group overflow-x-hidden',
+        cardClassName: 'highlight-card',
+        wrapperClassName: 'highlight-swiper-wrapper relative w-full group overflow-x-hidden',
         showNavigation: true,
         showPagination: true,
         navButtonVariant: 'default',
@@ -23,13 +23,13 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
         containerStyles: `
             .scroll-container {
                 gap: 1rem;
-                padding: 1rem;
+                padding: 0 1rem;
             }
 
             @media (min-width: 640px) {
                 .scroll-container {
                     gap: 1.5rem;
-                    padding: 1rem 2rem;
+                    padding: 0 2rem;
                 }
             }
 
@@ -40,29 +40,29 @@ export default function FeaturedCourseSwiper({ items, renderItem, buttons }: Fea
             }
         `,
         cardStyles: `
-            .featured-card {
+            .highlight-card {
                 scroll-snap-align: center;
                 scroll-snap-stop: always;
                 flex-shrink: 0;
                 width: calc(100vw - 3rem);
-                padding: 1rem 0;
+                padding: 0;
             }
 
             @media (min-width: 640px) {
-                .featured-card {
+                .highlight-card {
                     scroll-snap-align: start;
                     width: calc(45% - 0.75rem);
                 }
             }
 
             @media (min-width: 1024px) {
-                .featured-card {
+                .highlight-card {
                     width: calc(31.25% - 1.33rem);
                 }
             }
 
             @media (min-width: 1280px) {
-                .featured-card {
+                .highlight-card {
                     width: calc(25% - 1.5rem);
                 }
             }

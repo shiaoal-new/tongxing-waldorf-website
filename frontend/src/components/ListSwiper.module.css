@@ -1,8 +1,8 @@
 /* Swiper Effect Cards Styles */
 .list-swiper-container {
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /* padding-top: 20px; */
+    /* padding-bottom: 20px; */
     overflow-x: hidden;
     /* 防止 EffectCards 旋轉時超出容器導致頁面橫向滾動 */
 }

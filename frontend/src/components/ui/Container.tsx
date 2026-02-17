@@ -11,7 +11,12 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>((props, ref) 
     return (
         <div
             ref={ref}
-            className={`w-full mx-auto ${props.ignorePadding ? "" : "px-mobile-margin lg:px-desktop-margin"} ${props.limit ? "max-w-brand" : ""
+            className={`w-full mx-auto ${typeof props.ignorePadding === 'string'
+                    ? props.ignorePadding
+                    : (props.ignorePadding ? "" : "px-mobile-margin lg:px-desktop-margin")
+                } ${typeof props.limit === 'string'
+                    ? props.limit
+                    : (props.limit ? "max-w-brand" : "")
                 } ${props.className ? props.className : ""
                 }`}>
             {props.children}

@@ -13,7 +13,7 @@ interface TestimonialSwiperProps {
 export default function TestimonialSwiper({ items, renderItem }: TestimonialSwiperProps) {
     const config: ScrollCarouselConfig = {
         cardClassName: 'testimonial-card',
-        wrapperClassName: 'testimonial-swiper-wrapper py-6 md:py-16 relative px-0 w-full group overflow-x-hidden',
+        wrapperClassName: 'testimonial-swiper-wrapper relative px-0 w-full group overflow-x-hidden',
         showNavigation: true,
         showPagination: false,
         navButtonVariant: 'large',
@@ -26,7 +26,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
             .scroll-container {
                 gap: 1.5rem; /* 稍微加大間距提升呼吸感 */
                 align-items: center;
-                padding: 3rem 0; 
+                padding: 0; 
             }
 
             /* 關鍵修復：使用 50% 基準確保完美置中 */
@@ -72,7 +72,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
                 flex-shrink: 0;
                 width: 75vw;
                 transition: all 0.5s ease;
-                padding: 2.5rem 0;
+                padding: 0;
                 cursor: pointer;
             }
 

@@ -38,7 +38,7 @@ export default function ScrollCarousel({
 
     const {
         cardClassName,
-        wrapperClassName = 'py-8 relative w-full group',
+        wrapperClassName = 'relative w-full group',
         showNavigation = true,
         showPagination = false,
         cardStyles = '',

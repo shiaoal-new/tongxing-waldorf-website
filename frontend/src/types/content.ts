@@ -87,13 +87,15 @@ export type ListItem = FaqItem | FeatureItem | VideoItem;
 
 export interface ListBlock extends BaseBlock {
     type: 'list_block';
-    layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'scrollable_grid';
+    layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'scrollable_grid' | 'testimonial_carousel' | 'highlight_carousel' | 'masonry_grid';
     item_type: 'faq_item' | 'feature_item' | 'video_item';
     items?: ListItem[];
     faq_ids?: string[];
     title?: string;
     direction?: string;
     buttons?: CTAButton[];
+    mobile_scroll?: boolean;
+    mobile_layout_method?: 'vertical' | 'grid_cards' | 'bento_grid' | 'scrollable_grid' | 'testimonial_carousel' | 'highlight_carousel' | 'masonry_grid';
 }
 
 export interface Question {

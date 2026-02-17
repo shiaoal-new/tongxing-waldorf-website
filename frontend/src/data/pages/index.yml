@@ -30,13 +30,9 @@ sections:
       - type: text_block
         title: "$features.intro.title"
         subtitle: "$features.intro.subtitle"
-        content: "$features.intro.content"
-        buttons:
-          - text: "$features.intro.button"
-            link: /curriculum-development
-            style: btn-outline-primary
       - type: list_block
         layout_method: bento_grid
+        mobile_layout_method: testimonial_carousel
         item_type: feature_item
         align: center
         items:

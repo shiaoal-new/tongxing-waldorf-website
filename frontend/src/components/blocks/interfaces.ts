@@ -7,15 +7,15 @@ import { Block } from "../../types/content";
 export interface BlockPolicy {
     /**
      * 判斷是否應該忽略容器的預設內邊距 (Padding)
-     * @returns true 如果區塊應該貼齊視窗邊緣
+     * @returns boolean 或 Tailwind Class 字串
      */
-    shouldIgnorePadding(block: Block): boolean;
+    shouldIgnorePadding(block: Block): boolean | string;
 
     /**
      * 判斷是否應該取消 Section 的最大寬度限制
-     * @returns true 如果區塊應該即使在寬螢幕下也佔滿寬度
+     * @returns boolean 或 Tailwind Class 字串
      */
-    isSectionWide(block: Block): boolean;
+    isSectionWide(block: Block): boolean | string;
 }
 
 /**

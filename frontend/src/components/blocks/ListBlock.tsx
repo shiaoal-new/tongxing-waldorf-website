@@ -54,6 +54,8 @@ export default function ListBlock({ block, align }: ListBlockProps) {
 
                 items={listItems}
                 layout={block.layout_method || "scrollable_grid"}
+                mobile_scroll={block.mobile_scroll}
+                mobile_layout={block.mobile_layout_method}
                 columns={3}
                 buttons={block.buttons}
                 renderItem={(item: ListItem, index: number, extra: any) => (
@@ -68,13 +70,38 @@ import { BlockPolicy } from './interfaces';
 
 export const listPolicy: BlockPolicy = {
     shouldIgnorePadding: (block: any) => {
-        const layoutMethod = block.layout_method;
-        const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
-        return config?.fullWidth === true;
+        const isFullWidth = (method?: string) => {
+            if (!method) return false;
+            return (LIST_LAYOUT_CONFIG as any)[method]?.fullWidth === true;
+        };
+
+        const desktopFull = isFullWidth(block.layout_method);
+        const mobileFull = isFullWidth(block.mobile_layout_method || block.layout_method);
+
+        if (desktopFull && mobileFull) return true;
+        if (!desktopFull && !mobileFull) return false;
+
+        // 響應式：手機全寬，桌機有 Padding
+        if (mobileFull && !desktopFull) return "px-0 md:px-desktop-margin";
+        // 響應式：桌機全寬，手機有 Padding
+        return "px-mobile-margin md:px-0";
     },
     isSectionWide: (block: any) => {
-        const layoutMethod = block.layout_method;
-        const config = (LIST_LAYOUT_CONFIG as any)[layoutMethod];
-        return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid", "masonry_grid"].includes(layoutMethod);
+        const isWide = (method?: string) => {
+            if (!method) return false;
+            const config = (LIST_LAYOUT_CONFIG as any)[method];
+            return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid", "masonry_grid"].includes(method);
+        };
+
+        const desktopWide = isWide(block.layout_method);
+        const mobileWide = isWide(block.mobile_layout_method || block.layout_method);
+
+        if (desktopWide && mobileWide) return true;
+        if (!desktopWide && !mobileWide) return false;
+
+        // 響應式：手機寬版，桌機限寬 (max-w-brand)
+        if (mobileWide && !desktopWide) return "md:max-w-brand";
+        // 響應式：桌機寬版，手機限寬
+        return "max-w-brand md:max-w-none";
     }
 };
