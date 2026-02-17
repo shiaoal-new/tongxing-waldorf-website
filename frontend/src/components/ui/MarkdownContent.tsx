@@ -22,7 +22,12 @@ const MarkdownContent = ({
     tag = "div"
 }: MarkdownContentProps) => {
     // 預處理語法：將 [文字]{提示內容} 轉換為 [文字](tooltip:提示內容)
-    const processedContent = content.replace(/\[([^\]]+)\]\{([^\}]+)\}/g, '[$1](tooltip:$2)');
+    // 同時將 <br> 轉換為兩個空格加換行，以符合 Markdown 的換行規則
+    // 預處理語法：將 [文字]{提示內容} 轉換為 [文字](tooltip:提示內容)
+    // 同時將 <br> 轉換為兩個空格加換行，以符合 Markdown 的換行規則
+    const processedContent = content
+        .replace(/\[([^\]]+)\]\{([^\}]+)\}/g, '[$1](tooltip:$2)')
+        .replace(/<br\s*\/?>/gi, '  \n');
 
     const Container = tag as any;
 

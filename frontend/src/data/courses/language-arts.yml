@@ -1,0 +1,70 @@
+title: $title
+slug: language-arts
+hero:
+  title: $hero.title
+  subtitle: $hero.subtitle
+  media_list:
+    - type: image
+      image: /img/featured-academic.webp
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+
+sections:
+  - section_id: intro
+    blocks:
+      - type: text_block
+        title: $intro.title
+        content: $intro.content
+
+  - section_id: comparison
+    blocks:
+      - type: list_block
+        title: $comparison.title
+        layout_method: grid_cards
+        item_type: feature_item
+        items:
+          - title: $comparison.point1.title
+            icon: mdi:lightbulb-on-outline
+            content: $comparison.point1.content
+          - title: $comparison.point2.title
+            icon: mdi:draw
+            content: $comparison.point2.content
+          - title: $comparison.point3.title
+            icon: mdi:book-open-page-variant
+            content: $comparison.point3.content
+          - title: $comparison.point4.title
+            icon: mdi:heart-pulse
+            content: $comparison.point4.content
+
+  - section_id: learning-path
+    blocks:
+      - type: list_block
+        title: $path.title
+        layout_method: vertical
+        item_type: feature_item
+        items:
+          - title: $path.stage1.title
+            icon: mdi:ear-hearing
+            content: $path.stage1.content
+          - title: $path.stage2.title
+            icon: mdi:palette
+            content: $path.stage2.content
+          - title: $path.stage3.title
+            icon: mdi:brain
+            content: $path.stage3.content
+
+  - section_id: qa
+    blocks:
+      - type: list_block
+        title: $qa.title
+        layout_method: grid_cards
+        item_type: feature_item
+        items:
+          - title: $qa.pain_point.title
+            icon: mdi:check-circle-outline
+            content: $qa.pain_point.content
+          - title: $qa.itch_point.title
+            icon: mdi:star-face
+            content: $qa.itch_point.content
+          - title: $qa.highlight.title
+            icon: mdi:creation
+            content: $qa.highlight.content

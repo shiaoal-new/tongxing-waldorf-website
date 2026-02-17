@@ -23,7 +23,7 @@ export function getAllCourses(): Course[] {
 
     const fileNames = fs.readdirSync(coursesDirectory);
     const allCoursesData = fileNames
-        .filter(fileName => fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml'))
+        .filter(fileName => (fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml')) && !fileName.includes('.wording.'))
         .map(fileName => {
             const extension = path.extname(fileName);
             const slug = fileName.replace(new RegExp(`\\${extension}$`), '');

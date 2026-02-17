@@ -33,18 +33,23 @@ interface DynamicPageContentProps {
 export default function DynamicPageContent({ page: initialPage, pages, navigation, siteSettings, data: initialData = {}, contentType = 'page' }: DynamicPageContentProps) {
     // 使用 useWording Hook 處理客戶端動態文案切換 (主要用於開發環境)
     const pageId = initialPage?.slug || (contentType === 'course' ? 'course' : 'index');
-    const { page, data } = useWording(pageId, {
+    const { page, data: resolvedData } = useWording(pageId, {
         page: initialPage,
-        data: initialData
+        data: {
+            ...initialData,
+            coursesList: [] // 排除大型列表的遞迴解析，避免產生大量無關頁面的 [Missing] 警告
+        }
     }, ["faq"]);
 
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
     const {
         facultyList = [],
         faqList = [],
-        coursesList = [],
         questionnaire = null,
-    } = data;
+    } = resolvedData;
+
+    // 恢復未經全文解析的 coursesList (避免干擾導航等基本功能)
+    const coursesList = initialData.coursesList || [];
 
     const [selectedMember, setSelectedMember] = useState<Member | null>(null);
     const { theme } = useTheme();
