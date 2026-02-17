@@ -7,6 +7,8 @@ items:
       - slug: "future-paths"
       - slug: "future-path-advisor"
         title: "未來路徑診斷系統"
+      - slug: "future-education"
+        title: "AI 世代教育觀點"
   - title: "首頁方案"
     children:
       - title: "正式版本"
