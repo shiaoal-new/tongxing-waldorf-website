@@ -191,7 +191,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                         opacity: 0,
                         transition: { duration: 0.5, ease: "easeInOut" },
                       }}
-                      className="absolute top-full left-0 w-full z-[100] overscroll-contain flex flex-col my-5 lg:hidden bg-brand-bg/80 dark:bg-brand-structural/80 backdrop-blur-md rounded-lg p-4 shadow-xl border border-brand-bg/20"
+                      className="absolute top-full left-0 w-full z-[100] overscroll-contain flex flex-col my-2 lg:hidden bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-lg p-4 shadow-xl border border-brand-bg/20 max-h-[80vh] overflow-y-auto"
                     >
                       <>
                         <ul className="menu bg-transparent w-full space-y-1">
