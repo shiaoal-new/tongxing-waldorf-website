@@ -232,9 +232,9 @@ export default function Section(props: SectionProps) {
 
             {
                 !content_inside_wrapper && bodyContent && (
-                    <Container limit={!!limit} ignorePadding={ignore_padding} className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
+                    <div className={`relative content_class z-10 ${classes.content_body_class || ""}`}>
                         {bodyContent}
-                    </Container>
+                    </div>
                 )
             }
         </section >

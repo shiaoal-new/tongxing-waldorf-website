@@ -1,5 +1,6 @@
 import React from "react";
 import Section from "./layout/Section";
+import Container from "./ui/Container";
 import BlockDispatcher from "./blocks/BlockDispatcher";
 import { shouldBlockIgnorePadding, isBlockSectionWide } from "./blocks/blockPolicies";
 import { Section as SectionType, Block, TextBlock } from "../types/content";
@@ -18,7 +19,6 @@ export function SectionRenderer({ section, index }: SectionRendererProps) {
         headerProps,
         contentBlocks,
         align,
-        sectionLimit,
         sectionProps
     } = resolveSectionData(section);
 
@@ -26,20 +26,40 @@ export function SectionRenderer({ section, index }: SectionRendererProps) {
         <Section
             key={index}
             align={align}
-            limit={sectionLimit}
+            limit={section.limit !== undefined ? section.limit : true} // Header 預設限制寬度
             {...sectionProps}
             {...headerProps}
         >
             <div className="mt-6">
-                {contentBlocks.map((block: Block, bIndex: number) => (
-                    <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
-                        <BlockDispatcher
-                            block={block}
-                            align={align as any}
-                            anchor={section.section_id}
-                        />
-                    </div>
-                ))}
+                {contentBlocks.map((block: Block, bIndex: number) => {
+                    const isWide = isBlockSectionWide(block);
+                    const ignorePadding = shouldBlockIgnorePadding(block);
+
+                    const blockElement = (
+                        <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
+                            <BlockDispatcher
+                                block={block}
+                                align={align as any}
+                                anchor={section.section_id}
+                            />
+                        </div>
+                    );
+
+                    // 如果是寬版區塊，直接渲染；否則包裹在 Container 中
+                    if (isWide === true) {
+                        return blockElement;
+                    }
+
+                    return (
+                        <Container
+                            key={bIndex}
+                            limit={isWide === false ? true : isWide as any}
+                            ignorePadding={ignorePadding as any}
+                        >
+                            {blockElement}
+                        </Container>
+                    );
+                })}
             </div>
         </Section>
     );
@@ -72,14 +92,10 @@ function resolveSectionData(section: any) {
     // 2. 確定對齊方式 (Alignment)
     const align = determineAlignment(contentBlocks);
 
-    // 3. 確定容器寬度限制 (Limit)
-    const sectionLimit = determineSectionLimit(blocks, section.limit);
-
     return {
         headerProps,
         contentBlocks,
         align,
-        sectionLimit,
         sectionProps: {
             layout: section._layout || {},
             anchor: section.section_id,
@@ -90,7 +106,7 @@ function resolveSectionData(section: any) {
             silk_background: section.silk_background,
             overlay_opacity: section.overlay_opacity,
             full_height: section.full_height,
-            ignore_padding: section.ignore_padding || determineIgnorePadding(blocks),
+            ignore_padding: section.ignore_padding,
             content_inside_wrapper: isCTABanner
         }
     };
@@ -115,59 +131,5 @@ function determineAlignment(contentBlocks: Block[]): "left" | "center" {
     return "center";
 }
 
-/**
- * 判斷寬度限制 Helper
- */
-function determineSectionLimit(blocks: Block[], explicitLimit?: boolean): boolean | string {
-    if (explicitLimit !== undefined) return explicitLimit;
 
-    const wideBlockTypes = [
-        "member_block",
-        "schedule_block",
-        "curriculum_block",
-        "visit_process_block",
-        "spacing_demo_block",
-        "typography_demo_block",
-        "micro_interactions_block"
-    ];
-
-    let responsiveClasses: string[] = [];
-
-    const hasWideBlock = blocks.some(b => {
-        if (wideBlockTypes.includes(b.type)) return true;
-        const result = isBlockSectionWide(b);
-        if (typeof result === 'string') {
-            responsiveClasses.push(result);
-            return false; // Don't trigger full true yet
-        }
-        return result === true;
-    });
-
-    if (hasWideBlock) return false;
-    if (responsiveClasses.length > 0) return responsiveClasses.join(' ');
-
-    return true;
-}
-
-/**
- * 判斷是否需要忽略內邊距 (Ignore Padding) Helper
- * 遍歷所有 Block，若有任何 Block 需要全寬顯示（如輪播類型），則整個 Section 忽略內邊距
- */
-function determineIgnorePadding(blocks: Block[]): boolean | string {
-    let responsiveClasses: string[] = [];
-
-    const hasFullIgnore = blocks.some(b => {
-        const result = shouldBlockIgnorePadding(b);
-        if (typeof result === 'string') {
-            responsiveClasses.push(result);
-            return false;
-        }
-        return result === true;
-    });
-
-    if (hasFullIgnore) return true;
-    if (responsiveClasses.length > 0) return responsiveClasses.join(' ');
-
-    return false;
-}
 
