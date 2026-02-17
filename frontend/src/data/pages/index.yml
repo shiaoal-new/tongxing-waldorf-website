@@ -186,10 +186,6 @@ sections:
       - type: text_block
         title: "$testimonials.intro.title"
         subtitle: "$testimonials.intro.subtitle"
-        buttons:
-          - text: "$testimonials.intro.button"
-            link: /philosophy
-            style: btn-outline-primary
       - type: list_block
         layout_method: spotlight_carousel
         item_type: testimonial_item
