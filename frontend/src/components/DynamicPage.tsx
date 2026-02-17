@@ -15,7 +15,7 @@ import { useDynamicTOC } from "../hooks/useDynamicTOC";
 import { useWording } from "../hooks/useWording";
 import { PageData, NavigationData, FaqItem, Member, Course, QuestionnaireData, SiteData } from "../types/content";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
-import DevWordingSwitcher from "./DevWordingSwitcher";
+
 
 interface DynamicPageContentProps {
     page: PageData | null;
@@ -151,7 +151,7 @@ export default function DynamicPageContent({ page: initialPage, pages, navigatio
                     </div>
                 </Layout>
             </LayoutGroup>
-            <DevWordingSwitcher pageId={pageId} />
+
         </>
     );
 }
