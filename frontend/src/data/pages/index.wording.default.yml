@@ -30,15 +30,6 @@ ai_future:
     subtitle: 給孩子 AI 模擬不來的生命力
     content: 在生成式 AI 能瞬間完成重複性任務的時代，教育的重點不再是知識填充，而是培養那些機器無法複製的人性核心：好奇心、創造力與強大的心理韌性。
     button: 探索 AI 時代的強項
-  item_resilience:
-    title: 情緒韌性
-    content: 面對未知變局的內在定力與修復力。
-  item_creativity:
-    title: 原創創造力
-    content: 從無到有的直覺靈魂，非大數據拼湊。
-  item_thinking:
-    title: 批判性思考
-    content: 在資訊大海中定義問題與判斷真偽的能力。
 
 community:
   intro:

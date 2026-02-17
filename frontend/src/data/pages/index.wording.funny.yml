@@ -30,15 +30,6 @@ ai_future:
     subtitle: 給孩子 AI 模擬不來的生命力
     content: 當 ChatGPT 都能寫詩、畫畫、寫程式的時候，你的孩子拿什麼跟它拚？(拚速度一定輸)。我們要教的是那些讓 AI 當機的神奇能力：真實的創造力、情緒韌性，還有「問個好問題」的智慧。
     button: 探索未來強項 (AI 不要看)
-  item_resilience:
-    title: 情緒韌性 (心臟要夠強)
-    content: 即使世界變太快，孩子還是能穩住陣腳，不會隨便就「系統崩潰」。
-  item_creativity:
-    title: 原創力 (非複製貼上)
-    content: 不是大數據拼湊出的平庸，而是從靈魂深處冒出來的真實創意。
-  item_thinking:
-    title: 批判性思考 (大腦清醒)
-    content: 資訊大海裡，一眼看穿誰在亂講話，誰才是真的有內容。
 
 community:
   intro:

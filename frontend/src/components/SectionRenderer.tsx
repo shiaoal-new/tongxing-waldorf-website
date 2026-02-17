@@ -88,6 +88,7 @@ function resolveSectionData(section: any) {
             divider: section.divider,
             shader_gradient: section.shader_gradient || isCTABanner,
             silk_background: section.silk_background,
+            overlay_opacity: section.overlay_opacity,
             ignore_padding: section.ignore_padding || determineIgnorePadding(blocks),
             content_inside_wrapper: isCTABanner
         }

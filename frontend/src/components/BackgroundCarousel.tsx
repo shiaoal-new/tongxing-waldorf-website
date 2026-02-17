@@ -226,9 +226,16 @@ export default function BackgroundCarousel({
                             transition_type={transition_type}
                             currentIndex={currentIndex}
                         />
-                        {/* <div className="absolute inset-0 bg-black" style={{ opacity: overlay_opacity }} /> */}
                     </motion.div>
                 </div>
+            )}
+
+            {/* Overlay */}
+            {overlay_opacity > 0 && (
+                <div
+                    className="absolute inset-0 bg-black pointer-events-none"
+                    style={{ opacity: overlay_opacity }}
+                />
             )}
 
             <CarouselPagination

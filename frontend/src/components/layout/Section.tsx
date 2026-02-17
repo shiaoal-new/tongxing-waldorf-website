@@ -32,6 +32,7 @@ interface SectionProps {
     buttons?: CTAButton[];
     media_list?: MediaItem[];
     parallax_ratio?: number;
+    overlay_opacity?: number;
     className?: string;
     limit?: boolean | number;
     divider?: Divider;
@@ -55,6 +56,7 @@ export default function Section(props: SectionProps) {
         buttons,
         media_list,
         parallax_ratio,
+        overlay_opacity,
         className,
         limit,
         divider, // { type, position, color, flip }
@@ -166,7 +168,11 @@ export default function Section(props: SectionProps) {
             )}
 
             {media_list && media_list.length > 0 && (
-                <BackgroundCarousel media_list={media_list} parallax_ratio={parallax_ratio} />
+                <BackgroundCarousel
+                    media_list={media_list}
+                    parallax_ratio={parallax_ratio}
+                    overlay_opacity={overlay_opacity}
+                />
             )}
 
             {silk_background && isInView && (

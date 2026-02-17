@@ -1,11 +1,11 @@
-title: "AI 世代的教育選擇 | 同心華德福"
+title: "$title"
 slug: future-education
 seo:
-  title: "AI 世代的教育選擇 - 培養無法被取代的能力 | 同心華德福"
-  description: "在 AI 高速發展的時代，華德福教育專注於培養創造力、情緒韌性與批判性思考，讓孩子成為 AI 無法取代的人。"
+  title: "$seo.title"
+  description: "$seo.description"
 hero:
-  title: "給孩子，AI 模擬不來的生命力"
-  subtitle: "先成為完整的人，再成為 AI 的主人"
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   media_list:
     - type: video
@@ -16,78 +16,78 @@ sections:
   - section_id: intro_ai_context
     blocks:
       - type: text_block
-        title: "2035 年，您的孩子將面對什麼樣的世界？"
-        subtitle: "不是比快與多，而是比深與真"
-        content: "世界經濟論壇預測，未來 65% 的小學生將從事目前還不存在的工作。在生成式 AI 能瞬間完成重複性任務的時代，教育的重點不再是知識的填鴨，而是培養那些機器無法複製的人性核心：好奇心、創造力與強大的心理韌性。華德福教育，正是為這樣的未來而生。"
+        title: "$intro_ai_context.title"
+        subtitle: "$intro_ai_context.subtitle"
+        content: "$intro_ai_context.content"
         layout: centered
 
   - section_id: core_abilities
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
-        title: "構築 AI 時代的 7 大關鍵能力"
-        subtitle: "從 0 到 12 歲，我們這樣打地基"
-        content: "AI 可以生成答案，但無法擁有好奇心；AI 可以執行指令，但無法在崩潰後自我修復。我們相信，過早接觸虛擬世界會削弱孩子對真實世界的感知。同心華德福透過真實的感官體驗、人際互動與藝術滋養，為孩子建立堅不可摧的內在力量。"
+        title: "$core_abilities.title"
+        subtitle: "$core_abilities.subtitle"
+        content: "$core_abilities.content"
       - type: list_block
         layout_method: horizontal_scroll
         item_type: feature_item
         items:
-          - title: "情緒韌性"
+          - title: "$core_abilities.items.0.title"
             icon: lucide:heart-handshake
-          - title: "提問的能力"
+          - title: "$core_abilities.items.1.title"
             icon: lucide:message-circle-question
-          - title: "原創創造力"
+          - title: "$core_abilities.items.2.title"
             icon: lucide:palette
-          - title: "批判性思考"
+          - title: "$core_abilities.items.3.title"
             icon: lucide:brain-circuit
-          - title: "自主學習"
+          - title: "$core_abilities.items.4.title"
             icon: lucide:sparkles
-          - title: "真實協作"
+          - title: "$core_abilities.items.5.title"
             icon: lucide:users-round
 
   - section_id: waldorf_approach
     silk_background: true
     blocks:
       - type: text_block
-        title: "慢學，是為了走得更遠"
-        subtitle: "為什麼華德福不急著教電腦？"
-        content: "許多矽谷科技領袖選擇讓孩子遠離螢幕，因為他們深知：創造力源於真實的生活體驗。我們用泥土、木頭、故事與歌聲，喚醒孩子的全腦潛能。當 AI 接手了平庸的產出，您的孩子將具備定義問題、整合資源與領導創新的智慧。"
+        title: "$waldorf_approach.title"
+        subtitle: "$waldorf_approach.subtitle"
+        content: "$waldorf_approach.content"
       - type: list_block
         layout_method: vertical
         item_type: feature_item
         items:
-          - title: "感官基礎：真實體驗取代虛擬刺激"
+          - title: "$waldorf_approach.items.0.title"
             icon: lucide:hand-metal
-          - title: "情感連結：培養 AI 缺乏的同理心"
+          - title: "$waldorf_approach.items.1.title"
             icon: lucide:heart
-          - title: "思維訓練：超越標準答案的邏輯"
+          - title: "$waldorf_approach.items.2.title"
             icon: lucide:lightbulb
 
   - section_id: future_advantage
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
-        title: "華德福的未來防護力"
-        subtitle: "先成人，再成才"
-        content: "華德福不是反科技，而是先建構強大的人性根基。數據顯示，具備藝術感知與創造力的孩子，更能適應 AI 時代的變遷。我們培養的不是科技的消費者，而是未來的創造者。"
+        title: "$future_advantage.title"
+        subtitle: "$future_advantage.subtitle"
+        content: "$future_advantage.content"
       - type: list_block
         layout_method: vertical
         item_type: feature_item
         items:
-          - title: "原創力：AI 無法取代的靈魂"
+          - title: "$future_advantage.items.0.title"
             icon: lucide:fingerprint
-          - title: "適應力：擁抱未知的變化"
+          - title: "$future_advantage.items.1.title"
             icon: lucide:compass
-          - title: "協作力：真實的人際溫度"
+          - title: "$future_advantage.items.2.title"
             icon: lucide:handshake
 
   - layout: 紫色大型看板 (CTA)
     blocks:
       - type: text_block
-        title: "給孩子一份帶得走的禮物"
-        content: "如果不希望孩子被 AI 取代，就別用訓練機器人的方式教導他。預約參訪，看見教育的另一種可能。"
+        title: "$cta.title"
+        content: "$cta.content"
       - type: cta_block
         buttons:
-          - text: "預約說明會"
+          - text: "$cta.button"
             link: /visit
             style: btn-inverse
