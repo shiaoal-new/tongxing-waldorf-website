@@ -82,3 +82,5 @@ frontend/public/robots.txt
 
 # GitHub Copilot Instructions
 .github/copilot-instructions.md
+frontend/public/sitemap.xml
+frontend/public/og-images/

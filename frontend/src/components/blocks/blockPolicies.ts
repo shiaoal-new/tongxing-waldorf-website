@@ -16,7 +16,7 @@ const policyMap: Record<string, BlockPolicy> = {
  * 解析區塊的行為：是否忽略 Padding
  * 模仿虛擬函數調用: "block.shouldIgnorePadding()"
  */
-export function shouldBlockIgnorePadding(block: Block): boolean {
+export function shouldBlockIgnorePadding(block: Block): boolean | string {
     const policy = policyMap[block.type] || DefaultPolicy;
     return policy.shouldIgnorePadding(block);
 }
@@ -24,7 +24,7 @@ export function shouldBlockIgnorePadding(block: Block): boolean {
 /**
  * 解析區塊的行為：是否為寬版區塊 (取消 Section Limit)
  */
-export function isBlockSectionWide(block: Block): boolean {
+export function isBlockSectionWide(block: Block): boolean | string {
     const policy = policyMap[block.type] || DefaultPolicy;
     return policy.isSectionWide(block);
 }
