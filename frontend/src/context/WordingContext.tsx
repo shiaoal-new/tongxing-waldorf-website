@@ -42,11 +42,12 @@ export const WordingProvider = ({ children }: { children: ReactNode }) => {
 
     // 3. 讀取風格 (預設為 default)
     const getStyle = (pageId: string) => {
-        // 只有在真正的 Production 環境 (非 dev, 非 local) 才強行回傳 default
+        // 只有在真正的 Production 環境 (非 dev, 非 local, 非 preview) 才強行回傳 default
         const isActuallyProd =
             process.env.NODE_ENV === 'production' &&
             process.env.NEXT_PUBLIC_APP_ENV !== 'dev' &&
-            process.env.NEXT_PUBLIC_APP_ENV !== 'local';
+            process.env.NEXT_PUBLIC_APP_ENV !== 'local' &&
+            process.env.NEXT_PUBLIC_APP_ENV !== 'preview';
 
         if (isActuallyProd) return 'default';
         return styles[pageId] || 'default';

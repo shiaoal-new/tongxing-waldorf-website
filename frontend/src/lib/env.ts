@@ -8,7 +8,7 @@ export const isDevEnvironment = (): boolean => {
 
     // 2. 雲端測試環境 (透過環境變數判斷)
     const appEnv = process.env.NEXT_PUBLIC_APP_ENV;
-    if (appEnv === 'dev' || appEnv === 'local') return true;
+    if (appEnv === 'dev' || appEnv === 'local' || appEnv === 'preview') return true;
 
     return false;
 };

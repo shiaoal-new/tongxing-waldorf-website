@@ -7,7 +7,11 @@ export default function DevWordingSwitcher({ pageId }: { pageId: string }) {
     const { styles, setStyle, getStyle } = useWordingContext();
     const [isOpen, setIsOpen] = useState(false);
 
-    if (process.env.NODE_ENV === 'production') return null;
+    if (
+        process.env.NODE_ENV === 'production' &&
+        process.env.NEXT_PUBLIC_APP_ENV !== 'preview'
+    )
+        return null;
 
     const currentStyle = getStyle(pageId);
 
@@ -35,8 +39,8 @@ export default function DevWordingSwitcher({ pageId }: { pageId: string }) {
                             <label
                                 key={style}
                                 className={`flex items-center space-x-2 p-2 rounded cursor-pointer transition-colors ${currentStyle === style
-                                        ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300'
-                                        : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:text-neutral-400'
+                                    ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300'
+                                    : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:text-neutral-400'
                                     }`}
                             >
                                 <input
