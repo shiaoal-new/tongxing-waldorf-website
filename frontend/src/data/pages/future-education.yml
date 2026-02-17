@@ -9,8 +9,10 @@ hero:
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   media_list:
     - type: video
-      video: /img/hero-video-vp9.webm
-      poster: /img/video-poster.webp
+      video: /img/index/future-world.mp4
+      mobileVideo: /img/index/future-world-mobile.mp4
+      poster: /img/index/future-world-poster.webp
+      mobilePoster: /img/index/future-world-poster-mobile.webp
 
 sections:
   - section_id: intro_ai_context
@@ -22,28 +24,33 @@ sections:
         layout: centered
 
   - section_id: core_abilities
-    layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
         title: "$core_abilities.title"
         subtitle: "$core_abilities.subtitle"
         content: "$core_abilities.content"
       - type: list_block
-        layout_method: horizontal_scroll
+        layout_method: spotlight_carousel
         item_type: feature_item
         items:
           - title: "$core_abilities.items.0.title"
             icon: lucide:heart-handshake
+            content: "$core_abilities.items.0.content"
           - title: "$core_abilities.items.1.title"
             icon: lucide:message-circle-question
+            content: "$core_abilities.items.1.content"
           - title: "$core_abilities.items.2.title"
             icon: lucide:palette
+            content: "$core_abilities.items.2.content"
           - title: "$core_abilities.items.3.title"
             icon: lucide:brain-circuit
+            content: "$core_abilities.items.3.content"
           - title: "$core_abilities.items.4.title"
             icon: lucide:sparkles
+            content: "$core_abilities.items.4.content"
           - title: "$core_abilities.items.5.title"
             icon: lucide:users-round
+            content: "$core_abilities.items.5.content"
 
   - section_id: waldorf_approach
     silk_background: true
