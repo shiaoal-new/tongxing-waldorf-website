@@ -80,7 +80,7 @@
     }
 
     .btn-outline-primary {
-        @apply bg-transparent border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
+        @apply bg-transparent border-2 border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm hover:shadow-md;
     }
 
     .btn-inverse {
