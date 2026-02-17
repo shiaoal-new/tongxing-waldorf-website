@@ -158,7 +158,7 @@ export default function BackgroundCarousel({
     bg_video,
     bg_video_mobile,
     transition_type = 'fade',
-    overlay_opacity = 0.4,
+    overlay_opacity = 0,
     parallax_ratio = 0
 }: BackgroundCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);

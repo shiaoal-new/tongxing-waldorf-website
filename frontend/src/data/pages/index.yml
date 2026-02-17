@@ -121,10 +121,15 @@ sections:
                 style: btn-sm-outline
   - section_id: ai_future
     layout: 精緻特色區塊 (Features Premium)
+    align: center
+    full_height: true
     overlay_opacity: 0.6
     media_list:
       - type: video
         video: /img/index/future-world.mp4
+        mobileVideo: /img/index/future-world-mobile.mp4
+        poster: /img/index/future-world-poster.webp
+        mobilePoster: /img/index/future-world-poster-mobile.webp
     blocks:
       - type: text_block
         title: "$ai_future.intro.title"

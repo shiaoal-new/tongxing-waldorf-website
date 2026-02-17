@@ -38,6 +38,7 @@ interface SectionProps {
     divider?: Divider;
     shader_gradient?: boolean;
     silk_background?: boolean;
+    full_height?: boolean;
     ignore_padding?: boolean;
     content_inside_wrapper?: boolean;
     [key: string]: any;
@@ -57,6 +58,7 @@ export default function Section(props: SectionProps) {
         media_list,
         parallax_ratio,
         overlay_opacity,
+        full_height,
         className,
         limit,
         divider, // { type, position, color, flip }
@@ -142,7 +144,7 @@ export default function Section(props: SectionProps) {
     return (
         <section
             id={anchor}
-            className={`w-full relative section_container py-section ${container_class} ${className || ""}`}
+            className={`w-full relative section_container py-section ${full_height ? 'min-h-[100lvh] flex flex-col justify-center' : ''} ${container_class} ${className || ""}`}
             style={{
                 backgroundColor: silk_background ? "rgb(var(--color-brand-taupe))" : undefined,
                 ...rest.style
