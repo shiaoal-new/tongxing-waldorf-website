@@ -29,9 +29,14 @@ export default function DevWordingSwitcher({ pageId }: { pageId: string }) {
             {/* 面板 */}
             {isOpen && (
                 <div className="absolute bottom-12 left-0 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg shadow-xl p-4 w-64 animate-in fade-in slide-in-from-bottom-2">
-                    <h3 className="text-sm font-bold mb-3 border-bottom pb-2 dark:text-white flex justify-between">
-                        <span>文案風格切換 (Dev)</span>
-                        <span className="text-[10px] bg-neutral-100 dark:bg-neutral-800 px-1 rounded uppercase">{pageId}</span>
+                    <h3 className="text-sm font-bold mb-3 border-bottom pb-2 dark:text-white flex flex-col gap-1">
+                        <div className="flex justify-between items-center">
+                            <span>文案風格切換 (Dev)</span>
+                            <span className="text-[10px] bg-brand-100 dark:bg-brand-900/50 text-brand-600 px-1 rounded uppercase">
+                                {process.env.NEXT_PUBLIC_APP_ENV || 'prod'}
+                            </span>
+                        </div>
+                        <span className="text-[10px] text-neutral-400 font-normal uppercase">Page: {pageId}</span>
                     </h3>
 
                     <div className="space-y-2">

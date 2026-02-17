@@ -76,10 +76,13 @@ export async function getStaticProps() {
   });
 
   // Resolve default wordings for static generation (only in production for SEO)
+  // In preview mode, keep raw $placeholders so client-side useWording can switch styles
   const isProd = process.env.NODE_ENV === 'production';
+  const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
+  const shouldResolve = isProd && !isPreview;
   const dictionary = getWordingDictionary("index", "default", ["faq"]);
-  const resolvedPage = isProd ? (page ? resolveWording(page, dictionary) : null) : page;
-  const resolvedData = isProd ? resolveWording({ facultyList, faqList }, dictionary) : { facultyList, faqList };
+  const resolvedPage = shouldResolve ? (page ? resolveWording(page, dictionary) : null) : page;
+  const resolvedData = shouldResolve ? resolveWording({ facultyList, faqList }, dictionary) : { facultyList, faqList };
 
   return {
     props: {

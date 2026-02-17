@@ -23,6 +23,7 @@ module.exports = {
     NEXT_PUBLIC_GIT_COMMIT_TIME: gitCommitTime,
     NEXT_PUBLIC_BUILD_TIME: new Date().toString(),
     NEXT_PUBLIC_ACTION_RUN_TIME: process.env.NEXT_PUBLIC_ACTION_RUN_TIME || '',
+    NEXT_PUBLIC_APP_ENV: process.env.NEXT_PUBLIC_APP_ENV || '',
   },
 
   output: process.env.NEXT_OUTPUT === 'export' ? 'export' : undefined,

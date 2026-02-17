@@ -24,9 +24,11 @@ export async function getStaticProps() {
         };
     });
 
+    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
+
     return {
         props: {
-            page: page ? resolveWording(page, getWordingDictionary('waldorf-assessment', "default")) : null,
+            page: (!isPreview && page) ? resolveWording(page, getWordingDictionary('waldorf-assessment', "default")) : (page || null),
             pages: resolvedPages,
             navigation,
             data: {

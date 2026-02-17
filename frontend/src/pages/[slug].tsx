@@ -77,10 +77,13 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     const pageData = getPageDataOptimized(page);
 
     // Resolve default wordings for static generation (only in production for SEO)
+    // In preview mode, keep raw $placeholders so client-side useWording can switch styles
     const isProd = process.env.NODE_ENV === 'production';
+    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
+    const shouldResolve = isProd && !isPreview;
     const dictionary = getWordingDictionary(slug, "default", ["faq"]);
-    const resolvedPage = page ? resolveWording(page, dictionary) : null;
-    const resolvedDataList = isProd ? resolveWording({
+    const resolvedPage = shouldResolve ? (page ? resolveWording(page, dictionary) : null) : page;
+    const resolvedDataList = shouldResolve ? resolveWording({
         facultyList: pageData.facultyList || [],
         faqList: pageData.faqList || [],
         coursesList: pageData.coursesList || [],

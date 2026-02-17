@@ -58,6 +58,27 @@ async function copyWordings() {
         }
     }
 
+    // Generate manifest.json listing available styles per page
+    const manifest = {};
+    if (fs.existsSync(PUBLIC_WORDINGS_DIR)) {
+        const pageDirs = fs.readdirSync(PUBLIC_WORDINGS_DIR, { withFileTypes: true });
+        for (const entry of pageDirs) {
+            if (entry.isDirectory()) {
+                const pageId = entry.name;
+                const styleFiles = fs.readdirSync(path.join(PUBLIC_WORDINGS_DIR, pageId));
+                const styles = styleFiles
+                    .filter(f => f.endsWith('.yml') || f.endsWith('.yaml') || f.endsWith('.json'))
+                    .map(f => f.replace(/\.(yml|yaml|json)$/, ''));
+                // Ensure 'default' is first
+                const uniqueStyles = ['default', ...styles.filter(s => s !== 'default')];
+                manifest[pageId] = uniqueStyles;
+            }
+        }
+    }
+    const manifestPath = path.join(PUBLIC_WORDINGS_DIR, 'manifest.json');
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+    console.log(`Generated manifest: ${Object.keys(manifest).length} pages`);
+
     console.log('Wording copy complete.');
 }
 
