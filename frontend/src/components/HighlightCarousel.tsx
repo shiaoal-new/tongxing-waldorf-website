@@ -1,20 +1,20 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import ScrollCarousel, { ScrollCarouselConfig } from './ui/ScrollCarousel';
+import SnapCarousel, { SnapCarouselConfig } from './ui/SnapCarousel';
 
-interface HighlightSwiperProps {
+interface HighlightCarouselProps {
     items: any[];
     renderItem: (item: any, index: number) => React.ReactNode;
     buttons?: any[];
 }
 
-export default function HighlightSwiper({ items, renderItem, buttons }: HighlightSwiperProps) {
+export default function HighlightCarousel({ items, renderItem, buttons }: HighlightCarouselProps) {
     const displayItems = items.slice(0, 5);
     const hasMoreButton = buttons && buttons.length > 0;
 
-    const config: ScrollCarouselConfig = {
+    const config: SnapCarouselConfig = {
         cardClassName: 'highlight-card',
-        wrapperClassName: 'highlight-swiper-wrapper relative w-full group overflow-x-hidden',
+        wrapperClassName: 'highlight-carousel-wrapper relative w-full group overflow-x-hidden',
         showNavigation: true,
         showPagination: true,
         navButtonVariant: 'default',
@@ -87,7 +87,7 @@ export default function HighlightSwiper({ items, renderItem, buttons }: Highligh
     ) : null;
 
     return (
-        <ScrollCarousel
+        <SnapCarousel
             items={displayItems}
             config={config}
             appendContent={viewAllCard}

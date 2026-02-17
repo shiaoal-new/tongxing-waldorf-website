@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, ReactNode, useCallback } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
-export interface ScrollCarouselConfig {
+export interface SnapCarouselConfig {
     cardClassName: string;
     wrapperClassName?: string;
     showNavigation?: boolean;
@@ -17,21 +17,21 @@ export interface ScrollCarouselConfig {
     loop?: boolean;
 }
 
-interface ScrollCarouselProps {
+interface SnapCarouselProps {
     items: any[];
     renderItem: (item: any, index: number, extra?: any) => ReactNode;
-    config: ScrollCarouselConfig;
+    config: SnapCarouselConfig;
     appendContent?: ReactNode;
     onActiveIndexChange?: (index: number) => void;
 }
 
-export default function ScrollCarousel({
+export default function SnapCarousel({
     items,
     renderItem,
     config,
     appendContent,
     onActiveIndexChange,
-}: ScrollCarouselProps) {
+}: SnapCarouselProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLoopReady, setIsLoopReady] = useState(false);

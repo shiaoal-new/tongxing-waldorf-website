@@ -1,5 +1,5 @@
 /* Swiper Effect Cards Styles */
-.list-swiper-container {
+.card-deck-swiper-container {
     width: 100%;
     /* padding-top: 20px; */
     /* padding-bottom: 20px; */
@@ -21,7 +21,7 @@
     }
 }
 
-.list-swiper-slide {
+.card-deck-swiper-slide {
     border-radius: 20px;
     overflow: hidden;
     display: flex !important;
@@ -31,7 +31,7 @@
     border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.list-swiper-slide>div {
+.card-deck-swiper-slide>div {
     height: 100%;
     width: 100%;
     display: flex;
@@ -39,7 +39,7 @@
 }
 
 /* Ensure feature items have padding inside the card */
-.list-swiper-slide :global(.feature-container) {
+.card-deck-swiper-slide :global(.feature-container) {
     padding: 24px;
     margin-top: 0 !important;
     height: 100%;

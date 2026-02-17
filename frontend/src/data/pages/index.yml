@@ -32,7 +32,7 @@ sections:
         subtitle: "$features.intro.subtitle"
       - type: list_block
         layout_method: bento_grid
-        mobile_layout_method: testimonial_carousel
+        mobile_layout_method: spotlight_carousel
         item_type: feature_item
         align: center
         items:
@@ -171,7 +171,7 @@ sections:
             link: /philosophy
             style: btn-outline-primary
       - type: list_block
-        layout_method: testimonial_carousel
+        layout_method: spotlight_carousel
         item_type: testimonial_item
         items:
           - quote: $testimonials.items.0.quote

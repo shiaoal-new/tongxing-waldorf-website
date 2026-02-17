@@ -103,7 +103,7 @@ function determineAlignment(contentBlocks: Block[]): "left" | "center" {
     const firstContent = contentBlocks[0];
     const leftAlignedTypes = ['text_block', 'member_block'];
     const isSpecialList = firstContent.type === 'list_block' &&
-        (firstContent as any).layout_method === 'scrollable_grid' &&
+        (firstContent as any).layout_method === 'card_deck_swiper' &&
         ((firstContent as any).item_type === 'Benefit' || (firstContent as any).item_type === 'benefit_item');
 
     if (leftAlignedTypes.includes(firstContent.type) || isSpecialList) {

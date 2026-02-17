@@ -53,7 +53,7 @@ export default function ListBlock({ block, align }: ListBlockProps) {
                 direction={direction as "horizontal" | "vertical"}
 
                 items={listItems}
-                layout={block.layout_method || "scrollable_grid"}
+                layout={block.layout_method || "card_deck_swiper"}
                 mobile_scroll={block.mobile_scroll}
                 mobile_layout={block.mobile_layout_method}
                 columns={3}
@@ -90,7 +90,7 @@ export const listPolicy: BlockPolicy = {
         const isWide = (method?: string) => {
             if (!method) return false;
             const config = (LIST_LAYOUT_CONFIG as any)[method];
-            return config?.fullWidth || ["grid_cards", "compact_grid", "scrollable_grid", "masonry_grid"].includes(method);
+            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "masonry_grid"].includes(method);
         };
 
         const desktopWide = isWide(block.layout_method);

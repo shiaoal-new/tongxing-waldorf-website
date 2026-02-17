@@ -8,17 +8,17 @@ import ActionButtons from "./ui/ActionButtons";
 import Disclosure from "./ui/Disclosure";
 import DevComment from "./ui/DevComment";
 
-const ListSwiper = dynamic<any>(() => import('./ListSwiper'), {
+const CardDeckSwiper = dynamic<any>(() => import('./CardDeckSwiper'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
 
 
-const TestimonialSwiper = dynamic<any>(() => import('./TestimonialSwiper'), {
+const SpotlightCarousel = dynamic<any>(() => import('./SpotlightCarousel'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
-const HighlightSwiper = dynamic<any>(() => import('./HighlightSwiper'), {
+const HighlightCarousel = dynamic<any>(() => import('./HighlightCarousel'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
@@ -31,8 +31,8 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     grid_cards: { fullWidth: false },
     compact_grid: { fullWidth: false },
     bento_grid: { fullWidth: false },
-    scrollable_grid: { fullWidth: true },
-    testimonial_carousel: { fullWidth: true },
+    card_deck_swiper: { fullWidth: true },
+    spotlight_carousel: { fullWidth: true },
     highlight_carousel: { fullWidth: true },
     masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
@@ -57,7 +57,7 @@ export default function ListRenderer(props: ListRendererProps) {
         items = [],
         renderItem,
         direction = "horizontal",
-        layout = "scrollable_grid",
+        layout = "card_deck_swiper",
         buttons,
         columns = 3,
         mobile_scroll = false,
@@ -297,9 +297,9 @@ export default function ListRenderer(props: ListRendererProps) {
     }
 
     // Scrollable Grid 佈局 (使用 Swiper EffectCards)
-    if (layout === "scrollable_grid") {
+    if (layout === "card_deck_swiper") {
         return (
-            <ListSwiper
+            <CardDeckSwiper
                 items={items}
                 renderItem={renderItem}
                 buttons={buttons}
@@ -308,9 +308,9 @@ export default function ListRenderer(props: ListRendererProps) {
     }
 
     // Testimonial Carousel 佈局 (置中放大效果)
-    if (layout === "testimonial_carousel") {
+    if (layout === "spotlight_carousel") {
         return (
-            <TestimonialSwiper
+            <SpotlightCarousel
                 items={items}
                 renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
             />
@@ -320,7 +320,7 @@ export default function ListRenderer(props: ListRendererProps) {
     // Highlight Carousel 佈局 (特色項目輪播)
     if (layout === "highlight_carousel") {
         return (
-            <HighlightSwiper
+            <HighlightCarousel
                 items={items}
                 renderItem={(item: any, index: number) => renderItem(item, index)}
                 buttons={buttons}

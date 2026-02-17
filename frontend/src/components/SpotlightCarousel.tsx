@@ -1,19 +1,19 @@
 import React from 'react';
-import ScrollCarousel, { ScrollCarouselConfig } from './ui/ScrollCarousel';
+import SnapCarousel, { SnapCarouselConfig } from './ui/SnapCarousel';
 
-interface TestimonialSwiperProps {
+interface SpotlightCarouselProps {
     items: any[];
     renderItem: (item: any, index: number, pagination: { current: number; total: number }) => React.ReactNode;
 }
 
 /**
- * TestimonialSwiper
+ * SpotlightCarousel
  * 專為見證設計的輪播組件，具有置中放大的視覺效果
  */
-export default function TestimonialSwiper({ items, renderItem }: TestimonialSwiperProps) {
-    const config: ScrollCarouselConfig = {
+export default function SpotlightCarousel({ items, renderItem }: SpotlightCarouselProps) {
+    const config: SnapCarouselConfig = {
         cardClassName: 'testimonial-card',
-        wrapperClassName: 'testimonial-swiper-wrapper relative px-0 w-full group overflow-x-hidden',
+        wrapperClassName: 'testimonial-carousel-wrapper relative px-0 w-full group overflow-x-hidden',
         showNavigation: true,
         showPagination: false,
         navButtonVariant: 'large',
@@ -59,7 +59,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
                 pointer-events: none;
             }
             
-            /* 隱藏偽元素如果 ScrollCarousel 預設有 */
+            /* 隱藏偽元素如果 SnapCarousel 預設有 */
             .scroll-container::before,
             .scroll-container::after {
                 display: none;
@@ -91,7 +91,7 @@ export default function TestimonialSwiper({ items, renderItem }: TestimonialSwip
     };
 
     return (
-        <ScrollCarousel
+        <SnapCarousel
             items={items}
             config={config}
             renderItem={(item, index, extra) => (

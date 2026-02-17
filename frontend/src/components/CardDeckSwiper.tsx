@@ -4,19 +4,19 @@ import { EffectCards, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
-import styles from "./ListSwiper.module.css";
+import styles from "./CardDeckSwiper.module.css";
 import DevComment from "./ui/DevComment";
 import ActionButtons from "./ui/ActionButtons";
 
-interface ListSwiperProps {
+interface CardDeckSwiperProps {
     items: any[];
     renderItem: (item: any, index: number) => React.ReactNode;
     buttons?: any[];
 }
 
-export default function ListSwiper({ items, renderItem, buttons }: ListSwiperProps) {
+export default function CardDeckSwiper({ items, renderItem, buttons }: CardDeckSwiperProps) {
     return (
-        <div className={`w-full mx-auto ${styles['list-swiper-container']}`}>
+        <div className={`w-full mx-auto ${styles['card-deck-swiper-container']}`}>
             <DevComment text="Swiper Effect Cards Container" />
             <Swiper
                 effect={'cards'}
@@ -28,7 +28,7 @@ export default function ListSwiper({ items, renderItem, buttons }: ListSwiperPro
                 className={styles['swiper-cards-container']}
             >
                 {items.map((item, index) => (
-                    <SwiperSlide key={item.id || index} className={styles['list-swiper-slide']}>
+                    <SwiperSlide key={item.id || index} className={styles['card-deck-swiper-slide']}>
                         <div className="w-full h-full flex flex-col">
                             {renderItem(item, index)}
                         </div>
