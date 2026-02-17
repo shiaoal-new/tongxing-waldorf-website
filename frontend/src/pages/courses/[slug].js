@@ -55,21 +55,22 @@ export async function getStaticProps({ params }) {
         };
     });
 
-    // Note: Wording resolution is deferred to the client in development
-    // For production, we can optionally pre-resolve here for SEO if needed,
-    // but CoursePage currently relies more on client-side loading.
+    // Always resolve default wordings at build time for all environments.
+    const dictionary = getWordingDictionary(slug, "default", ["faq"]);
+    const resolvedCourse = course ? resolveWording(course, dictionary) : null;
+    const resolvedData = resolveWording({
+        facultyList: pageData.facultyList || [],
+        faqList: pageData.faqList || [],
+        coursesList,
+    }, dictionary);
 
     return {
         props: {
-            course: course || null,
+            course: resolvedCourse,
             pages: resolvedPages,
             navigation,
             siteSettings,
-            data: {
-                facultyList: pageData.facultyList || [],
-                faqList: pageData.faqList || [],
-                coursesList,
-            },
+            data: resolvedData,
         },
     };
 }

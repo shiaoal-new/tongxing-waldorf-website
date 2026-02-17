@@ -75,14 +75,12 @@ export async function getStaticProps() {
     };
   });
 
-  // Resolve default wordings for static generation (only in production for SEO)
-  // In preview mode, keep raw $placeholders so client-side useWording can switch styles
-  const isProd = process.env.NODE_ENV === 'production';
-  const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
-  const shouldResolve = isProd && !isPreview;
+  // Always resolve default wordings at build time for all environments.
+  // This eliminates text flash (FOUC) where raw $ids like "$hero.title" briefly appear.
+  // Client-side useWording hook will only re-resolve when user actively switches wording style.
   const dictionary = getWordingDictionary("index", "default", ["faq"]);
-  const resolvedPage = shouldResolve ? (page ? resolveWording(page, dictionary) : null) : page;
-  const resolvedData = shouldResolve ? resolveWording({ facultyList, faqList }, dictionary) : { facultyList, faqList };
+  const resolvedPage = page ? resolveWording(page, dictionary) : null;
+  const resolvedData = resolveWording({ facultyList, faqList }, dictionary);
 
   return {
     props: {

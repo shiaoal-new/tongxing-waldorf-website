@@ -76,22 +76,15 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     // 按需加载数据 - 只加载页面实际需要的数据
     const pageData = getPageDataOptimized(page);
 
-    // Resolve default wordings for static generation (only in production for SEO)
-    // In preview mode, keep raw $placeholders so client-side useWording can switch styles
-    const isProd = process.env.NODE_ENV === 'production';
-    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
-    const shouldResolve = isProd && !isPreview;
+    // Always resolve default wordings at build time for all environments.
+    // This eliminates text flash (FOUC) where raw $ids briefly appear.
     const dictionary = getWordingDictionary(slug, "default", ["faq"]);
-    const resolvedPage = shouldResolve ? (page ? resolveWording(page, dictionary) : null) : page;
-    const resolvedDataList = shouldResolve ? resolveWording({
+    const resolvedPage = page ? resolveWording(page, dictionary) : null;
+    const resolvedDataList = resolveWording({
         facultyList: pageData.facultyList || [],
         faqList: pageData.faqList || [],
         coursesList: pageData.coursesList || [],
-    }, dictionary) : {
-        facultyList: pageData.facultyList || [],
-        faqList: pageData.faqList || [],
-        coursesList: pageData.coursesList || [],
-    };
+    }, dictionary);
 
     return {
         props: {

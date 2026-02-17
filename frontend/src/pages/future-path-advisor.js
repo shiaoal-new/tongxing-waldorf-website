@@ -68,13 +68,10 @@ export async function getStaticProps() {
         };
     });
 
-    // Resolve default wordings for static generation (only in production for SEO)
-    const isProd = process.env.NODE_ENV === 'production';
-    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === 'preview';
-    const shouldResolve = isProd && !isPreview;
+    // Always resolve default wordings at build time for all environments.
     const dictionary = getWordingDictionary("future-path-advisor", "default");
-    const resolvedPage = shouldResolve ? (page ? resolveWording(page, dictionary) : null) : page;
-    const resolvedData = shouldResolve ? resolveWording({ questionnaire }, dictionary) : { questionnaire };
+    const resolvedPage = page ? resolveWording(page, dictionary) : null;
+    const resolvedData = resolveWording({ questionnaire }, dictionary);
 
     return {
         props: {

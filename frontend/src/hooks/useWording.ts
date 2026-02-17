@@ -6,19 +6,27 @@ import yaml from 'js-yaml';
 /**
  * useWording Hook 
  * @param pageId 頁面 ID (例如 "index")
- * @param initialData 原始數據
+ * @param initialData 原始數據 (already resolved with default wording from server)
  * @param extraCategories 額外要加載的文案包 (例如 ["faq", "ui"])
+ * 
+ * Since getStaticProps always resolves default wordings at build time,
+ * this hook only fetches and re-resolves when the user switches to a non-default style.
  */
 export function useWording<T>(pageId: string, initialData: T, extraCategories: string[] = []): T {
     const { getStyle, reportMissingKeys } = useWordingContext();
     const currentStyle = getStyle(pageId);
 
-    const [dictionary, setDictionary] = useState<any>(null);
     const [resolvedData, setResolvedData] = useState<T>(initialData);
 
     useEffect(() => {
+        // Default style is already resolved server-side, no need to fetch again.
+        if (currentStyle === 'default') {
+            setResolvedData(initialData);
+            return;
+        }
+
+        // Only fetch dictionary from client when user switches to non-default style.
         const loadDictionaries = async () => {
-            const styleToLoad = currentStyle;
             const categories = [pageId, ...extraCategories];
 
             try {
@@ -26,7 +34,7 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
                     categories.map(async (cat) => {
                         // Try API first (for dev server)
                         try {
-                            const res = await fetch(`/api/wording?page=${cat}&style=${styleToLoad}`);
+                            const res = await fetch(`/api/wording?page=${cat}&style=${currentStyle}`);
                             if (res.ok) {
                                 const text = await res.text();
                                 return yaml.load(text) || {};
@@ -38,13 +46,13 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
 
                         // Fallback to static file
                         try {
-                            const staticRes = await fetch(`/data/wordings/${cat}/${styleToLoad}.yml`);
+                            const staticRes = await fetch(`/data/wordings/${cat}/${currentStyle}.yml`);
                             if (staticRes.ok) {
                                 const text = await staticRes.text();
                                 return yaml.load(text) || {};
                             }
                         } catch (staticError) {
-                            console.warn(`Could not load static wording for ${cat}/${styleToLoad}`, staticError);
+                            console.warn(`Could not load static wording for ${cat}/${currentStyle}`, staticError);
                         }
 
                         return {};
@@ -65,33 +73,25 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
                 };
 
                 const mergedDictionary = results.reduce((acc, curr) => deepMerge(acc, curr), {});
-                setDictionary(mergedDictionary);
+
+                const missing: string[] = [];
+                const newResolved = resolveWording(initialData, mergedDictionary, (key) => {
+                    missing.push(key);
+                });
+
+                if (missing.length > 0) {
+                    reportMissingKeys(missing);
+                }
+
+                setResolvedData(newResolved);
             } catch (e) {
                 console.warn(`Could not load dictionaries for ${pageId}`, e);
-                setDictionary({});
             }
         };
 
         loadDictionaries();
     }, [pageId, currentStyle, JSON.stringify(extraCategories)]);
 
-    useEffect(() => {
-        if (!dictionary) {
-            setResolvedData(initialData);
-            return;
-        }
-
-        const missing: string[] = [];
-        const newResolved = resolveWording(initialData, dictionary, (key) => {
-            missing.push(key);
-        });
-
-        if (missing.length > 0) {
-            reportMissingKeys(missing);
-        }
-
-        setResolvedData(newResolved);
-    }, [initialData, dictionary]);
-
     return resolvedData;
 }
+
