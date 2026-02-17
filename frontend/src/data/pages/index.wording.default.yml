@@ -24,6 +24,21 @@ features:
     title: 穩定的九年一貫發展路徑
     content: 我們提供從國小到國中的連貫教育鏈，確保課程設計符合不同年齡層的發展門檻。透過師生的長久陪伴與信任關係，點燃孩子對知識探究的終身熱情，為其成人生活奠定穩固基礎。
     button: 瀏覽課程綱要
+ai_future:
+  intro:
+    title: 2035 年，您的孩子將面對什麼樣的世界？
+    subtitle: 給孩子 AI 模擬不來的生命力
+    content: 在生成式 AI 能瞬間完成重複性任務的時代，教育的重點不再是知識填充，而是培養那些機器無法複製的人性核心：好奇心、創造力與強大的心理韌性。
+    button: 探索 AI 時代的強項
+  item_resilience:
+    title: 情緒韌性
+    content: 面對未知變局的內在定力與修復力。
+  item_creativity:
+    title: 原創創造力
+    content: 從無到有的直覺靈魂，非大數據拼湊。
+  item_thinking:
+    title: 批判性思考
+    content: 在資訊大海中定義問題與判斷真偽的能力。
 
 community:
   intro:
