@@ -1,0 +1,89 @@
+title: $title
+slug: humanities
+hero:
+  title: $hero.title
+  subtitle: $hero.subtitle
+  media_list:
+    - type: image
+      image: /img/featured-academic.webp
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+
+sections:
+  - section_id: intro
+    blocks:
+      - type: text_block
+        title: $intro.title
+        content: $intro.content
+
+  - section_id: comparison
+    blocks:
+      - type: text_block
+        title: $comparison.title
+      - type: comparison_block
+        image: /img/classroom-compare.jpeg
+        left:
+          label: $comparison_block.left.label
+          badge: $comparison_block.left.badge
+          items:
+            - icon: mdi:clipboard-check-outline
+              text: $comparison_block.left.items.0.text
+              description: $comparison_block.left.items.0.description
+            - icon: mdi:notebook-outline
+              text: $comparison_block.left.items.1.text
+              description: $comparison_block.left.items.1.description
+            - icon: mdi:school-outline
+              text: $comparison_block.left.items.2.text
+              description: $comparison_block.left.items.2.description
+            - icon: mdi:pencil-outline
+              text: $comparison_block.left.items.3.text
+              description: $comparison_block.left.items.3.description
+        right:
+          label: $comparison_block.right.label
+          badge: $comparison_block.right.badge
+          items:
+            - icon: mdi:target
+              text: $comparison_block.right.items.0.text
+              description: $comparison_block.right.items.0.description
+            - icon: mdi:book-open-page-variant
+              text: $comparison_block.right.items.1.text
+              description: $comparison_block.right.items.1.description
+            - icon: mdi:drama-masks
+              text: $comparison_block.right.items.2.text
+              description: $comparison_block.right.items.2.description
+            - icon: mdi:feather
+              text: $comparison_block.right.items.3.text
+              description: $comparison_block.right.items.3.description
+
+  - section_id: learning-path
+    blocks:
+      - type: list_block
+        title: $path.title
+        layout_method: vertical
+        item_type: feature_item
+        items:
+          - title: $path.stage1.title
+            icon: mdi:sprout
+            content: $path.stage1.content
+          - title: $path.stage2.title
+            icon: mdi:pyramid
+            content: $path.stage2.content
+          - title: $path.stage3.title
+            icon: mdi:compass-outline
+            content: $path.stage3.content
+
+  - section_id: qa
+    blocks:
+      - type: list_block
+        title: $qa.title
+        layout_method: grid_cards
+        item_type: feature_item
+        items:
+          - title: $qa.pain_point.title
+            icon: mdi:emoticon-happy-outline
+            content: $qa.pain_point.content
+          - title: $qa.itch_point.title
+            icon: mdi:star-face
+            content: $qa.itch_point.content
+          - title: $qa.highlight.title
+            icon: mdi:book-open-page-variant
+            content: $qa.highlight.content

@@ -32,7 +32,7 @@ interface DynamicPageContentProps {
 
 export default function DynamicPageContent({ page: initialPage, pages, navigation, siteSettings, data: initialData = {}, contentType = 'page' }: DynamicPageContentProps) {
     // 使用 useWording Hook 處理客戶端動態文案切換 (主要用於開發環境)
-    const pageId = initialPage?.slug || (contentType === 'course' ? 'course' : 'index');
+    const pageId = initialPage?.slug || 'index';
     const { page, data: resolvedData } = useWording(pageId, {
         page: initialPage,
         data: {

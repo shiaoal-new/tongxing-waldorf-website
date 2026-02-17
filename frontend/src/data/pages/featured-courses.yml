@@ -31,7 +31,7 @@ sections:
                 icon: ph:book-open-text-bold
                 buttons:
                   - text: $course-list.blocks.0.items.0.sub_items.0.buttons.0.text
-                    link: "/courses/language-arts"
+                    link: "/courses/humanities"
                     style: btn-outline-primary
               - title: $course-list.blocks.0.items.0.sub_items.1.title
                 content: $course-list.blocks.0.items.0.sub_items.1.content

@@ -68,7 +68,7 @@ const ComparisonBlock = ({ data }: ComparisonBlockProps) => {
                                 <img
                                     src={image}
                                     alt="Artistic background comparison"
-                                    className="h-[90%] md:h-[95%] lg:h-[105%] w-auto object-contain object-center opacity-90 mix-blend-multiply dark:mix-blend-normal"
+                                    className="h-[90%] md:h-[95%] lg:h-[105%] w-auto object-contain object-center opacity-70 mix-blend-multiply dark:mix-blend-normal"
                                 />
                             </motion.div>
                         </div>
@@ -89,7 +89,7 @@ const ComparisonBlock = ({ data }: ComparisonBlockProps) => {
                                     <img
                                         src={image}
                                         alt="Public path background"
-                                        className="w-[200%] max-w-none h-full object-cover object-left opacity-30 mix-blend-multiply dark:mix-blend-normal absolute top-0 left-0"
+                                        className="w-[200%] max-w-none h-full object-cover object-left opacity-20 mix-blend-multiply dark:mix-blend-normal absolute top-0 left-0"
                                     />
                                 )}
                             </div>
@@ -141,7 +141,7 @@ const ComparisonBlock = ({ data }: ComparisonBlockProps) => {
                                     <img
                                         src={image}
                                         alt="Private path background"
-                                        className="w-[200%] max-w-none h-full object-cover object-right opacity-30 mix-blend-multiply dark:mix-blend-normal absolute top-0 right-0"
+                                        className="w-[200%] max-w-none h-full object-cover object-right opacity-20 mix-blend-multiply dark:mix-blend-normal absolute top-0 right-0"
                                     />
                                 )}
                             </div>
