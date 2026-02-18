@@ -39,12 +39,14 @@ sections:
         title: "$courses.title"
         subtitle: "$courses.subtitle"
       - type: list_block
-        layout_method: carousel
-        loop: false
-        align: start
-        highlight_active: false
-        limit: 5
-        append_more: true
+        layout:
+          method: carousel
+          config:
+            loop: false
+            align: start
+            highlight_active: false
+            limit: 5
+            append_more: true
         item_type: hero_card_item
         items:
           - title: "$courses.humanities.title"
@@ -100,7 +102,7 @@ sections:
         title: "$milestones.title"
         subtitle: "$milestones.subtitle"
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: "$milestones.trekking.title"
@@ -122,7 +124,7 @@ sections:
         content: "$rhythm.content"
       - type: breathing_intro_block
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: "$rhythm.seasons.spring"
@@ -153,7 +155,7 @@ sections:
       - type: text_block
         title: "$benefits.title"
       - type: list_block
-        layout_method: horizontal_scroll
+        layout: horizontal_scroll
         item_type: feature_item
         items:
           - title: "$benefits.university.title"
@@ -166,7 +168,7 @@ sections:
   - section_id: faq
     blocks:
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: faq_item
         faq_ids: [curriculum, graduates, transition]
 

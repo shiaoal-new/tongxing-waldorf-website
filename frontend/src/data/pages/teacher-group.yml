@@ -59,7 +59,7 @@ sections:
 
       - type: list_block
         title: $part-time.blocks.1.title
-        layout_method: compact_grid
+        layout: compact_grid
         item_type: compact_card
         items:
           - title: "王振叡"
@@ -77,7 +77,7 @@ sections:
 
       - type: list_block
         title: $part-time.blocks.2.title
-        layout_method: compact_grid
+        layout: compact_grid
         item_type: compact_card
         items:
           - title: "朱道興"
@@ -99,7 +99,7 @@ sections:
 
       - type: list_block
         title: $part-time.blocks.3.title
-        layout_method: compact_grid
+        layout: compact_grid
         item_type: compact_card
         items:
           - title: "林育姍"
@@ -113,7 +113,7 @@ sections:
 
       - type: list_block
         title: $part-time.blocks.4.title
-        layout_method: compact_grid
+        layout: compact_grid
         item_type: compact_card
         items:
           - title: "陳乃欣"
@@ -135,7 +135,7 @@ sections:
 
       - type: list_block
         title: $part-time.blocks.5.title
-        layout_method: compact_grid
+        layout: compact_grid
         item_type: compact_card
         items:
           - title: "余明儒"

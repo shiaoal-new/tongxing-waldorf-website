@@ -25,7 +25,7 @@ sections:
         subtitle: "$philosophy.subtitle"
         content: "$philosophy.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$philosophy.item_rhythm.title"
@@ -46,7 +46,7 @@ sections:
         subtitle: "$deep_time.subtitle"
         content: "$deep_time.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$deep_time.item_connection.title"
@@ -66,7 +66,7 @@ sections:
         subtitle: "$festivals.subtitle"
         content: "$festivals.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$festivals.spring.title"

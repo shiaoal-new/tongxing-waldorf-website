@@ -33,7 +33,7 @@ sections:
         title: "$primary.title"
         subtitle: "$primary.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$primary.g3.title"
@@ -58,7 +58,7 @@ sections:
         title: "$middle.title"
         subtitle: "$middle.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$middle.g5.title"
@@ -84,7 +84,7 @@ sections:
         title: "$secondary.title"
         subtitle: "$secondary.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$secondary.g7.title"

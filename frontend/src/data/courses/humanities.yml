@@ -58,7 +58,7 @@ sections:
     blocks:
       - type: list_block
         title: $path.title
-        layout_method: vertical
+        layout: vertical
         item_type: feature_item
         items:
           - title: $path.stage1.title
@@ -75,7 +75,7 @@ sections:
     blocks:
       - type: list_block
         title: $qa.title
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $qa.pain_point.title

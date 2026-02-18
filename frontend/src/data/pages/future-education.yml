@@ -30,10 +30,12 @@ sections:
         subtitle: "$core_abilities.subtitle"
         content: "$core_abilities.content"
       - type: list_block
-        layout_method: carousel
-        align: left
-        loop: false
-        highlight_active: false
+        layout:
+          method: carousel
+          config:
+            align: left
+            loop: false
+            highlight_active: false
         variant: cinema
         item_type: feature_item
         items:
@@ -76,7 +78,7 @@ sections:
         subtitle: "$waldorf_approach.subtitle"
         content: "$waldorf_approach.content"
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: feature_item
         items:
           - title: "$waldorf_approach.items.0.title"
@@ -94,7 +96,7 @@ sections:
         subtitle: "$future_advantage.subtitle"
         content: "$future_advantage.content"
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: feature_item
         items:
           - title: "$future_advantage.items.0.title"

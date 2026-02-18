@@ -16,7 +16,7 @@ sections:
   - section_id: course-list
     blocks:
       - type: list_block
-        layout_method: masonry_grid
+        layout: masonry_grid
         item_type: feature_item
         items:
           - title: $course-list.blocks.0.items.0.title

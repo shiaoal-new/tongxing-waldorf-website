@@ -366,23 +366,31 @@
                     hint: "橫向適合 benefit/video,縱向適合 FAQ/accordion",
                   }
                 - {
-                    label: "🖼️ 佈局方式",
-                    name: "layout_method",
+                    label: "� 佈局方式 (Layout)",
+                    name: "layout",
                     widget: "select",
                     options:
                       [
                         {
-                          label: "可滾動網格 (通用模式)",
+                          label: "可滾動網格 (Scrollable Grid)",
                           value: "scrollable_grid",
                         },
                         {
-                          label: "三欄網格卡片 (概覽模式)",
+                          label: "三欄網格卡片 (Grid Cards)",
                           value: "grid_cards",
                         },
+                        { label: "縱向清單 (Vertical)", value: "vertical" },
+                        { label: "雜誌風 Bento 網格", value: "bento_grid" },
                         {
-                          label: "縱向摺疊清單 (Vertical List)",
-                          value: "vertical",
+                          label: "緊湊網格 (Compact Grid)",
+                          value: "compact_grid",
                         },
+                        {
+                          label: "橫向滾動 (Horizontal Scroll)",
+                          value: "horizontal_scroll",
+                        },
+                        { label: "輪播圖 (Carousel)", value: "carousel" },
+                        { label: "瀑布流 (Masonry)", value: "masonry_grid" },
                       ],
                     default: "scrollable_grid",
                   }

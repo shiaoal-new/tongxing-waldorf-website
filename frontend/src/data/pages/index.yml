@@ -31,10 +31,14 @@ sections:
         title: "$features.intro.title"
         subtitle: "$features.intro.subtitle"
       - type: list_block
-        layout_method: bento_grid
-        mobile_layout_method: carousel
-        loop: false # Added prop for carousel
-        highlight_active: true # Added prop for carousel
+        layout:
+          desktop:
+            method: bento_grid
+          mobile:
+            method: carousel
+            config:
+              loop: false
+              highlight_active: true
         item_type: feature_item
         align: center
         items:
@@ -84,7 +88,7 @@ sections:
             link: /philosophy
             style: btn-primary
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         align: center
         items:
@@ -153,7 +157,7 @@ sections:
             link: /featured-courses
             style: btn-outline-primary
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: video_item
         items:
           - title: "$videos.item_essence.title"
@@ -190,10 +194,12 @@ sections:
         title: "$testimonials.intro.title"
         subtitle: "$testimonials.intro.subtitle"
       - type: list_block
-        layout_method: carousel
-        loop: true
-        align: center
-        highlight_active: true
+        layout:
+          method: carousel
+          config:
+            loop: true
+            align: center
+            highlight_active: true
         item_type: testimonial_item
         items:
           - quote: $testimonials.items.0.quote
@@ -267,7 +273,7 @@ sections:
         subtitle: "$faq.intro.subtitle"
         content: "$faq.intro.content"
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: faq_item
         faq_ids:
           - tuition

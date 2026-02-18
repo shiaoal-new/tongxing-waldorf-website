@@ -49,6 +49,8 @@ interface ListRendererProps {
     highlightActive?: boolean;
     limit?: number;
     appendMore?: boolean;
+    layoutConfig?: any;
+    mobileLayoutConfig?: any;
 }
 
 /**
@@ -65,12 +67,11 @@ export default function ListRenderer(props: ListRendererProps) {
         mobile_scroll = false,
         mobile_layout,
         variant,
-        loop,
-        align,
-        highlightActive,
-        limit,
-        appendMore,
+        layoutConfig = {},
+        mobileLayoutConfig = {},
     } = props;
+
+    // ... (rest of the component)
 
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -84,10 +85,15 @@ export default function ListRenderer(props: ListRendererProps) {
         return (
             <>
                 <div className="hidden md:block w-full">
-                    <ListRenderer {...props} mobile_layout={undefined} />
+                    <ListRenderer {...props} mobile_layout={undefined} layoutConfig={layoutConfig} />
                 </div>
                 <div className="md:hidden w-full">
-                    <ListRenderer {...props} layout={mobile_layout} mobile_layout={undefined} />
+                    <ListRenderer
+                        {...props}
+                        layout={mobile_layout}
+                        mobile_layout={undefined}
+                        layoutConfig={mobileLayoutConfig && Object.keys(mobileLayoutConfig).length > 0 ? mobileLayoutConfig : layoutConfig}
+                    />
                 </div>
             </>
         );
@@ -327,16 +333,17 @@ export default function ListRenderer(props: ListRendererProps) {
             appendMore: false,
         };
 
+        const config = { ...defaultProps, ...layoutConfig };
+
         return (
             <ListCarousel
                 items={items}
                 variant={variant}
-                // 優先使用傳入的 props，否則使用據佈局決定的預設值
-                loop={loop !== undefined ? loop : defaultProps.loop}
-                align={align || defaultProps.align}
-                highlightActive={highlightActive !== undefined ? highlightActive : defaultProps.highlightActive}
-                limit={limit || defaultProps.limit}
-                appendMore={appendMore !== undefined ? appendMore : defaultProps.appendMore}
+                loop={config.loop}
+                align={config.align}
+                highlightActive={config.highlight_active || config.highlightActive} // Handle both casing just in case
+                limit={config.limit}
+                appendMore={config.append_more || config.appendMore} // Handle both casing
                 buttons={buttons}
                 renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
             />

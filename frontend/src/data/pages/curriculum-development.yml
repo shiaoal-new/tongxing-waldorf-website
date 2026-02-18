@@ -17,7 +17,7 @@ sections:
         title: $core-vision.blocks.0.title
         content: $core-vision.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: $core-vision.blocks.1.items.0.title
@@ -60,7 +60,7 @@ sections:
         title: $curriculum-continuity.blocks.0.title
         content: $curriculum-continuity.blocks.0.content
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $curriculum-continuity.blocks.1.items.0.title
@@ -82,7 +82,7 @@ sections:
         title: $senior-transition.blocks.0.title
         content: $senior-transition.blocks.0.content
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $senior-transition.blocks.1.items.0.title

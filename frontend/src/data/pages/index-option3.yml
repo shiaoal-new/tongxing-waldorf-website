@@ -28,7 +28,7 @@ sections:
         subtitle: "$journey.step1.subtitle"
         content: "$journey.step1.content"
       - type: list_block
-        layout_method: horizontal_scroll
+        layout: horizontal_scroll
         item_type: feature_item
         items:
           - title: "每日節奏"
@@ -54,7 +54,7 @@ sections:
         subtitle: "$journey.step3.subtitle"
         content: "$journey.step3.content"
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: feature_item
         items:
           - title: "五年級大縱走"

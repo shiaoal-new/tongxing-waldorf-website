@@ -8,7 +8,7 @@ blocks:
     subtitle: "$paths.waldorf.subtitle"
     content: "$paths.waldorf.content"
   - type: list_block
-    layout_method: bento_grid
+    layout: bento_grid
     item_type: feature_item
     items:
       - title: "$paths.waldorf.item_curriculum.title"
@@ -29,7 +29,7 @@ blocks:
     layout: centered
   - type: list_block
     title: "$paths.waldorf.external_resources.title"
-    layout_method: grid_cards
+    layout: grid_cards
     item_type: feature_item
     items: "$paths.waldorf.external_resources.items"
 

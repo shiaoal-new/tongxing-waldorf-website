@@ -25,7 +25,7 @@ sections:
         subtitle: "$concept.subtitle"
         content: "$concept.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$concept.item_non_talent.title"
@@ -45,7 +45,7 @@ sections:
         title: "$grades.title"
         subtitle: "$grades.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$grades.g4.title"
@@ -70,7 +70,7 @@ sections:
         title: "$features.title"
         subtitle: "$features.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$features.item_hands.title"

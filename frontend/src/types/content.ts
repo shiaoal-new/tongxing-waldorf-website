@@ -85,9 +85,51 @@ export interface VideoItem {
 
 export type ListItem = FaqItem | FeatureItem | VideoItem;
 
+
+// Basic layout types
+export type LayoutMethod = 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'masonry_grid' | 'carousel';
+
+export interface LayoutConfig {
+    // Carousel options
+    loop?: boolean;
+    align?: 'start' | 'center';
+    highlight_active?: boolean;
+    limit?: number;
+    append_more?: boolean;
+
+    // Potential future options
+    // columns?: number;
+    // gap?: number;
+    [key: string]: any;
+}
+
+export interface ResponsiveLayout {
+    method: LayoutMethod;
+    config?: LayoutConfig;
+
+    // Optional overrides for specific breakpoints
+    // In Design A, we support separating desktop and mobile completely if needed
+    desktop?: {
+        method: LayoutMethod;
+        config?: LayoutConfig;
+    };
+    mobile?: {
+        method: LayoutMethod;
+        config?: LayoutConfig;
+    };
+}
+
 export interface ListBlock extends BaseBlock {
     type: 'list_block';
-    layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'masonry_grid' | 'carousel';
+
+    // New structured layout property (Design A)
+    layout?: LayoutMethod | ResponsiveLayout;
+
+    // Deprecated properties removed
+    // layout_method?: LayoutMethod;
+    // mobile_layout_method?: LayoutMethod;
+    // layout_config?: LayoutConfig;
+
     item_type: 'faq_item' | 'feature_item' | 'video_item';
     items?: ListItem[];
     faq_ids?: string[];
@@ -95,13 +137,7 @@ export interface ListBlock extends BaseBlock {
     direction?: string;
     buttons?: CTAButton[];
     mobile_scroll?: boolean;
-    mobile_layout_method?: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'masonry_grid' | 'carousel';
     variant?: string;
-    loop?: boolean;
-    align?: 'start' | 'center';
-    highlight_active?: boolean;
-    limit?: number;
-    append_more?: boolean;
 }
 
 export interface Question {

@@ -22,7 +22,7 @@ sections:
         content: $core.content
 
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $speech.title
@@ -43,7 +43,7 @@ sections:
   - section_id: education
     blocks:
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         title: $education.title
         item_type: feature_item
         items:
@@ -83,7 +83,7 @@ sections:
         content: $adult.content
 
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $adult.tuning.title

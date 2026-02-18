@@ -45,7 +45,7 @@ sections:
         labels: "$analysis.comparison.radar.labels"
         datasets: "$analysis.comparison.radar.datasets"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$analysis.comparison.waldorf.title"
@@ -64,7 +64,7 @@ sections:
         title: "$analysis.advice.title"
         layout: centered
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: "$analysis.advice.parent.title"

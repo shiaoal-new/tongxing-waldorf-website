@@ -23,7 +23,7 @@ blocks:
     title: "$paths.mainstream.case_analysis.title"
     layout: centered
   - type: list_block
-    layout_method: bento_grid
+    layout: bento_grid
     item_type: feature_item
     items:
       - title: "$paths.mainstream.case_analysis.success.title"
@@ -95,14 +95,14 @@ blocks:
     title: "$paths.mainstream.parent_guide.title"
     layout: centered
   - type: list_block
-    layout_method: grid_cards
+    layout: grid_cards
     item_type: feature_item
     items: "$paths.mainstream.parent_guide.items"
 
   # 7. 外部參考資料
   - type: list_block
     title: "$paths.mainstream.external_resources.title"
-    layout_method: grid_cards
+    layout: grid_cards
     item_type: feature_item
     items: "$paths.mainstream.external_resources.items"
 

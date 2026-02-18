@@ -26,7 +26,7 @@ sections:
         subtitle: $what-is-it.blocks.0.subtitle
         content: $what-is-it.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         align: center
         items:
@@ -73,7 +73,7 @@ sections:
         subtitle: $seven-year-cycles.blocks.0.subtitle
         content: $seven-year-cycles.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         align: center
         items:

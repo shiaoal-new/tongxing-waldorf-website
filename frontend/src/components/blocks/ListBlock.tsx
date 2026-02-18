@@ -3,7 +3,7 @@ import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListLayoutRenderer";
 
 import { usePageData } from "../../context/PageDataContext";
 import BlockDispatcher from "./BlockDispatcher";
-import { ListBlock as ListBlockType, FaqItem, ListItem } from "../../types/content";
+import { ListBlock as ListBlockType, FaqItem, ListItem, LayoutConfig } from "../../types/content";
 
 /**
  * 準備列表數據，將 FAQ 或普通項目統一轉化為規整的 Block 結構
@@ -31,12 +31,66 @@ interface ListBlockProps {
 }
 
 /**
+ * Helper to extract layout configuration for Design A
+ */
+export function getLayoutSettings(block: ListBlockType) {
+    let method = "card_deck_swiper";
+    let mobileMethod: string | undefined = undefined;
+    let config: LayoutConfig = {};
+    let mobileConfig: LayoutConfig | undefined = undefined;
+
+    // Design A: Parse 'layout' property
+    if (block.layout) {
+        if (typeof block.layout === 'string') {
+            method = block.layout;
+        } else {
+            // It's a ResponsiveLayout object
+            const layoutObj = block.layout;
+
+            // 1. Base/Desktop settings
+            // If explicit desktop object exists, use it. Otherwise use root method/config
+            if (layoutObj.desktop) {
+                method = layoutObj.desktop.method;
+                config = layoutObj.desktop.config || {};
+            } else if (layoutObj.method) {
+                // Shared / Default method
+                method = layoutObj.method;
+                config = layoutObj.config || {};
+            }
+
+            // 2. Mobile settings
+            if (layoutObj.mobile) {
+                mobileMethod = layoutObj.mobile.method;
+                mobileConfig = layoutObj.mobile.config;
+            } else {
+                // Fallback behavior: if no explicit mobile setting, mobile behaves like desktop
+                // OR we could check if we want to inherit behavior.
+                // Currently keeping it simple: if no mobile override, ListRenderer might just use desktop layout
+            }
+        }
+    }
+
+    // Fallback: if mobileConfig is not set but we have a mobileMethod (from legacy or new), 
+    // we might want to default mobileConfig to config if they share the same method, OR separate.
+    // For now, let's keep them distinct to avoid pollution unless explicitly requested.
+    // BUT per user request "use same layout method and layout config for both",
+    // if we parsed `layout: { method: 'carousel', config: {...} }`, we have method='carousel', config={...},
+    // and mobileMethod=undefined. ListRenderer handles mobileMethod=undefined by using layout (desktop).
+
+    return { method, mobileMethod, config, mobileConfig };
+}
+
+
+/**
  * ListBlock Component
  * 渲染列表塊
  */
 export default function ListBlock({ block, align }: ListBlockProps) {
     const { faqList } = usePageData();
-    const direction = block.direction || (block.layout_method === "vertical" ? "vertical" : "horizontal");
+
+    const { method, mobileMethod, config, mobileConfig } = getLayoutSettings(block);
+
+    const direction = block.direction || (method === "vertical" ? "vertical" : "horizontal");
 
     const listItems = prepareListItems(block, faqList as FaqItem[], direction);
 
@@ -53,15 +107,12 @@ export default function ListBlock({ block, align }: ListBlockProps) {
                 direction={direction as "horizontal" | "vertical"}
 
                 items={listItems}
-                layout={block.layout_method || "card_deck_swiper"}
+                layout={method}
                 mobile_scroll={block.mobile_scroll}
-                mobile_layout={block.mobile_layout_method}
+                mobile_layout={mobileMethod}
                 variant={block.variant}
-                loop={block.loop}
-                align={block.align}
-                highlightActive={block.highlight_active}
-                limit={block.limit}
-                appendMore={block.append_more}
+                layoutConfig={config}
+                mobileLayoutConfig={mobileConfig}
                 columns={3}
                 buttons={block.buttons}
                 renderItem={(item: ListItem, index: number, extra: any) => {
@@ -81,15 +132,17 @@ export default function ListBlock({ block, align }: ListBlockProps) {
 
 import { BlockPolicy } from './interfaces';
 
-export const listPolicy: BlockPolicy = {
+export const listPolicy: any = {
     shouldIgnorePadding: (block: any) => {
-        const isFullWidth = (method?: string) => {
-            if (!method) return false;
-            return (LIST_LAYOUT_CONFIG as any)[method]?.fullWidth === true;
+        const { method, mobileMethod } = getLayoutSettings(block);
+
+        const isFullWidth = (m?: string) => {
+            if (!m) return false;
+            return (LIST_LAYOUT_CONFIG as any)[m]?.fullWidth === true;
         };
 
-        const desktopFull = isFullWidth(block.layout_method);
-        const mobileFull = isFullWidth(block.mobile_layout_method || block.layout_method);
+        const desktopFull = isFullWidth(method);
+        const mobileFull = isFullWidth(mobileMethod || method);
 
         if (desktopFull && mobileFull) return true;
         if (!desktopFull && !mobileFull) return false;
@@ -100,14 +153,16 @@ export const listPolicy: BlockPolicy = {
         return "px-mobile-margin md:px-0";
     },
     isSectionWide: (block: any) => {
-        const isWide = (method?: string) => {
-            if (!method) return false;
-            const config = (LIST_LAYOUT_CONFIG as any)[method];
-            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "scrollable_grid", "masonry_grid", "carousel"].includes(method);
+        const { method, mobileMethod } = getLayoutSettings(block);
+
+        const isWide = (m?: string) => {
+            if (!m) return false;
+            const config = (LIST_LAYOUT_CONFIG as any)[m];
+            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "scrollable_grid", "masonry_grid", "carousel"].includes(m!);
         };
 
-        const desktopWide = isWide(block.layout_method);
-        const mobileWide = isWide(block.mobile_layout_method || block.layout_method);
+        const desktopWide = isWide(method);
+        const mobileWide = isWide(mobileMethod || method);
 
         if (desktopWide && mobileWide) return true;
         if (!desktopWide && !mobileWide) return false;

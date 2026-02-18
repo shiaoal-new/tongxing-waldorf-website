@@ -8,7 +8,7 @@ blocks:
     subtitle: "$paths.diverse.subtitle"
     content: "$paths.diverse.content"
   - type: list_block
-    layout_method: bento_grid
+    layout: bento_grid
     item_type: feature_item
     items:
       - title: "$paths.diverse.item_special.title"
@@ -29,7 +29,7 @@ blocks:
         icon: lucide:hammer
   - type: list_block
     title: "$paths.diverse.external_resources.title"
-    layout_method: grid_cards
+    layout: grid_cards
     item_type: feature_item
     items: "$paths.diverse.external_resources.items"
 

@@ -21,7 +21,7 @@ sections:
         subtitle: $core-values.blocks.0.subtitle
         content: $core-values.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: $core-values.blocks.1.items.0.title
@@ -65,7 +65,7 @@ sections:
         subtitle: $mission.blocks.0.subtitle
         content: $mission.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: $mission.blocks.1.items.0.title

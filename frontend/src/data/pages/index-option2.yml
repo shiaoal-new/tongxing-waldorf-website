@@ -20,7 +20,7 @@ sections:
         subtitle: "$bento.subtitle"
         layout: centered
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$bento.academic.title"
@@ -61,10 +61,12 @@ sections:
   - section_id: testimonials
     blocks:
       - type: list_block
-        layout_method: carousel
-        loop: true
-        align: center
-        highlight_active: true
+        layout:
+          method: carousel
+          config:
+            loop: true
+            align: center
+            highlight_active: true
         item_type: testimonial_item
         items:
           - quote: $testimonials.items.0.quote

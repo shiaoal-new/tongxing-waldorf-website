@@ -3,7 +3,8 @@ import Section from "./layout/Section";
 import Container from "./ui/Container";
 import BlockDispatcher from "./blocks/BlockDispatcher";
 import { shouldBlockIgnorePadding, isBlockSectionWide } from "./blocks/blockPolicies";
-import { Section as SectionType, Block, TextBlock } from "../types/content";
+import { Section as SectionType, Block, TextBlock, ListBlock } from "../types/content";
+import { getLayoutSettings } from "./blocks/ListBlock";
 
 interface SectionRendererProps {
     section: SectionType & { limit?: boolean; _layout?: any; media_list?: any; parallax_ratio?: number; ignore_padding?: boolean };
@@ -132,9 +133,15 @@ function determineAlignment(contentBlocks: Block[]): "left" | "center" {
 
     const firstContent = contentBlocks[0];
     const leftAlignedTypes = ['text_block', 'member_block'];
-    const isSpecialList = firstContent.type === 'list_block' &&
-        ['card_deck_swiper', 'scrollable_grid'].includes((firstContent as any).layout_method) &&
-        ((firstContent as any).item_type === 'Benefit' || (firstContent as any).item_type === 'benefit_item');
+
+    let isSpecialList = false;
+    if (firstContent.type === 'list_block') {
+        const settings = getLayoutSettings(firstContent as ListBlock);
+        if (['card_deck_swiper', 'scrollable_grid'].includes(settings.method) &&
+            ((firstContent as any).item_type === 'Benefit' || (firstContent as any).item_type === 'benefit_item')) {
+            isSpecialList = true;
+        }
+    }
 
     if (leftAlignedTypes.includes(firstContent.type) || isSpecialList) {
         return "left";

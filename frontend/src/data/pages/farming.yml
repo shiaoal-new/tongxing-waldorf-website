@@ -25,7 +25,7 @@ sections:
         subtitle: "$willpower.subtitle"
         content: "$willpower.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$willpower.item_crisis.title"
@@ -52,7 +52,7 @@ sections:
         subtitle: "$spiral.subtitle"
         content: "$spiral.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$spiral.item_creation.title"
@@ -76,7 +76,7 @@ sections:
         subtitle: "$horticulture.subtitle"
         content: "$horticulture.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$horticulture.item_integration.title"
@@ -97,7 +97,7 @@ sections:
         subtitle: "$community.subtitle"
         content: "$community.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$community.item_cooperation.title"

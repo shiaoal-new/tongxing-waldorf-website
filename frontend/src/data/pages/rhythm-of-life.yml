@@ -34,7 +34,7 @@ sections:
         subtitle: $interactive-schedule.blocks.2.subtitle
         content: $interactive-schedule.blocks.2.content
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: faq_item
         items:
           - title: $interactive-schedule.blocks.3.items.0.title
@@ -52,7 +52,7 @@ sections:
         subtitle: $weekly-core.blocks.0.subtitle
         content: $weekly-core.blocks.0.content
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $weekly-core.blocks.1.items.0.title
@@ -78,7 +78,7 @@ sections:
         subtitle: $yearly-cycle.blocks.0.subtitle
         content: $yearly-cycle.blocks.0.content
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $yearly-cycle.blocks.1.items.0.title

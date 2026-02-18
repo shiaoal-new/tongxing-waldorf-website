@@ -25,7 +25,7 @@ sections:
         subtitle: "$concept.subtitle"
         content: "$concept.content"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$path.item_internalization.title"
@@ -59,7 +59,7 @@ sections:
         subtitle: "$assessment.subtitle"
         content: "$assessment.content"
       - type: list_block
-        layout_method: vertical
+        layout: vertical
         item_type: feature_item
         items:
           - title: "$assessment.item_observation.title"
@@ -76,7 +76,7 @@ sections:
         title: "$grades.title"
         subtitle: "$grades.subtitle"
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: "$grades.low.title"

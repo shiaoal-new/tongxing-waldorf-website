@@ -20,7 +20,7 @@ sections:
         title: $mission.blocks.0.title
         content: $mission.blocks.0.content
       - type: list_block
-        layout_method: grid_cards
+        layout: grid_cards
         item_type: feature_item
         items:
           - title: $mission.blocks.1.items.0.title
@@ -50,7 +50,7 @@ sections:
         subtitle: $how-to.blocks.0.subtitle
         content: $how-to.blocks.0.content
       - type: list_block
-        layout_method: bento_grid
+        layout: bento_grid
         item_type: feature_item
         items:
           - title: $how-to.blocks.1.items.0.title
