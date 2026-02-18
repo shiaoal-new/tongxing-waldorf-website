@@ -71,6 +71,12 @@ export async function getStaticProps({ params }) {
             navigation,
             siteSettings,
             data: resolvedData,
+            rawPage: course,
+            rawData: {
+                facultyList: pageData.facultyList || [],
+                faqList: pageData.faqList || [],
+                coursesList,
+            },
         },
     };
 }

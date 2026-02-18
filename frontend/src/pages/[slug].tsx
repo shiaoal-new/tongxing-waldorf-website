@@ -17,6 +17,12 @@ interface DynamicPageProps {
         faqList: FaqItem[];
         coursesList: Course[];
     };
+    rawPage?: PageData | null;
+    rawData?: {
+        facultyList: Member[];
+        faqList: FaqItem[];
+        coursesList: Course[];
+    };
 }
 
 export default function DynamicPage(props: DynamicPageProps) {
@@ -93,6 +99,12 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
             navigation,
             siteSettings,
             data: resolvedDataList,
+            rawPage: page,
+            rawData: {
+                facultyList: pageData.facultyList || [],
+                faqList: pageData.faqList || [],
+                coursesList: pageData.coursesList || [],
+            },
         },
     };
 };

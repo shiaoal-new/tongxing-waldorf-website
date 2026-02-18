@@ -29,9 +29,11 @@ interface DynamicPageContentProps {
         questionnaire?: QuestionnaireData | null;
     };
     contentType?: 'page' | 'course';
+    rawPage?: any;
+    rawData?: any;
 }
 
-export default function DynamicPageContent({ page: initialPage, pages, navigation, siteSettings, data: initialData = {}, contentType = 'page' }: DynamicPageContentProps) {
+export default function DynamicPageContent({ page: initialPage, pages, navigation, siteSettings, data: initialData = {}, contentType = 'page', rawPage, rawData }: DynamicPageContentProps) {
     // 使用 useWording Hook 處理客戶端動態文案切換 (主要用於開發環境)
     const pageId = initialPage?.slug || 'index';
     const { page, data: resolvedData } = useWording(pageId, {
@@ -39,6 +41,13 @@ export default function DynamicPageContent({ page: initialPage, pages, navigatio
         data: {
             ...initialData,
             coursesList: [] // 排除大型列表的遞迴解析，避免產生大量無關頁面的 [Missing] 警告
+        }
+    }, {
+        // Pass raw unresolved data for client-side resolution
+        page: rawPage || initialPage,
+        data: {
+            ...(rawData || initialData),
+            coursesList: []
         }
     }, ["faq"]);
 

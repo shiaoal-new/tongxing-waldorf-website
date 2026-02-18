@@ -89,6 +89,8 @@ export async function getStaticProps() {
       navigation,
       siteSettings,
       data: resolvedData,
+      rawPage: page || null,
+      rawData: { facultyList, faqList },
     },
   };
 }

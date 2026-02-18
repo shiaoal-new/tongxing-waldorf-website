@@ -12,9 +12,36 @@ import yaml from 'js-yaml';
  * Since getStaticProps always resolves default wordings at build time,
  * this hook only fetches and re-resolves when the user switches to a non-default style.
  */
-export function useWording<T>(pageId: string, initialData: T, extraCategories: string[] = []): T {
+/**
+ * useWording Hook 
+ * @param pageId 頁面 ID (例如 "index")
+ * @param initialData 原始數據 (already resolved with default wording from server)
+ * @param rawDataOrExtraCategories (Optional) Raw data with keys OR extra categories array (backward compatibility)
+ * @param extraCategoriesArgs (Optional) Extra categories array if rawData is provided
+ * 
+ * Since getStaticProps always resolves default wordings at build time,
+ * this hook only fetches and re-resolves when the user switches to a non-default style.
+ */
+export function useWording<T>(
+    pageId: string,
+    initialData: T,
+    rawDataOrExtraCategories?: T | string[],
+    extraCategoriesArgs: string[] = []
+): T {
     const { getStyle, reportMissingKeys } = useWordingContext();
     const currentStyle = getStyle(pageId);
+
+    // Determine arguments
+    let rawData: T = initialData;
+    let extraCategories: string[] = extraCategoriesArgs;
+
+    if (Array.isArray(rawDataOrExtraCategories)) {
+        // Case: useWording(pageId, initialData, ["faq"])
+        extraCategories = rawDataOrExtraCategories;
+    } else if (rawDataOrExtraCategories) {
+        // Case: useWording(pageId, initialData, rawData, ["faq"])
+        rawData = rawDataOrExtraCategories;
+    }
 
     const [resolvedData, setResolvedData] = useState<T>(initialData);
 
@@ -75,7 +102,8 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
                 const mergedDictionary = results.reduce((acc, curr) => deepMerge(acc, curr), {});
 
                 const missing: string[] = [];
-                const newResolved = resolveWording(initialData, mergedDictionary, (key) => {
+                // Use rawData for resolution to ensure keys are available
+                const newResolved = resolveWording(rawData, mergedDictionary, (key) => {
                     missing.push(key);
                 });
 
@@ -90,6 +118,7 @@ export function useWording<T>(pageId: string, initialData: T, extraCategories: s
         };
 
         loadDictionaries();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageId, currentStyle, JSON.stringify(extraCategories)]);
 
     return resolvedData;
