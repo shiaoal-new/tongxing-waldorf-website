@@ -9,6 +9,7 @@ hero:
   media_list:
     - type: video
       video: https://ik.imagekit.io/tongxingwaldorf/hero-video-av1.webm
+      mobileVideo: https://ik.imagekit.io/tongxingwaldorf/tr:ar-9-16/hero-video-av1.webm/ik-video.mp4
       poster: /img/video-poster.webp
 
 sections:
