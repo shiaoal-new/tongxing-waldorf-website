@@ -14,7 +14,7 @@ export default function HighlightCarousel({ items, renderItem, buttons }: Highli
 
     const config: SnapCarouselConfig = {
         cardClassName: 'highlight-card',
-        wrapperClassName: 'highlight-carousel-wrapper relative w-full group overflow-x-hidden',
+        wrapperClassName: 'highlight-carousel-wrapper relative w-full group',
         showNavigation: true,
         showPagination: true,
         navButtonVariant: 'default',
@@ -24,13 +24,15 @@ export default function HighlightCarousel({ items, renderItem, buttons }: Highli
             .snap-carousel-container {
                 display: flex;
                 gap: 1rem;
-                padding: 0 1rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
 
             @media (min-width: 640px) {
                 .snap-carousel-container {
                     gap: 1.5rem;
-                    padding: 0 2rem;
+                    padding-left: 2rem;
+                    padding-right: 2rem;
                 }
             }
 

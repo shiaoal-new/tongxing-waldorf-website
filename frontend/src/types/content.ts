@@ -302,6 +302,12 @@ export interface Section {
     divider?: Divider;
     overlay_color?: string;
     media_list?: MediaItem[];
+    parallax_ratio?: number;
+    full_height?: boolean;
+    silk_background?: boolean;
+    entry_animation?: boolean | { delay?: number; duration?: number };
+    ignore_padding?: boolean;
+    shader_gradient?: boolean;
 }
 
 export interface HeroMedia {

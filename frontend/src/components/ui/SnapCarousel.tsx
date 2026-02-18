@@ -275,6 +275,8 @@ export default function SnapCarousel({
                     scrollbar-width: none;
                     overscroll-behavior-x: contain;
                     position: relative;
+                    padding-top: 1.5rem;
+                    padding-bottom: 1.5rem;
                 }
                 .snap-carousel-container::-webkit-scrollbar { display: none; }
                 ${containerStyles}

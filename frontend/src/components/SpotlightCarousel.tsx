@@ -13,7 +13,7 @@ interface SpotlightCarouselProps {
 export default function SpotlightCarousel({ items, renderItem }: SpotlightCarouselProps) {
     const config: SnapCarouselConfig = {
         cardClassName: 'testimonial-card',
-        wrapperClassName: 'testimonial-carousel-wrapper relative px-0 w-full group overflow-x-hidden',
+        wrapperClassName: 'testimonial-carousel-wrapper relative px-0 w-full group',
         showNavigation: true,
         showPagination: false,
         navButtonVariant: 'large',
@@ -27,7 +27,8 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
                 display: flex;
                 gap: 0.75rem; /* 縮小間距讓側邊卡片更靠攏 */
                 align-items: center;
-                padding: 0; 
+                padding-left: 0;
+                padding-right: 0; 
             }
 
             /* 關鍵修復：使用 50% 基準確保完美置中 */
