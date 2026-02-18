@@ -104,8 +104,8 @@ function resolveSectionData(section: any) {
             divider: section.divider,
             shader_gradient: section.shader_gradient || isCTABanner,
             silk_background: section.silk_background,
-            overlay_opacity: section.overlay_opacity,
             overlay_color: section.overlay_color,
+            entry_animation: section.entry_animation,
             full_height: section.full_height,
             ignore_padding: section.ignore_padding,
             content_inside_wrapper: isCTABanner

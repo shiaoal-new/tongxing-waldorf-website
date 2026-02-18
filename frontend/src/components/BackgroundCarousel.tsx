@@ -148,8 +148,8 @@ interface BackgroundCarouselProps {
     bg_video?: string;
     bg_video_mobile?: string;
     transition_type?: string;
-    overlay_opacity?: number;
-    overlay_color?: string;
+    overlay_color?: string; // Supports Hex8 for opacity (#RRGGBBAA)
+    entry_animation?: boolean | { delay?: number; duration?: number };
     parallax_ratio?: number;
 }
 
@@ -159,8 +159,8 @@ export default function BackgroundCarousel({
     bg_video,
     bg_video_mobile,
     transition_type = 'fade',
-    overlay_opacity = 0,
     overlay_color,
+    entry_animation,
     parallax_ratio = 0
 }: BackgroundCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -232,14 +232,17 @@ export default function BackgroundCarousel({
                 </div>
             )}
 
-            {/* Overlay */}
-            {(overlay_opacity > 0 || (overlay_color && overlay_color.length > 7)) && (
-                <div
+            {/* Overlay Layer */}
+            {overlay_color && (
+                <motion.div
                     className="absolute inset-0 pointer-events-none"
-                    style={{
-                        opacity: overlay_color && overlay_color.length > 7 ? undefined : overlay_opacity,
-                        backgroundColor: overlay_color || 'black'
-                    }}
+                    initial={entry_animation ? { backgroundColor: "rgba(0,0,0,0)" } : false}
+                    animate={{ backgroundColor: overlay_color }}
+                    transition={entry_animation ? {
+                        delay: typeof entry_animation === 'object' ? entry_animation.delay : 0,
+                        duration: typeof entry_animation === 'object' ? entry_animation.duration : 1.5,
+                        ease: "easeInOut"
+                    } : undefined}
                 />
             )}
 

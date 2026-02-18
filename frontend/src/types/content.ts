@@ -301,7 +301,6 @@ export interface Section {
     layout?: string;
     divider?: Divider;
     overlay_color?: string;
-    overlay_opacity?: number;
     media_list?: MediaItem[];
 }
 
@@ -321,6 +320,8 @@ export interface HeroData {
     media_list?: HeroMedia[];
     layout?: string;
     divider?: Divider;
+    overlay_color?: string;
+    full_height?: boolean;
 }
 
 export interface Member {

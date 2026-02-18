@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useEffect, useRef } from 'react';
 import Container from "../ui/Container";
 import { motion } from "framer-motion";
 import BackgroundCarousel from "../BackgroundCarousel";
@@ -8,7 +8,6 @@ import MarkdownContent from "../ui/MarkdownContent";
 
 import { CTAButton, MediaItem, Divider } from "../../types/content";
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 
 // Helper function to determine if a color is light
 function isLightColor(color: string): boolean {
@@ -71,7 +70,6 @@ interface SectionProps {
     buttons?: CTAButton[];
     media_list?: MediaItem[];
     parallax_ratio?: number;
-    overlay_opacity?: number;
     overlay_color?: string;
     className?: string;
     limit?: boolean | number;
@@ -81,6 +79,7 @@ interface SectionProps {
     full_height?: boolean;
     ignore_padding?: boolean;
     content_inside_wrapper?: boolean;
+    entry_animation?: boolean | { delay?: number; duration?: number };
     [key: string]: any;
 }
 
@@ -97,18 +96,20 @@ export default function Section(props: SectionProps) {
         buttons,
         media_list,
         parallax_ratio,
-        overlay_opacity,
-        overlay_color,
         full_height,
         className,
-        limit,
         divider, // { type, position, color, flip }
         shader_gradient,
         silk_background,
         ignore_padding,
         content_inside_wrapper,
+        entry_animation,
+        overlay_color,
+        limit = 10,
         ...rest
     } = props;
+
+
 
     const [isInView, setIsInView] = useState(false);
 
@@ -233,8 +234,8 @@ export default function Section(props: SectionProps) {
                 <BackgroundCarousel
                     media_list={media_list}
                     parallax_ratio={parallax_ratio}
-                    overlay_opacity={overlay_opacity}
                     overlay_color={overlay_color}
+                    entry_animation={entry_animation}
                 />
             )}
 

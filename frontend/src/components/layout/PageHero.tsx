@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../ui/Container";
 import ShinyText from "../ui/ShinyText";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import BackgroundCarousel from "../BackgroundCarousel";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "../ui/DevComment";
@@ -80,6 +80,7 @@ interface PageHeroProps {
     data: HeroData & {
         bg_video_mobile?: string;
         parallax_ratio?: number;
+        full_height?: boolean;
     };
 }
 
@@ -98,7 +99,8 @@ export default function PageHero({ data }: PageHeroProps) {
         scrolling_effect = 'fadeToWhite', // none, fadeToDark, fadeToWhite
         entry_effect = {},
         accent_text = "手、心、腦的均衡成長", // Default or from data
-        buttons = []
+        buttons = [],
+        full_height = true,
     } = data as any;
 
     const effect = scrolling_effect;
@@ -108,6 +110,28 @@ export default function PageHero({ data }: PageHeroProps) {
         duration: entryDuration = 2,
         brightness: entryBrightness = 0.4
     } = entry_effect;
+
+    // Convert old Hero entry_effect to the new common format
+    const commonEntryAnimation = entryType === 'fade_to_dim' ? {
+        delay: entryDelay,
+        duration: entryDuration
+    } : false;
+
+    // Consolidate into Hex8 color
+    const commonOverlayColor = useMemo(() => {
+        const baseColor = data.overlay_color || "#000000";
+        // If it's a fade_to_dim hero, use the brightness calculation. 
+        // Otherwise use the provided overlay_color directly.
+        if (entryType === 'fade_to_dim') {
+            const opacity = 1 - entryBrightness;
+            if (opacity === 0) return undefined;
+            if (baseColor.length > 7) return baseColor; // Already has alpha
+            const alpha = Math.round(opacity * 255).toString(16).padStart(2, '0');
+            return `${baseColor}${alpha}`;
+        }
+
+        return data.overlay_color;
+    }, [data.overlay_color, entryType, entryBrightness]);
 
     // Resolve content 
     const effectiveTitle = title || legacyHeader;
@@ -168,7 +192,7 @@ export default function PageHero({ data }: PageHeroProps) {
     };
 
     return (
-        <div ref={ref} className={`relative flex h-[100lvh] ${container_class}`}>
+        <div ref={ref} className={`relative flex w-full ${full_height ? "min-h-[100lvh]" : "min-h-[60vh]"} ${container_class}`}>
 
             <DevComment text="Background Carousel" />
             <motion.div
@@ -184,21 +208,11 @@ export default function PageHero({ data }: PageHeroProps) {
                     bg_video_mobile={data.bg_video_mobile}
                     transition_type={transition_type}
                     parallax_ratio={data.parallax_ratio}
+                    overlay_color={commonOverlayColor}
+                    entry_animation={commonEntryAnimation}
                 />
 
-                {/* 背景進入特效層 (Entry Effect Overlay) */}
-                {entryType === 'fade_to_dim' && (
-                    <motion.div
-                        className="absolute inset-0 bg-black pointer-events-none"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 - entryBrightness }}
-                        transition={{
-                            delay: entryDelay,
-                            duration: entryDuration,
-                            ease: "easeInOut"
-                        }}
-                    />
-                )}
+                {/* Local Entry Effect Overlay is now handled by BackgroundCarousel */}
             </motion.div>
 
 
