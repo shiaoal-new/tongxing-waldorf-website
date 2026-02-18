@@ -143,6 +143,15 @@
         /* Button Watercolor Effect - 按鈕水彩效果 */
         & .btn {
             position: relative;
+
+            &.absolute {
+                position: absolute;
+            }
+
+            &.fixed {
+                position: fixed;
+            }
+
             /* overflow: hidden; */
             z-index: 1;
 

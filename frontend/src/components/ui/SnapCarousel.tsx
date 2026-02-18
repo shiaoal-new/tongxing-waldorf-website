@@ -286,7 +286,7 @@ export default function SnapCarousel({
             {showNavigation && (enableLoop || activeIndex > 0) && (
                 <button
                     onClick={() => handleNavigation('prev')}
-                    className={`absolute top-1/2 left-4 md:left-8 z-30 -translate-y-1/2 hidden lg:flex ${navButtonClass}`}
+                    className={`absolute top-1/2 left-4 md:left-8 z-30 -translate-y-1/2 hidden md:flex ${navButtonClass}`}
                     aria-label="Previous slide"
                 >
                     <ChevronLeftIcon className={navIconClass} />
@@ -296,7 +296,7 @@ export default function SnapCarousel({
             {showNavigation && (enableLoop || activeIndex < totalRealItems - 1) && (
                 <button
                     onClick={() => handleNavigation('next')}
-                    className={`absolute top-1/2 right-4 md:right-8 z-30 -translate-y-1/2 hidden lg:flex ${navButtonClass}`}
+                    className={`absolute top-1/2 right-4 md:right-8 z-30 -translate-y-1/2 hidden md:flex ${navButtonClass}`}
                     aria-label="Next slide"
                 >
                     <ChevronRightIcon className={navIconClass} />
