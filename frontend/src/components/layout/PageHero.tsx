@@ -1,14 +1,13 @@
 import React from "react";
 import Container from "../ui/Container";
 import ShinyText from "../ui/ShinyText";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useMemo } from "react";
-import BackgroundCarousel from "../BackgroundCarousel";
+import { motion } from "framer-motion";
+import { useEffect, useMemo } from "react";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "../ui/DevComment";
-import SectionDivider from "../SectionDivider";
-import { HeroData, CTAButton } from "../../types/content";
+import { HeroData } from "../../types/content";
 import ActionButtons from "../ui/ActionButtons";
+import Section from "./Section";
 
 /**
  * 自定義 Hook: 在 iOS Safari 上鎖定最小滾動位置到狀態欄高度
@@ -103,7 +102,6 @@ export default function PageHero({ data }: PageHeroProps) {
         full_height = true,
     } = data as any;
 
-    const effect = scrolling_effect;
     const {
         type: entryType = 'fade_to_dim',
         delay: entryDelay = 1,
@@ -141,16 +139,10 @@ export default function PageHero({ data }: PageHeroProps) {
     const layoutClasses = layout || {};
     const title_class = layoutClasses.title_class || "mb-component text-brand-bg";
     const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/90 uppercase bg-brand-structural/50 rounded-full border border-brand-accent/20";
+    // Default to max-w-3xl for hero, centered
     const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
-    const container_class = layoutClasses.container_class || "items-center justify-center";
-    const ref = useRef<HTMLDivElement>(null);
 
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"]
-    });
-
-    const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+    useStatusBarScrollLock();
 
     // Animation Variants
     const containerVariants: any = {
@@ -192,74 +184,75 @@ export default function PageHero({ data }: PageHeroProps) {
     };
 
     return (
-        <div ref={ref} className={`relative flex w-full ${full_height ? "min-h-[100lvh]" : "min-h-[60vh]"} ${container_class}`}>
+        <Section
+            full_height={full_height}
+            className="flex flex-col justify-center"
 
-            <DevComment text="Background Carousel" />
+            // Background Configuration
+            media_list={media_list}
+            bg_images={bg_images}
+            bg_video={bg_video}
+            bg_video_mobile={data.bg_video_mobile}
+            transition_type={transition_type}
+            parallax_ratio={data.parallax_ratio}
+
+            // Overlay & Effects
+            overlay_color={commonOverlayColor}
+            entry_animation={commonEntryAnimation}
+            background_scroll_fade={true}
+            disable_content_animation={true} // We handle our own content animation
+
+            // Layout
+            layout={{
+                wrapper_class: wrapper_class,
+                container_class: layoutClasses.container_class || "items-center justify-center",
+            }}
+
+            // Divider
+            divider={data.divider}
+        >
+            <DevComment text="Hero Texts" />
             <motion.div
-                className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-                style={{
-                    opacity: effect !== 'none' ? bgOpacity : 1
-                }}
+                className="w-full flex flex-col items-center"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
             >
-                <BackgroundCarousel
-                    media_list={media_list}
-                    bg_images={bg_images}
-                    bg_video={bg_video}
-                    bg_video_mobile={data.bg_video_mobile}
-                    transition_type={transition_type}
-                    parallax_ratio={data.parallax_ratio}
-                    overlay_color={commonOverlayColor}
-                    entry_animation={commonEntryAnimation}
-                />
-
-                {/* Local Entry Effect Overlay is now handled by BackgroundCarousel */}
-            </motion.div>
-
-
-            <DevComment text="Texts" />
-            <Container className="relative z-10 py-20 flex w-full">
-                <motion.div
-                    className={`w-full flex flex-col ${wrapper_class}`}
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                >
-                    {effectiveSubTitle && (
-                        <motion.div variants={itemVariants}>
-                            <span className={pretitle_class}>
-                                {effectiveSubTitle}
-                            </span>
-                        </motion.div>
-                    )}
-
-                    <motion.div variants={itemVariants} className="relative">
-                        <h1 className={title_class}>
-                            <ShinyText
-                                text={effectiveTitle}
-                                disabled={false}
-                                speed={3}
-                                className=""
-                            />
-                        </h1>
-
-                        {/* 裝飾性手寫文字 - 響應式顯示 */}
-                        {accent_text && (
-                            <motion.span
-                                variants={accentVariants}
-                                className="absolute -top-6 right-0 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
-                            >
-                                {accent_text}
-                            </motion.span>
-                        )}
+                {effectiveSubTitle && (
+                    <motion.div variants={itemVariants}>
+                        <span className={pretitle_class}>
+                            {effectiveSubTitle}
+                        </span>
                     </motion.div>
+                )}
 
-                    {buttons && buttons.length > 0 && (
-                        <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center pb-6">
-                            <ActionButtons buttons={buttons} align="center" size="lg" />
-                        </motion.div>
+                <motion.div variants={itemVariants} className="relative">
+                    <h1 className={title_class}>
+                        <ShinyText
+                            text={effectiveTitle}
+                            disabled={false}
+                            speed={3}
+                            className=""
+                        />
+                    </h1>
+
+                    {/* 裝飾性手寫文字 - 響應式顯示 */}
+                    {accent_text && (
+                        <motion.span
+                            variants={accentVariants}
+                            className="absolute -top-6 right-0 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
+                        >
+                            {accent_text}
+                        </motion.span>
                     )}
                 </motion.div>
-            </Container>
+
+                {buttons && buttons.length > 0 && (
+                    <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center pb-6">
+                        <ActionButtons buttons={buttons} align="center" size="lg" />
+                    </motion.div>
+                )}
+            </motion.div>
 
             <DevComment text="Scroll Down Button" />
             <motion.button
@@ -280,9 +273,11 @@ export default function PageHero({ data }: PageHeroProps) {
                     default: { duration: 0.3 }
                 }}
                 onClick={() => {
-                    const nextSection = document.querySelector('section');
-                    if (nextSection) {
-                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                    // Start searching from the next sibling, or use a more specific selector
+                    const sections = document.querySelectorAll('section');
+                    // Assuming PageHero is always the first section if present
+                    if (sections.length > 1) {
+                        sections[1].scrollIntoView({ behavior: 'smooth' });
                     } else {
                         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
                     }
@@ -291,19 +286,6 @@ export default function PageHero({ data }: PageHeroProps) {
             >
                 <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
             </motion.button>
-
-            {/* Section Divider */}
-            {data.divider && (
-                <SectionDivider
-                    type={data.divider.type}
-                    position={data.divider.position || "bottom"}
-                    color={data.divider.color}
-                    flip={data.divider.flip}
-                    zIndex="z-[5]"
-                />
-            )}
-
-        </div>
+        </Section>
     );
 }
-

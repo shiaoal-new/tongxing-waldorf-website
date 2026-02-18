@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect, useRef } from 'react';
 import Container from "../ui/Container";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import BackgroundCarousel from "../BackgroundCarousel";
 import ActionButtons from "../ui/ActionButtons";
 import SectionDivider from "../SectionDivider";
@@ -80,6 +80,8 @@ interface SectionProps {
     ignore_padding?: boolean;
     content_inside_wrapper?: boolean;
     entry_animation?: boolean | { delay?: number; duration?: number };
+    background_scroll_fade?: boolean;
+    disable_content_animation?: boolean;
     [key: string]: any;
 }
 
@@ -106,12 +108,23 @@ export default function Section(props: SectionProps) {
         entry_animation,
         overlay_color,
         limit = 10,
+        background_scroll_fade,
+        disable_content_animation,
         ...rest
     } = props;
 
 
 
     const [isInView, setIsInView] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start start", "end start"]
+    });
+
+    const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+    const backgroundOpacity = background_scroll_fade ? bgOpacity : 1;
 
     // Use classes from layout if provided, otherwise use defaults
     const classes = layout || {};
@@ -204,6 +217,7 @@ export default function Section(props: SectionProps) {
 
     return (
         <section
+            ref={sectionRef}
             id={anchor}
             className={`w-full relative section_container py-section ${full_height ? 'min-h-[100lvh] flex flex-col justify-center' : ''} ${container_class} ${className || ""}`}
             style={{
@@ -230,13 +244,19 @@ export default function Section(props: SectionProps) {
                 />
             )}
 
-            {media_list && media_list.length > 0 && (
-                <BackgroundCarousel
-                    media_list={media_list}
-                    parallax_ratio={parallax_ratio}
-                    overlay_color={overlay_color}
-                    entry_animation={entry_animation}
-                />
+            {(media_list && media_list.length > 0 || rest.bg_images || rest.bg_video) && (
+                <motion.div style={{ opacity: backgroundOpacity }} className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+                    <BackgroundCarousel
+                        media_list={media_list}
+                        bg_images={rest.bg_images}
+                        bg_video={rest.bg_video}
+                        bg_video_mobile={rest.bg_video_mobile}
+                        transition_type={rest.transition_type}
+                        parallax_ratio={parallax_ratio}
+                        overlay_color={overlay_color}
+                        entry_animation={entry_animation}
+                    />
+                </motion.div>
             )}
 
             {silk_background && isInView && (
@@ -252,7 +272,7 @@ export default function Section(props: SectionProps) {
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
                     onViewportEnter={() => setIsInView(true)}
-                    variants={variants}
+                    variants={disable_content_animation ? undefined : variants}
                     className={`w-full flex flex-col wrapper_class ${alignmentClasses} ${wrapper_class}`}
                 >
                     {shader_gradient && content_inside_wrapper && isInView && (
