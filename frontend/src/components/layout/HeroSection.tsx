@@ -75,7 +75,7 @@ function useStatusBarScrollLock() {
     }, []); // 空依賴陣列,只在組件掛載時執行一次
 }
 
-interface PageHeroProps {
+interface HeroSectionProps {
     data: HeroData & {
         header?: string;
         sub_header?: string;
@@ -94,7 +94,7 @@ interface PageHeroProps {
     };
 }
 
-export default function PageHero({ data }: PageHeroProps) {
+export default function HeroSection({ data }: HeroSectionProps) {
     const {
         layout = {},
         title,

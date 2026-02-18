@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import Section from "./layout/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageHero from "./layout/PageHero";
+import HeroSection from "./layout/HeroSection";
 import MemberDetailModal from "./ui/MemberDetailModal";
 import TableOfContents from "./blocks/TableOfContents";
 import ParallaxBackground from "./ParallaxBackground";
@@ -132,7 +132,7 @@ export default function DynamicPageContent({ page: initialPage, pages, navigatio
                         </AnimatePresence>
                     }
                 >
-                    {effectiveHeroData && <PageHero data={effectiveHeroData as any} />}
+                    {effectiveHeroData && <HeroSection data={effectiveHeroData as any} />}
 
                     <div className={`w-full relative ${effectiveHeroData ? 'pb-10' : 'py-10'}`}>
                         {!effectiveHeroData && (

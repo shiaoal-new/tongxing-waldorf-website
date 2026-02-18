@@ -5,7 +5,7 @@ import Section from "../components/layout/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import PageHero from "../components/layout/PageHero";
+import HeroSection from "../components/layout/HeroSection";
 import ColorPaletteBlock from "../components/blocks/ColorPaletteBlock";
 import ActionButtons from "../components/ui/ActionButtons";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
@@ -25,7 +25,7 @@ export default function ColorsDynamicPage({ page, pages, navigation }) {
                 <title>{page.title || "Color Palette"} | Tung-Hsin Waldorf</title>
             </Head>
 
-            {effectiveHeroData && <PageHero data={effectiveHeroData} />}
+            {effectiveHeroData && <HeroSection data={effectiveHeroData} />}
 
             <div className="w-full py-10">
                 {!effectiveHeroData && (

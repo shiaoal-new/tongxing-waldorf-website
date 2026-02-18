@@ -5,7 +5,7 @@ import Section from "../components/layout/Section";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import PageHero from "../components/layout/PageHero";
+import HeroSection from "../components/layout/HeroSection";
 import SpacingDemoBlock from "../components/blocks/SpacingDemoBlock";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation } from "../lib/settings";
@@ -42,7 +42,7 @@ export default function LayoutSpacingPage({ page, pages, navigation }) {
                 </button>
             </div>
 
-            {effectiveHeroData && <PageHero data={effectiveHeroData} />}
+            {effectiveHeroData && <HeroSection data={effectiveHeroData} />}
 
             <div className={`transition-all duration-500 ease-in-out ${isMobileSim ? "max-w-[400px] mx-auto border-x-8 border-gray-800 shadow-2xl overflow-hidden my-10 rounded-[3rem]" : "w-full"}`}>
                 <div className="w-full py-10 ">
