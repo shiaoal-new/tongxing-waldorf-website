@@ -58,9 +58,16 @@ export default function ListBlock({ block, align }: ListBlockProps) {
                 mobile_layout={block.mobile_layout_method}
                 columns={3}
                 buttons={block.buttons}
-                renderItem={(item: ListItem, index: number, extra: any) => (
-                    <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
-                )}
+                renderItem={(item: ListItem, index: number, extra: any) => {
+                    const itemSrc = (item as any)._sourceFile
+                        ? `${(item as any)._sourceFile}${(item as any)._sourceLine ? `:${(item as any)._sourceLine}` : ''}`
+                        : undefined;
+                    return (
+                        <div data-yml-src={itemSrc} style={{ display: 'contents' }}>
+                            <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
+                        </div>
+                    );
+                }}
             />
         </div>
     );

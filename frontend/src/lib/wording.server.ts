@@ -99,12 +99,19 @@ export function resolveWording(data: any, dictionary: any): any {
     if (typeof data === 'object') {
         const result: any = {};
         for (const key in data) {
-            // 排除以 _ 開頭的私有屬性或已處理屬性
+            // 排除以 _ 開頭的私有屬性或已處理屬性 (如 _sourceFile)
             if (key.startsWith('_')) {
                 result[key] = data[key];
                 continue;
             }
-            result[key] = resolveWording(data[key], dictionary);
+            const resolvedValue = resolveWording(data[key], dictionary);
+
+            // 啟發式繼承：如果子對象是普通物件且沒有自己的 _sourceFile，則從父對象繼承
+            if (resolvedValue && typeof resolvedValue === 'object' && !Array.isArray(resolvedValue) && !resolvedValue._sourceFile && data._sourceFile) {
+                resolvedValue._sourceFile = data._sourceFile;
+            }
+
+            result[key] = resolvedValue;
         }
         return result;
     }

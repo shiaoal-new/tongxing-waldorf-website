@@ -42,11 +42,11 @@ export function useDynamicTOC(page, extraData = {}) {
                     try {
                         // 將 block.type 轉換為組件檔名 (例如: 'timeline_block' -> 'TimelineBlock')
                         const componentName = convertBlockTypeToComponentName(block.type);
-                        console.log('[useDynamicTOC] Trying to load:', componentName, 'for block type:', block.type);
+                        // console.log('[useDynamicTOC] Trying to load:', componentName, 'for block type:', block.type);
 
                         // 嘗試動態載入該組件模組
                         const module = await import(`../components/blocks/${componentName}`);
-                        console.log('[useDynamicTOC] Module loaded:', componentName, 'has getTOC:', typeof module.getTOC);
+                        // console.log('[useDynamicTOC] Module loaded:', componentName, 'has getTOC:', typeof module.getTOC);
 
                         // 檢查是否有 export getTOC 函式
                         if (typeof module.getTOC === 'function') {

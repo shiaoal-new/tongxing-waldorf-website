@@ -65,7 +65,14 @@ export function resolveWording(data: any, dictionary: any, onMissing?: (key: str
                 result[key] = data[key];
                 continue;
             }
-            result[key] = resolveWording(data[key], dictionary, onMissing);
+            const resolvedValue = resolveWording(data[key], dictionary, onMissing);
+
+            // 啟發式繼承：如果子項沒有自己的路徑且父項有，則繼承（針對內聯定義的區塊）
+            if (resolvedValue && typeof resolvedValue === 'object' && !Array.isArray(resolvedValue) && !resolvedValue._sourceFile && data._sourceFile) {
+                resolvedValue._sourceFile = data._sourceFile;
+            }
+
+            result[key] = resolvedValue;
         }
         return result;
     }

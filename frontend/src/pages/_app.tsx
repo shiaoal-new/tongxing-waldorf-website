@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 const ThemeProvider = dynamic(() => import("next-themes").then((mod) => mod.ThemeProvider), { ssr: false }) as any;
 const LayoutDebugger = dynamic(() => import("../components/ui/LayoutDebugger"), { ssr: false });
 const WordingDebugger = dynamic(() => import("../components/ui/WordingDebugger"), { ssr: false });
+const YmlLocator = dynamic(() => import("../components/ui/YmlLocator"), { ssr: false });
 import "../css/tailwind.css";
 
 // Third party styles - moved to specific components where possible
@@ -25,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
             {process.env.NODE_ENV === 'development' && <WordingDebugger />}
+            {process.env.NODE_ENV === 'development' && <YmlLocator />}
             <Component {...pageProps} />
           </main>
         </ThemeProvider>

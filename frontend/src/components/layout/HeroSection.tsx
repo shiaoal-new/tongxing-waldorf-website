@@ -179,8 +179,19 @@ export default function HeroSection({ data }: HeroSectionProps) {
         }
     };
 
+    // Source file helpers
+    const sourceFile = (data as any)._sourceFile;
+    const sourceLines = (data as any)._sourceLines || {};
+    const getSource = (field: string) => {
+        if (!sourceFile) return undefined;
+        // 优先使用具体字段的行号，其次使用 hero 块的行号
+        const line = sourceLines[field] || (data as any)._sourceLine;
+        return line ? `${sourceFile}:${line}` : sourceFile;
+    };
+
     return (
         <Section
+            data-yml-src={(data as any)._sourceFile} // Hero 整体定位
             full_height={full_height}
             className="flex flex-col justify-center"
             media_list={media_list as any} // HeroMedia vs MediaItem subtle difference
@@ -207,13 +218,13 @@ export default function HeroSection({ data }: HeroSectionProps) {
                 animate="visible"
             >
                 {displaySubtitle && (
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={itemVariants} data-yml-src={getSource('subtitle')}>
                         <span className={pretitleClass}>{displaySubtitle}</span>
                     </motion.div>
                 )}
 
                 <motion.div variants={itemVariants} className="relative">
-                    <h1 className={titleClass}>
+                    <h1 className={titleClass} data-yml-src={getSource('title')}>
                         <ShinyText text={displayTitle || ""} speed={3} />
                     </h1>
 
@@ -221,6 +232,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
                         <motion.span
                             variants={accentVariants}
                             className="absolute -top-6 right-0 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
+                            data-yml-src={getSource('accent_text')}
                         >
                             {accent_text}
                         </motion.span>
@@ -228,7 +240,11 @@ export default function HeroSection({ data }: HeroSectionProps) {
                 </motion.div>
 
                 {buttons.length > 0 && (
-                    <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center pb-6">
+                    <motion.div
+                        variants={itemVariants}
+                        className="relative z-10 mt-6 flex justify-center pb-6"
+                        data-yml-src={getSource('buttons')}
+                    >
                         <ActionButtons buttons={buttons} align="center" size="lg" />
                     </motion.div>
                 )}

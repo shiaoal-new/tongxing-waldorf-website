@@ -28,5 +28,16 @@ export function loadYamlWithIncludes(fullPath: string): any {
     const basePath = path.dirname(fullPath);
     // js-yaml v4 uses DEFAULT_SCHEMA.extend instead of Schema.create
     const schema = yaml.DEFAULT_SCHEMA.extend([createIncludeType(basePath)]);
-    return yaml.load(fileContents, { schema }) || {};
+    const data = yaml.load(fileContents, { schema }) || {};
+
+    // Inject source file path for debugging/locator (non-enumerable)
+    if (data && typeof data === 'object') {
+        Object.defineProperty(data, '_sourceFile', {
+            value: fullPath,
+            enumerable: true,
+            configurable: true
+        });
+    }
+
+    return data;
 }

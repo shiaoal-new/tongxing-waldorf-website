@@ -35,8 +35,16 @@ export function SectionRenderer({ section, index }: SectionRendererProps) {
                     const isWide = isBlockSectionWide(block);
                     const ignorePadding = shouldBlockIgnorePadding(block);
 
+                    const blockSrc = (block as any)._sourceFile
+                        ? `${(block as any)._sourceFile}${(block as any)._sourceLine ? `:${(block as any)._sourceLine}` : ''}`
+                        : undefined;
+
                     const blockElement = (
-                        <div key={bIndex} className={bIndex > 0 ? "mt-16" : ""}>
+                        <div
+                            key={bIndex}
+                            className={bIndex > 0 ? "mt-16" : ""}
+                            data-yml-src={blockSrc}
+                        >
                             <BlockDispatcher
                                 block={block}
                                 align={align as any}
@@ -108,7 +116,10 @@ function resolveSectionData(section: any) {
             entry_animation: section.entry_animation,
             full_height: section.full_height,
             ignore_padding: section.ignore_padding,
-            content_inside_wrapper: isCTABanner
+            content_inside_wrapper: isCTABanner,
+            'data-yml-src': section._sourceFile
+                ? `${section._sourceFile}${section._sourceLine ? `:${section._sourceLine}` : ''}`
+                : undefined // 格式: /path/to/file.yml:27
         }
     };
 }
