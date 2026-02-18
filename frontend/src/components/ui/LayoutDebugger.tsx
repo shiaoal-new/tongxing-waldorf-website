@@ -7,7 +7,7 @@ import DebuggerPopup from './DebuggerPopup';
  */
 export default function LayoutDebugger() {
     const isVisibleRef = useRef(false);
-    const [overflowElements, setOverflowElements] = useState<{ tag: string; className: string; id: string; amount: number }[]>([]);
+    const [overflowElements, setOverflowElements] = useState<{ tag: string; className: string; id: string; amount: number; el: Element }[]>([]);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -87,7 +87,7 @@ export default function LayoutDebugger() {
                         otherIndex !== index && other.el.contains(item.el)
                     );
                 })
-                .map(({ tag, className, id, amount }) => ({ tag, className, id, amount }));
+                .map(({ tag, className, id, amount, el }) => ({ tag, className, id, amount, el }));
 
             // 修正：如果 offending 為空但有明顯捲動偏移，且非 Pinch Zoom，塞入一個視覺提示
             if (offending.length === 0 && (currentScrollX > 1 || Math.abs(vvOffset) > 1)) {
@@ -96,7 +96,8 @@ export default function LayoutDebugger() {
                         tag: 'VIEWPORT',
                         className: 'viewport-shift',
                         id: 'visual-viewport',
-                        amount: Math.max(Math.abs(vvOffset), currentScrollX)
+                        amount: Math.max(Math.abs(vvOffset), currentScrollX),
+                        el: document.body
                     }];
                 }
             }
@@ -193,6 +194,28 @@ export default function LayoutDebugger() {
         };
     }, []);
 
+    const handleElementClick = (targetEl: Element) => {
+        const container = targetEl.closest('[data-yml-src]');
+        if (container) {
+            const rawValue = container.getAttribute('data-yml-src');
+            if (rawValue) {
+                // 解析 path:line 格式
+                const lastColon = rawValue.lastIndexOf(':');
+                let filePath = rawValue;
+                let lineNum = '';
+                if (lastColon > 0 && /^\d+$/.test(rawValue.slice(lastColon + 1))) {
+                    filePath = rawValue.slice(0, lastColon);
+                    lineNum = rawValue.slice(lastColon + 1);
+                }
+
+                const url = lineNum
+                    ? `antigravity://file${filePath}:${lineNum}:1`
+                    : `antigravity://file${filePath}`;
+                window.location.href = url;
+            }
+        }
+    };
+
     if (!isVisible || overflowElements.length === 0) return null;
 
     return (
@@ -210,9 +233,14 @@ export default function LayoutDebugger() {
                 <p>手機版寬度超標，可能導致左右晃動。</p>
                 <div className="bg-black/20 p-2 rounded-lg mt-2 max-h-32 overflow-auto custom-scrollbar">
                     {overflowElements.slice(0, 2).map((el, i) => (
-                        <div key={i} className="mb-1 border-b border-white/10 pb-1 last:border-0">
-                            <span className="font-mono text-[10px] text-yellow-300">
-                                {el.tag.toLowerCase()}{el.id ? `#${el.id}` : ''}{el.className ? `.${el.className.split(' ')[0]}` : ''}
+                        <div
+                            key={i}
+                            className="mb-1 border-b border-white/10 pb-1 last:border-0 cursor-pointer hover:bg-white/10 transition-colors group"
+                            onClick={() => handleElementClick(el.el)}
+                            title="Click to jump to source YAML"
+                        >
+                            <span className="font-mono text-[10px] text-yellow-300 group-hover:text-yellow-200">
+                                {el.tag.toLowerCase()}{el.id ? `#${el.id}` : ''}{typeof el.className === 'string' && el.className ? `.${el.className.split(' ')[0]}` : ''}
                             </span>
                             <div className="text-[10px] text-white/70">溢出: {Math.round(el.amount)}px</div>
                         </div>
