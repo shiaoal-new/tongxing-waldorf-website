@@ -1,11 +1,11 @@
 import React from "react";
 import Container from "../ui/Container";
 import ShinyText from "../ui/ShinyText";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import DevComment from "../ui/DevComment";
-import { HeroData } from "../../types/content";
+import { HeroData, CTAButton } from "../../types/content";
 import ActionButtons from "../ui/ActionButtons";
 import Section from "./Section";
 
@@ -77,30 +77,43 @@ function useStatusBarScrollLock() {
 
 interface PageHeroProps {
     data: HeroData & {
+        header?: string;
+        sub_header?: string;
+        bg_images?: string[];
+        bg_video?: string;
         bg_video_mobile?: string;
+        transition_type?: 'fade' | 'slide';
+        entry_effect?: {
+            type?: string;
+            delay?: number;
+            duration?: number;
+            brightness?: number;
+        };
         parallax_ratio?: number;
-        full_height?: boolean;
+        buttons?: CTAButton[];
     };
 }
 
 export default function PageHero({ data }: PageHeroProps) {
     const {
-        layout,
+        layout = {},
         title,
         subtitle,
-        // Legacy support
-        header: legacyHeader,
-        sub_header: legacySubHeader,
+        header,
+        sub_header,
         media_list = [],
         bg_images,
         bg_video,
+        bg_video_mobile,
         transition_type = 'fade',
-        scrolling_effect = 'fadeToWhite', // none, fadeToDark, fadeToWhite
         entry_effect = {},
-        accent_text = "手、心、腦的均衡成長", // Default or from data
+        accent_text = "手、心、腦的均衡成長",
         buttons = [],
         full_height = true,
-    } = data as any;
+        divider,
+        parallax_ratio,
+        overlay_color = "#000000"
+    } = data;
 
     const {
         type: entryType = 'fade_to_dim',
@@ -109,77 +122,60 @@ export default function PageHero({ data }: PageHeroProps) {
         brightness: entryBrightness = 0.4
     } = entry_effect;
 
-    // Convert old Hero entry_effect to the new common format
-    const commonEntryAnimation = entryType === 'fade_to_dim' ? {
-        delay: entryDelay,
-        duration: entryDuration
-    } : false;
+    // Entry animation configuration for Section
+    const entryAnimation = entryType === 'fade_to_dim' ? { delay: entryDelay, duration: entryDuration } : false;
 
-    // Consolidate into Hex8 color
-    const commonOverlayColor = useMemo(() => {
-        const baseColor = data.overlay_color || "#000000";
-        // If it's a fade_to_dim hero, use the brightness calculation. 
-        // Otherwise use the provided overlay_color directly.
-        if (entryType === 'fade_to_dim') {
-            const opacity = 1 - entryBrightness;
-            if (opacity === 0) return undefined;
-            if (baseColor.length > 7) return baseColor; // Already has alpha
-            const alpha = Math.round(opacity * 255).toString(16).padStart(2, '0');
-            return `${baseColor}${alpha}`;
-        }
+    // Resolve overlay color with alpha if it's a fade entry
+    const finalOverlayColor = useMemo(() => {
+        if (entryType !== 'fade_to_dim' || overlay_color.length > 7) return overlay_color;
+        const alpha = Math.round((1 - entryBrightness) * 255).toString(16).padStart(2, '0');
+        return `${overlay_color}${alpha}`;
+    }, [overlay_color, entryType, entryBrightness]);
 
-        return data.overlay_color;
-    }, [data.overlay_color, entryType, entryBrightness]);
+    // Content resolution (handles legacy header/subtitle)
+    const displayTitle = title || header;
+    const displaySubtitle = subtitle || sub_header;
 
-    // Resolve content 
-    const effectiveTitle = title || legacyHeader;
-    const effectiveSubTitle = subtitle || legacySubHeader;
-
-    // Resolve Layout CSS
-    const layoutClasses = layout || {};
-    const title_class = layoutClasses.title_class || "mb-component text-brand-bg";
-    const pretitle_class = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/90 uppercase bg-brand-structural/50 rounded-full border border-brand-accent/20";
-    // Default to max-w-3xl for hero, centered
-    const wrapper_class = layoutClasses.wrapper_class || "max-w-3xl text-center";
+    // Style resolution
+    const layoutClasses = layout as Record<string, string>;
+    const titleClass = layoutClasses.title_class || "mb-component text-brand-bg";
+    const pretitleClass = layoutClasses.pretitle_class || "inline-block px-3 py-1 mb-component text-sm font-bold tracking-brand text-brand-accent/90 uppercase bg-brand-structural/50 rounded-full border border-brand-accent/20";
+    const wrapperClass = layoutClasses.wrapper_class || "max-w-3xl text-center";
 
     useStatusBarScrollLock();
 
-    // Animation Variants
-    const containerVariants: any = {
+    // Framer motion variants
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.1
-            }
+            transition: { staggerChildren: 0.1, delayChildren: 0.1 }
         }
     };
 
-    const itemVariants: any = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
         visible: {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            transition: {
-                duration: 0.8,
-                ease: [0.22, 1, 0.36, 1]
-            }
+            opacity: 1, y: 0, filter: "blur(0px)",
+            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         }
     };
 
-    const accentVariants: any = {
+    const accentVariants: Variants = {
         hidden: { opacity: 0, scale: 0.8, rotate: -5 },
         visible: {
-            opacity: 0.8,
-            scale: 1,
-            rotate: -2,
-            transition: {
-                delay: 0.6,
-                duration: 1.2,
-                ease: "easeOut"
-            }
+            opacity: 0.8, scale: 1, rotate: -2,
+            transition: { delay: 0.6, duration: 1.2, ease: "easeOut" }
+        }
+    };
+
+    const handleScrollDown = () => {
+        const sections = document.querySelectorAll('section');
+        const target = sections.length > 1 ? sections[1] : null;
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
         }
     };
 
@@ -187,29 +183,21 @@ export default function PageHero({ data }: PageHeroProps) {
         <Section
             full_height={full_height}
             className="flex flex-col justify-center"
-
-            // Background Configuration
-            media_list={media_list}
+            media_list={media_list as any} // HeroMedia vs MediaItem subtle difference
             bg_images={bg_images}
             bg_video={bg_video}
-            bg_video_mobile={data.bg_video_mobile}
+            bg_video_mobile={bg_video_mobile}
             transition_type={transition_type}
-            parallax_ratio={data.parallax_ratio}
-
-            // Overlay & Effects
-            overlay_color={commonOverlayColor}
-            entry_animation={commonEntryAnimation}
-            background_scroll_fade={true}
-            disable_content_animation={true} // We handle our own content animation
-
-            // Layout
+            parallax_ratio={parallax_ratio}
+            overlay_color={finalOverlayColor}
+            entry_animation={entryAnimation}
+            background_scroll_fade
+            disable_content_animation
             layout={{
-                wrapper_class: wrapper_class,
+                wrapper_class: wrapperClass,
                 container_class: layoutClasses.container_class || "items-center justify-center",
             }}
-
-            // Divider
-            divider={data.divider}
+            divider={divider}
         >
             <DevComment text="Hero Texts" />
             <motion.div
@@ -218,25 +206,17 @@ export default function PageHero({ data }: PageHeroProps) {
                 initial="hidden"
                 animate="visible"
             >
-                {effectiveSubTitle && (
+                {displaySubtitle && (
                     <motion.div variants={itemVariants}>
-                        <span className={pretitle_class}>
-                            {effectiveSubTitle}
-                        </span>
+                        <span className={pretitleClass}>{displaySubtitle}</span>
                     </motion.div>
                 )}
 
                 <motion.div variants={itemVariants} className="relative">
-                    <h1 className={title_class}>
-                        <ShinyText
-                            text={effectiveTitle}
-                            disabled={false}
-                            speed={3}
-                            className=""
-                        />
+                    <h1 className={titleClass}>
+                        <ShinyText text={displayTitle || ""} speed={3} />
                     </h1>
 
-                    {/* 裝飾性手寫文字 - 響應式顯示 */}
                     {accent_text && (
                         <motion.span
                             variants={accentVariants}
@@ -247,7 +227,7 @@ export default function PageHero({ data }: PageHeroProps) {
                     )}
                 </motion.div>
 
-                {buttons && buttons.length > 0 && (
+                {buttons.length > 0 && (
                     <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center pb-6">
                         <ActionButtons buttons={buttons} align="center" size="lg" />
                     </motion.div>
@@ -256,32 +236,17 @@ export default function PageHero({ data }: PageHeroProps) {
 
             <DevComment text="Scroll Down Button" />
             <motion.button
-                className="absolute bottom-10 md:bottom-20 left-1/2 z-20 cursor-pointer p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors duration-300 group"
+                className="absolute bottom-10 md:bottom-20 left-1/2 z-20 p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors group"
                 style={{ x: "-50%" }}
                 initial={{ opacity: 0, y: -20, x: "-50%" }}
                 animate={{ opacity: 1, y: 0, x: "-50%" }}
                 whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.2)", x: "-50%" }}
                 whileTap={{ scale: 0.9, x: "-50%" }}
                 transition={{
-                    y: {
-                        delay: 2,
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                        ease: "easeInOut"
-                    } as any,
+                    y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } as any,
                     default: { duration: 0.3 }
                 }}
-                onClick={() => {
-                    // Start searching from the next sibling, or use a more specific selector
-                    const sections = document.querySelectorAll('section');
-                    // Assuming PageHero is always the first section if present
-                    if (sections.length > 1) {
-                        sections[1].scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-                    }
-                }}
+                onClick={handleScrollDown}
                 aria-label="Scroll to content"
             >
                 <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
