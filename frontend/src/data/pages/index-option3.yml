@@ -8,7 +8,7 @@ hero:
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   media_list:
     - type: video
-      video: /img/hero-video-vp9.webm
+      video: https://ik.imagekit.io/tongxingwaldorf/hero-video-av1.webm
       poster: /img/video-poster.webp
 
 sections:

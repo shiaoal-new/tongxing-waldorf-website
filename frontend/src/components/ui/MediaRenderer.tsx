@@ -23,6 +23,8 @@ interface MediaRendererProps {
     sizes?: string;
 }
 
+import { getOptimizedUrl } from "../../lib/media";
+
 const MediaRenderer = ({
     media,
     className = "",
@@ -42,8 +44,12 @@ const MediaRenderer = ({
         const updateSrc = () => {
             // On mobile, only use mobileVideo. If not available, we'll fall back to showing just the poster.
             // This prevents downloading a large desktop video on mobile connections.
-            const newVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || media.video) : media.video;
-            const newPosterSrc = (mediaQuery.matches) ? (media.mobilePoster || media.poster) : media.poster;
+            const rawVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || media.video) : media.video;
+            const rawPosterSrc = (mediaQuery.matches) ? (media.mobilePoster || media.poster) : media.poster;
+
+            // Apply ImageKit optimization (f-auto, q-auto)
+            const newVideoSrc = getOptimizedUrl(rawVideoSrc);
+            const newPosterSrc = getOptimizedUrl(rawPosterSrc);
 
             if (newVideoSrc !== videoSrc) {
                 setVideoSrc(newVideoSrc);
@@ -124,10 +130,11 @@ const MediaRenderer = ({
     switch (media.type.toLowerCase()) {
         case "image":
             if (!media.image) return null;
+            const optimizedImageUrl = getOptimizedUrl(media.image);
             return (
                 <div className={`relative overflow-hidden ${className}`}>
                     <Image
-                        src={media.image}
+                        src={optimizedImageUrl!}
                         alt={media.alt || "media image"}
                         fill
                         sizes={sizes}
