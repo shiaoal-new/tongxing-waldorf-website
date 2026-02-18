@@ -85,7 +85,7 @@ export default function SpotlightCarousel({ items, renderItem }: SpotlightCarous
 
             @media (min-width: 1024px) {
                 .testimonial-card {
-                    width: 640px;
+                    width: 480px;
                 }
             }
         `,

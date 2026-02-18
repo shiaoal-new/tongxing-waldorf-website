@@ -65,6 +65,7 @@ export default function HighlightCarousel({ items, renderItem, buttons }: Highli
             @media (min-width: 1280px) {
                 .highlight-card {
                     width: calc(25% - 1.5rem);
+                    max-width: 320px;
                 }
             }
         `,
