@@ -207,6 +207,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
             layout={{
                 wrapper_class: wrapperClass,
                 container_class: layoutClasses.container_class || "items-center justify-center",
+                content_body_class: "flex-grow flex flex-col justify-center"
             }}
             divider={divider}
         >
@@ -252,7 +253,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
             <DevComment text="Scroll Down Button" />
             <motion.button
-                className="absolute bottom-10 md:bottom-20 left-1/2 z-20 p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors group"
+                className="absolute bottom-4 md:bottom-8 left-1/2 z-20 p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors group"
                 style={{ x: "-50%" }}
                 initial={{ opacity: 0, y: -20, x: "-50%" }}
                 animate={{ opacity: 1, y: 0, x: "-50%" }}
