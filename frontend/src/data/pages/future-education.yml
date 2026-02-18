@@ -34,23 +34,35 @@ sections:
         item_type: feature_item
         items:
           - title: "$core_abilities.items.0.title"
-            icon: lucide:heart-handshake
             content: "$core_abilities.items.0.content"
+            media:
+              type: image
+              image: /img/future-education/emotion.webp
           - title: "$core_abilities.items.1.title"
-            icon: lucide:message-circle-question
             content: "$core_abilities.items.1.content"
+            media:
+              type: image
+              image: /img/future-education/question.webp
           - title: "$core_abilities.items.2.title"
-            icon: lucide:palette
             content: "$core_abilities.items.2.content"
+            media:
+              type: image
+              image: /img/future-education/creation.webp
           - title: "$core_abilities.items.3.title"
-            icon: lucide:brain-circuit
             content: "$core_abilities.items.3.content"
+            media:
+              type: image
+              image: /img/future-education/think.webp
           - title: "$core_abilities.items.4.title"
-            icon: lucide:sparkles
             content: "$core_abilities.items.4.content"
+            media:
+              type: image
+              image: /img/future-education/learn.webp
           - title: "$core_abilities.items.5.title"
-            icon: lucide:users-round
             content: "$core_abilities.items.5.content"
+            media:
+              type: image
+              image: /img/future-education/cooperation.webp
 
   - section_id: waldorf_approach
     silk_background: true

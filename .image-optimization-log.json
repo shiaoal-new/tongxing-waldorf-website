@@ -907,5 +907,68 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "classroom-compare.jpeg": {
+    "hash": "c8fd250f32ed7be2842c1df85a35857a",
+    "processedAt": "2026-02-18T09:19:40.775Z",
+    "originalSize": 354109,
+    "optimizedSize": 68974,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/cooperation.jpg": {
+    "hash": "2c558649af0f54da3f9937654888545c",
+    "processedAt": "2026-02-18T09:19:40.976Z",
+    "originalSize": 407606,
+    "optimizedSize": 76368,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/creation.jpg": {
+    "hash": "7e3a8a6a448a9a9029e55b852b111595",
+    "processedAt": "2026-02-18T09:19:41.142Z",
+    "originalSize": 315523,
+    "optimizedSize": 41852,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/emotion.jpg": {
+    "hash": "b2e3c1148e288fc3df238aae6e2f0869",
+    "processedAt": "2026-02-18T09:19:41.447Z",
+    "originalSize": 676797,
+    "optimizedSize": 124564,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/learn.jpg": {
+    "hash": "4c8d5d15c1f90e22e8d2a6f167a22ade",
+    "processedAt": "2026-02-18T09:19:41.638Z",
+    "originalSize": 1305175,
+    "optimizedSize": 83586,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/question.jpg": {
+    "hash": "efc0c12dca09801fa34ee3475703b632",
+    "processedAt": "2026-02-18T09:19:41.823Z",
+    "originalSize": 464358,
+    "optimizedSize": 102860,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "future-education/think.jpg": {
+    "hash": "d071532c569eb86eeb51703c8b6f0823",
+    "processedAt": "2026-02-18T09:19:42.005Z",
+    "originalSize": 485301,
+    "optimizedSize": 102526,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }

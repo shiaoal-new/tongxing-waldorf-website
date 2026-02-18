@@ -20,7 +20,7 @@ sections:
       - type: text_block
         title: $comparison.title
       - type: comparison_block
-        image: /img/classroom-compare.jpeg
+        image: /img/classroom-compare.webp
         left:
           label: $comparison_block.left.label
           badge: $comparison_block.left.badge
