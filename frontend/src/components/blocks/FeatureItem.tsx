@@ -10,7 +10,7 @@ interface FeatureItemProps {
   media?: MediaItem;
   title: string;
   children: string;
-  icon: string;
+  icon?: string;
   buttons?: CTAButton[];
   align?: 'left' | 'center' | 'right';
   sub_items?: {
@@ -57,10 +57,12 @@ export default function FeatureItem({ span, media, title, children, icon, button
         </div>
       )}
 
-      <div className={`relative z-20 flex flex-col px-6 py-8 md:px-10 md:py-10 ${isFullWidth ? 'w-full md:w-1/2 justify-center' : `w-full ${media ? '-mt-16 md:-mt-20' : ''}`} ${align === 'center' ? 'items-center' : 'items-start'}`}>
-        <div className="feature-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-14 h-14 rounded-2xl bg-brand-accent/10 text-brand-accent group-hover:bg-brand-accent group-hover:text-white transition-all duration-500 ease-out">
-          <Icon icon={icon} className="w-7 h-7" />
-        </div>
+      <div className={`relative z-20 flex flex-col px-6 py-8 md:px-10 md:py-10 ${isFullWidth ? 'w-full md:w-1/2 justify-center' : `w-full ${media && icon ? '-mt-16 md:-mt-20' : ''}`} ${align === 'center' ? 'items-center' : 'items-start'}`}>
+        {icon && (
+          <div className="feature-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-14 h-14 rounded-2xl bg-brand-accent/10 text-brand-accent group-hover:bg-brand-accent group-hover:text-white transition-all duration-500 ease-out">
+            <Icon icon={icon} className="w-7 h-7" />
+          </div>
+        )}
 
         <StaggeredReveal
           title={title}

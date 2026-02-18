@@ -105,7 +105,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             return (
                 <FeatureItem
                     title={feature.title}
-                    icon={feature.icon || "lucide:star"}
+                    icon={feature.icon}
                     buttons={feature.buttons as any}
                     media={feature.media}
                     span={feature.span}
