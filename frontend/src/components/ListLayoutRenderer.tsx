@@ -14,11 +14,7 @@ const CardDeckSwiper = dynamic<any>(() => import('./CardDeckSwiper'), {
 
 
 
-const SpotlightCarousel = dynamic<any>(() => import('./SpotlightCarousel'), {
-    loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
-});
-
-const HighlightCarousel = dynamic<any>(() => import('./HighlightCarousel'), {
+const ListCarousel = dynamic<any>(() => import('./ListCarousel'), {
     loading: () => <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-xl" />,
 });
 
@@ -33,9 +29,7 @@ export const LIST_LAYOUT_CONFIG: Record<string, any> = {
     bento_grid: { fullWidth: false },
     card_deck_swiper: { fullWidth: true },
     scrollable_grid: { fullWidth: true },
-    spotlight_carousel: { fullWidth: true },
-    testimonial_carousel: { fullWidth: true },
-    highlight_carousel: { fullWidth: true },
+    carousel: { fullWidth: true },
     masonry_grid: { fullWidth: true },
     accordion: { fullWidth: false, direction: 'vertical' },
 };
@@ -49,6 +43,12 @@ interface ListRendererProps {
     columns?: number;
     mobile_scroll?: boolean;
     mobile_layout?: string;
+    variant?: string;
+    loop?: boolean;
+    align?: 'start' | 'center';
+    highlightActive?: boolean;
+    limit?: number;
+    appendMore?: boolean;
 }
 
 /**
@@ -64,6 +64,12 @@ export default function ListRenderer(props: ListRendererProps) {
         columns = 3,
         mobile_scroll = false,
         mobile_layout,
+        variant,
+        loop,
+        align,
+        highlightActive,
+        limit,
+        appendMore,
     } = props;
 
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -309,23 +315,30 @@ export default function ListRenderer(props: ListRendererProps) {
         );
     }
 
-    // Testimonial Carousel 佈局 (置中放大效果)
-    if (layout === "spotlight_carousel" || layout === "testimonial_carousel") {
-        return (
-            <SpotlightCarousel
-                items={items}
-                renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
-            />
-        );
-    }
+    // List Carousel 佈局
+    if (layout === "carousel") {
 
-    // Highlight Carousel 佈局 (特色項目輪播)
-    if (layout === "highlight_carousel") {
+        // 預設配置
+        let defaultProps = {
+            loop: true,
+            align: 'center',
+            highlightActive: true,
+            limit: undefined,
+            appendMore: false,
+        };
+
         return (
-            <HighlightCarousel
+            <ListCarousel
                 items={items}
-                renderItem={(item: any, index: number) => renderItem(item, index)}
+                variant={variant}
+                // 優先使用傳入的 props，否則使用據佈局決定的預設值
+                loop={loop !== undefined ? loop : defaultProps.loop}
+                align={align || defaultProps.align}
+                highlightActive={highlightActive !== undefined ? highlightActive : defaultProps.highlightActive}
+                limit={limit || defaultProps.limit}
+                appendMore={appendMore !== undefined ? appendMore : defaultProps.appendMore}
                 buttons={buttons}
+                renderItem={(item: any, index: number, pagination: any) => renderItem(item, index, { pagination })}
             />
         );
     }

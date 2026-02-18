@@ -87,7 +87,7 @@ export type ListItem = FaqItem | FeatureItem | VideoItem;
 
 export interface ListBlock extends BaseBlock {
     type: 'list_block';
-    layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'spotlight_carousel' | 'highlight_carousel' | 'masonry_grid';
+    layout_method: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'masonry_grid' | 'carousel';
     item_type: 'faq_item' | 'feature_item' | 'video_item';
     items?: ListItem[];
     faq_ids?: string[];
@@ -95,7 +95,13 @@ export interface ListBlock extends BaseBlock {
     direction?: string;
     buttons?: CTAButton[];
     mobile_scroll?: boolean;
-    mobile_layout_method?: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'spotlight_carousel' | 'highlight_carousel' | 'masonry_grid';
+    mobile_layout_method?: 'vertical' | 'grid_cards' | 'bento_grid' | 'card_deck_swiper' | 'masonry_grid' | 'carousel';
+    variant?: string;
+    loop?: boolean;
+    align?: 'start' | 'center';
+    highlight_active?: boolean;
+    limit?: number;
+    append_more?: boolean;
 }
 
 export interface Question {

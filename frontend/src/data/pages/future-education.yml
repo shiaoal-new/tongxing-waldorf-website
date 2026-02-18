@@ -30,7 +30,11 @@ sections:
         subtitle: "$core_abilities.subtitle"
         content: "$core_abilities.content"
       - type: list_block
-        layout_method: spotlight_carousel
+        layout_method: carousel
+        align: left
+        loop: false
+        highlight_active: false
+        variant: cinema
         item_type: feature_item
         items:
           - title: "$core_abilities.items.0.title"

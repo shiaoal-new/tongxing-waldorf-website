@@ -61,7 +61,10 @@ sections:
   - section_id: testimonials
     blocks:
       - type: list_block
-        layout_method: spotlight_carousel
+        layout_method: carousel
+        loop: true
+        align: center
+        highlight_active: true
         item_type: testimonial_item
         items:
           - quote: $testimonials.items.0.quote

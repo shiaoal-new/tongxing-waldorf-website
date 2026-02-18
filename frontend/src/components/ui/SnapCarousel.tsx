@@ -86,7 +86,8 @@ export default function SnapCarousel({
     const scrollToIndex = useCallback((index: number, immediate = false) => {
         if (!scrollRef.current) return;
         const container = scrollRef.current;
-        const cards = container.querySelectorAll(`.${cardClassName}`);
+        const cardSelector = '.' + cardClassName.trim().replace(/\s+/g, '.');
+        const cards = container.querySelectorAll(cardSelector);
 
         // 對於 Loop 模式，我們操作的 index 是渲染列表的 index
         // 但是傳入的 index 通常是「邏輯」index，這需要轉換嗎？
@@ -127,7 +128,8 @@ export default function SnapCarousel({
             ? containerRect.left + containerRect.width / 2
             : containerRect.left;
 
-        const cards = container.querySelectorAll(`.${cardClassName}`);
+        const cardSelector = '.' + cardClassName.trim().replace(/\s+/g, '.');
+        const cards = container.querySelectorAll(cardSelector);
         if (cards.length === 0) return;
 
         let closestRenderIndex = 0;
@@ -172,7 +174,8 @@ export default function SnapCarousel({
                 ? containerRect.left + containerRect.width / 2
                 : containerRect.left;
 
-            const cards = container.querySelectorAll(`.${cardClassName}`);
+            const cardSelector = '.' + cardClassName.trim().replace(/\s+/g, '.');
+            const cards = container.querySelectorAll(cardSelector);
             let currentRenderIndex = 0;
             let minDistance = Number.MAX_VALUE;
 
@@ -231,7 +234,8 @@ export default function SnapCarousel({
         if (!scrollRef.current) return;
 
         const container = scrollRef.current;
-        const section = container.querySelectorAll(`.${cardClassName}`);
+        const cardSelector = '.' + cardClassName.trim().replace(/\s+/g, '.');
+        const section = container.querySelectorAll(cardSelector);
         const { scrollLeft, clientWidth } = container;
         const referencePoint = snapAlign === 'center' ? scrollLeft + clientWidth / 2 : scrollLeft;
 

@@ -32,7 +32,9 @@ sections:
         subtitle: "$features.intro.subtitle"
       - type: list_block
         layout_method: bento_grid
-        mobile_layout_method: spotlight_carousel
+        mobile_layout_method: carousel
+        loop: false # Added prop for carousel
+        highlight_active: true # Added prop for carousel
         item_type: feature_item
         align: center
         items:
@@ -188,7 +190,10 @@ sections:
         title: "$testimonials.intro.title"
         subtitle: "$testimonials.intro.subtitle"
       - type: list_block
-        layout_method: spotlight_carousel
+        layout_method: carousel
+        loop: true
+        align: center
+        highlight_active: true
         item_type: testimonial_item
         items:
           - quote: $testimonials.items.0.quote

@@ -56,6 +56,12 @@ export default function ListBlock({ block, align }: ListBlockProps) {
                 layout={block.layout_method || "card_deck_swiper"}
                 mobile_scroll={block.mobile_scroll}
                 mobile_layout={block.mobile_layout_method}
+                variant={block.variant}
+                loop={block.loop}
+                align={block.align}
+                highlightActive={block.highlight_active}
+                limit={block.limit}
+                appendMore={block.append_more}
                 columns={3}
                 buttons={block.buttons}
                 renderItem={(item: ListItem, index: number, extra: any) => {
@@ -97,7 +103,7 @@ export const listPolicy: BlockPolicy = {
         const isWide = (method?: string) => {
             if (!method) return false;
             const config = (LIST_LAYOUT_CONFIG as any)[method];
-            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "scrollable_grid", "masonry_grid"].includes(method);
+            return config?.fullWidth || ["grid_cards", "compact_grid", "card_deck_swiper", "scrollable_grid", "masonry_grid", "carousel"].includes(method);
         };
 
         const desktopWide = isWide(block.layout_method);
