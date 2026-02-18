@@ -10,6 +10,45 @@ import { CTAButton, MediaItem, Divider } from "../../types/content";
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
+// Helper function to determine if a color is light
+function isLightColor(color: string): boolean {
+    if (!color) return false;
+    let r, g, b;
+
+    // Handle hex colors
+    if (color.startsWith('#')) {
+        let hex = color.replace('#', '');
+        // Expand shorthand forms (e.g. #f00 -> #ff0000, #f00a -> #ff0000aa)
+        if (hex.length === 3 || hex.length === 4) {
+            hex = hex.split('').map(c => c + c).join('');
+        }
+
+        if (hex.length >= 6) {
+            r = parseInt(hex.substring(0, 2), 16);
+            g = parseInt(hex.substring(2, 4), 16);
+            b = parseInt(hex.substring(4, 6), 16);
+        } else {
+            return false;
+        }
+    } else if (color.startsWith('rgb')) {
+        // Handle rgb() and rgba()
+        const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+        if (match) {
+            r = parseInt(match[1]);
+            g = parseInt(match[2]);
+            b = parseInt(match[3]);
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
+    // Calculate relative luminance: 0.2126*R + 0.7152*G + 0.0722*B
+    const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b);
+    return luminance > 128;
+}
+
 const ShaderGradientBackgroundDynamic = dynamic(
     () => import('../ShaderGradientBackground'),
     { ssr: false }
@@ -33,6 +72,7 @@ interface SectionProps {
     media_list?: MediaItem[];
     parallax_ratio?: number;
     overlay_opacity?: number;
+    overlay_color?: string;
     className?: string;
     limit?: boolean | number;
     divider?: Divider;
@@ -58,6 +98,7 @@ export default function Section(props: SectionProps) {
         media_list,
         parallax_ratio,
         overlay_opacity,
+        overlay_color,
         full_height,
         className,
         limit,
@@ -77,10 +118,29 @@ export default function Section(props: SectionProps) {
     const wrapper_class = classes.wrapper_class || "";
     // If background media or shader gradient is present, default to white text for better visibility
     const hasSpecialBg = (media_list && media_list.length > 0) || shader_gradient || silk_background;
-    // Use fixed white/stone colors for special backgrounds to avoid dark-mode flipping to dark grey
-    const defaultTitleColor = hasSpecialBg ? "text-white drop-shadow-md" : "text-brand-text dark:text-brand-bg";
-    const defaultDescColor = hasSpecialBg ? "text-stone-100/90" : "text-brand-taupe dark:text-brand-taupe";
-    const defaultSubtitleColor = hasSpecialBg ? "text-brand-accent brightness-125 drop-shadow-sm" : "text-brand-accent";
+
+    // Determine default colors based on overlay_color or background type
+    let defaultTitleColor = "text-brand-text dark:text-brand-bg";
+    let defaultDescColor = "text-brand-taupe dark:text-brand-taupe";
+    let defaultSubtitleColor = "text-brand-accent";
+
+    if (overlay_color) {
+        if (isLightColor(overlay_color)) {
+            // Light overlay -> Dark text (force dark to ensure contrast)
+            defaultTitleColor = "text-gray-900";
+            defaultDescColor = "text-gray-700";
+            defaultSubtitleColor = "text-brand-accent";
+        } else {
+            // Dark overlay -> White text
+            defaultTitleColor = "text-white drop-shadow-md";
+            defaultDescColor = "text-stone-100/90";
+            defaultSubtitleColor = "text-brand-accent brightness-125 drop-shadow-sm";
+        }
+    } else if (hasSpecialBg) {
+        defaultTitleColor = "text-white drop-shadow-md";
+        defaultDescColor = "text-stone-100/90";
+        defaultSubtitleColor = "text-brand-accent brightness-125 drop-shadow-sm";
+    }
 
 
     /**
@@ -174,6 +234,7 @@ export default function Section(props: SectionProps) {
                     media_list={media_list}
                     parallax_ratio={parallax_ratio}
                     overlay_opacity={overlay_opacity}
+                    overlay_color={overlay_color}
                 />
             )}
 

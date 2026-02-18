@@ -149,6 +149,7 @@ interface BackgroundCarouselProps {
     bg_video_mobile?: string;
     transition_type?: string;
     overlay_opacity?: number;
+    overlay_color?: string;
     parallax_ratio?: number;
 }
 
@@ -159,6 +160,7 @@ export default function BackgroundCarousel({
     bg_video_mobile,
     transition_type = 'fade',
     overlay_opacity = 0,
+    overlay_color,
     parallax_ratio = 0
 }: BackgroundCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -231,10 +233,13 @@ export default function BackgroundCarousel({
             )}
 
             {/* Overlay */}
-            {overlay_opacity > 0 && (
+            {(overlay_opacity > 0 || (overlay_color && overlay_color.length > 7)) && (
                 <div
-                    className="absolute inset-0 bg-black pointer-events-none"
-                    style={{ opacity: overlay_opacity }}
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                        opacity: overlay_color && overlay_color.length > 7 ? undefined : overlay_opacity,
+                        backgroundColor: overlay_color || 'black'
+                    }}
                 />
             )}
 

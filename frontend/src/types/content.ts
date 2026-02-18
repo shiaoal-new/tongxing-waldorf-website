@@ -300,6 +300,9 @@ export interface Section {
     blocks: Block[];
     layout?: string;
     divider?: Divider;
+    overlay_color?: string;
+    overlay_opacity?: number;
+    media_list?: MediaItem[];
 }
 
 export interface HeroMedia {

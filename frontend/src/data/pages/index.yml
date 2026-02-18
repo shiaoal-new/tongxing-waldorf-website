@@ -123,7 +123,7 @@ sections:
     layout: 精緻特色區塊 (Features Premium)
     align: center
     full_height: true
-    overlay_opacity: 0.6
+    overlay_color: "#ffffff99"
     media_list:
       - type: video
         video: /img/index/future-world.mp4
