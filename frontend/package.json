@@ -18,6 +18,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run restore-full-font && next dev --webpack",
+    "type-check": "tsc --noEmit",
     "restore-full-font": "cp public/fonts/ChenYuluoyan-2.0-Thin.full.woff2 public/fonts/ChenYuluoyan-2.0-Thin.woff2",
     "copy-wordings": "node scripts/copy-wordings.js",
     "build": "npm run restore-full-font && npm run copy-wordings && npx tsx scripts/generate-og-images.tsx && npx tsx scripts/generate-sitemap.ts && NEXT_OUTPUT=export next build && node scripts/subset-font.js",

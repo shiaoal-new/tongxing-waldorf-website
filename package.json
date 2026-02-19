@@ -18,10 +18,18 @@
     "optimize-images:check-unused": "node scripts/image-optimizer/optimize-images.js --dry-run --check-unused",
     "optimize-images:cleanup-unused": "node scripts/image-optimizer/optimize-images.js --check-unused --trash-unused",
     "optimize-images:high-quality": "node scripts/image-optimizer/optimize-images.js --preset=high-quality",
-    "optimize-images:aggressive": "node scripts/image-optimizer/optimize-images.js --preset=aggressive"
+    "optimize-images:aggressive": "node scripts/image-optimizer/optimize-images.js --preset=aggressive",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "sharp": "^0.33.1",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "sharp": "^0.33.1"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx}": [
+      "bash -c \"npm run type-check --prefix frontend\""
+    ]
   }
 }
