@@ -3,39 +3,16 @@
  * Encapsulates session-related API calls.
  */
 
+import { handleResponse } from './utils';
+import { Session } from '../context/SessionContext';
+
 const API_BASE = '/api';
-
-async function handleResponse(response: Response) {
-    const contentType = response.headers.get('content-type');
-
-    // Check if response is JSON
-    if (contentType && contentType.includes('application/json')) {
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.error || `API Error: ${response.status}`);
-        }
-        return data;
-    }
-
-    // Handle non-JSON responses
-    const text = await response.text();
-    if (!response.ok) {
-        throw new Error(`API Error: ${response.status} - ${text.substring(0, 100)}`);
-    }
-
-    // Try to parse as JSON anyway (for cases where content-type is missing)
-    try {
-        return JSON.parse(text);
-    } catch (e) {
-        throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
-    }
-}
 
 export const authApi = {
     /**
      * Get current session
      */
-    getSession: async (): Promise<any> => {
+    getSession: async (): Promise<Session | null> => {
         const response = await fetch(`${API_BASE}/getSession`);
         return handleResponse(response);
     },
@@ -43,10 +20,32 @@ export const authApi = {
     /**
      * Logout user
      */
-    logout: async (): Promise<any> => {
+    logout: async (): Promise<{ success: boolean }> => {
         const response = await fetch(`${API_BASE}/logout`, {
             method: 'POST'
         });
         return handleResponse(response);
+    },
+
+    /**
+     * Generate LINE Login URL and set required cookies
+     */
+    getLineLoginUrl: (clientId: string): string => {
+        const baseUrl = window.location.origin;
+        const redirectUri = encodeURIComponent(`${baseUrl}/api/lineCallback`);
+        const state = Math.random().toString(36).substring(2, 15);
+        const nonce = Math.random().toString(36).substring(2, 15);
+
+        // 設置 NextAuth 期望的 state cookie
+        document.cookie = `next-auth.state=${state}; path=/; samesite=lax`;
+
+        return `https://access.line.me/oauth2/v2.1/authorize?` +
+            `response_type=code&` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${redirectUri}&` +
+            `state=${state}&` +
+            `scope=profile%20openid%20email&` +
+            `nonce=${nonce}&` +
+            `bot_prompt=aggressive`;
     }
 };

@@ -9,6 +9,7 @@ import DevComment from "../ui/DevComment";
 import { useSession } from "../../context/SessionContext";
 import { PageData, NavigationData } from "../../types/content";
 import { useWordingContext } from "../../context/WordingContext";
+import { CONFIG } from "../../lib/config";
 
 // Modularized Components
 import UserMenu from "./Navbar/UserMenu";
@@ -36,14 +37,14 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
   // Sync with localStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('debug_background_grid');
+      const saved = localStorage.getItem(CONFIG.STORAGE_KEYS.DEBUG_GRID);
       if (saved) setShowBackgroundGrid(saved === 'true');
     }
   }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('debug_background_grid', showBackgroundGrid.toString());
+      localStorage.setItem(CONFIG.STORAGE_KEYS.DEBUG_GRID, showBackgroundGrid.toString());
       // Dispatch custom event to notify ParallaxBackground
       window.dispatchEvent(new CustomEvent('debugGridToggle', { detail: showBackgroundGrid }));
     }

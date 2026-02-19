@@ -48,10 +48,10 @@ export default function DeviceSimulator() {
     }, []);
 
     useEffect(() => {
-        const savedH = localStorage.getItem('simulator_h_split_v2');
-        const savedWD = localStorage.getItem('simulator_w_desktop_v2');
-        const savedScrollPos = localStorage.getItem('simulator_scroll_positions');
-        const savedUrl = localStorage.getItem('simulator_current_url');
+        const savedH = localStorage.getItem('tongxing_simulator_h_split');
+        const savedWD = localStorage.getItem('tongxing_simulator_w_desktop');
+        const savedScrollPos = localStorage.getItem('tongxing_simulator_scroll_positions');
+        const savedUrl = localStorage.getItem('tongxing_simulator_current_url');
 
         if (savedH) setHorizontalSplit(parseFloat(savedH));
         if (savedWD) setWidthDesktop(parseInt(savedWD));
@@ -66,15 +66,15 @@ export default function DeviceSimulator() {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('simulator_h_split_v2', horizontalSplit);
-        localStorage.setItem('simulator_w_desktop_v2', widthDesktop);
-        localStorage.setItem('simulator_current_url', currentUrl);
+        localStorage.setItem('tongxing_simulator_h_split', horizontalSplit);
+        localStorage.setItem('tongxing_simulator_w_desktop', widthDesktop);
+        localStorage.setItem('tongxing_simulator_current_url', currentUrl);
     }, [horizontalSplit, widthDesktop, currentUrl]);
 
     // Save scroll positions to localStorage
     useEffect(() => {
         if (Object.keys(scrollPositions).length > 0) {
-            localStorage.setItem('simulator_scroll_positions', JSON.stringify(scrollPositions));
+            localStorage.setItem('tongxing_simulator_scroll_positions', JSON.stringify(scrollPositions));
         }
     }, [scrollPositions]);
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { CONFIG } from '../lib/config';
 
 type WordingStyles = Record<string, string>; // pageId -> styleName
 
@@ -13,7 +14,7 @@ interface WordingContextType {
 
 const WordingContext = createContext<WordingContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'tongxing_wording_styles';
+const STORAGE_KEY = CONFIG.STORAGE_KEYS.WORDING_STYLE;
 
 export const WordingProvider = ({ children }: { children: ReactNode }) => {
     const [styles, setStyles] = useState<WordingStyles>({});

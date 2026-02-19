@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { QuestionnaireData } from '../types/content';
+import { CONFIG } from '../lib/config';
 
 export interface PathScore {
     path: string;
@@ -43,7 +44,7 @@ export const usePathQuestionnaire = (data: QuestionnaireData): PathQuestionnaire
     const [popupFeedback, setPopupFeedback] = useState<{ title: string; content: string } | null>(null);
     const [notifiedCategories, setNotifiedCategories] = useState<Set<string>>(new Set());
 
-    const storageKey = `questionnaire_progress_${data.slug || 'future-path-advisor'}`;
+    const storageKey = `${CONFIG.STORAGE_KEYS.QUESTIONNAIRE_PREFIX}${data.slug || 'future-path-advisor'}`;
 
     // Load progress
     useEffect(() => {

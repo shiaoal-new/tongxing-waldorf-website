@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { authApi } from "../api/auth";
+import { CONFIG } from "../lib/config";
 
 export interface User {
     id: string;
@@ -35,8 +36,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
     const fetchSession = async () => {
         try {
-            const data = await (authApi as any).getSession();
-            setSession(data.user ? data : null);
+            const data = await authApi.getSession();
+            setSession(data && data.user ? data : null);
         } catch (err) {
             console.error("Failed to fetch session:", err);
             setSession(null);
@@ -55,31 +56,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     };
 
     const loginWithLine = () => {
-        // [Note] clientId remains here as it's a public client ID for LINE Login
-        const clientId = '2008899796';
-        const baseUrl = window.location.origin;
-        const redirectUri = encodeURIComponent(`${baseUrl}/api/lineCallback`);
-        const state = Math.random().toString(36).substring(2, 15);
-        const nonce = Math.random().toString(36).substring(2, 15);
-
-        // 設置 NextAuth 期望的 state cookie
-        document.cookie = `next-auth.state=${state}; path=/; samesite=lax`;
-
-        const authUrl = `https://access.line.me/oauth2/v2.1/authorize?` +
-            `response_type=code&` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `state=${state}&` +
-            `scope=profile%20openid%20email&` +
-            `nonce=${nonce}&` +
-            `bot_prompt=aggressive`;
-
-        window.location.href = authUrl;
+        window.location.href = authApi.getLineLoginUrl(CONFIG.LINE.CLIENT_ID);
     };
 
     const logout = async () => {
         try {
-            await (authApi as any).logout();
+            await authApi.logout();
             setSession(null);
             window.location.href = "/";
         } catch (err) {

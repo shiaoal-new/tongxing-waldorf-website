@@ -1,6 +1,8 @@
 
 export interface BaseBlock {
     type: string;
+    _sourceFile?: string;
+    _sourceLine?: number;
 }
 
 export interface SEOData {
@@ -395,12 +397,13 @@ export interface PageContextValue {
 export interface PageData {
     title: string;
     slug: string;
-    hero: HeroData;
-    sections: Section[];
+    hero: HeroData & { _sourceFile?: string; _sourceLine?: number; _sourceLines?: Record<string, number> };
+    sections: (Section & { _sourceFile?: string; _sourceLine?: number })[];
     content?: string;
     faq?: FaqItem[];
     questionnaire?: QuestionnaireData;
     seo?: SEOData;
+    _sourceFile?: string;
 }
 
 export interface NavigationItem {

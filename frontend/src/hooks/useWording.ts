@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useWordingContext } from '../context/WordingContext';
+import { deepMerge } from '../lib/utils';
 import { resolveWording } from '../lib/wording';
 import yaml from 'js-yaml';
 
-/**
- * useWording Hook 
- * @param pageId 頁面 ID (例如 "index")
- * @param initialData 原始數據 (already resolved with default wording from server)
- * @param extraCategories 額外要加載的文案包 (例如 ["faq", "ui"])
- * 
- * Since getStaticProps always resolves default wordings at build time,
- * this hook only fetches and re-resolves when the user switches to a non-default style.
- */
 /**
  * useWording Hook 
  * @param pageId 頁面 ID (例如 "index")
@@ -86,19 +78,6 @@ export function useWording<T>(
                     })
                 );
 
-                // 深層合併字典 (Deep Merge)
-                const deepMerge = (target: any, source: any) => {
-                    for (const key in source) {
-                        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-                            if (!target[key]) target[key] = {};
-                            deepMerge(target[key], source[key]);
-                        } else {
-                            target[key] = source[key];
-                        }
-                    }
-                    return target;
-                };
-
                 const mergedDictionary = results.reduce((acc, curr) => deepMerge(acc, curr), {});
 
                 const missing: string[] = [];
@@ -123,4 +102,3 @@ export function useWording<T>(
 
     return resolvedData;
 }
-

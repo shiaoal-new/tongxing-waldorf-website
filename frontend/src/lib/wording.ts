@@ -1,3 +1,5 @@
+import { getValueByPath } from './utils';
+
 /**
  * Wording Resolver Utility
  * 用於在開發環境下將數據物件中的 ID 鍵轉換為對應風格的文字
@@ -78,23 +80,4 @@ export function resolveWording(data: any, dictionary: any, onMissing?: (key: str
     }
 
     return data;
-}
-
-/**
- * 從字典中根據路徑獲取值 (例如 "hero.title")
- */
-function getValueByPath(obj: any, path: string): any | null {
-    if (!path) return null;
-
-    const parts = path.split('.');
-    let current = obj;
-
-    for (const part of parts) {
-        if (current === null || current === undefined || typeof current !== 'object') {
-            return null;
-        }
-        current = current[part];
-    }
-
-    return (current !== undefined && current !== null) ? current : null;
 }

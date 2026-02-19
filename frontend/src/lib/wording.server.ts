@@ -1,16 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import { loadYamlWithIncludes } from './yaml-loader';
+import { deepMerge } from './utils';
+import { resolveWording } from './wording';
+import { CONFIG } from './config';
+
+export { resolveWording };
 
 /**
  * 伺服器端獲取文案字典 (用於 getStaticProps)
  * 此檔案僅在 Node.js 環境中使用
  */
-export function getWordingDictionary(pageId: string, style: string = 'default', extraCategories: string[] = []) {
+export function getWordingDictionary(pageId: string, style: string = CONFIG.UI.DEFAULT_STYLE, extraCategories: string[] = []) {
     const categories = [pageId, ...extraCategories];
     let mergedDictionary = {};
 
-    const searchDirs = ['pages', 'courses', 'faq'];
+    const searchDirs = CONFIG.DATA.SEARCH_DIRS;
     const baseCwd = process.cwd();
     const possibleRoots = [baseCwd, path.join(baseCwd, 'frontend')];
 
@@ -32,7 +37,7 @@ export function getWordingDictionary(pageId: string, style: string = 'default', 
         // 2. Fallback to old path: src/data/wordings/cat/style.yml
         if (!filePath) {
             for (const root of possibleRoots) {
-                const oldPath = path.join(root, `src/data/wordings/${cat}/${style}.yml`);
+                const oldPath = path.join(root, `src/data/${CONFIG.DATA.WORDING_FALLBACK_DIR}/${cat}/${style}.yml`);
                 if (fs.existsSync(oldPath)) {
                     filePath = oldPath;
                     break;
@@ -51,89 +56,4 @@ export function getWordingDictionary(pageId: string, style: string = 'default', 
     });
 
     return mergedDictionary;
-}
-
-function deepMerge(target: any, source: any) {
-    for (const key in source) {
-        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-            if (!target[key]) target[key] = {};
-            deepMerge(target[key], source[key]);
-        } else {
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-
-/**
- * 深度解析並替換物件中的文案 ID
- * @param data 原始數據物件 (例如 page data)
- * @param dictionary 文案字典 (來自 JSON 檔案)
- * @returns 替換後的數據物件
- */
-export function resolveWording(data: any, dictionary: any): any {
-    if (!data || !dictionary) return data;
-
-    // 如果是字串，嘗試替換
-    if (typeof data === 'string') {
-        // 處理轉義
-        if (data.startsWith('\\$')) {
-            return data.substring(1);
-        }
-
-        // 顯式聲明
-        if (data.startsWith('$')) {
-            const id = data.substring(1);
-            return getValueByPath(dictionary, id) || id;
-        }
-
-        return data;
-    }
-
-    // 如果是陣列，遞迴處理每個元素
-    if (Array.isArray(data)) {
-        return data.map(item => resolveWording(item, dictionary));
-    }
-
-    // 如果是物件，遞迴處理每個屬性
-    if (typeof data === 'object') {
-        const result: any = {};
-        for (const key in data) {
-            // 排除以 _ 開頭的私有屬性或已處理屬性 (如 _sourceFile)
-            if (key.startsWith('_')) {
-                result[key] = data[key];
-                continue;
-            }
-            const resolvedValue = resolveWording(data[key], dictionary);
-
-            // 啟發式繼承：如果子對象是普通物件且沒有自己的 _sourceFile，則從父對象繼承
-            if (resolvedValue && typeof resolvedValue === 'object' && !Array.isArray(resolvedValue) && !resolvedValue._sourceFile && data._sourceFile) {
-                resolvedValue._sourceFile = data._sourceFile;
-            }
-
-            result[key] = resolvedValue;
-        }
-        return result;
-    }
-
-    return data;
-}
-
-/**
- * 從字典中根據路徑獲取值 (例如 "hero.title")
- */
-function getValueByPath(obj: any, path: string): any | null {
-    if (!path) return null;
-
-    const parts = path.split('.');
-    let current = obj;
-
-    for (const part of parts) {
-        if (current === null || current === undefined || typeof current !== 'object') {
-            return null;
-        }
-        current = current[part];
-    }
-
-    return (current !== undefined && current !== null) ? current : null;
 }
