@@ -84,3 +84,4 @@ frontend/public/robots.txt
 .github/copilot-instructions.md
 frontend/public/sitemap.xml
 frontend/public/og-images/
+frontend/tsconfig.tsbuildinfo
