@@ -46,6 +46,7 @@
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
     "@iconify/react": "^6.0.2",
+    "@imagekit/next": "^2.1.5",
     "@line/liff": "^2.27.3",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@react-three/drei": "^10.7.7",

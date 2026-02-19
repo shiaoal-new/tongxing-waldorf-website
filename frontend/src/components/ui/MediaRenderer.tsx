@@ -2,18 +2,12 @@ import React from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { MediaItem } from "../../types/content";
+import { getOptimizedUrl, isImageKitPath } from "../../lib/media";
 
 const DotLottiePlayer = dynamic(
     () => import("@dotlottie/react-player").then((mod) => mod.DotLottiePlayer),
     { ssr: false }
 );
-// Helper to determine MIME type
-const getMimeType = (src: string | undefined): string | undefined => {
-    if (!src) return undefined;
-    if (src.endsWith('.webm')) return 'video/webm';
-    if (src.endsWith('.mp4')) return 'video/mp4';
-    return undefined;
-};
 
 interface MediaRendererProps {
     media: MediaItem;
@@ -23,8 +17,6 @@ interface MediaRendererProps {
     sizes?: string;
 }
 
-import { getOptimizedUrl } from "../../lib/media";
-
 const MediaRenderer = ({
     media,
     className = "",
@@ -33,114 +25,47 @@ const MediaRenderer = ({
     sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 }: MediaRendererProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
-    const [videoSrc, setVideoSrc] = React.useState<string | undefined>(undefined);
-    const [posterSrc, setPosterSrc] = React.useState<string | undefined>(undefined);
+    const [isMobile, setIsMobile] = React.useState(false);
 
     // Determines the appropriate video and poster source based on screen width
     React.useEffect(() => {
-        if (media.type?.toLowerCase() !== 'video') return;
-
         const mediaQuery = window.matchMedia("(max-width: 768px)");
-        const updateSrc = () => {
-            // On mobile, only use mobileVideo. If not available, we'll fall back to showing just the poster.
-            // This prevents downloading a large desktop video on mobile connections.
-            const rawVideoSrc = (mediaQuery.matches) ? (media.mobileVideo || media.video) : media.video;
-            const rawPosterSrc = (mediaQuery.matches) ? (media.mobilePoster || media.poster) : media.poster;
+        const updateState = () => setIsMobile(mediaQuery.matches);
+        updateState();
 
-            // Apply ImageKit optimization (f-auto, q-auto)
-            const newVideoSrc = getOptimizedUrl(rawVideoSrc);
-            const newPosterSrc = getOptimizedUrl(rawPosterSrc);
-
-            if (newVideoSrc !== videoSrc) {
-                setVideoSrc(newVideoSrc);
-            }
-            if (newPosterSrc !== posterSrc) {
-                setPosterSrc(newPosterSrc);
-            }
-        };
-
-        updateSrc();
-
-        // Use modern listener if available, fallback to deprecated one for older Safari
         if (mediaQuery.addEventListener) {
-            mediaQuery.addEventListener('change', updateSrc);
-            return () => mediaQuery.removeEventListener('change', updateSrc);
+            mediaQuery.addEventListener('change', updateState);
+            return () => mediaQuery.removeEventListener('change', updateState);
         } else {
-            mediaQuery.addListener(updateSrc);
-            return () => mediaQuery.removeListener(updateSrc);
+            mediaQuery.addListener(updateState);
+            return () => mediaQuery.removeListener(updateState);
         }
-    }, [media.video, media.mobileVideo, media.poster, media.mobilePoster, media.type, videoSrc, posterSrc]);
-
-    // Handles video playback logic
-    React.useEffect(() => {
-        if (media.type?.toLowerCase() === 'video' && videoRef.current && videoSrc) {
-            const video = videoRef.current;
-
-            // Ensure video is muted for autoplay
-            video.muted = true;
-            video.setAttribute('muted', '');
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', '');
-
-            // Re-load if src changed
-            if (video.src !== videoSrc) {
-                video.load();
-            }
-
-            const attemptPlay = async () => {
-                if (!video.paused) return;
-                try {
-                    await video.play();
-                } catch (error) {
-                    console.warn("Autoplay was prevented, waiting for interaction:", error);
-                }
-            };
-
-            // Try playing as soon as we have enough data
-            const onCanPlay = () => {
-                attemptPlay();
-            };
-
-            // Fallback: Try playing on any user interaction with the document
-            const onInteraction = () => {
-                attemptPlay();
-                document.removeEventListener('touchstart', onInteraction);
-                document.removeEventListener('click', onInteraction);
-            };
-
-            if (video.readyState >= 2) {
-                attemptPlay();
-            } else {
-                video.addEventListener('canplay', onCanPlay);
-            }
-
-            document.addEventListener('touchstart', onInteraction, { passive: true });
-            document.addEventListener('click', onInteraction, { passive: true });
-
-            return () => {
-                video.removeEventListener('canplay', onCanPlay);
-                document.removeEventListener('touchstart', onInteraction);
-                document.removeEventListener('click', onInteraction);
-            };
-        }
-    }, [videoSrc, media.type]);
+    }, []);
 
     if (!media || !media.type) return null;
+
+    const commonImageStyles: React.CSSProperties = {
+        objectFit: imgClassName.includes('object-contain') ? 'contain' : 'cover'
+    };
 
     switch (media.type.toLowerCase()) {
         case "image":
             if (!media.image) return null;
-            const optimizedImageUrl = getOptimizedUrl(media.image);
+
+            // Generate optimized URL (getOptimizedUrl now handles ik: prefix internally)
+            const imageUrl = getOptimizedUrl(media.image, "f-auto,q-80");
+
             return (
                 <div className={`relative overflow-hidden ${className}`}>
                     <Image
-                        src={optimizedImageUrl!}
+                        src={imageUrl!}
                         alt={media.alt || "media image"}
                         fill
                         sizes={sizes}
                         priority={priority}
-                        style={{ objectFit: imgClassName.includes('object-contain') ? 'contain' : 'cover' }}
+                        style={commonImageStyles}
                         className={imgClassName}
+                        unoptimized={isImageKitPath(media.image)} // Let ImageKit handle optimization if it's an ik: path
                     />
                 </div>
             );
@@ -148,30 +73,29 @@ const MediaRenderer = ({
         case "video":
             if (!media.video) return null;
 
-            // If we have no video source (likely on mobile without mobileVideo),
-            // render the poster as an optimized Image.
-            if (!videoSrc) {
-                return (
-                    <div className={`relative overflow-hidden ${className}`}>
-                        <Image
-                            src={posterSrc || media.poster || ""}
-                            alt={media.alt || "video poster"}
-                            fill
-                            sizes={sizes}
-                            priority={priority}
-                            style={{ objectFit: imgClassName.includes('object-contain') ? 'contain' : 'cover' }}
-                            className={imgClassName}
-                        />
-                    </div>
-                );
-            }
+            // Determine transformation for ImageKit videos
+            const transformations = isMobile
+                ? "tr:w-720,ar-9-16,fo-auto"
+                : "tr:q-80";
+
+            const rawVideoPath = isMobile ? (media.mobileVideo || media.video) : media.video;
+            const videoUrl = isImageKitPath(media.video)
+                ? getOptimizedUrl(rawVideoPath, transformations)
+                : getOptimizedUrl(rawVideoPath);
+
+            // Handle Poster
+            const rawPosterPath = isMobile ? (media.mobilePoster || media.poster) : media.poster;
+            const posterUrl = isImageKitPath(rawPosterPath)
+                ? getOptimizedUrl(rawPosterPath, transformations.replace('tr:', 'tr:so-1,')) // If poster is ik: (from video), take 1st sec
+                : getOptimizedUrl(rawPosterPath);
 
             return (
                 <video
+                    key={videoUrl} // Force reload on URL change (e.g., resize)
                     ref={videoRef}
-                    src={videoSrc}
-                    poster={posterSrc}
-                    className={`object-cover ${className}`}
+                    src={videoUrl}
+                    poster={posterUrl}
+                    className={`object-cover ${className} w-full h-full`}
                     autoPlay
                     loop
                     muted
@@ -182,7 +106,6 @@ const MediaRenderer = ({
 
         case "youtube":
             if (!media.url) return null;
-            // Simple YouTube ID extractor
             const getYoutubeId = (url: string) => {
                 const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                 const match = url.match(regExp);
@@ -204,14 +127,10 @@ const MediaRenderer = ({
 
         case "lottie":
             if (!media.lottie && !media.url) return null;
-
             let source = media.lottie || media.url;
-
-            // If it's a lottie.host ID (contains hyphen but not starting with http/slash)
             if (source && typeof source === 'string' && !source.startsWith('/') && !source.startsWith('http') && source.includes('-')) {
                 source = `https://lottie.host/${source}.lottie`;
             }
-
             return (
                 <div className={`${className}`}>
                     <DotLottiePlayer

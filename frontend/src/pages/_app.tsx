@@ -14,24 +14,27 @@ import "../css/tailwind.css";
 
 import { SessionProvider } from "../context/SessionContext";
 import { WordingProvider } from "../context/WordingContext";
+import { ImageKitProvider } from "@imagekit/next";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <WordingProvider>
-      <SessionProvider>
-        <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
-          <main
-            className="font-body"
-            style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
-          >
-            {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
-            {process.env.NODE_ENV === 'development' && <WordingDebugger />}
-            {process.env.NODE_ENV === 'development' && <YmlLocator />}
-            <Component {...pageProps} />
-          </main>
-        </ThemeProvider>
-      </SessionProvider>
-    </WordingProvider>
+    <ImageKitProvider urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_ENDPOINT}>
+      <WordingProvider>
+        <SessionProvider>
+          <ThemeProvider attribute="data-theme" defaultTheme="tongxing">
+            <main
+              className="font-body"
+              style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
+            >
+              {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
+              {process.env.NODE_ENV === 'development' && <WordingDebugger />}
+              {process.env.NODE_ENV === 'development' && <YmlLocator />}
+              <Component {...pageProps} />
+            </main>
+          </ThemeProvider>
+        </SessionProvider>
+      </WordingProvider>
+    </ImageKitProvider>
   );
 }
 
