@@ -73,27 +73,26 @@ const MediaRenderer = ({
         case "video":
             if (!media.video) return null;
 
-            // Determine transformation for ImageKit videos
-            const transformations = isMobile
-                ? "tr:w-720,ar-9-16,fo-auto"
-                : "tr:q-80";
+            // Prepare optimized URLs for both mobile and desktop
+            // This allows us to use responsive <source> tags which prevent double-loading on initial page load
+            const desktopTransform = "tr:q-80";
+            const mobileTransform = "tr:w-720,ar-9-16,fo-auto";
 
-            const rawVideoPath = isMobile ? (media.mobileVideo || media.video) : media.video;
-            const videoUrl = isImageKitPath(media.video)
-                ? getOptimizedUrl(rawVideoPath, transformations)
-                : getOptimizedUrl(rawVideoPath);
+            const desktopVideoUrl = getOptimizedUrl(media.video, desktopTransform);
+            const mobileRawVideoPath = media.mobileVideo || media.video;
+            const mobileVideoUrl = getOptimizedUrl(mobileRawVideoPath, mobileTransform);
 
-            // Handle Poster
+            // Handle Poster (Reactive to isMobile to update the attribute if needed)
+            const activeTransform = isMobile ? mobileTransform : desktopTransform;
             const rawPosterPath = isMobile ? (media.mobilePoster || media.poster) : media.poster;
-            const posterUrl = isImageKitPath(rawPosterPath)
-                ? getOptimizedUrl(rawPosterPath, transformations.replace('tr:', 'tr:so-1,')) // If poster is ik: (from video), take 1st sec
-                : getOptimizedUrl(rawPosterPath);
+            const posterUrl = getOptimizedUrl(
+                rawPosterPath,
+                activeTransform.replace("tr:", "tr:so-1,")
+            );
 
             return (
                 <video
-                    key={videoUrl} // Force reload on URL change (e.g., resize)
                     ref={videoRef}
-                    src={videoUrl}
                     poster={posterUrl}
                     className={`object-cover ${className} w-full h-full`}
                     autoPlay
@@ -101,7 +100,12 @@ const MediaRenderer = ({
                     muted
                     playsInline
                     preload={priority ? "auto" : "metadata"}
-                />
+                >
+                    {media.mobileVideo && (
+                        <source src={mobileVideoUrl} media="(max-width: 768px)" />
+                    )}
+                    <source src={desktopVideoUrl} />
+                </video>
             );
 
         case "youtube":
