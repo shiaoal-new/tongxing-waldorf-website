@@ -1,122 +1,137 @@
-import { getAllFaculty } from './faculty';
-import { getAllFaq } from './faq';
-import { getAllCourses } from './courses';
-import { PageData, Section, Block, ListBlock as ListBlockType } from '../types/content';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { loadYamlWithIncludes } from './yaml-loader';
 
 /**
- * 数据依赖映射表
- * 定义每种 block 类型需要的全局数据
+ * 通用資料類型
  */
-const BLOCK_DATA_DEPENDENCIES: Record<string, string[]> = {
-    'member_block': ['facultyList'],
-    'faq_item': ['faqList'],
-    'list_block': [], // list_block 需要进一步检查其 item_type
-};
+export type DataType = 'pages' | 'courses' | 'faq' | 'faculty';
 
 /**
- * 检测 list_block 的数据依赖
+ * 通用資料項目介面
  */
-function getListBlockDependencies(block: ListBlockType): string[] {
-    const dependencies: string[] = [];
-    const itemType = block.item_type;
-
-    // 如果 list_block 包含 faq_ids,需要 faqList
-    if (block.faq_ids && block.faq_ids.length > 0) {
-        dependencies.push('faqList');
-    }
-
-    // 根据 item_type 判断依赖
-    if (itemType === 'faq_item') {
-        dependencies.push('faqList');
-    }
-
-    return dependencies;
+export interface DataItem {
+    slug?: string;
+    id?: string;
+    [key: string]: any;
 }
 
 /**
- * 递归分析 blocks 中的数据依赖
+ * 取得資料目錄
+ * @param dataType 資料類型 (pages, courses, faq, faculty)
  */
-function analyzeBlockDependencies(blocks: Block[]): Set<string> {
-    const dependencies = new Set<string>();
+export function getDataDirectory(dataType: DataType): string {
+    const baseCwd = process.cwd();
+    const p1 = path.join(baseCwd, `src/data/${dataType}`);
+    const p2 = path.join(baseCwd, `frontend/src/data/${dataType}`);
 
-    for (const block of blocks) {
-        const blockType = (block as any).type || (block as any).item_type;
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    return p1; // Fallback
+}
 
-        // 检查直接的 block 类型依赖
-        if (BLOCK_DATA_DEPENDENCIES[blockType]) {
-            BLOCK_DATA_DEPENDENCIES[blockType].forEach(dep => dependencies.add(dep));
+/**
+ * 取得資料項目 ID
+ * 根據檔名產生 slug 或 id
+ */
+function getItemId(fileName: string, extension: string): string {
+    return fileName.replace(new RegExp(`\\${extension}$`), '');
+}
+
+/**
+ * 讀取單一資料檔案
+ */
+function readDataFile(fullPath: string): { data: any; content: string } {
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const extension = path.extname(fullPath);
+
+    let data: any = {};
+    let content = '';
+
+    if (extension === '.yml' || extension === '.yaml') {
+        data = loadYamlWithIncludes(fullPath);
+        if (data.content) {
+            content = data.content;
         }
+    } else {
+        const matterResult = matter(fileContents);
+        data = matterResult.data;
+        content = matterResult.content;
+    }
 
-        // 特殊处理 list_block
-        if (blockType === 'list_block') {
-            const listBlock = block as ListBlockType;
-            const listDeps = getListBlockDependencies(listBlock);
-            listDeps.forEach(dep => dependencies.add(dep));
+    return { data, content };
+}
 
-            // 递归检查 list_block 中的 items
-            if (listBlock.items && Array.isArray(listBlock.items)) {
-                const itemDeps = analyzeBlockDependencies(listBlock.items as Block[]);
-                itemDeps.forEach(dep => dependencies.add(dep));
+/**
+ * 載入所有資料
+ * @param dataType 資料類型
+ * @param options 選項
+ * @param options.excludeWording 是否排除 .wording. 檔案
+ * @param options.sortBy 排序欄位
+ * @param options.transform 轉換函數
+ */
+export function loadAllData<T extends DataItem>(
+    dataType: DataType,
+    options: {
+        excludeWording?: boolean;
+        sortBy?: string;
+        transform?: (item: DataItem, fullPath: string, rawContent: string) => T;
+    } = {}
+): T[] {
+    const { excludeWording = true, sortBy, transform } = options;
+    const directory = getDataDirectory(dataType);
+
+    if (!fs.existsSync(directory)) {
+        return [];
+    }
+
+    const fileNames = fs.readdirSync(directory);
+    const allData = fileNames
+        .filter(fileName => {
+            const isValidExtension = fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml');
+            if (!isValidExtension) return false;
+            if (excludeWording && fileName.includes('.wording.')) return false;
+            return true;
+        })
+        .map(fileName => {
+            const extension = path.extname(fileName);
+            const slug = getItemId(fileName, extension);
+            const fullPath = path.join(directory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const { data, content } = readDataFile(fullPath);
+
+            // 預設轉換
+            let item: any = {
+                slug: data.slug || slug,
+                ...data,
+                content: content,
+            };
+
+            // 如果有自訂轉換函數，則使用
+            if (transform) {
+                item = transform(item, fullPath, fileContents);
             }
-        }
+
+            return item as T;
+        });
+
+    // 排序
+    if (sortBy) {
+        return allData.sort((a, b) => {
+            const orderA = a[sortBy] || 999;
+            const orderB = b[sortBy] || 999;
+            return orderA - orderB;
+        });
     }
 
-    return dependencies;
+    return allData;
 }
 
 /**
- * 分析页面配置,确定需要加载的数据
+ * 根據 slug/id 取得單一資料項目
  */
-export function analyzePageDataDependencies(page: PageData | null): Set<string> {
-    const dependencies = new Set<string>();
-
-    if (!page) {
-        return dependencies;
-    }
-
-    // 分析 sections 中的 blocks
-    if (page.sections && Array.isArray(page.sections)) {
-        for (const section of page.sections) {
-            if (section.blocks && Array.isArray(section.blocks)) {
-                const sectionDeps = analyzeBlockDependencies(section.blocks);
-                sectionDeps.forEach(dep => dependencies.add(dep));
-            }
-        }
-    }
-
-    return dependencies;
-}
-
-/**
- * 按需加载数据
- * 只加载页面实际需要的数据,减少不必要的开销
- */
-export function loadPageData(dependencies: Set<string>) {
-    const data: {
-        facultyList?: any[];
-        faqList?: any[];
-        coursesList?: any[];
-    } = {};
-
-    if (dependencies.has('facultyList')) {
-        data.facultyList = getAllFaculty();
-    }
-
-    if (dependencies.has('faqList')) {
-        data.faqList = getAllFaq();
-    }
-
-    if (dependencies.has('coursesList')) {
-        data.coursesList = getAllCourses();
-    }
-
-    return data;
-}
-
-/**
- * 一站式函数:分析并加载页面数据
- */
-export function getPageDataOptimized(page: PageData | null) {
-    const dependencies = analyzePageDataDependencies(page);
-    return loadPageData(dependencies);
+export function getDataBySlug<T extends DataItem>(dataType: DataType, slug: string): T | undefined {
+    const allData = loadAllData<T>(dataType);
+    return allData.find(item => item.slug === slug || item.id === slug);
 }

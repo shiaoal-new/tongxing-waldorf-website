@@ -1,188 +1,87 @@
-import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import { PageData } from '../types/content';
-import { loadYamlWithIncludes } from './yaml-loader';
+import { loadAllData } from './dataLoader';
 
-function getPagesDirectory() {
-    const baseCwd = process.cwd();
-    const p1 = path.join(baseCwd, 'src/data/pages');
-    const p2 = path.join(baseCwd, 'frontend/src/data/pages');
-
-    if (fs.existsSync(p1)) return p1;
-    if (fs.existsSync(p2)) return p2;
-    return p1; // Fallback
-}
-
-const pagesDirectory = getPagesDirectory();
-
+/**
+ * 取得所有頁面
+ */
 export function getAllPages(): PageData[] {
-    if (!fs.existsSync(pagesDirectory)) {
-        return [];
-    }
+    return loadAllData<PageData>('pages', {
+        excludeWording: true,
+        transform: (item, fullPath, rawContent) => {
+            const data = item as any;
+            const extension = path.extname(fullPath);
+            const isYaml = extension === '.yml' || extension === '.yaml';
 
-    const fileNames = fs.readdirSync(pagesDirectory);
-    const allPagesData = fileNames
-        .filter(fileName => (fileName.endsWith('.md') || fileName.endsWith('.yml') || fileName.endsWith('.yaml')) && !fileName.includes('.wording.'))
-        .map(fileName => {
-            const extension = path.extname(fileName);
-            const slug = fileName.replace(new RegExp(`\\${extension}$`), '');
-            const fullPath = path.join(pagesDirectory, fileName);
-            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            // 注入源文件路徑
+            data._sourceFile = fullPath;
 
-            let data: any = {};
-            let content = '';
+            if (isYaml) {
+                const lines = rawContent.split('\n');
 
-            if (extension === '.yml' || extension === '.yaml') {
-                data = loadYamlWithIncludes(fullPath);
-            } else {
-                const matterResult = matter(fileContents);
-                data = matterResult.data;
-                content = matterResult.content;
-            }
+                // 處理 Hero 欄位的精確行號
+                if (data.hero) {
+                    const heroStartLine = findFieldLineNumber(lines, 0, 'hero');
+                    if (heroStartLine > 0) {
+                        const fields = ['title', 'subtitle', 'badge', 'content', 'buttons', 'video', 'image', 'background_image'];
+                        const fieldLines: Record<string, number> = {};
 
-            // 处理 Hero 字段的精确行号
-            if (data.hero && (extension === '.yml' || extension === '.yaml')) {
-                const lines = fileContents.split('\n');
-                // 找到 hero: 的起始行
-                const heroStartLine = findFieldLineNumber(lines, 0, 'hero');
-
-                if (heroStartLine > 0) {
-                    const fields = ['title', 'subtitle', 'badge', 'content', 'buttons', 'video', 'image', 'background_image'];
-                    const fieldLines: Record<string, number> = {};
-
-                    fields.forEach(field => {
-                        // 在 hero 块内查找字段，假设 hero 块大约 50 行内（简单启发式，或者可以改进查找逻辑）
-                        // 为简单起见，我们从 heroStartLine 开始往下找，由于 YAML 顺序不确定，我们可能需要更严谨的范围控制
-                        // 但通常字段会在 hero 下方。
-                        // 修正：我们需要限制查找范围，或者检查缩进。
-                        // 简化版：从 heroStartLine 开始找，只要缩进比 hero 大。
-                        const line = findFieldLineNumber(lines, heroStartLine - 1, field, true);
-                        if (line > 0) fieldLines[field] = line;
-                    });
-
-                    data.hero = {
-                        ...data.hero,
-                        _sourceFile: fullPath,
-                        _sourceLines: fieldLines,
-                        _sourceLine: heroStartLine
-                    };
-                }
-            }
-
-            // 处理 Hero 字段的精确行号
-            if (data.hero && (extension === '.yml' || extension === '.yaml')) {
-                const lines = fileContents.split('\n');
-                // 找到 hero: 的起始行
-                const heroStartLine = findFieldLineNumber(lines, 0, 'hero');
-
-                if (heroStartLine > 0) {
-                    const fields = ['title', 'subtitle', 'badge', 'content', 'buttons', 'video', 'image', 'background_image'];
-                    const fieldLines: Record<string, number> = {};
-
-                    fields.forEach(field => {
-                        // 在 hero 块内查找字段，假设 hero 块大约 50 行内（简单启发式，或者可以改进查找逻辑）
-                        // 为简单起见，我们从 heroStartLine 开始往下找，由于 YAML 顺序不确定，我们可能需要更严谨的范围控制
-                        // 但通常字段会在 hero 下方。
-                        // 修正：我们需要限制查找范围，或者检查缩进。
-                        // 简化版：从 heroStartLine 开始找，只要缩进比 hero 大。
-                        const line = findFieldLineNumber(lines, heroStartLine - 1, field, true);
-                        if (line > 0) fieldLines[field] = line;
-                    });
-
-                    data.hero = {
-                        ...data.hero,
-                        _sourceFile: fullPath,
-                        _sourceLines: fieldLines,
-                        _sourceLine: heroStartLine
-                    };
-                }
-            }
-
-
-            // 处理 Hero 字段的精确行号
-            if (data.hero && (extension === '.yml' || extension === '.yaml')) {
-                const lines = fileContents.split('\n');
-                // 找到 hero: 的起始行
-                const heroStartLine = findFieldLineNumber(lines, 0, 'hero');
-
-                if (heroStartLine > 0) {
-                    const fields = ['title', 'subtitle', 'badge', 'content', 'buttons', 'video', 'image', 'background_image'];
-                    const fieldLines: Record<string, number> = {};
-
-                    fields.forEach(field => {
-                        // 从 heroStartLine 开始找，只要缩进比 hero 大。
-                        const line = findFieldLineNumber(lines, heroStartLine - 1, field, true);
-                        if (line > 0) fieldLines[field] = line;
-                    });
-
-                    data.hero = {
-                        ...data.hero,
-                        _sourceFile: fullPath,
-                        _sourceLines: fieldLines,
-                        _sourceLine: heroStartLine
-                    };
-                }
-            }
-
-            // 给每个 section 注入源文件路径和行号，用于 YML Locator 功能
-            if (Array.isArray(data.sections) && (extension === '.yml' || extension === '.yaml')) {
-                // 扫描 YAML 文本，找到 sections 数组下每个 section 的起始行号
-                const sectionLineNumbers = findSectionLineNumbers(fileContents);
-                const lines = fileContents.split('\n');
-
-                data.sections = data.sections.map((section: any, idx: number) => {
-                    // 如果 section 是通过 !include 加载的，它可能已经有自己的 _sourceFile
-                    if (section._sourceFile) return section;
-
-                    const sectionLine = sectionLineNumbers[idx] ?? 1;
-
-                    // 扫描该 section 内 blocks 的行号
-                    let blocksWithLines = section.blocks;
-                    if (Array.isArray(section.blocks)) {
-                        const blockLineNumbers = findBlockLineNumbers(lines, sectionLine - 1);
-                        blocksWithLines = section.blocks.map((block: any, bIdx: number) => {
-                            const blockLine = blockLineNumbers[bIdx] ?? sectionLine;
-
-                            // 准备要返回的 block 对象
-                            const newBlock = {
-                                ...block,
-                                _sourceFile: fullPath,
-                                _sourceLine: blockLine,
-                            };
-
-                            // 仅当 items 是数组时才处理并覆盖
-                            if (Array.isArray(block.items)) {
-                                const itemLineNumbers = findItemLineNumbers(lines, blockLine - 1);
-                                newBlock.items = block.items.map((item: any, iIdx: number) => ({
-                                    ...item,
-                                    _sourceFile: fullPath,
-                                    _sourceLine: itemLineNumbers[iIdx] ?? blockLine,
-                                }));
-                            }
-
-                            return newBlock;
+                        fields.forEach(field => {
+                            const line = findFieldLineNumber(lines, heroStartLine - 1, field, true);
+                            if (line > 0) fieldLines[field] = line;
                         });
-                    }
 
-                    return {
-                        ...section,
-                        blocks: blocksWithLines,
-                        _sourceFile: fullPath,
-                        _sourceLine: sectionLine,
-                    };
-                });
+                        data.hero = {
+                            ...data.hero,
+                            _sourceFile: fullPath,
+                            _sourceLines: fieldLines,
+                            _sourceLine: heroStartLine
+                        };
+                    }
+                }
+
+                // 注入 section/block/item 的行號
+                if (Array.isArray(data.sections)) {
+                    const sectionLineNumbers = findSectionLineNumbers(rawContent);
+                    data.sections = data.sections.map((section: any, idx: number) => {
+                        if (section._sourceFile) return section; // 已有來源（例如透過 !include）
+
+                        const sectionLine = sectionLineNumbers[idx] ?? 1;
+
+                        if (Array.isArray(section.blocks)) {
+                            const blockLineNumbers = findBlockLineNumbers(lines, sectionLine - 1);
+                            section.blocks = section.blocks.map((block: any, bIdx: number) => {
+                                const blockLine = blockLineNumbers[bIdx] ?? sectionLine;
+                                const newBlock = {
+                                    ...block,
+                                    _sourceFile: fullPath,
+                                    _sourceLine: blockLine,
+                                };
+
+                                if (Array.isArray(block.items)) {
+                                    const itemLineNumbers = findItemLineNumbers(lines, blockLine - 1);
+                                    newBlock.items = block.items.map((item: any, iIdx: number) => ({
+                                        ...item,
+                                        _sourceFile: fullPath,
+                                        _sourceLine: itemLineNumbers[iIdx] ?? blockLine,
+                                    }));
+                                }
+                                return newBlock;
+                            });
+                        }
+
+                        return {
+                            ...section,
+                            _sourceFile: fullPath,
+                            _sourceLine: sectionLine,
+                        };
+                    });
+                }
             }
 
-            return {
-                slug: data.slug || slug,
-                ...data,
-                _sourceFile: fullPath, // 直接注入路径，确保 spread 后不丢失
-                content: content,
-            } as PageData;
-        });
-
-    return allPagesData;
+            return data as PageData;
+        }
+    });
 }
 
 export function getPageBySlug(slug: string): PageData | undefined {
