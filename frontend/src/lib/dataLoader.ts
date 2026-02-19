@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { loadYamlWithIncludes } from './yaml-loader';
+import { PageData, ListBlock } from '../types/content';
 
 /**
  * 通用資料類型
@@ -153,4 +154,62 @@ export function getDataBySlug<T extends DataItem>(dataType: DataType, slug: stri
     // 這裡原本會呼叫 loadAllData，這很好，因為 loadAllData 現在已經有快取了
     const allData = loadAllData<T>(dataType);
     return allData.find(item => item.slug === slug || item.id === slug);
+}
+
+/**
+ * 根據頁面內容優化載入所需的資料
+ * 只載入頁面實際用到的資料集合
+ */
+export function getPageDataOptimized(page: PageData | null | undefined) {
+    const result: {
+        facultyList: any[];
+        faqList: any[];
+        coursesList: any[];
+    } = {
+        facultyList: [],
+        faqList: [],
+        coursesList: [],
+    };
+
+    if (!page || !page.sections) {
+        return result;
+    }
+
+    let needsFaculty = false;
+    let needsFaq = false;
+    let needsCourses = false;
+
+    // 檢查頁面是否包含需要特定資料的區塊
+    page.sections.forEach(section => {
+        if (section.blocks) {
+            section.blocks.forEach(block => {
+                if (block.type === 'member_block') {
+                    needsFaculty = true;
+                }
+                if (block.type === 'list_block') {
+                    const listBlock = block as ListBlock;
+                    if (listBlock.item_type === 'faq_item') {
+                        needsFaq = true;
+                    }
+                }
+                if (block.type === 'curriculum_block') {
+                    needsCourses = true;
+                }
+            });
+        }
+    });
+
+    if (needsFaculty) {
+        result.facultyList = loadAllData('faculty');
+    }
+
+    if (needsFaq) {
+        result.faqList = loadAllData('faq');
+    }
+
+    if (needsCourses) {
+        result.coursesList = loadAllData('courses');
+    }
+
+    return result;
 }
