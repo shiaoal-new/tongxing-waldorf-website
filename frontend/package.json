@@ -79,8 +79,6 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.13.5",
-    "@locator/babel-jsx": "^0.5.1",
-    "@locator/runtime": "^0.5.1",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
