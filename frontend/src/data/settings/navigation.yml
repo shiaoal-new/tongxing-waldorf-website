@@ -19,6 +19,8 @@ items:
         path: "/index-option2"
       - title: "方案 3：成長旅程版"
         path: "/index-option3"
+      - title: "方案 4：統整版"
+        path: "/index-option4"
   - title: "課程與教學"
     children:
       - slug: "rhythm-of-life"

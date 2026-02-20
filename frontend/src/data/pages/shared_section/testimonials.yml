@@ -1,0 +1,85 @@
+section_id: testimonials
+silk_background: true
+divider:
+  type: wave
+  position: bottom
+  color: fill-brand-bg
+_layout:
+  background: bg-neutral-50 dark:bg-neutral-950
+blocks:
+  - type: text_block
+    title: "$testimonials.intro.title"
+    subtitle: "$testimonials.intro.subtitle"
+  - type: list_block
+    layout:
+      method: carousel
+      config:
+        loop: true
+        align: center
+        highlight_active: true
+    item_type: testimonial_item
+    items:
+      - quote: $testimonials.items.0.quote
+        author: $testimonials.items.0.author
+        title: $testimonials.items.0.title
+        media:
+          type: image
+          image: /img/featured-academic.webp
+        span: 4
+      - quote: $testimonials.items.1.quote
+        author: $testimonials.items.1.author
+        title: $testimonials.items.1.title
+        media:
+          type: image
+          image: /img/featured-social.webp
+        span: 4
+      - quote: $testimonials.items.2.quote
+        author: $testimonials.items.2.author
+        title: $testimonials.items.2.title
+        media:
+          type: image
+          image: /img/featured-willpower.webp
+        span: 4
+      - quote: $testimonials.items.3.quote
+        author: $testimonials.items.3.author
+        title: $testimonials.items.3.title
+        media:
+          type: image
+          image: /img/featured-protection.webp
+        span: 4
+      - quote: $testimonials.items.4.quote
+        author: $testimonials.items.4.author
+        title: $testimonials.items.4.title
+        media:
+          type: image
+          image: /img/featured-artistic.webp
+        span: 4
+      - quote: $testimonials.items.5.quote
+        author: $testimonials.items.5.author
+        title: $testimonials.items.5.title
+        media:
+          type: image
+          image: /img/featured-exploration.webp
+        span: 4
+      - quote: $testimonials.items.6.quote
+        author: $testimonials.items.6.author
+        title: $testimonials.items.6.title
+        media:
+          type: image
+          image: /img/featured-nature.webp
+        span: 4
+      - quote: $testimonials.items.7.quote
+        author: $testimonials.items.7.author
+        title: $testimonials.items.7.title
+        media:
+          type: image
+          image: /img/featured-outdoor.webp
+        span: 4
+      - quote: $testimonials.items.8.quote
+        author: $testimonials.items.8.author
+        title: $testimonials.items.8.title
+        avatar: /img/teacher-photos/詹雅智.webp
+        media:
+          type: image
+          image: /img/visit.webp
+        span: 4

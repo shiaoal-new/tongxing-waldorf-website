@@ -1,0 +1,117 @@
+title: "$seo.title"
+slug: index-option4
+seo:
+  title: "$seo.title"
+hero:
+  title: "$hero.title"
+  subtitle: "$hero.subtitle"
+  layout: "Hero: 左下方文字方塊 (首頁風格)"
+  media_list:
+    - type: video
+      video: ik:hero-video-av1.webm
+      poster: /img/index/hero-poster.webp
+
+sections:
+  - section_id: mission
+    blocks:
+      - type: text_block
+        title: "$mission.title"
+        subtitle: "$mission.subtitle"
+        content: "$mission.content"
+        layout: centered
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$mission.item_pain.title"
+            content: "$mission.item_pain.content"
+            span: 6
+            icon: lucide:heart
+          - title: "$mission.item_anthroposophy.title"
+            content: "$mission.item_anthroposophy.content"
+            span: 6
+            icon: lucide:book-open
+
+  - section_id: differences
+    silk_background: true
+    blocks:
+      - type: text_block
+        title: "$differences.title"
+        subtitle: "$differences.subtitle"
+        content: "$differences.content"
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$differences.curriculum.title"
+            content: "$differences.curriculum.content"
+            span: 12
+          - title: "$differences.curriculum.item_anthroposophy.title"
+            span: 4
+            icon: lucide:star
+          - title: "$differences.curriculum.item_humanities.title"
+            content: "$differences.curriculum.item_humanities.content"
+            span: 4
+            icon: lucide:book
+          - title: "$differences.curriculum.item_math.title"
+            span: 4
+            icon: lucide:calculator
+          - title: "$differences.curriculum.item_nature.title"
+            content: "$differences.curriculum.item_nature.content"
+            span: 4
+            icon: lucide:leaf
+          - title: "$differences.curriculum.item_project.title"
+            span: 4
+            icon: lucide:lightbulb
+          - title: "$differences.workbook.title"
+            content: "$differences.workbook.content"
+            span: 4
+            icon: lucide:file-text
+
+  - section_id: daily_learning
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$daily_learning.title"
+      - type: list_block
+        layout: carousel
+        item_type: feature_item
+        items:
+          - title: "$daily_learning.schedule.title"
+            content: "$daily_learning.schedule.content"
+            span: 6
+            icon: lucide:clock
+          - title: "$daily_learning.rhythm.title"
+            content: "$daily_learning.rhythm.content"
+            span: 6
+            icon: lucide:calendar
+
+  - section_id: future_paths
+    blocks:
+      - type: text_block
+        title: "$future_paths.title"
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$future_paths.ai_generation.title"
+            content: "$future_paths.ai_generation.content"
+            span: 6
+            icon: lucide:cpu
+          - title: "$future_paths.diagnostic.title"
+            content: "$future_paths.diagnostic.content"
+            span: 6
+            icon: lucide:line-chart
+
+  - !include shared_section/testimonials.yml
+
+  - layout: 紫色大型看板 (CTA)
+    blocks:
+      - type: text_block
+        title: "$cta_bottom.title"
+        content: "$cta_bottom.content"
+      - type: cta_block
+        buttons:
+          - text: "$cta_bottom.button"
+            link: /visit
+            style: btn-inverse
