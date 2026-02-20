@@ -86,9 +86,10 @@ interface BackgroundMediaItemProps {
     transition_type: string;
     currentIndex: number;
     isFullViewport?: boolean;
+    priority?: boolean;
 }
 
-const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewport = false }: BackgroundMediaItemProps) => {
+const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewport = false, priority = false }: BackgroundMediaItemProps) => {
     const currentVariant = TRANSITION_VARIANTS[transition_type] || TRANSITION_VARIANTS.fade;
 
     return (
@@ -106,7 +107,7 @@ const BackgroundMediaItem = ({ item, transition_type, currentIndex, isFullViewpo
                     media={item}
                     className={`${isFullViewport ? 'w-full h-[100lvh]' : 'w-full h-full'} ${item.type === 'youtube' ? 'pointer-events-none scale-150 aspect-auto' : ''}`}
                     imgClassName="object-cover"
-                    priority={true}
+                    priority={priority}
                     sizes="100vw"
                 />
             </motion.div>
@@ -151,6 +152,7 @@ interface BackgroundCarouselProps {
     overlay_color?: string; // Supports Hex8 for opacity (#RRGGBBAA)
     entry_animation?: boolean | { delay?: number; duration?: number };
     parallax_ratio?: number;
+    priority?: boolean; // Control whether to preload video immediately
 }
 
 export default function BackgroundCarousel({
@@ -161,7 +163,8 @@ export default function BackgroundCarousel({
     transition_type = 'fade',
     overlay_color,
     entry_animation,
-    parallax_ratio = 0
+    parallax_ratio = 0,
+    priority = false
 }: BackgroundCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -210,6 +213,7 @@ export default function BackgroundCarousel({
                             transition_type={transition_type}
                             currentIndex={currentIndex}
                             isFullViewport={true}
+                            priority={priority}
                         />
                     </div>
                 </div>
@@ -227,6 +231,7 @@ export default function BackgroundCarousel({
                             item={currentItem}
                             transition_type={transition_type}
                             currentIndex={currentIndex}
+                            priority={priority}
                         />
                     </motion.div>
                 </div>

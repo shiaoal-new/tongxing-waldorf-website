@@ -64,6 +64,7 @@ interface SectionProps {
     entry_animation?: boolean | { delay?: number; duration?: number };
     background_scroll_fade?: boolean;
     disable_content_animation?: boolean;
+    priority?: boolean; // Control whether to preload video immediately
     [key: string]: any;
 }
 
@@ -92,6 +93,7 @@ export default function Section(props: SectionProps) {
         limit = 10,
         background_scroll_fade,
         disable_content_animation,
+        priority,
         ...rest
     } = props;
 
@@ -197,6 +199,7 @@ export default function Section(props: SectionProps) {
                         parallax_ratio={parallax_ratio}
                         overlay_color={overlay_color}
                         entry_animation={entry_animation}
+                        priority={priority}
                     />
                 </motion.div>
             )}

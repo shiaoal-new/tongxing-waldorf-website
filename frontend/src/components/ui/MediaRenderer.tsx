@@ -26,6 +26,7 @@ const MediaRenderer = ({
 }: MediaRendererProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [isMobile, setIsMobile] = React.useState(false);
+    const [shouldLoad, setShouldLoad] = React.useState(priority);
 
     // Determines the appropriate video and poster source based on screen width
     React.useEffect(() => {
@@ -41,6 +42,30 @@ const MediaRenderer = ({
             return () => mediaQuery.removeListener(updateState);
         }
     }, []);
+
+    // Use IntersectionObserver to lazy load video when not priority
+    React.useEffect(() => {
+        if (priority || shouldLoad) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // Start loading when video is within 200px of viewport
+                    if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + 200) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            { rootMargin: "200px" }
+        );
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [priority, shouldLoad]);
 
     if (!media || !media.type) return null;
 
@@ -99,12 +124,13 @@ const MediaRenderer = ({
                     loop
                     muted
                     playsInline
-                    preload={priority ? "auto" : "metadata"}
+                    preload={priority ? "auto" : (shouldLoad ? "auto" : "none")}
+                    src={shouldLoad ? desktopVideoUrl : undefined}
                 >
-                    {media.mobileVideo && (
+                    {shouldLoad && media.mobileVideo && (
                         <source src={mobileVideoUrl} media="(max-width: 768px)" />
                     )}
-                    <source src={desktopVideoUrl} />
+                    {shouldLoad && <source src={desktopVideoUrl} />}
                 </video>
             );
 

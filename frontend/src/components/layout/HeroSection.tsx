@@ -204,6 +204,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
             entry_animation={entryAnimation}
             background_scroll_fade
             disable_content_animation
+            priority={true} // Hero section videos should preload immediately
             layout={{
                 wrapper_class: wrapperClass,
                 container_class: layoutClasses.container_class || "items-center justify-center",
