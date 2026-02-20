@@ -115,6 +115,21 @@ const MediaRenderer = ({
                 activeTransform.replace("tr:", "tr:so-1,")
             );
 
+            // Trigger video load and play when shouldLoad becomes true
+            React.useEffect(() => {
+                const video = videoRef.current;
+                if (shouldLoad && video && video.paused) {
+                    video.load();
+                    // Explicitly call play() to ensure it starts as soon as data arrives
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            // Autoplay was prevented, but at least the video is primed
+                        });
+                    }
+                }
+            }, [shouldLoad]);
+
             return (
                 <video
                     ref={videoRef}
@@ -124,13 +139,20 @@ const MediaRenderer = ({
                     loop
                     muted
                     playsInline
-                    preload={priority ? "auto" : (shouldLoad ? "auto" : "none")}
-                    src={shouldLoad ? desktopVideoUrl : undefined}
+                    // Change: Use "metadata" instead of "none" to let browser check headers early
+                    // This allows the browser to know the video is streamable via our faststart fix
+                    preload={priority ? "auto" : "metadata"}
                 >
-                    {shouldLoad && media.mobileVideo && (
-                        <source src={mobileVideoUrl} media="(max-width: 768px)" />
+                    {/* Always render sources to help browser state machine, only set URL when needed */}
+                    {media.mobileVideo && (
+                        <source
+                            src={shouldLoad ? mobileVideoUrl : ""}
+                            media="(max-width: 768px)"
+                        />
                     )}
-                    {shouldLoad && <source src={desktopVideoUrl} />}
+                    <source
+                        src={shouldLoad ? desktopVideoUrl : ""}
+                    />
                 </video>
             );
 
