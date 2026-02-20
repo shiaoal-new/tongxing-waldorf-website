@@ -1,49 +1,51 @@
-label: 技職、自學與多元
-desc: 體制內的實作派與非傳統路徑
-title: 多元路徑：技職、自學與海外
-subtitle: 探索適合動手做與自主學習的生命色彩
-content: 華德福孩子展現的「實作力」與「靈活性」，在技職體系或自學領域常能大放異彩。
-item_vocational:
-  title: 技術高中 (Vocational)
-  content: 體制內的「實作派」。強調做中學，適合動手能力強、不想死讀書的孩子。壓力來源主要為技能檢定而非學科考試，與華德福的工藝精神高度契合。
-item_special:
-  title: 特殊選才與升學優勢
-  content: 華德福高中的「畢業專題」是申請特殊選才的核心資產。許多畢業生憑藉深厚的自我覺察與對議題的論述能力，錄取清大、交大、北藝大等頂尖學府。
-item_global:
-  title: 國際流動與海外銜接
-  content: 台灣華德福學生具備良好的國際流動性。部分家庭選擇在 9 年級後將孩子送往德國、澳洲或美國的華德福高中，無縫接軌當地的藝術與學術課程。
-advice:
-  title: 技職生的實作力
-  content: "華德福孩子具備卓越的『動手做』精神。在注重實習的技術中學裡，這份對材料的敏感度與自律性常讓他們在專業科目上脫穎而出。"
+paths:
+  diverse:
+    label: 其他多元選擇
+    desc: 海內外跨界發展
+    title: 其他多元升學管道
+    subtitle: 出國留學、自學與特殊機構
+    content: 除了高中體系外，部分家長與學生選擇了更具挑戰性的「非典型路徑」。這通常需要家庭極高的支持度與資源投入，但也能培育出獨特的世界觀。
+    item_abroad:
+      title: 提早出國留學
+      content: 銜接海外 Waldorf 學校或一般中學。適合外語能力早熟、家庭有移民/駐外規劃的孩子。文化適應是一大挑戰。
+    item_homeschool:
+      title: 個人實驗教育 (自學)
+      content: 針對有強烈個人興趣（如程式天才、藝術專精）的孩子，自組共學團體或在家自學。考驗家長的規劃能力。
+    item_vtech:
+      title: 特殊技職或藝術學校
+      content: 直接進入音樂班、體育班或建教合作學校。適合性向非常明確、提早確定職業生涯的孩子。
+    advice:
+      title: 給家長的話
+      content: "這條路人煙稀少，孩子可能會有孤獨感。確保孩子有參加校外社團或青少年活動，維持健康的社交網絡是非常重要的。此外，提早建立未來的能力清單與作品集，將是日後升學/就業的資本。"
 
-# 外部參考資料
-external_resources:
-  title: 多元升學與自學資源
-  items:
-    - title: "大學多元入學升學網"
-      content: "由大學招聯會提供，了解包含特殊選才在內的多元入學管道與重要時程。"
-      icon: "lucide:graduation-cap"
-      buttons:
-        - text: "前往招生資訊網"
-          link: "https://www.jbcrc.edu.tw/"
-          style: "btn-outline"
-    - title: "台灣實驗教育資訊網"
-      content: "提供自學申請、實驗機構查詢及相關法律規範的官方資源。"
-      icon: "lucide:info"
-      buttons:
-        - text: "探索實驗教育資源"
-          link: "https://fw.moe.edu.tw/"
-          style: "btn-outline"
-    - title: "技專校院招生委員會聯合會"
-      content: "針對想深耕實務技能的孩子，探索技職體系的各類入學管道與資訊。"
-      icon: "lucide:wrench"
-      buttons:
-        - text: "查看技職路徑"
-          link: "https://www.techadmi.edu.tw/"
-          style: "btn-outline"
+    # 外部參考資料
+    external_resources:
+      title: 多元升學參考資源
+      items:
+        - title: "教育部實驗教育推動中心"
+          content: "可以查詢全台最新的自學方案規定、資源申請與輔導機制。"
+          icon: "lucide:file-text"
+          buttons:
+            - text: "前往推動中心"
+              link: "https://teec.nccu.edu.tw/"
+              style: "btn-outline"
+        - title: "Taiwanese Study Abroad Groups"
+          content: "許多臉書社團分享低齡留學的甘苦談與學校推薦。"
+          icon: "lucide:plane"
+          buttons:
+            - text: "搜尋留學社群"
+              link: "https://www.facebook.com/search/groups/?q=台灣留學"
+              style: "btn-outline"
+        - title: "特殊選才資訊介紹"
+          content: "為非典型教育背景的學生，提供免考學測直升大學的管道說明。"
+          icon: "lucide:star"
+          buttons:
+            - text: "看特殊選才整理"
+              link: "https://www.unews.com.tw/school/news/64627"
+              style: "btn-outline"
 
-# CTA
-cta:
-  title: "讓天賦在最適宜的土壤發芽"
-  subtitle: "我們擅長協助孩子整理多年的學習歷程，將華德福的專題轉化為強大的升學優勢。"
-  button_text: "了解特殊選才全攻略"
+    # CTA
+    cta:
+      title: "尋找為您量身打造的航道"
+      subtitle: "不論做什麼選擇，同心都是支持你們的後盾。歡迎與導師預約個別諮詢。"
+      button_text: "預約升學諮詢"

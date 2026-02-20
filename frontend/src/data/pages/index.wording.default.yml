@@ -66,8 +66,6 @@ videos:
     title: 中學時期的個體化思辨過程
     content: 紀錄中學生如何在藝術專題與理科探究中，逐步發展出獨立思考的能力與對自我的認同感。
 
-testimonials: !include shared_section/testimonials.wording.default.yml
-
 faq:
   intro:
     title: 常見問答整理與解惑

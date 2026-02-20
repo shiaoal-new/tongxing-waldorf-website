@@ -6,7 +6,7 @@ import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation, getSiteSettings } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
 import { useWording } from "../hooks/useWording";
-import { getWordingDictionary, resolveWording } from "../lib/wording.server";
+import { getWordingDictionary, getWordingDictionaryFromData, resolveWording } from "../lib/wording.server";
 
 export default function Home(props) {
   // Wording resolution is now handled inside DynamicPageContent via useWording hook
@@ -78,7 +78,7 @@ export async function getStaticProps() {
   // Always resolve default wordings at build time for all environments.
   // This eliminates text flash (FOUC) where raw $ids like "$hero.title" briefly appear.
   // Client-side useWording hook will only re-resolve when user actively switches wording style.
-  const dictionary = getWordingDictionary("index", "default", ["faq"]);
+  const dictionary = getWordingDictionaryFromData(page, "index", "default", ["faq"]);
   const resolvedPage = page ? resolveWording(page, dictionary) : null;
   const resolvedData = resolveWording({ facultyList, faqList }, dictionary);
 

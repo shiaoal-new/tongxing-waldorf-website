@@ -1,132 +1,134 @@
-label: 轉軌主流高中
-desc: 挑戰自我與跨體制適應
-title: 轉軌主流高中：跨體制的生命挑戰
-subtitle: 內在驅動力帶動的跨體制適應力
-content: 華德福孩子在國中階段培養的「洞察力」與「抗壓性」，能協助他們快速適應體制內環境。
+paths:
+  mainstream:
+    label: 轉軌主流高中
+    desc: 挑戰自我與跨體制適應
+    title: 轉軌主流高中：跨體制的生命挑戰
+    subtitle: 內在驅動力帶動的跨體制適應力
+    content: 華德福孩子在國中階段培養的「洞察力」與「抗壓性」，能協助他們快速適應體制內環境。
 
-# 1. 轉回體制內更細的路徑及比較
-path_comparison:
-  title: 體制內主流高中：路徑對比
-  subtitle: 選擇適合孩子氣質與抗壓性的銜接環境
-  left:
-    label: 公立普通高中 (Senior High)
-    badge: 低負擔・高學術
-    items:
-      - text: 學費低廉
-        icon: lucide:banknote
-        description: 國民義務教育資源，學費負擔極輕。
-      - text: 學術競爭激烈
-        icon: lucide:swords
-        description: 適合學術傾向強、抗壓性高、目標為頂尖大學的孩子。
-      - text: 入學管道明確
-        icon: lucide:target
-        description: 主要依賴「國中教育會考」成績分發。
-  right:
-    label: 私立普高/各類實驗班
-    badge: 強結構・精準管理
-    items:
-      - text: 結構化管理
-        icon: lucide:layers
-        description: 生活與學習節奏緊湊，適合需要外部驅動力的孩子。
-      - text: 特定學科加速
-        icon: lucide:zap
-        description: 常設醫科班或資優班，針對特定職涯提早佈局。
-      - text: 多元入學策略
-        icon: lucide:key
-        description: 包含會考、直升或入學測試。
+    # 1. 轉回體制內更細的路徑及比較
+    path_comparison:
+      title: 體制內主流高中：路徑對比
+      subtitle: 選擇適合孩子氣質與抗壓性的銜接環境
+      left:
+        label: 公立普通高中 (Senior High)
+        badge: 低負擔・高學術
+        items:
+          - text: 學費低廉
+            icon: lucide:banknote
+            description: 國民義務教育資源，學費負擔極輕。
+          - text: 學術競爭激烈
+            icon: lucide:swords
+            description: 適合學術傾向強、抗壓性高、目標為頂尖大學的孩子。
+          - text: 入學管道明確
+            icon: lucide:target
+            description: 主要依賴「國中教育會考」成績分發。
+      right:
+        label: 私立普高/各類實驗班
+        badge: 強結構・精準管理
+        items:
+          - text: 結構化管理
+            icon: lucide:layers
+            description: 生活與學習節奏緊湊，適合需要外部驅動力的孩子。
+          - text: 特定學科加速
+            icon: lucide:zap
+            description: 常設醫科班或資優班，針對特定職涯提早佈局。
+          - text: 多元入學策略
+            icon: lucide:key
+            description: 包含會考、直升或入學測試。
 
-# 2. 成功、失敗案例分析
-case_analysis:
-  title: 成功與失敗案例
-  success:
-    title: 成功案例：從適應衝擊到卓越表現
-    content: 一位畢業生進入武陵高中後，初期面臨分數墊底的衝擊，但在高二憑藉華德福培養的「自主學習習慣」與「圖文整合力」，快速補齊數理落差，最終以優異成績錄取頂尖大學。
-  failure:
-    title: 失敗風險：教育斷層與認同衝突
-    content: 當家長強制將未經溝通過的孩子送入高壓私校，常引發嚴重的心理崩潰與「厭學」情緒。失敗關鍵在於缺乏「心理緩衝」與對體制規則的劇烈排斥。
-  success_bridge:
-    title: 策略型成功：提早三年的佈局
-    content: 案例B在國二便開始接觸體制內補習，雖犧牲部分華德福專題時間，但成功緩衝了「考題轟炸」的震撼，以穩健的心態考取第一志願。
-  failure_pace:
-    title: 節奏斷層：被時間表擊垮
-    content: 案例E在此前習慣自主安排學習，進入高中後無法適應「每小時換課、每天考試」的機械化節奏。雖智力足夠，但因長期焦慮導致身心失調，最終休學。
+    # 2. 成功、失敗案例分析
+    case_analysis:
+      title: 成功與失敗案例
+      success:
+        title: 成功案例：從適應衝擊到卓越表現
+        content: 一位畢業生進入武陵高中後，初期面臨分數墊底的衝擊，但在高二憑藉華德福培養的「自主學習習慣」與「圖文整合力」，快速補齊數理落差，最終以優異成績錄取頂尖大學。
+      failure:
+        title: 失敗風險：教育斷層與認同衝突
+        content: 當家長強制將未經溝通過的孩子送入高壓私校，常引發嚴重的心理崩潰與「厭學」情緒。失敗關鍵在於缺乏「心理緩衝」與對體制規則的劇烈排斥。
+      success_bridge:
+        title: 策略型成功：提早三年的佈局
+        content: 案例B在國二便開始接觸體制內補習，雖犧牲部分華德福專題時間，但成功緩衝了「考題轟炸」的震撼，以穩健的心態考取第一志願。
+      failure_pace:
+        title: 節奏斷層：被時間表擊垮
+        content: 案例E在此前習慣自主安排學習，進入高中後無法適應「每小時換課、每天考試」的機械化節奏。雖智力足夠，但因長期焦慮導致身心失調，最終休學。
 
-# 3. 轉軌成敗的關鍵因素
-success_factors_summary:
-  title: 影響轉軌成敗的關鍵因素
-  content: 成功轉軌並非取決於「原本就很會考試」，而在於強大的「心理韌性」與家長作為「緩衝墊」的支持角色。
+    # 3. 轉軌成敗的關鍵因素
+    success_factors_summary:
+      title: 影響轉軌成敗的關鍵因素
+      content: 成功轉軌並非取決於「原本就很會考試」，而在於強大的「心理韌性」與家長作為「緩衝墊」的支持角色。
 
-# 4. 準備時程表 (保持之前更新過的豐富內容)
-timeline_title: 轉軌準備時程表 (準備降落傘)
-timeline:
-  stage1:
-    title: 第一階段：探索與決策
-  8th:
-    year: "8 年級下學期"
-    title: 探索與初步決策
-    content: 繪製「生命地圖」，家長與孩子深度對話。若傾向轉軌，需開始接觸補充教材，熟悉體制內的「溝通語言」。
-  9th_up:
-    year: "9 年級上學期"
-    title: 心理調適與專題平衡
-    content: 在「畢業專題」深度投入與「學科總複習」間取得平衡。家長需陪伴處理「慢學」與「競爭」的內在衝突。
-  stage2:
-    title: 第二階段：衝刺與銜接
-  9th_down:
-    year: "9 年級下學期"
-    title: 意志爆發與身心跨越
-    content: 5月教育會考，6月畢業公演。成功關鍵在於將解決問題的能力轉化為穩定的「量化學習效能」。
-  10th:
-    year: "10 年級"
-    title: 跨文化適應與信心重建
-    content: 進入新環境的前 6 個月是關鍵。利用華德福特有的「圖文整合力」做筆記，在社團活動中重建認同。
+    # 4. 準備時程表 (保持之前更新過的豐富內容)
+    timeline_title: 轉軌準備時程表 (準備降落傘)
+    timeline:
+      stage1:
+        title: 第一階段：探索與決策
+      8th:
+        year: "8 年級下學期"
+        title: 探索與初步決策
+        content: 繪製「生命地圖」，家長與孩子深度對話。若傾向轉軌，需開始接觸補充教材，熟悉體制內的「溝通語言」。
+      9th_up:
+        year: "9 年級上學期"
+        title: 心理調適與專題平衡
+        content: 在「畢業專題」深度投入與「學科總複習」間取得平衡。家長需陪伴處理「慢學」與「競爭」的內在衝突。
+      stage2:
+        title: 第二階段：衝刺與銜接
+      9th_down:
+        year: "9 年級下學期"
+        title: 意志爆發與身心跨越
+        content: 5月教育會考，6月畢業公演。成功關鍵在於將解決問題的能力轉化為穩定的「量化學習效能」。
+      10th:
+        year: "10 年級"
+        title: 跨文化適應與信心重建
+        content: 進入新環境的前 6 個月是關鍵。利用華德福特有的「圖文整合力」做筆記，在社團活動中重建認同。
 
-# 5. 給轉軌家庭的調適建議
-parent_guide:
-  title: 給轉軌家庭的調適建議
-  items:
-    - title: 心理緩衝：建立「非同步」預期
-      content: 初步進入體制時，建議前 6 個月降低對分數的期待，優先關注社交融入與心理韌性。
-    - title: 角色切換：成為孩子的「支持盾」
-      content: 認可華德福背景帶來的「多元視角」，而非將其視為弱點，協助孩子緩衝量化評價的壓力。
-    - title: 學業支持：意義感轉化效用
-      content: 尋找能解釋學科「為什麼」的資源（如原理導向的輔導），避免純粹的題海灌輸。
-    - title: 自醫照護：管理家長焦慮
-      content: 華德福培養的是「長線競爭力」，當前微小的分數起伏不代表整體發展的失敗。請將眼光放遠到大學甚至職涯。
-    - title: 提早銜接：國八的關鍵期
-      content: 若確定轉軌，建議在8年級下學期開始接觸各科參考書或參加銜接課程，讓孩子提早適應「標準化測驗」的語言邏輯。
+    # 5. 給轉軌家庭的調適建議
+    parent_guide:
+      title: 給轉軌家庭的調適建議
+      items:
+        - title: 心理緩衝：建立「非同步」預期
+          content: 初步進入體制時，建議前 6 個月降低對分數的期待，優先關注社交融入與心理韌性。
+        - title: 角色切換：成為孩子的「支持盾」
+          content: 認可華德福背景帶來的「多元視角」，而非將其視為弱點，協助孩子緩衝量化評價的壓力。
+        - title: 學業支持：意義感轉化效用
+          content: 尋找能解釋學科「為什麼」的資源（如原理導向的輔導），避免純粹的題海灌輸。
+        - title: 自醫照護：管理家長焦慮
+          content: 華德福培養的是「長線競爭力」，當前微小的分數起伏不代表整體發展的失敗。請將眼光放遠到大學甚至職涯。
+        - title: 提早銜接：國八的關鍵期
+          content: 若確定轉軌，建議在8年級下學期開始接觸各科參考書或參加銜接課程，讓孩子提早適應「標準化測驗」的語言邏輯。
 
-# 6. 家長轉銜心得分享
-advice:
-  title: 家長轉銜心得分享
-  content: "不要將孩子視為待修補的產品。我們鼓勵他發揮圖文整合能力做筆記，後來他在探究實作課程大放異彩，找回了自信。"
-# 7. 外部參考資料
-external_resources:
-  title: 外部參考資料
-  items:
-    - title: "國中教育會考：簡章與最新消息"
-      content: "了解主流高中入學的最主要管道，包含考試時程與分發規則。"
-      icon: "lucide:external-link"
-      buttons:
-        - text: "前往官方網站"
-          link: "https://cap.rcpet.edu.tw/"
-          style: "btn-outline"
-    - title: "特殊選才：華德福生的升學利器"
-      content: "報導華德福畢業生如何透過「特殊選才」進入頂尖大學，避開單一會考競爭。"
-      icon: "lucide:newspaper"
-      buttons:
-        - text: "閱讀報導案例"
-          link: "https://www.parenting.com.tw/article/5097946"
-          style: "btn-outline"
-    - title: "升學銜接 7 問：跨體制適應指南"
-      content: "親子天下整理的實驗教育銜接攻略，解答家長對學習與社交適應的常見疑惑。"
-      icon: "lucide:info"
-      buttons:
-        - text: "查看適應指南"
-          link: "https://flipedu.parenting.com.tw/article/004636"
-          style: "btn-outline"
+    # 6. 家長轉銜心得分享
+    advice:
+      title: 家長轉銜心得分享
+      content: "不要將孩子視為待修補的產品。我們鼓勵他發揮圖文整合能力做筆記，後來他在探究實作課程大放異彩，找回了自信。"
+    # 7. 外部參考資料
+    external_resources:
+      title: 外部參考資料
+      items:
+        - title: "國中教育會考：簡章與最新消息"
+          content: "了解主流高中入學的最主要管道，包含考試時程與分發規則。"
+          icon: "lucide:external-link"
+          buttons:
+            - text: "前往官方網站"
+              link: "https://cap.rcpet.edu.tw/"
+              style: "btn-outline"
+        - title: "特殊選才：華德福生的升學利器"
+          content: "報導華德福畢業生如何透過「特殊選才」進入頂尖大學，避開單一會考競爭。"
+          icon: "lucide:newspaper"
+          buttons:
+            - text: "閱讀報導案例"
+              link: "https://www.parenting.com.tw/article/5097946"
+              style: "btn-outline"
+        - title: "升學銜接 7 問：跨體制適應指南"
+          content: "親子天下整理的實驗教育銜接攻略，解答家長對學習與社交適應的常見疑惑。"
+          icon: "lucide:info"
+          buttons:
+            - text: "查看適應指南"
+              link: "https://flipedu.parenting.com.tw/article/004636"
+              style: "btn-outline"
 
-# 8. CTA
-cta:
-  title: "準備好為孩子規劃下一步了嗎？"
-  subtitle: "我們提供專業的轉軌適應諮詢，協助孩子平穩降落體制內環境。"
-  button_text: "預約轉軌適應 1-on-1 諮詢"
+    # 8. CTA
+    cta:
+      title: "準備好為孩子規劃下一步了嗎？"
+      subtitle: "我們提供專業的轉軌適應諮詢，協助孩子平穩降落體制內環境。"
+      button_text: "預約轉軌適應 1-on-1 諮詢"

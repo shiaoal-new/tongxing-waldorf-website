@@ -8,8 +8,10 @@ hero:
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   media_list:
     - type: video
-      video: ik:hero-video-av1.webm
+      video: /img/index/hero-background.mp4
+      mobileVideo: /img/index/hero-mobile.mp4
       poster: /img/index/hero-poster.webp
+      mobilePoster: /img/index/hero-poster-mobile.webp
 
 sections:
   - section_id: mission

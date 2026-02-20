@@ -96,9 +96,9 @@ analysis:
 paths:
   title: 深度路徑探索
   subtitle: 請選擇您感興趣的路徑，了解更多細節、建議與時程
-  waldorf: !include future-paths/paths/waldorf.wording.default.yml
-  mainstream: !include future-paths/paths/mainstream.wording.default.yml
-  diverse: !include future-paths/paths/diverse.wording.default.yml
+
+
+
 
 footer:
   summary:

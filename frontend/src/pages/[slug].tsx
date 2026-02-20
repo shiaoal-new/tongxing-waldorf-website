@@ -5,7 +5,7 @@ import { getNavigation, getSiteSettings } from "../lib/settings";
 import { getPageDataOptimized } from "../lib/dataLoader";
 import DynamicPageContent from "../components/DynamicPage";
 import { PageData, NavigationData, FaqItem, Member, Course, SiteData } from "../types/content";
-import { getWordingDictionary, resolveWording } from "../lib/wording.server";
+import { getWordingDictionary, getWordingDictionaryFromData, resolveWording } from "../lib/wording.server";
 
 interface DynamicPageProps {
     page: PageData | null;
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
 
     // Always resolve default wordings at build time for all environments.
     // This eliminates text flash (FOUC) where raw $ids briefly appear.
-    const dictionary = getWordingDictionary(slug, "default", ["faq"]);
+    const dictionary = getWordingDictionaryFromData(page, slug, "default", ["faq"]);
     const resolvedPage = page ? resolveWording(page, dictionary) : null;
     const resolvedDataList = resolveWording({
         facultyList: pageData.facultyList || [],

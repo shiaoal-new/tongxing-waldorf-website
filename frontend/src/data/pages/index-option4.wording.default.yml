@@ -57,8 +57,6 @@ future_paths:
     title: "診斷分析"
     content: "專業的診斷分析，協助孩子找到最適合的發展路徑。"
 
-testimonials: !include shared_section/testimonials.wording.default.yml
-
 cta_bottom:
   title: "預約參觀，開啟孩子的成長之旅"
   content: "誠摯邀請您與孩子一同來同心走走，親身感受這裡的教學氛圍。"
