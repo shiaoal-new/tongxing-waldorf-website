@@ -53,6 +53,29 @@ export default function VideoItem({ video, className }: VideoItemProps) {
     };
 
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null | undefined>(getInitialThumbnail());
+    const [shouldLoad, setShouldLoad] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    // Use IntersectionObserver to defer thumbnail loading
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + 300) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            { rootMargin: "300px" }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     // Fallback if maxresdefault fails
     const handleThumbError = () => {
@@ -84,6 +107,7 @@ export default function VideoItem({ video, className }: VideoItemProps) {
 
     return (
         <div
+            ref={containerRef}
             className={`
                 video-mask group relative flex flex-col h-full overflow-hidden 
                 bg-white/40 dark:bg-black/20 backdrop-blur-md 
@@ -100,7 +124,7 @@ export default function VideoItem({ video, className }: VideoItemProps) {
                 >
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-500" />
 
-                    {thumbnailUrl && (
+                    {shouldLoad && thumbnailUrl && (
                         <div className="absolute inset-0 w-full h-full">
                             <img
                                 src={thumbnailUrl}
