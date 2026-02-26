@@ -12,6 +12,7 @@ hero:
     - text: "$hero.button_visit"
       link: /visit
       style: btn-primary
+  subtext: "$hero.subtext"
   media_list:
     - type: video
       video: /img/index/hero-background.mp4
@@ -74,6 +75,63 @@ sections:
             buttons:
               - text: "$features.item_marathon.button"
                 link: /featured-courses
+                style: btn-sm-outline
+  - section_id: experience
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$experience.intro.title"
+        subtitle: "$experience.intro.subtitle"
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$experience.item_spark.title"
+            span: 4
+            content: "$experience.item_spark.content"
+            icon: lucide:sparkles
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+          - title: "$experience.item_mainbook.title"
+            span: 4
+            content: "$experience.item_mainbook.content"
+            icon: lucide:book-open
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_drawing_workbook.webp
+          - title: "$experience.item_crossing.title"
+            span: 4
+            content: "$experience.item_crossing.content"
+            icon: lucide:mountain
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_climbing.webp
+            buttons:
+              - text: "$experience.item_crossing.button"
+                link: /crossing
+                style: btn-sm-outline
+          - title: "$experience.item_seasonal.title"
+            span: 6
+            content: "$experience.item_seasonal.content"
+            icon: lucide:calendar-check
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_nature_break.webp
+            buttons:
+              - text: "$experience.item_seasonal.button"
+                link: /rhythm-of-life
+                style: btn-sm-outline
+          - title: "$experience.item_future_gap.title"
+            span: 6
+            content: "$experience.item_future_gap.content"
+            icon: lucide:trending-up
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_graduates_success.webp
+            buttons:
+              - text: "$experience.item_future_gap.button"
+                link: /future-paths
                 style: btn-sm-outline
   - section_id: community
     layout: 精緻特色區塊 (Features Premium)
@@ -146,6 +204,18 @@ sections:
           - text: "$ai_future.intro.button"
             link: /future-education
             style: btn-outline-primary
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$ai_future.item_soft_skills.title"
+            span: 6
+            content: "$ai_future.item_soft_skills.content"
+            icon: lucide:brain-circuit
+          - title: "$ai_future.item_adaptability.title"
+            span: 6
+            content: "$ai_future.item_adaptability.content"
+            icon: lucide:compass
   - section_id: videos
     blocks:
       - type: text_block
@@ -208,3 +278,4 @@ sections:
           - text: "$cta_bottom.button"
             link: /visit
             style: btn-inverse
+        subtext: "$cta_bottom.subtext"

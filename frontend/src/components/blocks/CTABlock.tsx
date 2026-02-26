@@ -8,12 +8,17 @@ interface CTABlockProps {
 
 export default function CTABlock({ block }: CTABlockProps) {
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col items-center">
             <ActionButtons
                 buttons={block.buttons}
                 align={block.align || 'center'}
-                className="mt-8" // Default margin, can be overridden if needed by context but block usually implies some spacing
+                className="mt-8"
             />
+            {block.subtext && (
+                <p className="mt-paragraph text-sm text-brand-text/60 italic font-light tracking-brand">
+                    {block.subtext}
+                </p>
+            )}
         </div>
     );
 }

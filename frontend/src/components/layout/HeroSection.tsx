@@ -244,10 +244,20 @@ export default function HeroSection({ data }: HeroSectionProps) {
                 {buttons.length > 0 && (
                     <motion.div
                         variants={itemVariants}
-                        className="relative z-10 mt-6 flex justify-center pb-6"
+                        className="relative z-10 mt-6 flex flex-col items-center pb-6"
                         data-yml-src={getSource('buttons')}
                     >
                         <ActionButtons buttons={buttons} align="center" size="lg" />
+                        {(data as any).subtext && (
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 0.7 }}
+                                transition={{ delay: 1.2 }}
+                                className="mt-paragraph text-sm text-brand-bg/80 italic font-light tracking-brand"
+                            >
+                                {(data as any).subtext}
+                            </motion.p>
+                        )}
                     </motion.div>
                 )}
             </motion.div>

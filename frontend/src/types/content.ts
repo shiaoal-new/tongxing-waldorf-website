@@ -255,6 +255,7 @@ export interface CTABlock extends BaseBlock {
     type: 'cta_block';
     buttons: CTAButton[];
     align?: 'left' | 'center' | 'right';
+    subtext?: string;
 }
 
 export interface MermaidBlock extends BaseBlock {
@@ -366,6 +367,7 @@ export interface HeroMedia {
 export interface HeroData {
     title: string;
     subtitle: string;
+    subtext?: string;
     accent_text?: string;
     media_list?: HeroMedia[];
     layout?: string;
