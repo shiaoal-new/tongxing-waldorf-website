@@ -41,13 +41,13 @@ function getItemId(fileName: string, extension: string): string {
 }
 
 // 簡單的快取機制，避免重複讀取相同檔案
-const dataCache: Record<string, { data: any; content: string; timestamp: number }> = {};
+const dataCache: Record<string, { data: any; content: string; rawContent: string; timestamp: number }> = {};
 const CACHE_TTL = 1000 * 60 * 5; // 5 分鐘快取
 
 /**
  * 讀取單一資料檔案 (帶快取)
  */
-function readDataFile(fullPath: string): { data: any; content: string } {
+function readDataFile(fullPath: string): { data: any; content: string; rawContent: string } {
     const now = Date.now();
     const cached = dataCache[fullPath];
 
@@ -72,7 +72,7 @@ function readDataFile(fullPath: string): { data: any; content: string } {
         content = matterResult.content;
     }
 
-    const result = { data, content };
+    const result = { data, content, rawContent: fileContents };
     dataCache[fullPath] = { ...result, timestamp: now };
 
     return result;
@@ -115,7 +115,7 @@ export function loadAllData<T extends DataItem>(
             const fullPath = path.join(directory, fileName);
 
             // 使用帶快取的讀取函數
-            const { data, content } = readDataFile(fullPath);
+            const { data, content, rawContent } = readDataFile(fullPath);
 
             // 預設轉換
             let item: any = {
@@ -126,9 +126,6 @@ export function loadAllData<T extends DataItem>(
 
             // 如果有自訂轉換函數，則使用
             if (transform) {
-                // 原本這裡會 fs.readFileSync 第二次，現在我們可以直接拿到 content (或者根據需要傳入 rawContent)
-                // 為了保持相容性，如果 transform 需要完整的 rawContent (含 frontmatter)，可以使用快取優化過的方法
-                const rawContent = (extension === '.md') ? `---\n${matter.stringify('', data)}---\n${content}` : JSON.stringify(data);
                 item = transform(item, fullPath, rawContent);
             }
 
