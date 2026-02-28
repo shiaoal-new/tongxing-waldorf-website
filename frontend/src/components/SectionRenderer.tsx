@@ -106,6 +106,8 @@ function resolveSectionData(section: any) {
         contentBlocks,
         align,
         sectionProps: {
+            className: section.className,
+            style: section.style,
             layout: section._layout || {},
             anchor: section.section_id,
             media_list: section.media_list,

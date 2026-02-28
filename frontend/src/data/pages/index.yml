@@ -46,21 +46,21 @@ sections:
             icon: lucide:sparkles
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
+              image: /img/artifacts/tw_waldorf_spark_curiosity.webp
           - title: "$experience.item_mainbook.title"
             span: 4
             content: "$experience.item_mainbook.content"
             icon: lucide:book-open
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_drawing_workbook.webp
+              image: /img/artifacts/tw_waldorf_main_workbook.webp
           - title: "$experience.item_crossing.title"
             span: 4
             content: "$experience.item_crossing.content"
             icon: lucide:mountain
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_climbing.webp
+              image: /img/artifacts/tw_waldorf_inner_hero.webp
             buttons:
               - text: "$experience.item_crossing.button"
                 link: /crossing
@@ -71,7 +71,7 @@ sections:
             icon: lucide:calendar-check
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_nature_break.webp
+              image: /img/artifacts/tw_waldorf_seasonal_break.webp
             buttons:
               - text: "$experience.item_seasonal.button"
                 link: /rhythm-of-life
@@ -82,60 +82,10 @@ sections:
             icon: lucide:trending-up
             media:
               type: image
-              image: /img/artifacts/tw_waldorf_graduates_success.webp
+              image: /img/artifacts/tw_waldorf_future_leader.webp
             buttons:
               - text: "$experience.item_future_gap.button"
                 link: /future-paths
-                style: btn-sm-outline
-  - section_id: community
-    layout: 精緻特色區塊 (Features Premium)
-    blocks:
-      - type: text_block
-        title: "$community.intro.title"
-        subtitle: "$community.intro.subtitle"
-        content: "$community.intro.content"
-      - type: cta_block
-        buttons:
-          - text: "$community.intro.button"
-            link: /philosophy
-            style: btn-primary
-      - type: list_block
-        layout: bento_grid
-        item_type: feature_item
-        align: center
-        items:
-          - title: "$community.item_connection.title"
-            span: 4
-            content: "$community.item_connection.content"
-            icon: "lucide:users"
-            media:
-              type: image
-              image: /img/artifacts/tw_teacher_parent_connection_1768617938384.webp
-            buttons:
-              - text: "$community.item_connection.button"
-                link: /teacher-group
-                style: btn-sm-outline
-          - title: "$community.item_support.title"
-            span: 4
-            content: "$community.item_support.content"
-            icon: "lucide:message-square"
-            media:
-              type: image
-              image: /img/artifacts/tw_waldorf_community_support_1768617957981.webp
-            buttons:
-              - text: "$community.item_support.button"
-                link: /rhythm-of-life
-                style: btn-sm-outline
-          - title: "$community.item_secure.title"
-            span: 4
-            content: "$community.item_secure.content"
-            icon: "lucide:heart"
-            media:
-              type: image
-              image: /img/artifacts/tw_calm_family_secure_1768617979428.webp
-            buttons:
-              - text: "$community.item_secure.button"
-                link: /donation
                 style: btn-sm-outline
   - section_id: ai_future
     layout: 精緻特色區塊 (Features Premium)
@@ -205,7 +155,87 @@ sections:
               url: https://youtu.be/-kLpchWvdh4
             duration: "04:40"
             content: "$videos.item_revolution.content"
+  - section_id: community
+    layout: 精緻特色區塊 (Features Premium)
+    blocks:
+      - type: text_block
+        title: "$community.intro.title"
+        subtitle: "$community.intro.subtitle"
+        content: "$community.intro.content"
+      - type: cta_block
+        buttons:
+          - text: "$community.intro.button"
+            link: /philosophy
+            style: btn-primary
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        align: center
+        items:
+          - title: "$community.item_connection.title"
+            span: 4
+            content: "$community.item_connection.content"
+            icon: "lucide:users"
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_parent_teacher_connection.webp
+            buttons:
+              - text: "$community.item_connection.button"
+                link: /teacher-group
+                style: btn-sm-outline
+          - title: "$community.item_support.title"
+            span: 4
+            content: "$community.item_support.content"
+            icon: "lucide:message-square"
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_community_village.webp
+            buttons:
+              - text: "$community.item_support.button"
+                link: /rhythm-of-life
+                style: btn-sm-outline
+          - title: "$community.item_secure.title"
+            span: 4
+            content: "$community.item_secure.content"
+            icon: "lucide:heart"
+            media:
+              type: image
+              image: /img/artifacts/tw_waldorf_secure_family.webp
+            buttons:
+              - text: "$community.item_secure.button"
+                link: /donation
+                style: btn-sm-outline
   - !include shared_section/testimonials.yml
+  - section_id: not_for_everyone
+    layout: 精緻特色區塊 (Features Premium)
+    className: "mx-4 lg:mx-auto max-w-5xl bg-stone-100/80 dark:bg-stone-900/80 my-24 !py-16 rounded-[2.5rem] border border-stone-200 dark:border-stone-800 shadow-sm"
+    blocks:
+      - type: text_block
+        title: "$not_for_everyone.intro.title"
+        subtitle: "$not_for_everyone.intro.subtitle"
+        content: "$not_for_everyone.intro.content"
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: "$not_for_everyone.item_grades.title"
+            span: 4
+            content: "$not_for_everyone.item_grades.content"
+            icon: lucide:file-digit
+          - title: "$not_for_everyone.item_hands_off.title"
+            span: 4
+            content: "$not_for_everyone.item_hands_off.content"
+            icon: lucide:shopping-cart
+          - title: "$not_for_everyone.item_status.title"
+            span: 4
+            content: "$not_for_everyone.item_status.content"
+            icon: lucide:crown
+      - type: cta_block
+        buttons:
+          - text: "$not_for_everyone.outro.button"
+            link: /visit
+            style: btn-primary
+        subtext: "$not_for_everyone.outro.subtext"
   - section_id: faq
     blocks:
       - type: text_block

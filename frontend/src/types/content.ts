@@ -344,6 +344,8 @@ export interface Section {
     section_id?: string;
     blocks: Block[];
     layout?: string;
+    className?: string;
+    style?: any;
     divider?: Divider;
     overlay_color?: string;
     media_list?: MediaItem[];
