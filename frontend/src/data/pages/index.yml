@@ -25,63 +25,17 @@ hero:
     position: bottom
     color: fill-brand-bg
 sections:
-  - section_id: features
-    layout: 精緻特色區塊 (Features Premium)
-    blocks:
-      - type: text_block
-        title: "$features.intro.title"
-        subtitle: "$features.intro.subtitle"
-      - type: list_block
-        layout:
-          desktop:
-            method: bento_grid
-          mobile:
-            method: carousel
-            config:
-              loop: false
-              highlight_active: true
-        item_type: feature_item
-        align: center
-        items:
-          - title: "$features.item_university.title"
-            span: 4
-            content: "$features.item_university.content"
-            icon: lucide:school
-            media:
-              type: image
-              image: /img/artifacts/tw_waldorf_gardening_1768617891526.webp
-            buttons:
-              - text: "$features.item_university.button"
-                link: /visit
-                style: btn-sm-outline
-          - title: "$features.item_curriculum.title"
-            span: 4
-            content: "$features.item_curriculum.content"
-            icon: lucide:hand
-            media:
-              type: image
-              image: /img/artifacts/tw_waldorf_circle_1768617908506.webp
-            buttons:
-              - text: "$features.item_curriculum.button"
-                link: /philosophy
-                style: btn-sm-outline
-          - title: "$features.item_marathon.title"
-            span: 4
-            content: "$features.item_marathon.content"
-            icon: lucide:flame
-            media:
-              type: image
-              image: /img/artifacts/tw_waldorf_painting_1768617922808.webp
-            buttons:
-              - text: "$features.item_marathon.button"
-                link: /featured-courses
-                style: btn-sm-outline
   - section_id: experience
     layout: 精緻特色區塊 (Features Premium)
     blocks:
       - type: text_block
         title: "$experience.intro.title"
         subtitle: "$experience.intro.subtitle"
+      - type: cta_block
+        buttons:
+          - text: "$experience.intro.button"
+            link: /curriculum
+            style: btn-primary
       - type: list_block
         layout: bento_grid
         item_type: feature_item
