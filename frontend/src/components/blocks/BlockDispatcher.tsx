@@ -70,13 +70,14 @@ interface BlockDispatcherProps {
     align?: 'left' | 'center' | 'right';
     context?: 'standalone' | 'list';
     anchor?: string;
+    sectionLazy?: boolean; // Section level lazy load setting
 }
 
 /**
  * 內容分發器 (Block Dispatcher)
  * 負責將數據根據類型分配給具體的 UI 組件
  */
-export default function BlockDispatcher({ block, align = "center", context = "standalone", anchor = "" }: BlockDispatcherProps) {
+export default function BlockDispatcher({ block, align = "center", context = "standalone", anchor = "", sectionLazy = true }: BlockDispatcherProps) {
     if (!block) return null;
 
     const isNested = context === "list";
@@ -141,7 +142,10 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             return <Card data={block as any} variant="compact" />;
 
         case "list_block":
-            return <ListBlock block={block as ListBlockType} align={(block as any).align || align} />;
+            // Block level lazy > Section level lazy > Default true
+            const blockLazy = (block as any).lazy;
+            const isLazy = blockLazy !== undefined ? blockLazy : sectionLazy;
+            return <ListBlock block={block as ListBlockType} align={(block as any).align || align} lazy={isLazy} />;
 
         case "cta_block":
             return <CTABlock block={block as CTABlockType} />;

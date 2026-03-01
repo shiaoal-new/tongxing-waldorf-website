@@ -2,8 +2,11 @@ import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListLayoutRenderer";
 
 
 import { usePageData } from "../../context/PageDataContext";
+import { useWordingContext } from "../../context/WordingContext";
 import BlockDispatcher from "./BlockDispatcher";
 import { ListBlock as ListBlockType, FaqItem, ListItem, LayoutConfig } from "../../types/content";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { BlockPolicy } from './interfaces';
 
 /**
  * 準備列表數據，將 FAQ 或普通項目統一轉化為規整的 Block 結構
@@ -28,6 +31,8 @@ function prepareListItems(block: ListBlockType, faqList: FaqItem[], direction: s
 interface ListBlockProps {
     block: ListBlockType;
     align?: 'left' | 'center' | 'right';
+    lazy?: boolean; // Enable lazy loading for list items
+    lazyRootMargin?: string; // Root margin for lazy loading (default: "300px")
 }
 
 /**
@@ -80,19 +85,181 @@ export function getLayoutSettings(block: ListBlockType) {
     return { method, mobileMethod, config, mobileConfig };
 }
 
+/**
+ * LazyDataContainer Component
+ * 包裝列表項目並使用 Intersection Observer 進行懶加載
+ * 當 FAQ 區塊進入視口時才獲取數據
+ */
+function LazyDataContainer({
+    children,
+    rootMargin = "300px",
+    onVisible,
+    isLoading,
+    dataLoaded,
+}: {
+    children: React.ReactNode;
+    rootMargin?: string;
+    onVisible: () => void;
+    isLoading: boolean;
+    dataLoaded: boolean;
+}) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const hasTriggeredRef = useRef(false);
+
+    useEffect(() => {
+        // 如果已經觸發過或數據已加載，不再設置觀察器
+        if (hasTriggeredRef.current || dataLoaded) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !hasTriggeredRef.current) {
+                    hasTriggeredRef.current = true;
+                    onVisible();
+                    observer.disconnect();
+                }
+            },
+            {
+                rootMargin,
+                threshold: 0
+            }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [rootMargin, onVisible, dataLoaded]);
+
+    // 如果數據還沒加載完成，顯示加載骨架屏
+    if (!dataLoaded || isLoading) {
+        return (
+            <div ref={containerRef} className="lazy-list-container">
+                <div className="flex justify-center items-center py-12">
+                    <div className="animate-pulse flex flex-col items-center gap-4">
+                        <div className="w-16 h-16 bg-neutral-200 dark:bg-neutral-700 rounded-full"></div>
+                        <div className="h-4 w-48 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+                        <div className="h-3 w-64 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return <div ref={containerRef}>{children}</div>;
+}
 
 /**
  * ListBlock Component
- * 渲染列表塊
+ * 渲染列表塊，支持 FAQ 數據的懶加載
  */
-export default function ListBlock({ block, align }: ListBlockProps) {
-    const { faqList } = usePageData();
+export default function ListBlock({ block, align, lazy = true, lazyRootMargin = "300px" }: ListBlockProps) {
+    const { faqList: contextFaqList } = usePageData();
+    const { getStyle } = useWordingContext();
+
+    // 獲取目前頁面 ID (從 path 獲取或預設 index)
+    const pageId = typeof window !== 'undefined' ? window.location.pathname.split('/').pop() || 'index' : 'index';
+    const currentStyle = getStyle(pageId);
+
+    // 檢查是否需要懶加載 FAQ 數據
+    const needsLazyFaq = lazy && block.faq_ids && block.faq_ids.length > 0;
+
+    // 懶加載狀態
+    const [lazyFaqList, setLazyFaqList] = useState<FaqItem[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(!needsLazyFaq);
+    const abortControllerRef = useRef<AbortController | null>(null);
+
+    // 獲取 FAQ 數據的函數
+    const fetchFaqData = useCallback(async () => {
+        if (dataLoaded || isLoading) return;
+
+        // 取消之前的請求
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+        abortControllerRef.current = new AbortController();
+
+        setIsLoading(true);
+        const startTime = performance.now();
+
+        try {
+            // 將 style 傳遞給 API 以獲取正確解析的文字
+            const response = await fetch(`/api/data/faq?style=${currentStyle}`, {
+                signal: abortControllerRef.current.signal,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch FAQ: ${response.status} ${response.statusText}`);
+            }
+
+            const data: FaqItem[] = await response.json();
+            setLazyFaqList(data);
+            setDataLoaded(true);
+
+            if (process.env.NODE_ENV === 'development') {
+                const endTime = performance.now();
+                const size = JSON.stringify(data).length;
+                console.log(
+                    `[ListBlock] Lazy loaded FAQ data in ${(endTime - startTime).toFixed(2)}ms ` +
+                    `(${size.toLocaleString()} bytes, ${data.length} items)`
+                );
+            }
+        } catch (error) {
+            if (error instanceof Error && error.name !== 'AbortError') {
+                console.error('[ListBlock] Failed to lazy load FAQ data:', error);
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }, [dataLoaded, isLoading, currentStyle]);
+
+    // 組件卸載時取消請求
+    useEffect(() => {
+        return () => {
+            if (abortControllerRef.current) {
+                abortControllerRef.current.abort();
+            }
+        };
+    }, []);
 
     const { method, mobileMethod, config, mobileConfig } = getLayoutSettings(block);
 
     const direction = block.direction || (method === "vertical" ? "vertical" : "horizontal");
 
-    const listItems = prepareListItems(block, faqList as FaqItem[], direction);
+    // 決定使用哪個數據源
+    const faqListToUse = needsLazyFaq && dataLoaded ? lazyFaqList : (contextFaqList as FaqItem[] || []);
+
+    const listItems = prepareListItems(block, faqListToUse, direction);
+
+    const renderListContent = () => (
+        <ListRenderer
+            direction={direction as "horizontal" | "vertical"}
+
+            items={listItems}
+            layout={method}
+            mobile_scroll={block.mobile_scroll}
+            mobile_layout={mobileMethod}
+            variant={block.variant}
+            layoutConfig={config}
+            mobileLayoutConfig={mobileConfig}
+            columns={3}
+            buttons={block.buttons}
+            renderItem={(item: ListItem, index: number, extra: any) => {
+                const itemSrc = (item as any)._sourceFile
+                    ? `${(item as any)._sourceFile}${(item as any)._sourceLine ? `:${(item as any)._sourceLine}` : ''}`
+                    : undefined;
+                return (
+                    <div data-yml-src={itemSrc} style={{ display: 'contents' }}>
+                        <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
+                    </div>
+                );
+            }}
+        />
+    );
 
     return (
         <div className="brand-container">
@@ -103,36 +270,23 @@ export default function ListBlock({ block, align }: ListBlockProps) {
                     </h3>
                 </div>
             )}
-            <ListRenderer
-                direction={direction as "horizontal" | "vertical"}
-
-                items={listItems}
-                layout={method}
-                mobile_scroll={block.mobile_scroll}
-                mobile_layout={mobileMethod}
-                variant={block.variant}
-                layoutConfig={config}
-                mobileLayoutConfig={mobileConfig}
-                columns={3}
-                buttons={block.buttons}
-                renderItem={(item: ListItem, index: number, extra: any) => {
-                    const itemSrc = (item as any)._sourceFile
-                        ? `${(item as any)._sourceFile}${(item as any)._sourceLine ? `:${(item as any)._sourceLine}` : ''}`
-                        : undefined;
-                    return (
-                        <div data-yml-src={itemSrc} style={{ display: 'contents' }}>
-                            <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
-                        </div>
-                    );
-                }}
-            />
+            {needsLazyFaq ? (
+                <LazyDataContainer
+                    rootMargin={lazyRootMargin}
+                    onVisible={fetchFaqData}
+                    isLoading={isLoading}
+                    dataLoaded={dataLoaded}
+                >
+                    {renderListContent()}
+                </LazyDataContainer>
+            ) : (
+                renderListContent()
+            )}
         </div>
     );
 }
 
-import { BlockPolicy } from './interfaces';
-
-export const listPolicy: any = {
+export const listPolicy: BlockPolicy = {
     shouldIgnorePadding: (block: any) => {
         const { method, mobileMethod } = getLayoutSettings(block);
 

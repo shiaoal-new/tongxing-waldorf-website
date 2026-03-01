@@ -117,8 +117,9 @@ export function loadAllData<T extends DataItem>(
             // 使用帶快取的讀取函數
             const { data, content, rawContent } = readDataFile(fullPath);
 
-            // 預設轉換
+            const finalId = data.id || data.slug || slug;
             let item: any = {
+                id: finalId,
                 slug: data.slug || slug,
                 ...data,
                 content: content,

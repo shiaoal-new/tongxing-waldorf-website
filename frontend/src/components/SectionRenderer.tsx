@@ -7,7 +7,7 @@ import { Section as SectionType, Block, TextBlock, ListBlock } from "../types/co
 import { getLayoutSettings } from "./blocks/ListBlock";
 
 interface SectionRendererProps {
-    section: SectionType & { limit?: boolean; _layout?: any; media_list?: any; parallax_ratio?: number; ignore_padding?: boolean };
+    section: SectionType & { limit?: boolean; _layout?: any; media_list?: any; parallax_ratio?: number; ignore_padding?: boolean; lazy?: boolean };
     index: number;
 }
 
@@ -50,6 +50,7 @@ export function SectionRenderer({ section, index }: SectionRendererProps) {
                                 block={block}
                                 align={align as any}
                                 anchor={section.section_id}
+                                sectionLazy={section.lazy !== false} // 預設啟用 lazy load
                             />
                         </div>
                     );

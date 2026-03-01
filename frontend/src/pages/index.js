@@ -1,11 +1,9 @@
 import Head from "next/head";
 import { getAllPages, getPageBySlug } from "../lib/pages";
-import { getAllFaculty } from "../lib/faculty";
-import { getAllFaq } from "../lib/faq";
+import { loadAllData } from "../lib/dataLoader";
 import { getSectionLayoutByTitle } from "../lib/sectionLayouts";
 import { getNavigation, getSiteSettings } from "../lib/settings";
 import DynamicPageContent from "../components/DynamicPage";
-import { useWording } from "../hooks/useWording";
 import { getWordingDictionary, getWordingDictionaryFromData, resolveWording } from "../lib/wording.server";
 
 export default function Home(props) {
@@ -50,8 +48,8 @@ export async function getStaticProps() {
   const pages = getAllPages();
   const navigation = getNavigation();
   const siteSettings = getSiteSettings();
-  const facultyList = getAllFaculty();
-  const faqList = getAllFaq();
+  // NOTE: FAQ 和 Faculty 數據現在通過 API 懶加載，不再包含在初始頁面數據中
+  // 這將初始頁面數據從 ~249kB 減少到 ~128kB
 
   if (page && page.sections) {
     page.sections = page.sections.map(section => {
@@ -65,22 +63,35 @@ export async function getStaticProps() {
     });
   }
 
-  // Resolve page titles for navigation (pages list)
-  // This allows the Navbar to display correct titles instead of placeholders
+  // Navbar 只需要 slug + title，剔除完整的 sections/blocks 結構避免傳送大量多餘資料
   const resolvedPages = pages.map(p => {
     const dict = getWordingDictionary(p.slug, "default");
     return {
-      ...p,
+      slug: p.slug,
       title: resolveWording(p.title, dict)
     };
   });
 
-  // Always resolve default wordings at build time for all environments.
-  // This eliminates text flash (FOUC) where raw $ids like "$hero.title" briefly appear.
-  // Client-side useWording hook will only re-resolve when user actively switches wording style.
+  // Wording resolution
   const dictionary = getWordingDictionaryFromData(page, "index", "default", ["faq"]);
   const resolvedPage = page ? resolveWording(page, dictionary) : null;
-  const resolvedData = resolveWording({ facultyList, faqList }, dictionary);
+
+  // 為了 SEO 結構化數據，我們僅傳遞該頁面「實際用到」的 FAQ 項目
+  // 這不會顯著增加資料大小 (首頁約僅數 kB)，且能讓搜尋引擎正確識別 FAQPage 並顯示在搜尋結果
+  const pageFaqIds = new Set();
+  (page?.sections || []).forEach(section => {
+    (section.blocks || []).forEach(block => {
+      if (block.type === 'list_block' && block.item_type === 'faq_item' && block.faq_ids) {
+        block.faq_ids.forEach(id => pageFaqIds.add(id));
+      }
+    });
+  });
+
+  const allFaq = loadAllData("faq", { excludeWording: true });
+  const filteredFaqList = (allFaq || []).filter(f => pageFaqIds.has(f.id));
+
+  // Resolved Data 僅包含此頁面必要的 FAQ 內容 (用於 SEO)
+  const resolvedData = { faqList: filteredFaqList, facultyList: [] };
 
   return {
     props: {
@@ -90,7 +101,8 @@ export async function getStaticProps() {
       siteSettings,
       data: resolvedData,
       rawPage: page || null,
-      rawData: { facultyList, faqList },
+      // 不再傳遞 rawData 中的 FAQ 和 Faculty 列表
+      rawData: { faqList: [], facultyList: [] },
     },
   };
 }
