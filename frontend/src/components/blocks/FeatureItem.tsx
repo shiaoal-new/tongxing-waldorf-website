@@ -79,7 +79,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
         />
 
         {/* Sub Items - 更好地呈現深入內容 */}
-        {sub_items && sub_items.length > 0 && (
+        {Array.isArray(sub_items) && sub_items.length > 0 && (
           <motion.div
             initial={false}
             animate={{ height: isExpanded ? "auto" : 0, opacity: isExpanded ? 1 : 0 }}

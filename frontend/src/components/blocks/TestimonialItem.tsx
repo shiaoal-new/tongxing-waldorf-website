@@ -54,7 +54,7 @@ export default function TestimonialItem({ quote, author, title, media, avatar, t
                 </blockquote>
 
                 {/* Tags Section */}
-                {tags && tags.length > 0 && (
+                {Array.isArray(tags) && tags.length > 0 && (
                     <div className="flex flex-wrap justify-center gap-2 mb-6">
                         {tags.map((tag, idx) => (
                             <span

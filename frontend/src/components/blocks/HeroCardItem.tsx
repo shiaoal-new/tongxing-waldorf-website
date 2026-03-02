@@ -55,7 +55,7 @@ export default function HeroCardItem({ title, subtitle, content, media, buttons 
 
                     {/* Buttons Area */}
                     <div className="flex flex-row gap-3 mt-auto">
-                        {buttons && buttons.map((btn, idx) => {
+                        {Array.isArray(buttons) && buttons.map((btn, idx) => {
                             const isPrimary = idx === 0;
                             // Ensure button styling works for Link component
                             const btnClasses = `
@@ -78,7 +78,7 @@ export default function HeroCardItem({ title, subtitle, content, media, buttons 
                         })}
 
                         {/* If no buttons, show a default "Learn More" style arrow */}
-                        {(!buttons || buttons.length === 0) && (
+                        {(!Array.isArray(buttons) || buttons.length === 0) && (
                             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 group-hover:bg-brand-accent group-hover:border-brand-accent transition-colors duration-300 ml-auto">
                                 <Icon icon="ph:arrow-right-bold" className="w-5 h-5" />
                             </div>

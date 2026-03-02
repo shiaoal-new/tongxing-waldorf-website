@@ -122,7 +122,7 @@ export default function StaggeredReveal({
                 </motion.div>
             )}
 
-            {buttons && buttons.length > 0 && (
+            {Array.isArray(buttons) && buttons.length > 0 && (
                 <motion.div variants={itemVariants}>
                     <ActionButtons
                         buttons={buttons}

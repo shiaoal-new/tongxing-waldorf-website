@@ -18,7 +18,7 @@ blocks:
         author: $testimonials.items.0.author
         title: $testimonials.items.0.title
         tags: $testimonials.items.0.tags
-        avatar: https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop
+        avatar: /img/testimonials/xiuping.webp
         media:
           type: image
           image: /img/featured-academic.webp
@@ -27,7 +27,7 @@ blocks:
         author: $testimonials.items.1.author
         title: $testimonials.items.1.title
         tags: $testimonials.items.1.tags
-        avatar: https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop
+        avatar: /img/testimonials/miaochen.webp
         media:
           type: image
           image: /img/featured-social.webp
@@ -36,7 +36,7 @@ blocks:
         author: $testimonials.items.2.author
         title: $testimonials.items.2.title
         tags: $testimonials.items.2.tags
-        avatar: https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop
+        avatar: /img/testimonials/peipei.webp
         media:
           type: image
           image: /img/featured-willpower.webp
@@ -45,7 +45,7 @@ blocks:
         author: $testimonials.items.3.author
         title: $testimonials.items.3.title
         tags: $testimonials.items.3.tags
-        avatar: /img/teacher-photos/周天禧.webp
+        avatar: /img/testimonials/jianlong.webp
         media:
           type: image
           image: /img/featured-protection.webp
@@ -54,7 +54,7 @@ blocks:
         author: $testimonials.items.4.author
         title: $testimonials.items.4.title
         tags: $testimonials.items.4.tags
-        avatar: /img/teacher-photos/連涓妏.webp
+        avatar: /img/testimonials/peiyi.webp
         media:
           type: image
           image: /img/featured-artistic.webp
@@ -63,7 +63,7 @@ blocks:
         author: $testimonials.items.5.author
         title: $testimonials.items.5.title
         tags: $testimonials.items.5.tags
-        avatar: /img/teacher-photos/黃千瑜.webp
+        avatar: /img/testimonials/gufeng.webp
         media:
           type: image
           image: /img/featured-exploration.webp
@@ -72,7 +72,7 @@ blocks:
         author: $testimonials.items.6.author
         title: $testimonials.items.6.title
         tags: $testimonials.items.6.tags
-        avatar: /img/teacher-photos/吳俊輝.webp
+        avatar: https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=200&auto=format&fit=crop
         media:
           type: image
           image: /img/featured-nature.webp
@@ -81,7 +81,7 @@ blocks:
         author: $testimonials.items.7.author
         title: $testimonials.items.7.title
         tags: $testimonials.items.7.tags
-        avatar: /img/teacher-photos/游鈞桓.webp
+        avatar: https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=200&auto=format&fit=crop
         media:
           type: image
           image: /img/featured-outdoor.webp

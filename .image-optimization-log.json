@@ -970,5 +970,59 @@
     "hasAlpha": false,
     "preservedAlpha": false,
     "quality": 60
+  },
+  "testimonials/gufeng.png": {
+    "hash": "21f14e8829fdc9380bacac0aeebdbc31",
+    "processedAt": "2026-03-02T06:23:50.243Z",
+    "originalSize": 583659,
+    "optimizedSize": 21036,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "testimonials/jianlong.png": {
+    "hash": "029d1b9ed26e63052832859da71b7b96",
+    "processedAt": "2026-03-02T06:23:50.384Z",
+    "originalSize": 581362,
+    "optimizedSize": 22460,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "testimonials/miaochen.png": {
+    "hash": "2a11ca554d1466a3344043dcbeaa866b",
+    "processedAt": "2026-03-02T06:23:50.453Z",
+    "originalSize": 550462,
+    "optimizedSize": 18214,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "testimonials/peipei.png": {
+    "hash": "83e9d7a42b45abf6124a0cc93b8f377d",
+    "processedAt": "2026-03-02T06:23:50.546Z",
+    "originalSize": 681723,
+    "optimizedSize": 33678,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "testimonials/peiyi.png": {
+    "hash": "639f4f126725348ed3d91cfda881dae8",
+    "processedAt": "2026-03-02T06:23:50.620Z",
+    "originalSize": 675016,
+    "optimizedSize": 35808,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
+  },
+  "testimonials/xiuping.png": {
+    "hash": "cd4f5169a34d6e7715160ed0a662d757",
+    "processedAt": "2026-03-02T06:23:50.689Z",
+    "originalSize": 550404,
+    "optimizedSize": 15008,
+    "hasAlpha": false,
+    "preservedAlpha": false,
+    "quality": 60
   }
 }
