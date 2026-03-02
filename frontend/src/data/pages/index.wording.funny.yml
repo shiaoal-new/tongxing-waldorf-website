@@ -6,7 +6,24 @@ hero:
   title: 別怕！就算 2035 年機器人統治地球...
   subtitle: 領航 AI 時代的「自由人」培育基地 (就在深坑)
   button_visit: 預約參觀 (保證不推銷豆腐)
-  subtext: 在地耕耘 10+ 年 | 拯救了 1000+ 個焦慮家長 | 60 分鐘深度導覽 (純品茶，不推銷)
+  subtext: 60 分鐘深度導覽 (純品茶，不推銷)
+
+stats:
+  years:
+    value: "DYNAMICS:YEARS_SINCE:2013-09-07"
+    unit: "年+"
+    label: "我們已經活下來了"
+    description: "抗氧化、抗焦慮，在深坑紮實耕耘 3650 天"
+  students:
+    value: "1000"
+    unit: "+"
+    label: "被收服的小猴子"
+    description: "轉化教育理念為真實的生命蛻變（還有我們的耐心）"
+  ratio:
+    value: "100"
+    unit: "%"
+    label: "真心不刷考卷"
+    description: "堅持不搶拍、不刷題，只刷孩子眼中的好奇心"
 
 experience:
   intro:

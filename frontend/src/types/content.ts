@@ -331,7 +331,22 @@ export interface ComparisonBlock extends BaseBlock {
     image?: string;
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock | ComparisonBlock;
+export interface StatsItem {
+    value: string;
+    unit?: string;
+    label: string;
+    icon?: string;
+    description?: string;
+}
+
+export interface StatsBlock extends BaseBlock {
+    type: 'stats_block';
+    items: StatsItem[];
+    columns?: number;
+    show_dividers?: boolean;
+}
+
+export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock | ComparisonBlock | StatsBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';

@@ -6,7 +6,24 @@ hero:
   title: 讓孩子成為在 AI 時代領航的「自由人」
   subtitle: 致正在為孩子尋找未來競爭力的家長
   button_visit: 預約參觀校園
-  subtext: 在地耕耘 10+ 年 | 陪伴 1000+ 個孩子成長 | 全程約 60 分鐘，不含推銷
+  subtext: 全程約 60 分鐘，不含推銷
+
+stats:
+  years:
+    value: "DYNAMICS:YEARS_SINCE:2013-09-07"
+    unit: "年+"
+    label: "在地深耕經驗"
+    description: "陪伴無數家庭走過完整的華德福成長之路"
+  students:
+    value: "1000"
+    unit: "+"
+    label: "學生陪伴成長"
+    description: "轉化教育理念為真實的生命蛻變"
+  ratio:
+    value: "100"
+    unit: "%"
+    label: "師生深度契合"
+    description: "堅持小班制與導師長期陪伴制度"
 
 experience:
   intro:

@@ -24,6 +24,26 @@ hero:
     position: bottom
     color: fill-brand-bg
 sections:
+  - section_id: stats_overview
+    layout: 滿版 (Full width)
+    className: "relative z-10 w-full"
+    entry_animation: true
+    blocks:
+      - type: stats_block
+        show_dividers: true
+        items:
+          - value: "$stats.years.value"
+            unit: "$stats.years.unit"
+            label: "$stats.years.label"
+            description: "$stats.years.description"
+          - value: "$stats.students.value"
+            unit: "$stats.students.unit"
+            label: "$stats.students.label"
+            description: "$stats.students.description"
+          - value: "$stats.ratio.value"
+            unit: "$stats.ratio.unit"
+            label: "$stats.ratio.label"
+            description: "$stats.ratio.description"
   - section_id: experience
     layout: 精緻特色區塊 (Features Premium)
     blocks:
