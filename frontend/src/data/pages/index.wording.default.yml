@@ -20,10 +20,10 @@ stats:
     label: "學生陪伴成長"
     description: "轉化教育理念為真實的生命蛻變"
   ratio:
-    value: "100"
+    value: "95"
     unit: "%"
-    label: "師生深度契合"
-    description: "堅持小班制與導師長期陪伴制度"
+    label: "家長真實推薦"
+    description: "在台北這座孤島，找回能互相依靠的教育村落"
 
 experience:
   intro:

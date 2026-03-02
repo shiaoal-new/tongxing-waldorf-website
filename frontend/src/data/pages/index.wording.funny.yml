@@ -20,10 +20,10 @@ stats:
     label: "被收服的小猴子"
     description: "轉化教育理念為真實的生命蛻變（還有我們的耐心）"
   ratio:
-    value: "100"
+    value: "95"
     unit: "%"
-    label: "真心不刷考卷"
-    description: "堅持不搶拍、不刷題，只刷孩子眼中的好奇心"
+    label: "家長滿意推坑"
+    description: "超過 95% 家長表示：來這裡真的比外面有趣多了"
 
 experience:
   intro:
