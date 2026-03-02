@@ -3,7 +3,6 @@ slug: donation
 hero:
   title: $hero.title
   subtitle: $hero.subtitle
-  accent_text: $hero.accent_text
   media_list:
     - type: image
       image: /img/artifacts/tw_waldorf_painting_1768617922808.webp

@@ -6,7 +6,6 @@ seo:
 hero:
   title: "$hero.title"
   subtitle: "$hero.subtitle"
-  accent_text: "$hero.accent_text"
   media_list:
     - type: image
       image: /img/clay-modeling/hero.webp

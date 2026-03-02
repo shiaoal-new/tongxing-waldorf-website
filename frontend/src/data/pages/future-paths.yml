@@ -6,7 +6,6 @@ seo:
 hero:
   title: "$intro.hero.title"
   subtitle: "$intro.hero.subtitle"
-  accent_text: "$intro.hero.accent_text"
   media_list:
     - type: image
       image: /img/future-paths/hero.webp

@@ -10,7 +10,6 @@ hero:
     - type: image
       image: /img/vision-header.webp
   layout: "Hero: 中央圖文 (願景頁風格)"
-  accent_text: ""
 
 sections:
   - section_id: core-values

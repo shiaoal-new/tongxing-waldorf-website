@@ -3,7 +3,6 @@ slug: rhythm-of-life
 hero:
   title: $hero.title
   subtitle: $hero.subtitle
-  accent_text: $hero.accent_text
   media_list:
     - type: image
       image: /img/daily-routine.webp

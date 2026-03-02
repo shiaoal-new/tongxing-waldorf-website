@@ -107,7 +107,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         bg_video_mobile,
         transition_type = 'fade',
         entry_effect = {},
-        accent_text = "手、心、腦的均衡成長",
+        /* accent_text removed per premium-web-consultant audit */
         buttons = [],
         full_height = true,
         divider,
@@ -161,13 +161,6 @@ export default function HeroSection({ data }: HeroSectionProps) {
         }
     };
 
-    const accentVariants: Variants = {
-        hidden: { opacity: 0, scale: 0.8, rotate: -5 },
-        visible: {
-            opacity: 0.8, scale: 1, rotate: -2,
-            transition: { delay: 0.6, duration: 1.2, ease: "easeOut" }
-        }
-    };
 
     const handleScrollDown = () => {
         const sections = document.querySelectorAll('section');
@@ -231,15 +224,6 @@ export default function HeroSection({ data }: HeroSectionProps) {
                         <ShinyText text={displayTitle || ""} speed={3} />
                     </h1>
 
-                    {accent_text && (
-                        <motion.span
-                            variants={accentVariants}
-                            className="absolute -top-6 right-0 lg:-top-10 lg:-right-4 font-accent text-brand-accent text-xl lg:text-3xl opacity-80 select-none pointer-events-none"
-                            data-yml-src={getSource('accent_text')}
-                        >
-                            {accent_text}
-                        </motion.span>
-                    )}
                 </motion.div>
 
                 {buttons.length > 0 && (
