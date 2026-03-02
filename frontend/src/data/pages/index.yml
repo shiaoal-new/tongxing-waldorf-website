@@ -245,11 +245,12 @@ sections:
         layout: vertical
         item_type: faq_item
         faq_ids:
-          - tuition
-          - school-bus
-          - curriculum
-          - enrollment
+          - time
+          - investment
           - graduates
+          - adapt
+          - visit
+          - tuition
           - transition
   - layout: 紫色大型看板 (CTA)
     blocks:
