@@ -183,73 +183,74 @@ export default function HeroSection({ data }: HeroSectionProps) {
     };
 
     return (
-        <Section
-            data-yml-src={(data as any)._sourceFile} // Hero 整体定位
-            full_height={full_height}
-            className="flex flex-col justify-center"
-            media_list={media_list as any} // HeroMedia vs MediaItem subtle difference
-            bg_images={bg_images}
-            bg_video={bg_video}
-            bg_video_mobile={bg_video_mobile}
-            transition_type={transition_type}
-            parallax_ratio={parallax_ratio}
-            overlay_color={finalOverlayColor}
-            entry_animation={entryAnimation}
-            background_scroll_fade
-            disable_content_animation
-            content_inside_wrapper={true}
-            priority={true} // Hero section videos should preload immediately
-            layout={{
-                wrapper_class: wrapperClass,
-                container_class: layoutClasses.container_class || "items-center justify-center",
-                content_body_class: "w-full flex-grow flex flex-col justify-center"
-            }}
-            divider={divider}
-        >
-            <DevComment text="Hero Texts" />
-            <motion.div
-                className="w-full flex flex-col items-center"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
+        <div className="relative">
+            <Section
+                data-yml-src={(data as any)._sourceFile}
+                full_height={full_height}
+                className="flex flex-col justify-center"
+                media_list={media_list as any}
+                bg_images={bg_images}
+                bg_video={bg_video}
+                bg_video_mobile={bg_video_mobile}
+                transition_type={transition_type}
+                parallax_ratio={parallax_ratio}
+                overlay_color={finalOverlayColor}
+                entry_animation={entryAnimation}
+                background_scroll_fade
+                disable_content_animation
+                content_inside_wrapper={true}
+                priority={true}
+                layout={{
+                    wrapper_class: wrapperClass,
+                    container_class: layoutClasses.container_class || "items-center justify-center",
+                    content_body_class: "w-full flex-grow flex flex-col justify-center"
+                }}
+                divider={divider}
             >
-                {displaySubtitle && (
-                    <motion.div variants={itemVariants} data-yml-src={getSource('subtitle')}>
-                        <span className={pretitleClass}>{displaySubtitle}</span>
+                <DevComment text="Hero Texts" />
+                <motion.div
+                    className="w-full flex flex-col items-center"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {displaySubtitle && (
+                        <motion.div variants={itemVariants} data-yml-src={getSource('subtitle')}>
+                            <span className={pretitleClass}>{displaySubtitle}</span>
+                        </motion.div>
+                    )}
+
+                    <motion.div variants={itemVariants} className="relative">
+                        <h1 className={titleClass} data-yml-src={getSource('title')}>
+                            <ShinyText text={displayTitle || ""} speed={3} />
+                        </h1>
                     </motion.div>
-                )}
 
-                <motion.div variants={itemVariants} className="relative">
-                    <h1 className={titleClass} data-yml-src={getSource('title')}>
-                        <ShinyText text={displayTitle || ""} speed={3} />
-                    </h1>
-
+                    {buttons.length > 0 && (
+                        <motion.div
+                            variants={itemVariants}
+                            className="relative z-10 mt-6 flex flex-col items-center pb-16 md:pb-20"
+                            data-yml-src={getSource('buttons')}
+                        >
+                            <ActionButtons buttons={buttons} align="center" size="lg" />
+                            {(data as any).subtext && (
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 0.7 }}
+                                    transition={{ delay: 1.2 }}
+                                    className="mt-paragraph text-sm text-brand-bg/80 italic font-light tracking-brand"
+                                >
+                                    {(data as any).subtext}
+                                </motion.p>
+                            )}
+                        </motion.div>
+                    )}
                 </motion.div>
+            </Section>
 
-                {buttons.length > 0 && (
-                    <motion.div
-                        variants={itemVariants}
-                        className="relative z-10 mt-6 flex flex-col items-center pb-6"
-                        data-yml-src={getSource('buttons')}
-                    >
-                        <ActionButtons buttons={buttons} align="center" size="lg" />
-                        {(data as any).subtext && (
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 0.7 }}
-                                transition={{ delay: 1.2 }}
-                                className="mt-paragraph text-sm text-brand-bg/80 italic font-light tracking-brand"
-                            >
-                                {(data as any).subtext}
-                            </motion.p>
-                        )}
-                    </motion.div>
-                )}
-            </motion.div>
-
-            <DevComment text="Scroll Down Button" />
+            {/* Scroll down arrow - positioned relative to the full hero wrapper, not inside the content wrapper */}
             <motion.button
-                className="absolute bottom-4 md:bottom-8 left-1/2 z-20 p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors group"
+                className="absolute bottom-6 md:bottom-10 left-1/2 z-30 p-3 rounded-full bg-brand-bg/10 backdrop-blur-md border border-brand-bg/20 shadow-lg transition-colors group"
                 style={{ x: "-50%" }}
                 initial={{ opacity: 0, y: -20, x: "-50%" }}
                 animate={{ opacity: 1, y: 0, x: "-50%" }}
@@ -264,6 +265,6 @@ export default function HeroSection({ data }: HeroSectionProps) {
             >
                 <ArrowDownIcon className="w-6 h-6 md:w-8 md:h-8 text-brand-bg group-hover:text-white transition-colors" />
             </motion.button>
-        </Section>
+        </div>
     );
 }
