@@ -19,6 +19,7 @@
     "optimize-images:cleanup-unused": "node scripts/image-optimizer/optimize-images.js --check-unused --trash-unused",
     "optimize-images:high-quality": "node scripts/image-optimizer/optimize-images.js --preset=high-quality",
     "optimize-images:aggressive": "node scripts/image-optimizer/optimize-images.js --preset=aggressive",
+    "lint:traditional": "node scripts/lint-traditional.js",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -30,6 +31,9 @@
   "lint-staged": {
     "frontend/**/*.{ts,tsx}": [
       "bash -c \"npm run type-check --prefix frontend\""
+    ],
+    "frontend/src/data/**/*.{yml,yaml,json}": [
+      "node scripts/lint-traditional.js"
     ]
   }
 }
