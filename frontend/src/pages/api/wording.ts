@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
+import { deepMerge } from '../../lib/utils';
 
 /**
  * Wording API - 用於在開發環境下讀取文案 YAML
@@ -60,36 +62,55 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // Try new paths first
-    let wordingPath: string | null = null;
+    let mainWordingPath: string | null = null;
+    let folderWordingPaths: string[] = [];
 
     for (const root of possibleRoots) {
-        if (wordingPath) break;
+        if (mainWordingPath) break;
         for (const dir of searchDirs) {
             const p1 = path.join(root, `src/data/${dir}/${page}.wording.${style}.yml`);
             const p2 = path.join(root, `src/data/${dir}/${page}.wording.${style}.yaml`);
             if (fs.existsSync(p1)) {
-                wordingPath = p1;
+                mainWordingPath = p1;
                 break;
             }
             if (fs.existsSync(p2)) {
-                wordingPath = p2;
+                mainWordingPath = p2;
                 break;
+            }
+        }
+    }
+
+    // Check if there's a folder with this name containing piece-meal wording files
+    for (const root of possibleRoots) {
+        for (const dir of searchDirs) {
+            const folderPath = path.join(root, `src/data/${dir}`);
+            if (fs.existsSync(folderPath)) {
+                // If the folder name is 'faq' and we are requesting 'faq' page, or similar patterns
+                // (Currently our pages are flat in data/pages, but categories like faq are in data/faq)
+                // We always check the directory matching the 'page' parameter
+                const subDir = path.join(folderPath); // folderPath is src/data/faq
+                if (folderPath.endsWith(`/${page}`)) {
+                    const files = fs.readdirSync(folderPath);
+                    const matchingFiles = files.filter(f => f.includes(`.wording.${style}.`) && (f.endsWith('.yml') || f.endsWith('.yaml')));
+                    folderWordingPaths = [...folderWordingPaths, ...matchingFiles.map(f => path.join(folderPath, f))];
+                }
             }
         }
     }
 
     // Fallback to old path
-    if (!wordingPath) {
+    if (!mainWordingPath && folderWordingPaths.length === 0) {
         for (const root of possibleRoots) {
             const oldPath = path.join(root, `src/data/wordings/${page}/${style}.yml`);
             if (fs.existsSync(oldPath)) {
-                wordingPath = oldPath;
+                mainWordingPath = oldPath;
                 break;
             }
         }
     }
 
-    if (!wordingPath || !fs.existsSync(wordingPath)) {
+    if (!mainWordingPath && folderWordingPaths.length === 0) {
         // 如果 yml 不存在，嘗試回退到 json (相容過渡期)
         for (const root of possibleRoots) {
             const jsonPath = path.join(root, `src/data/wordings/${page}/${style}.json`);
@@ -102,9 +123,24 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     try {
-        const content = fs.readFileSync(wordingPath, 'utf8');
-        res.status(200).send(content);
+        let finalData: any = {};
+
+        // Load main file
+        if (mainWordingPath) {
+            const mainContent = fs.readFileSync(mainWordingPath, 'utf8');
+            finalData = yaml.load(mainContent) || {};
+        }
+
+        // Merge folder-based wordings
+        for (const fPath of folderWordingPaths) {
+            const content = fs.readFileSync(fPath, 'utf8');
+            const data = yaml.load(content) || {};
+            finalData = deepMerge(finalData, data);
+        }
+
+        res.status(200).send(yaml.dump(finalData, { lineWidth: -1 }));
     } catch (error) {
+        console.error('Error reading wording:', error);
         res.status(500).send('Error reading wording file');
     }
 }

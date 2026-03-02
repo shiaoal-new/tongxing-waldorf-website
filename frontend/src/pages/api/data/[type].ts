@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { loadAllData, DataType } from '../../../lib/dataLoader';
-import { getWordingDictionary, resolveWording } from '../../../lib/wording.server';
+import { getWordingDictionaryFromData, resolveWording } from '../../../lib/wording.server';
 
 const ALLOWED_TYPES: DataType[] = ['faq', 'faculty'];
 const SORT_BY: Partial<Record<DataType, string>> = {
@@ -25,7 +25,8 @@ export default function handler(
         });
 
         // 進行文字解析 (Wording Resolution)
-        const dictionary = getWordingDictionary(type, style as string);
+        // 使用 getWordingDictionaryFromData 以支援單獨檔案的 wording (例如 time.wording.default.yml)
+        const dictionary = getWordingDictionaryFromData(data, type, style as string);
         const resolvedData = data.map(item => resolveWording(item, dictionary));
 
         res.setHeader('Cache-Control', CACHE_HEADER);
