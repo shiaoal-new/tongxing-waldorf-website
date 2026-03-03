@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../ui/Logo";
+import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
 import { useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
@@ -141,16 +141,18 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
               <div className="flex flex-wrap items-center justify-between w-full lg:w-auto relative z-10">
                 <Link
                   href="/"
-                  className="flex items-center space-x-3 group transition-all duration-500 ease-out py-1">
-                  <Logo className="transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" />
-                  <div className="flex flex-col -space-y-1">
-                    <span className="text-2xl font-medium tracking-wider text-brand-accent dark:text-brand-bg font-accent transition-all duration-500">
-                      同心華德福
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-accent/70 dark:text-brand-bg/60 transition-all duration-700">
-                      Tongxing Waldorf
-                    </span>
-                  </div>
+                  className="flex items-center group transition-all duration-500 ease-out py-1">
+                  <Image
+                    src="/img/logo.webp"
+                    alt="同心華德福 Tongxing Waldorf"
+                    width={240}
+                    height={48}
+                    className={`h-6 sm:h-8 w-auto object-contain object-left transition-all duration-500 group-hover:scale-105 ${!scroll && !open
+                        ? "opacity-60 group-hover/navbar:opacity-100 group-hover/navbar:invert dark:group-hover/navbar:invert-0"
+                        : "invert dark:invert-0"
+                      }`}
+                    priority
+                  />
                 </Link>
 
                 <DisButton
