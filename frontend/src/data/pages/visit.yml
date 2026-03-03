@@ -23,4 +23,6 @@ sections:
         title: $schedule.blocks.0.title
         subtitle: $schedule.blocks.0.subtitle
         content: $schedule.blocks.0.content
-      - type: visit_schedule_block
+      - type: cal_com_block
+        namespace: "學校參訪"
+        calLink: "albert-siao/學校參訪"

@@ -43,6 +43,7 @@
   "author": "Surjith S M",
   "license": "ISC",
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@dotlottie/react-player": "^1.6.19",
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",

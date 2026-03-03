@@ -346,7 +346,15 @@ export interface StatsBlock extends BaseBlock {
     show_dividers?: boolean;
 }
 
-export type Block = TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock | ComparisonBlock | StatsBlock;
+export interface CalComBlock extends BaseBlock {
+    type: 'cal_com_block';
+    namespace?: string;
+    calLink: string;
+    config?: any;
+    theme?: any;
+}
+
+export type Block = CalComBlock | TextBlock | ScheduleBlock | ListBlock | CurriculumBlock | QuestionnaireBlock | MemberBlock | CardItem | CompactCardItem | VisitProcessBlock | VisitScheduleBlock | TimelineBlock | CTABlock | MermaidBlock | PieChartBlock | RadarChartBlock | BarChartBlock | BreathingIntroBlock | ScheduleListBlock | ComparisonBlock | StatsBlock;
 
 export interface Divider {
     type: 'wave' | 'curve';
