@@ -99,6 +99,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         layout = {},
         title,
         subtitle,
+        description,
         header,
         sub_header,
         media_list = [],
@@ -225,6 +226,14 @@ export default function HeroSection({ data }: HeroSectionProps) {
                             <ShinyText text={displayTitle || ""} speed={3} />
                         </h1>
                     </motion.div>
+
+                    {description && (
+                        <motion.div variants={itemVariants} className="max-w-2xl mx-auto mb-8 px-4" data-yml-src={getSource('description')}>
+                            <p className="text-lg md:text-xl text-brand-bg/80 font-medium leading-relaxed">
+                                {description}
+                            </p>
+                        </motion.div>
+                    )}
 
                     {buttons.length > 0 && (
                         <motion.div

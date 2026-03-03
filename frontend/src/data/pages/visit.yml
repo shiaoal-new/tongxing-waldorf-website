@@ -3,12 +3,18 @@ slug: visit
 content: $content
 hero:
   title: $hero.title
+  subtitle: $hero.eyebrow
+  description: $hero.sub_title
+  buttons:
+    - text: "立即預約深度參訪"
+      link: "#schedule"
+      style: "btn-primary"
   media_list:
     - type: image
       image: /img/visit.webp
   layout:
     wrapper_class: "max-w-3xl text-center"
-    container_class: "items-center justify-center"
+    container_class: "items-center justify-center justify-self-center self-center"
 sections:
   - section_id: process
     blocks:

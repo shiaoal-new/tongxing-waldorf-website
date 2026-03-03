@@ -392,6 +392,7 @@ export interface HeroMedia {
 export interface HeroData {
     title: string;
     subtitle: string;
+    description?: string;
     subtext?: string;
     accent_text?: string;
     media_list?: HeroMedia[];
