@@ -73,7 +73,7 @@ export async function getStaticProps() {
   });
 
   // Wording resolution
-  const dictionary = getWordingDictionaryFromData(page, "index", "default", ["faq"]);
+  const dictionary = getWordingDictionaryFromData(page, "index", "default", ["faq", "testimonials"]);
   const resolvedPage = page ? resolveWording(page, dictionary) : null;
 
   // 為了 SEO 結構化數據，我們僅傳遞該頁面「實際用到」的 FAQ 項目

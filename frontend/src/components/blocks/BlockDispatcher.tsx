@@ -226,6 +226,8 @@ export default function BlockDispatcher({ block, align = "center", context = "st
                     media={testimonial.media}
                     avatar={testimonial.avatar}
                     tags={testimonial.tags}
+                    source={testimonial.source}
+                    date={testimonial.date}
                     pagination={(block as any).pagination}
                 />
             );

@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
 
     // Always resolve default wordings at build time for all environments.
     // This eliminates text flash (FOUC) where raw $ids briefly appear.
-    const dictionary = getWordingDictionaryFromData(page, slug, "default", ["faq"]);
+    const dictionary = getWordingDictionaryFromData(page, slug, "default", ["faq", "testimonials"]);
     const resolvedPage = page ? resolveWording(page, dictionary) : null;
     const resolvedDataList = resolveWording({
         facultyList: pageData.facultyList || [],

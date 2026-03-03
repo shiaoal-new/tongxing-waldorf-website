@@ -10,6 +10,8 @@ interface TestimonialItemProps {
     media?: MediaItem;
     avatar?: string;
     tags?: string[];
+    source?: string;
+    date?: string;
     pagination?: { current: number; total: number };
 }
 
@@ -17,7 +19,7 @@ interface TestimonialItemProps {
  * TestimonialItem
  * 渲染單則見證與推薦，具有精緻的排版與視覺回饋
  */
-export default function TestimonialItem({ quote, author, title, media, avatar, tags, pagination }: TestimonialItemProps) {
+export default function TestimonialItem({ quote, author, title, media, avatar, tags, source, date, pagination }: TestimonialItemProps) {
     return (
         <div className="group relative flex flex-col items-center text-center bg-white dark:bg-neutral-800 rounded-3xl p-6 pt-16 md:p-8 md:pt-16 shadow-xl hover:shadow-2xl transition-all duration-500 border border-neutral-100 dark:border-neutral-700 mb-6 h-full">
             {/* Top Quote Mark - Large & Subtle */}
@@ -75,6 +77,22 @@ export default function TestimonialItem({ quote, author, title, media, avatar, t
                         <p className="text-[10px] text-neutral-400 dark:text-neutral-500 font-bold uppercase tracking-brand">
                             {title}
                         </p>
+                    )}
+                    {(source || date) && (
+                        <div className="mt-3 flex flex-col items-center justify-center text-[10px] text-neutral-400 dark:text-neutral-500 space-y-0.5">
+                            {source && (
+                                <div className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
+                                    <Icon icon="lucide:link" className="w-3 h-3" />
+                                    <span>{source}</span>
+                                </div>
+                            )}
+                            {date && (
+                                <div className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
+                                    <Icon icon="lucide:calendar" className="w-3 h-3" />
+                                    <span>{date}</span>
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
             </div>

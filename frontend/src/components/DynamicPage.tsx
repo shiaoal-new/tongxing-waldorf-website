@@ -49,7 +49,7 @@ export default function DynamicPageContent({ page: initialPage, pages, navigatio
             ...(rawData || initialData),
             coursesList: []
         }
-    }, ["faq"]);
+    }, ["faq", "testimonials"]);
 
     // 從 data 物件中解構所需的資料，提供預設值以保持向後相容
     const {
