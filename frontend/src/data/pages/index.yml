@@ -14,10 +14,10 @@ hero:
   subtext: "$hero.subtext"
   media_list:
     - type: video
-      video: /img/index/hero-background.mp4
-      mobileVideo: /img/index/hero-mobile.mp4
-      poster: /img/index/hero-poster.webp
-      mobilePoster: /img/index/hero-poster-mobile.webp
+      video: /img/index/hero/hero-background.mp4
+      mobileVideo: /img/index/hero/hero-mobile.mp4
+      poster: /img/index/hero/hero-poster.webp
+      mobilePoster: /img/index/hero/hero-poster-mobile.webp
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   divider:
     type: wave
@@ -114,10 +114,10 @@ sections:
     parallax_ratio: 1
     media_list:
       - type: video
-        video: /img/index/future-world.mp4
-        mobileVideo: /img/index/future-world-mobile.mp4
-        poster: /img/index/future-world-poster.webp
-        mobilePoster: /img/index/future-world-poster-mobile.webp
+        video: /img/index/future/future-world.mp4
+        mobileVideo: /img/index/future/future-world-mobile.mp4
+        poster: /img/index/future/future-world-poster.webp
+        mobilePoster: /img/index/future/future-world-poster-mobile.webp
     blocks:
       - type: text_block
         title: "$ai_future.intro.title"

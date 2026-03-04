@@ -9,10 +9,10 @@ hero:
   layout: "Hero: 左下方文字方塊 (首頁風格)"
   media_list:
     - type: video
-      video: /img/index/future-world.mp4
-      mobileVideo: /img/index/future-world-mobile.mp4
-      poster: /img/index/future-world-poster.webp
-      mobilePoster: /img/index/future-world-poster-mobile.webp
+      video: /img/index/future/future-world.mp4
+      mobileVideo: /img/index/future/future-world-mobile.mp4
+      poster: /img/index/future/future-world-poster.webp
+      mobilePoster: /img/index/future/future-world-poster-mobile.webp
 
 sections:
   - section_id: intro_ai_context
