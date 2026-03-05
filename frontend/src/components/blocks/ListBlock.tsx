@@ -33,6 +33,7 @@ interface ListBlockProps {
     align?: 'left' | 'center' | 'right';
     lazy?: boolean; // Enable lazy loading for list items
     lazyRootMargin?: string; // Root margin for lazy loading (default: "300px")
+    anchor?: string;
 }
 
 /**
@@ -103,7 +104,7 @@ function FaqSkeleton({ count = 4 }: { count?: number }) {
  * ListBlock Component
  * 渲染列表塊，支持 FAQ 數據的懶加載
  */
-export default function ListBlock({ block, align, lazy = true, lazyRootMargin = "300px" }: ListBlockProps) {
+export default function ListBlock({ block, align, lazy = true, lazyRootMargin = "300px", anchor }: ListBlockProps) {
     const { faqList: contextFaqList } = usePageData();
     const { getStyle } = useWordingContext();
 
@@ -236,7 +237,7 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
     const renderListContent = () => (
         <ListRenderer
             direction={direction as "horizontal" | "vertical"}
-
+            anchor={anchor || (block as any).anchor || (block as any).section_id}
             items={listItems}
             layout={method}
             mobile_scroll={block.mobile_scroll}
@@ -252,7 +253,12 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
                     : undefined;
                 return (
                     <div data-yml-src={itemSrc} style={{ display: 'contents' }}>
-                        <BlockDispatcher block={{ ...item, ...(extra || {}) }} context="list" align={align} />
+                        <BlockDispatcher
+                            block={{ ...item }}
+                            {...(extra || {})}
+                            context="list"
+                            align={align}
+                        />
                     </div>
                 );
             }}

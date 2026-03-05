@@ -51,7 +51,7 @@ export default function Disclosure({
                 <div className="flex items-center gap-4 relative z-10 flex-1 min-w-0">
                     {displayIndex && (
                         <span className={`
-                            text-sm font-bold font-mono tracking-tighter transition-colors duration-300 flex-shrink-0
+                            text-sm font-bold font-mono tracking-tighter transition-colors duration-300 flex-shrink-0 disclosure-index
                             ${isOpen ? 'text-brand-accent' : 'text-brand-taupe/40'}
                         `}>
                             {displayIndex}
@@ -59,11 +59,11 @@ export default function Disclosure({
                     )}
                     <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-3 flex-wrap">
-                            <span className={`font-bold transition-all duration-300 ${isOpen ? 'text-brand-text dark:text-brand-bg translate-x-1' : 'text-brand-text dark:text-brand-bg'}`}>
+                            <span className={`disclosure-title font-bold transition-all duration-300 ${isOpen ? 'text-brand-text translate-x-1' : 'text-brand-text'}`}>
                                 {title}
                             </span>
                             {subtitle && (
-                                <span className={`text-sm font-medium transition-all duration-300 ${isOpen ? 'text-brand-accent' : 'text-brand-taupe/60'}`}>
+                                <span className={`disclosure-subtitle text-sm font-medium transition-all duration-300 ${isOpen ? 'text-brand-accent' : 'text-brand-taupe/60'}`}>
                                     {subtitle}
                                 </span>
                             )}

@@ -82,10 +82,13 @@ sections:
         item_type: feature_item
         items:
           - title: "$waldorf_approach.items.0.title"
+            content: "$waldorf_approach.items.0.content"
             icon: lucide:hand-metal
           - title: "$waldorf_approach.items.1.title"
+            content: "$waldorf_approach.items.1.content"
             icon: lucide:heart
           - title: "$waldorf_approach.items.2.title"
+            content: "$waldorf_approach.items.2.content"
             icon: lucide:lightbulb
 
   - section_id: future_advantage
@@ -100,10 +103,13 @@ sections:
         item_type: feature_item
         items:
           - title: "$future_advantage.items.0.title"
+            content: "$future_advantage.items.0.content"
             icon: lucide:fingerprint
           - title: "$future_advantage.items.1.title"
+            content: "$future_advantage.items.1.content"
             icon: lucide:compass
           - title: "$future_advantage.items.2.title"
+            content: "$future_advantage.items.2.content"
             icon: lucide:handshake
 
   - layout: 紫色大型看板 (CTA)

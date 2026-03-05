@@ -51,6 +51,7 @@ interface ListRendererProps {
     appendMore?: boolean;
     layoutConfig?: any;
     mobileLayoutConfig?: any;
+    anchor?: string;
 }
 
 /**
@@ -69,6 +70,7 @@ export default function ListRenderer(props: ListRendererProps) {
         variant,
         layoutConfig = {},
         mobileLayoutConfig = {},
+        anchor,
     } = props;
 
     // ... (rest of the component)
@@ -109,13 +111,20 @@ export default function ListRenderer(props: ListRendererProps) {
             setTimeout(() => {
                 const item = items[index];
                 const itemId = item.id || index;
-                const element = document.getElementById(`dictionary-item-${itemId}`);
+                const elementId = `list-item-${props.layout || 'v'}-${anchor || 'x'}-${itemId}`;
+                const element = document.getElementById(elementId);
 
                 if (element) {
-                    // 使用 scrollIntoView 平滑滾動到視窗頂部（考慮導航欄偏移）
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // 檢查元素是否已經大部分在視圖中
+                    const rect = element.getBoundingClientRect();
+                    const isVisible = rect.top >= 100 && rect.bottom <= window.innerHeight;
+
+                    if (!isVisible) {
+                        // 如果不在視圖中，或者高度較大，則捲動到頂部（考慮導航欄偏移）
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
-            }, 300); // 延遲讓關閉動畫先進行一部分
+            }, 500); // 增加延遲，確保其他項目關閉導致的高度變化已穩定
         }
     };
 
@@ -142,7 +151,8 @@ export default function ListRenderer(props: ListRendererProps) {
 
                     // 2. 延遲一點點滾動，確保 UI 已經更新（展開）
                     setTimeout(() => {
-                        const element = document.getElementById(`dictionary-item-${id}`);
+                        const elementId = `list-item-${props.layout || 'v'}-${anchor || 'x'}-${id}`;
+                        const element = document.getElementById(elementId);
                         if (element) {
                             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
@@ -166,23 +176,27 @@ export default function ListRenderer(props: ListRendererProps) {
     if (direction === "vertical") {
         return (
             <div className="w-full max-w-2xl p-2 mx-auto rounded-2xl">
-                {items.map((item, index) => (
-                    <div
-                        id={`dictionary-item-${item.id || index}`}
-                        key={item.id || index}
-                        className="transition-all duration-300 rounded-3xl scroll-mt-32"
-                    >
-                        <Disclosure
-                            title={item.title}
-                            subtitle={item.subtitle}
-                            isOpen={activeIndex === index}
-                            onToggle={() => toggleItem(index)}
-                            index={index}
+                {items.map((item, index) => {
+                    const itemId = item.id || index;
+                    const elementId = `list-item-${props.layout || 'v'}-${anchor || 'x'}-${itemId}`;
+                    return (
+                        <div
+                            id={elementId}
+                            key={itemId}
+                            className="transition-all duration-300 rounded-3xl scroll-mt-32"
                         >
-                            {renderItem(item, index)}
-                        </Disclosure>
-                    </div>
-                ))}
+                            <Disclosure
+                                title={item.title}
+                                subtitle={item.subtitle}
+                                isOpen={activeIndex === index}
+                                onToggle={() => toggleItem(index)}
+                                index={index}
+                            >
+                                {renderItem(item, index, { expanded: activeIndex === index })}
+                            </Disclosure>
+                        </div>
+                    );
+                })}
 
                 <DevComment text="Vertical List Action Buttons" />
                 {/* 底部操作按钮 */}

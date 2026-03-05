@@ -6,23 +6,25 @@ interface TextBlockProps {
     align?: string;
     isNested?: boolean;
     disableExpand?: boolean;
+    expanded?: boolean;
 }
 
 /**
  * TextBlock Component
  * 提取的 UI 組件:文字區塊
  */
-export default function TextBlock({ data, align, isNested, disableExpand }: TextBlockProps) {
+export default function TextBlock({ data, align, isNested, disableExpand, expanded }: TextBlockProps) {
     return (
         <div className={isNested ? '' : 'section-container'}>
             <StaggeredReveal
                 subtitle={data.subtitle}
-                title={data.title}
+                title={isNested ? undefined : data.title}
                 content={data.content}
                 buttons={data.buttons}
                 align={(align as any) || 'center'}
                 isNested={isNested}
-                disableExpand={disableExpand}
+                disableExpand={disableExpand !== undefined ? disableExpand : expanded !== undefined}
+                expanded={expanded}
             />
         </div>
     );

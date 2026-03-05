@@ -19,17 +19,23 @@ interface FeatureItemProps {
     icon?: string;
     buttons?: CTAButton[];
   }[];
+  expanded?: boolean;
+  isNested?: boolean;
 }
 
-export default function FeatureItem({ span, media, title, children, icon, buttons, align = 'left', sub_items }: FeatureItemProps) {
+export default function FeatureItem({ span, media, title, children, icon, buttons, align = 'left', sub_items, expanded, isNested }: FeatureItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isFullWidth = span === 12;
 
   const cardClasses = `feature-card group h-full cursor-pointer hover:shadow-xl transition-all duration-500 ${isFullWidth ? 'flex-col md:flex-row' : 'flex-col'} ${align === 'center' ? 'items-center text-center' : 'items-start text-left'}`;
 
   const handleCardClick = () => {
-    setIsExpanded(!isExpanded);
+    if (expanded === undefined) {
+      setIsExpanded(!isExpanded);
+    }
   };
+
+  const effectiveExpanded = expanded !== undefined ? expanded : isExpanded;
 
   return (
     <div className={cardClasses} onClick={handleCardClick}>
@@ -58,22 +64,22 @@ export default function FeatureItem({ span, media, title, children, icon, button
       )}
 
       <div className={`relative z-20 flex flex-col px-6 py-8 md:px-10 md:py-10 ${isFullWidth ? 'w-full md:w-1/2 justify-center' : `w-full ${media && icon ? '-mt-16 md:-mt-20' : ''}`} ${align === 'center' ? 'items-center' : 'items-start'}`}>
-        {icon && (
+        {!isNested && icon && (
           <div className="feature-icon-container flex items-center justify-center flex-shrink-0 mb-6 w-14 h-14 rounded-2xl bg-brand-accent/10 text-brand-accent group-hover:bg-brand-accent group-hover:text-white transition-all duration-500 ease-out">
             <Icon icon={icon} className="w-7 h-7" />
           </div>
         )}
 
         <StaggeredReveal
-          title={title}
+          title={isNested ? undefined : title}
           content={children}
           buttons={buttons}
           align={align}
           isNested={true}
-          expanded={isExpanded}
+          expanded={effectiveExpanded}
           onToggle={setIsExpanded}
-          disableExpand={!(sub_items && sub_items.length > 0)}
-          variant={sub_items && sub_items.length > 0 ? "minimal" : "default"}
+          disableExpand={!(sub_items && sub_items.length > 0) && expanded === undefined}
+          variant={(sub_items && sub_items.length > 0) || expanded !== undefined ? "minimal" : "default"}
           expandText={sub_items && sub_items.length > 0 ? "展開了解更多" : "展開"}
           className="w-full"
         />

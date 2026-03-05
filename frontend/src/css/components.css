@@ -188,4 +188,22 @@
     [data-special-bg="true"] .feature-card h4 {
         @apply text-white drop-shadow-md !important;
     }
+
+    /* 針對 Disclosure 在特殊背景下的可讀性修正 */
+    [data-special-bg="true"] .disclosure-title {
+        @apply text-brand-text dark:text-brand-bg drop-shadow-none !important;
+    }
+
+    [data-special-bg="true"] .disclosure-subtitle {
+        @apply text-brand-taupe dark:text-brand-taupe drop-shadow-none !important;
+    }
+
+    [data-special-bg="true"] .disclosure-index {
+        @apply text-brand-taupe/40 drop-shadow-none !important;
+    }
+
+    [data-special-bg="true"] button[aria-expanded="true"] .disclosure-subtitle,
+    [data-special-bg="true"] button[aria-expanded="true"] .disclosure-index {
+        @apply text-brand-accent !important;
+    }
 }

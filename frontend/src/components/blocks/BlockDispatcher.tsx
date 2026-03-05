@@ -73,13 +73,14 @@ interface BlockDispatcherProps {
     context?: 'standalone' | 'list';
     anchor?: string;
     sectionLazy?: boolean; // Section level lazy load setting
+    expanded?: boolean; // 新增：是否受父組件（如 Disclosure）控制展開
 }
 
 /**
  * 內容分發器 (Block Dispatcher)
  * 負責將數據根據類型分配給具體的 UI 組件
  */
-export default function BlockDispatcher({ block, align = "center", context = "standalone", anchor = "", sectionLazy = true }: BlockDispatcherProps) {
+export default function BlockDispatcher({ block, align = "center", context = "standalone", anchor, sectionLazy = true, expanded }: BlockDispatcherProps) {
     if (!block) return null;
 
     const isNested = context === "list";
@@ -94,11 +95,11 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             );
         case "faq_item":
         case "faq":
-            return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} disableExpand={true} />;
+            return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} disableExpand={true} expanded={expanded} />;
 
         case "text_block":
         case "text":
-            return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} />;
+            return <TextBlock data={block as TextBlockType} align={isNested ? "left" : align} isNested={isNested} expanded={expanded} />;
 
         case "feature_item":
         case "feature":
@@ -114,6 +115,8 @@ export default function BlockDispatcher({ block, align = "center", context = "st
                     span={feature.span}
                     align={(block as any).align || align}
                     sub_items={feature.sub_items}
+                    expanded={expanded}
+                    isNested={isNested}
                 >
                     {feature.content}
                 </FeatureItem>
@@ -147,7 +150,7 @@ export default function BlockDispatcher({ block, align = "center", context = "st
             // Block level lazy > Section level lazy > Default true
             const blockLazy = (block as any).lazy;
             const isLazy = blockLazy !== undefined ? blockLazy : sectionLazy;
-            return <ListBlock block={block as ListBlockType} align={(block as any).align || align} lazy={isLazy} />;
+            return <ListBlock block={block as ListBlockType} align={(block as any).align || align} lazy={isLazy} anchor={anchor} />;
 
         case "cta_block":
             return <CTABlock block={block as CTABlockType} />;
