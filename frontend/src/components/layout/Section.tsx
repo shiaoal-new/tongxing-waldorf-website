@@ -167,7 +167,7 @@ export default function Section(props: SectionProps) {
         <section
             ref={sectionRef}
             id={anchor}
-            className={sectionClassName}
+            className={`${sectionClassName} ${silk_background ? 'bg-brand-taupe-fallback' : ''}`}
             style={{
                 backgroundColor: silk_background ? "rgb(var(--color-brand-taupe))" : undefined,
                 ...rest.style

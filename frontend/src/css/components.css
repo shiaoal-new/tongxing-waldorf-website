@@ -206,4 +206,9 @@
     [data-special-bg="true"] button[aria-expanded="true"] .disclosure-index {
         @apply text-brand-accent !important;
     }
+
+    /* Silk Background Fallback */
+    .bg-brand-taupe-fallback {
+        background-color: rgb(var(--color-brand-taupe)) !important;
+    }
 }

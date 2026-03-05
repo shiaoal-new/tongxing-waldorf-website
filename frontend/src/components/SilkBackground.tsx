@@ -24,11 +24,17 @@ interface SilkBackgroundProps {
 }
 
 const SilkBackground = (props: SilkBackgroundProps) => {
-    const { className = "", ...rest } = props;
+    const { className = "", color, ...rest } = props;
     const [isLoaded, setIsLoaded] = React.useState(false);
 
+    // Default to the brand taupe if no color provided
+    const backgroundColor = color || "rgb(var(--color-brand-taupe))";
+
     return (
-        <div className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${className}`}>
+        <div
+            className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${className}`}
+            style={{ backgroundColor }}
+        >
             <div className={`w-full h-full transition-opacity duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
                 <Canvas
                     dpr={[1, 2]}
