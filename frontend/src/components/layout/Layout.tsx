@@ -17,7 +17,7 @@ interface LayoutProps {
     seo?: SEOData;
     hero?: HeroData;
     navbarPadding?: boolean;
-    pages: PageData[];
+    pages: Partial<PageData>[];
     navigation: NavigationData;
     className?: string;
     backgroundSpeed?: number;

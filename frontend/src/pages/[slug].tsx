@@ -9,7 +9,7 @@ import { getWordingDictionary, getWordingDictionaryFromData, resolveWording } fr
 
 interface DynamicPageProps {
     page: PageData | null;
-    pages: PageData[];
+    pages: Partial<PageData>[];
     navigation: NavigationData;
     siteSettings: SiteData;
     data: {
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<DynamicPageProps> = async ({ params 
     const resolvedPages = pages.map(p => {
         const dict = getWordingDictionary(p.slug, "default");
         return {
-            ...p,
+            slug: p.slug,
             title: resolveWording(p.title, dict)
         };
     });

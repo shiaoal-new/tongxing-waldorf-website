@@ -19,7 +19,7 @@ import { AnimatePresence, LayoutGroup } from "framer-motion";
 
 interface DynamicPageContentProps {
     page: PageData | null;
-    pages: PageData[];
+    pages: Partial<PageData>[];
     navigation: NavigationData;
     siteSettings?: SiteData;
     data?: {

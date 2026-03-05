@@ -19,7 +19,7 @@ import { isDevEnvironment } from "../../lib/env";
 import MegaMenu from "./Navbar/MegaMenu";
 
 interface NavbarProps {
-  pages?: PageData[];
+  pages?: Partial<PageData>[];
   navigation: NavigationData;
   isHeroPage?: boolean;
 }
@@ -148,8 +148,8 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                     width={240}
                     height={48}
                     className={`h-6 sm:h-8 w-auto object-contain object-left transition-all duration-500 group-hover:scale-105 ${!scroll && !open
-                        ? "opacity-60 group-hover/navbar:opacity-100 group-hover/navbar:invert dark:group-hover/navbar:invert-0"
-                        : "invert dark:invert-0"
+                      ? "opacity-60 group-hover/navbar:opacity-100 group-hover/navbar:invert dark:group-hover/navbar:invert-0"
+                      : "invert dark:invert-0"
                       }`}
                     priority
                   />

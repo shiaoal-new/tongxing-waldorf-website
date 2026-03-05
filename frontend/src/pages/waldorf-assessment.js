@@ -19,7 +19,7 @@ export async function getStaticProps() {
     const resolvedPages = pages.map(p => {
         const dict = getWordingDictionary(p.slug, "default");
         return {
-            ...p,
+            slug: p.slug,
             title: resolveWording(p.title, dict)
         };
     });
