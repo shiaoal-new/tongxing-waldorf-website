@@ -123,6 +123,7 @@ export function loadAllData<T extends DataItem>(
                 slug: data.slug || slug,
                 ...data,
                 content: content,
+                _sourceFile: fullPath, // 記錄來源路徑以便文字解析器尋找 wording 檔案
             };
 
             // 如果有自訂轉換函數，則使用

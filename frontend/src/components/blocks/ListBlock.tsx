@@ -1,12 +1,12 @@
 import ListRenderer, { LIST_LAYOUT_CONFIG } from "../ListLayoutRenderer";
 
-
 import { usePageData } from "../../context/PageDataContext";
 import { useWordingContext } from "../../context/WordingContext";
 import BlockDispatcher from "./BlockDispatcher";
 import { ListBlock as ListBlockType, FaqItem, ListItem, LayoutConfig } from "../../types/content";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { BlockPolicy } from './interfaces';
+import { useVisibilityTrigger } from '../../hooks/useVisibilityTrigger';
 
 /**
  * 準備列表數據，將 FAQ 或普通項目統一轉化為規整的 Block 結構
@@ -85,71 +85,19 @@ export function getLayoutSettings(block: ListBlockType) {
     return { method, mobileMethod, config, mobileConfig };
 }
 
-/**
- * LazyDataContainer Component
- * 包裝列表項目並使用 Intersection Observer 進行懶加載
- * 當 FAQ 區塊進入視口時才獲取數據
- */
-function LazyDataContainer({
-    children,
-    rootMargin = "300px",
-    onVisible,
-    isLoading,
-    dataLoaded,
-}: {
-    children: React.ReactNode;
-    rootMargin?: string;
-    onVisible: () => void;
-    isLoading: boolean;
-    dataLoaded: boolean;
-}) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const hasTriggeredRef = useRef(false);
-
-    useEffect(() => {
-        // 如果已經觸發過或數據已加載，不再設置觀察器
-        if (hasTriggeredRef.current || dataLoaded) {
-            return;
-        }
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && !hasTriggeredRef.current) {
-                    hasTriggeredRef.current = true;
-                    onVisible();
-                    observer.disconnect();
-                }
-            },
-            {
-                rootMargin,
-                threshold: 0
-            }
-        );
-
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, [rootMargin, onVisible, dataLoaded]);
-
-    // 如果數據還沒加載完成，顯示加載骨架屏
-    if (!dataLoaded || isLoading) {
-        return (
-            <div ref={containerRef} className="lazy-list-container">
-                <div className="flex justify-center items-center py-12">
-                    <div className="animate-pulse flex flex-col items-center gap-4">
-                        <div className="w-16 h-16 bg-neutral-200 dark:bg-neutral-700 rounded-full"></div>
-                        <div className="h-4 w-48 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
-                        <div className="h-3 w-64 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
-                    </div>
+/** FAQ 手風琴骨架屏 — 形狀與實際 FAQ 吻合，減少 CLS */
+function FaqSkeleton({ count = 4 }: { count?: number }) {
+    return (
+        <div className="flex flex-col gap-3 animate-pulse">
+            {Array.from({ length: count }).map((_, i) => (
+                <div key={i} className="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4">
+                    <div className="h-5 bg-neutral-200 dark:bg-neutral-700 rounded" style={{ width: `${70 + (i % 3) * 10}%` }} />
                 </div>
-            </div>
-        );
-    }
-
-    return <div ref={containerRef}>{children}</div>;
+            ))}
+        </div>
+    );
 }
+
 
 /**
  * ListBlock Component
@@ -163,14 +111,39 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
     const pageId = typeof window !== 'undefined' ? window.location.pathname.split('/').pop() || 'index' : 'index';
     const currentStyle = getStyle(pageId);
 
-    // 檢查是否需要懶加載 FAQ 數據
-    const needsLazyFaq = lazy && block.faq_ids && block.faq_ids.length > 0;
+    // 確認 context 是否已包含所有必要的 FAQ ID
+    const hasAllDataInContext = block.faq_ids?.every(id =>
+        (contextFaqList as FaqItem[] || []).some(f => f.id === id)
+    ) ?? false;
+
+    // 需要懶加載的條件：
+    // 1. lazy=true 且有 faq_ids
+    // 2. 且 context 缺少數據 OR style 不是 default（需要重新 fetch 對應 style 的數據）
+    const hasFaqIds = lazy && block.faq_ids && block.faq_ids.length > 0;
+    const needsFetch = hasFaqIds && (!hasAllDataInContext || currentStyle !== 'default');
 
     // 懶加載狀態
     const [lazyFaqList, setLazyFaqList] = useState<FaqItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [dataLoaded, setDataLoaded] = useState(!needsLazyFaq);
+    const [loadedStyle, setLoadedStyle] = useState<string | null>(null);
+    const [fetchError, setFetchError] = useState(false); // fetch 失敗時 fallback 到 context
     const abortControllerRef = useRef<AbortController | null>(null);
+
+    // 數據是否已準備好顯示：
+    // - 不需要 fetch → 直接用 context
+    // - fetch 完成（loadedStyle 匹配）→ 用 lazy 資料
+    // - fetch 失敗（fetchError）→ fallback 到 context，不卡骨架屏
+    const needsLazyFaq = needsFetch;
+    const dataLoaded = !needsFetch || loadedStyle === currentStyle || fetchError;
+
+    // 當 style 改變時，重置狀態強制重新 fetch
+    useEffect(() => {
+        if (loadedStyle !== null && loadedStyle !== currentStyle) {
+            setLoadedStyle(null);
+            setLazyFaqList([]);
+            setFetchError(false);
+        }
+    }, [currentStyle, loadedStyle]);
 
     // 獲取 FAQ 數據的函數
     const fetchFaqData = useCallback(async () => {
@@ -186,44 +159,63 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
         const startTime = performance.now();
 
         try {
-            // 將 style 傳遞給 API 以獲取正確解析的文字
-            const response = await fetch(`/api/data/faq?style=${currentStyle}`, {
+            // 在部署環境（靜態導出）下，API 路由不可用，我們改為請求預先生成的靜態 JSON
+            // 嘗試路徑順序：1. 靜態 JSON (優選) 2. 動態 API (開發環境回退)
+            const staticPath = `/data-api/faq/${currentStyle}.json`;
+            const dynamicPath = `/api/data/faq?style=${currentStyle}`;
+
+            let response = await fetch(staticPath, {
                 signal: abortControllerRef.current.signal,
                 headers: { 'Accept': 'application/json' }
             });
 
+            // 如果靜態檔案不存在（例如在開發環境下還沒執行生成腳本），則嘗試動態 API
             if (!response.ok) {
-                throw new Error(`Failed to fetch FAQ: ${response.status} ${response.statusText}`);
+                response = await fetch(dynamicPath, {
+                    signal: abortControllerRef.current.signal,
+                    headers: { 'Accept': 'application/json' }
+                });
+            }
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch FAQ from both static and dynamic paths`);
             }
 
             const data: FaqItem[] = await response.json();
             setLazyFaqList(data);
-            setDataLoaded(true);
+            setLoadedStyle(currentStyle);
 
-            if (process.env.NODE_ENV === 'development') {
+            if (process.env.NODE_ENV === 'development' || (typeof window !== 'undefined' && window.location.hostname === 'localhost')) {
                 const endTime = performance.now();
                 const size = JSON.stringify(data).length;
                 console.log(
-                    `[ListBlock] Lazy loaded FAQ data in ${(endTime - startTime).toFixed(2)}ms ` +
+                    `[ListBlock] Lazy loaded FAQ data from ${response.url.includes('.json') ? 'static' : 'dynamic'} path in ${(endTime - startTime).toFixed(2)}ms ` +
                     `(${size.toLocaleString()} bytes, ${data.length} items)`
                 );
             }
         } catch (error) {
             if (error instanceof Error && error.name !== 'AbortError') {
-                console.error('[ListBlock] Failed to lazy load FAQ data:', error);
+                console.error('[ListBlock] Failed to lazy load FAQ data, falling back to context:', error);
+                // fetch 失敗 → 標記 fetchError，讓元件 fallback 到 SSG context 資料，不卡骨架屏
+                setFetchError(true);
             }
         } finally {
             setIsLoading(false);
         }
     }, [dataLoaded, isLoading, currentStyle]);
 
-    // 組件卸載時取消請求
+    // ref 永遠掛在同一個 container div，不隨骨架屏/內容切換而改變
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // 當元素進入視口 → 觸發 fetch（僅在需要 fetch 且尚未載入時啟動）
+    useVisibilityTrigger(containerRef, fetchFaqData, {
+        rootMargin: lazyRootMargin,
+        enabled: needsLazyFaq && !dataLoaded,
+    });
+
+    // 元件卸載時取消進行中的 network request
     useEffect(() => {
-        return () => {
-            if (abortControllerRef.current) {
-                abortControllerRef.current.abort();
-            }
-        };
+        return () => { abortControllerRef.current?.abort(); };
     }, []);
 
     const { method, mobileMethod, config, mobileConfig } = getLayoutSettings(block);
@@ -231,7 +223,13 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
     const direction = block.direction || (method === "vertical" ? "vertical" : "horizontal");
 
     // 決定使用哪個數據源
-    const faqListToUse = needsLazyFaq && dataLoaded ? lazyFaqList : (contextFaqList as FaqItem[] || []);
+    // - 若有 lazyFaqList（已 fetch），優先使用（保證是正確 style 的數據）
+    // - 若 style 是 default 且 context 有數據，直接用
+    // - 其他情況用空陣列（等待加載）
+    // 資料優先順序：lazy fetch 結果 > SSG context（不需 fetch 或 fetch 失敗時）> 空陣列
+    const faqListToUse = lazyFaqList.length > 0
+        ? lazyFaqList
+        : (!needsFetch || fetchError ? (contextFaqList as FaqItem[] || []) : []);
 
     const listItems = prepareListItems(block, faqListToUse, direction);
 
@@ -262,7 +260,7 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
     );
 
     return (
-        <div className="brand-container">
+        <div ref={containerRef} className="brand-container">
             {block.title && (
                 <div className="mb-8">
                     <h3 className="title-bordered">
@@ -270,18 +268,10 @@ export default function ListBlock({ block, align, lazy = true, lazyRootMargin = 
                     </h3>
                 </div>
             )}
-            {needsLazyFaq ? (
-                <LazyDataContainer
-                    rootMargin={lazyRootMargin}
-                    onVisible={fetchFaqData}
-                    isLoading={isLoading}
-                    dataLoaded={dataLoaded}
-                >
-                    {renderListContent()}
-                </LazyDataContainer>
-            ) : (
-                renderListContent()
-            )}
+            {needsLazyFaq && !dataLoaded
+                ? <FaqSkeleton />
+                : renderListContent()
+            }
         </div>
     );
 }

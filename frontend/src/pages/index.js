@@ -90,8 +90,11 @@ export async function getStaticProps() {
   const allFaq = loadAllData("faq", { excludeWording: true });
   const filteredFaqList = (allFaq || []).filter(f => pageFaqIds.has(f.id));
 
+  // 對 FAQ 列表進行文字解析
+  const resolvedFaqList = resolveWording(filteredFaqList, dictionary);
+
   // Resolved Data 僅包含此頁面必要的 FAQ 內容 (用於 SEO)
-  const resolvedData = { faqList: filteredFaqList, facultyList: [] };
+  const resolvedData = { faqList: resolvedFaqList, facultyList: [] };
 
   return {
     props: {

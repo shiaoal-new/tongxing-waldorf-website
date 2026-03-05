@@ -63,7 +63,7 @@ frontend/public/fonts/*.subset.woff2
 
 # Wording files
 frontend/public/data/wordings/
-
+frontend/public/data-api/
 # Generated OG Images
 frontend/public/og-images/
 
