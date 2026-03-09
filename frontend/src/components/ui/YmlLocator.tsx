@@ -5,7 +5,9 @@ type MenuState = {
     x: number;
     y: number;
     ymlSrc: string | null;
+    tsxSrc: string | null;
     element: HTMLElement | null;
+    tsxElement: HTMLElement | null;
     deltaX: number;
     deltaY: number;
 };
@@ -54,7 +56,9 @@ export default function YmlLocator() {
         deltaX: 0,
         deltaY: 0,
         ymlSrc: null,
-        element: null
+        tsxSrc: null,
+        element: null,
+        tsxElement: null
     });
 
     const [notes, setNotes] = useState<Record<string, NoteData>>({});
@@ -63,8 +67,10 @@ export default function YmlLocator() {
     const [editDraft, setEditDraft] = useState('');
 
     const observerRef = useRef<MutationObserver | null>(null);
-    const hoveredSrcRef = useRef<string | null>(null);
-    const outlineRef = useRef<HTMLDivElement>(null);
+    const hoveredTsxElementRef = useRef<HTMLElement | null>(null);
+    const hoveredYmlElementRef = useRef<HTMLElement | null>(null);
+    const tsxOutlineRef = useRef<HTMLDivElement>(null);
+    const ymlOutlineRef = useRef<HTMLDivElement>(null);
 
     // Initial load
     useEffect(() => {
@@ -93,25 +99,41 @@ export default function YmlLocator() {
             const currentNotes = notesRef.current;
             const srcKeys = Object.keys(currentNotes);
             const positions: NotePosition[] = [];
-            let highlighted = false;
+            let ymlHighlighted = false;
+            let tsxHighlighted = false;
 
-            if (srcKeys.length > 0 || hoveredSrcRef.current !== null) {
+            if (hoveredYmlElementRef.current && ymlOutlineRef.current) {
+                const el = hoveredYmlElementRef.current;
+                const style = window.getComputedStyle(el);
+                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                    const rect = getVisualRect(el);
+                    ymlOutlineRef.current.style.display = 'block';
+                    ymlOutlineRef.current.style.top = `${rect.top}px`;
+                    ymlOutlineRef.current.style.left = `${rect.left}px`;
+                    ymlOutlineRef.current.style.width = `${rect.width}px`;
+                    ymlOutlineRef.current.style.height = `${rect.height}px`;
+                    ymlHighlighted = true;
+                }
+            }
+
+            if (hoveredTsxElementRef.current && tsxOutlineRef.current) {
+                const el = hoveredTsxElementRef.current;
+                const style = window.getComputedStyle(el);
+                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                    const rect = getVisualRect(el);
+                    tsxOutlineRef.current.style.display = 'block';
+                    tsxOutlineRef.current.style.top = `${rect.top}px`;
+                    tsxOutlineRef.current.style.left = `${rect.left}px`;
+                    tsxOutlineRef.current.style.width = `${rect.width}px`;
+                    tsxOutlineRef.current.style.height = `${rect.height}px`;
+                    tsxHighlighted = true;
+                }
+            }
+
+            if (srcKeys.length > 0) {
                 const elements = document.querySelectorAll('[data-yml-src]');
                 elements.forEach(el => {
                     const src = el.getAttribute('data-yml-src');
-
-                    if (src === hoveredSrcRef.current && outlineRef.current) {
-                        const style = window.getComputedStyle(el);
-                        if (style.display !== 'none' && style.visibility !== 'hidden') {
-                            const rect = getVisualRect(el as HTMLElement);
-                            outlineRef.current.style.display = 'block';
-                            outlineRef.current.style.top = `${rect.top}px`;
-                            outlineRef.current.style.left = `${rect.left}px`;
-                            outlineRef.current.style.width = `${rect.width}px`;
-                            outlineRef.current.style.height = `${rect.height}px`;
-                            highlighted = true;
-                        }
-                    }
 
                     if (src && currentNotes[src]) {
                         const rect = getVisualRect(el as HTMLElement);
@@ -142,8 +164,11 @@ export default function YmlLocator() {
                 });
             }
 
-            if (!highlighted && outlineRef.current) {
-                outlineRef.current.style.display = 'none';
+            if (!ymlHighlighted && ymlOutlineRef.current) {
+                ymlOutlineRef.current.style.display = 'none';
+            }
+            if (!tsxHighlighted && tsxOutlineRef.current) {
+                tsxOutlineRef.current.style.display = 'none';
             }
 
             setNotePositions(prev => {
@@ -164,60 +189,126 @@ export default function YmlLocator() {
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') return;
 
-        const handleContextMenuInfo = (e: MouseEvent) => {
-            const isMatch = e.altKey;
+        const handleMouseMove = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target.closest('.yml-locator-note')) return;
 
-            if (isMatch) {
-                // 向上查找到带有 data-yml-src 的元素
+            if (e.altKey) {
+                const tsxContainer = target.closest('[data-source-loc]') as HTMLElement;
+                const ymlContainer = target.closest('[data-yml-src]') as HTMLElement;
+                hoveredTsxElementRef.current = tsxContainer || null;
+                hoveredYmlElementRef.current = ymlContainer || null;
+            } else {
+                hoveredTsxElementRef.current = null;
+                hoveredYmlElementRef.current = null;
+            }
+        };
+
+        const handleKeyUp = (e: KeyboardEvent) => {
+            if (e.key === 'Alt' || e.key === 'Option') {
+                hoveredTsxElementRef.current = null;
+                hoveredYmlElementRef.current = null;
+            }
+        };
+
+        const handleClick = (e: MouseEvent) => {
+            if (e.altKey && e.button === 0) {
+                // JSX & YML Locator: Option + Left Click
                 const target = e.target as HTMLElement;
-                const container = target.closest('[data-yml-src]');
+                const tsxContainer = target.closest('[data-source-loc]') as HTMLElement;
+                const ymlContainer = target.closest('[data-yml-src]') as HTMLElement;
 
-                if (container) {
-                    const rawValue = container.getAttribute('data-yml-src');
-                    if (rawValue) {
-                        e.preventDefault(); // 阻止默认右键菜单
-                        // 計算點擊時相對於該元素的精確 px 偏移量
-                        // e.clientX 與 rect.left 都是相較於 viewport 視窗的座標，所以兩者相減即可得出偏移
-                        const rect = getVisualRect(container as HTMLElement);
-                        const clickX = e.clientX;
-                        const clickY = e.clientY;
+                let tsxSrcValue = null;
+                let ymlSrcValue = null;
 
-                        setMenu({
-                            visible: true,
-                            x: clickX,
-                            y: clickY,
-                            deltaX: clickX - rect.left,
-                            deltaY: clickY - rect.top,
-                            ymlSrc: rawValue,
-                            element: container as HTMLElement
-                        });
+                if (tsxContainer) tsxSrcValue = tsxContainer.getAttribute('data-source-loc');
+                if (ymlContainer) ymlSrcValue = ymlContainer.getAttribute('data-yml-src');
+
+                if (tsxSrcValue || ymlSrcValue) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const clickX = e.clientX;
+                    const clickY = e.clientY;
+                    let deltaX = 0;
+                    let deltaY = 0;
+
+                    if (ymlContainer) {
+                        const rect = getVisualRect(ymlContainer);
+                        deltaX = clickX - rect.left;
+                        deltaY = clickY - rect.top;
                     }
+
+                    setMenu({
+                        visible: true,
+                        x: clickX,
+                        y: clickY,
+                        deltaX,
+                        deltaY,
+                        ymlSrc: ymlSrcValue,
+                        tsxSrc: tsxSrcValue,
+                        element: ymlContainer,
+                        tsxElement: tsxContainer
+                    });
                 } else {
-                    console.warn('[YML Locator] %cOption + 右键正确，但点击的元素及其祖先没有 data-yml-src 属性', 'color: #f59e0b;');
+                    console.warn('[YML Locator] Could not find locator data or yml src data.');
+                }
+            } else {
+                const target = e.target as HTMLElement;
+                if (!target.closest('#yml-locator-menu')) {
+                    setMenu(prev => prev.visible ? { ...prev, visible: false } : prev);
                 }
             }
         };
 
-        const handleClickOutside = () => {
-            setMenu(prev => prev.visible ? { ...prev, visible: false } : prev);
-        };
-
-        // 使用 contextmenu 事件来捕获右键
-        window.addEventListener('contextmenu', handleContextMenuInfo, true);
-        window.addEventListener('click', handleClickOutside);
+        window.addEventListener('click', handleClick, true);
+        window.addEventListener('mousemove', handleMouseMove, true);
+        window.addEventListener('keyup', handleKeyUp, true);
 
         return () => {
-            window.removeEventListener('contextmenu', handleContextMenuInfo, true);
-            window.removeEventListener('click', handleClickOutside);
+            window.removeEventListener('click', handleClick, true);
+            window.removeEventListener('mousemove', handleMouseMove, true);
+            window.removeEventListener('keyup', handleKeyUp, true);
         };
     }, []);
 
     if (process.env.NODE_ENV !== 'development') return null;
 
-    const handleOpenSource = () => {
-        if (!menu.ymlSrc) return;
+    const handleOpenTsx = () => {
+        if (!menu.tsxSrc) return;
 
-        const rawValue = menu.ymlSrc;
+        const [filePath, line, column] = menu.tsxSrc.split('::');
+        const url = `antigravity://file${filePath}:${line}:${column || 1}`;
+        console.log(`[JSX Locator] %cOpening JSX: ${url}`, 'color: #10b981; font-weight: bold;');
+        window.location.href = url;
+
+        // Visual feedback
+        if (menu.tsxElement) {
+            const el = menu.tsxElement;
+            const originalTransition = el.style.transition;
+            const originalShadow = el.style.boxShadow;
+            const originalZIndex = el.style.zIndex;
+
+            el.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            el.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)';
+            el.style.transform = 'scale(0.995)';
+            el.style.zIndex = '9999';
+
+            setTimeout(() => {
+                el.style.transform = '';
+                el.style.boxShadow = originalShadow;
+                el.style.zIndex = originalZIndex;
+                setTimeout(() => {
+                    el.style.transition = originalTransition;
+                }, 300);
+            }, 500);
+        }
+
+        setMenu(prev => ({ ...prev, visible: false }));
+    };
+
+    const jumpToYml = (ymlSrc: string) => {
+        const rawValue = ymlSrc;
         // 解析 path:line 格式
         const lastColon = rawValue.lastIndexOf(':');
         let filePath = rawValue;
@@ -233,6 +324,12 @@ export default function YmlLocator() {
         window.location.href = url;
 
         console.log(`[YML Locator] %cOpening: ${url}`, 'color: #10b981; font-weight: bold;');
+    };
+
+    const handleOpenSource = () => {
+        if (!menu.ymlSrc) return;
+
+        jumpToYml(menu.ymlSrc);
 
         // 增加视觉反馈
         if (menu.element) {
@@ -328,6 +425,7 @@ export default function YmlLocator() {
             {/* Context Menu */}
             {menu.visible && (
                 <div
+                    id="yml-locator-menu"
                     style={{
                         position: 'fixed',
                         top: menu.y,
@@ -347,67 +445,110 @@ export default function YmlLocator() {
                     onContextMenu={e => { e.preventDefault(); e.stopPropagation(); }}
                 >
                     <div style={{ padding: '6px 12px', fontSize: '12px', color: '#6b7280', borderBottom: '1px solid #f3f4f6', marginBottom: '4px', wordBreak: 'break-all' }}>
-                        {menu.ymlSrc?.split('/').pop()}
+                        {menu.ymlSrc?.split('/').pop() || menu.tsxSrc?.split('/').pop()?.split('::')[0]}
                     </div>
 
-                    <button
-                        onClick={handleOpenSource}
-                        style={{
-                            padding: '8px 12px',
-                            textAlign: 'left',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            borderRadius: '4px',
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            color: '#111827'
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
-                        onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                        <span style={{ fontSize: '16px' }}>↗️</span> Go to YML source
-                    </button>
+                    {menu.tsxSrc && (
+                        <button
+                            onClick={handleOpenTsx}
+                            style={{
+                                padding: '8px 12px',
+                                textAlign: 'left',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                borderRadius: '4px',
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                color: '#111827'
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                            <span style={{ fontSize: '16px' }}>⚛️</span> Go to TSX source
+                        </button>
+                    )}
 
-                    <button
-                        onClick={handleAddNoteClick}
-                        style={{
-                            padding: '8px 12px',
-                            textAlign: 'left',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            borderRadius: '4px',
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            color: '#111827'
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
-                        onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                        <span style={{ fontSize: '16px' }}>📝</span> {notes[menu.ymlSrc || ''] ? 'Edit note' : 'Add note on this element'}
-                    </button>
+                    {menu.ymlSrc && (
+                        <button
+                            onClick={handleOpenSource}
+                            style={{
+                                padding: '8px 12px',
+                                textAlign: 'left',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                borderRadius: '4px',
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                color: '#111827'
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                            <span style={{ fontSize: '16px' }}>↗️</span> Go to YML source
+                        </button>
+                    )}
+
+                    {menu.ymlSrc && (
+                        <button
+                            onClick={handleAddNoteClick}
+                            style={{
+                                padding: '8px 12px',
+                                textAlign: 'left',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                borderRadius: '4px',
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                color: '#111827'
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+                            onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                            <span style={{ fontSize: '16px' }}>📝</span> {notes[menu.ymlSrc] ? 'Edit note' : 'Add note on this element'}
+                        </button>
+                    )}
                 </div>
             )}
 
-            {/* Element Outline Highlighter */}
+            {/* Element Outline Highlighters */}
+            {/* YML Boundary (Amber) */}
             <div
-                ref={outlineRef}
+                ref={ymlOutlineRef}
                 style={{
                     position: 'fixed',
                     display: 'none',
                     pointerEvents: 'none',
                     border: '2px dashed #f59e0b',
                     backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    zIndex: 9996,
+                    borderRadius: '4px',
+                    transition: 'none'
+                }}
+            />
+            {/* TSX Boundary (Emerald) */}
+            <div
+                ref={tsxOutlineRef}
+                style={{
+                    position: 'fixed',
+                    display: 'none',
+                    pointerEvents: 'none',
+                    border: '2px dashed #10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     zIndex: 9997,
                     borderRadius: '4px',
-                    transition: 'none' // Controlled by rAF
+                    transition: 'none'
                 }}
             />
 
@@ -415,6 +556,7 @@ export default function YmlLocator() {
             {notePositions.map((pos, i) => (
                 <div
                     key={`${pos.ymlSrc}-${i}`}
+                    className="yml-locator-note"
                     style={{
                         position: 'fixed',
                         top: pos.y,
@@ -437,22 +579,30 @@ export default function YmlLocator() {
                         transition: 'box-shadow 0.2s ease, transform 0.2s ease'
                     }}
                     onMouseEnter={e => {
-                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.15)';
                         e.currentTarget.style.transform = 'translate(-5px, -5px) scale(1.02)';
-                        hoveredSrcRef.current = pos.ymlSrc;
+                        hoveredYmlElementRef.current = document.querySelector(`[data-yml-src="${pos.ymlSrc}"]`) as HTMLElement;
+                        hoveredTsxElementRef.current = null;
                     }}
                     onMouseLeave={e => {
                         e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
                         e.currentTarget.style.transform = 'translate(-5px, -5px)';
-                        hoveredSrcRef.current = null;
+                        hoveredYmlElementRef.current = null;
+                        hoveredTsxElementRef.current = null;
                     }}
                 >
-                    <div style={{
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        flex: 1
-                    }}>
+                    <div
+                        onClick={() => jumpToYml(pos.ymlSrc)}
+                        style={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            flex: 1,
+                            cursor: 'pointer',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        title="Click to jump to YML source"
+                    >
                         {pos.text}
                     </div>
                     <button
