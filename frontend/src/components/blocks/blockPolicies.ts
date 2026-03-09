@@ -16,7 +16,6 @@ const policyMap: Record<string, BlockPolicy> = {
  * These types are always considered wide (no max-width limit)
  */
 const wideBlockTypes = [
-    "member_block",
     "schedule_block",
     "curriculum_block",
     "visit_process_block",
