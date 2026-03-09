@@ -9,6 +9,8 @@ import MarkdownContent from "../ui/MarkdownContent";
 import { CTAButton, MediaItem, Divider } from "../../types/content";
 import dynamic from 'next/dynamic';
 
+import { SectionThemeProvider } from '../../context/SectionThemeContext';
+
 // Helper function to determine if a color is light using relative luminance
 function isLightColor(color: string): boolean {
     if (!color) return false;
@@ -114,17 +116,23 @@ export default function Section(props: SectionProps) {
     const container_class = layout.container_class || "";
     const wrapper_class = layout.wrapper_class || "";
 
-    const typographyColors = useMemo(() => {
+    const sectionTheme = useMemo<'light' | 'dark'>(() => {
         if (overlay_color) {
-            return isOverlayLight
-                ? { title: "text-gray-900", desc: "text-gray-700", subtitle: "text-brand-accent" }
-                : { title: "text-white drop-shadow-md", desc: "text-stone-100/90", subtitle: "text-brand-accent brightness-125 drop-shadow-sm" };
+            return isOverlayLight ? 'light' : 'dark';
         }
         if (hasSpecialBg) {
-            return { title: "text-white drop-shadow-md", desc: "text-stone-100/90", subtitle: "text-brand-accent brightness-125 drop-shadow-sm" };
+            return 'dark';
         }
-        return { title: "text-brand-text dark:text-brand-bg", desc: "text-brand-taupe dark:text-brand-taupe", subtitle: "text-brand-accent" };
+        return 'light';
     }, [overlay_color, isOverlayLight, hasSpecialBg]);
+
+    const typographyColors = useMemo(() => {
+        if (sectionTheme === 'light') {
+            return { title: "text-gray-900", desc: "text-gray-700", subtitle: "text-brand-accent" };
+        }
+        // dark theme or special bg
+        return { title: "text-white drop-shadow-md", desc: "text-stone-100/90", subtitle: "text-brand-accent brightness-125 drop-shadow-sm" };
+    }, [sectionTheme]);
 
     const resolveClass = (custom: string | undefined, base: string, defaultColor: string) => {
         if (!custom) return `${base} ${defaultColor}`;
@@ -173,6 +181,7 @@ export default function Section(props: SectionProps) {
                 ...rest.style
             }}
             data-special-bg={hasSpecialBg}
+            data-section-theme={sectionTheme}
             {...rest}
         >
             {shader_gradient && !content_inside_wrapper && isInView && (
@@ -208,62 +217,64 @@ export default function Section(props: SectionProps) {
                 <SilkBackgroundDynamic color="rgb(var(--color-brand-taupe))" />
             )}
 
-            <Container
-                limit={limit !== false}
-                ignorePadding={ignore_padding}
-                className={["flex w-full flex-col relative", align === "left" ? "" : "items-center justify-center text-center"].filter(Boolean).join(' ')}
-            >
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    onViewportEnter={() => setIsInView(true)}
-                    variants={disable_content_animation ? undefined : variants}
-                    className={["w-full flex flex-col", alignmentClasses, wrapper_class].filter(Boolean).join(' ')}
+            <SectionThemeProvider theme={sectionTheme}>
+                <Container
+                    limit={limit !== false}
+                    ignorePadding={ignore_padding}
+                    className={["flex w-full flex-col relative", align === "left" ? "" : "items-center justify-center text-center"].filter(Boolean).join(' ')}
                 >
-                    {shader_gradient && content_inside_wrapper && isInView && (
-                        <ShaderGradientBackgroundDynamic />
-                    )}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        onViewportEnter={() => setIsInView(true)}
+                        variants={disable_content_animation ? undefined : variants}
+                        className={["w-full flex flex-col", alignmentClasses, wrapper_class].filter(Boolean).join(' ')}
+                    >
+                        {shader_gradient && content_inside_wrapper && isInView && (
+                            <ShaderGradientBackgroundDynamic />
+                        )}
 
-                    {subtitle && (
-                        <div className={["section-subtitle", subtitle_class, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
-                            {subtitle}
-                        </div>
-                    )}
+                        {subtitle && (
+                            <div className={["section-subtitle", subtitle_class, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
+                                {subtitle}
+                            </div>
+                        )}
 
-                    {title && (
-                        <h2 className={["section-title relative z-10", title_class, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
-                            <MarkdownContent content={title} isInline />
-                        </h2>
-                    )}
+                        {title && (
+                            <h2 className={["section-title relative z-10", title_class, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
+                                <MarkdownContent content={title} isInline />
+                            </h2>
+                        )}
 
-                    {effectiveContent && (
-                        <div className={["section-description relative z-10", content_class_default, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
-                            <MarkdownContent content={effectiveContent} />
-                        </div>
-                    )}
+                        {effectiveContent && (
+                            <div className={["section-description relative z-10", content_class_default, align === "left" ? "self-start" : ""].filter(Boolean).join(' ')}>
+                                <MarkdownContent content={effectiveContent} />
+                            </div>
+                        )}
 
-                    {buttons && buttons.length > 0 && (
-                        <ActionButtons
-                            buttons={buttons}
-                            align={align === "left" ? "left" : "center"}
-                            className="mt-6 relative z-10"
-                        />
-                    )}
+                        {buttons && buttons.length > 0 && (
+                            <ActionButtons
+                                buttons={buttons}
+                                align={align === "left" ? "left" : "center"}
+                                className="mt-6 relative z-10"
+                            />
+                        )}
 
-                    {content_inside_wrapper && bodyContent && (
-                        <div className="w-full relative z-10">
-                            {bodyContent}
-                        </div>
-                    )}
-                </motion.div>
-            </Container>
+                        {content_inside_wrapper && bodyContent && (
+                            <div className="w-full relative z-10">
+                                {bodyContent}
+                            </div>
+                        )}
+                    </motion.div>
+                </Container>
 
-            {!content_inside_wrapper && bodyContent && (
-                <div className={["relative section-body-content z-10", layout.content_body_class].filter(Boolean).join(' ')}>
-                    {bodyContent}
-                </div>
-            )}
+                {!content_inside_wrapper && bodyContent && (
+                    <div className={["relative section-body-content z-10", layout.content_body_class].filter(Boolean).join(' ')}>
+                        {bodyContent}
+                    </div>
+                )}
+            </SectionThemeProvider>
         </section>
     );
 }

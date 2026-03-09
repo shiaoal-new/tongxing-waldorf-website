@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import MediaRenderer from "../ui/MediaRenderer";
 import { MediaItem, CTAButton } from "../../types/content";
 import StaggeredReveal from "../ui/StaggeredReveal";
+import { useSectionTheme } from "../../context/SectionThemeContext";
 
 interface FeatureItemProps {
   span?: number;
@@ -26,6 +27,22 @@ interface FeatureItemProps {
 export default function FeatureItem({ span, media, title, children, icon, buttons, align = 'left', sub_items, expanded, isNested }: FeatureItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isFullWidth = span === 12;
+  const sectionContext = useSectionTheme();
+
+  /**
+   * Adaptive color states for sub-items based on section theme
+   */
+  const subTitleColorClass = sectionContext?.theme === 'dark'
+    ? "text-white dark:text-brand-bg group-hover/sub:text-brand-accent transition-colors"
+    : sectionContext?.theme === 'light'
+      ? "text-gray-900 group-hover/sub:text-brand-accent transition-colors"
+      : "text-brand-text dark:text-brand-bg group-hover/sub:text-brand-accent transition-colors";
+
+  const subContentColorClass = sectionContext?.theme === 'dark'
+    ? "text-stone-100/80"
+    : sectionContext?.theme === 'light'
+      ? "text-gray-600"
+      : "text-brand-taupe leading-relaxed";
 
   const cardClasses = `feature-card group h-full cursor-pointer hover:shadow-xl transition-all duration-500 ${isFullWidth ? 'flex-col md:flex-row' : 'flex-col'} ${align === 'center' ? 'items-center text-center' : 'items-start text-left'}`;
 
@@ -105,7 +122,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
                       )}
                       <div className="flex-grow">
                         <div className="flex items-center justify-between gap-2 mb-1">
-                          <h4 className="text-sm font-bold text-brand-text dark:text-brand-bg group-hover/sub:text-brand-accent transition-colors">
+                          <h4 className={`text-sm font-bold ${subTitleColorClass}`}>
                             {sub.title}
                           </h4>
                           {hasLink && (
@@ -115,7 +132,7 @@ export default function FeatureItem({ span, media, title, children, icon, button
                             />
                           )}
                         </div>
-                        <p className="text-xs text-brand-taupe leading-relaxed">
+                        <p className={`text-xs ${subContentColorClass}`}>
                           {sub.content}
                         </p>
                         {hasLink && (

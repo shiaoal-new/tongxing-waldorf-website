@@ -169,41 +169,64 @@
     }
 
     /* --- 特殊背景文字適配 (Special Background Adaptations) --- */
-    /* 當 Section 有特殊背景 (Silk/ShaderGradient) 時，強制將內部文字轉為淺色以保證可讀性 */
+    /* 當 Section 是深色主題時 (例如深色背景與影片)，強制將內部文字轉為淺色以保證可讀性 */
 
-    [data-special-bg="true"] .text-brand-text {
-        @apply text-white drop-shadow-sm !important;
-    }
-
-    [data-special-bg="true"] .text-brand-taupe {
-        @apply text-stone-100/90 drop-shadow-sm !important;
-    }
-
-    /* 針對 Feature Card 在深色背景下的優化 */
-    [data-special-bg="true"] .feature-card {
-        @apply bg-white/10 border-white/20 !important;
-    }
-
-    [data-special-bg="true"] .feature-card h3,
-    [data-special-bg="true"] .feature-card h4 {
+    [data-section-theme="dark"] .section-title,
+    [data-section-theme="dark"] .text-brand-text {
         @apply text-white drop-shadow-md !important;
     }
 
+    [data-section-theme="dark"] .section-description,
+    [data-section-theme="dark"] .text-brand-taupe {
+        @apply text-stone-100/90 drop-shadow-sm !important;
+    }
+
+    /* 當 Section 是淺色主題時 (即使有特殊背景)，確保文字是深色的 */
+    [data-section-theme="light"] .section-title,
+    [data-section-theme="light"] .text-brand-text {
+        @apply text-gray-900 drop-shadow-none !important;
+    }
+
+    [data-section-theme="light"] .section-description,
+    [data-section-theme="light"] .text-brand-taupe {
+        @apply text-gray-700/90 drop-shadow-none !important;
+    }
+
+    /* 針對 Feature Card 在深色背景下的優化 */
+    [data-section-theme="dark"] .feature-card {
+        @apply bg-white/10 dark:bg-black/30 border-white/20 !important;
+    }
+
+    [data-section-theme="dark"] .feature-card h3,
+    [data-section-theme="dark"] .feature-card h4 {
+        @apply text-white drop-shadow-md !important;
+    }
+
+    /* 針對 Feature Card 在淺色背景下的優化 */
+    [data-section-theme="light"] .feature-card {
+        @apply bg-white/60 dark:bg-black/5 border-white/40 !important;
+    }
+
+    [data-section-theme="light"] .feature-card h3,
+    [data-section-theme="light"] .feature-card h4 {
+        @apply text-gray-900 drop-shadow-none !important;
+    }
+
     /* 針對 Disclosure 在特殊背景下的可讀性修正 */
-    [data-special-bg="true"] .disclosure-title {
+    [data-section-theme="dark"] .disclosure-title {
         @apply text-brand-text dark:text-brand-bg drop-shadow-none !important;
     }
 
-    [data-special-bg="true"] .disclosure-subtitle {
+    [data-section-theme="dark"] .disclosure-subtitle {
         @apply text-brand-taupe dark:text-brand-taupe drop-shadow-none !important;
     }
 
-    [data-special-bg="true"] .disclosure-index {
+    [data-section-theme="dark"] .disclosure-index {
         @apply text-brand-taupe/40 drop-shadow-none !important;
     }
 
-    [data-special-bg="true"] button[aria-expanded="true"] .disclosure-subtitle,
-    [data-special-bg="true"] button[aria-expanded="true"] .disclosure-index {
+    [data-section-theme="dark"] button[aria-expanded="true"] .disclosure-subtitle,
+    [data-section-theme="dark"] button[aria-expanded="true"] .disclosure-index {
         @apply text-brand-accent !important;
     }
 
