@@ -22,44 +22,51 @@ export default function MemberBlock({ block }: MemberBlockProps) {
                     if (!member) return null;
                     const isSelected = selectedMember?.title === member.title;
 
+                    // 判斷是否可點擊：擁有媒體(照片)或詳細內容(學歷、經歷、理念)
+                    const isClickable = !!(member.media || member.photo || member.content || member.education || member.experience);
+                    const hasPhoto = !!(member.media || member.photo);
+
                     return (
                         <div
                             key={mIndex}
-                            onClick={() => setSelectedMember(member)}
-                            className="group relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 bg-gray-100 dark:bg-gray-800"
+                            onClick={() => isClickable && setSelectedMember(member)}
+                            className={`group relative w-full rounded-[2rem] overflow-hidden transition-all duration-300 
+                                ${hasPhoto ? 'aspect-[3/4] bg-gray-100 dark:bg-gray-800' : 'aspect-[3/1.2] lg:aspect-[3/1.5] bg-brand-accent/5 dark:bg-white/5'}
+                                ${isClickable ? 'cursor-pointer shadow-md hover:shadow-xl' : 'cursor-default opacity-80 shadow-sm'}`}
                         >
-                            {/* Background Image & Info Card Container */}
+                            {/* Background Image Container (Only for photo cards) */}
                             <div className={`absolute inset-0 ${isSelected ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
-                                {member.media ? (
-                                    <div className="relative w-full h-full">
-                                        <motion.div
-                                            layoutId={`member-image-${member.title}`}
-                                            layout
-                                            className="w-full h-full relative z-10"
-                                        >
-                                            <MediaRenderer
-                                                media={member.media as any}
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                className="w-full h-full"
-                                                imgClassName="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-                                            />
-                                        </motion.div>
-                                    </div>
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-brand-accent/5 dark:bg-white/5">
-                                        <span className="text-brand-accent/20 text-7xl font-bold select-none">
-                                            {member.title?.[0]}
-                                        </span>
-                                    </div>
+                                {hasPhoto && (
+                                    <>
+                                        <div className="relative w-full h-full">
+                                            <motion.div
+                                                layoutId={`member-image-${member.title}`}
+                                                layout
+                                                className="w-full h-full relative z-10"
+                                            >
+                                                <MediaRenderer
+                                                    media={member.media as any}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    className="w-full h-full"
+                                                    imgClassName={`object-cover w-full h-full transition-transform duration-700 ${isClickable ? 'group-hover:scale-105' : ''}`}
+                                                />
+                                            </motion.div>
+                                        </div>
+                                        {/* Overlay Gradient for photo cards */}
+                                        <div className={`absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent ${isClickable ? 'opacity-60 group-hover:opacity-80' : 'opacity-30'} transition-opacity duration-300 z-20`} />
+                                    </>
                                 )}
-                                {/* Overlay Gradient */}
-                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300 z-20" />
 
-                                {/* Floating Info Card - Now inside the opacity-controlled container */}
-                                <div className="absolute bottom-4 left-4 right-4 z-30 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md p-4 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:shadow-xl">
-                                    <div className="flex justify-between items-start gap-3">
-                                        <div className="flex flex-col text-left min-w-0">
-                                            <h3 className="font-bold text-gray-900 dark:text-gray-100 text-lg leading-tight truncate pr-2">
+                                {/* Info Content Area */}
+                                <div className={`absolute z-30 transition-all duration-300 
+                                    ${hasPhoto
+                                        ? 'bottom-4 left-4 right-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md p-4 rounded-2xl shadow-lg group-hover:shadow-xl group-hover:-translate-y-1'
+                                        : 'inset-0 flex items-center justify-center p-6 text-center'}`}
+                                >
+                                    <div className={`flex justify-between items-start gap-3 w-full ${!hasPhoto ? 'flex-col items-center' : ''}`}>
+                                        <div className={`flex flex-col min-w-0 ${!hasPhoto ? 'items-center' : 'text-left'}`}>
+                                            <h3 className={`font-bold text-gray-900 dark:text-gray-100 leading-tight truncate px-1 
+                                                ${hasPhoto ? 'text-lg' : 'text-xl'}`}>
                                                 {member.title}
                                             </h3>
                                             {member.subtitle && (
@@ -69,12 +76,13 @@ export default function MemberBlock({ block }: MemberBlockProps) {
                                             )}
                                         </div>
 
-                                        {/* Icon - Decorative */}
-                                        <div className="flex-shrink-0 text-brand-accent/40 group-hover:text-brand-accent transition-colors pt-1">
-                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            </svg>
-                                        </div>
+                                        {/* Indicator - Only show for clickable items */}
+                                        {isClickable && (
+                                            <div className={`flex-shrink-0 text-brand-accent/60 group-hover:text-brand-accent transition-colors font-bold tracking-widest 
+                                                ${!hasPhoto ? 'mt-2' : 'pt-1'}`}>
+                                                ...
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
