@@ -41,7 +41,11 @@ functions/firebase-debug.log
 firestore-debug.log
 firebase-debug.log
 functions/.env
-.agent/
+!.agent/
+.agent/*
+!.agent/skills/
+.agent/skills/*
+!.agent/skills/faculty-photo-processor/
 .shared/
 
 # 部署報告
