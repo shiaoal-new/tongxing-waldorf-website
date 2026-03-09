@@ -172,11 +172,6 @@ sections:
         title: "$community.intro.title"
         subtitle: "$community.intro.subtitle"
         content: "$community.intro.content"
-      - type: cta_block
-        buttons:
-          - text: "$community.intro.button"
-            link: /philosophy
-            style: btn-primary
       - type: list_block
         layout: bento_grid
         item_type: feature_item

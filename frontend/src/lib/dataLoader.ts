@@ -51,7 +51,8 @@ function readDataFile(fullPath: string): { data: any; content: string; rawConten
     const now = Date.now();
     const cached = dataCache[fullPath];
 
-    if (cached && (now - cached.timestamp < CACHE_TTL)) {
+    const isDev = process.env.NODE_ENV === 'development';
+    if (!isDev && cached && (now - cached.timestamp < CACHE_TTL)) {
         return cached;
     }
 
