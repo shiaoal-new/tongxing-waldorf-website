@@ -65,6 +65,7 @@ export default function YmlLocator() {
     const [notePositions, setNotePositions] = useState<NotePosition[]>([]);
     const [editingNodeSrc, setEditingNodeSrc] = useState<string | null>(null);
     const [editDraft, setEditDraft] = useState('');
+    const IS_DEV = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_APP_ENV === 'preview';
 
     const observerRef = useRef<MutationObserver | null>(null);
     const hoveredTsxElementRef = useRef<HTMLElement | null>(null);
@@ -74,7 +75,7 @@ export default function YmlLocator() {
 
     // Initial load
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') return;
+        if (!IS_DEV) return;
 
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -91,7 +92,7 @@ export default function YmlLocator() {
     notesRef.current = notes;
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') return;
+        if (!IS_DEV) return;
 
         let rafId: number;
 
@@ -187,7 +188,7 @@ export default function YmlLocator() {
     }, []); // 只需掛載/卸載一次，使用 notesRef 避免 stale closure
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') return;
+        if (!IS_DEV) return;
 
         const handleMouseMove = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
@@ -272,7 +273,7 @@ export default function YmlLocator() {
         };
     }, []);
 
-    if (process.env.NODE_ENV !== 'development') return null;
+    if (!IS_DEV) return null;
 
     const handleOpenTsx = () => {
         if (!menu.tsxSrc) return;
