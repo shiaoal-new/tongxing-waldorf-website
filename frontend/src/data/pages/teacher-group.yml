@@ -26,7 +26,7 @@ sections:
           - "連涓妏"
           - "呂孟庭"
           - "姚昱廷"
-          - "林品嫻"
+          - "趙奕瑋"
           - "黃郁容"
           - "周天禧"
           - "游鈞桓"
@@ -45,6 +45,7 @@ sections:
           - "吳俊輝"
           - "廖容"
           - "董品喬"
+          - "林鈺恆"
           - "曾本瑜"
           - "羅貞婷"
           - "吳星螢"
@@ -69,31 +70,33 @@ sections:
           - title: "陳心恬"
             subtitle: "自然"
           - title: "王大偉"
-            subtitle: "自然"
+            subtitle: "理科"
           - title: "劉得光"
-            subtitle: "自然"
-          - title: "林佩芬"
-            subtitle: "英文"
+            subtitle: "理科"
+          - title: "林佩芬MAY"
+            subtitle: "英語"
 
       - type: list_block
         title: $part-time.blocks.2.title
         layout: compact_grid
         item_type: compact_card
         items:
+          - title: "吳庭豪"
+            subtitle: "木工"
+          - title: "莫沛儒"
+            subtitle: "木工"
           - title: "朱道興"
-            subtitle: "書法"
+            subtitle: "藝術"
           - title: "林祐竹"
             subtitle: "藝術"
           - title: "江玄文"
             subtitle: "藝術"
           - title: "張又予"
             subtitle: "藝術"
-          - title: "常茵茵"
+          - title: "周軒萱"
             subtitle: "藝術"
           - title: "楊慧如"
             subtitle: "手工"
-          - title: "吳庭豪"
-            subtitle: "木工"
           - title: "董佳琳"
             subtitle: "戲劇"
 
@@ -107,9 +110,11 @@ sections:
           - title: "周欣穎"
             subtitle: "優律思美"
           - title: "趙奕瑋"
+            subtitle: "武術"
+          - title: "陳元培"
             subtitle: "體育"
           - title: "林孟廷"
-            subtitle: "藝術 / 體育 / 園藝"
+            subtitle: "園藝"
 
       - type: list_block
         title: $part-time.blocks.4.title
@@ -117,31 +122,39 @@ sections:
         item_type: compact_card
         items:
           - title: "陳乃欣"
-            subtitle: "音樂（豎笛）"
+            subtitle: "音樂 / 中學社團"
           - title: "李軒"
             subtitle: "音樂"
           - title: "陳宇璿"
             subtitle: "音樂"
           - title: "陳宇捷"
-            subtitle: "合奏（小提琴・中提琴）"
+            subtitle: "國小合奏（小提琴・中提琴）"
           - title: "許靖敏"
-            subtitle: "合奏 (小提琴)"
+            subtitle: "國小合奏 (小提琴)"
           - title: "李虹霈"
-            subtitle: "合奏 (大提琴)"
-          - title: "郭星吾"
-            subtitle: "合奏"
+            subtitle: "國小合奏 / 伴奏 (大提琴)"
           - title: "黃弈涵"
-            subtitle: "合奏（長笛）"
+            subtitle: "國小合奏（長笛）"
+          - title: "郭星吾"
+            subtitle: "國小合奏"
+          - title: "陳乃欣"
+            subtitle: "音樂（豎笛）"
+          - title: "李宏葳"
+            subtitle: "中學社團（排球）"
+          - title: "楊品芳"
+            subtitle: "中學社團（桌遊）"
 
       - type: list_block
         title: $part-time.blocks.5.title
         layout: compact_grid
         item_type: compact_card
         items:
-          - title: "余明儒"
+          - title: "任新蘭"
             subtitle: "安親"
-          - title: "江采芹"
+          - title: "葉卉婷"
             subtitle: "安親"
+          - title: "翁綾霙"
+            subtitle: "課輔"
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
