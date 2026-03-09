@@ -23,6 +23,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "agent-browser": "^0.17.0",
     "glob": "^10.3.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
