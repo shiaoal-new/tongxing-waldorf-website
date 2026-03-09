@@ -26,30 +26,23 @@ const inputPath = args[inputArg + 1];
 const outputPath = args[outputArg + 1];
 
 /**
- * 處理照片以符合專案美術風格（Pencil/Sketch）
+ * 格式化照片為 WebP 規格
+ * 僅進行格式轉換與品質優化，不套用額外濾鏡
  */
-async function processPhoto(input, output) {
+async function formatFacultyPhoto(input, output) {
     try {
-        console.log(`Processing: ${input} ...`);
+        console.log(`Formatting: ${input} ...`);
 
         await sharp(input)
-            .grayscale() // 1. 去色
-            .modulate({
-                brightness: 1.1, // 2. 略微提升基礎亮度 (1.1x)
-                saturation: 0,
-                hue: 0
-            })
-            .linear(1.3, 15) // 3. 微對比/偏移修正: 1.3對比，15偏移補償
-            .gamma(2.2)    // 4. 重中之重：Gamma 2.2 推亮中間調，呈現「淺色透視感」
-            .webp({ quality: 80 }) // 5. 強制 WebP 格式並優化
+            .webp({ quality: 85, effort: 6 }) // 強制 WebP 格式並優化大小
             .toFile(output);
 
-        console.log(`SUCCESS: Saved to ${output}`);
+        console.log(`SUCCESS: Saved formatted image to ${output}`);
     } catch (err) {
-        console.error(`ERROR processing photo: ${err.message}`);
+        console.error(`ERROR formatting photo: ${err.message}`);
         process.exit(1);
     }
 }
 
-// 執行處理
-processPhoto(inputPath, outputPath);
+// 執行格式化
+formatFacultyPhoto(inputPath, outputPath);
