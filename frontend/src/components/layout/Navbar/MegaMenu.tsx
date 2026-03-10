@@ -126,8 +126,8 @@ const getSubItemStyles = (active: boolean) => {
 
 // --- Sub-Components ---
 
-const MenuCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-    <div className={`bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 ${className}`}>
+const MenuCard = ({ children, className = "", style }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) => (
+    <div className={`bg-brand-bg/95 dark:bg-brand-structural/95 backdrop-blur-md rounded-md shadow-lg ring-1 ring-black/5 ${className}`} style={style}>
         {children}
     </div>
 );
@@ -139,7 +139,7 @@ const SideSubMenu = ({ children, className = "" }: { children: React.ReactNode, 
     return (
         <div
             ref={containerRef}
-            className={`absolute top-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto ${flipLeft ? 'right-full pr-1' : 'left-full pl-1'} ${className}`}
+            className={`absolute top-0 w-[12rem] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto ${flipLeft ? 'right-full pr-1' : 'left-full pl-1'} ${className}`}
         >
             {children}
         </div>
@@ -173,13 +173,12 @@ const WordingStyleContent = ({ actionHandlers, pageId }: { actionHandlers: any, 
     );
 };
 
-const DropdownTransition = ({ children, shakeKey = 0, wrapperClass = "absolute right-0 translate-x-4 top-full pt-2 w-auto min-w-[200px] origin-top z-50 pointer-events-none" }: { children: React.ReactNode, shakeKey?: number, wrapperClass?: string }) => {
+const DropdownTransition = ({ children, shakeKey = 0, wrapperClass = "absolute right-0 top-full pt-2 origin-top z-50 pointer-events-none !left-auto" }: { children: React.ReactNode, shakeKey?: number, wrapperClass?: string }) => {
     const controls = useAnimation();
     const isFirstRender = useRef(true);
 
     useEffect(() => {
         // Skip the animation on the very first render (when the menu first opens via hover)
-        // This prevents the menu from "jumping" every time it is opened if shakeKey > 0
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return;
@@ -201,6 +200,7 @@ const DropdownTransition = ({ children, shakeKey = 0, wrapperClass = "absolute r
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className={wrapperClass}
+                style={{ left: 'auto', right: 0 }}
             >
                 <div className="pointer-events-auto">
                     <motion.div animate={controls}>
@@ -515,10 +515,13 @@ const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonI
         }
     }
 
-    const linksContainerWidth = useColumns ? "w-[480px]" : "w-[240px]";
+    const linksWidthRem = useColumns ? 30 : 15;
+    const menuWidthRem = (featuredCount > 0)
+        ? (useColumns ? 60 : 47.5)
+        : linksWidthRem;
 
     return (
-        <NavigationMenu.Item>
+        <NavigationMenu.Item className="relative">
             <NavigationMenu.Trigger
                 className={`${styles} group`}
                 onPointerDown={(e) => {
@@ -533,11 +536,11 @@ const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonI
             >
                 <span>{item.title}</span>
             </NavigationMenu.Trigger>
-            <DropdownTransition shakeKey={shakeKey} wrapperClass="absolute lg:-right-4 right-0 top-full pt-2 w-auto origin-top z-50 pointer-events-none">
-                <MenuCard className={`w-max max-w-[calc(100vw-32px)] p-6 flex flex-col md:flex-row gap-8 max-h-[calc(100vh-80px)] overflow-y-auto overflow-x-hidden custom-scrollbar`}>
+            <DropdownTransition shakeKey={shakeKey} wrapperClass="absolute right-0 lg:-right-4 top-full pt-2 origin-top z-50 pointer-events-none !left-auto">
+                <MenuCard className={`max-w-[calc(100vw-2rem)] p-6 flex flex-col md:flex-row gap-8 max-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden custom-scrollbar`} style={{ width: `${menuWidthRem}rem` }}>
                     {/* Featured Section */}
                     {item.featuredItems && item.featuredItems.length > 0 && (
-                        <div className={`flex flex-col md:grid ${featuredGridCols} gap-4 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-4 md:pb-0 md:pr-8 w-full md:w-[480px] shrink-0`}>
+                        <div className={`flex flex-col md:grid ${featuredGridCols} gap-4 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-4 md:pb-0 md:pr-8 w-full shrink-0`} style={{ width: '30rem' }}>
                             {item.featuredItems.map((featured, idx) => (
                                 <NavigationMenu.Link asChild key={idx}>
                                     <Link
@@ -570,7 +573,7 @@ const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonI
                     )}
 
                     {/* Links Section */}
-                    <div className={`${linksContainerWidth} shrink-0`}>
+                    <div className="shrink-0" style={{ width: `${linksWidthRem}rem` }}>
                         <div className={`py-1 ${useColumns ? 'flex gap-6 w-full' : ''}`}>
                             <div className="flex-1 flex flex-col w-full">
                                 {leftSectionLinks.map((child, idx) => (
