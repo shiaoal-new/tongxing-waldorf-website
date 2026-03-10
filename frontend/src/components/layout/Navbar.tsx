@@ -130,7 +130,12 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
             open={open}
             scroll={scroll}
             onClick={(e: React.MouseEvent) => {
-              if (!(e.target as HTMLElement).closest("a") && !(e.target as HTMLElement).closest("button")) {
+              if (
+                !(e.target as HTMLElement).closest("a") &&
+                !(e.target as HTMLElement).closest("button") &&
+                !(e.target as HTMLElement).closest("summary") &&
+                !(e.target as HTMLElement).closest("details")
+              ) {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}>
