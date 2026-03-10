@@ -16,8 +16,6 @@ items:
         children:
           - slug: "rhythm-of-life"
             title: "生活節奏"
-          - slug: "seasons-holiday"
-            title: "四季慶典"
       - title: "教學架構"
         children:
           - slug: "curriculum-development"

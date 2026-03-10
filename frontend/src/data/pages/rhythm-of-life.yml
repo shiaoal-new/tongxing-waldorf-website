@@ -108,6 +108,34 @@ sections:
               type: image
               image: /img/season-winter-bg.webp
             content: $yearly-cycle.blocks.1.items.3.content
+  - section_id: seasonal-holidays
+    layout: "精緻特色區塊 (Features Premium)"
+    silk_background: true
+    blocks:
+      - type: text_block
+        title: $seasonal-holidays.blocks.0.title
+        subtitle: $seasonal-holidays.blocks.0.subtitle
+        content: $seasonal-holidays.blocks.0.content
+      - type: list_block
+        layout: bento_grid
+        item_type: feature_item
+        items:
+          - title: $seasonal-holidays.blocks.1.items.0.title
+            span: 6
+            content: $seasonal-holidays.blocks.1.items.0.content
+            icon: lucide:clock
+          - title: $seasonal-holidays.blocks.1.items.1.title
+            span: 6
+            content: $seasonal-holidays.blocks.1.items.1.content
+            icon: lucide:wind
+          - title: $seasonal-holidays.blocks.1.items.2.title
+            span: 6
+            content: $seasonal-holidays.blocks.1.items.2.content
+            icon: lucide:tree-pine
+          - title: $seasonal-holidays.blocks.1.items.3.title
+            span: 6
+            content: $seasonal-holidays.blocks.1.items.3.content
+            icon: lucide:heart
   - section_id: cta
     layout: 紫色大型看板 (CTA)
     blocks:
