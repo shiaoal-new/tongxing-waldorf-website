@@ -1,10 +1,18 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { ThemeList } from "../../ui/DarkSwitch";
 import { NextRouter, useRouter } from "next/router";
 import { motion } from "framer-motion";
+
+export interface NavbarFeaturedItemType {
+    title: string;
+    description?: string;
+    image?: string;
+    path?: string;
+}
 
 export interface NavbarItemType {
     title: string;
@@ -14,6 +22,9 @@ export interface NavbarItemType {
     children?: NavbarItemType[];
     debugOnly?: boolean;
     slug?: string;
+    layout?: string;
+    featuredItems?: NavbarFeaturedItemType[];
+    image?: string;
 }
 
 interface NavbarActionItemProps {
@@ -434,6 +445,43 @@ export function MobileNavbarItem({ item, router, actionHandlers, showBackgroundG
                             );
                         })}
                     </ul>
+
+                    {/* Display featured items on mobile if they exist */}
+                    {item.featuredItems && item.featuredItems.length > 0 && (
+                        <div className="flex overflow-x-auto gap-3 px-3 mt-4 pb-2 snap-x hide-scrollbar">
+                            {item.featuredItems.map((featured, fIdx) => (
+                                <Link
+                                    key={`feat-${fIdx}`}
+                                    href={featured.path || '#'}
+                                    className="flex flex-col gap-2 min-w-[160px] w-[160px] snap-start group/mfeat"
+                                    onClick={(e) => {
+                                        if (router) {
+                                            e.preventDefault();
+                                            const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]') as HTMLButtonElement;
+                                            if (disclosureButton) disclosureButton.click();
+                                            setTimeout(() => router.push(featured.path || "#"), 300);
+                                        }
+                                    }}
+                                >
+                                    {featured.image && (
+                                        <div className="relative w-full aspect-video rounded overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10">
+                                            <Image
+                                                src={featured.image}
+                                                alt={featured.title}
+                                                fill
+                                                sizes="160px"
+                                                className="object-cover transition-transform duration-500 group-hover/mfeat:scale-105"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="flex flex-col px-1">
+                                        <span className="text-xs font-semibold text-brand-text dark:text-brand-bg group-hover/mfeat:text-brand-accent line-clamp-1">{featured.title}</span>
+                                        {featured.description && <span className="text-[10px] text-brand-taupe line-clamp-2 mt-0.5">{featured.description}</span>}
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </details>
             </li>
         );

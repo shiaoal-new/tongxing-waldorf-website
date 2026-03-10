@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { NavbarItemType } from "./NavbarItems";
 import { ThemeList } from "../../ui/DarkSwitch";
+import Image from "next/image";
 
 // --- Types ---
 
@@ -431,6 +432,130 @@ const SimpleLinkItem = ({ item, styles, actionHandlers }: CommonItemProps) => {
     );
 };
 
+const MegaMenuLinksColumn = ({ item, currentPath }: { item: NavbarItemType, currentPath: string }) => {
+    // If it's a leaf node without children, render it as a standard link
+    if (!item.children || item.children.length === 0) {
+        const active = isItemActive(item, currentPath);
+        const activeStyles = active ? "text-brand-accent bg-brand-accent/10 font-medium" : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5";
+
+        return (
+            <div className="mb-0.5">
+                <Link
+                    href={item.path || "#"}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
+                >
+                    {item.image && (
+                        <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
+                            <Image src={item.image} alt={item.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
+                        </div>
+                    )}
+                    <span className="font-medium whitespace-nowrap text-sm flex-1">{item.title}</span>
+                </Link>
+            </div>
+        );
+    }
+
+    // It has children, so render it as a section block
+    return (
+        <div className="flex flex-col mb-4 break-inside-avoid">
+            <h5 className="text-xs font-semibold tracking-widest text-brand-taupe/70 dark:text-brand-taupe/50 mb-2 px-3 uppercase">{item.title}</h5>
+            <div className="flex flex-col gap-0.5 border-l-2 border-brand-taupe/10 ml-3 pl-3">
+                {item.children.map((child, idx) => {
+                    const active = isItemActive(child, currentPath);
+                    const activeStyles = active ? "text-brand-accent bg-brand-accent/10 font-medium" : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5";
+
+                    return (
+                        <Link
+                            key={idx}
+                            href={child.path || "#"}
+                            className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
+                        >
+                            {child.image && (
+                                <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
+                                    <Image src={child.image} alt={child.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
+                                </div>
+                            )}
+                            <span className="text-sm whitespace-nowrap flex-1">{child.title}</span>
+                        </Link>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
+const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonItemProps & { currentPath: string }) => {
+    const [shakeKey, setShakeKey] = useState(0);
+
+    // Determine grid columns based on number of featured items
+    const featuredCount = item.featuredItems?.length || 0;
+    const featuredGridCols = featuredCount >= 3 ? 'grid-cols-3' : featuredCount === 2 ? 'grid-cols-2' : 'grid-cols-1';
+
+    return (
+        <NavigationMenu.Item className="relative">
+            <NavigationMenu.Trigger
+                className={`${styles} group`}
+                onPointerDown={(e) => {
+                    if (!item.path) {
+                        setShakeKey(prev => prev + 1);
+                        e.preventDefault();
+                    }
+                }}
+                onClick={(e) => {
+                    if (!item.path) e.preventDefault();
+                }}
+            >
+                <span>{item.title}</span>
+            </NavigationMenu.Trigger>
+            <DropdownTransition shakeKey={shakeKey}>
+                <MenuCard className="w-[800px] max-w-[95vw] -ml-[300px] left-1/2 p-6 flex gap-8">
+                    {/* Featured Section */}
+                    {item.featuredItems && item.featuredItems.length > 0 && (
+                        <div className={`flex-1 grid ${featuredGridCols} gap-4 border-r border-brand-taupe/10 pr-8`}>
+                            {item.featuredItems.map((featured, idx) => (
+                                <Link
+                                    key={idx}
+                                    href={featured.path || '#'}
+                                    className="block group/featured overflow-hidden"
+                                >
+                                    {featured.image && (
+                                        <div className="relative w-full aspect-video rounded-md overflow-hidden bg-brand-bg/50 mb-3 ml-1 outline outline-1 outline-brand-taupe/10 shadow-sm">
+                                            <Image
+                                                src={featured.image}
+                                                alt={featured.title}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 30vw"
+                                                className="object-cover transition-transform duration-500 group-hover/featured:scale-105"
+                                            />
+                                        </div>
+                                    )}
+                                    <h4 className="font-medium text-brand-text dark:text-brand-bg mb-1 group-hover/featured:text-brand-accent transition-colors ml-1">
+                                        {featured.title}
+                                    </h4>
+                                    {featured.description && (
+                                        <p className="text-xs text-brand-taupe line-clamp-2 ml-1">
+                                            {featured.description}
+                                        </p>
+                                    )}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Links Section */}
+                    <div className="w-[240px] shrink-0">
+                        <div className="py-1">
+                            {item.children?.map((child, idx) => (
+                                <MegaMenuLinksColumn key={idx} item={child} currentPath={currentPath} />
+                            ))}
+                        </div>
+                    </div>
+                </MenuCard>
+            </DropdownTransition>
+        </NavigationMenu.Item>
+    );
+};
+
 // --- Main Components ---
 
 function MegaMenuItem({ item, actionHandlers, showBackgroundGrid, scroll }: { item: NavbarItemType } & MegaMenuProps) {
@@ -445,6 +570,9 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid, scroll }: { it
 
     // Items with children
     if (item.children?.length) {
+        if (item.layout === 'megamenu' || item.featuredItems?.length) {
+            return <MegaDropdownItem item={item} styles={styles} currentPath={currentPath} actionHandlers={actionHandlers} />;
+        }
         return <StandardDropdownItem item={item} styles={styles} currentPath={currentPath} actionHandlers={actionHandlers} />;
     }
 
@@ -453,20 +581,37 @@ function MegaMenuItem({ item, actionHandlers, showBackgroundGrid, scroll }: { it
 }
 
 export default function MegaMenu({ items, actionHandlers, showBackgroundGrid, scroll }: MegaMenuProps) {
+    const [value, setValue] = useState("");
+
     return (
-        <NavigationMenu.Root className="relative">
-            <NavigationMenu.List className="flex items-center justify-end gap-1">
-                {items.map((item, index) => (
-                    <MegaMenuItem
-                        key={index}
-                        item={item}
-                        items={items} // Pass full props just to satisfy types if needed, although mostly unused in child
-                        actionHandlers={actionHandlers}
-                        showBackgroundGrid={showBackgroundGrid}
-                        scroll={scroll}
+        <>
+            <NavigationMenu.Root className="relative" value={value} onValueChange={setValue}>
+                <NavigationMenu.List className="flex items-center justify-end gap-1">
+                    {items.map((item, index) => (
+                        <MegaMenuItem
+                            key={index}
+                            item={item}
+                            items={items} // Pass full props just to satisfy types if needed, although mostly unused in child
+                            actionHandlers={actionHandlers}
+                            showBackgroundGrid={showBackgroundGrid}
+                            scroll={scroll}
+                        />
+                    ))}
+                </NavigationMenu.List>
+            </NavigationMenu.Root>
+
+            {/* Desktop backdrop mask */}
+            <AnimatePresence>
+                {value && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="fixed inset-0 w-screen h-screen z-[-1] bg-brand-bg/60 dark:bg-brand-structural/60 backdrop-blur-md pointer-events-none"
                     />
-                ))}
-            </NavigationMenu.List>
-        </NavigationMenu.Root>
+                )}
+            </AnimatePresence>
+        </>
     );
 }
