@@ -204,7 +204,7 @@ export default function BackgroundCarousel({
     if (items.length === 0) return <div ref={containerRef} className="absolute inset-0 w-full h-full bg-black/10" />;
 
     return (
-        <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden">
+        <div ref={containerRef} className="relative inset-0 w-full h-full overflow-hidden">
             {isFixed ? (
                 <div className="absolute inset-0" style={{ clipPath: 'inset(0)' }}>
                     <div className="fixed inset-0 w-full h-full">

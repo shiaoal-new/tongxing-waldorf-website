@@ -182,7 +182,7 @@ const ScheduleBlock = ({ data }: ScheduleBlockProps) => {
     const activeData = scheduleData[activeGrade];
 
     return (
-        <div ref={containerRef} className="w-full">
+        <div ref={containerRef} className="w-full relative">
             {/* 呼吸節奏說明卡片 */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}

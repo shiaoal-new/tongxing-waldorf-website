@@ -114,7 +114,7 @@ const CurriculumBlock = ({ data }: CurriculumBlockProps) => {
     };
 
     return (
-        <div className="w-full" ref={containerRef}>
+        <div className="w-full relative" ref={containerRef}>
             <h3 className="text-brand-accent border-l-8 border-brand-accent/30 pl-4 mb-component">1-9 年級課程脈絡與發展任務</h3>
 
             <DevComment text="Curriculum Block Growth Path View" />

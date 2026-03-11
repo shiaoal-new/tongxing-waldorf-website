@@ -13,10 +13,11 @@ import { CONFIG } from "../../lib/config";
 
 // Modularized Components
 import UserMenu from "./Navbar/UserMenu";
-import { NavbarListItem, MobileNavbarItem } from "./Navbar/NavbarItems";
+import { NavbarListItem, MobileNavbarItem, NavbarItemType } from "./Navbar/NavbarItems";
 import { ScrollLock, NavBarContainer } from "./Navbar/NavbarLayout";
 import { isDevEnvironment } from "../../lib/env";
 import MegaMenu from "./Navbar/MegaMenu";
+import { resolveNavigationItem } from "../../lib/navigation";
 
 interface NavbarProps {
   pages?: Partial<PageData>[];
@@ -50,40 +51,21 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
     }
   }, [showBackgroundGrid]);
 
-  const resolveItem = (item: any): any => {
-    let resolvedTitle = item.title;
-    let resolvedPath = item.path;
-
-    if (item.slug) {
-      const page = pages.find(p => p.slug === item.slug);
-      if (page) {
-        if (!resolvedTitle) resolvedTitle = page.title;
-        if (!resolvedPath) resolvedPath = item.slug === 'index' ? '/' : `/${item.slug}`;
-      }
-    }
-
-    const resolvedChildren = item.children ? item.children.map(resolveItem) : undefined;
-
-    return {
-      ...item,
-      title: resolvedTitle,
-      path: resolvedPath,
-      children: resolvedChildren
-    };
-  };
-
   const isDev = isDevEnvironment();
-  const navigation = (customNavigation?.items || [])
-    .filter((item: any) => isDev || !item.debugOnly)
-    .map(resolveItem);
+  const navigationRaw = (customNavigation?.items || [])
+    .filter((item: any) => isDev || !item.debugOnly);
+  
+  const navigationResolved = navigationRaw.map((item: any) => resolveNavigationItem(item, pages));
 
-  const finalNavigation = navigation.length > 0 ? navigation : [
-    { title: "首頁", path: "/" },
+  const finalNavigation: NavbarItemType[] = navigationResolved.length > 0 ? navigationResolved : [
+    { title: "首頁", path: "/", text: "首頁", link: "/" },
     ...pages
       .filter(page => page.slug !== "index")
       .map(page => ({
-        title: page.title,
-        path: `/${page.slug}`
+        title: page.title as string,
+        path: `/${page.slug}`,
+        text: page.title as string,
+        link: `/${page.slug}`
       }))
   ];
 

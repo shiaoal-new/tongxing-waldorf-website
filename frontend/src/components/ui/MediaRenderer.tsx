@@ -89,7 +89,7 @@ const MediaRenderer = ({
                     priority={priority}
                     loading={priority ? "eager" : "lazy"}
                     // @ts-ignore
-                    fetchpriority={priority ? "high" : "low"}
+                    fetchPriority={priority ? "high" : "low"}
                     style={commonImageStyles}
                     className={imgClassName}
                     unoptimized={isImageKitPath(media.image)}
