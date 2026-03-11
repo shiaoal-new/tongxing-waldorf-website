@@ -133,9 +133,13 @@ export default function HeroSection({ data }: HeroSectionProps) {
         return `${overlay_color}${alpha}`;
     }, [overlay_color, entryType, entryBrightness]);
 
-    // Content resolution (handles legacy header/subtitle)
+    // Content resolution (handles legacy header/subtitle and new eyebrow)
+    const { eyebrow } = data as any;
+    const displayEyebrow = eyebrow || (subtitle && subtitle.length < 20 ? subtitle : null) || sub_header;
     const displayTitle = title || header;
-    const displaySubtitle = subtitle || sub_header;
+    // If we used subtitle for eyebrow, don't use it for description. 
+    // Otherwise, if subtitle is long, use it as description if description is missing.
+    const displayDescription = description || (subtitle && subtitle.length >= 20 ? subtitle : null);
 
     // Style resolution
     const layoutClasses = layout as Record<string, string>;
@@ -178,7 +182,6 @@ export default function HeroSection({ data }: HeroSectionProps) {
     const sourceLines = (data as any)._sourceLines || {};
     const getSource = (field: string) => {
         if (!sourceFile) return undefined;
-        // 优先使用具体字段的行号，其次使用 hero 块的行号
         const line = sourceLines[field] || (data as any)._sourceLine;
         return line ? `${sourceFile}:${line}` : sourceFile;
     };
@@ -202,7 +205,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
                 content_inside_wrapper={true}
                 priority={true}
                 layout={{
-                    wrapper_class: wrapperClass,
+                    wrapper_class: `${wrapperClass} pt-20 md:pt-0`, // Add top padding to clear navbar on mobile/short viewports if absolute
                     container_class: layoutClasses.container_class || "items-center justify-center",
                     content_body_class: "w-full flex-grow flex flex-col justify-center"
                 }}
@@ -210,14 +213,14 @@ export default function HeroSection({ data }: HeroSectionProps) {
             >
                 <DevComment text="Hero Texts" />
                 <motion.div
-                    className="w-full flex flex-col items-center"
+                    className={`w-full flex flex-col ${wrapperClass.includes('items-start') ? 'items-start text-left' : 'items-center text-center'}`}
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
                 >
-                    {displaySubtitle && (
-                        <motion.div variants={itemVariants} data-yml-src={getSource('subtitle')}>
-                            <span className={pretitleClass}>{displaySubtitle}</span>
+                    {displayEyebrow && (
+                        <motion.div variants={itemVariants} data-yml-src={getSource('eyebrow') || getSource('subtitle')}>
+                            <span className={pretitleClass}>{displayEyebrow}</span>
                         </motion.div>
                     )}
 
@@ -227,10 +230,14 @@ export default function HeroSection({ data }: HeroSectionProps) {
                         </h1>
                     </motion.div>
 
-                    {description && (
-                        <motion.div variants={itemVariants} className="max-w-2xl mx-auto mb-8 px-4" data-yml-src={getSource('description')}>
+                    {displayDescription && (
+                        <motion.div 
+                            variants={itemVariants} 
+                            className={`max-w-2xl mb-8 ${wrapperClass.includes('items-start') ? '' : 'mx-auto px-4'}`} 
+                            data-yml-src={getSource('description') || getSource('subtitle')}
+                        >
                             <p className="text-lg md:text-xl text-brand-bg/80 font-medium leading-relaxed">
-                                {description}
+                                {displayDescription}
                             </p>
                         </motion.div>
                     )}
