@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -290,6 +290,18 @@ export const MegaMenuLinksColumn = ({ item, currentPath }: { item: NavbarItemTyp
 
 export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonItemProps & { currentPath: string }) => {
     const [shakeKey, setShakeKey] = useState(0);
+    const [navbarHeight, setNavbarHeight] = useState(64);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        const measure = () => {
+            const header = document.querySelector('header.navbar-container');
+            if (header) setNavbarHeight(header.getBoundingClientRect().height);
+        };
+        measure();
+        window.addEventListener('resize', measure);
+        return () => window.removeEventListener('resize', measure);
+    }, []);
 
     const featuredCount = item.featuredItems?.length || 0;
     const featuredGridCols = featuredCount >= 3 ? 'grid-cols-3' : featuredCount === 2 ? 'grid-cols-2' : 'grid-cols-1';
@@ -313,14 +325,10 @@ export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: 
         }
     }
 
-    const linksWidthRem = useColumns ? 30 : 15;
-    const menuWidthRem = (featuredCount > 0)
-        ? (useColumns ? 60 : 47.5)
-        : linksWidthRem;
-
     return (
-        <NavigationMenu.Item className="relative">
+        <NavigationMenu.Item>
             <NavigationMenu.Trigger
+                ref={triggerRef}
                 className={`${styles} group`}
                 onPointerDown={(e) => {
                     if (!item.path) {
@@ -334,10 +342,10 @@ export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: 
             >
                 <span>{item.title}</span>
             </NavigationMenu.Trigger>
-            <DropdownTransition shakeKey={shakeKey} wrapperClass="absolute right-0 lg:-right-4 top-full pt-2 origin-top z-50 pointer-events-none !left-auto">
-                <MenuCard className={`max-w-[calc(100vw-2rem)] p-6 flex flex-col md:flex-row gap-8 max-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden custom-scrollbar`} style={{ width: `${menuWidthRem}rem` }}>
+            <DropdownTransition shakeKey={shakeKey} isMegaMenu navbarHeight={navbarHeight}>
+                <MenuCard className="w-full p-6 lg:p-10 flex flex-col md:flex-row justify-center gap-8 lg:gap-16 max-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
                     {item.featuredItems && item.featuredItems.length > 0 && (
-                        <div className={`flex flex-col md:grid ${featuredGridCols} gap-4 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-4 md:pb-0 md:pr-8 w-full shrink-0`} style={{ width: '30rem' }}>
+                        <div className={`flex flex-col md:grid ${featuredGridCols} gap-6 md:gap-8 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-6 md:pb-0 md:pr-10 max-w-3xl shrink`}>
                             {item.featuredItems.map((featured, idx) => (
                                 <NavigationMenu.Link asChild key={idx}>
                                     <Link
@@ -359,15 +367,15 @@ export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: 
                         </div>
                     )}
 
-                    <div className="shrink-0" style={{ width: `${linksWidthRem}rem` }}>
-                        <div className={`py-1 ${useColumns ? 'flex gap-6 w-full' : ''}`}>
+                    <div className="shrink-0 md:min-w-[15rem]">
+                        <div className={`py-1 ${useColumns ? 'flex gap-8 lg:gap-12 w-full' : ''}`}>
                             <div className="flex-1 flex flex-col w-full">
                                 {leftSectionLinks.map((child, idx) => (
                                     <MegaMenuLinksColumn key={idx} item={child} currentPath={currentPath} />
                                 ))}
                             </div>
                             {useColumns && (
-                                <div className="flex-1 flex flex-col w-full border-l border-brand-taupe/10 pl-6">
+                                <div className="flex-1 flex flex-col w-full border-l border-brand-taupe/10 pl-8 lg:pl-12">
                                     {rightSectionLinks.map((child, idx) => (
                                         <MegaMenuLinksColumn key={`right-${idx}`} item={child} currentPath={currentPath} />
                                     ))}
@@ -380,3 +388,4 @@ export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: 
         </NavigationMenu.Item>
     );
 };
+

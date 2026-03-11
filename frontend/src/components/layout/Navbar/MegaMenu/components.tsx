@@ -26,22 +26,26 @@ export const SideSubMenu = ({ children, className = "" }: { children: React.Reac
 export const DropdownTransition = ({ 
     children, 
     shakeKey = 0, 
-    wrapperClass = "absolute right-0 top-full pt-2 origin-top z-50 pointer-events-none !left-auto" 
+    wrapperClass = "absolute right-0 top-full pt-2 origin-top z-50 pointer-events-none",
+    style,
+    isMegaMenu = false,
+    navbarHeight = 64,
 }: { 
     children: React.ReactNode, 
     shakeKey?: number, 
-    wrapperClass?: string 
+    wrapperClass?: string,
+    style?: React.CSSProperties,
+    isMegaMenu?: boolean,
+    navbarHeight?: number,
 }) => {
     const controls = useAnimation();
     const isFirstRender = useRef(true);
 
     useEffect(() => {
-        // Skip the animation on the very first render (when the menu first opens via hover)
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return;
         }
-
         if (shakeKey > 0) {
             controls.start({
                 y: [0, -10, 0, -5, 0],
@@ -49,6 +53,41 @@ export const DropdownTransition = ({
             });
         }
     }, [shakeKey, controls]);
+
+    if (isMegaMenu) {
+        return (
+            <NavigationMenu.Content>
+                {/* 
+                  * This invisible anchor sits inside Radix's positioned container.
+                  * The actual mega menu panel uses position:fixed to escape
+                  * Radix's inline transform and span 100vw.
+                  */}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: 0, height: 0, overflow: 'visible', pointerEvents: 'none' }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        style={{
+                            position: 'fixed',
+                            top: navbarHeight,
+                            left: 0,
+                            right: 0,
+                            width: '100vw',
+                            zIndex: 50,
+                            pointerEvents: 'auto',
+                            paddingTop: '8px',
+                            overscrollBehavior: 'contain',
+                        }}
+                    >
+                        <motion.div animate={controls}>
+                            {children}
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </NavigationMenu.Content>
+        );
+    }
 
     return (
         <NavigationMenu.Content asChild>
@@ -58,7 +97,7 @@ export const DropdownTransition = ({
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className={wrapperClass}
-                style={{ left: 'auto', right: 0 }}
+                style={style ?? { left: 'auto', right: 0 }}
             >
                 <div className="pointer-events-auto">
                     <motion.div animate={controls}>

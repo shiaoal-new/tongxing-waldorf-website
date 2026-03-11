@@ -121,7 +121,7 @@ export default function Navbar({ pages = [], navigation: customNavigation, isHer
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}>
-            <nav className="w-full mx-auto relative flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-1 z-10">
+            <nav className="w-full mx-auto flex flex-wrap items-center justify-between px-mobile-margin lg:px-desktop-margin py-1 z-10">
               <DevComment text="Navbar Logo Section" />
               {/* Logo  */}
 

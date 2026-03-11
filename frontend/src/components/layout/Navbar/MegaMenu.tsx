@@ -57,8 +57,8 @@ export default function MegaMenu({ items, actionHandlers, showBackgroundGrid, sc
 
     return (
         <>
-            <NavigationMenu.Root className="relative" value={value} onValueChange={setValue}>
-                <NavigationMenu.List className="flex items-center justify-end gap-1">
+            <NavigationMenu.Root className="static" value={value} onValueChange={setValue}>
+                <NavigationMenu.List className="static flex items-center justify-end gap-1">
                     {items.map((item, index) => (
                         <MegaMenuItem
                             key={index}
