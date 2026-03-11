@@ -235,26 +235,36 @@ export const SimpleLinkItem = ({ item, styles, actionHandlers }: CommonItemProps
     );
 };
 
-export const MegaMenuLinksColumn = ({ item, currentPath }: { item: NavbarItemType, currentPath: string }) => {
+export const MegaMenuLinksColumn = ({ item, currentPath, isDropdown = true }: { item: NavbarItemType, currentPath: string, isDropdown?: boolean }) => {
     if (!item.children || item.children.length === 0) {
         const active = isItemActive(item, currentPath);
         const activeStyles = active ? "text-brand-accent bg-brand-accent/10 font-medium" : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5";
 
+        const handleClick = () => {
+            if (!isDropdown) {
+                const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]') as HTMLButtonElement;
+                if (disclosureButton) disclosureButton.click();
+            }
+        };
+
+        const LinkComponent = (
+            <Link
+                href={item.path || "#"}
+                onClick={handleClick}
+                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
+            >
+                {item.image && (
+                    <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
+                        <Image src={item.image} alt={item.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
+                    </div>
+                )}
+                <span className="font-medium whitespace-nowrap text-sm flex-1">{item.title}</span>
+            </Link>
+        );
+
         return (
             <div className="mb-0.5">
-                <NavigationMenu.Link asChild>
-                    <Link
-                        href={item.path || "#"}
-                        className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
-                    >
-                        {item.image && (
-                            <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
-                                <Image src={item.image} alt={item.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
-                            </div>
-                        )}
-                        <span className="font-medium whitespace-nowrap text-sm flex-1">{item.title}</span>
-                    </Link>
-                </NavigationMenu.Link>
+                {isDropdown ? <NavigationMenu.Link asChild>{LinkComponent}</NavigationMenu.Link> : LinkComponent}
             </div>
         );
     }
@@ -267,25 +277,119 @@ export const MegaMenuLinksColumn = ({ item, currentPath }: { item: NavbarItemTyp
                     const active = isItemActive(child, currentPath);
                     const activeStyles = active ? "text-brand-accent bg-brand-accent/10 font-medium" : "text-brand-text dark:text-brand-bg hover:text-brand-accent hover:bg-brand-accent/5";
 
+                    const handleClick = () => {
+                        if (!isDropdown) {
+                            const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]') as HTMLButtonElement;
+                            if (disclosureButton) disclosureButton.click();
+                        }
+                    };
+
+                    const ChildLinkComponent = (
+                        <Link
+                            href={child.path || "#"}
+                            onClick={handleClick}
+                            className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
+                        >
+                            {child.image && (
+                                <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
+                                    <Image src={child.image} alt={child.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
+                                </div>
+                            )}
+                            <span className="text-sm whitespace-nowrap flex-1">{child.title}</span>
+                        </Link>
+                    );
+
                     return (
-                        <NavigationMenu.Link asChild key={idx}>
-                            <Link
-                                href={child.path || "#"}
-                                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all group/link ${activeStyles}`}
-                            >
-                                {child.image && (
-                                    <div className="relative w-10 h-10 rounded-md shrink-0 overflow-hidden shadow-sm outline outline-1 outline-brand-taupe/10 bg-brand-bg/50">
-                                        <Image src={child.image} alt={child.title} fill sizes="40px" className="object-cover transition-transform duration-500 group-hover/link:scale-110" />
-                                    </div>
-                                )}
-                                <span className="text-sm whitespace-nowrap flex-1">{child.title}</span>
-                            </Link>
-                        </NavigationMenu.Link>
+                        <React.Fragment key={idx}>
+                            {isDropdown ? <NavigationMenu.Link asChild>{ChildLinkComponent}</NavigationMenu.Link> : ChildLinkComponent}
+                        </React.Fragment>
                     )
                 })}
             </div>
         </div>
     )
+}
+
+export const MegaMenuContent = ({ item, currentPath, isDropdown = true }: { item: NavbarItemType, currentPath: string, isDropdown?: boolean }) => {
+    const featuredCount = item.featuredItems?.length || 0;
+    const featuredGridCols = featuredCount >= 3 ? 'grid-cols-3' : featuredCount === 2 ? 'grid-cols-2' : 'grid-cols-1';
+
+    const totalLinksCount = item.children?.reduce((acc, child) => {
+        return acc + (child.children ? child.children.length + 1 : 1);
+    }, 0) || 0;
+
+    const useColumns = totalLinksCount > 6;
+
+    let leftSectionLinks: NavbarItemType[] = [];
+    let rightSectionLinks: NavbarItemType[] = [];
+
+    if (item.children) {
+        if (useColumns) {
+            const splitIndex = Math.ceil(item.children.length / 2);
+            leftSectionLinks = item.children.slice(0, splitIndex);
+            rightSectionLinks = item.children.slice(splitIndex);
+        } else {
+            leftSectionLinks = item.children;
+        }
+    }
+
+    return (
+        <div className={`w-full flex justify-center custom-scrollbar ${isDropdown ? 'p-6 lg:p-10 flex-col md:flex-row gap-8 lg:gap-16 max-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden overscroll-contain' : 'flex-col gap-6 py-4'}`}>
+            {item.featuredItems && item.featuredItems.length > 0 && (
+                <div className={`flex flex-col md:grid ${featuredGridCols} gap-6 md:gap-8 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-6 md:pb-0 md:pr-10 max-w-3xl shrink`}>
+                    {item.featuredItems.map((featured, idx) => {
+                        const handleClick = () => {
+                            if (!isDropdown) {
+                                const disclosureButton = document.querySelector('[aria-label="Toggle Menu"]') as HTMLButtonElement;
+                                if (disclosureButton) disclosureButton.click();
+                            }
+                        };
+
+                        const FeaturedLinkComponent = (
+                            <Link
+                                href={featured.path || '#'}
+                                onClick={handleClick}
+                                className="block group/featured overflow-hidden"
+                            >
+                                {featured.image && (
+                                    <div className="relative w-full aspect-video rounded-md overflow-hidden bg-brand-bg/50 mb-3 ml-1 outline outline-1 outline-brand-taupe/10 shadow-sm">
+                                        <Image src={featured.image} alt={featured.title} fill sizes="(max-width: 768px) 100vw, 30vw" className="object-cover transition-transform duration-500 group-hover/featured:scale-105" />
+                                    </div>
+                                )}
+                                <h4 className="font-medium text-brand-text dark:text-brand-bg mb-1 group-hover/featured:text-brand-accent transition-colors ml-1">
+                                    {featured.title}
+                                </h4>
+                                {featured.description && <p className="text-xs text-brand-taupe line-clamp-2 ml-1">{featured.description}</p>}
+                            </Link>
+                        );
+
+                        return (
+                            <React.Fragment key={idx}>
+                                {isDropdown ? <NavigationMenu.Link asChild>{FeaturedLinkComponent}</NavigationMenu.Link> : FeaturedLinkComponent}
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
+            )}
+
+            <div className="shrink-0 md:min-w-[15rem]">
+                <div className={`py-1 ${useColumns ? 'flex flex-col md:flex-row gap-8 lg:gap-12 w-full' : ''}`}>
+                    <div className="flex-1 flex flex-col w-full">
+                        {leftSectionLinks.map((child, idx) => (
+                            <MegaMenuLinksColumn key={idx} item={child} currentPath={currentPath} isDropdown={isDropdown} />
+                        ))}
+                    </div>
+                    {useColumns && (
+                        <div className="flex-1 flex flex-col w-full md:border-l border-brand-taupe/10 pt-4 md:pt-0 md:pl-8 lg:pl-12">
+                            {rightSectionLinks.map((child, idx) => (
+                                <MegaMenuLinksColumn key={`right-${idx}`} item={child} currentPath={currentPath} isDropdown={isDropdown} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: CommonItemProps & { currentPath: string }) => {
@@ -343,46 +447,8 @@ export const MegaDropdownItem = ({ item, styles, currentPath, actionHandlers }: 
                 <span>{item.title}</span>
             </NavigationMenu.Trigger>
             <DropdownTransition shakeKey={shakeKey} isMegaMenu navbarHeight={navbarHeight}>
-                <MenuCard className="w-full p-6 lg:p-10 flex flex-col md:flex-row justify-center gap-8 lg:gap-16 max-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar">
-                    {item.featuredItems && item.featuredItems.length > 0 && (
-                        <div className={`flex flex-col md:grid ${featuredGridCols} gap-6 md:gap-8 border-b md:border-b-0 md:border-r border-brand-taupe/10 pb-6 md:pb-0 md:pr-10 max-w-3xl shrink`}>
-                            {item.featuredItems.map((featured, idx) => (
-                                <NavigationMenu.Link asChild key={idx}>
-                                    <Link
-                                        href={featured.path || '#'}
-                                        className="block group/featured overflow-hidden"
-                                    >
-                                        {featured.image && (
-                                            <div className="relative w-full aspect-video rounded-md overflow-hidden bg-brand-bg/50 mb-3 ml-1 outline outline-1 outline-brand-taupe/10 shadow-sm">
-                                                <Image src={featured.image} alt={featured.title} fill sizes="(max-width: 768px) 100vw, 30vw" className="object-cover transition-transform duration-500 group-hover/featured:scale-105" />
-                                            </div>
-                                        )}
-                                        <h4 className="font-medium text-brand-text dark:text-brand-bg mb-1 group-hover/featured:text-brand-accent transition-colors ml-1">
-                                            {featured.title}
-                                        </h4>
-                                        {featured.description && <p className="text-xs text-brand-taupe line-clamp-2 ml-1">{featured.description}</p>}
-                                    </Link>
-                                </NavigationMenu.Link>
-                            ))}
-                        </div>
-                    )}
-
-                    <div className="shrink-0 md:min-w-[15rem]">
-                        <div className={`py-1 ${useColumns ? 'flex gap-8 lg:gap-12 w-full' : ''}`}>
-                            <div className="flex-1 flex flex-col w-full">
-                                {leftSectionLinks.map((child, idx) => (
-                                    <MegaMenuLinksColumn key={idx} item={child} currentPath={currentPath} />
-                                ))}
-                            </div>
-                            {useColumns && (
-                                <div className="flex-1 flex flex-col w-full border-l border-brand-taupe/10 pl-8 lg:pl-12">
-                                    {rightSectionLinks.map((child, idx) => (
-                                        <MegaMenuLinksColumn key={`right-${idx}`} item={child} currentPath={currentPath} />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
+                <MenuCard className="w-full">
+                    <MegaMenuContent item={item} currentPath={currentPath} isDropdown={true} />
                 </MenuCard>
             </DropdownTransition>
         </NavigationMenu.Item>
