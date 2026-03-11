@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StatsBlock as StatsBlockType } from '../../types/content';
-import { Icon } from '@iconify/react';
+import { motion, useInView, animate } from 'framer-motion';
 
 interface StatsBlockProps {
     data: StatsBlockType;
@@ -32,6 +32,36 @@ const resolveStatsValue = (value: string): string => {
 };
 
 /**
+ * Animate numbers from 0 to target
+ */
+const CounterValue: React.FC<{ value: string }> = ({ value }) => {
+    const resolvedValue = resolveStatsValue(value);
+    const numericValue = parseInt(resolvedValue.replace(/[^0-9]/g, ''), 10);
+    const isNumeric = !isNaN(numericValue) && /^\d+$/.test(resolvedValue);
+
+    const [displayValue, setDisplayValue] = useState(isNumeric ? 0 : resolvedValue);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.5 });
+
+    useEffect(() => {
+        if (isInView && isNumeric) {
+            const controls = animate(0, numericValue, {
+                duration: 2,
+                ease: 'easeOut',
+                onUpdate: (latest) => setDisplayValue(Math.floor(latest)),
+            });
+            return () => controls.stop();
+        }
+    }, [isInView, isNumeric, numericValue]);
+
+    return (
+        <span ref={ref} className="tabular-nums">
+            {displayValue}
+        </span>
+    );
+};
+
+/**
  * StatsBlock - Tesla-inspired statistics/authority section
  * Features large numbers, subtle dividers, and clean typography.
  */
@@ -54,8 +84,12 @@ const StatsBlock: React.FC<StatsBlockProps> = ({ data }) => {
             <div className="max-w-7xl mx-auto px-6">
                 <div className={`grid grid-cols-1 ${gridClass} gap-12 md:gap-0`}>
                     {items.map((item, index) => (
-                        <div
+                        <motion.div
                             key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
                             className={`flex flex-col items-center text-center px-8 relative
                 ${show_dividers && index !== items.length - 1 ? 'md:border-r border-stone-100 dark:border-stone-800' : ''}
               `}
@@ -63,7 +97,7 @@ const StatsBlock: React.FC<StatsBlockProps> = ({ data }) => {
                             {/* Stats Value & Unit */}
                             <div className="flex items-baseline mb-3 group cursor-default">
                                 <span className="text-5xl md:text-7xl font-bold tracking-tighter text-stone-900 dark:text-white transition-transform duration-500 group-hover:scale-105">
-                                    {resolveStatsValue(item.value)}
+                                    <CounterValue value={item.value} />
                                 </span>
                                 {item.unit && (
                                     <span className="ml-1 text-2xl md:text-3xl font-medium text-stone-500 dark:text-stone-500">
@@ -83,7 +117,7 @@ const StatsBlock: React.FC<StatsBlockProps> = ({ data }) => {
                                     {item.description}
                                 </div>
                             )}
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
@@ -92,3 +126,4 @@ const StatsBlock: React.FC<StatsBlockProps> = ({ data }) => {
 };
 
 export default StatsBlock;
+
