@@ -33,11 +33,24 @@ export default function YmlLocator() {
         }
     };
 
-    const onJumpToWording = () => {
-        if (menu.wordingSrc) {
-            jumpToYml(menu.wordingSrc);
-            handleOpenSource(); // We reuse handleOpenSource for visual feedback since it's the same element
+    const onJumpToWording = async () => {
+        if (!menu.wordingSrc || !menu.ymlSrc) return;
+        
+        const [srcFile, srcLine] = menu.ymlSrc.split(':');
+        try {
+            const res = await fetch(`/api/wording-loc?srcFile=${encodeURIComponent(srcFile)}&srcLine=${srcLine}&wordingFile=${encodeURIComponent(menu.wordingSrc)}`);
+            const data = await res.json();
+            if (data.file) {
+                jumpToYml(`${data.file}:${data.line || 1}`);
+            } else {
+                jumpToYml(`${menu.wordingSrc}:1`);
+            }
+        } catch (error) {
+            console.error('Failed to locate wording key line', error);
+            jumpToYml(`${menu.wordingSrc}:1`);
         }
+        
+        handleOpenSource(); // We reuse handleOpenSource for visual feedback since it's the same element
     };
 
     const onAddNote = () => {

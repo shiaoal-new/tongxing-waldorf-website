@@ -390,6 +390,7 @@ export interface HeroMedia {
 }
 
 export interface HeroData {
+    eyebrow?: string;
     title: string;
     subtitle: string;
     description?: string;
