@@ -58,6 +58,7 @@ module.exports = {
         'xl': '9999rem',
         '2xl': '9999rem',
         '3xl': '9999rem',
+        'short': { 'raw': '(max-height: 740px)' },
       },
       maxWidth: {
         'brand': 'var(--layout-max-width)',
