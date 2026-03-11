@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import { useWordingContext } from '../../../context/WordingContext';
+import { getPageIdFromRouter } from '../../../lib/navigation';
 import { MenuState, NoteData, NotePosition } from './types';
 import { getVisualRect, STORAGE_KEY } from './utils';
 
 export function useYmlLocator(IS_DEV: boolean) {
+    const router = useRouter();
+    const { getStyle } = useWordingContext();
+
     const [menu, setMenu] = useState<MenuState>({
         visible: false,
         x: 0,
@@ -11,6 +17,7 @@ export function useYmlLocator(IS_DEV: boolean) {
         deltaY: 0,
         ymlSrc: null,
         tsxSrc: null,
+        wordingSrc: null,
         element: null,
         tsxElement: null
     });
@@ -172,6 +179,13 @@ export function useYmlLocator(IS_DEV: boolean) {
                     e.preventDefault();
                     e.stopPropagation();
 
+                    let wordingSrcValue = null;
+                    if (ymlSrcValue) {
+                        const pageId = getPageIdFromRouter(router);
+                        const style = getStyle(pageId);
+                        wordingSrcValue = ymlSrcValue.replace('.yml', `.wording.${style}.yml`).split(':')[0];
+                    }
+
                     const clickX = e.clientX;
                     const clickY = e.clientY;
                     let deltaX = 0;
@@ -191,6 +205,7 @@ export function useYmlLocator(IS_DEV: boolean) {
                         deltaY,
                         ymlSrc: ymlSrcValue,
                         tsxSrc: tsxSrcValue,
+                        wordingSrc: wordingSrcValue,
                         element: ymlContainer,
                         tsxElement: tsxContainer
                     });

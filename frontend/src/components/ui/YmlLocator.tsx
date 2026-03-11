@@ -33,6 +33,13 @@ export default function YmlLocator() {
         }
     };
 
+    const onJumpToWording = () => {
+        if (menu.wordingSrc) {
+            jumpToYml(menu.wordingSrc);
+            handleOpenSource(); // We reuse handleOpenSource for visual feedback since it's the same element
+        }
+    };
+
     const onAddNote = () => {
         if (menu.ymlSrc) {
             setEditingNodeSrc(menu.ymlSrc);
@@ -58,6 +65,7 @@ export default function YmlLocator() {
                 notes={notes}
                 handleOpenTsx={handleOpenTsx}
                 handleOpenSource={onJumpToSource}
+                handleOpenWording={onJumpToWording}
                 handleAddNoteClick={onAddNote}
                 setMenu={setMenu}
             />

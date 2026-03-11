@@ -4,6 +4,7 @@ export type MenuState = {
     y: number;
     ymlSrc: string | null;
     tsxSrc: string | null;
+    wordingSrc: string | null;
     element: HTMLElement | null;
     tsxElement: HTMLElement | null;
     deltaX: number;

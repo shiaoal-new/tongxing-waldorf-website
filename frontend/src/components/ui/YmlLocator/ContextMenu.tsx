@@ -7,6 +7,7 @@ interface ContextMenuProps {
     notes: Record<string, NoteData>;
     handleOpenTsx: () => void;
     handleOpenSource: () => void;
+    handleOpenWording: () => void;
     handleAddNoteClick: () => void;
     setMenu: React.Dispatch<React.SetStateAction<MenuState>>;
 }
@@ -16,6 +17,7 @@ export const ContextMenu = ({
     notes,
     handleOpenTsx,
     handleOpenSource,
+    handleOpenWording,
     handleAddNoteClick,
     setMenu
 }: ContextMenuProps) => {
@@ -91,6 +93,30 @@ export const ContextMenu = ({
                     onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
                 >
                     <span style={{ fontSize: '16px' }}>↗️</span> Go to YML source
+                </button>
+            )}
+            
+            {menu.wordingSrc && (
+                <button
+                    onClick={handleOpenWording}
+                    style={{
+                        padding: '8px 12px',
+                        textAlign: 'left',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        borderRadius: '4px',
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        color: '#111827'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+                    onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                    <span style={{ fontSize: '16px' }}>🔤</span> Go to Wording YML
                 </button>
             )}
 
