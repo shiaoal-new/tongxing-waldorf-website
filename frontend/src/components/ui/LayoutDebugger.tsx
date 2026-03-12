@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import DebuggerPopup from './DebuggerPopup';
+import { isDevEnvironment } from '../../lib/env';
 
 /**
  * LayoutDebugger - 僅在開發模式下運行的佈局偵測器
@@ -12,7 +13,7 @@ export default function LayoutDebugger() {
 
     useEffect(() => {
         // 僅在開發模式且客戶端運行
-        if (process.env.NODE_ENV === 'production' || typeof window === 'undefined') return;
+        if (!isDevEnvironment() || typeof window === 'undefined') return;
 
         let throttleTimer: NodeJS.Timeout | undefined;
         let confirmationTimer: NodeJS.Timeout | undefined;

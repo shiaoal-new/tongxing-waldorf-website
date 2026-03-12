@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useWordingContext } from '../context/WordingContext';
+import { isDevEnvironment } from '../lib/env';
 
 const AVAILABLE_STYLES = ['default', 'funny', 'professional']; // 這裡可以擴展或自動偵測
 
@@ -7,11 +8,8 @@ export default function DevWordingSwitcher({ pageId }: { pageId: string }) {
     const { styles, setStyle, getStyle } = useWordingContext();
     const [isOpen, setIsOpen] = useState(false);
 
-    if (
-        process.env.NODE_ENV === 'production' &&
-        process.env.NEXT_PUBLIC_APP_ENV !== 'preview'
-    )
-        return null;
+    if (!isDevEnvironment()) return null;
+
 
     const currentStyle = getStyle(pageId);
 

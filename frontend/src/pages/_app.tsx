@@ -15,6 +15,7 @@ import "../css/tailwind.css";
 import { SessionProvider } from "../context/SessionContext";
 import { WordingProvider } from "../context/WordingContext";
 import { ImageKitProvider } from "@imagekit/next";
+import { isDevEnvironment } from "../lib/env";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -26,9 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
               className="font-body"
               style={{ '--font-accent': 'var(--font-chen)' } as React.CSSProperties}
             >
-              {process.env.NODE_ENV === 'development' && <LayoutDebugger />}
-              {process.env.NODE_ENV === 'development' && <WordingDebugger />}
-              {process.env.NODE_ENV === 'development' && <YmlLocator />}
+              {isDevEnvironment() && (
+                <>
+                  <LayoutDebugger />
+                  <WordingDebugger />
+                  <YmlLocator />
+                </>
+              )}
               <Component {...pageProps} />
             </main>
           </ThemeProvider>

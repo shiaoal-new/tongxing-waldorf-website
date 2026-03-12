@@ -5,6 +5,7 @@ import { OutlineHighlighters } from './YmlLocator/OutlineHighlighters';
 import { NoteIndicators } from './YmlLocator/NoteIndicators';
 import { EditNoteModal } from './YmlLocator/EditNoteModal';
 import { jumpToYml } from './YmlLocator/utils';
+import { isDevEnvironment } from '../../lib/env';
 
 /**
  * YmlLocator - 開發環境輔助工具
@@ -12,7 +13,7 @@ import { jumpToYml } from './YmlLocator/utils';
  * 並將備註可視化懸浮在對應元素旁邊
  */
 export default function YmlLocator() {
-    const IS_DEV = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_APP_ENV === 'preview';
+    const IS_DEV = isDevEnvironment();
 
     const {
         menu, setMenu,
